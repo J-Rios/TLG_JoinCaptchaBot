@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    10/09/2018
+    11/09/2018
 Version:
-    0.8.0
+    0.9.0
 '''
 
 ####################################################################################################
@@ -29,7 +29,8 @@ from time import time, sleep, strptime, mktime, strftime
 from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
-from telegram import MessageEntity, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import MessageEntity, ParseMode, InputMediaPhoto,  InlineKeyboardButton, \
+                     InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler, \
                          ConversationHandler, CallbackQueryHandler
 from captcha.image import ImageCaptcha
@@ -241,7 +242,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
 
 ### Received Telegram not-command messages handlers ###
 
-def new_user(bot, update):
+def msg_new_user(bot, update):
     '''New member join the group event handler'''
     # Get message data
     chat_id = update.message.chat_id
@@ -285,13 +286,16 @@ def new_user(bot, update):
                     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                     img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
                                                                                 captcha_timeout)
+                    # Prepare inline keyboard button to let user request another catcha
+                    keyboard = [[InlineKeyboardButton("Other Captcha", callback_data="request_captcha")]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
                     # Image caption must be < 200 chars, so send separate image and text messages
-                    #sent_photo_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
+                    #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
                     #                                 "rb"), caption=img_caption)
-                    sent_photo_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
-                                                    "rb"))
+                    sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
+                                                    "rb"), reply_markup=reply_markup)
                     sent_msg = bot.send_message(chat_id, img_caption)
-                    tlg_msg_to_selfdestruct_in(sent_photo_msg, captcha_timeout+0.5)
+                    tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
                     tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
                     # Add join messages to delete
                     msg = \
@@ -299,7 +303,7 @@ def new_user(bot, update):
                         "chat_id": chat_id,
                         "user_id" : join_user_id,
                         "msg_id_join0": update.message.message_id,
-                        "msg_id_join1": sent_photo_msg.message_id,
+                        "msg_id_join1": sent_img_msg.message_id,
                         "msg_id_join2": sent_msg.message_id
                     }
                     to_delete_join_messages_list.append(msg)
@@ -355,6 +359,36 @@ def msg_nocmd(bot, update):
                         tlg_msg_to_selfdestruct_in(update.message, 1)
                         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 1)
                         new_users_list.remove(new_user)
+
+
+def button_request_captcha(bot, update):
+    '''Button "Other Captcha" pressed handler'''
+    query = update.callback_query
+    # If the query come from the Other Captcha button
+    if query.data == "request_captcha":
+        # Get query data
+        chat_id = query.message.chat_id
+        usr_id = query.from_user.id
+        message_id = query.message.message_id
+        # Search if this user is a new user that has not completed the captcha
+        for i in range(len(new_users_list)):
+            new_user = new_users_list[i]
+            if new_user["user_id"] == usr_id:
+                if new_user["chat_id"] == chat_id:
+                    # Prepare inline keyboard button to let user request another catcha
+                    keyboard = [[InlineKeyboardButton("Other Captcha", \
+                                 callback_data="request_captcha")]]
+                    reply_markup = InlineKeyboardMarkup(keyboard)
+                    # Generate a new captcha and edit previous captcha image message with this one
+                    captcha = create_image_captcha(usr_id)
+                    bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
+                                           media=open(captcha["image"], "rb")), \
+                                           reply_markup=reply_markup)
+                    bot.edit_message_media(chat_id, message_id, media=open(captcha["image"], "rb"))
+                    # Set and modified to new expected captcha number
+                    new_user["captcha_num"] = captcha["number"]
+                    new_users_list[i] = new_user
+    bot.answer_callback_query(query.id)
 
 ####################################################################################################
 
@@ -543,8 +577,8 @@ def cmd_captcha(bot, update):
     '''Command /captcha handler'''
     chat_id = update.message.chat_id
     captcha = create_image_captcha(chat_id)
-    sent_photo_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], "rb"))
-    tlg_msg_to_selfdestruct_in(sent_photo_msg, 1)
+    sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], "rb"))
+    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)
 
 
 ####################################################################################################
@@ -616,7 +650,9 @@ def main():
     # Set to dispatcher a not-command text messages handler
     dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
     # Set to dispatcher a new member join the group and member left the group events handlers
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, new_user))
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
+    # Set to dispatcher request new captcha button callback handler
+    dp.add_handler(CallbackQueryHandler(button_request_captcha))
     # Set to dispatcher all expected commands messages handler
     dp.add_handler(CommandHandler("start", cmd_start))
     dp.add_handler(CommandHandler("help", cmd_help))
