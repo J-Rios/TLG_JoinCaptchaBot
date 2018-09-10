@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    09/09/2018
+    10/09/2018
 Version:
-    0.0.0
+    0.8.0
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '0.0.0' # Bot version
+    'VERSION' : '0.8.0' # Bot version
 }
 
 TEXT = {

@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    09/09/2018
+    10/09/2018
 Version:
-    0.0.0
+    0.8.0
 '''
 
 ####################################################################################################
@@ -43,7 +43,8 @@ from img_captcha_gen import CaptchaGenerator
 
 ### Globals ###
 files_config_list = []
-to_delete_messages_list = []
+to_delete_in_time_messages_list = []
+to_delete_join_messages_list = []
 users_join_messages_list = []
 new_users_list = []
 
@@ -234,7 +235,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     sent_msg_data["User_id"] = user_id
     sent_msg_data["Msg_id"] = msg_id
     sent_msg_data["delete_time"] = destroy_time
-    to_delete_messages_list.append(sent_msg_data)
+    to_delete_in_time_messages_list.append(sent_msg_data)
 
 ####################################################################################################
 
@@ -284,8 +285,7 @@ def new_user(bot, update):
                     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                     img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
                                                                                 captcha_timeout)
-                    # Send the captcha image and text message about it (cause image caption must 
-                    # be < 200 chars)
+                    # Image caption must be < 200 chars, so send separate image and text messages
                     #sent_photo_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
                     #                                 "rb"), caption=img_caption)
                     sent_photo_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
@@ -293,13 +293,25 @@ def new_user(bot, update):
                     sent_msg = bot.send_message(chat_id, img_caption)
                     tlg_msg_to_selfdestruct_in(sent_photo_msg, captcha_timeout+0.5)
                     tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
+                    # Add join messages to delete
+                    msg = \
+                    {
+                        "chat_id": chat_id,
+                        "user_id" : join_user_id,
+                        "msg_id_join0": update.message.message_id,
+                        "msg_id_join1": sent_photo_msg.message_id,
+                        "msg_id_join2": sent_msg.message_id
+                    }
+                    to_delete_join_messages_list.append(msg)
                     # Add new user data to lists
-                    new_user = {"chat_id": "", "user_id" : "", "user_name": "", "captcha_num" : "", "join_time" : ""}
-                    new_user["chat_id"] = chat_id
-                    new_user["user_id"] = join_user_id
-                    new_user["user_name"] = join_user_name
-                    new_user["captcha_num"] = captcha["number"]
-                    new_user["join_time"] = time()
+                    new_user = \
+                    {
+                        "chat_id": chat_id,
+                        "user_id" : join_user_id,
+                        "user_name": join_user_name,
+                        "captcha_num" : captcha["number"],
+                        "join_time" : time()
+                    }
                     new_users_list.append(new_user)
 
 
@@ -321,14 +333,22 @@ def msg_nocmd(bot, update):
                 if new_user["user_id"] == user_id:
                     if new_user["captcha_num"] in text:
                         # Remove join messages
-                        for msg in to_delete_messages_list:
-                            if msg["Chat_id"] == chat_id:
-                                if msg["User_id"] == user_id: # To-Do: Not work, cause it is Bot ID
+                        for msg in to_delete_join_messages_list:
+                            if msg["chat_id"] == chat_id:
+                                if msg["user_id"] == user_id:
                                     try:
-                                        if bot.delete_message(msg["Chat_id"], msg["Msg_id"]):
-                                            to_delete_messages_list.remove(msg)
+                                        # Uncomment next line to remove "user join" message too
+                                        #bot.delete_message(msg["chat_id"], msg["msg_id_join0"])
+                                        bot.delete_message(msg["chat_id"], msg["msg_id_join1"])
+                                        bot.delete_message(msg["chat_id"], msg["msg_id_join2"])
                                     except:
-                                        to_delete_messages_list.remove(msg)
+                                        pass
+                                    to_delete_join_messages_list.remove(msg)
+                        # Remove user captcha numbers message
+                        try:
+                            bot.delete_message(chat_id, update.message.message_id)
+                        except:
+                            pass
                         # Send captcha solved message and program user and bot messages 
                         # selfdestruct in 1min
                         bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
@@ -534,14 +554,14 @@ def cmd_captcha(bot, update):
 def selfdestruct_messages(bot):
     '''Handle remove messages sent by the Bot with the timed self-delete function'''
     # Check each Bot sent message
-    for sent_msg in to_delete_messages_list:
+    for sent_msg in to_delete_in_time_messages_list:
         # If actual time is equal or more than the expected sent msg delete time
         if time() >= sent_msg["delete_time"]:
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
-                    to_delete_messages_list.remove(sent_msg)
+                    to_delete_in_time_messages_list.remove(sent_msg)
             except:
-                to_delete_messages_list.remove(sent_msg)
+                to_delete_in_time_messages_list.remove(sent_msg)
 
 
 def check_time_to_ban_not_verify_users(bot):
@@ -557,14 +577,17 @@ def check_time_to_ban_not_verify_users(bot):
                 bot.unbanChatMember(new_user["chat_id"], new_user["user_id"])
                 bot_msg = TEXT[lang]["NEW_USER_BAN"].format(new_user["user_name"])
                 # Remove join messages
-                for msg in to_delete_messages_list:
-                    if msg["Chat_id"] == new_user["chat_id"]:
-                        if msg["User_id"] == new_user["user_id"]: # To-Do: Not work, cause it is Bot ID
+                for msg in to_delete_join_messages_list:
+                    if msg["chat_id"] == new_user["chat_id"]:
+                        if msg["user_id"] == new_user["user_id"]:
                             try:
-                                if bot.delete_message(msg["Chat_id"], msg["Msg_id"]):
-                                    to_delete_messages_list.remove(msg)
+                                # Uncomment next line to remove "user join" message too
+                                #bot.delete_message(msg["chat_id"], msg["msg_id_join0"])
+                                bot.delete_message(msg["chat_id"], msg["msg_id_join1"])
+                                bot.delete_message(msg["chat_id"], msg["msg_id_join2"])
                             except:
-                                to_delete_messages_list.remove(msg)
+                                pass
+                            to_delete_join_messages_list.remove(msg)
                 # Remove the ban user from the list
                 new_users_list.remove(new_user)
             except Exception as e:
@@ -604,7 +627,8 @@ def main():
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
-    dp.add_handler(CommandHandler("captcha", cmd_captcha))
+    # Next /captcha cmd just for test (use it in release can be a potentially DoS vulnerability)
+    #dp.add_handler(CommandHandler("captcha", cmd_captcha))
     # Launch the Bot ignoring pending messages (clean=True)
     updater.start_polling(clean=True)
     # Handle remove of sent messages and not verify new users ban (main loop)
