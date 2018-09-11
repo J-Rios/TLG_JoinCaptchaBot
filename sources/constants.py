@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     11/09/2018
 Version:
-    0.9.0
+    1.0.0
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '0.9.0' # Bot version
+    'VERSION' : '1.0.0' # Bot version
 }
 
 TEXT = {
@@ -116,7 +116,7 @@ TEXT = {
             'don\'t see all of them, touch the image to see it full.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha solved, user verify. Welcome to the group {}.',
+            'Captcha solved, user verified. Welcome to the group {}.',
 
         'NEW_USER_BAN' : \
             '{} has not completed the captcha in time (5mins). "User" was kicked.',

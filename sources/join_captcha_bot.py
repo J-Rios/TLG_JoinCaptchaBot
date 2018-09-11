@@ -287,7 +287,7 @@ def msg_new_user(bot, update):
                     img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
                                                                                 captcha_timeout)
                     # Prepare inline keyboard button to let user request another catcha
-                    keyboard = [[InlineKeyboardButton("Other Captcha", callback_data="request_captcha")]]
+                    keyboard = [[InlineKeyboardButton("Other Captcha", callback_data=join_user_id)]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     # Image caption must be < 200 chars, so send separate image and text messages
                     #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
@@ -364,8 +364,8 @@ def msg_nocmd(bot, update):
 def button_request_captcha(bot, update):
     '''Button "Other Captcha" pressed handler'''
     query = update.callback_query
-    # If the query come from the Other Captcha button
-    if query.data == "request_captcha":
+    # If the query come from the expected user (the query data is the user ID of )
+    if query.data == str(query.from_user.id):
         # Get query data
         chat_id = query.message.chat_id
         usr_id = query.from_user.id
@@ -377,14 +377,13 @@ def button_request_captcha(bot, update):
                 if new_user["chat_id"] == chat_id:
                     # Prepare inline keyboard button to let user request another catcha
                     keyboard = [[InlineKeyboardButton("Other Captcha", \
-                                 callback_data="request_captcha")]]
+                                 callback_data=str(query.from_user.id))]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     # Generate a new captcha and edit previous captcha image message with this one
                     captcha = create_image_captcha(usr_id)
                     bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
                                            media=open(captcha["image"], "rb")), \
                                            reply_markup=reply_markup)
-                    bot.edit_message_media(chat_id, message_id, media=open(captcha["image"], "rb"))
                     # Set and modified to new expected captcha number
                     new_user["captcha_num"] = captcha["number"]
                     new_users_list[i] = new_user
@@ -668,13 +667,13 @@ def main():
     # Launch the Bot ignoring pending messages (clean=True)
     updater.start_polling(clean=True)
     # Handle remove of sent messages and not verify new users ban (main loop)
-    '''while True:
+    while True:
         # Handle self-messages delete
         selfdestruct_messages(updater.bot)
         # Check time for ban new users that has not completed the captcha
         check_time_to_ban_not_verify_users(updater.bot)
         # Wait 10s (release CPU usage)
-        sleep(10)'''
+        sleep(10)
 
 if __name__ == "__main__":
     main()
