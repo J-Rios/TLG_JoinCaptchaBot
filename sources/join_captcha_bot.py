@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/09/2018
+    12/09/2018
 Version:
-    0.9.0
+    1.0.0
 '''
 
 ####################################################################################################
@@ -33,7 +33,6 @@ from telegram import MessageEntity, ParseMode, InputMediaPhoto,  InlineKeyboardB
                      InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler, \
                          ConversationHandler, CallbackQueryHandler
-from captcha.image import ImageCaptcha
 from random import randint
 
 from constants import CONST, TEXT
@@ -275,48 +274,52 @@ def msg_new_user(bot, update):
             bot.send_message(chat_id, TEXT[lang]["START"])
         # The added user is not myself (this Bot)
         else:
-            # If the captcha protection is enabled
-            captcha_enable = get_chat_config(chat_id, "Enabled")
-            if captcha_enable:
-                # If the member that has been join the group is not a Bot
-                if not update.message.new_chat_members[0].is_bot:
-                    # Generate a pseudorandom captcha send it to telegram group and program message 
-                    # selfdestruct
-                    captcha = create_image_captcha(join_user_id)
-                    captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-                    img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
-                                                                                captcha_timeout)
-                    # Prepare inline keyboard button to let user request another catcha
-                    keyboard = [[InlineKeyboardButton("Other Captcha", callback_data=join_user_id)]]
-                    reply_markup = InlineKeyboardMarkup(keyboard)
-                    # Image caption must be < 200 chars, so send separate image and text messages
-                    #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
-                    #                                 "rb"), caption=img_caption)
-                    sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], \
-                                                    "rb"), reply_markup=reply_markup)
-                    sent_msg = bot.send_message(chat_id, img_caption)
-                    tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
-                    tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
-                    # Add join messages to delete
-                    msg = \
-                    {
-                        "chat_id": chat_id,
-                        "user_id" : join_user_id,
-                        "msg_id_join0": update.message.message_id,
-                        "msg_id_join1": sent_img_msg.message_id,
-                        "msg_id_join2": sent_msg.message_id
-                    }
-                    to_delete_join_messages_list.append(msg)
-                    # Add new user data to lists
-                    new_user = \
-                    {
-                        "chat_id": chat_id,
-                        "user_id" : join_user_id,
-                        "user_name": join_user_name,
-                        "captcha_num" : captcha["number"],
-                        "join_time" : time()
-                    }
-                    new_users_list.append(new_user)
+            # Ignore Admins
+            if not user_is_admin(bot, join_user_id, chat_id):
+                # If the captcha protection is enabled
+                captcha_enable = get_chat_config(chat_id, "Enabled")
+                if captcha_enable:
+                    # If the member that has been join the group is not a Bot
+                    if not update.message.new_chat_members[0].is_bot:
+                        # Generate a pseudorandom captcha send it to telegram group and program 
+                        # message selfdestruct
+                        captcha = create_image_captcha(join_user_id)
+                        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+                        img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
+                                                                                    captcha_timeout)
+                        # Prepare inline keyboard button to let user request another catcha
+                        keyboard = [[InlineKeyboardButton("Other Captcha", \
+                                                          callback_data=join_user_id)]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                        # Img caption must be < 200 chars, so send separate image and text messages
+                        #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
+                        #                              captcha["image"],"rb"), caption=img_caption)
+                        sent_img_msg = bot.send_photo(chat_id=chat_id, \
+                                                      photo=open(captcha["image"], "rb"), \
+                                                      reply_markup=reply_markup)
+                        sent_msg = bot.send_message(chat_id, img_caption)
+                        tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
+                        tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
+                        # Add join messages to delete
+                        msg = \
+                        {
+                            "chat_id": chat_id,
+                            "user_id" : join_user_id,
+                            "msg_id_join0": update.message.message_id,
+                            "msg_id_join1": sent_img_msg.message_id,
+                            "msg_id_join2": sent_msg.message_id
+                        }
+                        to_delete_join_messages_list.append(msg)
+                        # Add new user data to lists
+                        new_user = \
+                        {
+                            "chat_id": chat_id,
+                            "user_id" : join_user_id,
+                            "user_name": join_user_name,
+                            "captcha_num" : captcha["number"],
+                            "join_time" : time()
+                        }
+                        new_users_list.append(new_user)
 
 
 def msg_nocmd(bot, update):
@@ -632,6 +635,9 @@ def check_time_to_ban_not_verify_users(bot):
                     new_user["join_time"] = time()
                     new_users_list.remove(new_user)
                     new_users_list.append(new_user)
+                else:
+                    bot_msg = str(e)
+                    to_delete_join_messages_list.remove(msg)
             print("Send selfdestruct")
             tlg_send_selfdestruct_msg(bot, new_user["chat_id"], bot_msg)
 

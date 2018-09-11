@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/09/2018
+    12/09/2018
 Version:
     1.0.0
 '''
@@ -246,11 +246,11 @@ TEXT = {
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hola {}, por favor envía un mensaje con el número que aparece en esta imagen para ' \
             'verificar que eres un humano. Si no resuelves este captcha en {} minutos serás ' \
-            'automáticamente kickeado del grupo.\n\nHay 4 números en este captcha, si no los ves ' \
+            'kickeado del grupo automáticamente.\n\nHay 4 números en este captcha, si no los ves ' \
             'todos, toca la imágen para ampliarla.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha resuleto, usuario verificado. Bienvenido al grupo {}.',
+            'Captcha resuelto, usuario verificado. Bienvenido al grupo {}.',
 
         'NEW_USER_BAN' : \
             '{} no completó el captcha a tiempo (5mins). El "usuario" fue kickeado.',
