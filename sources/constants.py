@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 '''
 Script:
     constants.py
@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    12/09/2018
+    15/09/2018
 Version:
     1.0.0
 '''
@@ -53,7 +53,10 @@ TEXT = {
             '- I am a Bot that send a captcha for each new user who join a group, and kick any ' \
             'of them that can\'t solve the captcha in a specified time.\n' \
             '\n' \
-            '- You need to provide me Administration rights for kick users.\n' \
+            '- You need to provide me Administration rights for kick users and remove messages.\n' \
+            '\n' \
+            '- To preserve a clean group, I auto-remove all messages related to me when captcha ' \
+            ' is solved or the user was kicked.\n' \
             '\n' \
             '- The time that new users have to solve the captcha is 5 minutes, but it can be ' \
             'configured using the command /time.\n' \
@@ -64,9 +67,6 @@ TEXT = {
             '- Configuration commands just can be used by group Administrators.\n' \
             '\n' \
             '- You can change the language that I speak, using the command /language.\n' \
-            '\n' \
-            '- To preserve a clean group, I auto-remove all messages related to me, after ' \
-            '5 minutes.\n' \
             '\n' \
             '- Check /commands for get a list of all avaliable commands, and a short ' \
             'description of all of them.',
@@ -186,7 +186,11 @@ TEXT = {
             '- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
             'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
             '\n' \
-            '- Debes darme permisos de Administración rights para suspender (banear) usuarios.\n' \
+            '- Debes darme permisos de Administración para suspender (banear) usuarios y ' \
+            ' eliminar mensajes.\n' \
+            '\n' \
+            '- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación ' \
+            'conmigo en cuanto el captcha haya sido resuelto o el usuario haya sido kickeado.\n' \
             '\n' \
             '- El tiempo que disponen los usuarios para resolver el captcha son 5 minutos, pero ' \
             'este tiempo puede ser cambiado mediante el comando /time.\n' \
@@ -198,9 +202,6 @@ TEXT = {
             'del grupo.\n' \
             '\n' \
             '- Puedes cambiar el idioma en el que hablo mediante el comando /language.\n' \
-            '\n' \
-            '- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación ' \
-            'conmigo, pasados 5 minutos.\n' \
             '\n' \
             '- Echa un vistazo al comando /commands para ver una lista con todos los comandos ' \
             'disponibles y una breve descripción de cada uno de ellos.',

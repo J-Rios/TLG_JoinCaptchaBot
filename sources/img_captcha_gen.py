@@ -1,4 +1,5 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
+
 """
 Script:
     img_captcha_gen.py
@@ -9,9 +10,9 @@ Author:
 Creation date:
     08/09/2017
 Last modified date:
-    08/09/2017
+    12/09/2017
 Version:
-    1.0.0
+    1.0.2
 """
 
 ####################################################################################################
@@ -34,6 +35,15 @@ l_fonts = ["FreeMono.ttf", "FreeMonoBold.ttf", "FreeMonoOblique.ttf", "FreeSans.
 # Captcha with noise (turn it on add delay)
 ADD_NOISE = False
 
+# Captcha 16:9 resolution sizes (captcha_size_num -> 0 to 12)
+CAPTCHA_SIZE = [(256, 144), (426, 240), (640, 360), (768, 432), (800, 450), (848, 480), \
+                (960, 540), (1024, 576), (1152, 648), (1280, 720), (1366, 768), (1600, 900), \
+                (1920, 1080)]
+
+# Font sizes range for each size
+FONT_SIZE_RANGE = [(30, 45), (35, 80), (75, 125), (80, 140), (85, 150), (90, 165), (100, 175), \
+                   (110, 185), (125, 195), (135, 210), (150, 230), (165, 250), (180, 290)]
+
 ####################################################################################################
 
 # Image Captcha Generator Class #
@@ -43,9 +53,26 @@ class CaptchaGenerator:
     Just and image captcha generator class.
     """
 
-    def __init__(self, captcha_size=160):
+    def __init__(self, captcha_size_num=2):
         """Constructor"""
-        self.one_char_image_size = captcha_size
+        # Limit provided captcha size num
+        if captcha_size_num < 0:
+            captcha_size_num = 0
+        elif captcha_size_num >= len(CAPTCHA_SIZE):
+            captcha_size_num = len(CAPTCHA_SIZE) - 1
+        # Get captcha size
+        self.captcha_size = CAPTCHA_SIZE[captcha_size_num]
+        # Determine one char image height
+        fourth_size = self.captcha_size[0] / 4
+        if fourth_size - int(fourth_size) <= 0.5:
+            fourth_size = int(fourth_size)
+        else:
+            fourth_size = int(fourth_size) + 1
+        self.one_char_image_size = (fourth_size, fourth_size)
+        # Determine font size according to image size
+        font_size_min = FONT_SIZE_RANGE[captcha_size_num][0]
+        font_size_max = FONT_SIZE_RANGE[captcha_size_num][1]
+        self.font_size_range = (font_size_min, font_size_max)
 
 
     def gen_rand_color(self, min_val=0, max_val=255):
@@ -255,14 +282,15 @@ class CaptchaGenerator:
         #character = choice(characters_availables) # For all chars support
         rand_color = self.gen_rand_custom_contrast_color(background_color)
         character_color = rand_color["color"]
-        character_pos = (50, randint(0, 50))
+        character_pos = (int(image_size[0]/4), randint(0, int(image_size[0]/4)))
         # Pick a random font with a random size, from the provided list
         rand_font_path = self.gen_rand_font(FONTS_PATH, l_fonts)
-        character_font = self.gen_rand_size_font(rand_font_path, 70, 130)
+        character_font = self.gen_rand_size_font(rand_font_path, self.font_size_range[0], \
+                                                 self.font_size_range[1])
         # Create an image of specified size, background color and character
         image = self.create_image_char(image_size, background_color["color"], character, \
                                     character_color, character_pos, character_font)
-        # Random rotate the created image
+        # Random rotate the created image between -55º and +55º
         image = image.rotate(randint(-55, 55), fillcolor=background_color["color"])
         # Add some random lines to image
         for _ in range(0, 2):
@@ -275,7 +303,7 @@ class CaptchaGenerator:
         return generated_captcha
 
 
-    def gen_captcha_image(self, multicolor=False):
+    def gen_captcha_image(self, multicolor=False, margin=True):
         '''Generate an image captcha.'''
         # Generate a RGB background color if the multicolor is disabled
         if not multicolor:
@@ -301,7 +329,13 @@ class CaptchaGenerator:
         self.add_rand_horizontal_line_to_image(image, 5)
         # Add some random circles to the image
         for _ in range(0, 10):
-            self.add_rand_circle_to_image(image, 10, 20)
+            self.add_rand_circle_to_image(image, int(0.05*self.one_char_image_size[0]), \
+                                          int(0.15*self.one_char_image_size[1]))
+        # Add horizontal margins
+        if margin:
+            new_image = Image.new('RGBA', self.captcha_size, "rgb(0, 0, 0)")
+            new_image.paste(image, (0, int((self.captcha_size[1]/2) - (image.height/2))))
+            image = new_image
         # Return generated image captcha
         generated_captcha = {"image": image, "characters": image_characters}
         return generated_captcha

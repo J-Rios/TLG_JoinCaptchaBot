@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 '''
 Script:
     join_captcha_bot.py
@@ -12,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    12/09/2018
+    15/09/2018
 Version:
     1.0.0
 '''
@@ -48,8 +49,8 @@ to_delete_join_messages_list = []
 users_join_messages_list = []
 new_users_list = []
 
-# Create Captcha Generator object of specified size
-CaptchaGen = CaptchaGenerator((160, 160))
+# Create Captcha Generator object of specified size (2 -> 640x360)
+CaptchaGen = CaptchaGenerator(2)
 
 ####################################################################################################
 
@@ -106,8 +107,8 @@ def create_image_captcha(img_file_name):
         # If the captcha file exists remove it
         if path.exists(image_file_path):
             remove(image_file_path)
-    # Generate and save the captcha
-    captcha = CaptchaGen.gen_captcha_image(True)
+    # Generate and save the captcha with a random captcha background mono-color or multi-color
+    captcha = CaptchaGen.gen_captcha_image(multicolor=bool(randint(0, 1)))
     image = captcha["image"]
     image.save(image_file_path, "png")
     # Return a dictionary with captcha file path and captcha resolve characters
@@ -359,7 +360,6 @@ def msg_nocmd(bot, update):
                         # Send captcha solved message and program user and bot messages 
                         # selfdestruct in 1min
                         bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
-                        tlg_msg_to_selfdestruct_in(update.message, 1)
                         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 1)
                         new_users_list.remove(new_user)
 

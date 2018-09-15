@@ -3,3 +3,4 @@ sources/__pycache__/
 sources/data/
 *.pyc
 *.log
+test.py
