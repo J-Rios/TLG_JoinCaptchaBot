@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/09/2018
+    16/09/2018
 Version:
     1.0.0
 '''
@@ -112,19 +112,27 @@ TEXT = {
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hello {}, please send a message with the number that appear in this captcha to ' \
             'verify that you are a human. If you don\'t resolve the captcha in {} mins, you will ' \
-            'be automatically kick from the group.\n\nThere is 4 numbers in this captcha, if you ' \
-            'don\'t see all of them, touch the image to see it full.',
+            'be automatically kick from the group.',
 
         'CAPTHA_SOLVED' : \
             'Captcha solved, user verified. Welcome to the group {}.',
 
-        'NEW_USER_BAN' : \
-            '{} has not completed the captcha in time (5mins). "User" was kicked.',
+        'NEW_USER_KICK' : \
+            '{} has not completed the captcha in time. "User" was kicked.',
 
-        'NEW_USER_BAN_NO_RIGHTS' : \
-            '{} has not completed the captcha in time (5mins). I try to kick the "User", but I ' \
-            'don\'t have the administration rights for ban users in the group. I will try again ' \
-            'to kick this user in 5mins.',
+        'NEW_USER_KICK_NOT_RIGHTS' : \
+            '{} has not completed the captcha in time. I try to kick the "User", but I ' \
+            'don\'t have the administration rights for ban users in the group. I will try to ' \
+            ' kick this user again later...',
+
+        'NEW_USER_KICK_NOT_IN_CHAT' : \
+            '{} has not completed the captcha in time. I try to kick the "User", but the ' \
+            'user is not in the group (has left the group or has been kicked by an Admin).',
+
+        'BOT_CANT_KICK' : \
+            '{} has not completed the captcha in time. I try to kick the "User", but for ' \
+            'some unexpected problem (maybe network/server related), I can\'t do it. I will try ' \
+            'to kick this user again later...',
 
         'ENABLE' : \
             'Captcha protection enabled. Disable it with /disable command.',
@@ -176,7 +184,7 @@ TEXT = {
             'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
-            'administración para suspender (banear) usuarios en el grupo.' \
+            'administración para suspender usuarios en el grupo.\n' \
             '\n' \
             'Echa un vistazo al comando /help para conocer más información sobre mi uso.',
 
@@ -186,8 +194,8 @@ TEXT = {
             '- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
             'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
             '\n' \
-            '- Debes darme permisos de Administración para suspender (banear) usuarios y ' \
-            ' eliminar mensajes.\n' \
+            '- Debes darme permisos de Administración para suspender usuarios y eliminar ' \
+            'mensajes.\n' \
             '\n' \
             '- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación ' \
             'conmigo en cuanto el captcha haya sido resuelto o el usuario haya sido kickeado.\n' \
@@ -247,19 +255,27 @@ TEXT = {
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hola {}, por favor envía un mensaje con el número que aparece en esta imagen para ' \
             'verificar que eres un humano. Si no resuelves este captcha en {} minutos serás ' \
-            'kickeado del grupo automáticamente.\n\nHay 4 números en este captcha, si no los ves ' \
-            'todos, toca la imágen para ampliarla.',
+            'kickeado del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
             'Captcha resuelto, usuario verificado. Bienvenido al grupo {}.',
 
-        'NEW_USER_BAN' : \
-            '{} no completó el captcha a tiempo (5mins). El "usuario" fue kickeado.',
+        'NEW_USER_KICK' : \
+            '{} no completó el captcha a tiempo. El "usuario" fue kickeado.',
 
-       'NEW_USER_BAN_NO_RIGHTS' : \
-            '{} no completó el captcha a tiempo (5mins). El "usuario" debería ser kickeado, pero ' \
-            'no se me han dado los privilegios de administración necesarios para kickear usuarios ' \
-            'en el grupo. intentaré kickearlo nuevamente dentro de 5mins.',
+       'NEW_USER_KICK_NOT_RIGHTS' : \
+            '{} no completó el captcha a tiempo. El "usuario" debería ser kickeado, pero ' \
+            'no se me han dado los privilegios de administración necesarios para expulsar ' \
+            'usuarios del grupo. Intentaré kickearlo nuevamente más adelante...',
+
+        'NEW_USER_KICK_NOT_IN_CHAT' : \
+            '{} no completó el captcha a tiempo. Iba a kickear al "usuario", pero ya no ' \
+            'se encuentra en el grupo (salió del grupo o fue kickeado/baneado por un Admin).',
+
+        'BOT_CANT_KICK' : \
+            '{} no completó el captcha a tiempo. He intentado kickear al "usuario", pero ' \
+            'debido a un problema inesperado (quizás relacionado con la red o el servidor), no ' \
+            'he podido hacerlo. Intentaré kickearlo nuevamente más adelante...',
 
         'ENABLE' : \
             'Protección captcha activada. Desactívala con el comando /disable.',
