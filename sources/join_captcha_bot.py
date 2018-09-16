@@ -699,7 +699,8 @@ def check_time_to_ban_not_verify_users(bot):
             for msg in to_delete_join_messages_list:
                 if msg["user_id"] == new_user["user_id"]:
                     if msg["chat_id"] == new_user["chat_id"]:
-                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"])
+                        # Uncomment next line to remove "user join" message too
+                        #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                         to_delete_join_messages_list.remove(msg)
