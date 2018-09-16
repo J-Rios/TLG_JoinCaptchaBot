@@ -309,7 +309,7 @@ def msg_new_user(bot, update):
                 chat_link = "@{}".format(chat_link)
                 save_config_property(chat_id, "Link", chat_link)
             # Send bot join message
-            bot.send_message(chat_id, TEXT[lang]["START"])
+            bot.send_message(chat_id, TEXT[admin_language]["START"])
         # The added user is not myself (this Bot)
         else:
             # Ignore Admins
