@@ -406,7 +406,10 @@ def msg_nocmd(bot, update):
                         tlg_delete_msg(bot, chat_id, update.message.message_id)
                         # Send captcha solved message and program selfdestruct in 5 minutes
                         bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
-                        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                        # Uncomment and use next first line instead the second, if we want Bot to auto-remove
+                        #the kick  message too, after a while
+                        #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                        bot.send_message(chat_id, bot_msg)
                         new_users_list.remove(new_user)
 
 
@@ -670,6 +673,8 @@ def check_time_to_ban_not_verify_users(bot):
             lang = get_chat_config(chat_id, "Language")
             # Try to kick the user
             kick_result = tlg_kick_user(bot, new_user["chat_id"], new_user["user_id"])
+            # Remove user from new users list
+            new_users_list.remove(new_user)
             if kick_result == 1:
                 # Kick success
                 bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
@@ -678,21 +683,17 @@ def check_time_to_ban_not_verify_users(bot):
                 if kick_result == -1:
                     # The user is not in the chat
                     bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format(new_user["user_name"])
-                    # Remove user from new users list
-                    new_users_list.remove(new_user)
                 elif kick_result == -2:
                     # Bot has no privileges to ban
                     bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format(new_user["user_name"])
                     # Update the ban time of the user to try again later
                     new_user["join_time"] = time()
-                    new_users_list.remove(new_user)
                     new_users_list.append(new_user)
                 else:
                     # For other reason, the Bot can't ban
                     bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
                     # Update the ban time of the user to try again later
                     new_user["join_time"] = time()
-                    new_users_list.remove(new_user)
                     new_users_list.append(new_user)
             # Remove join messages
             for msg in to_delete_join_messages_list:
@@ -702,7 +703,10 @@ def check_time_to_ban_not_verify_users(bot):
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                         to_delete_join_messages_list.remove(msg)
-            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            # Uncomment and use next first line instead the second, if we want Bot to auto-remove
+            #the kick  message too, after a while
+            #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            bot.send_message(chat_id, bot_msg)
 
 ####################################################################################################
 
