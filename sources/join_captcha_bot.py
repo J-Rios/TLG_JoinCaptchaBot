@@ -313,7 +313,7 @@ def msg_new_user(bot, update):
         # The added user is not myself (this Bot)
         else:
             # Ignore Admins
-            if not user_is_admin(bot, join_user_id, chat_id):
+            if user_is_admin(bot, join_user_id, chat_id) != True:
                 # Check and remove to delete previous messages of user (if any)
                 for new_user in new_users_list:
                     if new_user["user_id"] == join_user_id:
@@ -334,7 +334,7 @@ def msg_new_user(bot, update):
                     if not update.message.new_chat_members[0].is_bot:
                         # Generate a pseudorandom captcha send it to telegram group and program 
                         # message selfdestruct
-                        captcha = create_image_captcha(join_user_id)
+                        captcha = create_image_captcha(str(join_user_id))
                         captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                         img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
                                                                                     captcha_timeout)
@@ -429,13 +429,16 @@ def button_request_captcha(bot, update):
                                  callback_data=str(query.from_user.id))]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     # Generate a new captcha and edit previous captcha image message with this one
-                    captcha = create_image_captcha(usr_id)
+                    captcha = create_image_captcha(str(usr_id))
                     bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
                                            media=open(captcha["image"], "rb")), \
                                            reply_markup=reply_markup)
                     # Set and modified to new expected captcha number
                     new_user["captcha_num"] = captcha["number"]
                     new_users_list[i] = new_user
+                    # Remove sent captcha image file from file system
+                    if path.exists(captcha["image"]):
+                        remove(captcha["image"])
     bot.answer_callback_query(query.id)
 
 ####################################################################################################
