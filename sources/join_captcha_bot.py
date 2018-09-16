@@ -339,7 +339,7 @@ def msg_new_user(bot, update):
                         img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
                                                                                     captcha_timeout)
                         # Prepare inline keyboard button to let user request another catcha
-                        keyboard = [[InlineKeyboardButton("Other Captcha", \
+                        keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
                                                           callback_data=join_user_id)]]
                         reply_markup = InlineKeyboardMarkup(keyboard)
                         # Img caption must be < 200 chars, so send separate image and text messages
@@ -428,7 +428,7 @@ def button_request_captcha(bot, update):
             if new_user["user_id"] == usr_id:
                 if new_user["chat_id"] == chat_id:
                     # Prepare inline keyboard button to let user request another catcha
-                    keyboard = [[InlineKeyboardButton("Other Captcha", \
+                    keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
                                  callback_data=str(query.from_user.id))]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
                     # Generate a new captcha and edit previous captcha image message with this one

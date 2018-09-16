@@ -134,6 +134,9 @@ TEXT = {
             'some unexpected problem (maybe network/server related), I can\'t do it. I will try ' \
             'to kick this user again later...',
 
+        'OTHER_CAPTCHA_BTN_TEXT' : \
+            'Other Captcha',
+
         'ENABLE' : \
             'Captcha protection enabled. Disable it with /disable command.',
 
@@ -276,6 +279,9 @@ TEXT = {
             '{} no completó el captcha a tiempo. He intentado kickear al "usuario", pero ' \
             'debido a un problema inesperado (quizás relacionado con la red o el servidor), no ' \
             'he podido hacerlo. Intentaré kickearlo nuevamente más adelante...',
+
+        'OTHER_CAPTCHA_BTN_TEXT' : \
+            'Otro Captcha',
 
         'ENABLE' : \
             'Protección captcha activada. Desactívala con el comando /disable.',
