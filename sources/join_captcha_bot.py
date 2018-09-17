@@ -698,15 +698,12 @@ def check_time_to_ban_not_verify_users(bot):
                 elif kick_result == -2:
                     # Bot has no privileges to ban
                     bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format(new_user["user_name"])
-                    # Update the ban time of the user to try again later
-                    new_user["join_time"] = time()
-                    new_users_list.append(new_user)
                 else:
                     # For other reason, the Bot can't ban
                     bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
                     # Update the ban time of the user to try again later
-                    new_user["join_time"] = time()
-                    new_users_list.append(new_user)
+                    #new_user["join_time"] = time()
+                    #new_users_list.append(new_user)
             # Remove join messages
             for msg in to_delete_join_messages_list:
                 if msg["user_id"] == new_user["user_id"]:

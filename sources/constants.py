@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     17/09/2018
 Version:
-    1.0.1
+    1.0.2
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.0.1' # Bot version
+    'VERSION' : '1.0.2' # Bot version
 }
 
 TEXT = {
@@ -122,8 +122,7 @@ TEXT = {
 
         'NEW_USER_KICK_NOT_RIGHTS' : \
             '{} has not completed the captcha in time. I try to kick the "User", but I ' \
-            'don\'t have the administration rights for ban users in the group. I will try to ' \
-            ' kick this user again later...',
+            'don\'t have the administration rights for ban users in the group.',
 
         'NEW_USER_KICK_NOT_IN_CHAT' : \
             '{} has not completed the captcha in time. I try to kick the "User", but the ' \
@@ -269,7 +268,7 @@ TEXT = {
        'NEW_USER_KICK_NOT_RIGHTS' : \
             '{} no completó el captcha a tiempo. El "usuario" debería ser kickeado, pero ' \
             'no se me han dado los privilegios de administración necesarios para expulsar ' \
-            'usuarios del grupo. Intentaré kickearlo nuevamente más adelante...',
+            'usuarios del grupo.',
 
         'NEW_USER_KICK_NOT_IN_CHAT' : \
             '{} no completó el captcha a tiempo. Iba a kickear al "usuario", pero ya no ' \
