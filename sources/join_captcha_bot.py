@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    16/09/2018
+    17/09/2018
 Version:
-    1.0.0
+    1.0.1
 '''
 
 ####################################################################################################
@@ -46,7 +46,6 @@ from img_captcha_gen import CaptchaGenerator
 files_config_list = []
 to_delete_in_time_messages_list = []
 to_delete_join_messages_list = []
-users_join_messages_list = []
 new_users_list = []
 
 # Create Captcha Generator object of specified size (2 -> 640x360)
@@ -74,6 +73,7 @@ signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
 
 def initialize_resources():
     '''Initialize resources by populating files list with chats found files'''
+    global files_config_list
     # Remove old captcha directory and create it again
     if path.exists(CONST["CAPTCHAS_DIR"]):
         rmtree(CONST["CAPTCHAS_DIR"])
@@ -167,6 +167,7 @@ def get_chat_config(chat_id, param):
 
 def get_chat_config_file(chat_id):
     '''Determine chat config file from the list by ID. Get the file if exists or create it if not'''
+    global files_config_list
     file = OrderedDict([("ID", chat_id), ("File", None)])
     found = False
     if files_config_list:
@@ -224,6 +225,7 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
 
 def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     '''Add a telegram message to be auto-delete in specified time'''
+    global to_delete_in_time_messages_list
     # Get sent message ID and calculate delete time
     chat_id = message.chat_id
     user_id = message.from_user.id
@@ -281,6 +283,8 @@ def tlg_kick_user(bot, chat_id, user_id):
 
 def msg_new_user(bot, update):
     '''New member join the group event handler'''
+    global to_delete_join_messages_list
+    global new_users_list
     # Get message data
     chat_id = update.message.chat_id
     # Determine configured bot language in actual chat
@@ -378,6 +382,8 @@ def msg_new_user(bot, update):
 
 def msg_nocmd(bot, update):
     '''All Not-command messages handler'''
+    global to_delete_join_messages_list
+    global new_users_list
     # Get message data
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
@@ -415,6 +421,7 @@ def msg_nocmd(bot, update):
 
 def button_request_captcha(bot, update):
     '''Button "Other Captcha" pressed handler'''
+    global new_users_list
     query = update.callback_query
     # If the query come from the expected user (the query data is the user ID of )
     if query.data == str(query.from_user.id):
@@ -422,6 +429,8 @@ def button_request_captcha(bot, update):
         chat_id = query.message.chat_id
         usr_id = query.from_user.id
         message_id = query.message.message_id
+        # Get chat language
+        lang = get_chat_config(chat_id, "Language")
         # Search if this user is a new user that has not completed the captcha
         for i in range(len(new_users_list)):
             new_user = new_users_list[i]
@@ -652,6 +661,7 @@ def handle_remove_and_kicks(bot):
 
 def selfdestruct_messages(bot):
     '''Handle remove messages sent by the Bot with the timed self-delete function'''
+    global to_delete_in_time_messages_list
     # Check each Bot sent message
     for sent_msg in to_delete_in_time_messages_list:
         # If actual time is equal or more than the expected sent msg delete time
@@ -665,6 +675,8 @@ def selfdestruct_messages(bot):
 
 def check_time_to_ban_not_verify_users(bot):
     '''Check if the time for ban new users that has not completed the captcha has arrived'''
+    global to_delete_join_messages_list
+    global new_users_list
     for new_user in new_users_list:
         # If the time for ban has arrived
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
