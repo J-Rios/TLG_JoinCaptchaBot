@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/09/2018
+    18/09/2018
 Version:
-    1.0.1
+    1.0.3
 '''
 
 ####################################################################################################
@@ -341,7 +341,7 @@ def msg_new_user(bot, update):
                         captcha = create_image_captcha(str(join_user_id))
                         captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                         img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
-                                                                                    captcha_timeout)
+                                                                                    str(captcha_timeout))
                         # Prepare inline keyboard button to let user request another catcha
                         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
                                                           callback_data=join_user_id)]]
@@ -545,7 +545,7 @@ def cmd_time(bot, update, args):
         if len(args) == 1:
             if is_int(args[0]):
                 new_time = args[0]
-                save_config_property(chat_id, "Captcha_Time", new_time)
+                save_config_property(chat_id, "Captcha_Time", int(new_time))
                 bot_msg = TEXT[lang]["TIME_CHANGE"].format(new_time)
             else:
                 bot_msg = TEXT[lang]["TIME_NOT_NUM"]
