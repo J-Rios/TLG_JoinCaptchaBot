@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/09/2018
+    21/09/2018
 Version:
-    1.0.3
+    1.0.4
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.0.3' # Bot version
+    'VERSION' : '1.0.4' # Bot version
 }
 
 TEXT = {
@@ -56,7 +56,7 @@ TEXT = {
             '- You need to provide me Administration rights for kick users and remove messages.\n' \
             '\n' \
             '- To preserve a clean group, I auto-remove all messages related to me when captcha ' \
-            ' is solved or the user was kicked.\n' \
+            ' is not solved and the user was kicked (after 5 minutes).\n' \
             '\n' \
             '- The time that new users have to solve the captcha is 5 minutes, but it can be ' \
             'configured using the command /time.\n' \
@@ -111,7 +111,7 @@ TEXT = {
 
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hello {}, please send a message with the number that appear in this captcha to ' \
-            'verify that you are a human. If you don\'t resolve the captcha in {} mins, you will ' \
+            'verify that you are a human. If you don\'t resolve the captcha in {} min, you will ' \
             'be automatically kick from the group.',
 
         'CAPTHA_SOLVED' : \
@@ -130,8 +130,11 @@ TEXT = {
 
         'BOT_CANT_KICK' : \
             '{} has not completed the captcha in time. I try to kick the "User", but for ' \
-            'some unexpected problem (maybe network/server related), I can\'t do it. I will try ' \
-            'to kick this user again later...',
+            'some unexpected problem (maybe network/server related), I can\'t do it.',
+
+        'CANT_DEL_MSG' : \
+            'I try to delete this message, but I don\'t have the administration rights for ' \
+            'remove messages that has not been sent by me.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
@@ -156,7 +159,7 @@ TEXT = {
 
         'ABOUT_MSG' : \
             'This is an open-source GNU-GPL licensed Bot developed by the telegram user {}. You ' \
-            'can check the code here:\n{}\n\n-----------------------------------------------\n\n' \
+            'can check the code here:\n{}\n\n---------------------------------------------\n\n' \
             'Do you like my work? Buy me a coffee.\n\nPaypal:\n{}\n\nBTC:\n{}',
        
         'COMMANDS' : \
@@ -200,7 +203,8 @@ TEXT = {
             'mensajes.\n' \
             '\n' \
             '- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación ' \
-            'conmigo en cuanto el captcha haya sido resuelto o el usuario haya sido kickeado.\n' \
+            'conmigo cuando no se haya resuelto el captcha y el usuario haya sido kickeado ' \
+            '(transcurridos 5 minutos).\n' \
             '\n' \
             '- El tiempo que disponen los usuarios para resolver el captcha son 5 minutos, pero ' \
             'este tiempo puede ser cambiado mediante el comando /time.\n' \
@@ -256,7 +260,7 @@ TEXT = {
 
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hola {}, por favor envía un mensaje con el número que aparece en esta imagen para ' \
-            'verificar que eres un humano. Si no resuelves este captcha en {} minutos serás ' \
+            'verificar que eres un humano. Si no resuelves este captcha en {} min, serás ' \
             'kickeado del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
@@ -277,7 +281,11 @@ TEXT = {
         'BOT_CANT_KICK' : \
             '{} no completó el captcha a tiempo. He intentado kickear al "usuario", pero ' \
             'debido a un problema inesperado (quizás relacionado con la red o el servidor), no ' \
-            'he podido hacerlo. Intentaré kickearlo nuevamente más adelante...',
+            'he podido hacerlo.',
+
+        'CANT_DEL_MSG' : \
+            'He intentado borrar este mensaje pero no se me han dado los privilegios de ' \
+            'administración necesarios para eliminar mensajes que no son míos.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Otro Captcha',
@@ -303,7 +311,7 @@ TEXT = {
         'ABOUT_MSG' : \
             'Este es un Bot open-source con licencia GNU-GPL, desarrollado por el usuario de ' \
             'telegram {}. Puedes consultar el código aquí:\n{}\n\n' \
-            '-----------------------------------------------\n\nTe gusta lo que hago? ' \
+            '---------------------------------------------\n\nTe gusta lo que hago? ' \
             'Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}',
 
         'COMMANDS' : \

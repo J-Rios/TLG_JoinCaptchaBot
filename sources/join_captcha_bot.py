@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/09/2018
+    21/09/2018
 Version:
-    1.0.3
+    1.0.4
 '''
 
 ####################################################################################################
@@ -138,7 +138,7 @@ def get_default_config_data():
         ("Link", CONST["INIT_LINK"]), \
         ("Enabled", CONST["INIT_ENABLE"]), \
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]), \
-        ("Language", CONST["INIT_LANG"])
+        ("Language", CONST["INIT_LANG"]) \
     ])
     return config_data
 
@@ -192,7 +192,7 @@ def get_chat_config_file(chat_id):
 
 ### Telegram Related Functions ###
 
-def user_is_admin(bot, user_id, chat_id):
+def tlg_user_is_admin(bot, user_id, chat_id):
     '''Check if the specified user is an Administrator of a group given by IDs'''
     try:
         group_admins = bot.get_chat_administrators(chat_id)
@@ -202,6 +202,24 @@ def user_is_admin(bot, user_id, chat_id):
         if user_id == admin.user.id:
             return True
     return False
+
+
+def tlg_get_bot_admin_privileges(bot, chat_id):
+    '''Get the actual Bot administration privileges'''
+    try:
+        bot_data = bot.get_me()
+    except:
+        return None
+    bot_admin_privileges = OrderedDict( \
+    [ \
+        ("can_change_info", bot_data.can_change_info), \
+        ("can_delete_messages", bot_data.can_delete_messages), \
+        ("can_restrict_members", bot_data.can_restrict_members), \
+        ("can_invite_users", bot_data.can_invite_users), \
+        ("can_pin_messages", bot_data.can_pin_messages), \
+        ("can_promote_members", bot_data.can_promote_members) \
+    ])
+    return bot_admin_privileges
 
 
 def tlg_send_selfdestruct_msg(bot, chat_id, message):
@@ -217,10 +235,12 @@ def tlg_msg_to_selfdestruct(message):
 def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
     '''Send a telegram message that will be auto-delete in specified time'''
     # Send the message
-    sent_msg = bot.send_message(chat_id, message)
-    # If has been succesfully sent
-    if sent_msg:
+    try:
+        sent_msg = bot.send_message(chat_id, message)
         tlg_msg_to_selfdestruct(sent_msg)
+    # It has been an unsuccesfull sent
+    except Exception as e:
+        print(str(e))
 
 
 def tlg_msg_to_selfdestruct_in(message, time_delete_min):
@@ -292,14 +312,18 @@ def msg_new_user(bot, update):
     # For each new user that join or has been added
     for join_user in update.message.new_chat_members:
         join_user_id = join_user.id
-        join_user_name = join_user.name
-        if not join_user_name:
-            join_user_name = "{} {}".format(update.message.from_user.first_name, \
-                update.message.from_user.last_name)
+        # Get user name
+        if join_user.name != None:
+            join_user_name = join_user.name
+        else:
+            join_user_name = join_user.full_name
+        # If the user name is too long, truncate it to 25 characters
+        if len(join_user_name) > 25:
+            join_user_name = join_user_name[0:25]
         # If the added user is myself (this Bot)
         if bot.id == join_user_id:
-            # Get the language of the Telegram client software the Admin that has added the Bot has,
-            # to assume this is the chat language and configure Bot language of this chat
+            # Get the language of the Telegram client software the Admin that has added the Bot 
+            # has, to assume this is the chat language and configure Bot language of this chat
             admin_language = update.message.from_user.language_code[0:2].upper()
             if admin_language not in TEXT:
                 admin_language = "EN"
@@ -313,11 +337,15 @@ def msg_new_user(bot, update):
                 chat_link = "@{}".format(chat_link)
                 save_config_property(chat_id, "Link", chat_link)
             # Send bot join message
-            bot.send_message(chat_id, TEXT[admin_language]["START"])
+            try:
+                bot.send_message(chat_id, TEXT[admin_language]["START"])
+            except Exception as e:
+                print(str(e))
+                pass
         # The added user is not myself (this Bot)
         else:
             # Ignore Admins
-            if user_is_admin(bot, join_user_id, chat_id) != True:
+            if tlg_user_is_admin(bot, join_user_id, chat_id) != True:
                 # Check and remove to delete previous messages of user (if any)
                 for new_user in new_users_list:
                     if new_user["user_id"] == join_user_id:
@@ -327,7 +355,7 @@ def msg_new_user(bot, update):
                 for msg in to_delete_join_messages_list:
                     if msg["user_id"] == join_user_id:
                         if msg["chat_id"] == chat_id:
-                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"])
+                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                             to_delete_join_messages_list.remove(msg)
@@ -335,49 +363,59 @@ def msg_new_user(bot, update):
                 captcha_enable = get_chat_config(chat_id, "Enabled")
                 if captcha_enable:
                     # If the member that has been join the group is not a Bot
-                    if not update.message.new_chat_members[0].is_bot:
+                    if not join_user.is_bot:
                         # Generate a pseudorandom captcha send it to telegram group and program 
                         # message selfdestruct
                         captcha = create_image_captcha(str(join_user_id))
                         captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                         img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
-                                                                                    str(captcha_timeout))
+                                                                             str(captcha_timeout))
                         # Prepare inline keyboard button to let user request another catcha
                         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
                                                           callback_data=join_user_id)]]
                         reply_markup = InlineKeyboardMarkup(keyboard)
-                        # Img caption must be < 200 chars, so send separate image and text messages
-                        #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
-                        #                              captcha["image"],"rb"), caption=img_caption)
-                        sent_img_msg = bot.send_photo(chat_id=chat_id, \
-                                                      photo=open(captcha["image"], "rb"), \
-                                                      reply_markup=reply_markup)
-                        sent_msg = bot.send_message(chat_id, img_caption)
-                        tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
-                        tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
-                        # Remove sent captcha image file from file system
-                        if path.exists(captcha["image"]):
-                            remove(captcha["image"])
-                        # Add join messages to delete
-                        msg = \
-                        {
-                            "chat_id": chat_id,
-                            "user_id" : join_user_id,
-                            "msg_id_join0": update.message.message_id,
-                            "msg_id_join1": sent_img_msg.message_id,
-                            "msg_id_join2": sent_msg.message_id
-                        }
-                        to_delete_join_messages_list.append(msg)
-                        # Add new user data to lists
-                        new_user = \
-                        {
-                            "chat_id": chat_id,
-                            "user_id" : join_user_id,
-                            "user_name": join_user_name,
-                            "captcha_num" : captcha["number"],
-                            "join_time" : time()
-                        }
-                        new_users_list.append(new_user)
+                        send_problem = False
+                        try:
+                            # Img caption must be < 200 chars, so send separate image and text messages
+                            #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
+                            #                              captcha["image"],"rb"), caption=img_caption)
+                            sent_img_msg = bot.send_photo(chat_id=chat_id, \
+                                                        photo=open(captcha["image"], "rb"), \
+                                                        reply_markup=reply_markup)
+                            tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
+                            # Remove sent captcha image file from file system
+                            if path.exists(captcha["image"]):
+                                remove(captcha["image"])
+                        except Exception as e:
+                            send_problem = True
+                            print(str(e))
+                        try:
+                            sent_msg = bot.send_message(chat_id, img_caption)
+                            tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
+                        except Exception as e:
+                            send_problem = True
+                            print(str(e))
+                        if not send_problem:
+                            # Add join messages to delete
+                            msg = \
+                            {
+                                "chat_id": chat_id,
+                                "user_id" : join_user_id,
+                                "msg_id_join0": update.message,
+                                "msg_id_join1": sent_img_msg.message_id,
+                                "msg_id_join2": sent_msg.message_id
+                            }
+                            to_delete_join_messages_list.append(msg)
+                            # Add new user data to lists
+                            new_user = \
+                            {
+                                "chat_id": chat_id,
+                                "user_id" : join_user_id,
+                                "user_name": join_user_name,
+                                "captcha_num" : captcha["number"],
+                                "join_time" : time()
+                            }
+                            new_users_list.append(new_user)
 
 
 def msg_nocmd(bot, update):
@@ -404,7 +442,7 @@ def msg_nocmd(bot, update):
                             if msg["user_id"] == user_id:
                                 if msg["chat_id"] == chat_id:
                                     # Uncomment next line to remove "user join" message too
-                                    #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"])
+                                    #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                                     to_delete_join_messages_list.remove(msg)
@@ -502,7 +540,7 @@ def cmd_language(bot, update, args):
     lang = get_chat_config(chat_id, "Language")
     allow_command = True
     if chat_type != "private":
-        is_admin = user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
         if is_admin == False:
             allow_command = False
     if allow_command:
@@ -538,7 +576,7 @@ def cmd_time(bot, update, args):
     lang = get_chat_config(chat_id, "Language")
     allow_command = True
     if chat_type != "private":
-        is_admin = user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
         if is_admin == False:
             allow_command = False
     if allow_command:
@@ -569,7 +607,7 @@ def cmd_enable(bot, update):
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
     enable = get_chat_config(chat_id, "Enabled")
-    is_admin = user_is_admin(bot, user_id, chat_id)
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
     if is_admin == True:
         if enable:
             bot_msg = TEXT[lang]["ALREADY_ENABLE"]
@@ -595,7 +633,7 @@ def cmd_disable(bot, update):
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
     enable = get_chat_config(chat_id, "Enabled")
-    is_admin = user_is_admin(bot, user_id, chat_id)
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
     if is_admin == True:
         if enable:
             enable = False
@@ -638,10 +676,11 @@ def cmd_about(bot, update):
 
 def cmd_captcha(bot, update):
     '''Command /captcha handler'''
-    chat_id = update.message.chat_id
+    '''chat_id = update.message.chat_id
     captcha = create_image_captcha(chat_id)
     sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], "rb"))
-    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)
+    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)'''
+    tlg_get_bot_admin_privileges(bot, update.message.chat_id)
 
 
 ####################################################################################################
@@ -669,7 +708,19 @@ def selfdestruct_messages(bot):
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
                     to_delete_in_time_messages_list.remove(sent_msg)
-            except:
+            except Exception as e:
+                print(str(e))
+                # The bot has no privileges to delete messages
+                if str(e) == "Message can't be deleted":
+                    lang = get_chat_config(sent_msg["Chat_id"], "Language")
+                    try:
+                        cant_del_msg = bot.send_message(sent_msg["Chat_id"], \
+                                                        TEXT[lang]["CANT_DEL_MSG"], \
+                                                        reply_to_message_id=sent_msg["Msg_id"])
+                        tlg_msg_to_selfdestruct(cant_del_msg)
+                    except:
+                        print(str(e))
+                        pass
                 to_delete_in_time_messages_list.remove(sent_msg)
 
 
@@ -704,19 +755,20 @@ def check_time_to_ban_not_verify_users(bot):
                     # Update the ban time of the user to try again later
                     #new_user["join_time"] = time()
                     #new_users_list.append(new_user)
+            # Uncomment and use next first line instead the second, if we want Bot to auto-remove
+            #the kick  message too, after a while
+            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            #bot.send_message(chat_id, bot_msg)
             # Remove join messages
             for msg in to_delete_join_messages_list:
                 if msg["user_id"] == new_user["user_id"]:
                     if msg["chat_id"] == new_user["chat_id"]:
                         # Uncomment next line to remove "user join" message too
-                        #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"])
+                        #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                        tlg_msg_to_selfdestruct(msg["msg_id_join0"])
                         to_delete_join_messages_list.remove(msg)
-            # Uncomment and use next first line instead the second, if we want Bot to auto-remove
-            #the kick  message too, after a while
-            #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-            bot.send_message(chat_id, bot_msg)
 
 ####################################################################################################
 
