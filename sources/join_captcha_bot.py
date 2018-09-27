@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/09/2018
+    27/09/2018
 Version:
-    1.0.4
+    1.0.6
 '''
 
 ####################################################################################################
@@ -382,20 +382,34 @@ def msg_new_user(bot, update):
                             sent_img_msg = bot.send_photo(chat_id=chat_id, \
                                                         photo=open(captcha["image"], "rb"), \
                                                         reply_markup=reply_markup)
-                            tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
-                            # Remove sent captcha image file from file system
-                            if path.exists(captcha["image"]):
-                                remove(captcha["image"])
                         except Exception as e:
-                            send_problem = True
                             print(str(e))
+                            if str(e) != "Timed out":
+                                send_problem = True
+                        if not send_problem:
+                            # Add sent image to self-destruct list
+                            tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
+                        # Remove sent captcha image file from file system
+                        if path.exists(captcha["image"]):
+                            remove(captcha["image"])
                         try:
                             sent_msg = bot.send_message(chat_id, img_caption)
-                            tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
                         except Exception as e:
-                            send_problem = True
                             print(str(e))
+                            if str(e) != "Timed out":
+                                send_problem = True
                         if not send_problem:
+                            tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
+							# Add new user data to lists
+                            new_user = \
+                            {
+                                "chat_id": chat_id,
+                                "user_id" : join_user_id,
+                                "user_name": join_user_name,
+                                "captcha_num" : captcha["number"],
+                                "join_time" : time()
+                            }
+                            new_users_list.append(new_user)
                             # Add join messages to delete
                             msg = \
                             {
@@ -406,16 +420,6 @@ def msg_new_user(bot, update):
                                 "msg_id_join2": sent_msg.message_id
                             }
                             to_delete_join_messages_list.append(msg)
-                            # Add new user data to lists
-                            new_user = \
-                            {
-                                "chat_id": chat_id,
-                                "user_id" : join_user_id,
-                                "user_name": join_user_name,
-                                "captcha_num" : captcha["number"],
-                                "join_time" : time()
-                            }
-                            new_users_list.append(new_user)
 
 
 def msg_nocmd(bot, update):
