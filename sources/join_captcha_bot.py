@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/09/2018
+    05/10/2018
 Version:
-    1.0.6
+    1.0.7
 '''
 
 ####################################################################################################
@@ -246,19 +246,30 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
 def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     '''Add a telegram message to be auto-delete in specified time'''
     global to_delete_in_time_messages_list
+    # Check if provided message has all necessary attributtes
+    if not hasattr(message, "chat_id"):
+        return False
+    if not hasattr(message, "message_id"):
+        return False
+    if not hasattr(message, "from_user"):
+        return False
+    else:
+        if not hasattr(message.from_user, "id"):
+            return False
     # Get sent message ID and calculate delete time
     chat_id = message.chat_id
     user_id = message.from_user.id
     msg_id = message.message_id
     destroy_time = time() + (time_delete_min*60)
     # Add sent message data to to-delete messages list
-    sent_msg_data = OrderedDict([("Chat_id", None), ("User_id", None), ("Msg_id", None), \
-                                ("delete_time", None)])
+    sent_msg_data = OrderedDict([("Chat_id", None), ("User_id", None), \
+                                ("Msg_id", None), ("delete_time", None)])
     sent_msg_data["Chat_id"] = chat_id
     sent_msg_data["User_id"] = user_id
     sent_msg_data["Msg_id"] = msg_id
     sent_msg_data["delete_time"] = destroy_time
     to_delete_in_time_messages_list.append(sent_msg_data)
+    return True
 
 
 def tlg_delete_msg(bot, chat_id, msg_id):
@@ -381,7 +392,7 @@ def msg_new_user(bot, update):
                             #                              captcha["image"],"rb"), caption=img_caption)
                             sent_img_msg = bot.send_photo(chat_id=chat_id, \
                                                         photo=open(captcha["image"], "rb"), \
-                                                        reply_markup=reply_markup)
+                                                        reply_markup=reply_markup, timeout=20)
                         except Exception as e:
                             print(str(e))
                             if str(e) != "Timed out":
@@ -400,7 +411,7 @@ def msg_new_user(bot, update):
                                 send_problem = True
                         if not send_problem:
                             tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
-							# Add new user data to lists
+                            # Add new user data to lists
                             new_user = \
                             {
                                 "chat_id": chat_id,
@@ -486,7 +497,7 @@ def button_request_captcha(bot, update):
                     captcha = create_image_captcha(str(usr_id))
                     bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
                                            media=open(captcha["image"], "rb")), \
-                                           reply_markup=reply_markup)
+                                           reply_markup=reply_markup, timeout=20)
                     # Set and modified to new expected captcha number
                     new_user["captcha_num"] = captcha["number"]
                     new_users_list[i] = new_user
@@ -759,7 +770,7 @@ def check_time_to_ban_not_verify_users(bot):
                     # Update the ban time of the user to try again later
                     #new_user["join_time"] = time()
                     #new_users_list.append(new_user)
-            # Uncomment and use next first line instead the second, if we want Bot to auto-remove
+            # Use next first line instead the second, if we want Bot to auto-remove
             #the kick  message too, after a while
             tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
             #bot.send_message(chat_id, bot_msg)
