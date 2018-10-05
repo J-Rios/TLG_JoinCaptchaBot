@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     05/10/2018
 Version:
-    1.0.7
+    1.0.8
 '''
 
 ####################################################################################################
@@ -116,6 +116,17 @@ def create_image_captcha(img_file_name):
     generated_captcha["image"] = image_file_path
     generated_captcha["number"] = captcha["characters"]
     return generated_captcha
+
+
+def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_msg_id_value):
+    '''Update the msg_id_value from his key of the to_delete_join_messages_list'''
+    global to_delete_join_messages_list
+    for msg in to_delete_join_messages_list:
+        if msg["user_id"] == msg_user_id:
+            if msg["chat_id"] == msg_chat_id:
+                msg[message_id_key] = new_msg_id_value
+                to_delete_join_messages_list.remove(msg)
+                to_delete_join_messages_list.append(msg)
 
 
 def is_int(s):
@@ -224,7 +235,7 @@ def tlg_get_bot_admin_privileges(bot, chat_id):
 
 def tlg_send_selfdestruct_msg(bot, chat_id, message):
     '''tlg_send_selfdestruct_msg_in() with default delete time'''
-    tlg_send_selfdestruct_msg_in(bot, chat_id, message, CONST["T_DEL_MSG"])
+    return tlg_send_selfdestruct_msg_in(bot, chat_id, message, CONST["T_DEL_MSG"])
 
 
 def tlg_msg_to_selfdestruct(message):
@@ -234,13 +245,16 @@ def tlg_msg_to_selfdestruct(message):
 
 def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
     '''Send a telegram message that will be auto-delete in specified time'''
+    sent_msg_id = None
     # Send the message
     try:
         sent_msg = bot.send_message(chat_id, message)
         tlg_msg_to_selfdestruct(sent_msg)
+        sent_msg_id = sent_msg["message_id"]
     # It has been an unsuccesfull sent
     except Exception as e:
         print(str(e))
+    return sent_msg_id
 
 
 def tlg_msg_to_selfdestruct_in(message, time_delete_min):
@@ -275,17 +289,18 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
 def tlg_delete_msg(bot, chat_id, msg_id):
     '''Try to remove a telegram message'''
     return_code = 0
-    try:
-        bot.delete_message(chat_id, msg_id)
-        return_code = 1
-    except Exception as e:
-        print(str(e))
-        # Message is already deleted
-        if str(e) == "Message to delete not found":
-            return_code = -1
-        # The bot has no privileges to delete messages
-        elif str(e) == "Message can't be deleted":
-            return_code = -2
+    if msg_id is not None:
+        try:
+            bot.delete_message(chat_id, msg_id)
+            return_code = 1
+        except Exception as e:
+            print(str(e))
+            # Message is already deleted
+            if str(e) == "Message to delete not found":
+                return_code = -1
+            # The bot has no privileges to delete messages
+            elif str(e) == "Message can't be deleted":
+                return_code = -2
     return return_code
 
 
@@ -369,6 +384,7 @@ def msg_new_user(bot, update):
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                             to_delete_join_messages_list.remove(msg)
                 # If the captcha protection is enabled
                 captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -387,9 +403,10 @@ def msg_new_user(bot, update):
                         reply_markup = InlineKeyboardMarkup(keyboard)
                         send_problem = False
                         try:
-                            # Img caption must be < 200 chars, so send separate image and text messages
+                            # Img caption must be < 200 chars, so send separate image and text msgs
                             #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
-                            #                              captcha["image"],"rb"), caption=img_caption)
+                            #                              captcha["image"],"rb"), \
+                            #                              caption=img_caption)
                             sent_img_msg = bot.send_photo(chat_id=chat_id, \
                                                         photo=open(captcha["image"], "rb"), \
                                                         reply_markup=reply_markup, timeout=20)
@@ -428,7 +445,8 @@ def msg_new_user(bot, update):
                                 "user_id" : join_user_id,
                                 "msg_id_join0": update.message,
                                 "msg_id_join1": sent_img_msg.message_id,
-                                "msg_id_join2": sent_msg.message_id
+                                "msg_id_join2": sent_msg.message_id,
+                                "msg_id_join3" : None
                             }
                             to_delete_join_messages_list.append(msg)
 
@@ -441,7 +459,7 @@ def msg_nocmd(bot, update):
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     user_id = update.message.from_user.id
-    text = update.message.text
+    msg_text = update.message.text
     # Verify if we are in a group and the captcha protection is enabled
     if chat_type != "private":
         captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -451,25 +469,48 @@ def msg_nocmd(bot, update):
             # Search if this user is a new user that has not completed the captcha
             for new_user in new_users_list:
                 if new_user["user_id"] == user_id:
-                    if new_user["captcha_num"] in text:
+                    # Check if the expected captcha solve number is in the message
+                    if new_user["captcha_num"] in msg_text:
                         # Remove join messages
                         for msg in to_delete_join_messages_list:
                             if msg["user_id"] == user_id:
                                 if msg["chat_id"] == chat_id:
                                     # Uncomment next line to remove "user join" message too
-                                    #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
+                                    #tlg_delete_msg(bot, msg["chat_id"], \
+                                    #               msg["msg_id_join0"].message_id)
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                                    tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                                     to_delete_join_messages_list.remove(msg)
                         # Remove user captcha numbers message
                         tlg_delete_msg(bot, chat_id, update.message.message_id)
                         # Send captcha solved message and program selfdestruct in 5 minutes
                         bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
-                        # Uncomment and use next first line instead the second, if we want Bot to auto-remove
-                        #the kick  message too, after a while
+                        # Uncomment and use next first line instead the second, if we want Bot to 
+                        # auto-remove the kick message too after a while
                         #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                         bot.send_message(chat_id, bot_msg)
                         new_users_list.remove(new_user)
+                    # The provided message doesnt has the valid captcha number
+                    else:
+                        # Check if the message was just a 4 numbers msg
+                        if is_int(msg_text):
+                            # Remove previously error message (if any)
+                            for msg in to_delete_join_messages_list:
+                                if msg["user_id"] == user_id:
+                                    if msg["chat_id"] == chat_id:
+                                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
+                            # Check if the message has 4 digits
+                            if len(msg_text) == 4:
+                                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                                                          TEXT[lang]["CAPTCHA_INCORRECT_0"])
+                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join3", \
+                                                             sent_msg_id)
+                            else:
+                                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                                                          TEXT[lang]["CAPTCHA_INCORRECT_1"])
+                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join3", \
+                                                             sent_msg_id)
 
 
 def button_request_captcha(bot, update):
@@ -691,11 +732,10 @@ def cmd_about(bot, update):
 
 def cmd_captcha(bot, update):
     '''Command /captcha handler'''
-    '''chat_id = update.message.chat_id
+    chat_id = update.message.chat_id
     captcha = create_image_captcha(chat_id)
     sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], "rb"))
-    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)'''
-    tlg_get_bot_admin_privileges(bot, update.message.chat_id)
+    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)
 
 
 ####################################################################################################
@@ -782,6 +822,7 @@ def check_time_to_ban_not_verify_users(bot):
                         #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                         tlg_msg_to_selfdestruct(msg["msg_id_join0"])
                         to_delete_join_messages_list.remove(msg)
 

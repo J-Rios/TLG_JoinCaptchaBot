@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     05/10/2018
 Version:
-    1.0.7
+    1.0.8
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.0.7' # Bot version
+    'VERSION' : '1.0.8' # Bot version
 }
 
 TEXT = {
@@ -116,6 +116,12 @@ TEXT = {
 
         'CAPTHA_SOLVED' : \
             'Captcha solved, user verified. Welcome to the group {}.',
+
+        'CAPTCHA_INCORRECT_0' : \
+            'That is not the correct number. Try again...',
+
+        'CAPTCHA_INCORRECT_1' : \
+            'That is not the correct number. Check closely, the captcha has 4 numbers...',
 
         'NEW_USER_KICK' : \
             '{} has not completed the captcha in time. "User" was kicked.',
@@ -265,6 +271,12 @@ TEXT = {
 
         'CAPTHA_SOLVED' : \
             'Captcha resuelto, usuario verificado. Bienvenido al grupo {}.',
+
+        'CAPTCHA_INCORRECT_0' : \
+            'Ese no es el número correcto. Inténtalo nuevamente...',
+
+        'CAPTCHA_INCORRECT_1' : \
+            'Ese no es el número correcto. Fijate bien, el captcha tiene 4 numeros...',
 
         'NEW_USER_KICK' : \
             '{} no completó el captcha a tiempo. El "usuario" fue kickeado.',
