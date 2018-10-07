@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    05/10/2018
+    07/10/2018
 Version:
-    1.0.8
+    1.0.9
 '''
 
 ####################################################################################################
@@ -34,16 +34,18 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.0.8' # Bot version
+    'VERSION' : '1.0.9' # Bot version
 }
 
 TEXT = {
     'EN' : {
         'START' : \
             'Hello, I am a Bot that send a captcha for each new user who join a group, and kick ' \
-            'any of them that can\'t solve the captcha in a specified time.\n' \
+            'any of them that can\'t solve the captcha in a specified time. If one user try to ' \
+            'join the group for 3 times and never solve the captcha, I will assume that the ' \
+            '"user" is a Bot, and It will be ban.\n' \
             '\n' \
-            'Remember to give me administration privileges to kick users.' \
+            'Remember to give me administration privileges to kick-ban users.' \
             '\n' \
             'Check /help command for more information about my usage.',
 
@@ -52,6 +54,9 @@ TEXT = {
             '————————————————\n' \
             '- I am a Bot that send a captcha for each new user who join a group, and kick any ' \
             'of them that can\'t solve the captcha in a specified time.\n' \
+            '\n' \
+            '- If one user try to join the group for 3 times and never can\'t solve the captcha, ' \
+            'I will assume that the "user" is a Bot, and it will be ban.\n' \
             '\n' \
             '- You need to provide me Administration rights for kick users and remove messages.\n' \
             '\n' \
@@ -128,7 +133,7 @@ TEXT = {
 
         'NEW_USER_KICK_NOT_RIGHTS' : \
             '{} has not completed the captcha in time. I try to kick the "User", but I ' \
-            'don\'t have the administration rights for ban users in the group.',
+            'don\'t have the administration rights for kick users in the group.',
 
         'NEW_USER_KICK_NOT_IN_CHAT' : \
             '{} has not completed the captcha in time. I try to kick the "User", but the ' \
@@ -141,6 +146,26 @@ TEXT = {
         'CANT_DEL_MSG' : \
             'I try to delete this message, but I don\'t have the administration rights for ' \
             'remove messages that has not been sent by me.',
+
+        'NEW_USER_BAN' : \
+            'Warning: This is the third time that {} has tried to join the group and fail to ' \
+            'resolve the captcha. "User" was ban. To let he enter again, an Admin has to ' \
+            'manually remove the restrictions of this "user".',
+
+        'NEW_USER_BAN_NOT_IN_CHAT' : \
+            'Warning: This is the third time that {} has tried to join the group and fail to ' \
+            'resolve the captcha. I try to ban the "User", but the user is not in the group ' \
+            '(has left the group or has been kicked/banned by an Admin).',
+
+        'NEW_USER_BAN_NOT_RIGHTS' : \
+            'Warning: This is the third time that {} has tried to join the group and fail to ' \
+            'resolve the captcha. I try to ban the "User", but I don\'t have the administration ' \
+            'rights for ban users in the group.',
+
+        'BOT_CANT_BAN' : \
+            'Warning: This is the third time that {} has tried to join the group and fail to ' \
+            'resolve the captcha. I try to ban the "User", but for some unexpected problem ' \
+            '(maybe network/server related), I can\'t do it.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
@@ -192,7 +217,9 @@ TEXT = {
     'ES' : {
         'START' : \
             'Hola, soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
-            'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
+            'kickeo a los que no resuelvan el captcha en un tiempo determinado. Si un usuario ' \
+            'ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, supondré que ese ' \
+            '"usuario" es un Bot y lo banearé.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
             'administración para suspender usuarios en el grupo.\n' \
@@ -204,6 +231,9 @@ TEXT = {
             '————————————————\n' \
             '- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
             'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
+            '\n' \
+            '- Si un usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, ' \
+            'supondré que ese "usuario" es un Bot y lo banearé.\n' \
             '\n' \
             '- Debes darme permisos de Administración para suspender usuarios y eliminar ' \
             'mensajes.\n' \
@@ -298,6 +328,28 @@ TEXT = {
         'CANT_DEL_MSG' : \
             'He intentado borrar este mensaje pero no se me han dado los privilegios de ' \
             'administración necesarios para eliminar mensajes que no son míos.',
+
+        'NEW_USER_BAN' : \
+            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'y no pudo resolver el captcha. El "usuario" fue baneado. Para permitir que intente ' \
+            'entrar nuevamente al grupo, un Admin debe de quitar la restricción del usuario ' \
+            'de forma manual en las opciones de administración del grupo.',
+
+        'NEW_USER_BAN_NOT_IN_CHAT' : \
+            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero ya no se ' \
+            'encuentra en el grupo (salió del grupo o fue kickeado/baneado por un Admin).',
+
+        'NEW_USER_BAN_NOT_RIGHTS' : \
+            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero no se me han ' \
+            'dado los privilegios de administración necesarios para expulsar usuarios del grupo.',
+
+        'BOT_CANT_BAN' : \
+            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero debido a un ' \
+            'problema inesperado (quizás relacionado con la red o el servidor), no he podido ' \
+            'hacerlo.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Otro Captcha',
