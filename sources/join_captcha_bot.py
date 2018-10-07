@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     07/10/2018
 Version:
-    1.0.9
+    1.1.0
 '''
 
 ####################################################################################################
@@ -395,6 +395,14 @@ def msg_new_user(bot, update):
                 pass
         # The added user is not myself (this Bot)
         else:
+            # Get and update chat data
+            chat_title = update.message.chat.title
+            if chat_title:
+                save_config_property(chat_id, "Title", chat_title)
+            chat_link = update.message.chat.username
+            if chat_link:
+                chat_link = "@{}".format(chat_link)
+                save_config_property(chat_id, "Link", chat_link)
             # Ignore Admins
             if tlg_user_is_admin(bot, join_user_id, chat_id) != True:
                 # Check and remove to delete previous messages of user (if any)
@@ -427,6 +435,7 @@ def msg_new_user(bot, update):
                         captcha = create_image_captcha(str(join_user_id))
                         captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                         img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,\
+                                                                             chat_title, \
                                                                              str(captcha_timeout))
                         # Prepare inline keyboard button to let user request another catcha
                         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
@@ -922,7 +931,7 @@ def check_time_to_kick_not_verify_users(bot):
                         bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_RIGHTS'].format(new_user["user_name"])
                     else:
                         # For other reason, the Bot can't ban
-                        bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"]())
+                        bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"])
                 # Send ban notify message
                 print(bot_msg)
                 bot.send_message(chat_id, bot_msg)

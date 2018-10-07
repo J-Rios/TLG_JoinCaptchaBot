@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     07/10/2018
 Version:
-    1.0.9
+    1.1.0
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.0.9' # Bot version
+    'VERSION' : '1.1.0' # Bot version
 }
 
 TEXT = {
@@ -115,9 +115,9 @@ TEXT = {
             '/time 10',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
-            'Hello {}, please send a message with the number that appear in this captcha to ' \
-            'verify that you are a human. If you don\'t resolve the captcha in {} min, you will ' \
-            'be automatically kick from the group.',
+            'Hello {}, welcome to {}, please send a message with the number that appear in this ' \
+            'captcha to verify that you are a human. If you don\'t resolve the captcha in {} ' \
+            'mins, you will be automatically kick from the group.',
 
         'CAPTHA_SOLVED' : \
             'Captcha solved, user verified. Welcome to the group {}.',
@@ -295,9 +295,9 @@ TEXT = {
             '/time 10',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
-            'Hola {}, por favor envía un mensaje con el número que aparece en esta imagen para ' \
-            'verificar que eres un humano. Si no resuelves este captcha en {} min, serás ' \
-            'kickeado del grupo automáticamente.',
+            'Hola {}, bienvenido a {}, por favor envía un mensaje con el número que aparece ' \
+            'en esta imagen para verificar que eres un humano. Si no resuelves este captcha en ' \
+            '{} mins, serás kickeado del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
             'Captcha resuelto, usuario verificado. Bienvenido al grupo {}.',
