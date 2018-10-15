@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/10/2018
+    15/10/2018
 Version:
-    1.1.0
+    1.1.1
 '''
 
 ####################################################################################################
@@ -258,7 +258,7 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
         sent_msg_id = sent_msg["message_id"]
     # It has been an unsuccesfull sent
     except Exception as e:
-        print(str(e))
+        print("[{}] - {}".format(chat_id, str(e)))
     return sent_msg_id
 
 
@@ -299,7 +299,7 @@ def tlg_delete_msg(bot, chat_id, msg_id):
             bot.delete_message(chat_id, msg_id)
             return_code = 1
         except Exception as e:
-            print(str(e))
+            print("[{}] - {}".format(chat_id, str(e)))
             # Message is already deleted
             if str(e) == "Message to delete not found":
                 return_code = -1
@@ -320,7 +320,7 @@ def tlg_ban_user(bot, chat_id, user_id):
         else:
             return_code = -1
     except Exception as e:
-        print(str(e))
+        print("[{}] - {}".format(chat_id, str(e)))
         if str(e) == "Not enough rights to restrict/unrestrict chat member":
             return_code = -2
         elif str(e) == "User is an administrator of the chat":
@@ -340,7 +340,7 @@ def tlg_kick_user(bot, chat_id, user_id):
         else:
             return_code = -1
     except Exception as e:
-        print(str(e))
+        print("[{}] - {}".format(chat_id, str(e)))
         if str(e) == "Not enough rights to restrict/unrestrict chat member":
             return_code = -2
         elif str(e) == "User is an administrator of the chat":
@@ -391,7 +391,7 @@ def msg_new_user(bot, update):
             try:
                 bot.send_message(chat_id, TEXT[admin_language]["START"])
             except Exception as e:
-                print(str(e))
+                print("[{}] - {}".format(chat_id, str(e)))
                 pass
         # The added user is not myself (this Bot)
         else:
@@ -422,7 +422,6 @@ def msg_new_user(bot, update):
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                             tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                             to_delete_join_messages_list.remove(msg)
                     i = i + 1
                 # If the captcha protection is enabled
@@ -443,31 +442,20 @@ def msg_new_user(bot, update):
                         reply_markup = InlineKeyboardMarkup(keyboard)
                         send_problem = False
                         try:
-                            # Img caption must be < 200 chars, so send separate image and text msgs
-                            #sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
-                            #                              captcha["image"],"rb"), \
-                            #                              caption=img_caption)
-                            sent_img_msg = bot.send_photo(chat_id=chat_id, \
-                                                        photo=open(captcha["image"], "rb"), \
-                                                        reply_markup=reply_markup, timeout=20)
+                            # Note: Img caption must be <= 1024 chars
+                            sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open( \
+                                                          captcha["image"],"rb"), \
+                                                          reply_markup=reply_markup, \
+                                                          caption=img_caption, timeout=20)
                         except Exception as e:
-                            print(str(e))
                             if str(e) != "Timed out":
                                 send_problem = True
-                        if not send_problem:
-                            # Add sent image to self-destruct list
-                            tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
                         # Remove sent captcha image file from file system
                         if path.exists(captcha["image"]):
                             remove(captcha["image"])
-                        try:
-                            sent_msg = bot.send_message(chat_id, img_caption)
-                        except Exception as e:
-                            print(str(e))
-                            if str(e) != "Timed out":
-                                send_problem = True
                         if not send_problem:
-                            tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5)
+                            # Add sent image to self-destruct list
+                            tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5)
                             # Add new user data to lists
                             new_user = \
                             {
@@ -485,8 +473,7 @@ def msg_new_user(bot, update):
                                 "user_id" : join_user_id,
                                 "msg_id_join0": update.message,
                                 "msg_id_join1": sent_img_msg.message_id,
-                                "msg_id_join2": sent_msg.message_id,
-                                "msg_id_join3" : None
+                                "msg_id_join2" : None
                             }
                             to_delete_join_messages_list.append(msg)
                             # Increase the number of this user join retries
@@ -496,9 +483,7 @@ def msg_new_user(bot, update):
                                 user = new_user_join_retries[i]
                                 if user["user_id"] == join_user_id:
                                     if user["chat_id"] == chat_id:
-                                        print(user["retries"])
                                         user["retries"] = user["retries"] + 1
-                                        print(user["retries"])
                                         new_user_join_retries[i] = user
                                         user_any_retry = True
                                         break
@@ -547,7 +532,6 @@ def msg_nocmd(bot, update):
                                     #               msg["msg_id_join0"].message_id)
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                                    tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                                     to_delete_join_messages_list.remove(msg)
                                     break
                             j = j + 1
@@ -577,17 +561,17 @@ def msg_nocmd(bot, update):
                             for msg in to_delete_join_messages_list:
                                 if msg["user_id"] == user_id:
                                     if msg["chat_id"] == chat_id:
-                                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
+                                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                             # Check if the message has 4 digits
                             if len(msg_text) == 4:
                                 sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
                                                           TEXT[lang]["CAPTCHA_INCORRECT_0"])
-                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join3", \
+                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", \
                                                              sent_msg_id)
                             else:
                                 sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
                                                           TEXT[lang]["CAPTCHA_INCORRECT_1"])
-                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join3", \
+                                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", \
                                                              sent_msg_id)
                     break
                 i = i + 1
@@ -603,6 +587,7 @@ def button_request_captcha(bot, update):
         chat_id = query.message.chat_id
         usr_id = query.from_user.id
         message_id = query.message.message_id
+        chat_title = query.message.chat.title
         # Get chat language
         lang = get_chat_config(chat_id, "Language")
         # Search if this user is a new user that has not completed the captcha
@@ -615,11 +600,16 @@ def button_request_captcha(bot, update):
                     keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
                                  callback_data=str(query.from_user.id))]]
                     reply_markup = InlineKeyboardMarkup(keyboard)
+                    # Get captcha timeout and set image caption
+                    captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+                    img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format( \
+                                        new_user["user_name"], chat_title, str(captcha_timeout))
                     # Generate a new captcha and edit previous captcha image message with this one
                     captcha = create_image_captcha(str(usr_id))
                     bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
-                                           media=open(captcha["image"], "rb")), \
-                                           reply_markup=reply_markup, timeout=20)
+                                           media=open(captcha["image"], "rb"), \
+                                           caption=img_caption), reply_markup=reply_markup, \
+                                           timeout=20)
                     # Set and modified to new expected captcha number
                     new_user["captcha_num"] = captcha["number"]
                     new_users_list[i] = new_user
@@ -849,7 +839,7 @@ def selfdestruct_messages(bot):
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
                     to_delete_in_time_messages_list.remove(sent_msg)
             except Exception as e:
-                print(str(e))
+                print("[{}] - {}".format(sent_msg["Chat_id"], str(e)))
                 # The bot has no privileges to delete messages
                 if str(e) == "Message can't be deleted":
                     lang = get_chat_config(sent_msg["Chat_id"], "Language")
@@ -859,7 +849,7 @@ def selfdestruct_messages(bot):
                                                         reply_to_message_id=sent_msg["Msg_id"])
                         tlg_msg_to_selfdestruct(cant_del_msg)
                     except:
-                        print(str(e))
+                        print("[{}] - {}".format(sent_msg["Chat_id"], str(e)))
                         pass
                 to_delete_in_time_messages_list.remove(sent_msg)
         i = i + 1
@@ -915,7 +905,6 @@ def check_time_to_kick_not_verify_users(bot):
             else:
                 # Try to ban the user and notify Admins
                 ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
-                print(ban_result)
                 # Remove user from new users list
                 new_users_list.remove(new_user)
                 if ban_result == 1:
@@ -933,7 +922,6 @@ def check_time_to_kick_not_verify_users(bot):
                         # For other reason, the Bot can't ban
                         bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"])
                 # Send ban notify message
-                print(bot_msg)
                 bot.send_message(chat_id, bot_msg)
             # Remove join messages
             j = 0
@@ -945,7 +933,6 @@ def check_time_to_kick_not_verify_users(bot):
                         #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join3"])
                         tlg_msg_to_selfdestruct(msg["msg_id_join0"])
                         to_delete_join_messages_list.remove(msg)
                         break
