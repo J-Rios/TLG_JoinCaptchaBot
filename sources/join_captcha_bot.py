@@ -368,9 +368,9 @@ def msg_new_user(bot, update):
             join_user_name = join_user.name
         else:
             join_user_name = join_user.full_name
-        # If the user name is too long, truncate it to 25 characters
-        if len(join_user_name) > 25:
-            join_user_name = join_user_name[0:25]
+        # If the user name is too long, truncate it to 35 characters
+        if len(join_user_name) > 35:
+            join_user_name = join_user_name[0:35]
         # If the added user is myself (this Bot)
         if bot.id == join_user_id:
             # Get the language of the Telegram client software the Admin that has added the Bot 
