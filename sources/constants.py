@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/10/2018
+    09/02/2019
 Version:
-    1.1.1
+    1.1.2
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.1.1' # Bot version
+    'VERSION' : '1.1.2' # Bot version
 }
 
 TEXT = {
@@ -83,22 +83,25 @@ TEXT = {
             'Language changed to english.',
 
         'LANG_SAME' : \
-            'I am already in english.\n\nMay you want to say:\n/language es',
+            'I am already in english.\n\nMay you want to say:\n/language es\n/language pt_br',
 
         'LANG_BAD_LANG' : \
-            'Invalid language provided. The actual languages supported are english and spanish, ' \
-            'change any of them using "en" or "es".\n' \
+            'Invalid language provided. The actual languages supported are english, spanish and ' \
+            'portuguese (Brazil). Change any of them using "en" or "es".\n' \
             '\n' \
             'Example:\n' \
             '/language en\n' \
-            '/language es',
+            '/language es\n' \
+            '/language pt_br',
 
         'LANG_NOT_ARG' : \
-            'The command needs a language to set (en - english, es - spanish).\n' \
+            'The command needs a language to set (en - english, es - spanish, ' \
+            'pt_br - portugese from Brazil).\n' \
             '\n' \
             'Example:\n' \
             '/language en\n' \
-            '/language es',
+            '/language es\n' \
+            '/language pt_br',
 
         'TIME_CHANGE' : \
             'Time to resolve captcha successfully changed to {} minutes.',
@@ -189,8 +192,8 @@ TEXT = {
             'Actual Bot version: {}',
 
         'ABOUT_MSG' : \
-            'This is an open-source GNU-GPL licensed Bot developed by the telegram user {}. You ' \
-            'can check the code here:\n{}\n\n---------------------------------------------\n\n' \
+            'This is a free software and open-source GNU-GPL licensed Bot developed by the ' \
+            'telegram user {}.\n\nYou can check the code here:\n{}\n\n' \
             'Do you like my work? Buy me a coffee.\n\nPaypal:\n{}\n\nBTC:\n{}',
        
         'COMMANDS' : \
@@ -204,7 +207,7 @@ TEXT = {
             'and their description.\n' \
             '\n' \
             '/language - Allow to change the language of the bot messages. Actual available ' \
-            'languages: en (english) - es (spanish).\n' \
+            'languages: en (english) - es (spanish) - pt_br (portuguese from Brazil).\n' \
             '\n' \
             '/enable - Enable the captcha protection of the group.\n' \
             '\n' \
@@ -263,22 +266,26 @@ TEXT = {
             'Idioma cambiado a español.',
 
         'LANG_SAME' : \
-            'Ya estoy en español.\n\nQuizás querías decir:\n/language en',
+            'Ya estoy en español.\n\nQuizás querías decir:\n/language en\n/language pt_br',
 
         'LANG_BAD_LANG' : \
-            'Idioma inválidado. Los idiomas actualmente soportados son el español y el inglés, ' \
-            'cambia a uno de ellos mediante las etiquetas "es" o "en".\n' \
+            'Idioma inválidado. Los idiomas actualmente soportados son el inglés, el español y ' \
+            'el portugués de Brasil. Cambia a uno de ellos mediante las etiquetas "en", "es" o ' \
+            '"pt_br".\n' \
             '\n' \
             'Ejemplo:\n' \
+            '/language en\n' \
             '/language es\n' \
-            '/language en',
+            '/language pt_br',
 
         'LANG_NOT_ARG' : \
-            'El comando necesita un idioma que establecer (es - español, en - inglés).\n' \
+            'El comando necesita un idioma que establecer (en - inglés, es - español, ' \
+            'pt_br - portugués de brasil).\n' \
             '\n' \
             'Ejemplo:\n' \
+            '/language en\n' \
             '/language es\n' \
-            '/language en',
+            '/language pt_br',
 
         'TIME_CHANGE' : \
             'Tiempo para resolver el captcha cambiado a {} minutos.',
@@ -373,10 +380,9 @@ TEXT = {
             'Versión actual del Bot: {}',
 
         'ABOUT_MSG' : \
-            'Este es un Bot open-source con licencia GNU-GPL, desarrollado por el usuario de ' \
-            'telegram {}. Puedes consultar el código aquí:\n{}\n\n' \
-            '---------------------------------------------\n\nTe gusta lo que hago? ' \
-            'Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}',
+            'Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por ' \
+            'el usuario de telegram {}.\n\nPuedes consultar el código aquí:\n{}\n\n' \
+            'Te gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}',
 
         'COMMANDS' : \
             'Lista de comandos:\n' \
@@ -389,7 +395,7 @@ TEXT = {
             'disponibles y su descripción.\n' \
             '\n' \
             '/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente ' \
-            'disponibles: es (español) - en (inglés).\n' \
+            'disponibles: es (español) - en (inglés) - pt_br (portugués de Brasil).\n' \
             '\n' \
             '/enable - Activa la protección captcha en el grupo.\n' \
             '\n' \
@@ -398,5 +404,189 @@ TEXT = {
             '/version - Consulta la versión del Bot.\n' \
             '\n' \
             '/about - Muestra la información \"acerca de...\" del Bot.'
+    },
+    'PT_BR' : {
+        'START' : \
+            'Olá, eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e ' \
+            'expulsa aquele que não enviar o captcha no tempo definido. Se um usuário tentar ' \
+            'entrar no grupo 3 vezes sem enviar o captcha corretamente, vou assumir que esse ' \
+            '"usuário" é um Bot, e ele será banido.\n' \
+            '\n' \
+            'Lembre-se de dar privilégios de administrador para que eu possa expulsar e banir ' \
+            'usuários.\n' \
+            '\n' \
+            'Confira o comando /help para saber mais sobre como me usar.',
+
+        'HELP' : \
+            'Ajuda do Bot:\n' \
+            '————————————————\n' \
+            '- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e ' \
+            'expulsa aquele que não enviar o captcha no tempo definido.\n' \
+            '\n' \
+            '- Se um usuário tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, ' \
+            'vou assumir que esse “usuário” é um Bot, e ele será banido.\n' \
+            '\n' \
+            '- Você tem que me dar privilégios de administrador para que eu possa expulsar e ' \
+            'banir usuários, e remover mensagens.\n' \
+            '\n' \
+            '- Para manter o grupo limpo, eu removo automaticamente todas as mensagens ' \
+            'relacionadas a mim quando um captacha não é enviado e o usuário é expulso (depois ' \
+            'de 5 minutos).\n' \
+            '\n' \
+            '- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ' \
+            'ser configurado usando o comando /time.\n' \
+            '\n' \
+            '- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e ' \
+            '/disable.\n' \
+            '\n' \
+            '- Comandos de configuração somente podem ser usados pelos  Administradores do ' \
+            'grupo.\n' \
+            '\n' \
+            '- Você pode definir o idioma que eu falo usando o comando /language.\n' \
+            '\n' \
+            '- Use a opção /commands para ver a lista de todos os comandos com uma breve ' \
+            'descrição de cada um deles.',
+
+        'CMD_NOT_ALLOW' : \
+            'Apenas um Admin pode usar esse comando',
+
+        'LANG_CHANGE' : \
+            'Idioma definido para Português (Brasil).',
+
+        'LANG_SAME' : \
+            'Eu já estou em Português (Brasil).\n\nQuem sabe você quer usar:\n' \
+            '/language en\n' \
+            '/language es',
+
+        'LANG_BAD_LANG' : \
+            'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol e Português (Brasil). ' \
+            'Defina um deles usando "en", "es" ou "pt_br".\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language pt_br',
+
+        'LANG_NOT_ARG' : \
+            'O comando exige o idioma que será usado (en – Inglês, es – Espanhol, ' \
+            'pt_br – Português (Brasil)).\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language pt_br',
+
+        'TIME_CHANGE' : \
+            'Tempo para enviar o captcha modificado com sucesso para {} minutos.',
+
+        'TIME_NOT_NUM' : \
+            'O tempo fornecido não é um número integral.',
+
+        'TIME_NOT_ARG' : \
+            'O comando exige um valor para o tempo (em minutos).\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/time 3\n' \
+            '/time 5\n' \
+            '/time 10',
+
+        'NEW_USER_CAPTCHA_CAPTION' : \
+            'Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que ' \
+            'aparece neste captcha para que possamos nos certificar que você é humano. Se você ' \
+            'não enviar o captcha em {} minutos, você será automaticamente expulso do grupo.',
+
+        'CAPTHA_SOLVED' : \
+            'Captcha enviado, usuário verificado. Seja bem-vindo ao grupo {}.',
+
+        'CAPTCHA_INCORRECT_0' : \
+            'Esse não é o número correto. Tente de novo...',
+
+        'CAPTCHA_INCORRECT_1' : \
+            'Esse não é o número correto. Olhe com atenção pois o captcha tem 4 números...',
+
+        'NEW_USER_KICK' : \
+            '{} não enviou o captcha em tempo hábil. O "Usuário" foi expulso.',
+
+        'NEW_USER_KICK_NOT_RIGHTS' : \
+            '{} não completou o captcha em tempo. Eu tentei expulsar o "usuário", mas eu não ' \
+            'tenho poderes administrativos para expulsar usuários do grupo.',
+
+        'NEW_USER_KICK_NOT_IN_CHAT' : \
+            '{} não completou o captcha em tempo. Eu tentei expulsar o "usuário", mas o usuário ' \
+            'não está mais no grupo (ele saiu ou foi expulso por um Admin).',
+
+        'BOT_CANT_KICK' : \
+            '{} não completou o captcha em tempo. Eu tentei expulsar o "usuário", mas algo deu ' \
+            'errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.',
+
+        'CANT_DEL_MSG' : \
+            'Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para ' \
+            'remover mensagens que não foram enviadas por mim',
+
+        'NEW_USER_BAN' : \
+            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'captcha. O "usuário" foi banido. Para deixá-lo entrar de novo, um administrador tem ' \
+            'que remover as restrições, manualmente..',
+
+        'NEW_USER_BAN_NOT_IN_CHAT' : \
+            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'captcha. Eu tentei banir o "usuário", mas ele não está mais no grupo (ele saiu ou ' \
+            'foi expulso por um Admin).',
+
+        'NEW_USER_BAN_NOT_RIGHTS' : \
+            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'captcha. Eu tentei banir o "usuário", mas eu não tenho poderes administrativos para ' \
+            'banir usuários do grupo.',
+
+        'BOT_CANT_BAN' : \
+            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'captcha. Eu tentei banir o "usuário", mas algo deu errado (talvez algo relacionado ' \
+            'à rede ou servidor). Não pude fazê-lo.',
+
+        'OTHER_CAPTCHA_BTN_TEXT' : \
+            'Outro Captcha',
+
+        'ENABLE' : \
+            'Proteção Captcha ativada. Desative com o comando /disable.',
+
+        'DISABLE' : \
+            'Proteção Captcha desativada. Ative com o comando /enable.',
+
+        'ALREADY_ENABLE' : \
+            'A proteção captcha já está ativada.',
+
+        'ALREADY_DISABLE' : \
+            'A proteção captcha já está desativada.',
+
+        'CAN_NOT_GET_ADMINS' : \
+            'Não posso usar esse comando neste chat.',
+
+        'VERSION' : \
+            'Versão atual do Bot: {}',
+
+        'ABOUT_MSG' : \
+            'Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo usuário do ' \
+            'Telegram {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\n' \
+            'Gosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}',
+
+        'COMMANDS' : \
+            'Lista de comandos:\n' \
+            '————————————————\n' \
+            '/start - Mostrar informações básicas sobre o bot.\n' \
+            '\n' \
+            '/help - Mostra informações de ajuda.\n' \
+            '\n' \
+            '/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n' \
+            '\n' \
+            '/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis ' \
+            'são: en (inglês) - es (espanhol) - pt_br (português BR).\n' \
+            '\n' \
+            '/enable - Ativa a proteção captcha no grupo.\n' \
+            '\n' \
+            '/disable - Desativa a proteção captcha no grupo.\n' \
+            '\n' \
+            '/version - Mostra a versão do Bot.\n' \
+            '\n' \
+            '/about - Mostra informações "sobre".'
     }
 }

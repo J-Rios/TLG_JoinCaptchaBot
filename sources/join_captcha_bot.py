@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/10/2018
+    09/02/2019
 Version:
-    1.1.1
+    1.1.2
 '''
 
 ####################################################################################################
@@ -266,6 +266,8 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     '''Add a telegram message to be auto-delete in specified time'''
     global to_delete_in_time_messages_list
     # Check if provided message has all necessary attributtes
+    if message is None:
+        return False
     if not hasattr(message, "chat_id"):
         return False
     if not hasattr(message, "message_id"):
@@ -456,6 +458,8 @@ def msg_new_user(bot, update):
                             print("[{}] - {}".format(chat_id, str(e)))
                             if str(e) != "Timed out":
                                 send_problem = True
+                            else:
+                                print("sent_img_msg: {}".format(sent_img_msg))
                         # Remove sent captcha image file from file system
                         if path.exists(captcha["image"]):
                             remove(captcha["image"])
