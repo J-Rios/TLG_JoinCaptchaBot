@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    09/02/2019
+    28/02/2019
 Version:
-    1.1.2
+    1.1.3
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.1.2' # Bot version
+    'VERSION' : '1.1.3 (28/02/2019)' # Bot version
 }
 
 TEXT = {
@@ -105,6 +105,9 @@ TEXT = {
 
         'TIME_CHANGE' : \
             'Time to resolve captcha successfully changed to {} minutes.',
+
+        'TIME_MAX_NOT_ALLOW' : \
+            'Maximum captcha solve time is 120 minutes. Time not changed.',
 
         'TIME_NOT_NUM' : \
             'The provided time is not an integer number.',
@@ -289,6 +292,9 @@ TEXT = {
 
         'TIME_CHANGE' : \
             'Tiempo para resolver el captcha cambiado a {} minutos.',
+
+        'TIME_MAX_NOT_ALLOW' : \
+            'El tiempo máximo para resolver el captcha son 120 minutos. No se cambió el tiempo.',
 
         'TIME_NOT_NUM' : \
             'El tiempo entregado no es un número entero.',
@@ -478,6 +484,9 @@ TEXT = {
 
         'TIME_CHANGE' : \
             'Tempo para enviar o captcha modificado com sucesso para {} minutos.',
+
+        'TIME_MAX_NOT_ALLOW' : \
+            'O tempo máximo para resolver o captcha é de 120 minutos. Tempo não mudado.',
 
         'TIME_NOT_NUM' : \
             'O tempo fornecido não é um número integral.',

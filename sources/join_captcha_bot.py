@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    09/02/2019
+    28/02/2019
 Version:
-    1.1.2
+    1.1.3
 '''
 
 ####################################################################################################
@@ -534,8 +534,22 @@ def msg_nocmd(bot, update):
     chat_type = update.message.chat.type
     user_id = update.message.from_user.id
     msg_text = update.message.text
-    # Verify if we are in a group and the captcha protection is enabled
+    # Verify if we are in a group
     if chat_type != "private":
+        # Get and update chat data
+        chat_title = update.message.chat.title
+        if chat_title:
+            save_config_property(chat_id, "Title", chat_title)
+        chat_link = update.message.chat.username
+        if chat_link:
+            chat_link = "@{}".format(chat_link)
+            save_config_property(chat_id, "Link", chat_link)
+        user_name = update.message.from_user.full_name
+        if update.message.from_user.username != None:
+            user_name = "{}(@{})".format(user_name, update.message.from_user.username)
+        if msg_text is None:
+            msg_text = "[Not a text message]"
+        # Check if captcha protection is enabled
         captcha_enable = get_chat_config(chat_id, "Enabled")
         if captcha_enable:
             # Determine configured bot language in actual chat
@@ -743,8 +757,11 @@ def cmd_time(bot, update, args):
         if len(args) == 1:
             if is_int(args[0]):
                 new_time = args[0]
-                save_config_property(chat_id, "Captcha_Time", int(new_time))
-                bot_msg = TEXT[lang]["TIME_CHANGE"].format(new_time)
+                if new_time <= 120:
+                    save_config_property(chat_id, "Captcha_Time", int(new_time))
+                    bot_msg = TEXT[lang]["TIME_CHANGE"].format(new_time)
+                else:
+                    bot_msg = TEXT[lang]["TIME_MAX_NOT_ALLOW"]
             else:
                 bot_msg = TEXT[lang]["TIME_NOT_NUM"]
         else:
@@ -898,7 +915,7 @@ def check_time_to_kick_not_verify_users(bot):
     i = 0
     while i < len(new_users_list):
         new_user = new_users_list[i]
-        # If the time for ban has arrived
+        # If time for kick/ban has arrived
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
         if time() >= new_user["join_time"] + captcha_timeout*60:
             chat_id = new_user["chat_id"]
@@ -958,7 +975,7 @@ def check_time_to_kick_not_verify_users(bot):
                     print("[{}] - OK".format(chat_id))
                 else:
                     # Ban fail
-                    print("[{}] - Can't kick".format(chat_id))
+                    print("[{}] - Can't ban".format(chat_id))
                     if ban_result == -1:
                         # The user is not in the chat
                         bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_IN_CHAT'].format( \
