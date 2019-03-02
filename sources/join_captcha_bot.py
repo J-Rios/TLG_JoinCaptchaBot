@@ -756,9 +756,11 @@ def cmd_time(bot, update, args):
     if allow_command:
         if len(args) == 1:
             if is_int(args[0]):
-                new_time = args[0]
+                new_time = int(args[0])
+                if new_time < 1:
+                    new_time = 1
                 if new_time <= 120:
-                    save_config_property(chat_id, "Captcha_Time", int(new_time))
+                    save_config_property(chat_id, "Captcha_Time", new_time)
                     bot_msg = TEXT[lang]["TIME_CHANGE"].format(new_time)
                 else:
                     bot_msg = TEXT[lang]["TIME_MAX_NOT_ALLOW"]
