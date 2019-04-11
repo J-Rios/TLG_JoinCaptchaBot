@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/02/2019
+    11/04/2019
 Version:
-    1.1.3
+    1.1.4
 '''
 
 ####################################################################################################
@@ -509,10 +509,11 @@ def msg_new_user(bot, update):
                                         user["retries"] = user["retries"] + 1
                                         new_user_join_retries[i] = user
                                         user_any_retry = True
+                                        print("[{}] - Actual join retries {}".format(chat_id, \
+                                              user["retries"]))
                                         break
                                 i = i + 1
                             if not user_any_retry:
-                                print("[{}] - New join retries set to 0".format(chat_id))
                                 new_user_retries = \
                                 {
                                     "chat_id": chat_id,
@@ -520,6 +521,7 @@ def msg_new_user(bot, update):
                                     "retries": 1
                                 }
                                 new_user_join_retries.append(new_user_retries)
+                                print("[{}] - New join retries set to 1".format(chat_id))
                             print("[{}] - OK".format(chat_id))
                             print(" ")
 
@@ -930,7 +932,7 @@ def check_time_to_kick_not_verify_users(bot):
                 user = new_user_join_retries[i]
                 if user["user_id"] == new_user["user_id"]:
                     if user["chat_id"] == new_user["chat_id"]:
-                        if user["retries"] == 3:
+                        if user["retries"] > 2:
                             ban_user = True
                             new_user_join_retries.remove(user)
                             break
@@ -960,8 +962,7 @@ def check_time_to_kick_not_verify_users(bot):
                     else:
                         # For other reason, the Bot can't ban
                         bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
-                # Use next first line instead the second, if we want Bot to auto-remove
-                #the kick  message too, after a while
+                # Set to auto-remove the kick message too, after a while
                 tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
             else:
                 print("[{}] - Captcha not solved, banning {} ({})...".format(chat_id, \

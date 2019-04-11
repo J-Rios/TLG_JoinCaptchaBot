@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/02/2019
+    11/04/2019
 Version:
-    1.1.3
+    1.1.4
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.1.3 (28/02/2019)' # Bot version
+    'VERSION' : '1.1.4 (11/04/2019)' # Bot version
 }
 
 TEXT = {
@@ -45,7 +45,7 @@ TEXT = {
             'join the group for 3 times and never solve the captcha, I will assume that the ' \
             '"user" is a Bot, and It will be ban.\n' \
             '\n' \
-            'Remember to give me administration privileges to kick-ban users.' \
+            'Remember to give me administration privileges to kick-ban users and remove messages.' \
             '\n' \
             'Check /help command for more information about my usage.',
 
@@ -228,7 +228,7 @@ TEXT = {
             '"usuario" es un Bot y lo banearé.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
-            'administración para suspender usuarios en el grupo.\n' \
+            'administración para suspender usuarios y eliminar mensajes del grupo.\n' \
             '\n' \
             'Echa un vistazo al comando /help para conocer más información sobre mi uso.',
 
@@ -418,8 +418,8 @@ TEXT = {
             'entrar no grupo 3 vezes sem enviar o captcha corretamente, vou assumir que esse ' \
             '"usuário" é um Bot, e ele será banido.\n' \
             '\n' \
-            'Lembre-se de dar privilégios de administrador para que eu possa expulsar e banir ' \
-            'usuários.\n' \
+            'Lembre-se de dar privilégios de administrador para que eu possa expulsar-banir ' \
+            'usuários e excluir mensagens do grupo.\n' \
             '\n' \
             'Confira o comando /help para saber mais sobre como me usar.',
 
