@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/04/2019
+    12/04/2019
 Version:
-    1.1.4
+    1.1.5
 '''
 
 ####################################################################################################
@@ -46,7 +46,6 @@ from img_captcha_gen import CaptchaGenerator
 files_config_list = []
 to_delete_in_time_messages_list = []
 to_delete_join_messages_list = []
-new_user_join_retries = []
 new_users_list = []
 
 # Create Captcha Generator object of specified size (2 -> 640x360)
@@ -357,7 +356,6 @@ def msg_new_user(bot, update):
     '''New member join the group event handler'''
     global to_delete_join_messages_list
     global new_users_list
-    global new_user_join_retries
     # Get message data
     chat_id = update.message.chat_id
     # Determine configured bot language in actual chat
@@ -410,14 +408,6 @@ def msg_new_user(bot, update):
                 save_config_property(chat_id, "Link", chat_link)
             # Ignore Admins
             if tlg_user_is_admin(bot, join_user_id, chat_id) != True:
-                # Check and remove to delete previous messages of user (if any)
-                i = 0
-                while i < len(new_users_list):
-                    new_user = new_users_list[i]
-                    if new_user["user_id"] == join_user_id:
-                        if new_user["chat_id"] == chat_id:
-                            new_users_list.remove(new_user)
-                    i = i + 1
                 # Check and remove previous join messages of that user (if any)
                 i = 0
                 while i < len(to_delete_join_messages_list):
@@ -472,16 +462,33 @@ def msg_new_user(bot, update):
                                       "to be deleted".format(chat_id))
                             else:
                                 print("[{}] - OK".format(chat_id))
-                            # Add new user data to lists
-                            print("[{}] - Adding user to new users list...".format(chat_id))
+                            # Default user data
                             new_user = \
                             {
                                 "chat_id": chat_id,
                                 "user_id" : join_user_id,
                                 "user_name": join_user_name,
                                 "captcha_num" : captcha["number"],
-                                "join_time" : time()
+                                "join_time" : time(),
+                                "join_retries" : 1,
+                                "kicked_ban" : False
                             }
+                            # Check if this user was before in the chat without solve the captcha
+                            prev_user_data = None
+                            for user in new_users_list:
+                                if user["chat_id"] == new_user["chat_id"]:
+                                    if user["user_id"] == new_user["user_id"]:
+                                        prev_user_data = user
+                            if prev_user_data is not None:
+                                # Increase join retries and remove previous user data from list
+                                new_user["join_retries"] = prev_user_data["join_retries"] + 1
+                                print("[{}] - User was kicked before. Increasing join retries..." \
+                                      .format(chat_id))
+                                print("[{}] - Actual join retries {}".format(chat_id, \
+                                      new_user["join_retries"]))
+                                new_users_list.remove(prev_user_data)
+                            # Add new user data to lists
+                            print("[{}] - Adding user to new users list...".format(chat_id))
                             new_users_list.append(new_user)
                             print("[{}] - OK".format(chat_id))
                             print("[{}] - Adding join messages to messages delete list..." \
@@ -497,32 +504,6 @@ def msg_new_user(bot, update):
                             }
                             to_delete_join_messages_list.append(msg)
                             print("[{}] - OK".format(chat_id))
-                            # Increase the number of this user join retries
-                            print("[{}] - Increasing number of user join retries..." \
-                                  .format(chat_id))
-                            user_any_retry = False
-                            i = 0
-                            while i < len(new_user_join_retries):
-                                user = new_user_join_retries[i]
-                                if user["user_id"] == join_user_id:
-                                    if user["chat_id"] == chat_id:
-                                        user["retries"] = user["retries"] + 1
-                                        new_user_join_retries[i] = user
-                                        user_any_retry = True
-                                        print("[{}] - Actual join retries {}".format(chat_id, \
-                                              user["retries"]))
-                                        break
-                                i = i + 1
-                            if not user_any_retry:
-                                new_user_retries = \
-                                {
-                                    "chat_id": chat_id,
-                                    "user_id" : join_user_id,
-                                    "retries": 1
-                                }
-                                new_user_join_retries.append(new_user_retries)
-                                print("[{}] - New join retries set to 1".format(chat_id))
-                            print("[{}] - OK".format(chat_id))
                             print(" ")
 
 
@@ -530,7 +511,6 @@ def msg_nocmd(bot, update):
     '''All Not-command messages handler'''
     global to_delete_join_messages_list
     global new_users_list
-    global new_user_join_retries
     # Get message data
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
@@ -591,15 +571,6 @@ def msg_nocmd(bot, update):
                         #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                         bot.send_message(chat_id, bot_msg)
                         new_users_list.remove(new_user)
-                        # Remove user try to join retries
-                        j = 0
-                        while j < len(new_user_join_retries):
-                            user = new_user_join_retries[j]
-                            if user["user_id"] == user_id:
-                                if user["chat_id"] == chat_id:
-                                    new_user_join_retries.remove(user)
-                                    break
-                            j = j + 1
                     # The provided message doesn't has the valid captcha number
                     else:
                         # Check if the message was just a 4 numbers msg
@@ -915,100 +886,96 @@ def check_time_to_kick_not_verify_users(bot):
     '''Check if the time for ban new users that has not completed the captcha has arrived'''
     global to_delete_join_messages_list
     global new_users_list
-    global new_user_join_retries
     i = 0
     while i < len(new_users_list):
         new_user = new_users_list[i]
-        # If time for kick/ban has arrived
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
-        if time() >= new_user["join_time"] + captcha_timeout*60:
-            chat_id = new_user["chat_id"]
-            lang = get_chat_config(chat_id, "Language")
-            print(" ")
-            # Check if this "user" has try to join this chat 3 times and never get solve the captcha
-            ban_user = False
-            j = 0
-            while j < len(new_user_join_retries):
-                user = new_user_join_retries[i]
-                if user["user_id"] == new_user["user_id"]:
-                    if user["chat_id"] == new_user["chat_id"]:
-                        if user["retries"] > 2:
-                            ban_user = True
-                            new_user_join_retries.remove(user)
+        # Remove from new users list, the remaining kicked users that doesnt try to join group 
+        # again in 1 hour (this allows to keep join retries in same chat, so user ban just happen 
+        # if a user try to join the group and fail to solve the captcha 3 times in the past hour)
+        if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
+            # Remove user from new users list
+            new_users_list.remove(new_user)
+        if new_user["kicked_ban"] == False:
+            # If time for kick/ban has arrived
+            if time() >= new_user["join_time"] + captcha_timeout*60:
+                chat_id = new_user["chat_id"]
+                lang = get_chat_config(chat_id, "Language")
+                print(" ")
+                # Check if this "user" has try to join this chat 3 times and never get solve the captcha
+                if new_user["join_retries"] < 3:
+                    print("[{}] - Captcha not solved, kicking {} ({})...".format(chat_id, \
+                        new_user["user_name"], new_user["user_id"]))
+                    # Try to kick the user
+                    kick_result = tlg_kick_user(bot, new_user["chat_id"], new_user["user_id"])
+                    if kick_result == 1:
+                        # Kick success
+                        bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
+                        print("[{}] - OK".format(chat_id))
+                    else:
+                        # Kick fail
+                        print("[{}] - Can't kick".format(chat_id))
+                        if kick_result == -1:
+                            # The user is not in the chat
+                            bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format( \
+                                    new_user["user_name"])
+                        elif kick_result == -2:
+                            # Bot has no privileges to ban
+                            bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format( \
+                                    new_user["user_name"])
+                        else:
+                            # For other reason, the Bot can't ban
+                            bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
+                    # Set to auto-remove the kick message too, after a while
+                    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                else:
+                    print("[{}] - Captcha not solved, banning {} ({})...".format(chat_id, \
+                        new_user["user_name"], new_user["user_id"]))
+                    # Try to ban the user and notify Admins
+                    ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
+                    print(ban_result)
+                    # Remove user from new users list
+                    new_users_list.remove(new_user)
+                    if ban_result == 1:
+                        # Ban success
+                        bot_msg = TEXT[lang]["NEW_USER_BAN"].format(new_user["user_name"])
+                        print("[{}] - OK".format(chat_id))
+                    else:
+                        # Ban fail
+                        print("[{}] - Can't ban".format(chat_id))
+                        if ban_result == -1:
+                            # The user is not in the chat
+                            bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_IN_CHAT'].format( \
+                                    new_user["user_name"])
+                        elif ban_result == -2:
+                            # Bot has no privileges to ban
+                            bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_RIGHTS'].format( \
+                                    new_user["user_name"])
+                        else:
+                            # For other reason, the Bot can't ban
+                            bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"])
+                    # Send ban notify message
+                    print(bot_msg)
+                    bot.send_message(chat_id, bot_msg)
+                # Update kick_ban
+                new_user["kicked_ban"] = True
+                new_users_list[i] = new_user
+                # Remove join messages
+                print("[{}] - Removing messages from user...".format(chat_id))
+                j = 0
+                while j < len(to_delete_join_messages_list):
+                    msg = to_delete_join_messages_list[j]
+                    if msg["user_id"] == new_user["user_id"]:
+                        if msg["chat_id"] == new_user["chat_id"]:
+                            # Uncomment next line to remove "user join" message too
+                            #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
+                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
+                            tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                            tlg_msg_to_selfdestruct(msg["msg_id_join0"])
+                            to_delete_join_messages_list.remove(msg)
                             break
-                j = j + 1
-            if not ban_user:
-                print("[{}] - Captcha not solved, kicking {} ({})...".format(chat_id, \
-                      new_user["user_name"], new_user["user_id"]))
-                # Try to kick the user
-                kick_result = tlg_kick_user(bot, new_user["chat_id"], new_user["user_id"])
-                # Remove user from new users list
-                new_users_list.remove(new_user)
-                if kick_result == 1:
-                    # Kick success
-                    bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
-                    print("[{}] - OK".format(chat_id))
-                else:
-                    # Kick fail
-                    print("[{}] - Can't kick".format(chat_id))
-                    if kick_result == -1:
-                        # The user is not in the chat
-                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format( \
-                                  new_user["user_name"])
-                    elif kick_result == -2:
-                        # Bot has no privileges to ban
-                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format( \
-                                  new_user["user_name"])
-                    else:
-                        # For other reason, the Bot can't ban
-                        bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
-                # Set to auto-remove the kick message too, after a while
-                tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-            else:
-                print("[{}] - Captcha not solved, banning {} ({})...".format(chat_id, \
-                      new_user["user_name"], new_user["user_id"]))
-                # Try to ban the user and notify Admins
-                ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
-                print(ban_result)
-                # Remove user from new users list
-                new_users_list.remove(new_user)
-                if ban_result == 1:
-                    # Ban success
-                    bot_msg = TEXT[lang]["NEW_USER_BAN"].format(new_user["user_name"])
-                    print("[{}] - OK".format(chat_id))
-                else:
-                    # Ban fail
-                    print("[{}] - Can't ban".format(chat_id))
-                    if ban_result == -1:
-                        # The user is not in the chat
-                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_IN_CHAT'].format( \
-                                  new_user["user_name"])
-                    elif ban_result == -2:
-                        # Bot has no privileges to ban
-                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_RIGHTS'].format( \
-                                  new_user["user_name"])
-                    else:
-                        # For other reason, the Bot can't ban
-                        bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"])
-                # Send ban notify message
-                print(bot_msg)
-                bot.send_message(chat_id, bot_msg)
-            # Remove join messages
-            print("[{}] - Removing messages from user...".format(chat_id))
-            j = 0
-            while j < len(to_delete_join_messages_list):
-                msg = to_delete_join_messages_list[j]
-                if msg["user_id"] == new_user["user_id"]:
-                    if msg["chat_id"] == new_user["chat_id"]:
-                        # Uncomment next line to remove "user join" message too
-                        #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
-                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
-                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                        tlg_msg_to_selfdestruct(msg["msg_id_join0"])
-                        to_delete_join_messages_list.remove(msg)
-                        break
-                j = j + 1
-            print("[{}] - end".format(chat_id))
+                    j = j + 1
+                print("[{}] - end".format(chat_id))
         i = i + 1
 
 ####################################################################################################

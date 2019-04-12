@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/04/2019
+    12/04/2019
 Version:
-    1.1.4
+    1.1.5
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.1.4 (11/04/2019)' # Bot version
+    'VERSION' : '1.1.5 (12/04/2019)' # Bot version
 }
 
 TEXT = {
@@ -42,7 +42,7 @@ TEXT = {
         'START' : \
             'Hello, I am a Bot that send a captcha for each new user who join a group, and kick ' \
             'any of them that can\'t solve the captcha in a specified time. If one user try to ' \
-            'join the group for 3 times and never solve the captcha, I will assume that the ' \
+            'join the group for 3 times and never solve the captcha, I will assume that this ' \
             '"user" is a Bot, and It will be ban.\n' \
             '\n' \
             'Remember to give me administration privileges to kick-ban users and remove messages.' \
@@ -126,7 +126,7 @@ TEXT = {
             'mins, you will be automatically kick from the group.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha solved, user verified. Welcome to the group {}.',
+            'Captcha solved, user verified.\nWelcome to the group {}.',
 
         'CAPTCHA_INCORRECT_0' : \
             'That is not the correct number. Try again...',
@@ -313,7 +313,7 @@ TEXT = {
             '{} mins, serás kickeado del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha resuelto, usuario verificado. Bienvenido al grupo {}.',
+            'Captcha resuelto, usuario verificado.\nBienvenido al grupo {}.',
 
         'CAPTCHA_INCORRECT_0' : \
             'Ese no es el número correcto. Inténtalo nuevamente...',
@@ -505,7 +505,7 @@ TEXT = {
             'não enviar o captcha em {} minutos, você será automaticamente expulso do grupo.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha enviado, usuário verificado. Seja bem-vindo ao grupo {}.',
+            'Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}.',
 
         'CAPTCHA_INCORRECT_0' : \
             'Esse não é o número correto. Tente de novo...',
