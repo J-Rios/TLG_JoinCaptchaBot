@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     12/04/2019
 Version:
-    1.2.0
+    1.2.1
 '''
 
 ####################################################################################################
@@ -36,16 +36,18 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.2.0 (12/04/2019)' # Bot version
+    'VERSION' : '1.2.1 (12/04/2019)' # Bot version
 }
 
 TEXT = {
     'EN' : {
         'START' : \
-            'Hello, I am a Bot that send a captcha for each new user who join a group, and kick ' \
-            'any of them that can\'t solve the captcha in a specified time. If one user try to ' \
+            'Hello, I am a Bot that send an image captcha for each new user who join a group, and ' \
+            'kick anyone that can\'t solve the captcha in a specified time. If one user try to ' \
             'join the group for 3 times and never solve the captcha, I will assume that this ' \
-            '"user" is a Bot, and It will be ban.\n' \
+            '"user" is a Bot, and It will be ban. Also, any message that contains an URL sent ' \
+            'by a new "user" before captcha completion, will be considered Spam and will be ' \
+            'deleted.\n' \
             '\n' \
             'Remember to give me administration privileges to kick-ban users and remove messages.' \
             '\n' \
@@ -59,6 +61,9 @@ TEXT = {
             '\n' \
             '- If one user try to join the group for 3 times and never can\'t solve the captcha, ' \
             'I will assume that the "user" is a Bot, and it will be ban.\n' \
+            '\n' \
+            '- Any message that contains an URL that has been sent by a new "user" before captcha ' \
+            'completion, will be considered Spam and will be deleted.\n' \
             '\n' \
             '- You need to provide me Administration rights for kick users and remove messages.\n' \
             '\n' \
@@ -213,15 +218,17 @@ TEXT = {
         'COMMANDS' : \
             'List of commands:\n' \
             '————————————————\n' \
-            '/start - Show the initial information about the bot.\n' \
+            '/start - Shows the initial information about the bot.\n' \
             '\n' \
-            '/help - Show the help information.\n' \
+            '/help - Shows the help information.\n' \
             '\n' \
-            '/commands - Show the actual message. Information about all the available commands ' \
+            '/commands - Shows the actual message. Information about all the available commands ' \
             'and their description.\n' \
             '\n' \
-            '/language - Allow to change the language of the bot messages. Actual available ' \
+            '/language - Allows to change the language of the bot messages. Actual available ' \
             'languages: en (english) - es (spanish) - pt_br (portuguese from Brazil).\n' \
+            '\n' \
+            '/time - Allows to change the time available to resolve a captcha.\n' \
             '\n' \
             '/enable - Enable the captcha protection of the group.\n' \
             '\n' \
@@ -233,10 +240,12 @@ TEXT = {
     },
     'ES' : {
         'START' : \
-            'Hola, soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
-            'kickeo a los que no resuelvan el captcha en un tiempo determinado. Si un usuario ' \
-            'ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, supondré que ese ' \
-            '"usuario" es un Bot y lo banearé.\n' \
+            'Hola, soy un Bot que envia una imagen captcha a cada nuevo usuario que se une al ' \
+            'grupo, y kickeo a los que no resuelvan el captcha en un tiempo determinado. Si un ' \
+            'usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, supondré ' \
+            'que ese "usuario" es un Bot y lo banearé. Además, cualquier mensaje que contenga ' \
+            'una URL y haya sido enviado por un nuevo "usuario" antes de que este haya resuelto ' \
+            'el captcha, será considerado un mensaje de Spam y será borrado.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
             'administración para suspender usuarios y eliminar mensajes del grupo.\n' \
@@ -251,6 +260,10 @@ TEXT = {
             '\n' \
             '- Si un usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, ' \
             'supondré que ese "usuario" es un Bot y lo banearé.\n' \
+            '\n' \
+            '- Cualquier mensaje que contenga una URL y haya sido enviado por un nuevo "usuario" ' \
+            'antes de que este haya resuelto el captcha, será considerado un mensaje de Spam y ' \
+            'será borrado.\n' \
             '\n' \
             '- Debes darme permisos de Administración para suspender usuarios y eliminar ' \
             'mensajes.\n' \
@@ -423,6 +436,8 @@ TEXT = {
             '/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente ' \
             'disponibles: es (español) - en (inglés) - pt_br (portugués de Brasil).\n' \
             '\n' \
+            '/time - Permite cambiar el tiempo disponible para resolver un captcha.\n' \
+            '\n' \
             '/enable - Activa la protección captcha en el grupo.\n' \
             '\n' \
             '/disable - Desactiva la protección captcha en el grupo.\n' \
@@ -433,10 +448,12 @@ TEXT = {
     },
     'PT_BR' : {
         'START' : \
-            'Olá, eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e ' \
-            'expulsa aquele que não enviar o captcha no tempo definido. Se um usuário tentar ' \
-            'entrar no grupo 3 vezes sem enviar o captcha corretamente, vou assumir que esse ' \
-            '"usuário" é um Bot, e ele será banido.\n' \
+            'Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra ' \
+            'no grupo e expulsa aquele que não enviar o captcha no tempo definido. Se um usuário ' \
+            'tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, vou assumir que ' \
+            'esse "usuário" é um Bot, e ele será banido. Também, qualquer mensagem que contenha ' \
+            'um URL que tenha sido enviado por um novo "usuário" antes da conclusão do captcha, ' \
+            'será considerada Spam e será excluída.\n' \
             '\n' \
             'Lembre-se de dar privilégios de administrador para que eu possa expulsar-banir ' \
             'usuários e excluir mensagens do grupo.\n' \
@@ -451,6 +468,9 @@ TEXT = {
             '\n' \
             '- Se um usuário tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, ' \
             'vou assumir que esse “usuário” é um Bot, e ele será banido.\n' \
+            '\n' \
+            '- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo ' \
+            '"usuário" antes da conclusão do captcha, será considerada Spam e será excluída.\n' \
             '\n' \
             '- Você tem que me dar privilégios de administrador para que eu possa expulsar e ' \
             'banir usuários, e remover mensagens.\n' \
@@ -618,6 +638,8 @@ TEXT = {
             '\n' \
             '/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis ' \
             'são: en (inglês) - es (espanhol) - pt_br (português BR).\n' \
+            '\n' \
+            '/time - Permite alterar o tempo disponível para resolver um captcha.\n' \
             '\n' \
             '/enable - Ativa a proteção captcha no grupo.\n' \
             '\n' \

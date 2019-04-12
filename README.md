@@ -1,5 +1,6 @@
 # TLG_JoinCaptchaBot
-Bot to verify if a new user, who join a group, is human. The Bot send an image captcha for each new user, and kick any of them that can't solve the captcha in a specified time.
+Bot to verify if a new user, who join a group, is human.
+The Bot send an image captcha for each new user, and kick any of them that can't solve the captcha in a specified time. Also, any message that contains an URL sent by a new "user" before captcha completion, will be considered Spam and will be deleted.
 
 ### Installation:
 
