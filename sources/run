@@ -1,0 +1,12 @@
+PID=ps -aux | grep -e "[j]oin_captcha_bot.py" | awk 'FNR == 1 {print $2}'
+
+if [ -z "$PID" ]; then
+    rm -f ./data/captchas/*
+    nohup python3 -u join_captcha_bot.py > output.log 2>&1 &
+    echo "Starting Script..."
+    ./status
+    exit 0
+else
+    echo "Already running."
+    exit 1
+fi
