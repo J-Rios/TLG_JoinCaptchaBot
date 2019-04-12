@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     12/04/2019
 Version:
-    1.1.5
+    1.2.0
 '''
 
 ####################################################################################################
@@ -30,11 +30,13 @@ CONST = {
     'INIT_ENABLE' : True, # Initial enable/disable status at Bot start
     'INIT_CAPTCHA_TIME_MIN' : 5, # Initial captcha solve time (in minutes)
     'T_DEL_MSG' : 5, # Default time (in mins) to remove self-destruct sent messages from the Bot
+    'F_TLDS' : './tlds-alpha-by-domain.txt', # IANA TLD list (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
+    'REGEX_URLS' : r'((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))',
     'DEVELOPER' : '@JoseTLG', # Bot developer
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.1.5 (12/04/2019)' # Bot version
+    'VERSION' : '1.2.0 (12/04/2019)' # Bot version
 }
 
 TEXT = {
@@ -172,6 +174,15 @@ TEXT = {
             'Warning: This is the third time that {} has tried to join the group and fail to ' \
             'resolve the captcha. I try to ban the "User", but for some unexpected problem ' \
             '(maybe network/server related), I can\'t do it.',
+
+        'SPAM_DETECTED_RM' : \
+            'Detected a message with an URL from {}, who has not solved the captcha yet. ' \
+            'The message has been removed for the sake of a Telegram free of spam :)',
+
+        'SPAM_DETECTED_NOT_RM' : \
+            'Message with an URL detected from {}, who has not solved the captcha yet. ' \
+            'I try to remove the Spam message, but I don\'t have the administration rights for ' \
+            'remove messages that has not been sent by me.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
@@ -364,6 +375,15 @@ TEXT = {
             'problema inesperado (quizás relacionado con la red o el servidor), no he podido ' \
             'hacerlo.',
 
+        'SPAM_DETECTED_RM' : \
+            'Se ha detectado un mensaje con URL enviado por {}, quien aún no ha resuelto el ' \
+            'captcha. El mensaje ha sido eliminado en aras de un Telegram libre de Spam :)',
+
+        'SPAM_DETECTED_NOT_RM' : \
+            'Se ha detectado un mensaje con URL enviado por {}, quien aún no ha resuelto el ' \
+            'captcha. He intentado borrar el mensaje, pero no se me han dado los privilegios de ' \
+            'administración necesarios para eliminar mensajes que no son míos.',
+
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Otro Captcha',
 
@@ -551,6 +571,15 @@ TEXT = {
             'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
             'captcha. Eu tentei banir o "usuário", mas algo deu errado (talvez algo relacionado ' \
             'à rede ou servidor). Não pude fazê-lo.',
+
+        'SPAM_DETECTED_RM' : \
+            'Detectou uma mensagem com um URL de {}, que ainda não resolveu o captcha. ' \
+            'A mensagem foi removida por causa de um Telegram livre de spam :)',
+
+        'SPAM_DETECTED_NOT_RM' : \
+            'Detectou uma mensagem com um URL de {}, que ainda não resolveu o captcha. ' \
+            'Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para ' \
+            'remover mensagens que não foram enviadas por mim.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Outro Captcha',

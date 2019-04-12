@@ -15,12 +15,13 @@ Creation date:
 Last modified date:
     12/04/2019
 Version:
-    1.1.5
+    1.2.0
 '''
 
 ####################################################################################################
 
 ### Imported modules ###
+import re
 from sys import exit
 from signal import signal, SIGTERM, SIGINT
 from os import path, remove, makedirs, listdir
@@ -95,6 +96,33 @@ def initialize_resources():
                     default_conf = get_default_config_data()
                     for key, value in default_conf.items():
                         save_config_property(f_chat_id, key, value)
+    # Load and generate URL detector regex from TLD list file
+    load_urls_regex(CONST["F_TLDS"])
+
+
+def load_urls_regex(file_path):
+    '''Load URL detection Regex from IANA TLD list text file.'''
+    tlds_str = ""
+    list_file_lines = []
+    try:
+        with open(file_path, "r") as f:
+            for line in f:
+                if line is None:
+                    continue
+                if (line == "") or (line == "\r\n") or (line == "\r") or (line == "\n"):
+                    continue
+                # Ignore lines that start with # (first header line of IANA TLD list file)
+                if line[0] == "#":
+                    continue
+                line = line.lower()
+                line = line.replace("\r", "")
+                line = line.replace("\n", "|")
+                list_file_lines.append(line)
+    except Exception as e:
+        printts("Error when opening file \"{}\". {}".format(file_path, str(e)))
+    if len(list_file_lines) > 0:
+        tlds_str = "".join(list_file_lines)
+    CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
 
 
 def create_image_captcha(img_file_name):
@@ -554,6 +582,7 @@ def msg_nocmd(bot, update):
     chat_type = update.message.chat.type
     user_id = update.message.from_user.id
     msg_text = update.message.text
+    msg_id = update.message.message_id
     # Verify if we are in a group
     if chat_type != "private":
         # Get and update chat data
@@ -629,6 +658,24 @@ def msg_nocmd(bot, update):
                                                           TEXT[lang]["CAPTCHA_INCORRECT_1"])
                                 update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", \
                                                              sent_msg_id)
+                        else:
+                            # Check if the message contains any URL
+                            has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+                            if has_url:
+                                printts("[{}] - Spammer detected: {}.".format(chat_id, \
+                                        new_user["user_name"]))
+                                printts("[{}] - Removing spam message: {}.".format(chat_id, \
+                                        msg_text))
+                                # Try to remove the message and notify detection
+                                rm_result = tlg_delete_msg(bot, chat_id, msg_id)
+                                if rm_result == 1:
+                                    bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format( \
+                                              new_user["user_name"])
+                                # Check if message cant be removed due to not delete msg privileges
+                                if rm_result == -2:
+                                    bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format( \
+                                              new_user["user_name"])
+                                tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                     break
                 i = i + 1
 
@@ -928,9 +975,9 @@ def check_time_to_kick_not_verify_users(bot):
     while i < len(new_users_list):
         new_user = new_users_list[i]
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
-        # Remove from new users list, the remaining kicked users that doesnt try to join group 
-        # again in 1 hour (this allows to keep join retries in same chat, so user ban just happen 
-        # if a user try to join the group and fail to solve the captcha 3 times in the past hour)
+        # Remove from new users list the remaining kicked users that have not solve the captcha in 
+        # 1 hour (user ban just happen if a user try to join the group and fail to solve the 
+        # captcha 3 times in the past hour)
         if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
             # Remove user from new users list
             new_users_list.remove(new_user)
@@ -940,7 +987,7 @@ def check_time_to_kick_not_verify_users(bot):
                 chat_id = new_user["chat_id"]
                 lang = get_chat_config(chat_id, "Language")
                 printts(" ")
-                # Check if this "user" has try to join this chat 3 times and never get solve the captcha
+                # Check if this "user" has join this chat 3 times and never get solve the captcha
                 if new_user["join_retries"] < 3:
                     printts("[{}] - Captcha not solved, kicking {} ({})...".format(chat_id, \
                         new_user["user_name"], new_user["user_id"]))
