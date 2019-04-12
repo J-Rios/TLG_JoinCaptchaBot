@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     12/04/2019
 Version:
-    1.2.1
+    1.2.2
 '''
 
 ####################################################################################################
@@ -546,19 +546,17 @@ def msg_new_user(bot, update):
                                     if user["user_id"] == new_user["user_id"]:
                                         prev_user_data = user
                             if prev_user_data is not None:
-                                # Increase join retries and remove previous user data from list
-                                new_user["join_retries"] = prev_user_data["join_retries"] + 1
-                                printts("[{}] - User was kicked before. Increasing join retries..." \
-                                      .format(chat_id))
-                                printts("[{}] - Actual join retries {}".format(chat_id, \
-                                      new_user["join_retries"]))
-                                new_users_list.remove(prev_user_data)
-                            # Add new user data to lists
-                            printts("[{}] - Adding user to new users list...".format(chat_id))
-                            new_users_list.append(new_user)
-                            printts("[{}] - OK".format(chat_id))
-                            printts("[{}] - Adding join messages to messages delete list..." \
-                                  .format(chat_id))
+                                # Keep join retries and remove previous user data from list
+                                new_user["join_retries"] = prev_user_data["join_retries"]
+                                prev_pos = new_users_list.index(prev_user_data)
+                                new_users_list[prev_pos] = new_user
+                            else:
+                                # Add new user data to lists
+                                printts("[{}] - Adding user to new users list...".format(chat_id))
+                                new_users_list.append(new_user)
+                                printts("[{}] - OK".format(chat_id))
+                                printts("[{}] - Adding join messages to messages delete list..." \
+                                    .format(chat_id))
                             # Add join messages to delete
                             msg = \
                             {
@@ -975,13 +973,14 @@ def check_time_to_kick_not_verify_users(bot):
     while i < len(new_users_list):
         new_user = new_users_list[i]
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
-        # Remove from new users list the remaining kicked users that have not solve the captcha in 
-        # 1 hour (user ban just happen if a user try to join the group and fail to solve the 
-        # captcha 3 times in the past hour)
-        if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
-            # Remove user from new users list
-            new_users_list.remove(new_user)
-        if new_user["kicked_ban"] == False:
+        if new_user["kicked_ban"] == True:
+            # Remove from new users list the remaining kicked users that have not solve the captcha 
+            # in 1 hour (user ban just happen if a user try to join the group and fail to solve the 
+            # captcha 3 times in the past hour)
+            if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
+                # Remove user from new users list
+                new_users_list.remove(new_user)
+        else:
             # If time for kick/ban has arrived
             if time() >= new_user["join_time"] + captcha_timeout*60:
                 chat_id = new_user["chat_id"]
@@ -997,6 +996,10 @@ def check_time_to_kick_not_verify_users(bot):
                         # Kick success
                         bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
                         printts("[{}] - OK".format(chat_id))
+                        # Increase join retries
+                        new_user["join_retries"] = new_user["join_retries"] + 1
+                        printts("[{}] - Increased join_retries to {}".format(chat_id, \
+                                new_user["join_retries"]))
                     else:
                         # Kick fail
                         printts("[{}] - Can't kick".format(chat_id))
@@ -1018,7 +1021,6 @@ def check_time_to_kick_not_verify_users(bot):
                         new_user["user_name"], new_user["user_id"]))
                     # Try to ban the user and notify Admins
                     ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
-                    printts(ban_result)
                     # Remove user from new users list
                     new_users_list.remove(new_user)
                     if ban_result == 1:
@@ -1042,9 +1044,11 @@ def check_time_to_kick_not_verify_users(bot):
                     # Send ban notify message
                     printts(bot_msg)
                     bot.send_message(chat_id, bot_msg)
-                # Update kick_ban
+                # Update user info (join_retries & kick_ban)
                 new_user["kicked_ban"] = True
-                new_users_list[i] = new_user
+                if new_user in new_users_list:
+                    pos = new_users_list.index(new_user)
+                    new_users_list[pos] = new_user
                 # Remove join messages
                 printts("[{}] - Removing messages from user...".format(chat_id))
                 j = 0
