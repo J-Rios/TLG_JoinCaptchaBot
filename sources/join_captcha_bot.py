@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     13/04/2019
 Version:
-    1.2.3
+    1.2.4
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ from random import randint
 
 from constants import CONST, TEXT
 from tsjson import TSjson
-from img_captcha_gen import CaptchaGenerator
+from lib.multicolor_captcha_generator.img_captcha_gen import CaptchaGenerator
 
 ####################################################################################################
 

@@ -4,7 +4,7 @@ The Bot send an image captcha for each new user, and kick any of them that can't
 
 ### Installation:
 
-To generate Captchas, the Bot uses [multicolor-captcha-generator library](https://github.com/J-Rios/multicolor-captcha-generator), wich uses Pillow to generate the images.
+To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), wich uses Pillow to generate the images.
 
 1. Install Pillow prerequisites:
 ```
@@ -13,7 +13,7 @@ apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-d
 
 2. Get the project and install JoinCaptchaBot requirements:
 ```
-git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
+git clone --recurse-submodules https://github.com/J-Rios/TLG_JoinCaptchaBot
 pip install -r TLG_JoinCaptchaBot/requirements.txt
 ```
 
