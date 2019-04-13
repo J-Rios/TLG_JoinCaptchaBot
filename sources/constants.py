@@ -10,14 +10,15 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    12/04/2019
+    13/04/2019
 Version:
-    1.2.2
+    1.2.3
 '''
 
 ####################################################################################################
 
 ### Constants ###
+
 CONST = {
     'TOKEN' : 'XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', # Bot Token (get it from @BotFather)
     'DATA_DIR' : './data', # Data directory path
@@ -30,26 +31,28 @@ CONST = {
     'INIT_ENABLE' : True, # Initial enable/disable status at Bot start
     'INIT_CAPTCHA_TIME_MIN' : 5, # Initial captcha solve time (in minutes)
     'T_DEL_MSG' : 5, # Default time (in mins) to remove self-destruct sent messages from the Bot
-    'F_TLDS' : './tlds-alpha-by-domain.txt', # IANA TLD list (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
+    'F_TLDS' : 'tlds-alpha-by-domain.txt', # IANA TLD list (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     'REGEX_URLS' : r'((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))',
     'DEVELOPER' : '@JoseTLG', # Bot developer
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.2.2 (12/04/2019)' # Bot version
+    'VERSION' : '1.2.3 (13/04/2019)' # Bot version
 }
 
 TEXT = {
     'EN' : {
         'START' : \
-            'Hello, I am a Bot that send an image captcha for each new user who join a group, and ' \
-            'kick anyone that can\'t solve the captcha in a specified time. If one user try to ' \
-            'join the group for 3 times and never solve the captcha, I will assume that this ' \
-            '"user" is a Bot, and It will be ban. Also, any message that contains an URL sent ' \
-            'by a new "user" before captcha completion, will be considered Spam and will be ' \
-            'deleted.\n' \
+            'Hello, I am a Bot that send an image captcha for each new user who join a group, ' \
+            'and kick anyone that can\'t solve the captcha in a specified time.\n' \
             '\n' \
-            'Remember to give me administration privileges to kick-ban users and remove messages.' \
+            'If one user try to join the group for 3 times and never solve the captcha, I will ' \
+            'assume that this "user" is a Bot, and It will be ban. Also, any message that ' \
+            'contains an URL sent by a new "user" before captcha completion, will be considered ' \
+            'Spam and will be deleted.\n' \
+            '\n' \
+            'Remember to give me administration privileges to kick-ban users and remove ' \
+            'messages.\n' \
             '\n' \
             'Check /help command for more information about my usage.',
 
@@ -62,8 +65,8 @@ TEXT = {
             '- If one user try to join the group for 3 times and never can\'t solve the captcha, ' \
             'I will assume that the "user" is a Bot, and it will be ban.\n' \
             '\n' \
-            '- Any message that contains an URL that has been sent by a new "user" before captcha ' \
-            'completion, will be considered Spam and will be deleted.\n' \
+            '- Any message that contains an URL that has been sent by a new "user" before ' \
+            'captcha completion, will be considered Spam and will be deleted.\n' \
             '\n' \
             '- You need to provide me Administration rights for kick users and remove messages.\n' \
             '\n' \
@@ -241,11 +244,12 @@ TEXT = {
     'ES' : {
         'START' : \
             'Hola, soy un Bot que envia una imagen captcha a cada nuevo usuario que se une al ' \
-            'grupo, y kickeo a los que no resuelvan el captcha en un tiempo determinado. Si un ' \
-            'usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, supondré ' \
-            'que ese "usuario" es un Bot y lo banearé. Además, cualquier mensaje que contenga ' \
-            'una URL y haya sido enviado por un nuevo "usuario" antes de que este haya resuelto ' \
-            'el captcha, será considerado un mensaje de Spam y será borrado.\n' \
+            'grupo, y kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
+            '\n' \
+            'Si un usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, ' \
+            'supondré que ese "usuario" es un Bot y lo banearé. Además, cualquier mensaje que ' \
+            'contenga una URL y haya sido enviado por un nuevo "usuario" antes de que este haya ' \
+            'resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
             'administración para suspender usuarios y eliminar mensajes del grupo.\n' \
@@ -449,11 +453,12 @@ TEXT = {
     'PT_BR' : {
         'START' : \
             'Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra ' \
-            'no grupo e expulsa aquele que não enviar o captcha no tempo definido. Se um usuário ' \
-            'tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, vou assumir que ' \
-            'esse "usuário" é um Bot, e ele será banido. Também, qualquer mensagem que contenha ' \
-            'um URL que tenha sido enviado por um novo "usuário" antes da conclusão do captcha, ' \
-            'será considerada Spam e será excluída.\n' \
+            'no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n' \
+            '\n' \
+            'Se um usuário tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, vou ' \
+            'assumir que esse "usuário" é um Bot, e ele será banido. Também, qualquer mensagem ' \
+            'que contenha um URL que tenha sido enviado por um novo "usuário" antes da conclusão ' \
+            'do captcha, será considerada Spam e será excluída.\n' \
             '\n' \
             'Lembre-se de dar privilégios de administrador para que eu possa expulsar-banir ' \
             'usuários e excluir mensagens do grupo.\n' \

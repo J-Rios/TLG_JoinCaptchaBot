@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    12/04/2019
+    13/04/2019
 Version:
-    1.2.2
+    1.2.3
 '''
 
 ####################################################################################################
@@ -97,7 +97,8 @@ def initialize_resources():
                     for key, value in default_conf.items():
                         save_config_property(f_chat_id, key, value)
     # Load and generate URL detector regex from TLD list file
-    load_urls_regex(CONST["F_TLDS"])
+    actual_script_path = path.dirname(path.realpath(__file__))
+    load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
 
 
 def load_urls_regex(file_path):
@@ -579,8 +580,22 @@ def msg_nocmd(bot, update):
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     user_id = update.message.from_user.id
-    msg_text = update.message.text
     msg_id = update.message.message_id
+    msg_text = update.message.text
+    # Check if message has a text link (embedded url in text) and get it
+    msg_entities = getattr(update.message, "entities", None)
+    if msg_entities is not None:
+        for entity in msg_entities:
+            url = getattr(entity, "url", None)
+            if url is not None:
+                if url != "":
+                    msg_text = "{} [{}]".format(msg_text, url)
+                    break
+    # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
+    if msg_text is None:
+        msg_text = getattr(update.message, "caption_html", None)
+    if msg_text is None:
+        msg_text = getattr(update.message, "caption", None)
     # Verify if we are in a group
     if chat_type != "private":
         # Get and update chat data
@@ -1079,7 +1094,9 @@ def main():
     updater = Updater(CONST["TOKEN"])
     dp = updater.dispatcher
     # Set to dispatcher a not-command text messages handler
-    dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
+    dp.add_handler(MessageHandler(Filters.text | Filters.photo | Filters.audio | Filters.voice | \
+        Filters.video | Filters.sticker | Filters.document | Filters.location | Filters.contact, \
+        msg_nocmd))
     # Set to dispatcher a new member join the group and member left the group events handlers
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
     # Set to dispatcher request new captcha button callback handler
