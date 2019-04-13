@@ -167,7 +167,11 @@ class CaptchaGenerator:
     def gen_rand_size_font(self, font_path, min_size, max_size):
         '''Generate a random size font PIL object from the given font file path.'''
         font_size = randint(min_size, max_size)
-        font = ImageFont.truetype(font_path, font_size)
+        try:
+            font = ImageFont.truetype(font_path, font_size)
+        except OSError:
+            print("Incompatible font for captcha. Using standard arial.ttf")
+            font = ImageFont.truetype("arial.ttf", font_size)
         return font
 
 
