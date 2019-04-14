@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     14/04/2019
 Version:
-    1.2.6
+    1.2.7
 '''
 
 ####################################################################################################
@@ -421,6 +421,7 @@ def tlg_kick_user(bot, chat_id, user_id):
 def tlg_check_chat_type(bot, chat_id_or_alias):
     '''Telegram check if a chat exists and what type it is (user, group, channel).'''
     chat_type = None
+    # Check if it is a group or channel
     try:
         get_chat = bot.getChat(chat_id_or_alias)
         chat_type = getattr(get_chat, "type", None)
@@ -678,20 +679,23 @@ def msg_nocmd(bot, update):
                 # Check if the message contains any URL
                 has_url = re.findall(CONST["REGEX_URLS"], msg_text)
                 # Check if the message contains any alias and if it is a group or channel alias
-                has_alias_text = False
+                has_alias = False
                 alias = ""
                 for word in msg_text.split():
                     if (len(word) > 1) and (word[0] == '@'):
-                        has_alias_text = True
+                        has_alias = True
                         alias = word
                         break
-                # Check if the detected alias is from a valid chat
-                has_alias = False
-                if has_alias_text:
-                    chat_type = tlg_check_chat_type(bot, alias)
+                # Check if the detected alias is from a valid chat (commented due to getChat 
+                # request doesnt tell us if an alias is from an user, just group or channel)
+                #has_alias = False
+                #if has_alias:
+                #    chat_type = tlg_check_chat_type(bot, alias)
                     # A None value in chat_type is for not telegram chat found
-                    if chat_type is not None:
-                        has_alias = True
+                #    if chat_type is not None:
+                #        has_alias = True
+                #    else:
+                #        has_alias = False
                 # Remove and notify if url/alias detection
                 if has_url or has_alias:
                     printts("[{}] Spammer detected: {}.".format(chat_id, new_user["user_name"]))
