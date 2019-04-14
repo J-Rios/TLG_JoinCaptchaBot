@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     14/04/2019
 Version:
-    1.2.5
+    1.2.6
 '''
 
 ####################################################################################################
@@ -37,7 +37,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.2.5 (14/04/2019)' # Bot version
+    'VERSION' : '1.2.6 (14/04/2019)' # Bot version
 }
 
 TEXT = {
@@ -184,13 +184,13 @@ TEXT = {
             '(maybe network/server related), I can\'t do it.',
 
         'SPAM_DETECTED_RM' : \
-            'Detected a message with an URL from {}, who has not solved the captcha yet. ' \
-            'The message has been removed for the sake of a Telegram free of spam :)',
+            'Detected a message with an URL (or an alias) from {}, who has not solved the ' \
+            'captcha yet. The message has been removed for the sake of a Telegram free of Spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
-            'Message with an URL detected from {}, who has not solved the captcha yet. ' \
-            'I try to remove the Spam message, but I don\'t have the administration rights for ' \
-            'remove messages that has not been sent by me.',
+            'Message with an URL (or an alias) detected from {}, who has not solved the captcha ' \
+            'yet. I try to remove the Spam message, but I don\'t have the administration rights ' \
+            'for remove messages that has not been sent by me.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
@@ -393,13 +393,14 @@ TEXT = {
             'hacerlo.',
 
         'SPAM_DETECTED_RM' : \
-            'Se ha detectado un mensaje con URL enviado por {}, quien aún no ha resuelto el ' \
-            'captcha. El mensaje ha sido eliminado en aras de un Telegram libre de Spam :)',
+            'Se ha detectado un mensaje que contiene una URL (o alias) enviado por {}, quien aún ' \
+            'no ha resuelto el captcha. El mensaje ha sido eliminado en aras de un Telegram ' \
+            'libre de Spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
-            'Se ha detectado un mensaje con URL enviado por {}, quien aún no ha resuelto el ' \
-            'captcha. He intentado borrar el mensaje, pero no se me han dado los privilegios de ' \
-            'administración necesarios para eliminar mensajes que no son míos.',
+            'Se ha detectado un mensaje con URL (o alias) enviado por {}, quien aún no ha ' \
+            'resuelto el captcha. He intentado borrar el mensaje, pero no se me han dado los ' \
+            'privilegios de administración necesarios para eliminar mensajes que no son míos.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Otro Captcha',
@@ -598,13 +599,13 @@ TEXT = {
             'à rede ou servidor). Não pude fazê-lo.',
 
         'SPAM_DETECTED_RM' : \
-            'Detectou uma mensagem com um URL de {}, que ainda não resolveu o captcha. ' \
-            'A mensagem foi removida por causa de um Telegram livre de spam :)',
+            'Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o ' \
+            'captcha. A mensagem foi removida por causa de um Telegram livre de spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
-            'Detectou uma mensagem com um URL de {}, que ainda não resolveu o captcha. ' \
-            'Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para ' \
-            'remover mensagens que não foram enviadas por mim.',
+            'Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o ' \
+            'captcha. Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos ' \
+            'para remover mensagens que não foram enviadas por mim.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Outro Captcha',
