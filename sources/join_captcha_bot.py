@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/04/2019
+    16/04/2019
 Version:
-    1.2.7
+    1.2.8
 '''
 
 ####################################################################################################
@@ -632,6 +632,10 @@ def msg_nocmd(bot, update):
         if new_user["user_id"] != user_id:
             i = i + 1
             continue
+        # If not the chat for expected user captcha number
+        if new_user["chat_id"] != chat_id:
+            i = i + 1
+            continue
         # Check if the expected captcha solve number is in the message
         printts("[{}] Message to resolve captcha send by {}: {}".format(chat_id, \
                 new_user["user_name"], msg_text))
@@ -1034,7 +1038,6 @@ def check_time_to_kick_not_verify_users(bot):
                 if kick_result == 1:
                     # Kick success
                     bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
-                    printts("[{}] OK".format(chat_id))
                     # Increase join retries
                     new_user["join_retries"] = new_user["join_retries"] + 1
                     printts("[{}] Increased join_retries to {}".format(chat_id, \
