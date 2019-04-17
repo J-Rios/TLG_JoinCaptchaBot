@@ -600,7 +600,7 @@ TEXT = {
 
         'SPAM_DETECTED_RM' : \
             'Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o ' \
-            'captcha. A mensagem foi removida por causa de um Telegram livre de spam :)',
+            'captcha. A mensagem foi removida em prol de um Telegram livre de spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
             'Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o ' \
