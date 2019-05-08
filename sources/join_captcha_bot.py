@@ -1049,15 +1049,22 @@ def check_time_to_kick_not_verify_users(bot):
                         # The user is not in the chat
                         bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format( \
                                 new_user["user_name"])
+                        # Set to auto-remove the kick message too, after a while
+                        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                     elif kick_result == -2:
                         # Bot has no privileges to ban
                         bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format( \
                                 new_user["user_name"])
+                        # Send no rights for kick message without auto-remove
+                        try:
+                            bot.send_message(chat_id, bot_msg)
+                        except Exception as e:
+                            printts("[{}] {}".format(chat_id, str(e)))
                     else:
                         # For other reason, the Bot can't ban
                         bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
-                # Set to auto-remove the kick message too, after a while
-                tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                        # Set to auto-remove the kick message too, after a while
+                        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
             # The user has join this chat 3 times and never succes to solve the captcha (ban)
             else:
                 printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id, \
