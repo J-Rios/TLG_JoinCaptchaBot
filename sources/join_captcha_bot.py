@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    16/04/2019
+    08/05/2019
 Version:
-    1.2.8
+    1.2.9
 '''
 
 ####################################################################################################
@@ -1084,7 +1084,10 @@ def check_time_to_kick_not_verify_users(bot):
                         bot_msg = TEXT[lang]['BOT_CANT_BAN'].format(new_user["user_name"])
                 # Send ban notify message
                 printts("[{}] {}".format(chat_id, bot_msg))
-                bot.send_message(chat_id, bot_msg)
+                try:
+                    bot.send_message(chat_id, bot_msg)
+                except Exception as e:
+                    printts("[{}] {}".format(chat_id, str(e)))
             # Update user info (join_retries & kick_ban)
             new_user["kicked_ban"] = True
             if new_user in new_users_list:
