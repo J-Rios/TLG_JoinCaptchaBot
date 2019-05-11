@@ -652,13 +652,13 @@ def msg_nocmd(bot, update):
             printts("[{}] Captcha solved by {}".format(chat_id, new_user["user_name"]))
             j = 0
             while j < len(to_delete_join_messages_list):
-                msg = to_delete_join_messages_list[j]
-                if (msg["user_id"] == user_id) and (msg["chat_id"] == chat_id):
+                msg_del = to_delete_join_messages_list[j]
+                if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
                     # Uncomment next line to remove "user join" message too
-                    #tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
-                    tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
-                    tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                    to_delete_join_messages_list.remove(msg)
+                    #tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join0"].message_id)
+                    tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join1"])
+                    tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
+                    to_delete_join_messages_list.remove(msg_del)
                     break
                 j = j + 1
             # Remove user captcha numbers message
@@ -675,9 +675,9 @@ def msg_nocmd(bot, update):
             # Check if the message was just a 4 numbers msg
             if is_int(msg_text):
                 # Remove previously error message (if any)
-                for msg in to_delete_join_messages_list:
-                    if (msg["user_id"] == user_id) and (msg["chat_id"] == chat_id):
-                        tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
+                for msg_del in to_delete_join_messages_list:
+                    if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
+                        tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
                 # Check if the message has 4 digits
                 if len(msg_text) == 4:
                     sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
