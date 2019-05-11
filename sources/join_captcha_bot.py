@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    08/05/2019
+    11/05/2019
 Version:
-    1.2.9
+    1.3.0
 '''
 
 ####################################################################################################
@@ -583,43 +583,51 @@ def msg_nocmd(bot, update):
     '''All Not-command messages handler'''
     global to_delete_join_messages_list
     global new_users_list
+    # Check for normal or edited message
+    msg = getattr(update, "message", None)
+    if msg == None:
+        msg = getattr(update, "edited_message", None)
     # Ignore if message comes from a private chat
-    if update.message.chat.type == "private":
+    if msg.chat.type == "private":
         return
     # Ignore if captcha protection is enabled
-    captcha_enable = get_chat_config(update.message.chat_id, "Enabled")
+    captcha_enable = get_chat_config(msg.chat_id, "Enabled")
     if captcha_enable == False:
         return
-    # Get message data
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    msg_id = update.message.message_id
-    msg_text = update.message.text
+    # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
+    msg_text = getattr(msg, "text", None)
+    if msg_text is None:
+        msg_text = getattr(msg, "caption_html", None)
+    if msg_text is None:
+        msg_text = getattr(msg, "caption", None)
     # Check if message has a text link (embedded url in text) and get it
-    msg_entities = getattr(update.message, "entities", None)
+    msg_entities = getattr(msg, "entities", None)
     if msg_entities is not None:
         for entity in msg_entities:
             url = getattr(entity, "url", None)
             if url is not None:
                 if url != "":
-                    msg_text = "{} [{}]".format(msg_text, url)
+                    if msg_text is None:
+                        msg_text = url
+                    else:
+                        msg_text = "{} [{}]".format(msg_text, url)
                     break
-    # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
-    if msg_text is None:
-        msg_text = getattr(update.message, "caption_html", None)
-    if msg_text is None:
-        msg_text = getattr(update.message, "caption", None)
+    # Get others message data
+    chat_id = msg.chat_id
+    user_id = msg.from_user.id
+    msg_id = msg.message_id
     # Get and update chat data
-    chat_title = update.message.chat.title
+    chat_title = msg.chat.title
     if chat_title:
         save_config_property(chat_id, "Title", chat_title)
-    chat_link = update.message.chat.username
+    chat_link = msg.chat.username
     if chat_link:
         chat_link = "@{}".format(chat_link)
         save_config_property(chat_id, "Link", chat_link)
-    user_name = update.message.from_user.full_name
-    if update.message.from_user.username != None:
-        user_name = "{}(@{})".format(user_name, update.message.from_user.username)
+    user_name = msg.from_user.full_name
+    if msg.from_user.username != None:
+        user_name = "{}(@{})".format(user_name, msg.from_user.username)
+    # Set default text message if not received
     if msg_text is None:
         msg_text = "[Not a text message]"
     # Determine configured bot language in actual chat
@@ -654,7 +662,7 @@ def msg_nocmd(bot, update):
                     break
                 j = j + 1
             # Remove user captcha numbers message
-            tlg_delete_msg(bot, chat_id, update.message.message_id)
+            tlg_delete_msg(bot, chat_id, msg.message_id)
             # Send captcha solved message and program selfdestruct in 5 minutes
             bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
             # Uncomment and use next first line instead the second, if we want Bot to auto-remove 
@@ -695,7 +703,7 @@ def msg_nocmd(bot, update):
                 #has_alias = False
                 #if has_alias:
                 #    chat_type = tlg_check_chat_type(bot, alias)
-                    # A None value in chat_type is for not telegram chat found
+                #    # A None value in chat_type is for not telegram chat found
                 #    if chat_type is not None:
                 #        has_alias = True
                 #    else:
@@ -711,7 +719,9 @@ def msg_nocmd(bot, update):
                     # Check if message cant be removed due to not delete msg privileges
                     if rm_result == -2:
                         bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(new_user["user_name"])
-                    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                    # Get chat kick timeout and send spam detection message with autoremove
+                    captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+                    tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
         printts("[{}] Message to solve captcha received process end.".format(chat_id))
         printts(" ")
         break
@@ -952,14 +962,6 @@ def cmd_about(bot, update):
     bot.send_message(chat_id, bot_msg)
 
 
-def cmd_captcha(bot, update):
-    '''Command /captcha handler'''
-    chat_id = update.message.chat_id
-    captcha = create_image_captcha(chat_id)
-    sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"], "rb"))
-    tlg_msg_to_selfdestruct_in(sent_img_msg, 1)
-
-
 ####################################################################################################
 
 ### Main Loop Functions ###
@@ -1135,7 +1137,7 @@ def main():
     # Set to dispatcher a not-command text messages handler
     dp.add_handler(MessageHandler(Filters.text | Filters.photo | Filters.audio | Filters.voice | \
             Filters.video | Filters.sticker | Filters.document | Filters.location | \
-            Filters.contact, msg_nocmd))
+            Filters.contact, msg_nocmd, edited_updates=True))
     # Set to dispatcher a new member join the group and member left the group events handlers
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
     # Set to dispatcher request new captcha button callback handler
@@ -1150,10 +1152,8 @@ def main():
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
-    # Next /captcha cmd just for test (use it in release can be a potentially DoS vulnerability)
-    #dp.add_handler(CommandHandler("captcha", cmd_captcha))
-    # Launch the Bot ignoring pending messages (clean=True)
-    updater.start_polling(clean=True)
+    # Launch the Bot ignoring pending messages (clean=True) and get all updates (cllowed_uptades=[])
+    updater.start_polling(clean=True, allowed_updates=[])
     printts("Bot setup completed. Bot is now running.")
     # Handle remove of sent messages and not verify new users ban (main loop)
     handle_remove_and_kicks(updater.bot)
