@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     11/05/2019
 Version:
-    1.3.0
+    1.3.1
 '''
 
 ####################################################################################################
@@ -37,7 +37,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.3.0 (11/05/2019)' # Bot version
+    'VERSION' : '1.3.1 (11/05/2019)' # Bot version
 }
 
 TEXT = {
@@ -136,7 +136,7 @@ TEXT = {
             'mins, you will be automatically kick from the group.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha solved, user verified.\nWelcome to the group {}.',
+            'Captcha solved, user verified.\nWelcome to the group {}',
 
         'CAPTCHA_INCORRECT_0' : \
             'That is not the correct number. Try again...',
@@ -191,6 +191,12 @@ TEXT = {
             'Message with an URL (or an alias) detected from {}, who has not solved the captcha ' \
             'yet. I try to remove the Spam message, but I don\'t have the administration rights ' \
             'for remove messages that has not been sent by me.',
+
+        'NOT_TEXT_MSG_ALLOWED' : \
+            'Removed a non-text message (image, audio, file...) from {}, for the sake of a ' \
+            'Telegram free of Spam.\n' \
+            '\n' \
+            'You can send non-text messages after you have resolved the captcha.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
@@ -341,7 +347,7 @@ TEXT = {
             '{} mins, serás kickeado del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha resuelto, usuario verificado.\nBienvenido al grupo {}.',
+            'Captcha resuelto, usuario verificado.\nBienvenido al grupo {}',
 
         'CAPTCHA_INCORRECT_0' : \
             'Ese no es el número correcto. Inténtalo nuevamente...',
@@ -401,6 +407,12 @@ TEXT = {
             'Se ha detectado un mensaje con URL (o alias) enviado por {}, quien aún no ha ' \
             'resuelto el captcha. He intentado borrar el mensaje, pero no se me han dado los ' \
             'privilegios de administración necesarios para eliminar mensajes que no son míos.',
+
+        'NOT_TEXT_MSG_ALLOWED' : \
+            'Eliminado un mensaje que no es de texto (imagen, audio, archivo...) enviado por {}, ' \
+            'en aras de un Telegram libre de Spam.\n' \
+            '\n' \
+            'Podrás enviar mensajes que no sean de texto una vez que hayas resuelto el captcha.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Otro Captcha',
@@ -551,7 +563,7 @@ TEXT = {
             'não enviar o captcha em {} minutos, você será automaticamente expulso do grupo.',
 
         'CAPTHA_SOLVED' : \
-            'Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}.',
+            'Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}',
 
         'CAPTCHA_INCORRECT_0' : \
             'Esse não é o número correto. Tente de novo...',
@@ -606,6 +618,12 @@ TEXT = {
             'Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o ' \
             'captcha. Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos ' \
             'para remover mensagens que não foram enviadas por mim.',
+
+        'NOT_TEXT_MSG_ALLOWED' : \
+            'Removida uma mensagem que não é de texto (imagem, áudio, arquivo...) de {}, por ' \
+            'causa de um Telegram livre de spam\n.' \
+            '\n' \
+            'Você pode enviar mensagens sem texto depois de ter resolvido o captcha.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Outro Captcha',

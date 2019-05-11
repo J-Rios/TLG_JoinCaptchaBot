@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     11/05/2019
 Version:
-    1.3.0
+    1.3.1
 '''
 
 ####################################################################################################
@@ -505,7 +505,7 @@ def msg_new_user(bot, update):
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                     to_delete_join_messages_list.remove(msg)
                 i = i + 1
-            # Ignore if the captcha protection is not enabled
+            # Ignore if the captcha protection is not enable in this chat
             captcha_enable = get_chat_config(chat_id, "Enabled")
             if captcha_enable == False:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
@@ -579,8 +579,47 @@ def msg_new_user(bot, update):
                 printts(" ")
 
 
+def msg_notext(bot, update):
+    '''All non-text messages handler.'''
+    # Check for normal or edited message
+    msg = getattr(update, "message", None)
+    if msg == None:
+        msg = getattr(update, "edited_message", None)
+    # Ignore if message comes from a private chat
+    if msg.chat.type == "private":
+        return
+    # Ignore if captcha protection is not enable int his chat
+    captcha_enable = get_chat_config(msg.chat_id, "Enabled")
+    if captcha_enable == False:
+        return
+    # Get message data
+    chat_id = msg.chat_id
+    user_id = msg.from_user.id
+    msg_id = msg.message_id
+    # Determine configured bot language in actual chat
+    lang = get_chat_config(chat_id, "Language")
+    # Search if this user is a new user that has not completed the captcha yet
+    i = 0
+    while i < len(new_users_list):
+        new_user = new_users_list[i]
+        # If not the user of this message, continue to next iteration
+        if new_user["user_id"] != user_id:
+            i = i + 1
+            continue
+        # If not the chat for expected user captcha number
+        if new_user["chat_id"] != chat_id:
+            i = i + 1
+            continue
+        # Remove send message and notify that not text messages are not allowed until solve captcha
+        printts("[{}] Removing non-text message sent by {}".format(chat_id, new_user["user_name"]))
+        tlg_delete_msg(bot, chat_id, msg_id)
+        bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(new_user["user_name"])
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        break
+
+
 def msg_nocmd(bot, update):
-    '''All Not-command messages handler'''
+    '''Non-command text messages handler'''
     global to_delete_join_messages_list
     global new_users_list
     # Check for normal or edited message
@@ -590,7 +629,7 @@ def msg_nocmd(bot, update):
     # Ignore if message comes from a private chat
     if msg.chat.type == "private":
         return
-    # Ignore if captcha protection is enabled
+    # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
     if captcha_enable == False:
         return
@@ -632,7 +671,7 @@ def msg_nocmd(bot, update):
         msg_text = "[Not a text message]"
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
-    # Search if this user is a new user that has not completed the captcha
+    # Search if this user is a new user that has not completed the captcha yet
     i = 0
     while i < len(new_users_list):
         new_user = new_users_list[i]
@@ -666,9 +705,12 @@ def msg_nocmd(bot, update):
             # Send captcha solved message and program selfdestruct in 5 minutes
             bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
             # Uncomment and use next first line instead the second, if we want Bot to auto-remove 
-            # the kick message too after a while
+            # captcha solved message too after a while
             #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-            bot.send_message(chat_id, bot_msg)
+            try:
+                bot.send_message(chat_id, bot_msg)
+            except Exception as e:
+                printts("[{}] {}".format(chat_id, str(e)))
             new_users_list.remove(new_user)
         # The provided message doesn't has the valid captcha number
         else:
@@ -1134,10 +1176,12 @@ def main():
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
     updater = Updater(CONST["TOKEN"])
     dp = updater.dispatcher
-    # Set to dispatcher a not-command text messages handler
-    dp.add_handler(MessageHandler(Filters.text | Filters.photo | Filters.audio | Filters.voice | \
+    # Set to dispatcher not text messages handler
+    dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice | \
             Filters.video | Filters.sticker | Filters.document | Filters.location | \
-            Filters.contact, msg_nocmd, edited_updates=True))
+            Filters.contact, msg_notext, edited_updates=True))
+    # Set to dispatcher a not-command text messages handler
+    dp.add_handler(MessageHandler(Filters.text, msg_nocmd, edited_updates=True))
     # Set to dispatcher a new member join the group and member left the group events handlers
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
     # Set to dispatcher request new captcha button callback handler
