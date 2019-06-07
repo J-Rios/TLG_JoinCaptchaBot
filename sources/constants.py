@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/05/2019
+    07/06/2019
 Version:
-    1.3.1
+    1.3.2
 '''
 
 ####################################################################################################
@@ -37,7 +37,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.3.1 (11/05/2019)' # Bot version
+    'VERSION' : '1.3.2 (07/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -54,7 +54,9 @@ TEXT = {
             'Remember to give me administration privileges to kick-ban users and remove ' \
             'messages.\n' \
             '\n' \
-            'Check /help command for more information about my usage.',
+            'Check /help command for more information about my usage.\n' \
+            '\n' \
+            'Am I useful? Check /about command and consider to make a donation to keep me active.',
 
         'HELP' : \
             'Bot help:\n' \
@@ -93,24 +95,32 @@ TEXT = {
             'Language changed to english.',
 
         'LANG_SAME' : \
-            'I am already in english.\n\nMay you want to say:\n/language es\n/language pt_br',
+            'I am already in english.\n' \
+            '\n' \
+            'May you want to say:\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br',
 
         'LANG_BAD_LANG' : \
-            'Invalid language provided. The actual languages supported are english, spanish and ' \
-            'portuguese (Brazil). Change any of them using "en" or "es".\n' \
+            'Invalid language provided. The actual languages supported are english, spanish, ' \
+            'catalan and portuguese (Brazil). Change any of them using "en", "es", "ca" or ' \
+            '"pt_br".\n' \
             '\n' \
             'Example:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'LANG_NOT_ARG' : \
             'The command needs a language to set (en - english, es - spanish, ' \
-            'pt_br - portugese from Brazil).\n' \
+            'ca - catalan, pt_br - portugese from Brazil).\n' \
             '\n' \
             'Example:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'TIME_CHANGE' : \
@@ -220,9 +230,18 @@ TEXT = {
             'Actual Bot version: {}',
 
         'ABOUT_MSG' : \
-            'This is a free software and open-source GNU-GPL licensed Bot developed by the ' \
-            'telegram user {}.\n\nYou can check the code here:\n{}\n\n' \
-            'Do you like my work? Buy me a coffee.\n\nPaypal:\n{}\n\nBTC:\n{}',
+            'This is a free software and open-source GNU-GPL licensed Bot developed by {}.\n' \
+            '\n' \
+            'You can check the code here:\n' \
+            '{}\n' \
+            '\n' \
+            'Do you like my work? Buy me a coffee.\n' \
+            '\n' \
+            'Paypal:\n' \
+            '{}\n' \
+            '\n' \
+            'BTC:\n' \
+            '{}',
        
         'COMMANDS' : \
             'List of commands:\n' \
@@ -260,7 +279,10 @@ TEXT = {
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
             'administración para suspender usuarios y eliminar mensajes del grupo.\n' \
             '\n' \
-            'Echa un vistazo al comando /help para conocer más información sobre mi uso.',
+            'Echa un vistazo al comando /help para conocer más información sobre mi uso.\n' \
+            '\n' \
+            'Soy útil? Echa un vistazo al comando /about y considera hacer una donación para ' \
+            'mantenerme activo.',
 
         'HELP' : \
             'Ayuda sobre el Bot:\n' \
@@ -303,25 +325,32 @@ TEXT = {
             'Idioma cambiado a español.',
 
         'LANG_SAME' : \
-            'Ya estoy en español.\n\nQuizás querías decir:\n/language en\n/language pt_br',
+            'Ya estoy en español.\n' \
+            '\n' \
+            'Quizás querías decir:\n' \
+            '/language en\n' \
+            '/language ca\n' \
+            '/language pt_br',
 
         'LANG_BAD_LANG' : \
-            'Idioma inválidado. Los idiomas actualmente soportados son el inglés, el español y ' \
-            'el portugués de Brasil. Cambia a uno de ellos mediante las etiquetas "en", "es" o ' \
-            '"pt_br".\n' \
+            'Idioma inválidado. Los idiomas actualmente soportados son el inglés, el español, ' \
+            'el catalán y el portugués de Brasil. Cambia a uno de ellos mediante las etiquetas ' \
+            '"en", "es", "ca" o "pt_br".\n' \
             '\n' \
             'Ejemplo:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'LANG_NOT_ARG' : \
             'El comando necesita un idioma que establecer (en - inglés, es - español, ' \
-            'pt_br - portugués de brasil).\n' \
+            'ca - catalán, pt_br - portugués de Brasil).\n' \
             '\n' \
             'Ejemplo:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'TIME_CHANGE' : \
@@ -437,8 +466,18 @@ TEXT = {
 
         'ABOUT_MSG' : \
             'Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por ' \
-            'el usuario de telegram {}.\n\nPuedes consultar el código aquí:\n{}\n\n' \
-            'Te gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}',
+            '{}.\n' \
+            '\n' \
+            'Puedes consultar el código aquí:\n' \
+            '{}\n' \
+            '\n' \
+            'Te gusta lo que hago? Invítame a un café.\n' \
+            '\n' \
+            'Paypal:\n' \
+            '{}\n' \
+            '\n' \
+            'BTC:\n' \
+            '{}',
 
         'COMMANDS' : \
             'Lista de comandos:\n' \
@@ -463,6 +502,245 @@ TEXT = {
             '\n' \
             '/about - Muestra la información \"acerca de...\" del Bot.'
     },
+    'CA' : {
+        'START':
+            'Hola, sóc un Bot que envia una imatge captcha a cada nou usuari que s\'uneixi al ' \
+            'grup, i kickejo als que no resolguin el captcha en un temps determinat.\n' \
+            '\n' \
+            'Si un usuari ha intentat unir-se al grup 3 vegades i mai ha resolt el captcha, ' \
+            'suposaré que aquell "usuari" és un Bot i el banejaré. A més, qualsevol missatge ' \
+            'que contingui una URL i hagi estat enviat per un nou "usuari" abans que aquest ' \
+            'hagi resolt el captcha, serà considerat un missatge d\'Spam i serà esborrat.\n' \
+            '\n' \
+            'Recorda que per a funcionar de forma adequada has de donar-me permisos ' \
+            'd\'administració per a suspendre usuaris i eliminar missatges del grup.\n' \
+            '\n' \
+            'Dóna un cop d\'ull al comandament /help per a conèixer més informació sobre el meu ' \
+            'ús.\n' \
+            '\n' \
+            'Sóc útil? Dóna un cop d\'ull al comandament /about i considereu que feu una donació ' \
+            'per mantenir-me actiu.',
+
+        'HELP':
+            'Ajuda sobre el Bot:\n' \
+            '————————————————\n' \
+            '- Sóc un Bot que envia un captcha a cada nou usuari que s\'uneix al grup, i kickejo ' \
+            'qui no resolgui el captcha en un temps determinat.\n' \
+            '\n' \
+            '- Si un usuari ha intentat unir-se al grup 3 vegades i mai ha resolt el captcha, ' \
+            'suposaré que aquell "usuari" és un Bot i el banejaré.\n' \
+            '\n' \
+            '- Qualsevol missatge que contingui una URL i hagi estat enviat per un nou "usuari" ' \
+            'abans que aquest hagi resolt el captcha, serà considerat un missatge d\'Spam i serà ' \
+            'esborrat.\n' \
+            '\n' \
+            '- Has de donar-me permisos d\'Administració per a suspendre usuaris i eliminar ' \
+            'missatges.\n' \
+            '\n' \
+            '- Per tal de mantenir net el grup, elimino aquells missatges que tinguin relació ' \
+            'amb mi quan no s\'hagi resolt el captcha i l\'usuari hagi estat kickejat ' \
+            '(transcorreguts 5 minuts).\n' \
+            '\n' \
+            '- El temps del que disposen els usuaris per a resoldre el captcha són 5 minuts, ' \
+            'però aquest temps es pot canviar mitjançant el comandament /time.\n' \
+            '\n' \
+            '- Pots activar o desactivar la protecció captcha mitjançant els comandaments ' \
+            '/enable i /disable.\n' \
+            '\n' \
+            '- Els comandaments de configuracions només poden ser utilitzats per els ' \
+            'Administradors del grup.\n' \
+            '\n' \
+            '- Pots canviar l\'idioma en el que parlo mitjançant el comandament /language.\n' \
+            '\n' \
+            '- Dóna un cop d\'ull al comandament /commands per a veure una llista amb tots els ' \
+            'comandaments disponibles i una breu descripció de cada un.',
+
+        'CMD_NOT_ALLOW':
+            'Només un Admin pot utiltzar aquest comandament.',
+
+        'LANG_CHANGE':
+            'Idioma canviat a català.',
+
+        'LANG_SAME':
+            'Ja estic en català.\n' \
+            '\n' \
+            'Potser volies dir:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language pt_br',
+
+        'LANG_BAD_LANG':
+            'Idioma invalidat. Els idiomes actualment suportats són l\'anglès, el castellà, el ' \
+            'català i el portuguès de Brasil. Canvia a un d\'ells mitjançant les etiquetes "en", ' \
+            '"es", "ca", o "pt_br".\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br',
+
+        'LANG_NOT_ARG':
+            'El comandament necessita un idioma a establir (en - anglès, es - castellà, ' \
+            'ca - català, pt_br - portuguès de Brasil)\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br',
+
+        'TIME_CHANGE':
+            'Temps per a resoldre el captcha canviat a {} minuts.',
+
+        'TIME_MAX_NOT_ALLOW':
+            'El temps màxim per a resoldre el captcha són 120 minuts. No s\'ha canviat el temps.',
+
+        'TIME_NOT_NUM':
+            'El temps entregat no és un número enter.',
+
+        'TIME_NOT_ARG':
+            'El comandament necessita un valor de temps a establir (en minuts).\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/time 3\n' \
+            '/time 5\n' \
+            '/time 10',
+
+        'NEW_USER_CAPTCHA_CAPTION':
+            'Hola{}, benvingut/da a {}, si us plau envia un missatge amb el número que apareix ' \
+            'en aquesta imatge per a verificar que ets un humà. Si no resols aquest captcha en ' \
+            '{} min, seràs kickejat del grup automàticament.',
+
+        'CAPTHA_SOLVED':
+            'Captcha resolt, usuari verificat.\n' \
+            'Benvingut/da al grup {}',
+
+        'CAPTCHA_INCORRECT_0':
+            'Aquest no és el número correcte. Intenta-ho una altra vegada...',
+
+        'CAPTCHA_INCORRECT_1':
+            'Aquest no és el número correcte. Fixa-t\'hi bé, el captcha té 4 xifres...',
+
+        'NEW_USER_KICK':
+            '{} no ha completat el captcha a temps. L\'"usuari" ha estat kickejat.',
+
+        'NEW_USER_KICK_NOT_RIGHTS':
+            '{} no ha completat el captcha a temps. L\'"usuari" hauria de ser kickejat, però no ' \
+            'se m\'han donat els privilegis d\'administració necessaris per a expulsar usuaris ' \
+            'del grup.',
+
+        'NEW_USER_KICK_NOT_IN_CHAT':
+            '{} no ha completat el captcha a temps. Estava a punt de kickejar l\'"usuari", però ' \
+            'ja no és al grup (ha sortit del grup o ha estat kickejat/banejat per un altre Admin).',
+
+        'BOT_CANT_KICK':
+            '{} no ha completat el captcha a temps. He intentat kickejar l\'"usuari", però degut ' \
+            'a un problema inesperat (potser relacionat amb la xarxa o el servidor), no ho he ' \
+            'pogut fer.',
+
+        'CANT_DEL_MSG':
+            'He intentat esborrar aquest missatge, però no se m\'han donat els privilegis ' \
+            'd\'administració necessaris per tal d\'eliminar els missatges que no són meus.',
+
+        'NEW_USER_BAN':
+            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'i no ha pogut resoldre el captcha. L\'"usuari" ha estat banejat. Per permetre que ' \
+            'intenti entrar novament al grup, un Admin ha de treure la restricció de l\'usuari ' \
+            'de forma manual en les opcions d\'administració del grup.',
+
+        'NEW_USER_BAN_NOT_IN_CHAT':
+            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però ja no és ' \
+            'al grup (ha sortit del grup o ha estat kickejat/banejat per un Admin).',
+
+        'NEW_USER_BAN_NOT_RIGHTS':
+            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però no se ' \
+            'm\'han donat els privilegis d\'administració necessaris per a expulsar usuaris del ' \
+            'grup.',
+
+        'BOT_CANT_BAN':
+            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però degut a ' \
+            'un problema inesperat (potser relacionat amb la xarxa o el servidor), no ho he ' \
+            'pogut fer.',
+
+        'SPAM_DETECTED_RM':
+            'S\'ha detectat un missatge que conté una URL (o alias) enviat per {}, que encara no ' \
+            'ha resolt el captcha. El missatge ha estat eliminat a fi de tenir un Telegram ' \
+            'lliure d\'Spam :)',
+
+        'SPAM_DETECTED_NOT_RM':
+            'S\'ha detectat un missatge amb URL (o alias) enviat per {}, que encara no ha resolt ' \
+            'el captcha. He intentat esborrar el missatge, però no se m\'han donat els ' \
+            'privilegis d\'administració necessaris per tal d\'eliminar missatges que no són meus.',
+
+        'NOT_TEXT_MSG_ALLOWED':
+            'Eliminat un missatge que no és de text (imatge, àudio, arxiu...) enviat per {}, a ' \
+            'fi de tenir un Telegram lliure d\'Spam.\n' \
+            '\n' \
+            'Podràs enviar missatges que no siguin de text un cop hagis resolt el captcha.',
+
+        'OTHER_CAPTCHA_BTN_TEXT':
+            'Un altre Captcha',
+
+        'ENABLE':
+            'Protecció captcha activada. Desactiva-la amb el comandament /disable.',
+
+        'DISABLE':
+            'Protecció captcha desactivada. Activa-la amb el comandament /enable.',
+
+        'ALREADY_ENABLE':
+            'La protecció captcha ja està activada.',
+
+        'ALREADY_DISABLE':
+            'La protecció captcha ja està desactivada.',
+
+        'CAN_NOT_GET_ADMINS':
+            'No es pot usar aquest comandament en el xat actual.',
+
+        'VERSION':
+            'Vesrsió actual del Bot: {}',
+
+        'ABOUT_MSG':
+            'Aquest és un Bot de software lliure open-source amb llicència GNU-GPL, ' \
+            'desenvolupat per {}\n' \
+            '\n' \
+            'Pots consultar el codi aquí:\n' \
+            '{}\n' \
+            '\n' \
+            'T\'agrada el que faig? Convida\'m a un cafè.\n' \
+            'Paypal:\n' \
+            '{}\n' \
+            '\n' \
+            'BTC:\n' \
+            '{}',
+
+        'COMMANDS' : \
+            'Llista de comandaments:\n' \
+            '————————————————\n' \
+            '/start - Mostra la informació inicial sobre el Bot.\n' \
+            '\n' \
+            '/help - Mostra la informació d\'ajuda.\n' \
+            '\n' \
+            '/commands - Mostra el missatge actual. Informació sobre tots els comandaments ' \
+            'disponibles i la seva descripció.\n' \
+            '\n' \
+            '/language - Permet canviar l\'idioma en que parla el Bot. Idiomes actualment ' \
+            'disponibles: en (anglès) - es (castellà) - ca (català) - ' \
+            'pt_br (portuguès de Brasil).\n' \
+            '\n' \
+            '/time - Permet canviar el temps disponible per a resoldre un captcha.\n' \
+            '\n' \
+            '/enable - Activa la protecció captcha en el grup.\n' \
+            '\n' \
+            '/disable - Desactiva la protecció captcha en el grup.\n' \
+            '\n' \
+            '/version - Consulta la versió del Bot.\n' \
+            '\n' \
+            '/about - Mostra la informació "sobre..." del Bot.',
+    },
     'PT_BR' : {
         'START' : \
             'Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra ' \
@@ -476,7 +754,10 @@ TEXT = {
             'Lembre-se de dar privilégios de administrador para que eu possa expulsar-banir ' \
             'usuários e excluir mensagens do grupo.\n' \
             '\n' \
-            'Confira o comando /help para saber mais sobre como me usar.',
+            'Confira o comando /help para saber mais sobre como me usar.\n' \
+            '\n' \
+            'Eu sou útil? Confira o comando /about e considere fazer uma doação para me manter ' \
+            'ativo.',
 
         'HELP' : \
             'Ajuda do Bot:\n' \
@@ -518,26 +799,31 @@ TEXT = {
             'Idioma definido para Português (Brasil).',
 
         'LANG_SAME' : \
-            'Eu já estou em Português (Brasil).\n\nQuem sabe você quer usar:\n' \
+            'Eu já estou em Português (Brasil).\n' \
+            '\n' \
+            'Quem sabe você quer usar:\n' \
             '/language en\n' \
-            '/language es',
+            '/language es\n' \
+            '/language ca',
 
         'LANG_BAD_LANG' : \
-            'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol e Português (Brasil). ' \
-            'Defina um deles usando "en", "es" ou "pt_br".\n' \
+            'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão e ' \
+            'Português (Brasil). Defina um deles usando "en", "es", "ca" ou "pt_br".\n' \
             '\n' \
             'Exemplo:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'LANG_NOT_ARG' : \
-            'O comando exige o idioma que será usado (en – Inglês, es – Espanhol, ' \
-            'pt_br – Português (Brasil)).\n' \
+            'O comando exige o idioma que será usado (en – inglês, es – espanhol, ' \
+            'ca - catalão, pt_br – português (Brasil)).\n' \
             '\n' \
             'Exemplo:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language ca\n' \
             '/language pt_br',
 
         'TIME_CHANGE' : \
@@ -647,9 +933,18 @@ TEXT = {
             'Versão atual do Bot: {}',
 
         'ABOUT_MSG' : \
-            'Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo usuário do ' \
-            'Telegram {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\n' \
-            'Gosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}',
+            'Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n' \
+            '\n' \
+            'Você pode acessar o código fonte aqui:\n' \
+            '{}\n' \
+            '\n' \
+            'Gosta do meu trabalho? Me pague um café.\n' \
+            '\n' \
+            'Paypal:\n' \
+            '{}\n' \
+            '\n' \
+            'BTC:\n' \
+            '{}',
 
         'COMMANDS' : \
             'Lista de comandos:\n' \
