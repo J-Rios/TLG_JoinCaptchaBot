@@ -4,6 +4,7 @@ if [ -z "$PID" ]; then
     rm -f ./data/captchas/*
     nohup python3 -u join_captcha_bot.py > output.log 2>&1 &
     echo "Starting Script..."
+    sleep 1
     ./status
     exit 0
 else
