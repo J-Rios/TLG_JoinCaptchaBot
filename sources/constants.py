@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/06/2019
+    08/06/2019
 Version:
-    1.3.2
+    1.4.0
 '''
 
 ####################################################################################################
@@ -30,6 +30,8 @@ CONST = {
     'INIT_LANG' : 'EN', # Initial language at Bot start
     'INIT_ENABLE' : True, # Initial enable/disable status at Bot start
     'INIT_CAPTCHA_TIME_MIN' : 5, # Initial captcha solve time (in minutes)
+    'INIT_CAPTCHA_DIFFICULTY_LEVEL' : 2, # Initial captcha difficult level
+    'INIT_CAPTCHA_CHARS_MODE' : "nums", # Initial captcha characters mode (nums, hex or ascci)
     'T_DEL_MSG' : 5, # Default time (in mins) to remove self-destruct sent messages from the Bot
     'F_TLDS' : 'tlds-alpha-by-domain.txt', # IANA TLD list (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     'REGEX_URLS' : r'((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))',
@@ -37,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.3.2 (07/06/2019)' # Bot version
+    'VERSION' : '1.4.0 (08/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -84,6 +86,11 @@ TEXT = {
             '- Configuration commands just can be used by group Administrators.\n' \
             '\n' \
             '- You can change the language that I speak, using the command /language.\n' \
+            '\n' \
+            '- You can configure captcha difficulty level using command /difficulty.\n' \
+            '\n' \
+            '- You can set captcha to use just numbers (default) or full numbers and letters, ' \
+            'using command /change_mode.\n' \
             '\n' \
             '- Check /commands for get a list of all avaliable commands, and a short ' \
             'description of all of them.',
@@ -139,6 +146,44 @@ TEXT = {
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            'Captchas difficulty successfully changed to level {}.',
+
+        'DIFFICULTY_NOT_NUM' : \
+            'The provided captchas difficulty is not a number.',
+
+        'DIFFICULTY_NOT_ARG' : \
+            'The command needs a difficulty level to set (from 1 to 5).\n' \
+            '\n' \
+            'Example:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            'Captchas character-mode successfully changed to "{}".',
+
+        'CAPTCHA_MODE_INVALID' : \
+            'Invalid captcha character-mode. Supported modes are: "nums", "hex" and "ascii".\n' \
+            '\n' \
+            'Example:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            'The command needs a characters mode to set. Availables modes are:\n' \
+            '- Numeric Captchas ("nums").\n' \
+            '- Hexadecimal Captchas, numbers and characters A-F ("hex").\n' \
+            '- Numbers and characters A-Z Captchas (ascii").\n' \
+            '\n' \
+            'Example:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hello {}, welcome to {}, please send a message with the number that appear in this ' \
@@ -315,6 +360,12 @@ TEXT = {
             '\n' \
             '- Puedes cambiar el idioma en el que hablo mediante el comando /language.\n' \
             '\n' \
+            '- Puedes configurar el nivel de dificultad del captcha mediante el comando ' \
+            '/difficulty.\n' \
+            '\n' \
+            '- Puedes establecer que los captchas solo contengan números (por defecto), o ' \
+            'números y letras, a través del comando /change_mode.\n' \
+            '\n' \
             '- Echa un vistazo al comando /commands para ver una lista con todos los comandos ' \
             'disponibles y una breve descripción de cada uno de ellos.',
 
@@ -369,6 +420,44 @@ TEXT = {
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            'Nivel de dificultad de los captchas cambiado a {}.',
+
+        'DIFFICULTY_NOT_NUM' : \
+            'El nivel de dificultad proporcionado no es un número.',
+
+        'DIFFICULTY_NOT_ARG' : \
+            'El comando necesita un nivel de dificultad a establecer (de 1 a 5).\n' \
+            '\n' \
+            'Ejemplo:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            'Modo-caracter de los capcthas cambiado a "{}".',
+
+        'CAPTCHA_MODE_INVALID' : \
+            'Modo-caracter invalido. Los modos disponibles son: "nums", "hex" y "ascii".\n' \
+            '\n' \
+            'Ejemplo:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            'El comando necesita el modo-caracter a establecer. Los modos disponibles son:\n' \
+            '- Captchas numéricos ("nums").\n' \
+            '- Captchas hexadecimales, con números y letras A-F ("hex").\n' \
+            '- Captchas con números y letras A-Z (ascii").\n' \
+            '\n' \
+            'Ejemplo:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hola {}, bienvenido a {}, por favor envía un mensaje con el número que aparece ' \
@@ -552,6 +641,12 @@ TEXT = {
             '\n' \
             '- Pots canviar l\'idioma en el que parlo mitjançant el comandament /language.\n' \
             '\n' \
+            '- Pots configurar el nivell de dificultat del captcha mitjançant la comanda ' \
+            '/difficulty.\n' \
+            '\n' \
+            'Pots establir que els captchas només continguin números (per defecte), ' \
+            'o números i lletres, a través de la comanda /captcha_mode.\n' \
+            '\n' \
             '- Dóna un cop d\'ull al comandament /commands per a veure una llista amb tots els ' \
             'comandaments disponibles i una breu descripció de cada un.',
 
@@ -606,6 +701,45 @@ TEXT = {
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            'Nivell de dificultat dels captchas canviat a {}.',
+
+        'DIFFICULTY_NOT_NUM' : \
+            'El nivell de dificultat proporcionat no és un nombre.',
+
+        'DIFFICULTY_NOT_ARG' : \
+            'El comandament necessita un nivell de dificultat a establir (d\'1 a 5).\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            'Mode-caràcter dels capcthas canviat a "{}".',
+
+        'CAPTCHA_MODE_INVALID' : \
+            'Mode-caràcter invàlid. Les maneres disponibles són: "nums", "hex" i "ascii".\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            'El comandament necessita la manera caràcter a establir. Les maneres disponibles ' \
+            'són:\n' \
+            '- Captchas numèrics ("nums").\n' \
+            '- Captchas hexadecimals, amb números i lletres A-F ("hex").\n' \
+            '- Captchas amb números i lletres A-Z (ascii ").\n' \
+            '\n' \
+            'Exemple:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION':
             'Hola{}, benvingut/da a {}, si us plau envia un missatge amb el número que apareix ' \
@@ -789,6 +923,12 @@ TEXT = {
             '\n' \
             '- Você pode definir o idioma que eu falo usando o comando /language.\n' \
             '\n' \
+            '- Você pode configurar o grau de dificuldade do captcha usando a opção ' \
+            '/difficulty.\n' \
+            '\n' \
+            'Você pode definir se o captacha terá apenas números (o padrão) ou números e letras, ' \
+            'usando a opção /change_mode.'
+            '\n' \
             '- Use a opção /commands para ver a lista de todos os comandos com uma breve ' \
             'descrição de cada um deles.',
 
@@ -842,6 +982,44 @@ TEXT = {
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            'O nível de dificuldade do captcha mudou para {}.',
+
+        'DIFFICULTY_NOT_NUM' : \
+            'O nível de dificuldade fornecido não é um número.',
+
+        'DIFFICULTY_NOT_ARG' : \
+            'O comando exige um nível de deficuldade como argumento (de 1 a 5).\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            'O modo-carater do captcha mudou para "{}".',
+
+        'CAPTCHA_MODE_INVALID' : \
+            'Modo-caracter inválido. As opções disponíveis são: "nums", "hex" ou "ascii".\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            'O comando exite um modo definido. As opções disponíveis são:\n' \
+            '- Captchas numéricos ("nums").\n' \
+            '- Captchas hexadecimais, com números e letras A-F ("hex").\n' \
+            '- Captchas com números e letras A-Z (ascii").\n' \
+            '\n' \
+            'Exemplo:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que ' \

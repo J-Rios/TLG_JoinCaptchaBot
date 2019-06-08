@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/06/2019
+    08/06/2019
 Version:
-    1.3.2
+    1.4.0
 '''
 
 ####################################################################################################
@@ -129,7 +129,7 @@ def load_urls_regex(file_path):
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
 
 
-def create_image_captcha(img_file_name):
+def create_image_captcha(img_file_name, difficult_level, chars_mode):
     '''Generate an image captcha from pseudo numbers'''
     image_file_path = "{}/{}.png".format(CONST["CAPTCHAS_DIR"], img_file_name)
     # If it doesn't exists, create captchas folder to store generated captchas
@@ -140,7 +140,7 @@ def create_image_captcha(img_file_name):
         if path.exists(image_file_path):
             remove(image_file_path)
     # Generate and save the captcha with a random captcha background mono-color or multi-color
-    captcha = CaptchaGen.gen_captcha_image(multicolor=bool(randint(0, 1)))
+    captcha = CaptchaGen.gen_captcha_image(difficult_level, chars_mode, bool(randint(0, 1)))
     image = captcha["image"]
     image.save(image_file_path, "png")
     # Return a dictionary with captcha file path and captcha resolve characters
@@ -222,6 +222,8 @@ def get_default_config_data():
         ("Link", CONST["INIT_LINK"]), \
         ("Enabled", CONST["INIT_ENABLE"]), \
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]), \
+        ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]), \
+        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]), \
         ("Language", CONST["INIT_LANG"]) \
     ])
     return config_data
@@ -242,10 +244,12 @@ def get_chat_config(chat_id, param):
     file = get_chat_config_file(chat_id)
     if file:
         config_data = file.read()
-        if not config_data:
+        if (not config_data) or (param not in config_data):
             config_data = get_default_config_data()
+            save_config_property(chat_id, param, config_data[param])
     else:
         config_data = get_default_config_data()
+        save_config_property(chat_id, param, config_data[param])
     return config_data[param]
 
 
@@ -510,9 +514,12 @@ def msg_new_user(bot, update):
             if captcha_enable == False:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
                 continue
+            # Determine configured bot language in actual chat
+            captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
+            captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
             # Generate a pseudorandom captcha send it to telegram group and program message 
             # selfdestruct
-            captcha = create_image_captcha(str(join_user_id))
+            captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
             img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
                     chat_title, str(captcha_timeout))
@@ -798,8 +805,11 @@ def button_request_captcha(bot, update):
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
             img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(new_user["user_name"], \
                     chat_title, str(captcha_timeout))
+            # Determine configured bot language in actual chat
+            captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
+            captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
             # Generate a new captcha and edit previous captcha image message with this one
-            captcha = create_image_captcha(str(usr_id))
+            captcha = create_image_captcha(str(usr_id), captcha_level, captcha_chars_mode)
             printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
             bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
                     media=open(captcha["image"], "rb"), caption=img_caption), \
@@ -869,7 +879,7 @@ def cmd_language(bot, update, args):
         if is_admin == False:
             allow_command = False
     if allow_command:
-        if len(args) == 1:
+        if len(args) >= 1:
             lang_provided = args[0].upper()
             if lang_provided in TEXT:
                 if lang_provided != lang:
@@ -905,7 +915,7 @@ def cmd_time(bot, update, args):
         if is_admin == False:
             allow_command = False
     if allow_command:
-        if len(args) == 1:
+        if len(args) >= 1:
             if is_int(args[0]):
                 new_time = int(args[0])
                 if new_time < 1:
@@ -919,6 +929,75 @@ def cmd_time(bot, update, args):
                 bot_msg = TEXT[lang]["TIME_NOT_NUM"]
         else:
             bot_msg = TEXT[lang]["TIME_NOT_ARG"]
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    if chat_type == "private":
+        bot.send_message(chat_id, bot_msg)
+    else:
+        tlg_msg_to_selfdestruct(update.message)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_difficulty(bot, update, args):
+    '''Command /difficulty message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    if allow_command:
+        if len(args) >= 1:
+            if is_int(args[0]):
+                new_difficulty = int(args[0])
+                if new_difficulty < 1:
+                    new_difficulty = 1
+                if new_difficulty > 5:
+                    new_difficulty = 5
+                save_config_property(chat_id, "Captcha_Difficulty_Level", new_difficulty)
+                bot_msg = TEXT[lang]["DIFFICULTY_CHANGE"].format(new_difficulty)
+            else:
+                bot_msg = TEXT[lang]["DIFFICULTY_NOT_NUM"]
+        else:
+            bot_msg = TEXT[lang]["DIFFICULTY_NOT_ARG"]
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    if chat_type == "private":
+        bot.send_message(chat_id, bot_msg)
+    else:
+        tlg_msg_to_selfdestruct(update.message)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_captcha_mode(bot, update, args):
+    '''Command /captcha_mode message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    if allow_command:
+        if len(args) >= 1:
+            new_captcha_mode = args[0]
+            if (new_captcha_mode == "nums") or (new_captcha_mode == "hex") \
+                    or (new_captcha_mode == "ascii"):
+                save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
+                bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
+            else:
+                bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
+        else:
+            bot_msg = TEXT[lang]["CAPTCHA_MODE_NOT_ARG"]
     elif is_admin == False:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
@@ -1003,6 +1082,21 @@ def cmd_about(bot, update):
         CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
     bot.send_message(chat_id, bot_msg)
 
+
+def cmd_captcha(bot, update):
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
+    captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    # Generate a pseudorandom captcha send it to telegram group and program message 
+    # selfdestruct
+    captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
+    printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
+    try:
+        # Note: Img caption must be <= 1024 chars
+        bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"), timeout=20)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
 
 ####################################################################################################
 
@@ -1192,10 +1286,13 @@ def main():
     dp.add_handler(CommandHandler("commands", cmd_commands))
     dp.add_handler(CommandHandler("language", cmd_language, pass_args=True))
     dp.add_handler(CommandHandler("time", cmd_time, pass_args=True))
+    dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
+    dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
+    #dp.add_handler(CommandHandler("captcha", cmd_captcha)) # Just for debug
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (cllowed_uptades=[])
     updater.start_polling(clean=True, allowed_updates=[])
     printts("Bot setup completed. Bot is now running.")
