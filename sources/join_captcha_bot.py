@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    08/06/2019
+    10/06/2019
 Version:
-    1.4.0
+    1.4.1
 '''
 
 ####################################################################################################
@@ -1263,6 +1263,12 @@ def check_time_to_kick_not_verify_users(bot):
 
 def main():
     '''Main Function'''
+    # Check if Bot Token has been set or has default value
+    if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
+        printts("Error: Bot Token has not been set.")
+        printts("Please add your Bot Token into constants.py file.")
+        printts("Exit.\n")
+        exit(0)
     printts("Bot started.")
     # Initialize resources by populating files list and configs with chats found files
     initialize_resources()
