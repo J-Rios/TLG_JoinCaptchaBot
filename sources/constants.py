@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     10/06/2019
 Version:
-    1.4.1
+    1.4.2
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.1 (10/06/2019)' # Bot version
+    'VERSION' : '1.4.2 (10/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -302,6 +302,11 @@ TEXT = {
             'languages: en (english) - es (spanish) - pt_br (portuguese from Brazil).\n' \
             '\n' \
             '/time - Allows to change the time available to resolve a captcha.\n' \
+            '\n' \
+            '/difficulty - Allows to change captcha difficulty level (from 1 to 5).\n' \
+            '\n' \
+            '/captcha_mode - Allows to change captcha characters mode (nums: just numbers, ' \
+            'hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n' \
             '\n' \
             '/enable - Enable the captcha protection of the group.\n' \
             '\n' \
@@ -582,6 +587,11 @@ TEXT = {
             'disponibles: es (español) - en (inglés) - pt_br (portugués de Brasil).\n' \
             '\n' \
             '/time - Permite cambiar el tiempo disponible para resolver un captcha.\n' \
+            '\n' \
+            '/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n' \
+            '\n' \
+            '/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo ' \
+            'números, hex: números y letras A-F, ascii: números y letras A-Z).\n' \
             '\n' \
             '/enable - Activa la protección captcha en el grupo.\n' \
             '\n' \
@@ -867,6 +877,11 @@ TEXT = {
             '\n' \
             '/time - Permet canviar el temps disponible per a resoldre un captcha.\n' \
             '\n' \
+            '/difficulty - Permet canviar el nivell de dificultat captcha (de 1 a 5).\n' \
+            '\n' \
+            '/captcha_mode - Permet canviar el mode-caràcter de captcha (nums: només ' \
+            'números, hex: números i A-F lletres, ascii: números i A-Z lletres).\n' \
+            '\n' \
             '/enable - Activa la protecció captcha en el grup.\n' \
             '\n' \
             '/disable - Desactiva la protecció captcha en el grup.\n' \
@@ -1137,6 +1152,11 @@ TEXT = {
             'são: en (inglês) - es (espanhol) - pt_br (português BR).\n' \
             '\n' \
             '/time - Permite alterar o tempo disponível para resolver um captcha.\n' \
+            '\n' \
+            '/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n' \
+            '\n' \
+            '/captcha_mode - Permite alterar o modo-carater do captcha (nums: apenas números, ' \
+            'hex: números e letras A-F, ascii: números e letras A-Z).\n' \
             '\n' \
             '/enable - Ativa a proteção captcha no grupo.\n' \
             '\n' \
