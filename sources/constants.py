@@ -45,118 +45,118 @@ CONST = {
 TEXT = {
     'EN' : {
         'START' : \
-            'Hello, I am a Bot that send an image captcha for each new user who join a group, ' \
-            'and kick anyone that can\'t solve the captcha in a specified time.\n' \
+            'Hello, I am a Bot that sends an image captcha for each new user who joins a group, ' \
+            'and kicks anyone that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            'If one user try to join the group for 3 times and never solve the captcha, I will ' \
-            'assume that this "user" is a Bot, and It will be ban. Also, any message that ' \
-            'contains an URL sent by a new "user" before captcha completion, will be considered ' \
-            'Spam and will be deleted.\n' \
+            'If a user tries to join the group 3 times in a row and never solves the captcha, I will ' \
+            'assume that this "user" is a bot, and it will be banned. Also, any message that ' \
+            'contains a URL sent by a new "user" before the captcha is completed, will be considered ' \
+            'spam and will be deleted.\n' \
             '\n' \
-            'Remember to give me administration privileges to kick-ban users and remove ' \
+            'Remember to give me administration privileges to kick/ban users and remove ' \
             'messages.\n' \
             '\n' \
-            'Check /help command for more information about my usage.\n' \
+            'Check the "/help" command for more information about my usage.\n' \
             '\n' \
-            'Am I useful? Check /about command and consider to make a donation to keep me active.',
+            'Am I useful? Check the "/about" command and consider making a donation to keep me active.',
 
         'HELP' : \
             'Bot help:\n' \
             '————————————————\n' \
-            '- I am a Bot that send a captcha for each new user who join a group, and kick any ' \
-            'of them that can\'t solve the captcha in a specified time.\n' \
+            '- I am a Bot that sends a captcha for each new user who joins a group, and kicks any ' \
+            'of them that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            '- If one user try to join the group for 3 times and never can\'t solve the captcha, ' \
-            'I will assume that the "user" is a Bot, and it will be ban.\n' \
+            '- If a user tries to join the group 3 times in a eow and never solves the captcha, ' \
+            'I will assume that the "user" is a bot, and it will be banned.\n' \
             '\n' \
             '- Any message that contains an URL that has been sent by a new "user" before ' \
-            'captcha completion, will be considered Spam and will be deleted.\n' \
+            'the captcha is completed, will be considered spam and will be deleted.\n' \
             '\n' \
-            '- You need to provide me Administration rights for kick users and remove messages.\n' \
+            '- You need to grant me Administration rights to kick users and remove messages.\n' \
             '\n' \
-            '- To preserve a clean group, I auto-remove all messages related to me when captcha ' \
-            ' is not solved and the user was kicked (after 5 minutes).\n' \
+            '- To preserve a clean group, I auto-remove all messages related to me when a captcha ' \
+            'is not solved and the user was kicked (after 5 minutes).\n' \
             '\n' \
-            '- The time that new users have to solve the captcha is 5 minutes, but it can be ' \
-            'configured using the command /time.\n' \
+            '- The time that new users have to solve the captcha is 5 minutes by default, but it can be ' \
+            'configured using the command "/time".\n' \
             '\n' \
-            '- You can turn on or off the captcha protection using the commands /enable and ' \
-            '/disable.\n' \
+            '- You can turn the captcha protection on or off using the commands "/enable" and ' \
+            '"/disable".\n' \
             '\n' \
-            '- Configuration commands just can be used by group Administrators.\n' \
+            '- Configuration commands can only be used by group Administrators.\n' \
             '\n' \
-            '- You can change the language that I speak, using the command /language.\n' \
+            '- You can change the language that I speak, using the command "/language".\n' \
             '\n' \
-            '- You can configure captcha difficulty level using command /difficulty.\n' \
+            '- You can configure the captcha difficulty level using command "/difficulty".\n' \
             '\n' \
             '- You can set captcha to use just numbers (default) or full numbers and letters, ' \
-            'using command /change_mode.\n' \
+            'using the command "/change_mode".\n' \
             '\n' \
-            '- Check /commands for get a list of all avaliable commands, and a short ' \
+            '- Check /commands to get a list of all avaliable commands, and a short ' \
             'description of all of them.',
 
         'CMD_NOT_ALLOW' : \
-            'Just an Admin can use this command',
+            'Only an Admin can use this command',
 
         'LANG_CHANGE' : \
-            'Language changed to english.',
+            'Language changed to English.',
 
         'LANG_SAME' : \
-            'I am already in english.\n' \
+            'I am already in English.\n' \
             '\n' \
-            'May you want to say:\n' \
+            'Did you mean:\n' \
             '/language es\n' \
             '/language ca\n' \
             '/language pt_br',
 
         'LANG_BAD_LANG' : \
-            'Invalid language provided. The actual languages supported are english, spanish, ' \
-            'catalan and portuguese (Brazil). Change any of them using "en", "es", "ca" or ' \
+            'Invalid language provided. The languages currently supported are English, Spanish, ' \
+            'Catalan and Portuguese (Brazil). Change to any of them using "en", "es", "ca" or ' \
             '"pt_br".\n' \
             '\n' \
-            'Example:\n' \
+            'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
             '/language pt_br',
 
         'LANG_NOT_ARG' : \
-            'The command needs a language to set (en - english, es - spanish, ' \
-            'ca - catalan, pt_br - portugese from Brazil).\n' \
+            'The command needs a language to set (en - English, es - Spanish, ' \
+            'ca - Catalan, pt_br - Portuguese from Brazil).\n' \
             '\n' \
-            'Example:\n' \
+            'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
             '/language pt_br',
 
         'TIME_CHANGE' : \
-            'Time to resolve captcha successfully changed to {} minutes.',
+            'Time to solve the captcha successfully changed to {} minutes.',
 
         'TIME_MAX_NOT_ALLOW' : \
-            'Maximum captcha solve time is 120 minutes. Time not changed.',
+            'The maximum allowed captcha solve time is 120 minutes. The time has not been changed.',
 
         'TIME_NOT_NUM' : \
-            'The provided time is not an integer number.',
+            'The provided time is not an integer/whole number.',
 
         'TIME_NOT_ARG' : \
             'The command needs a time value to set (in minutes).\n' \
             '\n' \
-            'Example:\n' \
+            'Examples\n' \
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
 
         'DIFFICULTY_CHANGE' : \
-            'Captchas difficulty successfully changed to level {}.',
+            'Captcha difficulty successfully changed to level {}.',
 
         'DIFFICULTY_NOT_NUM' : \
-            'The provided captchas difficulty is not a number.',
+            'The provided captcha difficulty is not a number.',
 
         'DIFFICULTY_NOT_ARG' : \
             'The command needs a difficulty level to set (from 1 to 5).\n' \
             '\n' \
-            'Example:\n' \
+            'Examples:\n' \
             '/difficulty 1\n' \
             '/difficulty 2\n' \
             '/difficulty 3\n' \
@@ -164,7 +164,7 @@ TEXT = {
             '/difficulty 5',
 
         'CAPTCHA_MODE_CHANGE' : \
-            'Captchas character-mode successfully changed to "{}".',
+            'Captcha character-mode successfully changed to "{}".',
 
         'CAPTCHA_MODE_INVALID' : \
             'Invalid captcha character-mode. Supported modes are: "nums", "hex" and "ascii".\n' \
@@ -175,20 +175,20 @@ TEXT = {
             '/captcha_mode ascii',
 
         'CAPTCHA_MODE_NOT_ARG' : \
-            'The command needs a characters mode to set. Availables modes are:\n' \
+            'The command needs a character mode to set. Available modes are:\n' \
             '- Numeric Captchas ("nums").\n' \
             '- Hexadecimal Captchas, numbers and characters A-F ("hex").\n' \
             '- Numbers and characters A-Z Captchas (ascii").\n' \
             '\n' \
-            'Example:\n' \
+            'Examples:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION' : \
-            'Hello {}, welcome to {}, please send a message with the number that appear in this ' \
+            'Hello {}, welcome to {}, please send a message with the number that appears in this ' \
             'captcha to verify that you are a human. If you don\'t resolve the captcha in {} ' \
-            'mins, you will be automatically kick from the group.',
+            'mins, you will be automatically kicked from the group.',
 
         'CAPTHA_SOLVED' : \
             'Captcha solved, user verified.\nWelcome to the group {}',
@@ -203,64 +203,64 @@ TEXT = {
             '{} has not completed the captcha in time. "User" was kicked.',
 
         'NEW_USER_KICK_NOT_RIGHTS' : \
-            '{} has not completed the captcha in time. I try to kick the "User", but I ' \
-            'don\'t have the administration rights for kick users in the group.',
+            '{} has not completed the captcha in time. I tried to kick the "User", but I ' \
+            'don\'t have administration rights to kick users in the group.',
 
         'NEW_USER_KICK_NOT_IN_CHAT' : \
-            '{} has not completed the captcha in time. I try to kick the "User", but the ' \
+            '{} has not completed the captcha in time. I tried to kick the "User", but the ' \
             'user is not in the group (has left the group or has been kicked by an Admin).',
 
         'BOT_CANT_KICK' : \
-            '{} has not completed the captcha in time. I try to kick the "User", but for ' \
-            'some unexpected problem (maybe network/server related), I can\'t do it.',
+            '{} has not completed the captcha in time. I tried to kick the "User", but due to ' \
+            'an unexpected problem (maybe network/server related), I can\'t do it.',
 
         'CANT_DEL_MSG' : \
-            'I try to delete this message, but I don\'t have the administration rights for ' \
-            'remove messages that has not been sent by me.',
+            'I tried to delete this message, but I don\'t have the administration rights to ' \
+            'remove messages that have not been sent by me.',
 
         'NEW_USER_BAN' : \
-            'Warning: This is the third time that {} has tried to join the group and fail to ' \
-            'resolve the captcha. "User" was ban. To let he enter again, an Admin has to ' \
+            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'solve the captcha. "User" was banned. To let him/her enter again, an Admin has to ' \
             'manually remove the restrictions of this "user".',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
-            'Warning: This is the third time that {} has tried to join the group and fail to ' \
-            'resolve the captcha. I try to ban the "User", but the user is not in the group ' \
+            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'solve the captcha. I tride to ban the "User", but the user is not in the group ' \
             '(has left the group or has been kicked/banned by an Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
-            'Warning: This is the third time that {} has tried to join the group and fail to ' \
-            'resolve the captcha. I try to ban the "User", but I don\'t have the administration ' \
-            'rights for ban users in the group.',
+            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'solve the captcha. I tried to ban the "User", but I don\'t have administration ' \
+            'rights to ban users in the group.',
 
         'BOT_CANT_BAN' : \
-            'Warning: This is the third time that {} has tried to join the group and fail to ' \
-            'resolve the captcha. I try to ban the "User", but for some unexpected problem ' \
+            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'solve the captcha. I tried to ban the "User", but due to an unexpected problem ' \
             '(maybe network/server related), I can\'t do it.',
 
         'SPAM_DETECTED_RM' : \
-            'Detected a message with an URL (or an alias) from {}, who has not solved the ' \
-            'captcha yet. The message has been removed for the sake of a Telegram free of Spam :)',
+            'Detected a message with anURL (or an alias) from {}, who has not solved the ' \
+            'captcha yet. The message has been removed for the sake of keeping Telegram free of Spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
             'Message with an URL (or an alias) detected from {}, who has not solved the captcha ' \
-            'yet. I try to remove the Spam message, but I don\'t have the administration rights ' \
-            'for remove messages that has not been sent by me.',
+            'yet. I tried to remove the Spam message, but I don\'t have administration rights ' \
+            'to remove messages that have not been sent by me.',
 
         'NOT_TEXT_MSG_ALLOWED' : \
-            'Removed a non-text message (image, audio, file...) from {}, for the sake of a ' \
+            'Removed a non-text message (image, audio, file...) from {}, for the sake of keeping ' \
             'Telegram free of Spam.\n' \
             '\n' \
-            'You can send non-text messages after you have resolved the captcha.',
+            'You can send non-text messages after you have solved the captcha.',
 
         'OTHER_CAPTCHA_BTN_TEXT' : \
             'Other Captcha',
 
         'ENABLE' : \
-            'Captcha protection enabled. Disable it with /disable command.',
+            'Captcha protection enabled. Disable it with the "/disable" command.',
 
         'DISABLE' : \
-            'Captcha protection disabled. Enable it with /enable command.',
+            'Captcha protection disabled. Enable it with "/enable" command.',
 
         'ALREADY_ENABLE' : \
             'The captcha protection is already enabled.',
@@ -272,10 +272,10 @@ TEXT = {
             'Can\'t use this command in the current chat.',
 
         'VERSION' : \
-            'Actual Bot version: {}',
+            'Current Bot version: {}',
 
         'ABOUT_MSG' : \
-            'This is a free software and open-source GNU-GPL licensed Bot developed by {}.\n' \
+            'This is free software and open-sourced under the GNU-GPL license. Bot developed by {}.\n' \
             '\n' \
             'You can check the code here:\n' \
             '{}\n' \
@@ -295,17 +295,17 @@ TEXT = {
             '\n' \
             '/help - Shows the help information.\n' \
             '\n' \
-            '/commands - Shows the actual message. Information about all the available commands ' \
+            '/commands - Shows this message. Information about all the available commands ' \
             'and their description.\n' \
             '\n' \
-            '/language - Allows to change the language of the bot messages. Actual available ' \
-            'languages: en (english) - es (spanish) - pt_br (portuguese from Brazil).\n' \
+            '/language - Allows to change the language of the bot\'s messages. Currently available ' \
+            'languages: en (English) - es (Spanish) - ca (Catalan) - pt_br (Portuguese from Brazil).\n' \
             '\n' \
-            '/time - Allows to change the time available to resolve a captcha.\n' \
+            '/time - Allows changing the time available to solve a captcha.\n' \
             '\n' \
-            '/difficulty - Allows to change captcha difficulty level (from 1 to 5).\n' \
+            '/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n' \
             '\n' \
-            '/captcha_mode - Allows to change captcha characters mode (nums: just numbers, ' \
+            '/captcha_mode - Allows changing captcha character mode (nums: just numbers, ' \
             'hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n' \
             '\n' \
             '/enable - Enable the captcha protection of the group.\n' \
