@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    10/06/2019
+    12/06/2019
 Version:
-    1.4.2
+    1.4.3
 '''
 
 ####################################################################################################
@@ -39,58 +39,58 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.2 (10/06/2019)' # Bot version
+    'VERSION' : '1.4.3 (12/06/2019)' # Bot version
 }
 
 TEXT = {
     'EN' : {
         'START' : \
-            'Hello, I am a Bot that sends an image captcha for each new user who joins a group, ' \
-            'and kicks anyone that can\'t solve the captcha within a specified time.\n' \
+            'Hello, I am a Bot that send an image captcha for each new user who joins a group, ' \
+            'and kick anyone that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            'If a user tries to join the group 3 times in a row and never solves the captcha, I will ' \
-            'assume that this "user" is a bot, and it will be banned. Also, any message that ' \
-            'contains a URL sent by a new "user" before the captcha is completed, will be considered ' \
-            'spam and will be deleted.\n' \
+            'If a user tries to join the group 3 times in a row and never solves the captcha, I ' \
+            'will assume that this "user" is a bot, and it will be banned. Also, any message ' \
+            'that contains a URL sent by a new "user" before the captcha is completed, will be ' \
+            'considered spam and will be deleted.\n' \
             '\n' \
-            'Remember to give me administration privileges to kick/ban users and remove ' \
+            'Remember to give me administration privileges to kick-ban users and remove ' \
             'messages.\n' \
             '\n' \
-            'Check the "/help" command for more information about my usage.\n' \
+            'Check /help command for more information about my usage.\n' \
             '\n' \
-            'Am I useful? Check the "/about" command and consider making a donation to keep me active.',
+            'Am I useful? Check /about command and consider making a donation to keep me active.',
 
         'HELP' : \
             'Bot help:\n' \
             '————————————————\n' \
-            '- I am a Bot that sends a captcha for each new user who joins a group, and kicks any ' \
+            '- I am a Bot that send a captcha for each new user who joins a group, and kick any ' \
             'of them that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            '- If a user tries to join the group 3 times in a eow and never solves the captcha, ' \
+            '- If a user tries to join the group 3 times in a row and never solves the captcha, ' \
             'I will assume that the "user" is a bot, and it will be banned.\n' \
             '\n' \
             '- Any message that contains an URL that has been sent by a new "user" before ' \
-            'the captcha is completed, will be considered spam and will be deleted.\n' \
+            'captcha is completed, will be considered spam and will be deleted.\n' \
             '\n' \
-            '- You need to grant me Administration rights to kick users and remove messages.\n' \
+            '- You need to grant me Administration rights for kick users and remove messages.\n' \
             '\n' \
-            '- To preserve a clean group, I auto-remove all messages related to me when a captcha ' \
-            'is not solved and the user was kicked (after 5 minutes).\n' \
+            '- To preserve a clean group, I auto-remove all messages related to me when a ' \
+            'captcha is not solved and the user was kicked (after 5 minutes).\n' \
             '\n' \
-            '- The time that new users have to solve the captcha is 5 minutes by default, but it can be ' \
-            'configured using the command "/time".\n' \
+            '- The time that new users have to solve the captcha is 5 minutes by default, but it ' \
+            'can be configured using the command /time.\n' \
             '\n' \
-            '- You can turn the captcha protection on or off using the commands "/enable" and ' \
-            '"/disable".\n' \
+            '- You can turn captcha protection on/off using the commands /enable and ' \
+            '/disable.\n' \
             '\n' \
             '- Configuration commands can only be used by group Administrators.\n' \
             '\n' \
-            '- You can change the language that I speak, using the command "/language".\n' \
+            '- You can change the language that I speak, using the command /language.\n' \
             '\n' \
-            '- You can configure the captcha difficulty level using command "/difficulty".\n' \
+            '- You can configure captcha difficulty level using command /difficulty.\n' \
             '\n' \
             '- You can set captcha to use just numbers (default) or full numbers and letters, ' \
-            'using the command "/change_mode".\n' \
+            'using command /change_mode.\n' \
             '\n' \
             '- Check /commands to get a list of all avaliable commands, and a short ' \
             'description of all of them.',
@@ -137,7 +137,7 @@ TEXT = {
             'The maximum allowed captcha solve time is 120 minutes. The time has not been changed.',
 
         'TIME_NOT_NUM' : \
-            'The provided time is not an integer/whole number.',
+            'The provided time is not an integer number.',
 
         'TIME_NOT_ARG' : \
             'The command needs a time value to set (in minutes).\n' \
@@ -175,7 +175,7 @@ TEXT = {
             '/captcha_mode ascii',
 
         'CAPTCHA_MODE_NOT_ARG' : \
-            'The command needs a character mode to set. Available modes are:\n' \
+            'The command needs a character-mode to set. Available modes are:\n' \
             '- Numeric Captchas ("nums").\n' \
             '- Hexadecimal Captchas, numbers and characters A-F ("hex").\n' \
             '- Numbers and characters A-Z Captchas (ascii").\n' \
@@ -239,8 +239,9 @@ TEXT = {
             '(maybe network/server related), I can\'t do it.',
 
         'SPAM_DETECTED_RM' : \
-            'Detected a message with anURL (or an alias) from {}, who has not solved the ' \
-            'captcha yet. The message has been removed for the sake of keeping Telegram free of Spam :)',
+            'Detected a message with a URL (or alias) from {}, who has not solved the ' \
+            'captcha yet. The message has been removed for the sake of keeping Telegram free of ' \
+            'Spam :)',
 
         'SPAM_DETECTED_NOT_RM' : \
             'Message with an URL (or an alias) detected from {}, who has not solved the captcha ' \
@@ -257,10 +258,10 @@ TEXT = {
             'Other Captcha',
 
         'ENABLE' : \
-            'Captcha protection enabled. Disable it with the "/disable" command.',
+            'Captcha protection enabled. Disable it with /disable command.',
 
         'DISABLE' : \
-            'Captcha protection disabled. Enable it with "/enable" command.',
+            'Captcha protection disabled. Enable it with /enable command.',
 
         'ALREADY_ENABLE' : \
             'The captcha protection is already enabled.',
@@ -275,7 +276,8 @@ TEXT = {
             'Current Bot version: {}',
 
         'ABOUT_MSG' : \
-            'This is free software and open-sourced under the GNU-GPL license. Bot developed by {}.\n' \
+            'This Bot is free software and open-sourced under the GNU-GPL license.\n' \
+            'Bot Developed by {}.\n' \
             '\n' \
             'You can check the code here:\n' \
             '{}\n' \
@@ -298,14 +300,15 @@ TEXT = {
             '/commands - Shows this message. Information about all the available commands ' \
             'and their description.\n' \
             '\n' \
-            '/language - Allows to change the language of the bot\'s messages. Currently available ' \
-            'languages: en (English) - es (Spanish) - ca (Catalan) - pt_br (Portuguese from Brazil).\n' \
+            '/language - Allows to change the language of the bot\'s messages. Currently ' \
+            'available languages: en (English) - es (Spanish) - ca (Catalan) - pt_br (Portuguese ' \
+            'from Brazil).\n' \
             '\n' \
             '/time - Allows changing the time available to solve a captcha.\n' \
             '\n' \
             '/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n' \
             '\n' \
-            '/captcha_mode - Allows changing captcha character mode (nums: just numbers, ' \
+            '/captcha_mode - Allows changing captcha character-mode (nums: just numbers, ' \
             'hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n' \
             '\n' \
             '/enable - Enable the captcha protection of the group.\n' \
@@ -393,7 +396,7 @@ TEXT = {
             'el catalán y el portugués de Brasil. Cambia a uno de ellos mediante las etiquetas ' \
             '"en", "es", "ca" o "pt_br".\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -403,7 +406,7 @@ TEXT = {
             'El comando necesita un idioma que establecer (en - inglés, es - español, ' \
             'ca - catalán, pt_br - portugués de Brasil).\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -421,7 +424,7 @@ TEXT = {
         'TIME_NOT_ARG' : \
             'El comando necesita un valor de tiempo a establecer (en minutos).\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
@@ -435,7 +438,7 @@ TEXT = {
         'DIFFICULTY_NOT_ARG' : \
             'El comando necesita un nivel de dificultad a establecer (de 1 a 5).\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/difficulty 1\n' \
             '/difficulty 2\n' \
             '/difficulty 3\n' \
@@ -448,7 +451,7 @@ TEXT = {
         'CAPTCHA_MODE_INVALID' : \
             'Modo-caracter invalido. Los modos disponibles son: "nums", "hex" y "ascii".\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
@@ -459,7 +462,7 @@ TEXT = {
             '- Captchas hexadecimales, con números y letras A-F ("hex").\n' \
             '- Captchas con números y letras A-Z (ascii").\n' \
             '\n' \
-            'Ejemplo:\n' \
+            'Ejemplos:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
@@ -679,7 +682,7 @@ TEXT = {
             'català i el portuguès de Brasil. Canvia a un d\'ells mitjançant les etiquetes "en", ' \
             '"es", "ca", o "pt_br".\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -689,7 +692,7 @@ TEXT = {
             'El comandament necessita un idioma a establir (en - anglès, es - castellà, ' \
             'ca - català, pt_br - portuguès de Brasil)\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -707,7 +710,7 @@ TEXT = {
         'TIME_NOT_ARG':
             'El comandament necessita un valor de temps a establir (en minuts).\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
@@ -721,7 +724,7 @@ TEXT = {
         'DIFFICULTY_NOT_ARG' : \
             'El comandament necessita un nivell de dificultat a establir (d\'1 a 5).\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/difficulty 1\n' \
             '/difficulty 2\n' \
             '/difficulty 3\n' \
@@ -734,7 +737,7 @@ TEXT = {
         'CAPTCHA_MODE_INVALID' : \
             'Mode-caràcter invàlid. Les maneres disponibles són: "nums", "hex" i "ascii".\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
@@ -746,13 +749,13 @@ TEXT = {
             '- Captchas hexadecimals, amb números i lletres A-F ("hex").\n' \
             '- Captchas amb números i lletres A-Z (ascii ").\n' \
             '\n' \
-            'Exemple:\n' \
+            'Exemples:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
 
         'NEW_USER_CAPTCHA_CAPTION':
-            'Hola{}, benvingut/da a {}, si us plau envia un missatge amb el número que apareix ' \
+            'Hola {}, benvingut/da a {}, si us plau envia un missatge amb el número que apareix ' \
             'en aquesta imatge per a verificar que ets un humà. Si no resols aquest captcha en ' \
             '{} min, seràs kickejat del grup automàticament.',
 
@@ -965,7 +968,7 @@ TEXT = {
             'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão e ' \
             'Português (Brasil). Defina um deles usando "en", "es", "ca" ou "pt_br".\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -975,7 +978,7 @@ TEXT = {
             'O comando exige o idioma que será usado (en – inglês, es – espanhol, ' \
             'ca - catalão, pt_br – português (Brasil)).\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
@@ -993,7 +996,7 @@ TEXT = {
         'TIME_NOT_ARG' : \
             'O comando exige um valor para o tempo (em minutos).\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
@@ -1007,7 +1010,7 @@ TEXT = {
         'DIFFICULTY_NOT_ARG' : \
             'O comando exige um nível de deficuldade como argumento (de 1 a 5).\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/difficulty 1\n' \
             '/difficulty 2\n' \
             '/difficulty 3\n' \
@@ -1020,7 +1023,7 @@ TEXT = {
         'CAPTCHA_MODE_INVALID' : \
             'Modo-caracter inválido. As opções disponíveis são: "nums", "hex" ou "ascii".\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
@@ -1031,7 +1034,7 @@ TEXT = {
             '- Captchas hexadecimais, com números e letras A-F ("hex").\n' \
             '- Captchas com números e letras A-Z (ascii").\n' \
             '\n' \
-            'Exemplo:\n' \
+            'Exemplos:\n' \
             '/captcha_mode nums\n' \
             '/captcha_mode hex\n' \
             '/captcha_mode ascii',
