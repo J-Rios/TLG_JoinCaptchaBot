@@ -1180,6 +1180,8 @@ def check_time_to_kick_not_verify_users(bot):
                     new_user["join_retries"] = new_user["join_retries"] + 1
                     printts("[{}] Increased join_retries to {}".format(chat_id, \
                             new_user["join_retries"]))
+                    # Set to auto-remove the kick message too, after a while
+                    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                 else:
                     # Kick fail
                     printts("[{}] Can't kick".format(chat_id))
@@ -1201,8 +1203,8 @@ def check_time_to_kick_not_verify_users(bot):
                     else:
                         # For other reason, the Bot can't ban
                         bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
-                    # Set to auto-remove the kick message too, after a while
-                    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                        # Set to auto-remove the kick message too, after a while
+                        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
             # The user has join this chat 3 times and never succes to solve the captcha (ban)
             else:
                 printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id, \
