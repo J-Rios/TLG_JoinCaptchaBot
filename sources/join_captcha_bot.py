@@ -530,7 +530,8 @@ def msg_new_user(bot, update):
             send_problem = False
             # Wait 1.5s of courtesy for lets others bots welcome messages be sent
             # (try show captcha msg as lastest one)
-            sleep(1.5)
+            # Commented due that it could be in conflict with anti-spam behaviour
+            #sleep(1.5)
             printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
             try:
                 # Note: Img caption must be <= 1024 chars
