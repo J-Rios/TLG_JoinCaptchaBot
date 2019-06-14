@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    13/06/2019
+    14/06/2019
 Version:
-    1.4.4
+    1.4.5
 '''
 
 ####################################################################################################
@@ -479,7 +479,7 @@ def msg_new_user(bot, update):
             except Exception as e:
                 printts("[{}] {}".format(chat_id, str(e)))
                 pass
-        # The added user is not myself (this Bot)
+        # The added user is not myself (not this Bot)
         else:
             printts(" ")
             printts("[{}] New join detected: {} ({})".format(chat_id, join_user_name, join_user_id))
@@ -528,6 +528,9 @@ def msg_new_user(bot, update):
                     callback_data=join_user_id)]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             send_problem = False
+            # Wait 1.5s of courtesy for lets others bots welcome messages be sent
+            # (try show captcha msg as lastest one)
+            sleep(1.5)
             printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
             try:
                 # Note: Img caption must be <= 1024 chars

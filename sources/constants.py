@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    13/06/2019
+    14/06/2019
 Version:
-    1.4.4
+    1.4.5
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.4 (13/06/2019)' # Bot version
+    'VERSION' : '1.4.5 (14/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -321,13 +321,15 @@ TEXT = {
     },
     'ES' : {
         'START' : \
-            'Hola, soy un Bot que envia una imagen captcha a cada nuevo usuario que se une al ' \
-            'grupo, y kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
+            'Hola, soy un Bot que envía una imagen captcha a cada nuevo usuario que se une al ' \
+            'grupo, y expulso (kick) a los que no resuelvan el captcha en un tiempo ' \
+            'determinado.\n' \
             '\n' \
-            'Si un usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, ' \
-            'supondré que ese "usuario" es un Bot y lo banearé. Además, cualquier mensaje que ' \
-            'contenga una URL y haya sido enviado por un nuevo "usuario" antes de que este haya ' \
-            'resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n' \
+            'Si un usuario ha intentado unirse al grupo 3 veces y nunca consiguió resolver el ' \
+            'captcha, supondré que ese "usuario" es un Bot y, trás expulsarlo, lo bloquearé ' \
+            '(ban) para que no pueda volver a entrar en el grupo. Además, cualquier mensaje que ' \
+            'contenga una URL y haya sido enviado por un nuevo "usuario" antes de que este ' \
+            'haya resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n' \
             '\n' \
             'Recuerda que para funcionar de forma adecuada debes darme permisos de ' \
             'administración para suspender usuarios y eliminar mensajes del grupo.\n' \
@@ -341,10 +343,11 @@ TEXT = {
             'Ayuda sobre el Bot:\n' \
             '————————————————\n' \
             '- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
-            'kickeo a los que no resuelvan el captcha en un tiempo determinado.\n' \
+            'expulso (kick) a los que no resuelvan el captcha en un tiempo determinado.\n' \
             '\n' \
-            '- Si un usuario ha intentado unirse al grupo 3 veces y nunca resolvió el captcha, ' \
-            'supondré que ese "usuario" es un Bot y lo banearé.\n' \
+            '- Si un usuario ha intentado unirse al grupo 3 veces y nunca consiguió resolver ' \
+            'el captcha, supondré que ese "usuario" es un Bot y, trás expulsarlo, lo ' \
+            'bloquearé (ban) para que no pueda volver a entrar en el grupo.\n' \
             '\n' \
             '- Cualquier mensaje que contenga una URL y haya sido enviado por un nuevo "usuario" ' \
             'antes de que este haya resuelto el captcha, será considerado un mensaje de Spam y ' \
@@ -354,7 +357,7 @@ TEXT = {
             'mensajes.\n' \
             '\n' \
             '- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación ' \
-            'conmigo cuando no se haya resuelto el captcha y el usuario haya sido kickeado ' \
+            'conmigo cuando no se haya resuelto el captcha y el usuario haya sido expulsado ' \
             '(transcurridos 5 minutos).\n' \
             '\n' \
             '- El tiempo que disponen los usuarios para resolver el captcha son 5 minutos, pero ' \
@@ -470,7 +473,7 @@ TEXT = {
         'NEW_USER_CAPTCHA_CAPTION' : \
             'Hola {}, bienvenido a {}, por favor envía un mensaje con el número que aparece ' \
             'en esta imagen para verificar que eres un humano. Si no resuelves este captcha en ' \
-            '{} mins, serás kickeado del grupo automáticamente.',
+            '{} mins, serás expulsado (kick) del grupo automáticamente.',
 
         'CAPTHA_SOLVED' : \
             'Captcha resuelto, usuario verificado.\nBienvenido al grupo {}',
@@ -482,19 +485,19 @@ TEXT = {
             'Ese no es el número correcto. Fijate bien, el captcha tiene 4 numeros...',
 
         'NEW_USER_KICK' : \
-            '{} no completó el captcha a tiempo. El "usuario" fue kickeado.',
+            '{} no completó el captcha a tiempo. El "usuario" fue expulsado (kick).',
 
        'NEW_USER_KICK_NOT_RIGHTS' : \
-            '{} no completó el captcha a tiempo. El "usuario" debería ser kickeado, pero ' \
+            '{} no completó el captcha a tiempo. El "usuario" debería ser expulsado (kick), pero ' \
             'no se me han dado los privilegios de administración necesarios para expulsar ' \
             'usuarios del grupo.',
 
         'NEW_USER_KICK_NOT_IN_CHAT' : \
-            '{} no completó el captcha a tiempo. Iba a kickear al "usuario", pero ya no ' \
-            'se encuentra en el grupo (salió del grupo o fue kickeado/baneado por un Admin).',
+            '{} no completó el captcha a tiempo. Iba a expulsar (kick) al "usuario", pero ya no ' \
+            'se encuentra en el grupo (salió del grupo o fue expulsado por un Admin).',
 
         'BOT_CANT_KICK' : \
-            '{} no completó el captcha a tiempo. He intentado kickear al "usuario", pero ' \
+            '{} no completó el captcha a tiempo. He intentado expulsar (kick) al "usuario", pero ' \
             'debido a un problema inesperado (quizás relacionado con la red o el servidor), no ' \
             'he podido hacerlo.',
 
@@ -504,25 +507,27 @@ TEXT = {
 
         'NEW_USER_BAN' : \
             'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
-            'y no pudo resolver el captcha. El "usuario" fue baneado. Para permitir que intente ' \
-            'entrar nuevamente al grupo, un Admin debe de quitar la restricción del usuario ' \
-            'de forma manual en las opciones de administración del grupo.',
+            'y no pudo resolver el captcha. El "usuario" fue expulsado y bloqueado (ban). ' \
+            'Para permitir que intente entrar nuevamente al grupo, un Admin debe de quitar la ' \
+            'restricción del usuario de forma manual en las opciones de administración del grupo.',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
             'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
-            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero ya no se ' \
-            'encuentra en el grupo (salió del grupo o fue kickeado/baneado por un Admin).',
+            'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
+            '(ban), pero ya no se encuentra en el grupo (salió del grupo o fue expulsado por ' \
+            'un Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
             'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
-            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero no se me han ' \
-            'dado los privilegios de administración necesarios para expulsar usuarios del grupo.',
+            'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
+            '(ban), pero no se me han dado los privilegios de administración necesarios para ' \
+            'expulsar usuarios del grupo.',
 
         'BOT_CANT_BAN' : \
             'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
-            'y no pudo resolver el captcha. El "usuario" debería ser baneado, pero debido a un ' \
-            'problema inesperado (quizás relacionado con la red o el servidor), no he podido ' \
-            'hacerlo.',
+            'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
+            '(ban), pero debido a un problema inesperado (quizás relacionado con la red o el ' \
+            'servidor), no he podido hacerlo.',
 
         'SPAM_DETECTED_RM' : \
             'Se ha detectado un mensaje que contiene una URL (o alias) enviado por {}, quien aún ' \
