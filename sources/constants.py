@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/06/2019
+    18/06/2019
 Version:
-    1.4.5
+    1.4.6
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.5 (14/06/2019)' # Bot version
+    'VERSION' : '1.4.6 (18/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -107,28 +107,31 @@ TEXT = {
             'Did you mean:\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_BAD_LANG' : \
             'Invalid language provided. The languages currently supported are English, Spanish, ' \
-            'Catalan and Portuguese (Brazil). Change to any of them using "en", "es", "ca" or ' \
-            '"pt_br".\n' \
+            'Catalan, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to any of ' \
+            'them using "en", "es", "ca", "pt_br" or "zh_cn".\n' \
             '\n' \
             'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'The command needs a language to set (en - English, es - Spanish, ' \
-            'ca - Catalan, pt_br - Portuguese from Brazil).\n' \
+            'ca - Catalan, pt_br - Portuguese from Brazil, zh_cn - Chinese Mainland).\n' \
             '\n' \
             'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'TIME_CHANGE' : \
             'Time to solve the captcha successfully changed to {} minutes.',
@@ -142,7 +145,7 @@ TEXT = {
         'TIME_NOT_ARG' : \
             'The command needs a time value to set (in minutes).\n' \
             '\n' \
-            'Examples\n' \
+            'Examples:\n' \
             '/time 3\n' \
             '/time 5\n' \
             '/time 10',
@@ -392,28 +395,31 @@ TEXT = {
             'Quizás querías decir:\n' \
             '/language en\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_BAD_LANG' : \
             'Idioma inválidado. Los idiomas actualmente soportados son el inglés, el español, ' \
-            'el catalán y el portugués de Brasil. Cambia a uno de ellos mediante las etiquetas ' \
-            '"en", "es", "ca" o "pt_br".\n' \
+            'el catalán, el portugués de Brasil y el chino. Cambia a uno de ellos mediante las ' \
+            'etiquetas "en", "es", "ca", "pt_br" o "zh_cn".\n' \
             '\n' \
             'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'El comando necesita un idioma que establecer (en - inglés, es - español, ' \
-            'ca - catalán, pt_br - portugués de Brasil).\n' \
+            'ca - catalán, pt_br - portugués de Brasil, zh_cn - chino).\n' \
             '\n' \
             'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'TIME_CHANGE' : \
             'Tiempo para resolver el captcha cambiado a {} minutos.',
@@ -680,28 +686,31 @@ TEXT = {
             'Potser volies dir:\n' \
             '/language en\n' \
             '/language es\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_BAD_LANG':
             'Idioma invalidat. Els idiomes actualment suportats són l\'anglès, el castellà, el ' \
-            'català i el portuguès de Brasil. Canvia a un d\'ells mitjançant les etiquetes "en", ' \
-            '"es", "ca", o "pt_br".\n' \
+            'català, el portuguès de Brasil i el xinès. Canvia a un d\'ells mitjançant les ' \
+            'etiquetes "en", "es", "ca", "pt_br" o "zh_cn".\n' \
             '\n' \
             'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_NOT_ARG':
             'El comandament necessita un idioma a establir (en - anglès, es - castellà, ' \
-            'ca - català, pt_br - portuguès de Brasil)\n' \
+            'ca - català, pt_br - portuguès de Brasil, zh_cn - xinès).\n' \
             '\n' \
             'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'TIME_CHANGE':
             'Temps per a resoldre el captcha canviat a {} minuts.',
@@ -967,27 +976,31 @@ TEXT = {
             'Quem sabe você quer usar:\n' \
             '/language en\n' \
             '/language es\n' \
-            '/language ca',
+            '/language ca\n' \
+            '/language zh_cn',
 
         'LANG_BAD_LANG' : \
-            'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão e ' \
-            'Português (Brasil). Defina um deles usando "en", "es", "ca" ou "pt_br".\n' \
+            'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão, ' \
+            'Português (Brasil) e chinês. Defina um deles usando "en", "es", "ca", ' \
+            '"pt_br" ou "zh_cn".\n' \
             '\n' \
             'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'O comando exige o idioma que será usado (en – inglês, es – espanhol, ' \
-            'ca - catalão, pt_br – português (Brasil)).\n' \
+            'ca - catalão, pt_br – português (Brasil), zh_cn - chinês).\n' \
             '\n' \
             'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
-            '/language pt_br',
+            '/language pt_br\n' \
+            '/language zh_cn',
 
         'TIME_CHANGE' : \
             'Tempo para enviar o captcha modificado com sucesso para {} minutos.',
@@ -1173,5 +1186,282 @@ TEXT = {
             '/version - Mostra a versão do Bot.\n' \
             '\n' \
             '/about - Mostra informações "sobre".'
+    },
+    'ZH_CN' : {
+        'START' : \
+            '你好，我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，' \
+            '并踢出任何在时限内无法输入验证码的人。\n' \
+            '\n' \
+            '如果有人尝试加入群3次且没有输入验证码，我' \
+            '将会认为这个用户是机器人，并且将他他拉黑。同样，任何' \
+            '包含链接的消息在他输入验证码之前被发送，将会被' \
+            '认为是垃圾信息并被删除。\n' \
+            '\n' \
+            '记得给我管理员权限以踢人和删除消息。\n' \
+            '\n' \
+            '检查 /help 命令以获取更多关于我的使用方法。\n' \
+            '\n' \
+            '我有用吗？检查 /about 命令并确认捐款给我使我保持运行。',
+
+        'HELP' : \
+            '机器人帮助:\n' \
+            '————————————————\n' \
+            '- 我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，并踢出任何' \
+            '在时限内无法输入验证码的人。\n' \
+            '\n' \
+            '- 如果有人尝试加入群3次且没有输入验证码，' \
+            '我将会认为这个用户是机器人，并且将他他拉黑。\n' \
+            '\n' \
+            '- 任何包含链接的消息在他输入验证码之前' \
+            '被发送，将会被认为是垃圾信息并被删除。\n' \
+            '\n' \
+            '- 你需要给我管理员权限以踢人和删除消息。\n' \
+            '\n' \
+            '- 为了保持群组清洁, 我会删除与我有关的所有信息当' \
+            '验证码没有输入和用户被踢出时（5分钟后）。\n' \
+            '\n' \
+            '- 用户在默认情况下必须在5分钟内输入验证码，但它' \
+            '能通过 /time 命令被设置。\n' \
+            '\n' \
+            '- 你可以通关 /enable 和 /disable 命令设置验证码' \
+            '的开启和关闭。\n' \
+            '\n' \
+            '- 设置类命令只能被群组管理员使用。\n' \
+            '\n' \
+            '- 你可以用 /language 命令设置我的语言。\n' \
+            '\n' \
+            '- 你可以通过 /difficulty 命令设置验证码难度。\n' \
+            '\n' \
+            '- 您可以将验证码设置为仅使用数字（默认）或完整数字和字母，' \
+            '通过命令 /change_mode.\n' \
+            '\n' \
+            '- 检查 /commands 以获取可用命令列表，以及' \
+            '它们的描述。',
+
+        'CMD_NOT_ALLOW' : \
+            '该命令只有管理员可以使用。',
+
+        'LANG_CHANGE' : \
+            '语言已设置为中文。',
+
+        'LANG_SAME' : \
+            '我已经被设置为中文。\n' \
+            '\n' \
+            '你是否需要使用以下命令:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br',
+
+        'LANG_BAD_LANG' : \
+            '无此语言。目前支持英语，西班牙语，' \
+            '加泰罗尼亚语，中文和葡萄牙语（巴西）。使用en - 英文，es - 西班牙语，' \
+            'ca - 加泰罗尼亚语，pt_br - 葡萄牙语（巴西），zh-CN - 中文。\n' \
+            '\n' \
+            '如:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br\n' \
+            '/language zh_cn',
+
+        'LANG_NOT_ARG' : \
+            '这个命令需要一个语言参数（en - 英文，es - 西班牙语，' \
+            'ca - 加泰罗尼亚语，pt_br - 葡萄牙语（巴西）），zh-CN - 中文。\n' \
+            '\n' \
+            '如:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br\n' \
+            '/language zh_cn',
+
+        'TIME_CHANGE' : \
+            '输入验证码的时间成功设置为 {} 分钟。',
+
+        'TIME_MAX_NOT_ALLOW' : \
+            '允许的验证码最大输入时间为120分钟，或，时间没有改变。',
+
+        'TIME_NOT_NUM' : \
+            '提供的时间不是整数。',
+
+        'TIME_NOT_ARG' : \
+            '该命令需要设置时间值（以分钟为单位）。\n' \
+            '\n' \
+            '如:\n' \
+            '/time 3\n' \
+            '/time 5\n' \
+            '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            '验证码难度成功更改为级别 {}。',
+
+        'DIFFICULTY_NOT_NUM' : \
+            '提供的验证码难度不是数字。',
+
+        'DIFFICULTY_NOT_ARG' : \
+            '该命令需要设置难度级别（从1到5）。\n' \
+            '\n' \
+            '如:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            '验证码字符模式已成功更改为"{}"。',
+
+        'CAPTCHA_MODE_INVALID' : \
+            '验证码字符模式无效。 支持的模式有："nums" - 数字，"hex" - 十六进制可表示数值，和' \
+            '"ascii" - 数字、英文组合。\n' \
+            '\n' \
+            '如:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            '该命令需要设置字符模式。 可用的模式有：\n' \
+            '- "nums" - 数字。\n' \
+            '- "hex" - 十六进制可表示数值。\n' \
+            '- "ascii" - 数字、英文组合。\n' \
+            '\n' \
+            '如:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'NEW_USER_CAPTCHA_CAPTION' : \
+            '你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码' \
+            '以验证你是人类。如果你没有在 {} ' \
+            '分钟内输入验证码，你将会被自动踢出群组。',
+
+        'CAPTHA_SOLVED' : \
+            '验证码已输入，用户已验证。欢迎加入群组 {}',
+
+        'CAPTCHA_INCORRECT_0' : \
+            '这不是正确的数字。请再试一次。',
+
+        'CAPTCHA_INCORRECT_1' : \
+            '这不是正确的数字。请仔细检查，验证码有4个数字。',
+
+        'NEW_USER_KICK' : \
+            '{} 还没有及时完成验证码。“用户”已被踢出。',
+
+        'NEW_USER_KICK_NOT_RIGHTS' : \
+            '{} 还没有及时完成验证码。我试图踢出“用户”，但我' \
+            '没有管理权限来踢出该群组中的用户。',
+
+        'NEW_USER_KICK_NOT_IN_CHAT' : \
+            '{} 还没有及时完成验证码。我试图踢出“用户”，但是' \
+            '用户不在组中（已离开组或已被管理员踢出）。',
+
+        'BOT_CANT_KICK' : \
+            '{} 还没有及时完成验证码。我试图踢出“用户”，但因为' \
+            '未知原因（可能与网络/服务器有关），我无法完成请求。',
+
+        'CANT_DEL_MSG' : \
+            '我试图删除此消息，但我没有管理权限以删除我尚未发送的消息。',
+
+        'NEW_USER_BAN' : \
+            '警告：这是 {} 尝试加入该组的第三次' \
+            '输入验证码失败。“用户”被拉黑。为了让他/她再次进入，管理员必须' \
+            '手动删除此“用户”的限制。',
+
+        'NEW_USER_BAN_NOT_IN_CHAT' : \
+            '警告：这是 {} 尝试加入该组的第三次' \
+            '输入验证码失败。我试图拉黑“用户”，但用户已不在该群组。' \
+            '（已离开组或已被管理员踢出）。',
+
+        'NEW_USER_BAN_NOT_RIGHTS' : \
+            '警告：这是 {} 尝试加入该组的第三次' \
+            '输入验证码失败。我试图拉黑“用户”，但我没有管理权限以' \
+            '拉黑此用户',
+
+        'BOT_CANT_BAN' : \
+            '警告：这是 {} 尝试加入该组的第三次' \
+            '输入验证码失败。我试图拉黑“用户”，但因为' \
+            '未知原因（可能与网络/服务器有关），我无法完成请求。',
+
+        'SPAM_DETECTED_RM' : \
+            '检测到来自 {} 的URL（或别名）的消息，该用户尚未输入' \
+            '验证码。为了保持Telegram不被垃圾消息困扰，该消息已被删除' \
+            ':)',
+
+        'SPAM_DETECTED_NOT_RM' : \
+            '检测到来自 {} 的URL（或别名）的消息，该用户尚未输入' \
+            '验证码。我试图删除消息，但我没有管理权限以' \
+            '删除消息',
+
+        'NOT_TEXT_MSG_ALLOWED' : \
+            '为了保持Telegram不被垃圾消息困扰，从 {} 中删除了非文本消息（图像，音频，文件...）' \
+            '没有电子邮件的电报。\n' \
+            '\n' \
+            '输入验证码后，您可以发送非文本消息。',
+
+        'OTHER_CAPTCHA_BTN_TEXT' : \
+            '其他验证码',
+
+        'ENABLE' : \
+            '启用了验证码保护。 使用 /disable 命令禁用它。',
+
+        'DISABLE' : \
+            '禁用了Captcha保护。 使用 /enable 命令启用它。',
+
+        'ALREADY_ENABLE' : \
+            '验证码保护已经启用。',
+
+        'ALREADY_DISABLE' : \
+            '验证码保护已经禁用。',
+
+        'CAN_NOT_GET_ADMINS' : \
+            '在当前聊天中无法使用此命令。',
+
+        'VERSION' : \
+            '当前机器人版本号： {}',
+
+        'ABOUT_MSG' : \
+            '这个机器人是免费软件，在GNU-GPL许可下开源。' \
+            '开发者是 {}.\n' \
+            '\n' \
+            '你可以在这里查看源码：\n' \
+            '{}\n' \
+            '\n' \
+            '你喜欢我的作品吗？请我杯咖啡吧。\n' \
+            '\n' \
+            'Paypal账号：\n' \
+            '{}\n' \
+            '\n' \
+            'BTC型比特币地址：\n' \
+            '{}',
+
+        'COMMANDS' : \
+            'L命令列表：\n' \
+            '————————————————\n' \
+            '/start - 显示有关机器人的初始信息。\n' \
+            '\n' \
+            '/help - 显示帮助信息。\n' \
+            '\n' \
+            '/commands - 显示此消息。有关所有可用命令的信息和描述。\n' \
+            '\n' \
+            '/language - 更改机器人消息的语言。 目前' \
+            '目前可用语言为： en - 英文，es - 西班牙语，' \
+            'ca - 加泰罗尼亚语，zh-CN - 中文，pt_br - 葡萄牙语（巴西）。\n' \
+            '\n' \
+            '/time - 更改可用于输入验证码的时间。\n' \
+            '\n' \
+            '/difficulty - 更改验证码难度级别（从1到5）。\n' \
+            '\n' \
+            '/captcha_mode - 更改验证码字符模式（nums：数字，' \
+            'hex：十六进制可表示数值，ascii：数字、英文组合。）\n' \
+            '\n' \
+            '/enable - 启用本群组验证码保护。\n' \
+            '\n' \
+            '/disable - 禁用本群组验证码保护。\n' \
+            '\n' \
+            '/version - 显示机器人版本号。\n' \
+            '\n' \
+            '/about - 显示“关于”信息。'
     }
 }
