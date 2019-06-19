@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/06/2019
+    19/06/2019
 Version:
-    1.4.6
+    1.4.7
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.6 (18/06/2019)' # Bot version
+    'VERSION' : '1.4.7 (19/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -1407,7 +1407,7 @@ TEXT = {
             '启用了验证码保护。 使用 /disable 命令禁用它。',
 
         'DISABLE' : \
-            '禁用了Captcha保护。 使用 /enable 命令启用它。',
+            '禁用了验证码保护。 使用 /enable 命令启用它。',
 
         'ALREADY_ENABLE' : \
             '验证码保护已经启用。',
@@ -1437,7 +1437,7 @@ TEXT = {
             '{}',
 
         'COMMANDS' : \
-            'L命令列表：\n' \
+            '命令列表：\n' \
             '————————————————\n' \
             '/start - 显示有关机器人的初始信息。\n' \
             '\n' \
