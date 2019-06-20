@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    19/06/2019
+    20/06/2019
 Version:
-    1.4.7
+    1.4.8
 '''
 
 ####################################################################################################
@@ -209,6 +209,16 @@ def is_int(s):
         return True
     except ValueError:
         return False
+
+
+def add_lrm(str_to_modify):
+    '''Add a Left to Right Mark (LRM) at provided string start'''
+    barray = bytearray(b"\xe2\x80\x8e")
+    str_to_modify = str_to_modify.encode("utf-8")
+    for b in str_to_modify:
+        barray.append(b)
+    str_to_modify = barray.decode("utf-8")
+    return str_to_modify
 
 ####################################################################################################
 
@@ -454,6 +464,8 @@ def msg_new_user(bot, update):
             join_user_name = join_user.name
         else:
             join_user_name = join_user.full_name
+        # Add an unicode Left to Right Mark (LRM) to user name (names fix for arabic, hebrew, etc.)
+        join_user_name = add_lrm(join_user_name)
         # If the user name is too long, truncate it to 35 characters
         if len(join_user_name) > 35:
             join_user_name = join_user_name[0:35]
@@ -487,6 +499,8 @@ def msg_new_user(bot, update):
             chat_title = update.message.chat.title
             if chat_title:
                 save_config_property(chat_id, "Title", chat_title)
+            # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
+            chat_title = add_lrm(chat_title)
             chat_link = update.message.chat.username
             if chat_link:
                 chat_link = "@{}".format(chat_link)
@@ -745,11 +759,11 @@ def msg_nocmd(bot, update):
                 has_url = re.findall(CONST["REGEX_URLS"], msg_text)
                 # Check if the message contains any alias and if it is a group or channel alias
                 has_alias = False
-                alias = ""
+                #alias = ""
                 for word in msg_text.split():
                     if (len(word) > 1) and (word[0] == '@'):
                         has_alias = True
-                        alias = word
+                        #alias = word
                         break
                 # Check if the detected alias is from a valid chat (commented due to getChat 
                 # request doesnt tell us if an alias is from an user, just group or channel)
@@ -793,6 +807,8 @@ def button_request_captcha(bot, update):
     usr_id = query.from_user.id
     message_id = query.message.message_id
     chat_title = query.message.chat.title
+    # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
+    chat_title = add_lrm(chat_title)
     # Get chat language
     lang = get_chat_config(chat_id, "Language")
     # Search if this user is a new user that has not completed the captcha
