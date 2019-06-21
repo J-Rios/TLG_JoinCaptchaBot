@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    20/06/2019
+    21/06/2019
 Version:
-    1.4.8
+    1.4.9
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.8 (20/06/2019)' # Bot version
+    'VERSION' : '1.4.9 (21/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -90,7 +90,7 @@ TEXT = {
             '- You can configure captcha difficulty level using command /difficulty.\n' \
             '\n' \
             '- You can set captcha to use just numbers (default) or full numbers and letters, ' \
-            'using command /change_mode.\n' \
+            'using command /captcha_mode.\n' \
             '\n' \
             '- Check /commands to get a list of all avaliable commands, and a short ' \
             'description of all of them.',
@@ -378,7 +378,7 @@ TEXT = {
             '/difficulty.\n' \
             '\n' \
             '- Puedes establecer que los captchas solo contengan números (por defecto), o ' \
-            'números y letras, a través del comando /change_mode.\n' \
+            'números y letras, a través del comando /captcha_mode.\n' \
             '\n' \
             '- Echa un vistazo al comando /commands para ver una lista con todos los comandos ' \
             'disponibles y una breve descripción de cada uno de ellos.',
@@ -959,7 +959,7 @@ TEXT = {
             '/difficulty.\n' \
             '\n' \
             'Você pode definir se o captacha terá apenas números (o padrão) ou números e letras, ' \
-            'usando a opção /change_mode.'
+            'usando a opção /captcha_mode.'
             '\n' \
             '- Use a opção /commands para ver a lista de todos os comandos com uma breve ' \
             'descrição de cada um deles.',
@@ -1233,7 +1233,7 @@ TEXT = {
             '- 你可以通过 /difficulty 命令设置验证码难度。\n' \
             '\n' \
             '- 您可以将验证码设置为仅使用数字（默认）或完整数字和字母，' \
-            '通过命令 /change_mode.\n' \
+            '通过命令 /captcha_mode.\n' \
             '\n' \
             '- 检查 /commands 以获取可用命令列表，以及' \
             '它们的描述。',
