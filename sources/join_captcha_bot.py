@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/06/2019
+    30/06/2019
 Version:
-    1.4.9
+    1.4.11
 '''
 
 ####################################################################################################
@@ -1187,8 +1187,8 @@ def check_time_to_kick_not_verify_users(bot):
             chat_id = new_user["chat_id"]
             lang = get_chat_config(chat_id, "Language")
             printts("[{}] Time for kick/ban {} has come.".format(chat_id, new_user["user_name"]))
-            # Check if this "user" has not join this chat more than 3 times (just kick)
-            if new_user["join_retries"] < 3:
+            # Check if this "user" has not join this chat more than 5 times (just kick)
+            if new_user["join_retries"] < 5:
                 printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id, \
                         new_user["user_name"], new_user["user_id"]))
                 # Try to kick the user
@@ -1225,7 +1225,7 @@ def check_time_to_kick_not_verify_users(bot):
                         bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
                         # Set to auto-remove the kick message too, after a while
                         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-            # The user has join this chat 3 times and never succes to solve the captcha (ban)
+            # The user has join this chat 5 times and never succes to solve the captcha (ban)
             else:
                 printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id, \
                         new_user["user_name"], new_user["user_id"]))

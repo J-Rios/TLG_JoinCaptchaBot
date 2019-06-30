@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     30/06/2019
 Version:
-    1.4.10
+    1.4.11
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.10 (30/06/2019)' # Bot version
+    'VERSION' : '1.4.11 (30/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -48,7 +48,7 @@ TEXT = {
             'Hello, I am a Bot that send an image captcha for each new user who joins a group, ' \
             'and kick anyone that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            'If a user tries to join the group 3 times in a row and never solves the captcha, I ' \
+            'If a user tries to join the group 5 times in a row and never solves the captcha, I ' \
             'will assume that this "user" is a bot, and it will be banned. Also, any message ' \
             'that contains a URL sent by a new "user" before the captcha is completed, will be ' \
             'considered spam and will be deleted.\n' \
@@ -66,7 +66,7 @@ TEXT = {
             '- I am a Bot that send a captcha for each new user who joins a group, and kick any ' \
             'of them that can\'t solve the captcha within a specified time.\n' \
             '\n' \
-            '- If a user tries to join the group 3 times in a row and never solves the captcha, ' \
+            '- If a user tries to join the group 5 times in a row and never solves the captcha, ' \
             'I will assume that the "user" is a bot, and it will be banned.\n' \
             '\n' \
             '- Any message that contains an URL that has been sent by a new "user" before ' \
@@ -222,22 +222,22 @@ TEXT = {
             'remove messages that have not been sent by me.',
 
         'NEW_USER_BAN' : \
-            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'Warning: This is the fifth time that {} has tried to join the group and failed to ' \
             'solve the captcha. "User" was banned. To let him/her enter again, an Admin has to ' \
             'manually remove the restrictions of this "user".',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
-            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'Warning: This is the fifth time that {} has tried to join the group and failed to ' \
             'solve the captcha. I tride to ban the "User", but the user is not in the group ' \
             '(has left the group or has been kicked/banned by an Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
-            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'Warning: This is the fifth time that {} has tried to join the group and failed to ' \
             'solve the captcha. I tried to ban the "User", but I don\'t have administration ' \
             'rights to ban users in the group.',
 
         'BOT_CANT_BAN' : \
-            'Warning: This is the third time that {} has tried to join the group and failed to ' \
+            'Warning: This is the fifth time that {} has tried to join the group and failed to ' \
             'solve the captcha. I tried to ban the "User", but due to an unexpected problem ' \
             '(maybe network/server related), I can\'t do it.',
 
@@ -328,7 +328,7 @@ TEXT = {
             'grupo, y expulso (kick) a los que no resuelvan el captcha en un tiempo ' \
             'determinado.\n' \
             '\n' \
-            'Si un usuario ha intentado unirse al grupo 3 veces y nunca consiguió resolver el ' \
+            'Si un usuario ha intentado unirse al grupo 5 veces y nunca consiguió resolver el ' \
             'captcha, supondré que ese "usuario" es un Bot y, trás expulsarlo, lo bloquearé ' \
             '(ban) para que no pueda volver a entrar en el grupo. Además, cualquier mensaje que ' \
             'contenga una URL y haya sido enviado por un nuevo "usuario" antes de que este ' \
@@ -348,7 +348,7 @@ TEXT = {
             '- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y ' \
             'expulso (kick) a los que no resuelvan el captcha en un tiempo determinado.\n' \
             '\n' \
-            '- Si un usuario ha intentado unirse al grupo 3 veces y nunca consiguió resolver ' \
+            '- Si un usuario ha intentado unirse al grupo 5 veces y nunca consiguió resolver ' \
             'el captcha, supondré que ese "usuario" es un Bot y, trás expulsarlo, lo ' \
             'bloquearé (ban) para que no pueda volver a entrar en el grupo.\n' \
             '\n' \
@@ -512,25 +512,25 @@ TEXT = {
             'administración necesarios para eliminar mensajes que no son míos.',
 
         'NEW_USER_BAN' : \
-            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'Atención: Esta es la quinta vez que el usuario {} ha intentado unirse al grupo ' \
             'y no pudo resolver el captcha. El "usuario" fue expulsado y bloqueado (ban). ' \
             'Para permitir que intente entrar nuevamente al grupo, un Admin debe de quitar la ' \
             'restricción del usuario de forma manual en las opciones de administración del grupo.',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
-            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'Atención: Esta es la quinta vez que el usuario {} ha intentado unirse al grupo ' \
             'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
             '(ban), pero ya no se encuentra en el grupo (salió del grupo o fue expulsado por ' \
             'un Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
-            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'Atención: Esta es la quinta vez que el usuario {} ha intentado unirse al grupo ' \
             'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
             '(ban), pero no se me han dado los privilegios de administración necesarios para ' \
             'expulsar usuarios del grupo.',
 
         'BOT_CANT_BAN' : \
-            'Atención: Esta es la tercera vez que el usuario {} ha intentado unirse al grupo ' \
+            'Atención: Esta es la quinta vez que el usuario {} ha intentado unirse al grupo ' \
             'y no pudo resolver el captcha. El "usuario" debería ser expulsado y bloqueado ' \
             '(ban), pero debido a un problema inesperado (quizás relacionado con la red o el ' \
             'servidor), no he podido hacerlo.',
@@ -620,7 +620,7 @@ TEXT = {
             'Hola, sóc un Bot que envia una imatge captcha a cada nou usuari que s\'uneixi al ' \
             'grup, i kickejo als que no resolguin el captcha en un temps determinat.\n' \
             '\n' \
-            'Si un usuari ha intentat unir-se al grup 3 vegades i mai ha resolt el captcha, ' \
+            'Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
             'suposaré que aquell "usuari" és un Bot i el banejaré. A més, qualsevol missatge ' \
             'que contingui una URL i hagi estat enviat per un nou "usuari" abans que aquest ' \
             'hagi resolt el captcha, serà considerat un missatge d\'Spam i serà esborrat.\n' \
@@ -640,7 +640,7 @@ TEXT = {
             '- Sóc un Bot que envia un captcha a cada nou usuari que s\'uneix al grup, i kickejo ' \
             'qui no resolgui el captcha en un temps determinat.\n' \
             '\n' \
-            '- Si un usuari ha intentat unir-se al grup 3 vegades i mai ha resolt el captcha, ' \
+            '- Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
             'suposaré que aquell "usuari" és un Bot i el banejaré.\n' \
             '\n' \
             '- Qualsevol missatge que contingui una URL i hagi estat enviat per un nou "usuari" ' \
@@ -805,24 +805,24 @@ TEXT = {
             'd\'administració necessaris per tal d\'eliminar els missatges que no són meus.',
 
         'NEW_USER_BAN':
-            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'Atenció: Aquesta és la cinquena vegada que l\'usuari {} ha intentat unir-se al grup ' \
             'i no ha pogut resoldre el captcha. L\'"usuari" ha estat banejat. Per permetre que ' \
             'intenti entrar novament al grup, un Admin ha de treure la restricció de l\'usuari ' \
             'de forma manual en les opcions d\'administració del grup.',
 
         'NEW_USER_BAN_NOT_IN_CHAT':
-            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'Atenció: Aquesta és la cinquena vegada que l\'usuari {} ha intentat unir-se al grup ' \
             'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però ja no és ' \
             'al grup (ha sortit del grup o ha estat kickejat/banejat per un Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS':
-            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'Atenció: Aquesta és la cinquena vegada que l\'usuari {} ha intentat unir-se al grup ' \
             'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però no se ' \
             'm\'han donat els privilegis d\'administració necessaris per a expulsar usuaris del ' \
             'grup.',
 
         'BOT_CANT_BAN':
-            'Atenció: Aquesta és la tercera vegada que l\'usuari {} ha intentat unir-se al grup ' \
+            'Atenció: Aquesta és la cinquena vegada que l\'usuari {} ha intentat unir-se al grup ' \
             'i no ha pogut resoldre el captcha. L\'"usuari" hauria de ser banejat, però degut a ' \
             'un problema inesperat (potser relacionat amb la xarxa o el servidor), no ho he ' \
             'pogut fer.',
@@ -912,7 +912,7 @@ TEXT = {
             'Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra ' \
             'no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n' \
             '\n' \
-            'Se um usuário tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, vou ' \
+            'Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou ' \
             'assumir que esse "usuário" é um Bot, e ele será banido. Também, qualquer mensagem ' \
             'que contenha um URL que tenha sido enviado por um novo "usuário" antes da conclusão ' \
             'do captcha, será considerada Spam e será excluída.\n' \
@@ -931,7 +931,7 @@ TEXT = {
             '- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e ' \
             'expulsa aquele que não enviar o captcha no tempo definido.\n' \
             '\n' \
-            '- Se um usuário tentar entrar no grupo 3 vezes sem enviar o captcha corretamente, ' \
+            '- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, ' \
             'vou assumir que esse “usuário” é um Bot, e ele será banido.\n' \
             '\n' \
             '- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo ' \
@@ -1091,22 +1091,22 @@ TEXT = {
             'remover mensagens que não foram enviadas por mim',
 
         'NEW_USER_BAN' : \
-            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o ' \
             'captcha. O "usuário" foi banido. Para deixá-lo entrar de novo, um administrador tem ' \
             'que remover as restrições, manualmente..',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
-            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o ' \
             'captcha. Eu tentei banir o "usuário", mas ele não está mais no grupo (ele saiu ou ' \
             'foi expulso por um Admin).',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
-            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o ' \
             'captcha. Eu tentei banir o "usuário", mas eu não tenho poderes administrativos para ' \
             'banir usuários do grupo.',
 
         'BOT_CANT_BAN' : \
-            'Alerta: Esta é a terceira vez que {} tenta entrar no grupo mas falha ao enviar o ' \
+            'Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o ' \
             'captcha. Eu tentei banir o "usuário", mas algo deu errado (talvez algo relacionado ' \
             'à rede ou servidor). Não pude fazê-lo.',
 
@@ -1192,7 +1192,7 @@ TEXT = {
             '你好，我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，' \
             '并踢出任何在时限内无法输入验证码的人。\n' \
             '\n' \
-            '如果有人尝试加入群3次且没有输入验证码，我' \
+            '如果有人尝试加入群5次且没有输入验证码，我' \
             '将会认为这个用户是机器人，并且将他他拉黑。同样，任何' \
             '包含链接的消息在他输入验证码之前被发送，将会被' \
             '认为是垃圾信息并被删除。\n' \
@@ -1209,7 +1209,7 @@ TEXT = {
             '- 我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，并踢出任何' \
             '在时限内无法输入验证码的人。\n' \
             '\n' \
-            '- 如果有人尝试加入群3次且没有输入验证码，' \
+            '- 如果有人尝试加入群5次且没有输入验证码，' \
             '我将会认为这个用户是机器人，并且将他他拉黑。\n' \
             '\n' \
             '- 任何包含链接的消息在他输入验证码之前' \
@@ -1365,22 +1365,22 @@ TEXT = {
             '我试图删除此消息，但我没有管理权限以删除我尚未发送的消息。',
 
         'NEW_USER_BAN' : \
-            '警告：这是 {} 尝试加入该组的第三次' \
+            '警告：这是 {} 尝试加入该组的第五次' \
             '输入验证码失败。“用户”被拉黑。为了让他/她再次进入，管理员必须' \
             '手动删除此“用户”的限制。',
 
         'NEW_USER_BAN_NOT_IN_CHAT' : \
-            '警告：这是 {} 尝试加入该组的第三次' \
+            '警告：这是 {} 尝试加入该组的第五次' \
             '输入验证码失败。我试图拉黑“用户”，但用户已不在该群组。' \
             '（已离开组或已被管理员踢出）。',
 
         'NEW_USER_BAN_NOT_RIGHTS' : \
-            '警告：这是 {} 尝试加入该组的第三次' \
+            '警告：这是 {} 尝试加入该组的第五次' \
             '输入验证码失败。我试图拉黑“用户”，但我没有管理权限以' \
             '拉黑此用户',
 
         'BOT_CANT_BAN' : \
-            '警告：这是 {} 尝试加入该组的第三次' \
+            '警告：这是 {} 尝试加入该组的第五次' \
             '输入验证码失败。我试图拉黑“用户”，但因为' \
             '未知原因（可能与网络/服务器有关），我无法完成请求。',
 
