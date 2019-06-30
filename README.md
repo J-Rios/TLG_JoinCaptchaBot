@@ -51,6 +51,8 @@ To ease usage, a run, status and kill scripts has been provided.
 
  - Portuguese (Brazil): Anahuac de Paula Gil
 
+ - Catalán: Adela Casals i Jorba
+
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
 
  

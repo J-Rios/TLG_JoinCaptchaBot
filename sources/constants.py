@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/06/2019
+    30/06/2019
 Version:
-    1.4.9
+    1.4.10
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.9 (21/06/2019)' # Bot version
+    'VERSION' : '1.4.10 (30/06/2019)' # Bot version
 }
 
 TEXT = {
@@ -181,7 +181,7 @@ TEXT = {
             'The command needs a character-mode to set. Available modes are:\n' \
             '- Numeric Captchas ("nums").\n' \
             '- Hexadecimal Captchas, numbers and characters A-F ("hex").\n' \
-            '- Numbers and characters A-Z Captchas (ascii").\n' \
+            '- Numbers and characters A-Z Captchas ("ascii").\n' \
             '\n' \
             'Examples:\n' \
             '/captcha_mode nums\n' \
@@ -469,7 +469,7 @@ TEXT = {
             'El comando necesita el modo-caracter a establecer. Los modos disponibles son:\n' \
             '- Captchas numéricos ("nums").\n' \
             '- Captchas hexadecimales, con números y letras A-F ("hex").\n' \
-            '- Captchas con números y letras A-Z (ascii").\n' \
+            '- Captchas con números y letras A-Z ("ascii").\n' \
             '\n' \
             'Ejemplos:\n' \
             '/captcha_mode nums\n' \
@@ -665,11 +665,11 @@ TEXT = {
             '\n' \
             '- Pots canviar l\'idioma en el que parlo mitjançant el comandament /language.\n' \
             '\n' \
-            '- Pots configurar el nivell de dificultat del captcha mitjançant la comanda ' \
+            '- Pots configurar el nivell de dificultat del captcha mitjançant el comandament ' \
             '/difficulty.\n' \
             '\n' \
             'Pots establir que els captchas només continguin números (per defecte), ' \
-            'o números i lletres, a través de la comanda /captcha_mode.\n' \
+            'o números i lletres, a través del comandament /captcha_mode.\n' \
             '\n' \
             '- Dóna un cop d\'ull al comandament /commands per a veure una llista amb tots els ' \
             'comandaments disponibles i una breu descripció de cada un.',
@@ -733,10 +733,10 @@ TEXT = {
             'Nivell de dificultat dels captchas canviat a {}.',
 
         'DIFFICULTY_NOT_NUM' : \
-            'El nivell de dificultat proporcionat no és un nombre.',
+            'El nivell de dificultat proporcionat no és un número.',
 
         'DIFFICULTY_NOT_ARG' : \
-            'El comandament necessita un nivell de dificultat a establir (d\'1 a 5).\n' \
+            'El comandament necessita un nivell de dificultat a establir (de l\'1 a 5).\n' \
             '\n' \
             'Exemples:\n' \
             '/difficulty 1\n' \
@@ -749,7 +749,7 @@ TEXT = {
             'Mode-caràcter dels capcthas canviat a "{}".',
 
         'CAPTCHA_MODE_INVALID' : \
-            'Mode-caràcter invàlid. Les maneres disponibles són: "nums", "hex" i "ascii".\n' \
+            'Mode-caràcter invàlid. Els modes disponibles són: "nums", "hex" i "ascii".\n' \
             '\n' \
             'Exemples:\n' \
             '/captcha_mode nums\n' \
@@ -757,11 +757,11 @@ TEXT = {
             '/captcha_mode ascii',
 
         'CAPTCHA_MODE_NOT_ARG' : \
-            'El comandament necessita la manera caràcter a establir. Les maneres disponibles ' \
+            'El comandament necessita el mode-caràcter a establir. Els modes disponibles ' \
             'són:\n' \
             '- Captchas numèrics ("nums").\n' \
             '- Captchas hexadecimals, amb números i lletres A-F ("hex").\n' \
-            '- Captchas amb números i lletres A-Z (ascii ").\n' \
+            '- Captchas amb números i lletres A-Z ("ascii").\n' \
             '\n' \
             'Exemples:\n' \
             '/captcha_mode nums\n' \
@@ -1050,7 +1050,7 @@ TEXT = {
             'O comando exite um modo definido. As opções disponíveis são:\n' \
             '- Captchas numéricos ("nums").\n' \
             '- Captchas hexadecimais, com números e letras A-F ("hex").\n' \
-            '- Captchas com números e letras A-Z (ascii").\n' \
+            '- Captchas com números e letras A-Z ("ascii").\n' \
             '\n' \
             'Exemplos:\n' \
             '/captcha_mode nums\n' \
