@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/06/2019
+    04/07/2019
 Version:
-    1.4.11
+    1.4.12
 '''
 
 ####################################################################################################
@@ -158,7 +158,8 @@ def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_m
         msg = to_delete_join_messages_list[i]
         if (msg["user_id"] == msg_user_id) and (msg["chat_id"] == msg_chat_id):
             msg[message_id_key] = new_msg_id_value
-            to_delete_join_messages_list.remove(msg)
+            if msg in to_delete_join_messages_list:
+                to_delete_join_messages_list.remove(msg)
             to_delete_join_messages_list.append(msg)
             break
         i = i + 1
@@ -521,7 +522,8 @@ def msg_new_user(bot, update):
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                    to_delete_join_messages_list.remove(msg)
+                    if msg in to_delete_join_messages_list:
+                        to_delete_join_messages_list.remove(msg)
                 i = i + 1
             # Ignore if the captcha protection is not enable in this chat
             captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -722,7 +724,8 @@ def msg_nocmd(bot, update):
                     #tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join0"].message_id)
                     tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join1"])
                     tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
-                    to_delete_join_messages_list.remove(msg_del)
+                    if msg_del in to_delete_join_messages_list:
+                        to_delete_join_messages_list.remove(msg_del)
                     break
                 j = j + 1
             # Remove user captcha numbers message
@@ -736,7 +739,8 @@ def msg_nocmd(bot, update):
                 bot.send_message(chat_id, bot_msg)
             except Exception as e:
                 printts("[{}] {}".format(chat_id, str(e)))
-            new_users_list.remove(new_user)
+            if new_user in new_users_list:
+                new_users_list.remove(new_user)
         # The provided message doesn't has the valid captcha number
         else:
             # Check if the message was just a 4 numbers msg
@@ -1146,7 +1150,8 @@ def selfdestruct_messages(bot):
                     sent_msg["Chat_id"], sent_msg["Msg_id"]))
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
-                    to_delete_in_time_messages_list.remove(sent_msg)
+                    if sent_msg in to_delete_in_time_messages_list:
+                        to_delete_in_time_messages_list.remove(sent_msg)
             except Exception as e:
                 printts("[{}] {}".format(sent_msg["Chat_id"], str(e)))
                 # The bot has no privileges to delete messages
@@ -1159,7 +1164,8 @@ def selfdestruct_messages(bot):
                     except:
                         printts(str(e))
                         pass
-                to_delete_in_time_messages_list.remove(sent_msg)
+                if sent_msg in to_delete_in_time_messages_list:
+                    to_delete_in_time_messages_list.remove(sent_msg)
         i = i + 1
 
 
@@ -1177,7 +1183,8 @@ def check_time_to_kick_not_verify_users(bot):
             # captcha 3 times in the past hour)
             if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
                 # Remove user from new users list
-                new_users_list.remove(new_user)
+                if new_user in new_users_list:
+                    new_users_list.remove(new_user)
         else:
             # If time for kick/ban has not arrived yet
             if time() < new_user["join_time"] + captcha_timeout*60:
@@ -1232,7 +1239,8 @@ def check_time_to_kick_not_verify_users(bot):
                 # Try to ban the user and notify Admins
                 ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
                 # Remove user from new users list
-                new_users_list.remove(new_user)
+                if new_user in new_users_list:
+                    new_users_list.remove(new_user)
                 if ban_result == 1:
                     # Ban success
                     bot_msg = TEXT[lang]["NEW_USER_BAN"].format(new_user["user_name"])
@@ -1272,7 +1280,8 @@ def check_time_to_kick_not_verify_users(bot):
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                         tlg_msg_to_selfdestruct(msg["msg_id_join0"])
-                        to_delete_join_messages_list.remove(msg)
+                        if msg in to_delete_join_messages_list:
+                            to_delete_join_messages_list.remove(msg)
                         break
                 j = j + 1
             printts("[{}] Kick/Ban process end".format(chat_id))
