@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    04/07/2019
+    07/07/2019
 Version:
-    1.4.12
+    1.4.13
 '''
 
 ####################################################################################################
@@ -453,6 +453,10 @@ def msg_new_user(bot, update):
     '''New member join the group event handler'''
     global to_delete_join_messages_list
     global new_users_list
+    # Ignore if message comes from a channel
+    msg = getattr(update, "message", None)
+    if msg.chat.type == "channel":
+        return
     # Get message data
     chat_id = update.message.chat_id
     # Determine configured bot language in actual chat
@@ -615,6 +619,9 @@ def msg_notext(bot, update):
     # Ignore if message comes from a private chat
     if msg.chat.type == "private":
         return
+    # Ignore if message comes from a channel
+    if msg.chat.type == "channel":
+        return
     # Ignore if captcha protection is not enable int his chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
     if captcha_enable == False:
@@ -655,6 +662,9 @@ def msg_nocmd(bot, update):
         msg = getattr(update, "edited_message", None)
     # Ignore if message comes from a private chat
     if msg.chat.type == "private":
+        return
+    # Ignore if message comes from a channel
+    if msg.chat.type == "channel":
         return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
