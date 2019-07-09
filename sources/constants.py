@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     07/07/2019
 Version:
-    1.4.13
+    1.4.14
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.13 (07/07/2019)' # Bot version
+    'VERSION' : '1.4.14 (09/07/2019)' # Bot version
 }
 
 TEXT = {
@@ -305,7 +305,7 @@ TEXT = {
             '\n' \
             '/language - Allows to change the language of the bot\'s messages. Currently ' \
             'available languages: en (English) - es (Spanish) - ca (Catalan) - pt_br (Portuguese ' \
-            'from Brazil).\n' \
+            'from Brazil) - zh_cn (Chinese, Mainland terms).\n' \
             '\n' \
             '/time - Allows changing the time available to solve a captcha.\n' \
             '\n' \
@@ -598,7 +598,8 @@ TEXT = {
             'disponibles y su descripción.\n' \
             '\n' \
             '/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente ' \
-            'disponibles: es (español) - en (inglés) - pt_br (portugués de Brasil).\n' \
+            'disponibles: en (inglés) - es (español) - ca (catalán) - ' \
+            'pt_br (portugués de Brasil) - zh_cn (Chino, Mainland terms).\n' \
             '\n' \
             '/time - Permite cambiar el tiempo disponible para resolver un captcha.\n' \
             '\n' \
@@ -890,7 +891,7 @@ TEXT = {
             '\n' \
             '/language - Permet canviar l\'idioma en que parla el Bot. Idiomes actualment ' \
             'disponibles: en (anglès) - es (castellà) - ca (català) - ' \
-            'pt_br (portuguès de Brasil).\n' \
+            'pt_br (portuguès de Brasil) - zh_cn (xinès).\n' \
             '\n' \
             '/time - Permet canviar el temps disponible per a resoldre un captcha.\n' \
             '\n' \
@@ -1170,7 +1171,8 @@ TEXT = {
             '/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n' \
             '\n' \
             '/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis ' \
-            'são: en (inglês) - es (espanhol) - pt_br (português BR).\n' \
+            'são: en (inglês) - es (espanhol) - ca (catalão) - pt_br (português BR) - ' \
+            'zh_cn (chinês).\n' \
             '\n' \
             '/time - Permite alterar o tempo disponível para resolver um captcha.\n' \
             '\n' \
