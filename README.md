@@ -49,8 +49,8 @@ To ease usage, a run, status and kill scripts has been provided.
 
 ### Docker
 
-You can also run the bot on [Docker](docker.io). This allows easy server
-migration and automates the download of all dependencies. Look at the
+You can also run the bot on [Docker](http://docker.com). This allows easy
+server migration and automates the download of all dependencies. Look at the
 [docker specific documentation](docker/README.md) for more details.
 
 ### Languages Contributors:
