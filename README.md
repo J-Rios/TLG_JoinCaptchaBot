@@ -47,6 +47,12 @@ To ease usage, a run, status and kill scripts has been provided.
 ./kill
 ```
 
+### Docker
+
+You can also run the bot on [Docker](docker.io). This allows easy server
+migration and automates the download of all dependencies. Look at the
+[docker specific documentation](docker/README.md) for more details.
+
 ### Languages Contributors:
 
  - Portuguese (Brazil): Anahuac de Paula Gil
@@ -54,5 +60,3 @@ To ease usage, a run, status and kill scripts has been provided.
  - Catalán: Adela Casals i Jorba
 
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
-
- 
