@@ -386,10 +386,10 @@ def tlg_delete_msg(bot, chat_id, msg_id):
         except Exception as e:
             printts("[{}] {}".format(chat_id, str(e)))
             # Message is already deleted
-            if str(e) == "Unable to delete message (not found)":
+            if str(e) == "Message to delete not found":
                 return_code = -1
             # The bot has no privileges to delete messages
-            elif str(e) == "Unable to delete message (no privileges)":
+            elif str(e) == "Message can't be deleted":
                 return_code = -2
     return return_code
 
@@ -408,7 +408,7 @@ def tlg_ban_user(bot, chat_id, user_id):
         printts("[{}] {}".format(chat_id, str(e)))
         if str(e) == "Not enough rights to restrict/unrestrict chat member":
             return_code = -2
-        elif str(e) == "User has administrator privileges":
+        elif str(e) == "User is an administrator of the chat":
             return_code = -3
     return return_code
 
@@ -428,7 +428,7 @@ def tlg_kick_user(bot, chat_id, user_id):
         printts("[{}] {}".format(chat_id, str(e)))
         if str(e) == "Not enough rights to restrict/unrestrict chat member":
             return_code = -2
-        elif str(e) == "User has administrator privileges":
+        elif str(e) == "User is an administrator of the chat":
             return_code = -3
     return return_code
 
@@ -1165,7 +1165,7 @@ def selfdestruct_messages(bot):
             except Exception as e:
                 printts("[{}] {}".format(sent_msg["Chat_id"], str(e)))
                 # The bot has no privileges to delete messages
-                if str(e) == "Unable to delete message":
+                if str(e) == "Message can't be deleted":
                     lang = get_chat_config(sent_msg["Chat_id"], "Language")
                     try:
                         cant_del_msg = bot.send_message(sent_msg["Chat_id"], \
