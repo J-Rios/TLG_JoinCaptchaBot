@@ -57,7 +57,7 @@ CaptchaGen = CaptchaGenerator(2)
 ### Termination signals handler for program process ###
 def signal_handler(signal, frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
-    printts("Termination signal received. Releasing resources (Waiting for close any open file)")
+    printts("Termination signal received. Releasing resources (Waiting for files to be closed)")
     # Acquire all messages and users files mutex to ensure not read/write operation on them
     for chat_config_file in files_config_list:
         chat_config_file["File"].lock.acquire()
@@ -123,7 +123,7 @@ def load_urls_regex(file_path):
                 line = line.replace("\n", "|")
                 list_file_lines.append(line)
     except Exception as e:
-        printts("Error when opening file \"{}\". {}".format(file_path, str(e)))
+        printts("Error opening file \"{}\". {}".format(file_path, str(e)))
     if len(list_file_lines) > 0:
         tlds_str = "".join(list_file_lines)
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
@@ -512,11 +512,11 @@ def msg_new_user(bot, update):
                 save_config_property(chat_id, "Link", chat_link)
             # Ignore Admins
             if tlg_user_is_admin(bot, join_user_id, chat_id) == True:
-                printts("[{}] The user is an Admin, so ignoring captcha process.".format(chat_id))
+                printts("[{}] User is an administrator. Skipping the captcha process.".format(chat_id))
                 continue
             # Ignore if the member that has been join the group is a Bot
             if join_user.is_bot:
-                printts("[{}] It is a Bot, so ignoring captcha process.".format(chat_id))
+                printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
                 continue
             # Check and remove previous join messages of that user (if any)
             i = 0
@@ -569,8 +569,8 @@ def msg_new_user(bot, update):
             if not send_problem:
                 # Add sent image to self-destruct list
                 if not tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5):
-                    printts("[{}] sent_img_msg has not all the expected attributtes " \
-                            "to be deleted".format(chat_id))
+                    printts("[{}] sent_img_msg does not have all expected attributes. " \
+                            "Scheduled for deletion".format(chat_id))
                 # Default user data
                 new_user = \
                 {
@@ -606,7 +606,7 @@ def msg_new_user(bot, update):
                     "msg_id_join2" : None
                 }
                 to_delete_join_messages_list.append(msg)
-                printts("[{}] Captcha send process end.".format(chat_id))
+                printts("[{}] Captcha send process complete.".format(chat_id))
                 printts(" ")
 
 
@@ -721,7 +721,7 @@ def msg_nocmd(bot, update):
             i = i + 1
             continue
         # Check if the expected captcha solve number is in the message
-        printts("[{}] Message to resolve captcha send by {}: {}".format(chat_id, \
+        printts("[{}] Received captcha reply from {}: {}".format(chat_id, \
                 new_user["user_name"], msg_text))
         if new_user["captcha_num"] in msg_text:
             # Remove join messages
@@ -803,7 +803,7 @@ def msg_nocmd(bot, update):
                     # Get chat kick timeout and send spam detection message with autoremove
                     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                     tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
-        printts("[{}] Message to solve captcha received process end.".format(chat_id))
+        printts("[{}] Captcha reply process complete.".format(chat_id))
         printts(" ")
         break
 
@@ -856,7 +856,7 @@ def button_request_captcha(bot, update):
                 remove(captcha["image"])
             break
         i = i + 1
-    printts("[{}] Requested new captcha process end.".format(chat_id))
+    printts("[{}] New captcha request process complete.".format(chat_id))
     printts(" ")
     bot.answer_callback_query(query.id)
 
@@ -1156,7 +1156,7 @@ def selfdestruct_messages(bot):
         sent_msg = to_delete_in_time_messages_list[i]
         # If actual time is equal or more than the expected sent msg delete time
         if time() >= sent_msg["delete_time"]:
-            printts("[{}] Mesage to be delete cause it is his time: {}".format( \
+            printts("[{}] Scheduled deletion time for message: {}".format( \
                     sent_msg["Chat_id"], sent_msg["Msg_id"]))
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
@@ -1203,7 +1203,7 @@ def check_time_to_kick_not_verify_users(bot):
             # The time has come for this user
             chat_id = new_user["chat_id"]
             lang = get_chat_config(chat_id, "Language")
-            printts("[{}] Time for kick/ban {} has come.".format(chat_id, new_user["user_name"]))
+            printts("[{}] Captcha reply timed out for user {}.".format(chat_id, new_user["user_name"]))
             # Check if this "user" has not join this chat more than 5 times (just kick)
             if new_user["join_retries"] < 5:
                 printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id, \
@@ -1221,7 +1221,7 @@ def check_time_to_kick_not_verify_users(bot):
                     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                 else:
                     # Kick fail
-                    printts("[{}] Can't kick".format(chat_id))
+                    printts("[{}] Unable to kick".format(chat_id))
                     if kick_result == -1:
                         # The user is not in the chat
                         bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format( \
@@ -1279,7 +1279,7 @@ def check_time_to_kick_not_verify_users(bot):
                 pos = new_users_list.index(new_user)
                 new_users_list[pos] = new_user
             # Remove join messages
-            printts("[{}] Removing messages of {}...".format(chat_id, new_user["user_name"]))
+            printts("[{}] Removing messages from user {}...".format(chat_id, new_user["user_name"]))
             j = 0
             while j < len(to_delete_join_messages_list):
                 msg = to_delete_join_messages_list[j]
@@ -1294,7 +1294,7 @@ def check_time_to_kick_not_verify_users(bot):
                             to_delete_join_messages_list.remove(msg)
                         break
                 j = j + 1
-            printts("[{}] Kick/Ban process end".format(chat_id))
+            printts("[{}] Kick/Ban process complete".format(chat_id))
             printts(" ")
         i = i + 1
 
@@ -1307,7 +1307,7 @@ def main():
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         printts("Error: Bot Token has not been set.")
-        printts("Please add your Bot Token into constants.py file.")
+        printts("Please add your Bot Token to the constants.py file.")
         printts("Exit.\n")
         exit(0)
     printts("Bot started.")
