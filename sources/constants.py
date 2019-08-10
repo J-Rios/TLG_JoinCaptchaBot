@@ -619,61 +619,61 @@ TEXT = {
     'CA' : {
         'START':
             'Hola, sóc un Bot que envia una imatge captcha a cada nou usuari que s\'uneixi al ' \
-            'grup, i kickejo als que no resolguin el captcha en un temps determinat.\n' \
+            'grup, i expulso als que no resolguin el captcha en un temps determinat.\n' \
             '\n' \
             'Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
-            'suposaré que aquell "usuari" és un Bot i el banejaré. A més, qualsevol missatge ' \
+            'suposaré que aquell "usuari" és un Bot i el bandejaré. A més, qualsevol missatge ' \
             'que contingui una URL i hagi estat enviat per un nou "usuari" abans que aquest ' \
-            'hagi resolt el captcha, serà considerat un missatge d\'Spam i serà esborrat.\n' \
+            'hagi resolt el captcha, serà considerat un missatge brossa i serà esborrat.\n' \
             '\n' \
-            'Recorda que per a funcionar de forma adequada has de donar-me permisos ' \
-            'd\'administració per a suspendre usuaris i eliminar missatges del grup.\n' \
+            'Recordeu que per a funcionar de forma adequada heu de donar-me permisos ' \
+            'd\'administració per a expulsar usuaris i eliminar missatges del grup.\n' \
             '\n' \
-            'Dóna un cop d\'ull al comandament /help per a conèixer més informació sobre el meu ' \
+            'Doneu un cop d\'ull a l\'ordre /help per a tenir més informació sobre el meu ' \
             'ús.\n' \
             '\n' \
-            'Sóc útil? Dóna un cop d\'ull al comandament /about i considereu que feu una donació ' \
-            'per mantenir-me actiu.',
+            'Us sóc útil? Feu una ullada a l\'ordre /about i penseu en feraa una donació ' \
+            'per mantenir-me actiu.', 
 
         'HELP':
             'Ajuda sobre el Bot:\n' \
             '————————————————\n' \
-            '- Sóc un Bot que envia un captcha a cada nou usuari que s\'uneix al grup, i kickejo ' \
+            '- Sóc un Bot que envia un captcha a cada nou usuari que s\'uneix al grup, i expulso ' \
             'qui no resolgui el captcha en un temps determinat.\n' \
             '\n' \
             '- Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
-            'suposaré que aquell "usuari" és un Bot i el banejaré.\n' \
+            'suposaré que aquell "usuari" és un Bot i el bandejaré.\n' \
             '\n' \
             '- Qualsevol missatge que contingui una URL i hagi estat enviat per un nou "usuari" ' \
-            'abans que aquest hagi resolt el captcha, serà considerat un missatge d\'Spam i serà ' \
+            'abans que aquest hagi resolt el captcha, serà considerat un missatge brossa i serà ' \
             'esborrat.\n' \
             '\n' \
-            '- Has de donar-me permisos d\'Administració per a suspendre usuaris i eliminar ' \
+            '- Heu de donar-me permisos d\'Administració per a expulsar usuaris i eliminar ' \
             'missatges.\n' \
             '\n' \
             '- Per tal de mantenir net el grup, elimino aquells missatges que tinguin relació ' \
-            'amb mi quan no s\'hagi resolt el captcha i l\'usuari hagi estat kickejat ' \
+            'amb mi quan no s\'hagi resolt el captcha i l\'usuari hagi estat expulsat ' \
             '(transcorreguts 5 minuts).\n' \
             '\n' \
             '- El temps del que disposen els usuaris per a resoldre el captcha són 5 minuts, ' \
-            'però aquest temps es pot canviar mitjançant el comandament /time.\n' \
+            'però aquest temps es pot canviar mitjançant l\'ordre /time.\n' \
             '\n' \
-            '- Pots activar o desactivar la protecció captcha mitjançant els comandaments ' \
+            '- Podeu activar o desactivar la protecció captcha mitjançant les ordres ' \
             '/enable i /disable.\n' \
             '\n' \
-            '- Els comandaments de configuracions només poden ser utilitzats per els ' \
+            '- Les ordres de configuracions només poden ser utilitzades pels ' \
             'Administradors del grup.\n' \
             '\n' \
-            '- Pots canviar l\'idioma en el que parlo mitjançant el comandament /language.\n' \
+            '- Podeu canviar l\'idioma en el que parlo mitjançant l\'ordre /language.\n' \
             '\n' \
-            '- Pots configurar el nivell de dificultat del captcha mitjançant el comandament ' \
+            '- Podeu configurar el nivell de dificultat del captcha mitjançant l\'ordre ' \
             '/difficulty.\n' \
             '\n' \
-            'Pots establir que els captchas només continguin números (per defecte), ' \
-            'o números i lletres, a través del comandament /captcha_mode.\n' \
+            '- Podeu establir que els captchas només continguin números (per defecte), ' \
+            'o números i lletres, a través de l\'ordre /captcha_mode.\n' \
             '\n' \
-            '- Dóna un cop d\'ull al comandament /commands per a veure una llista amb tots els ' \
-            'comandaments disponibles i una breu descripció de cada un.',
+            '- Doneu un cop d\'ull l\'ordre /commands per a veure una llista amb totes les ' \
+            'ordres disponibles i una breu descripció de cadascuna.',
 
         'CMD_NOT_ALLOW':
             'Només un Admin pot utiltzar aquest comandament.',
