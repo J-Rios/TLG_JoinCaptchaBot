@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/07/2019
+    10/08/2019
 Version:
-    1.4.14
+    1.4.15
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.14 (09/07/2019)' # Bot version
+    'VERSION' : '1.4.15 (10/08/2019)' # Bot version
 }
 
 TEXT = {
@@ -619,15 +619,16 @@ TEXT = {
     'CA' : {
         'START':
             'Hola, sóc un Bot que envia una imatge captcha a cada nou usuari que s\'uneixi al ' \
-            'grup, i expulso als que no resolguin el captcha en un temps determinat.\n' \
+            'grup, i expulso (kick) als que no resolguin el captcha en un temps determinat.\n' \
             '\n' \
             'Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
-            'suposaré que aquell "usuari" és un Bot i el bandejaré. A més, qualsevol missatge ' \
-            'que contingui una URL i hagi estat enviat per un nou "usuari" abans que aquest ' \
-            'hagi resolt el captcha, serà considerat un missatge brossa i serà esborrat.\n' \
+            'suposaré que aquell "usuari" és un Bot i el bandejaré (ban). A més, qualsevol ' \
+            'missatge que contingui una URL i hagi estat enviat per un nou "usuari" abans que ' \
+            'aquest hagi resolt el captcha, serà considerat un missatge d\'Spam i serà ' \
+            'esborrat.\n' \
             '\n' \
             'Recordeu que per a funcionar de forma adequada heu de donar-me permisos ' \
-            'd\'administració per a expulsar usuaris i eliminar missatges del grup.\n' \
+            'd\'administració per a suspendre (expulsar) usuaris i eliminar missatges del grup.\n' \
             '\n' \
             'Doneu un cop d\'ull a l\'ordre /help per a tenir més informació sobre el meu ' \
             'ús.\n' \
@@ -639,20 +640,20 @@ TEXT = {
             'Ajuda sobre el Bot:\n' \
             '————————————————\n' \
             '- Sóc un Bot que envia un captcha a cada nou usuari que s\'uneix al grup, i expulso ' \
-            'qui no resolgui el captcha en un temps determinat.\n' \
+            '(kick) qui no resolgui el captcha en un temps determinat.\n' \
             '\n' \
             '- Si un usuari ha intentat unir-se al grup 5 vegades i mai ha resolt el captcha, ' \
-            'suposaré que aquell "usuari" és un Bot i el bandejaré.\n' \
+            'suposaré que aquell "usuari" és un Bot i el bandejaré (ban).\n' \
             '\n' \
             '- Qualsevol missatge que contingui una URL i hagi estat enviat per un nou "usuari" ' \
-            'abans que aquest hagi resolt el captcha, serà considerat un missatge brossa i serà ' \
+            'abans que aquest hagi resolt el captcha, serà considerat un missatge d\'Spam i serà ' \
             'esborrat.\n' \
             '\n' \
             '- Heu de donar-me permisos d\'Administració per a expulsar usuaris i eliminar ' \
             'missatges.\n' \
             '\n' \
             '- Per tal de mantenir net el grup, elimino aquells missatges que tinguin relació ' \
-            'amb mi quan no s\'hagi resolt el captcha i l\'usuari hagi estat expulsat ' \
+            'amb mi quan no s\'hagi resolt el captcha i l\'usuari hagi estat expulsat (kick) ' \
             '(transcorreguts 5 minuts).\n' \
             '\n' \
             '- El temps del que disposen els usuaris per a resoldre el captcha són 5 minuts, ' \
