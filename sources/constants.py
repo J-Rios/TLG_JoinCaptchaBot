@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    10/08/2019
+    13/08/2019
 Version:
-    1.4.15
+    1.4.16
 '''
 
 ####################################################################################################
@@ -39,7 +39,7 @@ CONST = {
     'REPOSITORY' : 'https://github.com/J-Rios/TLG_JoinCaptchaBot', # Bot code repository
     'DEV_PAYPAL' : 'https://www.paypal.me/josrios', # Developer Paypal address
     'DEV_BTC' : '3N9wf3FunR6YNXonquBeWammaBZVzTXTyR', # Developer Bitcoin address
-    'VERSION' : '1.4.15 (10/08/2019)' # Bot version
+    'VERSION' : '1.4.16 (13/08/2019)' # Bot version
 }
 
 TEXT = {
@@ -107,29 +107,33 @@ TEXT = {
             'Did you mean:\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_BAD_LANG' : \
             'Invalid language provided. The languages currently supported are English, Spanish, ' \
-            'Catalan, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to any of ' \
-            'them using "en", "es", "ca", "pt_br" or "zh_cn".\n' \
+            'Catalan, Galician, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to ' \
+            'any of them using "en", "es", "ca", "gl", pt_br" or "zh_cn".\n' \
             '\n' \
             'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'The command needs a language to set (en - English, es - Spanish, ' \
-            'ca - Catalan, pt_br - Portuguese from Brazil, zh_cn - Chinese Mainland).\n' \
+            'ca - Catalan, gl - Galician, pt_br - Portuguese from Brazil, zh_cn - Chinese ' \
+            'Mainland).\n' \
             '\n' \
             'Examples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
@@ -304,8 +308,8 @@ TEXT = {
             'and their description.\n' \
             '\n' \
             '/language - Allows to change the language of the bot\'s messages. Currently ' \
-            'available languages: en (English) - es (Spanish) - ca (Catalan) - pt_br (Portuguese ' \
-            'from Brazil) - zh_cn (Chinese, Mainland terms).\n' \
+            'available languages: en (English) - es (Spanish) - ca (Catalan) - gl (Galician) - ' \
+            'pt_br (Portuguese from Brazil) - zh_cn (Chinese, Mainland terms).\n' \
             '\n' \
             '/time - Allows changing the time available to solve a captcha.\n' \
             '\n' \
@@ -395,29 +399,32 @@ TEXT = {
             'Quizás querías decir:\n' \
             '/language en\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_BAD_LANG' : \
-            'Idioma inválidado. Los idiomas actualmente soportados son el inglés, el español, ' \
-            'el catalán, el portugués de Brasil y el chino. Cambia a uno de ellos mediante las ' \
-            'etiquetas "en", "es", "ca", "pt_br" o "zh_cn".\n' \
+            'Idioma inválidado. Los idiomas actualmente soportados son inglés, español, ' \
+            'catalán, gallego, portugués de Brasil y chino. Cambia a uno de ellos mediante las ' \
+            'etiquetas "en", "es", "ca", "gl", pt_br" o "zh_cn".\n' \
             '\n' \
             'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'El comando necesita un idioma que establecer (en - inglés, es - español, ' \
-            'ca - catalán, pt_br - portugués de Brasil, zh_cn - chino).\n' \
+            'ca - catalán, gl - gallego, pt_br - portugués de Brasil, zh_cn - chino).\n' \
             '\n' \
             'Ejemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
@@ -598,7 +605,7 @@ TEXT = {
             'disponibles y su descripción.\n' \
             '\n' \
             '/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente ' \
-            'disponibles: en (inglés) - es (español) - ca (catalán) - ' \
+            'disponibles: en (inglés) - es (español) - ca (catalán) - gl (gallego) - ' \
             'pt_br (portugués de Brasil) - zh_cn (Chino, Mainland terms).\n' \
             '\n' \
             '/time - Permite cambiar el tiempo disponible para resolver un captcha.\n' \
@@ -687,29 +694,32 @@ TEXT = {
             'Potser volies dir:\n' \
             '/language en\n' \
             '/language es\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_BAD_LANG':
-            'Idioma no vàlid. Els idiomes que parlo actualment són l\'anglès, el castellà, el ' \
-            'català, el portuguès de Brasil i el xinès. Canvia a un d\'ells mitjançant les ' \
-            'etiquetes "en", "es", "ca", "pt_br" o "zh_cn".\n' \
+            'Idioma no vàlid. Els idiomes que parlo actualment són anglès, castellà, ' \
+            'català, galician, portuguès de Brasil i xinès. Canvia a un d\'ells mitjançant les ' \
+            'etiquetes "en", "es", "ca", "gl", pt_br" o "zh_cn".\n' \
             '\n' \
             'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_NOT_ARG':
             'Cal que especifiqueu un idioma (en - anglès, es - castellà, ' \
-            'ca - català, pt_br - portuguès de Brasil, zh_cn - xinès).\n' \
+            'ca - català, gl - galician, pt_br - portuguès de Brasil, zh_cn - xinès).\n' \
             '\n' \
             'Exemples:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
@@ -889,7 +899,7 @@ TEXT = {
             'disponibles i la seva descripció.\n' \
             '\n' \
             '/language - Permet canviar l\'idioma en que parla el bot. Idiomes disponibles ' \
-            'actualment: en (anglès) - es (castellà) - ca (català) - ' \
+            'actualment: en (anglès) - es (castellà) - ca (català) - gl (galician) - ' \
             'pt_br (portuguès de Brasil) - zh_cn (xinès).\n' \
             '\n' \
             '/time - Permet canviar el temps disponible per a resoldre un captcha.\n' \
@@ -906,6 +916,303 @@ TEXT = {
             '/version - Consulta la versió del bot.\n' \
             '\n' \
             '/about - Mostra la informació "Quant a..." del bot.',
+    },
+    'GL' : {
+        'START' : \
+            'Ola, son un Bot que envía unha imaxe captcha a cada novo usuario que se una ao ' \
+            'grupo, e expulso (kick) aos que non resolvan o captcha nun tempo ' \
+            'determinado.\n' \
+            '\n' \
+            'Se un usuario intentouse unir ao grupo 5 veces e nunca conseguiu resolver o ' \
+            'captcha, suporei que ese "usuario" é un Bot e, tras expulsalo, bloqueareino ' \
+            '(ban) para que non poida volver a entrar no grupo. Además, calquera mensaxe que ' \
+            'conteña unha URL e fora enviada por un novo "usuario" antes de que este ' \
+            'resolvera o captcha, será considerada unha mensaxe de Spam e será borrada.\n' \
+            '\n' \
+            'Lembra que para funcionar de maneira adecuada debes darme permisos de ' \
+            'administración para suspender usuarios e eliminar mensaxes do grupo.\n' \
+            '\n' \
+            'Bota un vistazo ao comando /help para coñecer máis información sobre o meu uso.\n' \
+            '\n' \
+            'Son útil? Bota un vistazo ao comando /about e considera facer unha donación para ' \
+            'manterme activo.',
+
+        'HELP' : \
+            'Axuda sobre o Bot:\n' \
+            '————————————————\n' \
+            '- Son un Bot que envía un captcha a cada novo usuario que se une ao grupo, e ' \
+            'expulso (kick) aos que no resolvan o captcha nun tempo determinado.\n' \
+            '\n' \
+            '- Se un usuario intentou unirse ao grupo 5 veces e nunca conseguiu resolver ' \
+            'o captcha, suporei que ese "usuario" é un Bot e, tras expulsalo, ' \
+            'bloqueareino(ban) para que non poida volver a entrar no grupo.\n' \
+            '\n' \
+            '- Calquera mensaxe que conteña unha URL e fora enviada por un novo "usuario" ' \
+            'antes de que este resolvera o captcha, será considerada unha mensaxe de Spam e ' \
+            'será borrada.\n' \
+            '\n' \
+            '- Debes darme permisos de Administración para suspender usuarios e eliminar ' \
+            'mensaxes.\n' \
+            '\n' \
+            '- Para manter limpio o grupo, elimino aquelas mensaxes que teñan relación ' \
+            'conmigo cando no se resolvera o captcha e o usuario sexa expulsado ' \
+            '(transcurridos 5 minutos).\n' \
+            '\n' \
+            '- O tempo que dispoñen os usuarios para resolver o captcha son 5 minutos, pero ' \
+            'este tempo pode ser cambiado mediante o comando /time.\n' \
+            '\n' \
+            '- Podes activar ou desactivar a protección captcha mediante os comandos /enable e ' \
+            '/disable.\n' \
+            '\n' \
+            '- Os comandos de configuracións só poden ser usados polos Administradores ' \
+            'do grupo.\n' \
+            '\n' \
+            '- Podes cambiar o idioma no que falo mediante o comando /language.\n' \
+            '\n' \
+            '- Podes configurar o nivel de dificultade do captcha mediante o comando ' \
+            '/difficulty.\n' \
+            '\n' \
+            '- Podes establecer que os captchas só conteñan números (por defecto), ou ' \
+            'números e letras, a través do comando /captcha_mode.\n' \
+            '\n' \
+            '- Bota un vistazo ao comando /commands para ver unha lista con todos os comandos ' \
+            'dispoñibles e unha breve descripción de cada un deles.',
+
+        'CMD_NOT_ALLOW' : \
+            'Só un Admin pode utilizar este comando.',
+
+        'LANG_CHANGE' : \
+            'Idioma cambiado a galego.',
+
+        'LANG_SAME' : \
+            'Xa estou en galego.\n' \
+            '\n' \
+            'Quizás querías dicir:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language pt_br\n' \
+            '/language zh_cn',
+
+        'LANG_BAD_LANG' : \
+            'Idioma inválidado. Os idiomas actualmente soportados son inglés, español, ' \
+            'catalán, galego, portugués de Brasil e chino. Cambia a un deles mediante ' \
+            'as etiquetas "en", "es", "ca", "gl", "pt_br" o "zh_cn".\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language gl\n' \
+            '/language pt_br\n' \
+            '/language zh_cn',
+
+        'LANG_NOT_ARG' : \
+            'O comando necesita un idioma que establecer (en - inglés, es - español, ' \
+            'ca - catalán, gl - galego, pt_br - portugués de Brasil, zh_cn - chino).\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/language en\n' \
+            '/language es\n' \
+            '/language ca\n' \
+            '/language gl\n' \
+            '/language pt_br\n' \
+            '/language zh_cn',
+
+        'TIME_CHANGE' : \
+            'Tempo para resolver o captcha cambiado a {} minutos.',
+
+        'TIME_MAX_NOT_ALLOW' : \
+            'O tempo máximo para resolver o captcha son 120 minutos. Non se cambiou o tempo.',
+
+        'TIME_NOT_NUM' : \
+            'O tempo entregado non é un número enteiro.',
+
+        'TIME_NOT_ARG' : \
+            'O comando necesita un valor de tempo a establecer (en minutos).\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/time 3\n' \
+            '/time 5\n' \
+            '/time 10',
+
+        'DIFFICULTY_CHANGE' : \
+            'Nivel de dificultade de los captchas cambiado a {}.',
+
+        'DIFFICULTY_NOT_NUM' : \
+            'O nivel de dificultade proporcionado non é un número.',
+
+        'DIFFICULTY_NOT_ARG' : \
+            'O comando necesita un nivel de dificultade a establecer (do 1 ao 5).\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/difficulty 1\n' \
+            '/difficulty 2\n' \
+            '/difficulty 3\n' \
+            '/difficulty 4\n' \
+            '/difficulty 5',
+
+        'CAPTCHA_MODE_CHANGE' : \
+            'Modo-caracter dos capcthas cambiado a "{}".',
+
+        'CAPTCHA_MODE_INVALID' : \
+            'Modo-caracter invalido. Os modos dispoñibles son: "nums", "hex" e "ascii".\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'CAPTCHA_MODE_NOT_ARG' : \
+            'O comando necesita o modo-caracter a establecer. Os modos dispoñibles son:\n' \
+            '- Captchas numéricos ("nums").\n' \
+            '- Captchas hexadecimais, con números e letras A-F ("hex").\n' \
+            '- Captchas con números e letras A-Z ("ascii").\n' \
+            '\n' \
+            'Exemplos:\n' \
+            '/captcha_mode nums\n' \
+            '/captcha_mode hex\n' \
+            '/captcha_mode ascii',
+
+        'NEW_USER_CAPTCHA_CAPTION' : \
+            'Ola {}, benvido a {}, por favor envía unha mensaxe co número que aparece ' \
+            'nesta imaxe para verificar que eres un humano. Se non resolves ese captcha en ' \
+            '{} mins, serás expulsado (kick) do grupo automáticamente.',
+
+        'CAPTHA_SOLVED' : \
+            'Captcha resolto, usuario verificado.\nBenvido ao grupo {}',
+
+        'CAPTCHA_INCORRECT_0' : \
+            'Ese non é o número correcto. Inténtao novamente...',
+
+        'CAPTCHA_INCORRECT_1' : \
+            'Ese non é o número correcto. Fíxate ben, o captcha ten 4 números...',
+
+        'NEW_USER_KICK' : \
+            '{} non completou o captcha a tempo. O "usuario" foi expulsado (kick).',
+
+        'NEW_USER_KICK_NOT_RIGHTS' : \
+            '{} non completou o captcha a tempo. O "usuario" debería ser expulsado (kick), pero ' \
+            'non se me deron os privilexios de administración necesarios para expulsar ' \
+            'usuarios do grupo.',
+
+        'NEW_USER_KICK_NOT_IN_CHAT' : \
+            '{} non completou o captcha a tempo. Iba expulsar (kick) ao "usuario", pero xa non ' \
+            'se encontra no grupo (Saliu do grupo o foi expulsado por un Admin).',
+
+        'BOT_CANT_KICK' : \
+            '{} non completou o captcha a tempo. Intentei expulsar (kcik) ao "usuario", pero ' \
+            'debido a un problema inesperado (quizais relacionado ca rede ou o servidor), non ' \
+            'puiden facelo.',
+
+        'CANT_DEL_MSG' : \
+            'Intentei borrar esta mensaxe pero non se me deron os privilexios de ' \
+            'administración necesarios para eliminar mensaxes que non son meus.',
+
+        'NEW_USER_BAN' : \
+            'Atención: Esta é a quinta vez que o usuario {} intentou unirse ao grupo ' \
+            'e non puido resolver o captcha. O "usuario" foi expulsado e bloqueado (ban). ' \
+            'Para permitir que intente entrar novamente ao grupo, un Admin debe de quitar a ' \
+            'restricción do usuario de forma manual nas opciones de administración do grupo.',
+
+        'NEW_USER_BAN_NOT_IN_CHAT' : \
+            'Atención: Esta é a quinta vez que o usuario {} intentou unirse ao grupo ' \
+            'e non puido resolver o captcha. O "usuario" debería ser expulsado e bloqueado ' \
+            '(ban), pero xa non se encontra no grupo (saíu do grupo ou foi expulsado por ' \
+            'un Admin).',
+
+        'NEW_USER_BAN_NOT_RIGHTS' : \
+            'Atención: Esta é a quinta vez que o usuario {} intentou unirse ao grupo ' \
+            'e non puido resolver o captcha. O "usuario" debería ser expulsado e bloqueado ' \
+            '(ban), pero non se me deron os privilexios de administración necesarios para ' \
+            'expulsar usuarios do grupo.',
+
+        'BOT_CANT_BAN' : \
+            'Atención: Esta é a quinta vez que o usuario {} intentou unirse ao grupo ' \
+            'e non puido resolver o captcha. O "usuario" debería ser expulsado e bloqueado ' \
+            '(ban), pero debido a un problema inesperado (quizais relacionado ca rede ou o ' \
+            'servidor), non puiden facelo.',
+
+        'SPAM_DETECTED_RM' : \
+            'Detectouse unha mensaxe que contén unha URL (ou alias) enviado por {}, quen aínda ' \
+            'non resolveu o captcha. A mensaxe foi eliminada en aras dun Telegram ' \
+            'libre de Spam :)',
+
+        'SPAM_DETECTED_NOT_RM' : \
+            'Detectouse unha mensaxe que contén unha URL (ou alias) enviado por {}, quen aínda ' \
+            'non resolveu o captcha. Intentei borrar a mensaxe, pero non se me deron os ' \
+            'privilexios de administración necesarios para eliminar mensaxes que non son meus.',
+
+        'NOT_TEXT_MSG_ALLOWED' : \
+            'Eliminada unha mensaje que non é de texto (imaxe, audio, arquivo...) enviado por ' \
+            '{}, en aras dun Telegram libre de Spam.\n' \
+            '\n' \
+            'Poderás enviar mensaxes que non sexan de texto unha vez que haxas resolto o captcha.',
+
+        'OTHER_CAPTCHA_BTN_TEXT' : \
+            'Otro Captcha',
+
+        'ENABLE' : \
+            'Protección captcha activada. Desactívaa co comando /disable.',
+
+        'DISABLE' : \
+            'Protección captcha desactivada. Actívaa co comando /enable.',
+
+        'ALREADY_ENABLE' : \
+            'A protección captcha xa está activada.',
+
+        'ALREADY_DISABLE' : \
+            'A protección captcha xa está desactivada.',
+
+        'CAN_NOT_GET_ADMINS' : \
+            'Non se pode usar este comando no chat actual.',
+
+        'VERSION' : \
+            'Versión actual do Bot: {}',
+
+        'ABOUT_MSG' : \
+            'Iste é un Bot de software libre open-source con licencia GNU-GPL, desenrolado por ' \
+            '{}.\n' \
+            '\n' \
+            'Podes consultar o código aquí:\n' \
+            '{}\n' \
+            '\n' \
+            'Gústache o que fago? Invítame a un café.\n' \
+            '\n' \
+            'Paypal:\n' \
+            '{}\n' \
+            '\n' \
+            'BTC:\n' \
+            '{}',
+
+        'COMMANDS' : \
+            'Lista de comandos:\n' \
+            '————————————————\n' \
+            '/start - Mostra a información inicial sobre o Bot.\n' \
+            '\n' \
+            '/help - Mostra a información de axuda.\n' \
+            '\n' \
+            '/commands - Mostra a mensaxe actual. Información sobre todos os comandos ' \
+            'dispoñibles e a súa descripción.\n' \
+            '\n' \
+            '/language - Permite cambiar o idioma no que fala o Bot. Idiomas actualmente ' \
+            'dispoñibles: en (inglés) - es (español) - ca (catalán) - gl (galego) - ' \
+            'pt_br (portugués de Brasil) - zh_cn (Chino, Mainland terms).\n' \
+            '\n' \
+            '/time - Permite cambiar o tempo dispoñible para resolver un captcha.\n' \
+            '\n' \
+            '/difficulty - Permite cambiar o nivel de dificultade do captcha (do 1 ao 5).\n' \
+            '\n' \
+            '/captcha_mode - Permite cambiar o modo-caracter dos captchas (nums: só ' \
+            'números, hex: números e letras A-F, ascii: números e letras A-Z).\n' \
+            '\n' \
+            '/enable - Activa a protección captcha no grupo.\n' \
+            '\n' \
+            '/disable - Desactiva a protección captcha no grupo.\n' \
+            '\n' \
+            '/version - Consulta a versión do Bot.\n' \
+            '\n' \
+            '/about - Mostra a información \"acerca do...\" do Bot.'
     },
     'PT_BR' : {
         'START' : \
@@ -977,28 +1284,31 @@ TEXT = {
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language zh_cn',
 
         'LANG_BAD_LANG' : \
             'Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão, ' \
-            'Português (Brasil) e chinês. Defina um deles usando "en", "es", "ca", ' \
-            '"pt_br" ou "zh_cn".\n' \
+            'Galego, Português (Brasil) e chinês. Defina um deles usando "en", "es", "ca", ' \
+            '"gl", "pt_br" ou "zh_cn".\n' \
             '\n' \
             'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_NOT_ARG' : \
             'O comando exige o idioma que será usado (en – inglês, es – espanhol, ' \
-            'ca - catalão, pt_br – português (Brasil), zh_cn - chinês).\n' \
+            'ca - catalão, gl - galego, pt_br – português (Brasil), zh_cn - chinês).\n' \
             '\n' \
             'Exemplos:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
@@ -1170,8 +1480,8 @@ TEXT = {
             '/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n' \
             '\n' \
             '/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis ' \
-            'são: en (inglês) - es (espanhol) - ca (catalão) - pt_br (português BR) - ' \
-            'zh_cn (chinês).\n' \
+            'são: en (inglês) - es (espanhol) - ca (catalão) - gl (galego) - ' \
+            'pt_br (português BR) - zh_cn (chinês).\n' \
             '\n' \
             '/time - Permite alterar o tempo disponível para resolver um captcha.\n' \
             '\n' \
@@ -1252,28 +1562,31 @@ TEXT = {
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br',
 
         'LANG_BAD_LANG' : \
             '无此语言。目前支持英语，西班牙语，' \
-            '加泰罗尼亚语，中文和葡萄牙语（巴西）。使用en - 英文，es - 西班牙语，' \
-            'ca - 加泰罗尼亚语，pt_br - 葡萄牙语（巴西），zh-CN - 中文。\n' \
+            '加泰罗尼亚语，加利西亚，中文和葡萄牙语（巴西）。使用en - 英文，es - 西班牙语，' \
+            'ca - 加泰罗尼亚语，gl - 加利西亚, pt_br - 葡萄牙语（巴西），zh-CN - 中文。\n' \
             '\n' \
             '如:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
         'LANG_NOT_ARG' : \
-            '这个命令需要一个语言参数（en - 英文，es - 西班牙语，' \
-            'ca - 加泰罗尼亚语，pt_br - 葡萄牙语（巴西）），zh-CN - 中文。\n' \
+            '这个命令需要一个语言参数（en - 英文，es - 西班牙语，ca - 加泰罗尼亚语，' \
+            'gl - 加利西亚，pt_br - 葡萄牙语（巴西）），zh-CN - 中文。\n' \
             '\n' \
             '如:\n' \
             '/language en\n' \
             '/language es\n' \
             '/language ca\n' \
+            '/language gl\n' \
             '/language pt_br\n' \
             '/language zh_cn',
 
@@ -1447,8 +1760,8 @@ TEXT = {
             '/commands - 显示此消息。有关所有可用命令的信息和描述。\n' \
             '\n' \
             '/language - 更改机器人消息的语言。 目前' \
-            '目前可用语言为： en - 英文，es - 西班牙语，' \
-            'ca - 加泰罗尼亚语，zh-CN - 中文，pt_br - 葡萄牙语（巴西）。\n' \
+            '目前可用语言为： en - 英文，es - 西班牙语，ca - 加泰罗尼亚语，' \
+            'gl - 加利西亚，zh-CN - 中文，pt_br - 葡萄牙语（巴西）。\n' \
             '\n' \
             '/time - 更改可用于输入验证码的时间。\n' \
             '\n' \

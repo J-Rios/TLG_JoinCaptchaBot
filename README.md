@@ -59,4 +59,6 @@ server migration and automates the download of all dependencies. Look at the
 
  - Catalán: Adela Casals i Jorba
 
+ - Galician: [Fernando Flores (@Fer6Flores)](https://github.com/Fer6Flores)
+
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
