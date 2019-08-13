@@ -7,6 +7,9 @@ ifndef BOT_TOKEN
     $(error BOT_TOKEN is not set. Use make -e BOT_TOKEN=<your_bot_token>.)
 endif
 
+# Set docker container build name to lowercases
+NAME_LOW = $(shell echo $(NAME) | tr A-Z a-z)
+
 # Set bot language argument to uppercases
 BOT_LANG_UPP = $(shell echo $(BOT_LANG) | tr a-z A-Z)
 
@@ -20,9 +23,9 @@ ifneq ($(strip $(VALID_LANG)), true)
 endif
 
 build:
-	docker build -t "${NAME}" --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
+	docker build -t "${NAME_LOW}" --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
 
 force:
-	docker build -t "${NAME}" --no-cache --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
+	docker build -t "${NAME_LOW}" --no-cache --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
 
 .PHONY: build force
