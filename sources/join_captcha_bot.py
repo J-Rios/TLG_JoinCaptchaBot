@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/07/2019
+    14/08/2019
 Version:
-    1.4.16
+    1.5.0
 '''
 
 ####################################################################################################
@@ -102,6 +102,8 @@ def initialize_resources():
     # Load and generate URL detector regex from TLD list file
     actual_script_path = path.dirname(path.realpath(__file__))
     load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
+    # Load all languages texts
+    load_texts_languages()
 
 
 def load_urls_regex(file_path):
@@ -127,6 +129,20 @@ def load_urls_regex(file_path):
     if len(list_file_lines) > 0:
         tlds_str = "".join(list_file_lines)
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
+
+
+def load_texts_languages():
+    '''Load all texts from each language file.'''
+    for lang_iso_code in TEXT:
+        lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code.lower())
+        json_lang_file = TSjson(lang_file)
+        json_lang_texts = json_lang_file.read()
+        if (json_lang_texts is None) or (json_lang_texts == {}):
+            printts("Error loading language \"{}\" from {}. Language file not found or bad JSON " \
+                    "sintax.".format(lang_iso_code, lang_file))
+            printts("Exit.\n")
+            exit(0)
+        TEXT[lang_iso_code] = json_lang_texts
 
 
 def create_image_captcha(img_file_name, difficult_level, chars_mode):

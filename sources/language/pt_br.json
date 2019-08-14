@@ -1,0 +1,127 @@
+{
+    "START" :
+        "Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\nSe um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou assumir que esse \"usuário\" é um Bot, e ele será banido. Também, qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\nLembre-se de dar privilégios de administrador para que eu possa expulsar-banir usuários e excluir mensagens do grupo.\n\nConfira o comando /help para saber mais sobre como me usar.\n\nEu sou útil? Confira o comando /about e considere fazer uma doação para me manter ativo.",
+
+    "HELP" :
+        "Ajuda do Bot:\n————————————————\n- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\n- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou assumir que esse “usuário” é um Bot, e ele será banido.\n\n- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\n- Você tem que me dar privilégios de administrador para que eu possa expulsar e banir usuários, e remover mensagens.\n\n- Para manter o grupo limpo, eu removo automaticamente todas as mensagens relacionadas a mim quando um captacha não é enviado e o usuário é expulso (depois de 5 minutos).\n\n- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ser configurado usando o comando /time.\n\n- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e /disable.\n\n- Comandos de configuração somente podem ser usados pelos  Administradores do grupo.\n\n- Você pode definir o idioma que eu falo usando o comando /language.\n\n- Você pode configurar o grau de dificuldade do captcha usando a opção /difficulty.\n\nVocê pode definir se o captacha terá apenas números (o padrão) ou números e letras, usando a opção /captcha_mode.\n- Use a opção /commands para ver a lista de todos os comandos com uma breve descrição de cada um deles.",
+
+    "CMD_NOT_ALLOW" :
+        "Apenas um Admin pode usar esse comando",
+
+    "LANG_CHANGE" :
+        "Idioma definido para Português (Brasil).",
+
+    "LANG_SAME" :
+        "Eu já estou em Português (Brasil).\n\nQuem sabe você quer usar:\n/language en\n/language es\n/language ca\n/language gl\n/language zh_cn",
+
+    "LANG_BAD_LANG" :
+        "Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão, Galego, Português (Brasil) e chinês. Defina um deles usando \"en\", \"es\", \"ca\", \"gl\", \"pt_br\" ou \"zh_cn\".\n\nExemplos:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+
+    "LANG_NOT_ARG" :
+        "O comando exige o idioma que será usado (en – inglês, es – espanhol, ca - catalão, gl - galego, pt_br – português (Brasil), zh_cn - chinês).\n\nExemplos:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+
+    "TIME_CHANGE" :
+        "Tempo para enviar o captcha modificado com sucesso para {} minutos.",
+
+    "TIME_MAX_NOT_ALLOW" :
+        "O tempo máximo para resolver o captcha é de 120 minutos. Tempo não mudado.",
+
+    "TIME_NOT_NUM" :
+        "O tempo fornecido não é um número integral.",
+
+    "TIME_NOT_ARG" :
+        "O comando exige um valor para o tempo (em minutos).\n\nExemplos:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE" :
+        "O nível de dificuldade do captcha mudou para {}.",
+
+    "DIFFICULTY_NOT_NUM" :
+        "O nível de dificuldade fornecido não é um número.",
+
+    "DIFFICULTY_NOT_ARG" :
+        "O comando exige um nível de deficuldade como argumento (de 1 a 5).\n\nExemplos:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE" :
+        "O modo-carater do captcha mudou para \"{}\".",
+
+    "CAPTCHA_MODE_INVALID" :
+        "Modo-caracter inválido. As opções disponíveis são: \"nums\", \"hex\" ou \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "CAPTCHA_MODE_NOT_ARG" :
+        "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "NEW_USER_CAPTCHA_CAPTION" :
+        "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo.",
+
+    "CAPTHA_SOLVED" :
+        "Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}",
+
+    "CAPTCHA_INCORRECT_0" :
+        "Esse não é o número correto. Tente de novo...",
+
+    "CAPTCHA_INCORRECT_1" :
+        "Esse não é o número correto. Olhe com atenção pois o captcha tem 4 números...",
+
+    "NEW_USER_KICK" :
+        "{} não enviou o captcha em tempo hábil. O \"Usuário\" foi expulso.",
+
+    "NEW_USER_KICK_NOT_RIGHTS" :
+        "{} não completou o captcha em tempo. Eu tentei expulsar o \"usuário\", mas eu não tenho poderes administrativos para expulsar usuários do grupo.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT" :
+        "{} não completou o captcha em tempo. Eu tentei expulsar o \"usuário\", mas o usuário não está mais no grupo (ele saiu ou foi expulso por um Admin).",
+
+    "BOT_CANT_KICK" :
+        "{} não completou o captcha em tempo. Eu tentei expulsar o \"usuário\", mas algo deu errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.",
+
+    "CANT_DEL_MSG" :
+        "Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para remover mensagens que não foram enviadas por mim",
+
+    "NEW_USER_BAN" :
+        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o captcha. O \"usuário\" foi banido. Para deixá-lo entrar de novo, um administrador tem que remover as restrições, manualmente..",
+
+    "NEW_USER_BAN_NOT_IN_CHAT" :
+        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas ele não está mais no grupo (ele saiu ou foi expulso por um Admin).",
+
+    "NEW_USER_BAN_NOT_RIGHTS" :
+        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas eu não tenho poderes administrativos para banir usuários do grupo.",
+
+    "BOT_CANT_BAN" :
+        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo mas falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas algo deu errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.",
+
+    "SPAM_DETECTED_RM" :
+        "Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o captcha. A mensagem foi removida em prol de um Telegram livre de spam :)",
+
+    "SPAM_DETECTED_NOT_RM" :
+        "Detectou uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o captcha. Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para remover mensagens que não foram enviadas por mim.",
+
+    "NOT_TEXT_MSG_ALLOWED" :
+        "Removida uma mensagem que não é de texto (imagem, áudio, arquivo...) de {}, por causa de um Telegram livre de spam\n.\nVocê pode enviar mensagens sem texto depois de ter resolvido o captcha.",
+
+    "OTHER_CAPTCHA_BTN_TEXT" :
+        "Outro Captcha",
+
+    "ENABLE" :
+        "Proteção Captcha ativada. Desative com o comando /disable.",
+
+    "DISABLE" :
+        "Proteção Captcha desativada. Ative com o comando /enable.",
+
+    "ALREADY_ENABLE" :
+        "A proteção captcha já está ativada.",
+
+    "ALREADY_DISABLE" :
+        "A proteção captcha já está desativada.",
+
+    "CAN_NOT_GET_ADMINS" :
+        "Não posso usar esse comando neste chat.",
+
+    "VERSION" :
+        "Versão atual do Bot: {}",
+
+    "ABOUT_MSG" :
+        "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}",
+
+    "COMMANDS" :
+        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis são: en (inglês) - es (espanhol) - ca (catalão) - gl (galego) - pt_br (português BR) - zh_cn (chinês).\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-carater do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
+}

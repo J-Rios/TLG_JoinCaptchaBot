@@ -49,8 +49,8 @@ class TSjson(object):
                 else: # El archivo existe y tiene contenido
                     with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
                         read = json.load(f, object_pairs_hook=OrderedDict) # Leer todo el archivo y devolver la lectura de los datos json usando un diccionario ordenado
-        except: # Error intentando abrir el archivo
-            print("    Error cuando se abria para lectura, el archivo {}".format(self.file_name)) # Escribir en consola el error
+        except Exception as e: # Error intentando abrir el archivo
+            print("    Error reading json file {}. {}".format(self.file_name, str(e))) # Escribir en consola el error
             read = None # Devolver None
         finally: # Para acabar, haya habido excepcion o no
             self.lock.release() # Abrimos (liberamos) el mutex
