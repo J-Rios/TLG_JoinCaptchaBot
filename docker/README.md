@@ -32,7 +32,7 @@ It is also possible to specify a different default language for the bot to use
 by setting the `BOT_LANG` variable at build time, like:
 
 ```
-make BOT_TOKEN="<your_bot_token_here> BOT_LANG="PT_BR"
+make BOT_TOKEN="<your_bot_token_here>" BOT_LANG="PT_BR"
 ```
 
 The build process may take a while, depending on your computer and connection

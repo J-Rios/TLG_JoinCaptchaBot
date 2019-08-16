@@ -39,7 +39,7 @@ RUN mkdir -p "${BOT_HOME_DIR}" && \
     pip3 install Pillow==6.0.0 && \
     cd TLG_JoinCaptchaBot/sources && \
     sed -i -e "s/${INVALID_TOKEN}/${BOT_TOKEN}/g" constants.py && \
-    sed -i -e "s/^\(\s\+'INIT_LANG'\)[^:]*:.*/\1 : '${BOT_LANG}',/g" constants.py && \
+    sed -i -e "s/^\(\s\+\"INIT_LANG\"\)[^:]*:.*/\1 : \"${BOT_LANG}\",/g" constants.py && \
     chown -R "${BOT_USER}":"${BOT_USER}" "${BOT_HOME_DIR}" && \
     echo "rm -f ./data/captchas/*; python3 -u join_captcha_bot.py" >run_in_docker && \
     chmod 755 kill run run_in_docker status && \
