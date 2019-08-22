@@ -51,7 +51,7 @@
         "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
     "NEW_USER_CAPTCHA_CAPTION" :
-        "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo. se houver letras maiúsculo e minúsculo faz diferença.",
+        "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo. se houver letras, maiúsculo e minúsculo faz diferença.",
 
     "CAPTHA_SOLVED" :
         "Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}",
