@@ -51,7 +51,7 @@
         "The command needs a character-mode to set. Available modes are:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
     "NEW_USER_CAPTCHA_CAPTION" : 
-        "Hello {}, welcome to {}, please send a message with the number that appears in this captcha to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group.",
+        "Hello {}, welcome to {}, please send a message with the number that appears in this captcha to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group. if there are letters, upper and lower case makes a difference.",
 
     "CAPTHA_SOLVED" : 
         "Captcha solved, user verified.\nWelcome to the group {}",
