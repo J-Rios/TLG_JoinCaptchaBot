@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/08/2019
+    30/08/2019
 Version:
-    1.5.2
+    1.5.3
 '''
 
 ####################################################################################################
@@ -496,7 +496,7 @@ def msg_new_user(bot, update):
             # has, to assume this is the chat language and configure Bot language of this chat
             admin_language = update.message.from_user.language_code[0:2].upper()
             if admin_language not in TEXT:
-                admin_language = "EN"
+                admin_language = CONST["INIT_LANG"]
             save_config_property(chat_id, "Language", admin_language)
             # Get and save chat data
             chat_title = update.message.chat.title

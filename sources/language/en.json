@@ -12,13 +12,13 @@
         "Language changed to English.",
 
     "LANG_SAME" : 
-        "I am already in English.\n\nDid you mean:\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "I am already in English.\n\nDid you mean:\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
 
     "LANG_BAD_LANG" : 
-        "Invalid language provided. The languages currently supported are English, Spanish, Catalan, Galician, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to any of them using \"en\", \"es\", \"ca\", \"gl\", \"pt_br\" or \"zh_cn\".\n\nExamples:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Invalid language provided. The languages currently supported are English, German, Spanish, Catalan, Galician, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to any of them using \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" or \"zh_cn\".\n\nExamples:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
 
     "LANG_NOT_ARG" : 
-        "The command needs a language to set (en - English, es - Spanish, ca - Catalan, gl - Galician, pt_br - Portuguese from Brazil, zh_cn - Chinese Mainland).\n\nExamples:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "The command needs a language to set (en - English, de - German, es - Spanish, ca - Catalan, gl - Galician, pt_br - Portuguese from Brazil, zh_cn - Chinese Mainland).\n\nExamples:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
 
     "TIME_CHANGE" : 
         "Time to solve the captcha successfully changed to {} minutes.",
@@ -123,5 +123,5 @@
         "This Bot is free software and open-sourced under the GNU-GPL license.\nBot Developed by {}.\n\nYou can check the code here:\n{}\n\nDo you like my work? Buy me a coffee.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" : 
-        "List of commands:\n————————————————\n/start - Shows the initial information about the bot.\n\n/help - Shows the help information.\n\n/commands - Shows this message. Information about all the available commands and their description.\n\n/language - Allows to change the language of the bot's messages. Currently available languages: en (English) - es (Spanish) - ca (Catalan) - gl (Galician) - pt_br (Portuguese from Brazil) - zh_cn (Chinese, Mainland terms).\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha character-mode (nums: just numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/version - Show the version of the Bot.\n\n/about - Show about info."
+        "List of commands:\n————————————————\n/start - Shows the initial information about the bot.\n\n/help - Shows the help information.\n\n/commands - Shows this message. Information about all the available commands and their description.\n\n/language - Allows to change the language of the bot's messages. Currently available languages: en (English) - de (German) - es (Spanish) - ca (Catalan) - gl (Galician) - pt_br (Portuguese from Brazil) - zh_cn (Chinese, Mainland terms).\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha character-mode (nums: just numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/version - Show the version of the Bot.\n\n/about - Show about info."
 }

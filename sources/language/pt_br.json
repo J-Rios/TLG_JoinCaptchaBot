@@ -12,13 +12,13 @@
         "Idioma definido para Português (Brasil).",
 
     "LANG_SAME" :
-        "Eu já estou em Português (Brasil).\n\nQuem sabe você quer usar:\n/language en\n/language es\n/language ca\n/language gl\n/language zh_cn",
+        "Eu já estou em Português (Brasil).\n\nQuem sabe você quer usar:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language zh_cn",
 
     "LANG_BAD_LANG" :
-        "Idioma inválido. Os idiomas disponíveis são Inglês, Espanhol, Catalão, Galego, Português (Brasil) e chinês. Defina um deles usando \"en\", \"es\", \"ca\", \"gl\", \"pt_br\" ou \"zh_cn\".\n\nExemplos:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Idioma inválido. Os idiomas disponíveis são Inglês, Alemão, Espanhol, Catalão, Galego, Português (Brasil) e chinês. Defina um deles usando \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" ou \"zh_cn\".\n\nExemplos:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
 
     "LANG_NOT_ARG" :
-        "O comando exige o idioma que será usado (en – inglês, es – espanhol, ca - catalão, gl - galego, pt_br – português (Brasil), zh_cn - chinês).\n\nExemplos:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "O comando exige o idioma que será usado (en – inglês, de - alemão, es – espanhol, ca - catalão, gl - galego, pt_br – português (Brasil), zh_cn - chinês).\n\nExemplos:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
 
     "TIME_CHANGE" :
         "Tempo para enviar o captcha modificado com sucesso para {} minutos.",
@@ -123,5 +123,5 @@
         "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" :
-        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis são: en (inglês) - es (espanhol) - ca (catalão) - gl (galego) - pt_br (português BR) - zh_cn (chinês).\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-carater do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
+        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot. Os idiomas disponíveis são: en (inglês) - de (alemão) - es (espanhol) - ca (catalão) - gl (galego) - pt_br (português BR) - zh_cn (chinês).\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-carater do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
 }

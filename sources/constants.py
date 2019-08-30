@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/08/2019
+    30/08/2019
 Version:
-    1.5.2
+    1.5.3
 '''
 
 ####################################################################################################
@@ -91,13 +91,14 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.5.2 (15/08/2019)"
+    "VERSION" : "1.5.3 (30/08/2019)"
 }
 
 
 # Supported languages list
 TEXT = {
     "EN" : None, # English
+    "DE" : None, # German
     "ES" : None, # Spanish
     "CA" : None, # Catalan
     "GL" : None, # Galician
