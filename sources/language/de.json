@@ -1,0 +1,127 @@
+{
+    "START" : 
+        "Hallo, ich bin ein Bot, der für jeden neuen Benutzer, der einer Gruppe beitritt, ein Bild-Captcha sendet und jeden tritt, der das Captcha nicht innerhalb einer bestimmten Zeit lösen kann.\n\nWenn ein Benutzer 5 Mal hintereinander versucht, der Gruppe beizutreten und das Captcha nicht löst, gehe ich davon aus, dass dieser \"user\" ein Bot ist, und er wird gesperrt. Jede Nachricht, die eine URL enthält, die von einem neuen \"user\" gesendet wurde, bevor das Captcha vollständig ist, wird als Spam eingestuft und gelöscht.\n\nDenken Sie daran, mir Administratorrechte zu erteilen, um Benutzer zu sperren und Nachrichten zu entfernen.\n\nCheck /help Befehl für weitere Informationen zu meiner Verwendung.\n\nBin ich nützlich? Überprüfen Sie den Befehl /about und überlegen Sie, eine Spende zu leisten, um mich aktiv zu halten.",
+
+    "HELP" : 
+        "Bot helfen:\n————————————————\n- Ich bin ein Bot, der für jeden neuen Benutzer, der einer Gruppe beitritt, ein Captcha sendet und einen von ihnen tritt, der das Captcha nicht innerhalb einer bestimmten Zeit lösen kann.\n\n- Wenn ein Benutzer 5 Mal hintereinander versucht, der Gruppe beizutreten und das Captcha nie löst, gehe ich davon aus, dass der \"user\" ein Bot ist, und er wird gesperrt.\n\n- Jede Nachricht, die eine URL enthält, die von einem neuen \"user\" gesendet wurde, bevor das Captcha abgeschlossen wurde, wird als Spam eingestuft und gelöscht.\n\n- Sie müssen mir Administratorrechte für Kick-Benutzer gewähren und Nachrichten entfernen.\n\n- Um eine saubere Gruppe beizubehalten, entferne ich automatisch alle Nachrichten, die sich auf mich beziehen, wenn ein Captcha nicht gelöst wurde und der Benutzer gekickt wurde (nach 5 Minuten).\n\n- Die Zeit, die neue Benutzer benötigen, um das Captcha zu lösen, beträgt standardmäßig 5 Minuten, kann jedoch mit dem Befehl konfiguriert werden /time.\n\n- Sie können den Captcha-Schutz mit den Befehlen /enable und /disable ein- und ausschalten.\n\n- Konfigurationsbefehle können nur von Gruppenadministratoren verwendet werden.\n\n- Sie können die Sprache, die ich spreche, mit dem Befehl /language ändern.\n\n- Sie können den Captcha-Schwierigkeitsgrad mit Befehl /difficulty konfigurieren.\n\n- Sie können das Captcha mit dem Befehl /captcha_mode so einstellen, dass nur Zahlen (Standard) oder ganze Zahlen und Buchstaben verwendet werden.\n\n- Aktivieren Sie /commands, um eine Liste aller verfügbaren Befehle und eine kurze Beschreibung aller Befehle zu erhalten.",
+
+    "CMD_NOT_ALLOW" : 
+        "Nur ein Administrator kann diesen Befehl verwenden.",
+
+    "LANG_CHANGE" : 
+        "Die Sprache wurde in Deutsch geändert.",
+
+    "LANG_SAME" : 
+        "Ich bin schon auf Deutsch.\n\nMeintest du:\n/Sprache en\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
+
+    "LANG_BAD_LANG" : 
+        "Ungültige Sprache angegeben. Die derzeit unterstützten Sprachen sind Englisch, Deutsch, Spanisch, Katalanisch, Galizisch, Portugiesisch (Brasilien) und Chinesisch (Festlandbegriffe, CN). Ändern Sie zu einem von ihnen mit \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" oder \"zh_cn\".\n\nBeispiele:\n/Sprache en\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
+
+    "LANG_NOT_ARG" : 
+        "Der Befehl benötigt eine Sprache zum Einstellen (en - Englisch, de - Deutsch, es - Spanisch, ca - Katalanisch, gl - Galizisch, pt_br - Portugiesisch aus Brasilien, zh_cn - Chinesisches Festland).\n\nBeispiele:\n/Sprache en\n/Sprache de\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
+
+    "TIME_CHANGE" : 
+        "Die Zeit zum Lösen des Captcha wurde in {} Minuten geändert.",
+
+    "TIME_MAX_NOT_ALLOW" : 
+        "Die maximal zulässige Zeit zum Lösen von Captchas beträgt 120 Minuten. Die Uhrzeit wurde nicht geändert.",
+
+    "TIME_NOT_NUM" : 
+        "Die angegebene Zeit ist keine Ganzzahl.",
+
+    "TIME_NOT_ARG" : 
+        "Der Befehl benötigt einen Zeitwert zum Einstellen (in Minuten).\n\nBeispiele:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE" : 
+        "Captcha-Schwierigkeit wurde erfolgreich auf Stufe {} geändert.",
+
+    "DIFFICULTY_NOT_NUM" : 
+        "Die angegebene Captcha-Schwierigkeit ist keine Zahl.",
+
+    "DIFFICULTY_NOT_ARG" : 
+        "Der Befehl benötigt einen Schwierigkeitsgrad (von 1 bis 5).\n\nBeispiele:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE" : 
+        "Captcha-Zeichenmodus erfolgreich geändert in \"{}\".",
+
+    "CAPTCHA_MODE_INVALID" : 
+        "Ungültiger Captcha-Zeichenmodus. Unterstützte Modi sind: \"nums\", \"hex\" und \"ascii\".\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "CAPTCHA_MODE_NOT_ARG" : 
+        "Der Befehl benötigt einen Zeichenmodus zum Setzen. Verfügbare Modi sind:\n- Numerisch Captchas (\"nums\").\n- Hexadezimal Captchas, Zahlen und Zeichen A-F (\"hex\").\n- Zahlen und Zeichen von A bis Z Captchas(\"ascii\").\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "NEW_USER_CAPTCHA_CAPTION" : 
+        "Hallo {}, willkommen bei {}, bitte senden Sie eine Nachricht mit der Nummer, die in diesem Captcha angezeigt wird, um zu bestätigen, dass Sie ein Mensch sind. Wenn Sie das Captcha in {} Minuten nicht auflösen, werden Sie automatisch aus der Gruppe ausgeschlossen. Wenn es Buchstaben gibt, machen Groß- und Kleinschreibung einen Unterschied.",
+
+    "CAPTHA_SOLVED" : 
+        "Captcha gelöst, Benutzer verifiziert.\nWillkommen in der Gruppe {}",
+
+    "CAPTCHA_INCORRECT_0" : 
+        "Das ist nicht die richtige Nummer. Versuchen Sie es nochmal...",
+
+    "CAPTCHA_INCORRECT_1" : 
+        "Das ist nicht die richtige Nummer. Überprüfen Sie genau, das Captcha hat 4 Zahlen ...",
+
+    "NEW_USER_KICK" : 
+        "{} hat das Captcha nicht rechtzeitig abgeschlossen. \"User\" wurde gekickt.",
+
+    "NEW_USER_KICK_NOT_RIGHTS" : 
+        "{} hat das Captcha nicht rechtzeitig abgeschlossen. Ich habe versucht, den \"User\" zu kicken, aber ich habe keine Administratorrechte, um Benutzer in der Gruppe zu kicken.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT" : 
+        "{} hat das Captcha nicht rechtzeitig abgeschlossen. Ich habe versucht, den \"User\" zu kicken, aber der Benutzer ist nicht in der Gruppe (hat die Gruppe verlassen oder wurde von einem Administrator gekickt).",
+
+    "BOT_CANT_KICK" : 
+        "{} hat das Captcha nicht rechtzeitig abgeschlossen. Ich habe versucht, den \"User\" zu treten, aber aufgrund eines unerwarteten Problems (möglicherweise im Zusammenhang mit dem Netzwerk / Server) kann ich das nicht tun.",
+
+    "CANT_DEL_MSG" : 
+        "Ich habe versucht, diese Nachricht zu löschen, habe jedoch keine Administratorrechte zum Entfernen von Nachrichten, die nicht von mir gesendet wurden.",
+
+    "NEW_USER_BAN" : 
+        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. \"User\" wurde gesperrt. Um ihn / sie erneut eingeben zu lassen, muss ein Administrator die Einschränkungen dieses \"User\" manuell entfernen.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT" : 
+        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den \"User\" zu sperren, aber der Benutzer ist nicht in der Gruppe (hat die Gruppe verlassen oder wurde von einem Administrator gekickt / gesperrt).",
+
+    "NEW_USER_BAN_NOT_RIGHTS" : 
+        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den \"User\" zu sperren, aber ich habe keine Administratorrechte, um Benutzer in der Gruppe zu sperren.",
+
+    "BOT_CANT_BAN" : 
+        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den \"User\" zu sperren, aber aufgrund eines unerwarteten Problems (möglicherweise im Zusammenhang mit dem Netzwerk / Server) kann ich das nicht tun.",
+
+    "SPAM_DETECTED_RM" : 
+        "Es wurde eine Nachricht mit einer URL (oder einem Alias) von {} gefunden, die das Captcha noch nicht gelöst hat. Die Nachricht wurde entfernt, um das Telegramm frei von Spam zu halten :)",
+
+    "SPAM_DETECTED_NOT_RM" : 
+        "Nachricht mit einer URL (oder einem Alias) von {}, der das Captcha noch nicht gelöst hat. Ich habe versucht, die Spam-Nachricht zu entfernen, habe jedoch keine Administratorrechte zum Entfernen von Nachrichten, die nicht von mir gesendet wurden.",
+
+    "NOT_TEXT_MSG_ALLOWED" : 
+        "Eine Nicht-Textnachricht (Bild, Audio, Datei ...) wurde aus {} entfernt, um Telegram frei von Spam zu halten.\n\nSie können Nicht-Textnachrichten senden, nachdem Sie das Captcha gelöst haben.",
+
+    "OTHER_CAPTCHA_BTN_TEXT" : 
+        "Anderes Captcha",
+
+    "ENABLE" : 
+        "Captcha-Schutz aktiviert. Deaktivieren Sie es mit dem /disable Befehl.",
+
+    "DISABLE" : 
+        "Captcha-Schutz deaktiviert. Aktivieren Sie es mit dem /enable Befehl.",
+
+    "ALREADY_ENABLE" : 
+        "Der Captcha-Schutz ist bereits aktiviert.",
+
+    "ALREADY_DISABLE" : 
+        "Der Captcha-Schutz ist bereits deaktiviert.",
+
+    "CAN_NOT_GET_ADMINS" : 
+        "Dieser Befehl kann im aktuellen Chat nicht verwendet werden.",
+
+    "VERSION" : 
+        "Aktuelle Bot-Version: {}",
+
+    "ABOUT_MSG" : 
+        "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee.\n\nPaypal:\n{}\n\nBTC:\n{}",
+
+    "COMMANDS" : 
+        "Liste der Befehle:\n————————————————\n/start - Zeigt die anfänglichen Informationen zum Bot an.\n\n/help - Zeigt die Hilfeinformationen an.\n\n/commands - Zeigt diese Nachricht an. Informationen zu allen verfügbaren Befehlen und deren Beschreibung.\n\n/language - Ermöglicht das Ändern der Sprache der Bot-Nachrichten. Derzeit verfügbare Sprachen: en (English) - de (German) - es (Spanish) - ca (Catalan) - gl (Galician) - pt_br (Portuguese from Brazil) - zh_cn (Chinese, Mainland terms).\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha character-mode (nums: just numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/version - Show the version of the Bot.\n\n/about - Show about info."
+}
