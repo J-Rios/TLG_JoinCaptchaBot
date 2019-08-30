@@ -12,13 +12,13 @@
         "Die Sprache wurde in Deutsch geändert.",
 
     "LANG_SAME" : 
-        "I am already in German.\n\nDid you mean:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ich bin schon auf Deutsch.\n\nMeintest du:\n/Sprache en\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
 
     "LANG_BAD_LANG" : 
-        "Invalid language provided. The languages currently supported are English, German, Spanish, Catalan, Galician, Portuguese (Brazil) and Chinese (Mainland terms, CN). Change to any of them using \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" or \"zh_cn\".\n\nExamples:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ungültige Sprache angegeben. Die derzeit unterstützten Sprachen sind Englisch, Deutsch, Spanisch, Katalanisch, Galizisch, Portugiesisch (Brasilien) und Chinesisch (Festlandbegriffe, CN). Ändern Sie zu einem von ihnen mit \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" oder \"zh_cn\".\n\nBeispiele:\n/Sprache en\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
 
     "LANG_NOT_ARG" : 
-        "The command needs a language to set (en - English, de - German, es - Spanish, ca - Catalan, gl - Galician, pt_br - Portuguese from Brazil, zh_cn - Chinese Mainland).\n\nExamples:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Der Befehl benötigt eine Sprache zum Einstellen (en - Englisch, de - Deutsch, es - Spanisch, ca - Katalanisch, gl - Galizisch, pt_br - Portugiesisch aus Brasilien, zh_cn - Chinesisches Festland).\n\nBeispiele:\n/Sprache en\n/Sprache de\n/Sprache es\n/Sprache ca\n/Sprache gl\n/Sprache pt_br\n/Sprache zh_cn",
 
     "TIME_CHANGE" : 
         "Die Zeit zum Lösen des Captcha wurde in {} Minuten geändert.",
