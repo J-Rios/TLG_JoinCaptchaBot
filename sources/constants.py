@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/08/2019
+    06/09/2019
 Version:
-    1.5.3
+    1.5.4
 '''
 
 ####################################################################################################
@@ -76,7 +76,17 @@ CONST = {
 
     # Regular expression to detect URLs in a string based in TLD domains
     "REGEX_URLS" : r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)" \
-                   r"(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))",
+        r"(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))",
+
+    # String of supported languages shows in "/commands" command
+    "SUPPORTED_LANGS" : \
+        "en (English) - de (German / Deutch) - es (Spanish / Español) - ca (Catalan / Català) - " \
+        "gl (Galician / Galego) - eu (Basque / Euskal) - " \
+        "pt_br (Portuguese-Brazil / Português-Brasil) - zh_cn (Chinese-Simplified / 中文)",
+
+    # List string of supported languages commands shows in invalid language set
+    "SUPPORTED_LANGS_CMDS" : "/language en\n/language de\n/language es\n/language ca\n" \
+        "/language eu\n/language gl\n/language pt_br\n/language zh_cn",
 
     # Bot developer
     "DEVELOPER" : "@JoseTLG",
@@ -91,7 +101,7 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.5.3 (30/08/2019)"
+    "VERSION" : "1.5.4 (06/09/2019)"
 }
 
 
@@ -102,6 +112,7 @@ TEXT = {
     "ES" : None, # Spanish
     "CA" : None, # Catalan
     "GL" : None, # Galician
+    "EU" : None, # Basque
     "PT_BR" : None, # Portuguese (Brasil)
     "ZH_CN" : None # Chinese (Mainland)
 }

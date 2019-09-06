@@ -12,13 +12,13 @@
         "语言已设置为中文。",
 
     "LANG_SAME" :
-        "我已经被设置为中文。\n\n你是否需要使用以下命令:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br",
+        "我已经被设置为中文。\n\n支持的语言:\n{}",
 
     "LANG_BAD_LANG" :
-        "无此语言。目前支持英语，西班牙语，加泰罗尼亚语，加利西亚，中文和葡萄牙语（巴西）。使用 en - 英文，de - 德国, es - 西班牙语，ca - 加泰罗尼亚语，gl - 加利西亚, pt_br - 葡萄牙语（巴西），zh-CN - 中文。\n\n如:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "无此语言。\n\n支持的语言:\n{}",
 
     "LANG_NOT_ARG" :
-        "这个命令需要一个语言参数（en - 英文，de - 德国, es - 西班牙语，ca - 加泰罗尼亚语，gl - 加利西亚，pt_br - 葡萄牙语（巴西）），zh-CN - 中文。\n\n如:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "这个命令需要一个语言参数。\n\n如:\n{}",
 
     "TIME_CHANGE" :
         "输入验证码的时间成功设置为 {} 分钟。",
@@ -123,5 +123,5 @@
         "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧。\n\nPaypal账号：\n{}\n\nBTC型比特币地址：\n{}",
 
     "COMMANDS" :
-        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。 目前目前可用语言为： en - 英文，de - 德国, es - 西班牙语，ca - 加泰罗尼亚语，gl - 加利西亚，zh-CN - 中文，pt_br - 葡萄牙语（巴西）。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
+        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。 目前目前可用语言为： {}。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
 }

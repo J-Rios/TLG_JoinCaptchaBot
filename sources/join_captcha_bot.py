@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/08/2019
+    06/09/2019
 Version:
-    1.5.3
+    1.5.4
 '''
 
 ####################################################################################################
@@ -910,11 +910,12 @@ def cmd_commands(bot, update):
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
+    commands_text = TEXT[lang]["COMMANDS"].format(CONST["SUPPORTED_LANGS"])
     if chat_type == "private":
-        bot.send_message(chat_id, TEXT[lang]["COMMANDS"])
+        bot.send_message(chat_id, commands_text)
     else:
         tlg_msg_to_selfdestruct(update.message)
-        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["COMMANDS"])
+        tlg_send_selfdestruct_msg(bot, chat_id, commands_text)
 
 
 def cmd_language(bot, update, args):
@@ -937,11 +938,11 @@ def cmd_language(bot, update, args):
                     save_config_property(chat_id, "Language", lang)
                     bot_msg = TEXT[lang]["LANG_CHANGE"]
                 else:
-                    bot_msg = TEXT[lang]["LANG_SAME"]
+                    bot_msg = TEXT[lang]["LANG_SAME"].format(CONST["SUPPORTED_LANGS_CMDS"])
             else:
-                bot_msg = TEXT[lang]["LANG_BAD_LANG"]
+                bot_msg = TEXT[lang]["LANG_BAD_LANG"].format(CONST["SUPPORTED_LANGS_CMDS"])
         else:
-            bot_msg = TEXT[lang]["LANG_NOT_ARG"]
+            bot_msg = TEXT[lang]["LANG_NOT_ARG"].format(CONST["SUPPORTED_LANGS_CMDS"])
     elif is_admin == False:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:

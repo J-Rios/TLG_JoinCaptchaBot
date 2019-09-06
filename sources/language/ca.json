@@ -12,13 +12,13 @@
         "S'ha canviat l'idioma a català.",
 
     "LANG_SAME" :
-        "Ja parlo en català.\n\nPotser volies dir:\n/language en\n/language de\n/language es\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ja parlo en català.\n\nIdiomes compatibles:\n{}",
 
     "LANG_BAD_LANG" :
-        "Idioma no vàlid. Els idiomes que parlo actualment són anglès, alemany, castellà, català, galician, portuguès de Brasil i xinès. Canvia a un d'ells mitjançant les etiquetes \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" o \"zh_cn\".\n\nExemples:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Idioma no vàlid.\n\nIdiomes compatibles:\n{}",
 
     "LANG_NOT_ARG" :
-        "Cal que especifiqueu un idioma (en - anglès, de - alemany, es - castellà, ca - català, gl - galician, pt_br - portuguès de Brasil, zh_cn - xinès).\n\nExemples:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Cal que especifiqueu un idioma.n\nExemples:\n{}",
 
     "TIME_CHANGE" :
         "S'ha canviat el temps per a resoldre el captcha a {} minuts.",
@@ -123,5 +123,5 @@
         "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè.\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" :
-        "Llistat d'ordres:\n————————————————\n/start - Mostra la informació inicial sobre el bot.\n\n/help - Mostra la informació d'ajuda.\n\n/commands - Mostra el missatge actual: informació sobre totes les ordres disponibles i la seva descripció.\n\n/language - Permet canviar l'idioma en que parla el bot. Idiomes disponibles actualment: en (anglès) - de (alemany) - es (castellà) - ca (català) - gl (galician) - pt_br (portuguès de Brasil) - zh_cn (xinès).\n\n/time - Permet canviar el temps disponible per a resoldre un captcha.\n\n/difficulty - Permet canviar el nivell de dificultat del captcha (d'1 a 5).\n\n/captcha_mode - Permet canviar el mode-caràcter del captcha (nums: només números, hex: números i lletres A-F, ascii: números i lletres A-Z).\n\n/enable - Activa la protecció per captcha en el grup.\n\n/disable - Desactiva la protecció per captcha en el grup.\n\n/version - Consulta la versió del bot.\n\n/about - Mostra la informació \"Quant a...\" del bot."
+        "Llistat d'ordres:\n————————————————\n/start - Mostra la informació inicial sobre el bot.\n\n/help - Mostra la informació d'ajuda.\n\n/commands - Mostra el missatge actual: informació sobre totes les ordres disponibles i la seva descripció.\n\n/language - Permet canviar l'idioma en que parla el bot. Idiomes disponibles actualment: {}.\n\n/time - Permet canviar el temps disponible per a resoldre un captcha.\n\n/difficulty - Permet canviar el nivell de dificultat del captcha (d'1 a 5).\n\n/captcha_mode - Permet canviar el mode-caràcter del captcha (nums: només números, hex: números i lletres A-F, ascii: números i lletres A-Z).\n\n/enable - Activa la protecció per captcha en el grup.\n\n/disable - Desactiva la protecció per captcha en el grup.\n\n/version - Consulta la versió del bot.\n\n/about - Mostra la informació \"Quant a...\" del bot."
 }

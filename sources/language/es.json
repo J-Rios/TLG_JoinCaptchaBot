@@ -12,13 +12,13 @@
         "Idioma cambiado a español.",
 
     "LANG_SAME" :
-        "Ya estoy en español.\n\nQuizás querías decir:\n/language en\n/language de\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ya estoy en español.\n\nIdiomas soportados:\n{}",
 
     "LANG_BAD_LANG" :
-        "Idioma inválidado. Los idiomas actualmente soportados son inglés, alemán, español, catalán, gallego, portugués de Brasil y chino. Cambia a uno de ellos mediante las etiquetas \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" o \"zh_cn\".\n\nEjemplos:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Idioma inválidado.\n\nIdiomas soportados:\n{}",
 
     "LANG_NOT_ARG" :
-        "El comando necesita un idioma que establecer (en - inglés, de - alemán, es - español, ca - catalán, gl - gallego, pt_br - portugués de Brasil, zh_cn - chino).\n\nEjemplos:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "El comando necesita un idioma que establecer.\n\nEjemplos:\n{}",
 
     "TIME_CHANGE" :
         "Tiempo para resolver el captcha cambiado a {} minutos.",
@@ -123,5 +123,5 @@
         "Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por {}.\n\nPuedes consultar el código aquí:\n{}\n\nTe gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" :
-        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente disponibles: en (inglés) - de (alemán) - es (español) - ca (catalán) - gl (gallego) - pt_br (portugués de Brasil) - zh_cn (Chino, Mainland terms).\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
+        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot. Idiomas actualmente disponibles: {}.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
 }

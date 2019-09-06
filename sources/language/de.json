@@ -12,13 +12,13 @@
         "Die Sprache wurde in Deutsch geändert.",
 
     "LANG_SAME" : 
-        "Ich bin schon auf Deutsch.\n\nMeintest du:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ich bin schon auf Deutsch.\n\nUnterstützte Sprachen:\n{}",
 
     "LANG_BAD_LANG" : 
-        "Ungültige Sprache angegeben. Die derzeit unterstützten Sprachen sind Englisch, Deutsch, Spanisch, Katalanisch, Galizisch, Portugiesisch (Brasilien) und Chinesisch (Festlandbegriffe, CN). Ändern Sie zu einem von ihnen mit \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\" oder \"zh_cn\".\n\nBeispiele:\n/language en\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Ungültige Sprache angegeben.\n\nUnterstützte Sprachen:\n{}",
 
     "LANG_NOT_ARG" : 
-        "Der Befehl benötigt eine Sprache zum Einstellen (en - Englisch, de - Deutsch, es - Spanisch, ca - Katalanisch, gl - Galizisch, pt_br - Portugiesisch aus Brasilien, zh_cn - Chinesisches Festland).\n\nBeispiele:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Der Befehl benötigt eine Sprache zum Einstellen.\n\nBeispiele:\n{}",
 
     "TIME_CHANGE" : 
         "Die Zeit zum Lösen des Captcha wurde in {} Minuten geändert.",
@@ -123,5 +123,5 @@
         "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" : 
-        "Liste der Befehle:\n————————————————\n/start - Zeigt die anfänglichen Informationen zum Bot an.\n\n/help - Zeigt die Hilfeinformationen an.\n\n/commands - Zeigt diese Nachricht an. Informationen zu allen verfügbaren Befehlen und deren Beschreibung.\n\n/language - Ermöglicht das Ändern der Sprache der Bot-Nachrichten. Derzeit verfügbare Sprachen: en (Englisch) - de (Deutsch) - es (Spanisch) - ca (Katalanisch) - gl (Galizisch) - pt_br (Brasilien Portugiesisch) - zh_cn (Chinesisch, Festlandbegriffe).\n\n/time - Ermöglicht das Ändern der verfügbaren Zeit zum Lösen eines Captchas.\n\n/difficulty - Ermöglicht das Ändern des Captcha-Schwierigkeitsgrades (von 1 bis 5).\n\n/captcha_mode - Ermöglicht das Ändern des Captcha-Zeichenmodus (nums: nur Zahlen, hex: Zahlen und A-F-Zeichen, ascii: Zahlen und A-Z-Zeichen).\n\n/enable - Aktivieren Sie den Captcha-Schutz der Gruppe.\n\n/disable - Deaktivieren Sie den Captcha-Schutz der Gruppe.\n\n/version - Zeigen Sie die Version des Bot an.\n\n/about - About info anzeigen."
+        "Liste der Befehle:\n————————————————\n/start - Zeigt die anfänglichen Informationen zum Bot an.\n\n/help - Zeigt die Hilfeinformationen an.\n\n/commands - Zeigt diese Nachricht an. Informationen zu allen verfügbaren Befehlen und deren Beschreibung.\n\n/language - Ermöglicht das Ändern der Sprache der Bot-Nachrichten. Derzeit verfügbare Sprachen: {}.\n\n/time - Ermöglicht das Ändern der verfügbaren Zeit zum Lösen eines Captchas.\n\n/difficulty - Ermöglicht das Ändern des Captcha-Schwierigkeitsgrades (von 1 bis 5).\n\n/captcha_mode - Ermöglicht das Ändern des Captcha-Zeichenmodus (nums: nur Zahlen, hex: Zahlen und A-F-Zeichen, ascii: Zahlen und A-Z-Zeichen).\n\n/enable - Aktivieren Sie den Captcha-Schutz der Gruppe.\n\n/disable - Deaktivieren Sie den Captcha-Schutz der Gruppe.\n\n/version - Zeigen Sie die Version des Bot an.\n\n/about - About info anzeigen."
 }

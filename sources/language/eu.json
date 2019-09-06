@@ -12,13 +12,13 @@
         "Hizkuntza euskarara aldatu da.",
 
     "LANG_SAME" :
-        "Euskaraz dago jada.\n\nBaliteke honakoa esan nahi izatea:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn",
+        "Euskaraz dago jada.\n\nOnartzen diren hizkuntzak:\n{}",
 
     "LANG_BAD_LANG" :
-        "Baliogabetutako hizkuntza. Erabilgarri dauden hizkuntzak hauek dira: ingelesa, alemana, gaztelera, katalana, galiziera, Brasilgo portugesa, txinera eta euskara. Hauetako batera aldatu hurrengo etiketak erabiliz \"en\", \"de\", \"es\", \"ca\", \"gl\", \"pt_br\", \"zh_cn\" edo \"eu\".\n\nAdibideak:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn\n/language eu",
+        "Baliogabetutako hizkuntza.\n\nOnartzen diren hizkuntzak:\n{}",
 
     "LANG_NOT_ARG" :
-        "Komandoak ezarri beharreko hizkuntza behar du (en - ingelesa, de - alemana, es - gaztelera, ca - katalana, gl - galiziera, pt_br - Brasilgo portugesa, zh_cn - txinera, eu - euskara).\n\nAdibideak:\n/language en\n/language de\n/language es\n/language ca\n/language gl\n/language pt_br\n/language zh_cn\n/language eu",
+        "Komandoak ezarri beharreko hizkuntza behar du.\n\nAdibideak:\n{}",
 
     "TIME_CHANGE" :
         "Captcha asmatzeko denbora {} minututara aldatua izan da.",
@@ -123,5 +123,5 @@
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu.\n\nPaypal:\n{}\n\nBTC:\n{}.",
 
     "COMMANDS" :
-        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du. Erabilgarri dauden hizkuntzak: en (ingelesa) - de (alemana) - es (gaztelera) - ca (katalana) - gl (galiziera) - pt_br (Brasilgo portugesa) - zh_cn (Txinera, Mainland terms) - eu (Euskara).\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du."
+        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du. Erabilgarri dauden hizkuntzak: {}.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du."
 }
