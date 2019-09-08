@@ -61,4 +61,6 @@ server migration and automates the download of all dependencies. Look at the
 
  - Galician: [Fernando Flores (@Fer6Flores)](https://github.com/Fer6Flores)
 
+ - Basque: [xa2er](https://github.com/xa2er)
+
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
