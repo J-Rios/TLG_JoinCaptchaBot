@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    06/09/2019
+    08/09/2019
 Version:
-    1.5.4
+    1.6.0
 '''
 
 ####################################################################################################
@@ -71,6 +71,12 @@ CONST = {
     # Default time (in mins) to remove self-destruct sent messages from the Bot
     "T_DEL_MSG" : 5,
 
+    # Auto-remove custom welcome message timeout
+    "T_DEL_WELCOME_MSG" : 5,
+
+    # Custom Welcome message max length
+    "MAX_WELCOME_MSG_LENGTH" : 3968,
+
     # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     "F_TLDS" : "tlds-alpha-by-domain.txt",
 
@@ -85,8 +91,12 @@ CONST = {
         "pt_br (Portuguese-Brazil / Português-Brasil) - zh_cn (Chinese-Simplified / 中文)",
 
     # List string of supported languages commands shows in invalid language set
-    "SUPPORTED_LANGS_CMDS" : "/language en\n/language de\n/language es\n/language ca\n" \
-        "/language eu\n/language gl\n/language pt_br\n/language zh_cn",
+    "SUPPORTED_LANGS_CMDS" : "\nEnglish / English\n/language en\n" \
+        "\nGerman / Deutch\n/language de\n\nSpanish / Español\n/language es\n" \
+        "\nCatalan / Català\n/language ca\n\nBasque / Euskal\n/language eu\n" \
+        "\nGalician / Galego\n/language gl\n" \
+        "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
+        "\nChinese-Simplified / 中文\n/language zh_cn",
 
     # Bot developer
     "DEVELOPER" : "@JoseTLG",
@@ -101,7 +111,7 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.5.4 (06/09/2019)"
+    "VERSION" : "1.6.0 (08/09/2019)"
 }
 
 

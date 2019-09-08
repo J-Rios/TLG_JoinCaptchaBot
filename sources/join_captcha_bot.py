@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    06/09/2019
+    08/09/2019
 Version:
-    1.5.4
+    1.6.0
 '''
 
 ####################################################################################################
@@ -251,7 +251,8 @@ def get_default_config_data():
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]), \
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]), \
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]), \
-        ("Language", CONST["INIT_LANG"]) \
+        ("Language", CONST["INIT_LANG"]), \
+        ("Welcome_Msg", "-")
     ])
     return config_data
 
@@ -756,17 +757,20 @@ def msg_nocmd(bot, update):
                 j = j + 1
             # Remove user captcha numbers message
             tlg_delete_msg(bot, chat_id, msg.message_id)
-            # Send captcha solved message and program selfdestruct in 5 minutes
             bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
-            # Uncomment and use next first line instead the second, if we want Bot to auto-remove 
-            # captcha solved message too after a while
-            #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            # Uncomment and use next first line instead the next ones, if we want Bot to 
+            # auto-remove captcha solved message too after 60mins
+            #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg, 60)
             try:
                 bot.send_message(chat_id, bot_msg)
             except Exception as e:
                 printts("[{}] {}".format(chat_id, str(e)))
             if new_user in new_users_list:
                 new_users_list.remove(new_user)
+            # Check for custom welcome message and send it
+            welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
+            if welcome_msg != "-":
+                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"])
         # The provided message doesn't has the valid captcha number
         else:
             # Check if the message was just a 4 numbers msg
@@ -1049,6 +1053,42 @@ def cmd_captcha_mode(bot, update, args):
                 bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
         else:
             bot_msg = TEXT[lang]["CAPTCHA_MODE_NOT_ARG"]
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    if chat_type == "private":
+        bot.send_message(chat_id, bot_msg)
+    else:
+        tlg_msg_to_selfdestruct(update.message)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_welcome_msg(bot, update, args):
+    '''Command /welcome_msg message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    if allow_command:
+        if len(args) >= 1:
+            welcome_msg = " ".join(args)
+            welcome_msg = welcome_msg.replace("$user", "{0}")
+            welcome_msg = welcome_msg[:CONST["MAX_WELCOME_MSG_LENGTH"]]
+            if welcome_msg == "disable":
+                welcome_msg = '-'
+                bot_msg = TEXT[lang]["WELCOME_MSG_UNSET"]
+            else:
+                bot_msg = TEXT[lang]["WELCOME_MSG_SET"]
+            if chat_type != "private":
+                save_config_property(chat_id, "Welcome_Msg", welcome_msg)
+        else:
+            bot_msg = TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"]
     elif is_admin == False:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
@@ -1352,6 +1392,7 @@ def main():
     dp.add_handler(CommandHandler("time", cmd_time, pass_args=True))
     dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
     dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
+    dp.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
