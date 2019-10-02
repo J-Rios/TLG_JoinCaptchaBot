@@ -60,10 +60,10 @@
         "Escribe el mensaje de bienvenida después del comando.\n\nEjemplo:\n/welcome_msg Hola $user, disfruta del grupo y recuerda ser respetuoso con los demás usuarios.\n\nDesactivar el mensaje:\n/welcome_msg disable",
 
     "NEW_USER_CAPTCHA_CAPTION" :
-        "Hola {}, bienvenid@ a {}, por favor envía un mensaje con el número que aparece en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsad@ (kick) del grupo automáticamente.",
+        "Hola {}, bienvenido/a a {}, por favor envía un mensaje con el número que aparece en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
 
     "CAPTHA_SOLVED" :
-        "Captcha resuelto, usuario verificado.\nBienvenid@ al grupo {}",
+        "Captcha resuelto, usuario verificado.\nBienvenido/a al grupo {}",
 
     "CAPTCHA_INCORRECT_0" :
         "Ese no es el número correcto. Inténtalo nuevamente...",
