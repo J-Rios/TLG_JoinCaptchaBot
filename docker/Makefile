@@ -1,6 +1,6 @@
 NAME = captcha-bot
 BOT_LANG ?= EN
-SUPPORTED_LANGUAGES = EN DE ES CA GL EU PT_BR ZH_CN
+SUPPORTED_LANGUAGES = EN FR DE ES CA GL EU PT_BR ZH_CN
 
 # Check if Bot token has been provided
 ifndef BOT_TOKEN

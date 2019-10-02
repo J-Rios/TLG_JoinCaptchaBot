@@ -55,11 +55,13 @@ server migration and automates the download of all dependencies. Look at the
 
 ### Languages Contributors:
 
+ - French: [Mathieu H (Aurnytoraink)](https://github.com/Aurnytoraink)
+
  - Portuguese (Brazil): Anahuac de Paula Gil
 
  - Catalán: Adela Casals i Jorba
 
- - Galician: [Fernando Flores (@Fer6Flores)](https://github.com/Fer6Flores)
+ - Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores)
 
  - Basque: [xa2er](https://github.com/xa2er)
 

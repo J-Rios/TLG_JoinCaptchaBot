@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    08/09/2019
+    02/10/2019
 Version:
-    1.6.0
+    1.6.1
 '''
 
 ####################################################################################################
@@ -86,15 +86,15 @@ CONST = {
 
     # String of supported languages shows in "/commands" command
     "SUPPORTED_LANGS" : \
-        "en (English) - de (German / Deutch) - es (Spanish / Español) - ca (Catalan / Català) - " \
-        "gl (Galician / Galego) - eu (Basque / Euskal) - " \
+        "en (English) - fr (French / Francais) - de (German / Deutch) - es (Spanish / Español) - " \
+        "ca (Catalan / Català) - gl (Galician / Galego) - eu (Basque / Euskal) - " \
         "pt_br (Portuguese-Brazil / Português-Brasil) - zh_cn (Chinese-Simplified / 中文)",
 
     # List string of supported languages commands shows in invalid language set
     "SUPPORTED_LANGS_CMDS" : "\nEnglish / English\n/language en\n" \
-        "\nGerman / Deutch\n/language de\n\nSpanish / Español\n/language es\n" \
-        "\nCatalan / Català\n/language ca\n\nBasque / Euskal\n/language eu\n" \
-        "\nGalician / Galego\n/language gl\n" \
+        "\nFrench / Francais\n/language fr\n\nGerman / Deutch\n/language de\n" \
+        "\nSpanish / Español\n/language es\n\nCatalan / Català\n/language ca\n" \
+        "\nBasque / Euskal\n/language eu\n\nGalician / Galego\n/language gl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nChinese-Simplified / 中文\n/language zh_cn",
 
@@ -111,7 +111,7 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.6.0 (08/09/2019)"
+    "VERSION" : "1.6.1 (02/10/2019)"
 }
 
 
@@ -119,6 +119,7 @@ CONST = {
 TEXT = {
     "EN" : None, # English
     "DE" : None, # German
+    "FR" : None, # French
     "ES" : None, # Spanish
     "CA" : None, # Catalan
     "GL" : None, # Galician
