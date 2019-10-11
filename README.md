@@ -57,6 +57,8 @@ server migration and automates the download of all dependencies. Look at the
 
  - French: [Mathieu H (Aurnytoraink)](https://github.com/Aurnytoraink)
 
+ - Italian: Noquitt
+
  - Portuguese (Brazil): Anahuac de Paula Gil
 
  - Catalán: Adela Casals i Jorba
