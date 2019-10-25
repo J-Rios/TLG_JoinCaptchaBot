@@ -757,7 +757,7 @@ def msg_nocmd(bot, update):
                 j = j + 1
             # Remove user captcha numbers message
             tlg_delete_msg(bot, chat_id, msg.message_id)
-            bot_msg = TEXT[lang]["CAPTHA_SOLVED"].format(new_user["user_name"])
+            bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
             # Uncomment and use next first line instead the next ones, if we want Bot to 
             # auto-remove captcha solved message too after 60mins
             #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg, 60)

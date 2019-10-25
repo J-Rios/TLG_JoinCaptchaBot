@@ -18,7 +18,7 @@
         "Idioma no vàlid.\n\nIdiomes compatibles:\n{}",
 
     "LANG_NOT_ARG" :
-        "Cal que especifiqueu un idioma.n\nExemples:\n{}",
+        "Cal que especifiqueu un idioma.\n\nExemples:\n{}",
 
     "TIME_CHANGE" :
         "S'ha canviat el temps per a resoldre el captcha a {} minuts.",
@@ -42,7 +42,7 @@
         "Cal que especifiqueu un nivell de dificultat (de l'1 al 5).\n\nExemples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE" :
-        "S'ha canviat el mode-caràcter dels capctha a \"{}\".",
+        "S'ha canviat el mode-caràcter dels captcha a \"{}\".",
 
     "CAPTCHA_MODE_INVALID" :
         "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\" i \"ascii\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" :
         "Hola {}, benvingut/da a {}. Podeu enviar un missatge amb el número que apareix en aquesta imatge per a verificar que sou un humà. Si no resoleu aquest captcha en {} minuts, sereu expulsat del grup automàticament.",
 
-    "CAPTHA_SOLVED" :
+    "CAPTCHA_SOLVED" :
         "Heu resolt el captcha correctament. Ja sou un usuari verificat.\nBenvingut/da al grup, {}",
 
     "CAPTCHA_INCORRECT_0" :

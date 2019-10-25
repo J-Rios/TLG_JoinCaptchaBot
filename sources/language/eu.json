@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" :
         "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} minututan asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
 
-    "CAPTHA_SOLVED" :
+    "CAPTCHA_SOLVED" :
         "Captcha asmatuta, erabiltzailea egiaztatua.\nOngi etorri {} taldera",
 
     "CAPTCHA_INCORRECT_0" :

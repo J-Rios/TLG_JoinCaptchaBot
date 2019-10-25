@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" :
         "Ciao {}, benvenuto in {}, invia un messaggio con il numero che appare in questo captcha per verificare che sei un essere umano. Se non risolvi il captcha in {} min, verrai automaticamente espulso dal gruppo. se ci sono lettere, le lettere maiuscole e minuscole fanno la differenza ",
 
-    "CAPTHA_SOLVED" :
+    "CAPTCHA_SOLVED" :
         "Captcha risolto, verificato dall'utente.\nBenvenuto nel gruppo {}",
 
     "CAPTCHA_INCORRECT_0" :

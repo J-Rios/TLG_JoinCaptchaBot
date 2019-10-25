@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" :
         "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 分钟内输入验证码，你将会被自动踢出群组。",
 
-    "CAPTHA_SOLVED" :
+    "CAPTCHA_SOLVED" :
         "验证码已输入，用户已验证。欢迎加入群组 {}",
 
     "CAPTCHA_INCORRECT_0" :

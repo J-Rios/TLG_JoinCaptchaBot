@@ -42,7 +42,7 @@
         "O comando necesita un nivel de dificultade a establecer (do 1 ao 5).\n\nExemplos:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE" :
-        "Modo-caracter dos capcthas cambiado a \"{}\".",
+        "Modo-caracter dos captchas cambiado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID" :
         "Modo-caracter invalido. Os modos dispoñibles son: \"nums\", \"hex\" e \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" :
         "Ola {}, benvido a {}, por favor envía unha mensaxe co número que aparece nesta imaxe para verificar que eres un humano. Se non resolves ese captcha en {} mins, serás expulsado (kick) do grupo automáticamente.",
 
-    "CAPTHA_SOLVED" :
+    "CAPTCHA_SOLVED" :
         "Captcha resolto, usuario verificado.\nBenvido ao grupo {}",
 
     "CAPTCHA_INCORRECT_0" :

@@ -62,7 +62,7 @@
     "NEW_USER_CAPTCHA_CAPTION" : 
         "Hallo {}, willkommen bei {}, bitte senden Sie eine Nachricht mit der Nummer, die in diesem Captcha angezeigt wird, um zu bestätigen, dass Sie ein Mensch sind. Wenn Sie das Captcha in {} Minuten nicht auflösen, werden Sie automatisch aus der Gruppe ausgeschlossen. Wenn es Buchstaben gibt, machen Groß- und Kleinschreibung einen Unterschied.",
 
-    "CAPTHA_SOLVED" : 
+    "CAPTCHA_SOLVED" : 
         "Captcha gelöst, Benutzer verifiziert.\nWillkommen in der Gruppe {}",
 
     "CAPTCHA_INCORRECT_0" : 
