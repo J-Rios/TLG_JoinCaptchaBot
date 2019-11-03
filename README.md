@@ -68,3 +68,5 @@ server migration and automates the download of all dependencies. Look at the
  - Basque: [xa2er](https://github.com/xa2er)
 
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
+
+ - Indonesian: ForIndonesian
