@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    02/11/2019
+    14/11/2019
 Version:
-    1.6.3
+    1.6.4
 '''
 
 ####################################################################################################
@@ -354,7 +354,7 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
     # Send the message
     try:
         sent_msg = bot.send_message(chat_id, message)
-        tlg_msg_to_selfdestruct(sent_msg)
+        tlg_msg_to_selfdestruct_in(sent_msg, time_delete_min)
         sent_msg_id = sent_msg["message_id"]
     # It has been an unsuccesfull sent
     except Exception as e:
@@ -758,13 +758,8 @@ def msg_nocmd(bot, update):
             # Remove user captcha numbers message
             tlg_delete_msg(bot, chat_id, msg.message_id)
             bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
-            # Uncomment and use next first line instead the next ones, if we want Bot to 
-            # auto-remove captcha solved message too after 60mins
-            #tlg_send_selfdestruct_msg(bot, chat_id, bot_msg, 60)
-            try:
-                bot.send_message(chat_id, bot_msg)
-            except Exception as e:
-                printts("[{}] {}".format(chat_id, str(e)))
+            # Set Bot to auto-remove captcha solved message too after 5mins
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
             if new_user in new_users_list:
                 new_users_list.remove(new_user)
             # Check for custom welcome message and send it
@@ -1247,7 +1242,7 @@ def check_time_to_kick_not_verify_users(bot):
         if new_user["kicked_ban"] == True:
             # Remove from new users list the remaining kicked users that have not solve the captcha 
             # in 1 hour (user ban just happen if a user try to join the group and fail to solve the 
-            # captcha 3 times in the past hour)
+            # captcha 5 times in the past hour)
             if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
                 # Remove user from new users list
                 if new_user in new_users_list:
