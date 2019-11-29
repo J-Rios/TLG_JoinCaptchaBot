@@ -70,3 +70,6 @@ server migration and automates the download of all dependencies. Look at the
  - Chinese (Mainland): [神林](https://github.com/jyxjjj)
 
  - Indonesian: ForIndonesian
+ 
+ - Persian (Iran): [sajjad taheri](https://github.com/tgMember)
+
