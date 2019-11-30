@@ -71,5 +71,5 @@ server migration and automates the download of all dependencies. Look at the
 
  - Indonesian: ForIndonesian
  
- - Persian (Iran): [sajjad taheri](https://github.com/tgMember)
+ - [Unsupported, not working] Persian (Iran): [sajjad taheri](https://github.com/tgMember)
 
