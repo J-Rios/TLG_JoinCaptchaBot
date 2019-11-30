@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/11/2019
+    30/11/2019
 Version:
-    1.6.4
+    1.6.5
 '''
 
 ####################################################################################################
@@ -33,7 +33,7 @@ SCRIPT_PATH = path.dirname(path.realpath(__file__))
 CONST = {
 
     # Bot Token (get it from @BotFather)
-    "TOKEN" : "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "TOKEN" : "571241324:AAGZZ_jA7Nb6SLUZ1CaZxcA00AbZTSYqeLY",
 
     # Languages texts files directory path
     "LANG_DIR" : SCRIPT_PATH + "/language",
@@ -113,7 +113,7 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.6.4 (14/11/2019)"
+    "VERSION" : "1.6.5 (30/11/2019)"
 }
 
 
@@ -129,5 +129,6 @@ TEXT = {
     "GL" : None, # Galician
     "EU" : None, # Basque
     "PT_BR" : None, # Portuguese (Brasil)
+    #"FA" : None, # Persian (The json file is broken or json parser library doesn't support it)
     "ZH_CN" : None # Chinese (Mainland)
 }
