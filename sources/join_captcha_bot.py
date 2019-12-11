@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/11/2019
+    11/12/2019
 Version:
-    1.6.4
+    1.6.6
 '''
 
 ####################################################################################################
@@ -740,7 +740,7 @@ def msg_nocmd(bot, update):
         # Check if the expected captcha solve number is in the message
         printts("[{}] Received captcha reply from {}: {}".format(chat_id, \
                 new_user["user_name"], msg_text))
-        if new_user["captcha_num"] in msg_text:
+        if new_user["captcha_num"].lower() in msg_text.lower():
             # Remove join messages
             printts("[{}] Captcha solved by {}".format(chat_id, new_user["user_name"]))
             j = 0
@@ -768,56 +768,64 @@ def msg_nocmd(bot, update):
                 tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"])
         # The provided message doesn't has the valid captcha number
         else:
-            # Check if the message was just a 4 numbers msg
-            if is_int(msg_text):
+            # Check if the message has 4 chars
+            if len(msg_text) == 4:
                 # Remove previously error message (if any)
                 for msg_del in to_delete_join_messages_list:
                     if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
                         tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
-                # Check if the message has 4 digits
-                if len(msg_text) == 4:
-                    sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
-                            TEXT[lang]["CAPTCHA_INCORRECT_0"])
-                    update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
-                else:
+                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_0"])
+                update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
+                # Promise remove bad message data in one minute
+                tlg_msg_to_selfdestruct_in(msg, 1)
+            else:
+                # Check if the message was just a 4 numbers msg
+                if is_int(msg_text):
+                    # Remove previously error message (if any)
+                    for msg_del in to_delete_join_messages_list:
+                        if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
+                            tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
                     sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
                             TEXT[lang]["CAPTCHA_INCORRECT_1"])
                     update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
-            else:
-                # Check if the message contains any URL
-                has_url = re.findall(CONST["REGEX_URLS"], msg_text)
-                # Check if the message contains any alias and if it is a group or channel alias
-                has_alias = False
-                #alias = ""
-                for word in msg_text.split():
-                    if (len(word) > 1) and (word[0] == '@'):
-                        has_alias = True
-                        #alias = word
-                        break
-                # Check if the detected alias is from a valid chat (commented due to getChat 
-                # request doesnt tell us if an alias is from an user, just group or channel)
-                #has_alias = False
-                #if has_alias:
-                #    chat_type = tlg_check_chat_type(bot, alias)
-                #    # A None value in chat_type is for not telegram chat found
-                #    if chat_type is not None:
-                #        has_alias = True
-                #    else:
-                #        has_alias = False
-                # Remove and notify if url/alias detection
-                if has_url or has_alias:
-                    printts("[{}] Spammer detected: {}.".format(chat_id, new_user["user_name"]))
-                    printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
-                    # Try to remove the message and notify detection
-                    rm_result = tlg_delete_msg(bot, chat_id, msg_id)
-                    if rm_result == 1:
-                        bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(new_user["user_name"])
-                    # Check if message cant be removed due to not delete msg privileges
-                    if rm_result == -2:
-                        bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(new_user["user_name"])
-                    # Get chat kick timeout and send spam detection message with autoremove
-                    captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-                    tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+                    # Promise remove bad message data in one minute
+                    tlg_msg_to_selfdestruct_in(msg, 1)
+                else:
+                    # Check if the message contains any URL
+                    has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+                    # Check if the message contains any alias and if it is a group or channel alias
+                    has_alias = False
+                    #alias = ""
+                    for word in msg_text.split():
+                        if (len(word) > 1) and (word[0] == '@'):
+                            has_alias = True
+                            #alias = word
+                            break
+                    # Check if the detected alias is from a valid chat (commented due to getChat 
+                    # request doesnt tell us if an alias is from an user, just group or channel)
+                    #has_alias = False
+                    #if has_alias:
+                    #    chat_type = tlg_check_chat_type(bot, alias)
+                    #    # A None value in chat_type is for not telegram chat found
+                    #    if chat_type is not None:
+                    #        has_alias = True
+                    #    else:
+                    #        has_alias = False
+                    # Remove and notify if url/alias detection
+                    if has_url or has_alias:
+                        printts("[{}] Spammer detected: {}.".format(chat_id, new_user["user_name"]))
+                        printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
+                        # Try to remove the message and notify detection
+                        rm_result = tlg_delete_msg(bot, chat_id, msg_id)
+                        if rm_result == 1:
+                            bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(new_user["user_name"])
+                        # Check if message cant be removed due to not delete msg privileges
+                        if rm_result == -2:
+                            bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(new_user["user_name"])
+                        # Get chat kick timeout and send spam detection message with autoremove
+                        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+                        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
         printts("[{}] Captcha reply process complete.".format(chat_id))
         printts(" ")
         break
