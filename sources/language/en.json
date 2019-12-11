@@ -50,23 +50,23 @@
     "CAPTCHA_MODE_NOT_ARG" : 
         "The command needs a character-mode to set. Available modes are:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
-    "WELCOME_MSG_SET" :
+    "WELCOME_MSG_SET" : 
         "Welcome message successfully configured.",
 
-    "WELCOME_MSG_UNSET" :
+    "WELCOME_MSG_UNSET" : 
         "Welcome message disabled.",
 
-    "WELCOME_MSG_SET_NOT_ARG" :
+    "WELCOME_MSG_SET_NOT_ARG" : 
         "Place the welcome message after the command.\n\nExample:\n/welcome_msg Hi $user, welcome to the group and remember to be respectful with other users.\n\nDisable the message:\n/welcome_msg disable",
 
     "NEW_USER_CAPTCHA_CAPTION" : 
-        "Hello {}, welcome to {}, please send a message with the number that appears in this captcha to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group. if there are letters, upper and lower case makes a difference.",
+        "Hello {}, welcome to {}, please write a message with the numbers and/or letters that appears in this image to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group.",
 
     "CAPTCHA_SOLVED" : 
         "Captcha solved, user verified.\nWelcome to the group {}",
 
     "CAPTCHA_INCORRECT_0" : 
-        "That is not the correct number. Try again...",
+        "That is not the correct code. Try again...",
 
     "CAPTCHA_INCORRECT_1" : 
         "That is not the correct number. Check closely, the captcha has 4 numbers...",

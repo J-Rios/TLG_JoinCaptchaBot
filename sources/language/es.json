@@ -45,7 +45,7 @@
         "Modo-caracter de los captchas cambiado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID" :
-        "Modo-caracter invalido. Los modos disponibles son: \"nums\", \"hex\" y \"ascii\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Modo-caracter inválido. Los modos disponibles son: \"nums\", \"hex\" y \"ascii\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
     "CAPTCHA_MODE_NOT_ARG" :
         "El comando necesita el modo-caracter a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
@@ -60,13 +60,13 @@
         "Escribe el mensaje de bienvenida después del comando.\n\nEjemplo:\n/welcome_msg Hola $user, disfruta del grupo y recuerda ser respetuoso con los demás usuarios.\n\nDesactivar el mensaje:\n/welcome_msg disable",
 
     "NEW_USER_CAPTCHA_CAPTION" :
-        "Hola {}, bienvenido/a a {}, por favor envía un mensaje con el número que aparece en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
+        "Hola {}, bienvenido/a a {}, por favor escribe los números y/o letras que aparecen en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
 
     "CAPTCHA_SOLVED" :
         "Captcha resuelto, usuario verificado.\nBienvenido/a al grupo {}",
 
     "CAPTCHA_INCORRECT_0" :
-        "Ese no es el número correcto. Inténtalo nuevamente...",
+        "Ese no es el código correcto. Prueba otra vez...",
 
     "CAPTCHA_INCORRECT_1" :
         "Ese no es el número correcto. Fijate bien, el captcha tiene 4 numeros...",
