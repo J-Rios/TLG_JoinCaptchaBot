@@ -73,3 +73,4 @@ server migration and automates the download of all dependencies. Look at the
  
  - [Unsupported, not working] Persian (Iran): [sajjad taheri](https://github.com/tgMember)
 
+ - Russian: Unattributed (anonymous)
