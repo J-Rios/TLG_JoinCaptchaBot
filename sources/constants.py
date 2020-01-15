@@ -84,21 +84,6 @@ CONST = {
     "REGEX_URLS" : r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)" \
         r"(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))",
 
-    # String of supported languages shows in "/commands" command
-    "SUPPORTED_LANGS" : \
-        "en (English)" \
-        " - es (Spanish / Español)" \
-        " - fr (French / Francais)" \
-        " - de (German / Deutch)" \
-        " - it (Italian / Italiano)" \
-        " - ru (Russian / Pусский)" \
-        " - id (Indonesian / Indonesia)" \
-        " - ca (Catalan / Català)" \
-        " - gl (Galician / Galego)" \
-        " - eu (Basque / Euskal)" \
-        " - pt_br (Portuguese-Brazil / Português-Brasil)" \
-        " - zh_cn (Chinese-Simplified / 中文)",
-
     # List string of supported languages commands shows in invalid language set
     "SUPPORTED_LANGS_CMDS" : \
         "\nEnglish / English\n/language en\n" \

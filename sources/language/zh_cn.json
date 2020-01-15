@@ -132,5 +132,5 @@
         "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧。\n\nPaypal账号：\n{}\n\nBTC型比特币地址：\n{}",
 
     "COMMANDS" :
-        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。 目前目前可用语言为： {}。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/welcome_msg - 允许配置解析验证码后发送的欢迎消息。\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
+        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/welcome_msg - 允许配置解析验证码后发送的欢迎消息。\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
 }

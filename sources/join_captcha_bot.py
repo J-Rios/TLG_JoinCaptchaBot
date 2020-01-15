@@ -917,7 +917,7 @@ def cmd_commands(bot, update):
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
-    commands_text = TEXT[lang]["COMMANDS"].format(CONST["SUPPORTED_LANGS"])
+    commands_text = TEXT[lang]["COMMANDS"]
     if chat_type == "private":
         bot.send_message(chat_id, commands_text)
     else:
