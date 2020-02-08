@@ -4,6 +4,8 @@ The Bot send an image captcha for each new user, and kick any of them that can't
 
 ### Installation:
 
+Note: Use Python 3 to install and run the Bot, Python 2 support could be broken.
+
 To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), wich uses Pillow to generate the images.
 
 1. Install Pillow prerequisites:
