@@ -59,14 +59,14 @@
     "WELCOME_MSG_SET_NOT_ARG" : 
         "Place the welcome message after the command.\n\nExample:\n/welcome_msg Hi $user, welcome to the group and remember to be respectful with other users.\n\nDisable the message:\n/welcome_msg disable",
 
-    "NEW_USER_CAPTCHA_CAPTION" : 
-        "Hello {}, welcome to {}, please write a message with the numbers and/or letters that appears in this image to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group.",
-
     "IGNORE_LIST_ADD_NOT_ARG" :
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890.",
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "This ID is already in ignore list.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you can't add more than 100 users into the ignore list.",
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.",
 
     "IGNORE_LIST_ADD_INCORRECT_ID":
         "This ID is incorrect, it has to consist only of numbers.",
@@ -78,7 +78,7 @@
         "Unfortunately, using this command is forbidden for private chats.",
 
     "IGNORE_LIST_REMOVE_NOT_ARG" :
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890.",
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
         "This ID has been removed successfully!",
@@ -88,6 +88,9 @@
 
     "IGNORE_LIST_EMPTY":
         "Ignore list of the chat is empty.",
+
+    "NEW_USER_CAPTCHA_CAPTION" : 
+        "Hello {}, welcome to {}, please write a message with the numbers and/or letters that appears in this image to verify that you are a human. If you don't resolve the captcha in {} mins, you will be automatically kicked from the group.",
 
     "CAPTCHA_SOLVED" : 
         "Captcha solved, user verified.\nWelcome to the group {}",

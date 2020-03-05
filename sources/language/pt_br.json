@@ -59,6 +59,36 @@
     "WELCOME_MSG_SET_NOT_ARG" :
         "Coloque a mensagem de boas-vindas após o comando.\n\nExemplo:\n/welcome_msg Olá $user, seja bem-vindo ao grupo e lembre-se de ser respeitoso com outros usuários.\n\nDesativar a mensagem:\n/welcome_msg disable",
 
+    "IGNORE_LIST_ADD_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_EMPTY":
+        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+
     "NEW_USER_CAPTCHA_CAPTION" :
         "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo. Se houver letras, maiúsculo e minúsculo faz diferença.",
 

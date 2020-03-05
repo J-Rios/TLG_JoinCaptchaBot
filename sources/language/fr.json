@@ -59,6 +59,36 @@
     "WELCOME_MSG_SET_NOT_ARG" :
         "Écriver le message de bienvenue après la commande.\n\nExemple:\n/welcome_msg Bonjour $user, bienvenue dans le groupe et rappelez vous d'être respectueux avec les autres utilisateurs.\n\nDésactiver le message:\n/welcome_msg désactivé",
 
+    "IGNORE_LIST_ADD_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_EMPTY":
+        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+
     "NEW_USER_CAPTCHA_CAPTION" : 
         "Bonjour {}, et bienvenue dans le groupe {}. S'il-vous-plaît, envoyez un message avec le numéro qui apparaît dans le captcha pour vérifier que vous êtes un humain. Si vous ne résolvez pas le captcha en {} minute(s), vous allez être automatiquement éjecté du groupe. Faites attention aux majuscules et minuscules.",
 

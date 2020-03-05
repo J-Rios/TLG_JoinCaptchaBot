@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/01/2020
+    05/03/2020
 Version:
-    1.6.7
+    1.7.0
 '''
 
 ####################################################################################################
@@ -77,6 +77,9 @@ CONST = {
     # Custom Welcome message max length
     "MAX_WELCOME_MSG_LENGTH" : 3968,
 
+    # Maximum number of users ID allowed in each chat ignore list
+    "IGNORE_LIST_MAX_ID" : 100,
+
     # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     "F_TLDS" : "tlds-alpha-by-domain.txt",
 
@@ -112,7 +115,7 @@ CONST = {
     "DEV_BTC" : "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION" : "1.6.7 (15/01/2020)"
+    "VERSION" : "1.7.0 (05/03/2020)"
 }
 
 

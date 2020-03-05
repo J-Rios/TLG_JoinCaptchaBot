@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/01/2020
+    05/03/2020
 Version:
-    1.6.7
+    1.7.0
 '''
 
 ####################################################################################################
@@ -1129,10 +1129,13 @@ def cmd_add_ignore(bot, update, args):
             try: # conversion of an incorrect string to integer can return ValueError
                 user_id = int(args[0])
                 # Ignore list limit enforcement
-                if len(ignore_list) < 100:
-                    ignore_list.append(user_id)
-                    save_config_property(chat_id, "Ignore_List", ignore_list)
-                    bot_msg = TEXT[lang]["IGNORE_LIST_ADD_SUCCESS"]
+                if len(ignore_list) < CONST["IGNORE_LIST_MAX_ID"]:
+                    if user_id not in ignore_list:
+                        ignore_list.append(user_id)
+                        save_config_property(chat_id, "Ignore_List", ignore_list)
+                        bot_msg = TEXT[lang]["IGNORE_LIST_ADD_SUCCESS"]
+                    else:
+                        bot_msg = TEXT[lang]["IGNORE_LIST_ADD_DUPLICATED"]
                 else:
                     bot_msg = TEXT[lang]["IGNORE_LIST_ADD_LIMIT_EXCEEDED"]
             except ValueError:

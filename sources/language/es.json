@@ -59,6 +59,36 @@
     "WELCOME_MSG_SET_NOT_ARG" :
         "Escribe el mensaje de bienvenida después del comando.\n\nEjemplo:\n/welcome_msg Hola $user, disfruta del grupo y recuerda ser respetuoso con los demás usuarios.\n\nDesactivar el mensaje:\n/welcome_msg disable",
 
+    "IGNORE_LIST_ADD_NOT_ARG" :
+        "Por favor, pon el ID del usuario (no el nombre ni el alias) después del comando.\n\nEjemplo:\n/add_ignore 1234567890",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "Este ID ya se encuentra en la lista de ignorados.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Has alcanzado el limite máximo de usuarios añadidos a la lista de ignorados, elimina alguno para añadir más.",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "El ID no es válido, solo puede contener números.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "El ID ha sido añadido correctamente a la lista de usuarios ignorados!",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Este comando no está soportado en chats privados.",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG" :
+        "Por favor, pon el ID del usuario (no el nombre ni el alias) después del comando.\n\nEjemplo:\n/remove_ignore 1234567890",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "El ID ha sido eliminado correctamente de la lista de usuarios ignorados!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "El ID proporcionado no se encuentra en la lista de usuarios ignorados.",
+
+    "IGNORE_LIST_EMPTY":
+        "La lista de usuarios ignorados está vacía.",
+
     "NEW_USER_CAPTCHA_CAPTION" :
         "Hola {}, bienvenido/a a {}, por favor escribe los números y/o letras que aparecen en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
 
@@ -132,5 +162,5 @@
         "Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por {}.\n\nPuedes consultar el código aquí:\n{}\n\n¿Te gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS" :
-        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
+        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/add_ignore - Añadir a un usuario a la lista de ignorados para que el Bot no le pida resolver el captcha en este grupo.\n\n/remove_ignore - Elimina a un usuario de la lista de ignorados en este chat.\n\n/ignore_list - Muestra la lista de IDs de usuarios ignorados en este chat.\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
 }

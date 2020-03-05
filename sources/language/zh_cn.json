@@ -59,6 +59,36 @@
     "WELCOME_MSG_SET_NOT_ARG" :
         "在命令后写下欢迎消息。\n\n如:\n/welcome_msg 你好 $user，欢迎来到这个团体，并记住要尊重其他用户.\n\n禁用该消息:\n/welcome_msg disable",
 
+    "IGNORE_LIST_ADD_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language].",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_EMPTY":
+        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+
     "NEW_USER_CAPTCHA_CAPTION" :
         "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 分钟内输入验证码，你将会被自动踢出群组。",
 

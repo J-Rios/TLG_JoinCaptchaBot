@@ -56,6 +56,36 @@
     "WELCOME_MSG_UNSET" :
         "Pesan selamat datang dinonaktifkan.",
 
+    "IGNORE_LIST_ADD_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_DUPLICATED" :
+        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG" :
+        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_EMPTY":
+        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+
     "WELCOME_MSG_SET_NOT_ARG" :
         "Taruh pesan selamat datangnya setelah perintah.\n\nContoh:\n/welcome_msg Hai $user, selamat datang di grup dan ingatlah untuk menghormati pengguna lain.\n\nMenonatifkan pesan selamat datang:\n/welcome_msg disable",
 
