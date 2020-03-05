@@ -252,7 +252,8 @@ def get_default_config_data():
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]), \
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]), \
         ("Language", CONST["INIT_LANG"]), \
-        ("Welcome_Msg", "-")
+        ("Welcome_Msg", "-"), \
+        ("Ignore_List", [])
     ])
     return config_data
 
@@ -534,6 +535,11 @@ def msg_new_user(bot, update):
             # Ignore if the member that has been join the group is a Bot
             if join_user.is_bot:
                 printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
+                continue
+            # Ignore if the member that has joined is in ignore list
+            ignored_ids = get_chat_config(chat_id, "Ignore_List")
+            if join_user_id in ignored_ids:
+                printts("[{}] User is in ignore list. Skipping the captcha process.".format(chat_id))
                 continue
             # Check and remove previous join messages of that user (if any)
             i = 0
@@ -1103,6 +1109,110 @@ def cmd_welcome_msg(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
+def cmd_add_ignore(bot, update, args):
+    '''Command /add_ignore message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    else: # private chats are forbidden for this command
+        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+        return
+    if allow_command:
+        if len(args) >= 1:
+            ignore_list = get_chat_config(chat_id, "Ignore_List")
+            try: # conversion of an incorrect string to integer can return ValueError
+                user_id = int(args[0])
+                # Ignore list limit enforcement
+                if len(ignore_list) < 100:
+                    ignore_list.append(user_id)
+                    save_config_property(chat_id, "Ignore_List", ignore_list)
+                    bot_msg = TEXT[lang]["IGNORE_LIST_ADD_SUCCESS"]
+                else:
+                    bot_msg = TEXT[lang]["IGNORE_LIST_ADD_LIMIT_EXCEEDED"]
+            except ValueError:
+                bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
+        else:
+            bot_msg = TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"]
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    tlg_msg_to_selfdestruct(update.message)
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_remove_ignore(bot, update, args):
+    '''Command /remove_ignore message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    else: # private chats are forbidden for this command
+        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+        return
+    if allow_command:
+        if len(args) >= 1:
+            ignore_list = get_chat_config(chat_id, "Ignore_List")
+            try: # conversion of an incorrect string to integer can return ValueError
+                user_id = int(args[0])
+                try: # user_id can be absent in ignore_list
+                    index = ignore_list.index(user_id)
+                    del ignore_list[index]
+                    save_config_property(chat_id, "Ignore_List", ignore_list)
+                    bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_SUCCESS"]
+                except ValueError:
+                    bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_IN_LIST"]
+            except ValueError:
+                bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
+        else:
+            bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"]
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    tlg_msg_to_selfdestruct(update.message)
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_ignore_list(bot, update):
+    '''Command /ignore_list message handler'''
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    lang = get_chat_config(chat_id, "Language")
+    allow_command = True
+    if chat_type != "private":
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin == False:
+            allow_command = False
+    else: # private chats are forbidden for this command
+        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+        return
+    if allow_command:
+        ignore_list = get_chat_config(chat_id, "Ignore_List")
+        if not ignore_list:
+            bot_msg = TEXT[lang]["IGNORE_LIST_EMPTY"]
+        else:
+            bot_msg = " ".join([str(x) for x in ignore_list])
+    elif is_admin == False:
+        bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
+    else:
+        bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
+    tlg_msg_to_selfdestruct(update.message)
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
 def cmd_enable(bot, update):
     '''Command /enable message handler'''
     chat_id = update.message.chat_id
@@ -1396,6 +1506,9 @@ def main():
     dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
     dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
     dp.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
+    dp.add_handler(CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
+    dp.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore, pass_args=True))
+    dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
