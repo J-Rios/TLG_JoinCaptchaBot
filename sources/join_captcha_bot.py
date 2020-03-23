@@ -34,7 +34,7 @@ from collections import OrderedDict
 from telegram import MessageEntity, ParseMode, InputMediaPhoto,  InlineKeyboardButton, \
         InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler, \
-        ConversationHandler, CallbackQueryHandler
+        ConversationHandler, CallbackQueryHandler, Defaults
 from random import randint
 
 from constants import CONST, TEXT
@@ -1488,7 +1488,7 @@ def main():
     initialize_resources()
     printts("Resources initialized.")
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
-    updater = Updater(CONST["TOKEN"])
+    updater = Updater(CONST["TOKEN"], defaults=Defaults(disable_notification=True))
     dp = updater.dispatcher
     # Set to dispatcher not text messages handler
     dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice | \
