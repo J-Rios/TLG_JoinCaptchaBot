@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     04/04/2020
 Version:
-    1.7.1
+    1.7.2
 '''
 
 ####################################################################################################
@@ -55,7 +55,7 @@ CaptchaGen = CaptchaGenerator(2)
 ####################################################################################################
 
 ### Termination signals handler for program process ###
-def signal_handler(signal, frame):
+def signal_handler(signal,  frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
     printts("Termination signal received. Releasing resources (Waiting for files to be closed)")
     # Acquire all messages and users files mutex to ensure not read/write operation on them
@@ -92,7 +92,7 @@ def initialize_resources():
             for f_chat_id in files:
                 # Populate config files list
                 file_path = "{}/{}/{}".format(CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
-                files_config_list.append(OrderedDict([("ID", f_chat_id), \
+                files_config_list.append(OrderedDict([("ID", f_chat_id),
                     ("File", TSjson(file_path))]))
                 # Create default configuration file if it does not exists
                 if not path.exists(file_path):
@@ -138,7 +138,7 @@ def load_texts_languages():
         json_lang_file = TSjson(lang_file)
         json_lang_texts = json_lang_file.read()
         if (json_lang_texts is None) or (json_lang_texts == {}):
-            printts("Error loading language \"{}\" from {}. Language file not found or bad JSON " \
+            printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
                     "sintax.".format(lang_iso_code, lang_file))
             printts("Exit.\n")
             exit(0)
@@ -243,16 +243,16 @@ def add_lrm(str_to_modify):
 
 def get_default_config_data():
     '''Get default config data structure'''
-    config_data = OrderedDict( \
-    [ \
-        ("Title", CONST["INIT_TITLE"]), \
-        ("Link", CONST["INIT_LINK"]), \
-        ("Enabled", CONST["INIT_ENABLE"]), \
-        ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]), \
-        ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]), \
-        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]), \
-        ("Language", CONST["INIT_LANG"]), \
-        ("Welcome_Msg", "-"), \
+    config_data = OrderedDict(
+    [
+        ("Title", CONST["INIT_TITLE"]),
+        ("Link", CONST["INIT_LINK"]),
+        ("Enabled", CONST["INIT_ENABLE"]),
+        ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]),
+        ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
+        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
+        ("Language", CONST["INIT_LANG"]),
+        ("Welcome_Msg", "-"),
         ("Ignore_List", [])
     ])
     return config_data
@@ -313,7 +313,7 @@ def tlg_user_is_admin(bot, user_id, chat_id):
     '''Check if the specified user is an Administrator of a group given by IDs'''
     try:
         group_admins = bot.get_chat_administrators(chat_id)
-    except:
+    except Exception:
         return None
     for admin in group_admins:
         if user_id == admin.user.id:
@@ -325,16 +325,16 @@ def tlg_get_bot_admin_privileges(bot, chat_id):
     '''Get the actual Bot administration privileges'''
     try:
         bot_data = bot.get_me()
-    except:
+    except Exception:
         return None
-    bot_admin_privileges = OrderedDict( \
-    [ \
-        ("can_change_info", bot_data.can_change_info), \
-        ("can_delete_messages", bot_data.can_delete_messages), \
-        ("can_restrict_members", bot_data.can_restrict_members), \
-        ("can_invite_users", bot_data.can_invite_users), \
-        ("can_pin_messages", bot_data.can_pin_messages), \
-        ("can_promote_members", bot_data.can_promote_members) \
+    bot_admin_privileges = OrderedDict(
+    [
+        ("can_change_info", bot_data.can_change_info),
+        ("can_delete_messages", bot_data.can_delete_messages),
+        ("can_restrict_members", bot_data.can_restrict_members),
+        ("can_invite_users", bot_data.can_invite_users),
+        ("can_pin_messages", bot_data.can_pin_messages),
+        ("can_promote_members", bot_data.can_promote_members)
     ])
     return bot_admin_privileges
 
@@ -384,7 +384,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     msg_id = message.message_id
     destroy_time = time() + (time_delete_min*60)
     # Add sent message data to to-delete messages list
-    sent_msg_data = OrderedDict([("Chat_id", None), ("User_id", None), \
+    sent_msg_data = OrderedDict([("Chat_id", None), ("User_id", None),
             ("Msg_id", None), ("delete_time", None)])
     sent_msg_data["Chat_id"] = chat_id
     sent_msg_data["User_id"] = user_id
@@ -473,7 +473,7 @@ def tlg_leave_chat(bot, chat_id):
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
     return left
-    
+
 
 ####################################################################################################
 
@@ -498,7 +498,7 @@ def msg_new_user(bot, update):
     for join_user in update.message.new_chat_members:
         join_user_id = join_user.id
         # Get user name
-        if join_user.name != None:
+        if join_user.name is not None:
             join_user_name = join_user.name
         else:
             join_user_name = join_user.full_name
@@ -544,7 +544,7 @@ def msg_new_user(bot, update):
                 chat_link = "@{}".format(chat_link)
                 save_config_property(chat_id, "Link", chat_link)
             # Ignore Admins
-            if tlg_user_is_admin(bot, join_user_id, chat_id) == True:
+            if tlg_user_is_admin(bot, join_user_id, chat_id):
                 printts("[{}] User is an administrator. Skipping the captcha process.".format(chat_id))
                 continue
             # Ignore if the member that has been join the group is a Bot
@@ -569,7 +569,7 @@ def msg_new_user(bot, update):
                 i = i + 1
             # Ignore if the captcha protection is not enable in this chat
             captcha_enable = get_chat_config(chat_id, "Enabled")
-            if captcha_enable == False:
+            if not captcha_enable:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
                 continue
             # Determine configured bot language in actual chat
@@ -579,21 +579,17 @@ def msg_new_user(bot, update):
             # selfdestruct
             captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-            img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name, \
+            img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,
                     chat_title, str(captcha_timeout))
             # Prepare inline keyboard button to let user request another catcha
-            keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
+            keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
                     callback_data=join_user_id)]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             send_problem = False
-            # Wait 1.5s of courtesy for lets others bots welcome messages be sent
-            # (try show captcha msg as lastest one)
-            # Commented due that it could be in conflict with anti-spam behaviour
-            #sleep(1.5)
             printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
             try:
                 # Note: Img caption must be <= 1024 chars
-                sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"), \
+                sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"),
                         reply_markup=reply_markup, caption=img_caption, timeout=20)
             except Exception as e:
                 printts("[{}] {}".format(chat_id, str(e)))
@@ -607,18 +603,18 @@ def msg_new_user(bot, update):
             if not send_problem:
                 # Add sent image to self-destruct list
                 if not tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5):
-                    printts("[{}] sent_img_msg does not have all expected attributes. " \
+                    printts("[{}] sent_img_msg does not have all expected attributes. "
                             "Scheduled for deletion".format(chat_id))
                 # Default user data
                 new_user = \
                 {
                     "chat_id": chat_id,
-                    "user_id" : join_user_id,
+                    "user_id": join_user_id,
                     "user_name": join_user_name,
-                    "captcha_num" : captcha["number"],
-                    "join_time" : time(),
-                    "join_retries" : 1,
-                    "kicked_ban" : False
+                    "captcha_num": captcha["number"],
+                    "join_time": time(),
+                    "join_retries": 1,
+                    "kicked_ban": False
                 }
                 # Check if this user was before in the chat without solve the captcha
                 prev_user_data = None
@@ -638,10 +634,10 @@ def msg_new_user(bot, update):
                 msg = \
                 {
                     "chat_id": chat_id,
-                    "user_id" : join_user_id,
+                    "user_id": join_user_id,
                     "msg_id_join0": update.message,
                     "msg_id_join1": sent_img_msg.message_id,
-                    "msg_id_join2" : None
+                    "msg_id_join2": None
                 }
                 to_delete_join_messages_list.append(msg)
                 printts("[{}] Captcha send process complete.".format(chat_id))
@@ -652,7 +648,7 @@ def msg_notext(bot, update):
     '''All non-text messages handler.'''
     # Check for normal or edited message
     msg = getattr(update, "message", None)
-    if msg == None:
+    if msg is None:
         msg = getattr(update, "edited_message", None)
     # Ignore if message comes from a private chat
     if msg.chat.type == "private":
@@ -662,7 +658,7 @@ def msg_notext(bot, update):
         return
     # Ignore if captcha protection is not enable int his chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
-    if captcha_enable == False:
+    if not captcha_enable:
         return
     # Get message data
     chat_id = msg.chat_id
@@ -696,7 +692,7 @@ def msg_nocmd(bot, update):
     global new_users_list
     # Check for normal or edited message
     msg = getattr(update, "message", None)
-    if msg == None:
+    if msg is None:
         msg = getattr(update, "edited_message", None)
     # Ignore if message comes from a private chat
     if msg.chat.type == "private":
@@ -706,7 +702,7 @@ def msg_nocmd(bot, update):
         return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
-    if captcha_enable == False:
+    if not captcha_enable:
         return
     # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
     msg_text = getattr(msg, "text", None)
@@ -739,7 +735,7 @@ def msg_nocmd(bot, update):
         chat_link = "@{}".format(chat_link)
         save_config_property(chat_id, "Link", chat_link)
     user_name = msg.from_user.full_name
-    if msg.from_user.username != None:
+    if msg.from_user.username is not None:
         user_name = "{}(@{})".format(user_name, msg.from_user.username)
     # Set default text message if not received
     if msg_text is None:
@@ -759,7 +755,7 @@ def msg_nocmd(bot, update):
             i = i + 1
             continue
         # Check if the expected captcha solve number is in the message
-        printts("[{}] Received captcha reply from {}: {}".format(chat_id, \
+        printts("[{}] Received captcha reply from {}: {}".format(chat_id,
                 new_user["user_name"], msg_text))
         if new_user["captcha_num"].lower() in msg_text.lower():
             # Remove join messages
@@ -795,7 +791,7 @@ def msg_nocmd(bot, update):
                 for msg_del in to_delete_join_messages_list:
                     if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
                         tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
-                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id,
                         TEXT[lang]["CAPTCHA_INCORRECT_0"])
                 update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
                 # Promise remove bad message data in one minute
@@ -807,7 +803,7 @@ def msg_nocmd(bot, update):
                     for msg_del in to_delete_join_messages_list:
                         if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
                             tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
-                    sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                    sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id,
                             TEXT[lang]["CAPTCHA_INCORRECT_1"])
                     update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
                     # Promise remove bad message data in one minute
@@ -876,12 +872,12 @@ def button_request_captcha(bot, update):
         if (new_user["user_id"] == usr_id) and (new_user["chat_id"] == chat_id):
             printts("[{}] User {} requested a new captcha.".format(chat_id, new_user["user_name"]))
             # Prepare inline keyboard button to let user request another catcha
-            keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"], \
+            keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
                     callback_data=str(query.from_user.id))]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             # Get captcha timeout and set image caption
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-            img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(new_user["user_name"], \
+            img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(new_user["user_name"],
                     chat_title, str(captcha_timeout))
             # Determine configured bot language in actual chat
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
@@ -889,8 +885,8 @@ def button_request_captcha(bot, update):
             # Generate a new captcha and edit previous captcha image message with this one
             captcha = create_image_captcha(str(usr_id), captcha_level, captcha_chars_mode)
             printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
-            bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto( \
-                    media=open(captcha["image"], "rb"), caption=img_caption), \
+            bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto(
+                    media=open(captcha["image"], "rb"), caption=img_caption),
                     reply_markup=reply_markup, timeout=20)
             # Set and modified to new expected captcha number
             new_user["captcha_num"] = captcha["number"]
@@ -955,7 +951,7 @@ def cmd_language(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     if allow_command:
         if len(args) >= 1:
@@ -971,7 +967,7 @@ def cmd_language(bot, update, args):
                 bot_msg = TEXT[lang]["LANG_BAD_LANG"].format(CONST["SUPPORTED_LANGS_CMDS"])
         else:
             bot_msg = TEXT[lang]["LANG_NOT_ARG"].format(CONST["SUPPORTED_LANGS_CMDS"])
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -991,7 +987,7 @@ def cmd_time(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     if allow_command:
         if len(args) >= 1:
@@ -1008,7 +1004,7 @@ def cmd_time(bot, update, args):
                 bot_msg = TEXT[lang]["TIME_NOT_NUM"]
         else:
             bot_msg = TEXT[lang]["TIME_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1028,7 +1024,7 @@ def cmd_difficulty(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     if allow_command:
         if len(args) >= 1:
@@ -1044,7 +1040,7 @@ def cmd_difficulty(bot, update, args):
                 bot_msg = TEXT[lang]["DIFFICULTY_NOT_NUM"]
         else:
             bot_msg = TEXT[lang]["DIFFICULTY_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1064,7 +1060,7 @@ def cmd_captcha_mode(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     if allow_command:
         if len(args) >= 1:
@@ -1077,7 +1073,7 @@ def cmd_captcha_mode(bot, update, args):
                 bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
         else:
             bot_msg = TEXT[lang]["CAPTCHA_MODE_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1097,7 +1093,7 @@ def cmd_welcome_msg(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     if allow_command:
         if len(args) >= 1:
@@ -1113,7 +1109,7 @@ def cmd_welcome_msg(bot, update, args):
                 save_config_property(chat_id, "Welcome_Msg", welcome_msg)
         else:
             bot_msg = TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1133,7 +1129,7 @@ def cmd_add_ignore(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     else: # private chats are forbidden for this command
         update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
@@ -1157,7 +1153,7 @@ def cmd_add_ignore(bot, update, args):
                 bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
         else:
             bot_msg = TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1174,7 +1170,7 @@ def cmd_remove_ignore(bot, update, args):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     else: # private chats are forbidden for this command
         update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
@@ -1195,7 +1191,7 @@ def cmd_remove_ignore(bot, update, args):
                 bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
         else:
             bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1212,7 +1208,7 @@ def cmd_ignore_list(bot, update):
     allow_command = True
     if chat_type != "private":
         is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin == False:
+        if not is_admin:
             allow_command = False
     else: # private chats are forbidden for this command
         update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
@@ -1223,7 +1219,7 @@ def cmd_ignore_list(bot, update):
             bot_msg = TEXT[lang]["IGNORE_LIST_EMPTY"]
         else:
             bot_msg = " ".join([str(x) for x in ignore_list])
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1239,14 +1235,14 @@ def cmd_enable(bot, update):
     lang = get_chat_config(chat_id, "Language")
     enable = get_chat_config(chat_id, "Enabled")
     is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if is_admin == True:
+    if is_admin:
         if enable:
             bot_msg = TEXT[lang]["ALREADY_ENABLE"]
         else:
             enable = True
             save_config_property(chat_id, "Enabled", enable)
             bot_msg = TEXT[lang]["ENABLE"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1265,14 +1261,14 @@ def cmd_disable(bot, update):
     lang = get_chat_config(chat_id, "Language")
     enable = get_chat_config(chat_id, "Enabled")
     is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if is_admin == True:
+    if is_admin:
         if enable:
             enable = False
             save_config_property(chat_id, "Enabled", enable)
             bot_msg = TEXT[lang]["DISABLE"]
         else:
             bot_msg = TEXT[lang]["ALREADY_DISABLE"]
-    elif is_admin == False:
+    elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:
         bot_msg = TEXT[lang]["CAN_NOT_GET_ADMINS"]
@@ -1300,7 +1296,7 @@ def cmd_about(bot, update):
     '''Command /about handler'''
     chat_id = update.message.chat_id
     lang = get_chat_config(chat_id, "Language")
-    bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"], \
+    bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
         CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
     bot.send_message(chat_id, bot_msg)
 
@@ -1344,7 +1340,7 @@ def selfdestruct_messages(bot):
         sent_msg = to_delete_in_time_messages_list[i]
         # If actual time is equal or more than the expected sent msg delete time
         if time() >= sent_msg["delete_time"]:
-            printts("[{}] Scheduled deletion time for message: {}".format( \
+            printts("[{}] Scheduled deletion time for message: {}".format(
                     sent_msg["Chat_id"], sent_msg["Msg_id"]))
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
@@ -1356,11 +1352,12 @@ def selfdestruct_messages(bot):
                 if str(e) == "Message can't be deleted":
                     lang = get_chat_config(sent_msg["Chat_id"], "Language")
                     try:
-                        cant_del_msg = bot.send_message(sent_msg["Chat_id"], \
+                        cant_del_msg = bot.send_message(sent_msg["Chat_id"],
                                 TEXT[lang]["CANT_DEL_MSG"], reply_to_message_id=sent_msg["Msg_id"])
                         tlg_msg_to_selfdestruct(cant_del_msg)
-                    except:
+                    except Exception as ee:
                         printts(str(e))
+                        printts(str(ee))
                         pass
                 if sent_msg in to_delete_in_time_messages_list:
                     to_delete_in_time_messages_list.remove(sent_msg)
@@ -1375,7 +1372,7 @@ def check_time_to_kick_not_verify_users(bot):
     while i < len(new_users_list):
         new_user = new_users_list[i]
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
-        if new_user["kicked_ban"] == True:
+        if new_user["kicked_ban"]:
             # Remove from new users list the remaining kicked users that have not solve the captcha 
             # in 1 hour (user ban just happen if a user try to join the group and fail to solve the 
             # captcha 5 times in the past hour)
@@ -1394,7 +1391,7 @@ def check_time_to_kick_not_verify_users(bot):
             printts("[{}] Captcha reply timed out for user {}.".format(chat_id, new_user["user_name"]))
             # Check if this "user" has not join this chat more than 5 times (just kick)
             if new_user["join_retries"] < 5:
-                printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id, \
+                printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
                         new_user["user_name"], new_user["user_id"]))
                 # Try to kick the user
                 kick_result = tlg_kick_user(bot, new_user["chat_id"], new_user["user_id"])
@@ -1403,7 +1400,7 @@ def check_time_to_kick_not_verify_users(bot):
                     bot_msg = TEXT[lang]["NEW_USER_KICK"].format(new_user["user_name"])
                     # Increase join retries
                     new_user["join_retries"] = new_user["join_retries"] + 1
-                    printts("[{}] Increased join_retries to {}".format(chat_id, \
+                    printts("[{}] Increased join_retries to {}".format(chat_id,
                             new_user["join_retries"]))
                     # Set to auto-remove the kick message too, after a while
                     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
@@ -1412,13 +1409,13 @@ def check_time_to_kick_not_verify_users(bot):
                     printts("[{}] Unable to kick".format(chat_id))
                     if kick_result == -1:
                         # The user is not in the chat
-                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format( \
+                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_IN_CHAT'].format(
                                 new_user["user_name"])
                         # Set to auto-remove the kick message too, after a while
                         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
                     elif kick_result == -2:
                         # Bot has no privileges to ban
-                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format( \
+                        bot_msg = TEXT[lang]['NEW_USER_KICK_NOT_RIGHTS'].format(
                                 new_user["user_name"])
                         # Send no rights for kick message without auto-remove
                         try:
@@ -1432,7 +1429,7 @@ def check_time_to_kick_not_verify_users(bot):
                         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
             # The user has join this chat 5 times and never succes to solve the captcha (ban)
             else:
-                printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id, \
+                printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id,
                         new_user["user_name"], new_user["user_id"]))
                 # Try to ban the user and notify Admins
                 ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
@@ -1446,11 +1443,11 @@ def check_time_to_kick_not_verify_users(bot):
                     # Ban fail
                     if ban_result == -1:
                         # The user is not in the chat
-                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_IN_CHAT'].format( \
+                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_IN_CHAT'].format(
                                 new_user["user_name"])
                     elif ban_result == -2:
                         # Bot has no privileges to ban
-                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_RIGHTS'].format( \
+                        bot_msg = TEXT[lang]['NEW_USER_BAN_NOT_RIGHTS'].format(
                                 new_user["user_name"])
                     else:
                         # For other reason, the Bot can't ban
@@ -1506,8 +1503,8 @@ def main():
     updater = Updater(CONST["TOKEN"])
     dp = updater.dispatcher
     # Set to dispatcher not text messages handler
-    dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice | \
-            Filters.video | Filters.sticker | Filters.document | Filters.location | \
+    dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice |
+            Filters.video | Filters.sticker | Filters.document | Filters.location |
             Filters.contact, msg_notext, edited_updates=True))
     # Set to dispatcher a not-command text messages handler
     dp.add_handler(MessageHandler(Filters.text, msg_nocmd, edited_updates=True))
