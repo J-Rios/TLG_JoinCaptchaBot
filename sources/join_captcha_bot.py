@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     04/04/2020
 Version:
-    1.8.0
+    1.8.1
 '''
 
 ####################################################################################################
@@ -34,7 +34,7 @@ from collections import OrderedDict
 from random import randint
 from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup)
 from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters, 
-    CallbackQueryHandler)
+    CallbackQueryHandler, Defaults)
 
 from constants import CONST, TEXT
 from tsjson import TSjson
@@ -1525,8 +1525,10 @@ def main():
     # Initialize resources by populating files list and configs with chats found files
     initialize_resources()
     printts("Resources initialized.")
+    # Set messages to be sent silently by default
+    msgs_defaults = Defaults(disable_notification=True)
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
-    updater = Updater(CONST["TOKEN"], use_context=True)
+    updater = Updater(CONST["TOKEN"], use_context=True, defaults=msgs_defaults)
     dp = updater.dispatcher
     # Set to dispatcher all expected commands messages handler
     dp.add_handler(CommandHandler("start", cmd_start))

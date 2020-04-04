@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     04/04/2020
 Version:
-    1.8.0
+    1.8.1
 '''
 
 ####################################################################################################
@@ -115,7 +115,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.8.0 (04/04/2020)"
+    "VERSION": "1.8.1 (04/04/2020)"
 }
 
 
