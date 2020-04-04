@@ -140,6 +140,9 @@
     "OTHER_CAPTCHA_BTN_TEXT" : 
         "Другие капчи",
 
+    "BOT_LEAVE_CHANNEL" : 
+        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
+
     "ENABLE" : 
         "Защита от спама включена. Отключите его с помощью команды /disable",
 

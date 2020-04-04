@@ -140,6 +140,9 @@
     "OTHER_CAPTCHA_BTN_TEXT" : 
         "Other Captcha",
 
+    "BOT_LEAVE_CHANNEL" : 
+        "This Bot can't be used in channels, just in groups.",
+
     "ENABLE" : 
         "Captcha protection enabled. Disable it with /disable command.",
 

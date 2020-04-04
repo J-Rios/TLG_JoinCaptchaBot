@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    05/03/2020
+    04/04/2020
 Version:
-    1.7.0
+    1.7.1
 '''
 
 ####################################################################################################
@@ -463,6 +463,18 @@ def tlg_check_chat_type(bot, chat_id_or_alias):
             printts("[{}] {}".format(chat_id_or_alias, str(e)))
     return chat_type
 
+
+def tlg_leave_chat(bot, chat_id):
+    '''Telegram Bot try to leave a chat.'''
+    left = False
+    try:
+        if bot.leave_chat(chat_id):
+            left = True
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
+    return left
+    
+
 ####################################################################################################
 
 ### Received Telegram not-command messages handlers ###
@@ -471,14 +483,17 @@ def msg_new_user(bot, update):
     '''New member join the group event handler'''
     global to_delete_join_messages_list
     global new_users_list
-    # Ignore if message comes from a channel
-    msg = getattr(update, "message", None)
-    if msg.chat.type == "channel":
-        return
     # Get message data
     chat_id = update.message.chat_id
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
+    # Leave the chat if it is a channel
+    msg = getattr(update, "message", None)
+    if msg.chat.type == "channel":
+        print("Bot try to be added to a channel")
+        tlg_send_selfdestruct_msg_in(bot, chat_id, TEXT[lang]["BOT_LEAVE_CHANNEL"], 1)
+        tlg_leave_chat(bot, chat_id)
+        return
     # For each new user that join or has been added
     for join_user in update.message.new_chat_members:
         join_user_id = join_user.id
@@ -1480,7 +1495,7 @@ def main():
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         printts("Error: Bot Token has not been set.")
-        printts("Please add your Bot Token to the constants.py file.")
+        printts("Please add your Bot Token to constants.py file.")
         printts("Exit.\n")
         exit(0)
     printts("Bot started.")

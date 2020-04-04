@@ -140,6 +140,9 @@
     "OTHER_CAPTCHA_BTN_TEXT" :
         "其他验证码",
 
+    "BOT_LEAVE_CHANNEL" : 
+        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
+
     "ENABLE" :
         "启用了验证码保护。 使用 /disable 命令禁用它。",
 

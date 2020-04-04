@@ -140,6 +140,9 @@
     "OTHER_CAPTCHA_BTN_TEXT" : 
         "Captcha lainnya",
 
+    "BOT_LEAVE_CHANNEL" : 
+        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
+
     "ENABLE" : 
         "Proteksi Captcha diaktifkan. Nonaktifkan captcha dengan perintah /disable ",
 

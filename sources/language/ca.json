@@ -140,6 +140,9 @@
     "OTHER_CAPTCHA_BTN_TEXT" :
         "Mostra un altre captcha",
 
+    "BOT_LEAVE_CHANNEL" : 
+        "Aquest bot no es pot utilitzar en canals, només en grups.",
+
     "ENABLE" :
         "S'ha activat la protecció per captcha. Podeu desactivar-la amb l'ordre /disable.",
 
