@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     04/04/2020
 Version:
-    1.7.2
+    1.8.0
 '''
 
 ####################################################################################################
@@ -31,11 +31,10 @@ from time import time, sleep, strptime, mktime, strftime
 from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
-from telegram import MessageEntity, ParseMode, InputMediaPhoto,  InlineKeyboardButton, \
-        InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler, \
-        ConversationHandler, CallbackQueryHandler
 from random import randint
+from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup)
+from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters, 
+    CallbackQueryHandler)
 
 from constants import CONST, TEXT
 from tsjson import TSjson
@@ -479,10 +478,11 @@ def tlg_leave_chat(bot, chat_id):
 
 ### Received Telegram not-command messages handlers ###
 
-def msg_new_user(bot, update):
+def msg_new_user(update: Update, context: CallbackContext):
     '''New member join the group event handler'''
     global to_delete_join_messages_list
     global new_users_list
+    bot = context.bot
     # Get message data
     chat_id = update.message.chat_id
     # Determine configured bot language in actual chat
@@ -644,8 +644,9 @@ def msg_new_user(bot, update):
                 printts(" ")
 
 
-def msg_notext(bot, update):
+def msg_notext(update: Update, context: CallbackContext):
     '''All non-text messages handler.'''
+    bot = context.bot
     # Check for normal or edited message
     msg = getattr(update, "message", None)
     if msg is None:
@@ -686,10 +687,11 @@ def msg_notext(bot, update):
         break
 
 
-def msg_nocmd(bot, update):
+def msg_nocmd(update: Update, context: CallbackContext):
     '''Non-command text messages handler'''
     global to_delete_join_messages_list
     global new_users_list
+    bot = context.bot
     # Check for normal or edited message
     msg = getattr(update, "message", None)
     if msg is None:
@@ -848,9 +850,10 @@ def msg_nocmd(bot, update):
         break
 
 
-def button_request_captcha(bot, update):
+def button_request_captcha(update: Update, context: CallbackContext):
     '''Button "Other Captcha" pressed handler'''
     global new_users_list
+    bot = context.bot
     query = update.callback_query
     # Ignore if the query come from an unexpected user
     if query.data != str(query.from_user.id):
@@ -904,8 +907,9 @@ def button_request_captcha(bot, update):
 
 ### Received Telegram command messages handlers ###
 
-def cmd_start(bot, update):
+def cmd_start(update: Update, context: CallbackContext):
     '''Command /start message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
@@ -916,8 +920,9 @@ def cmd_start(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["START"])
 
 
-def cmd_help(bot, update):
+def cmd_help(update: Update, context: CallbackContext):
     '''Command /help message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
@@ -929,8 +934,9 @@ def cmd_help(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_commands(bot, update):
+def cmd_commands(update: Update, context: CallbackContext):
     '''Command /commands message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
@@ -942,8 +948,10 @@ def cmd_commands(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, commands_text)
 
 
-def cmd_language(bot, update, args):
+def cmd_language(update: Update, context: CallbackContext):
     '''Command /language message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -978,8 +986,10 @@ def cmd_language(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_time(bot, update, args):
+def cmd_time(update: Update, context: CallbackContext):
     '''Command /time message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1015,8 +1025,10 @@ def cmd_time(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_difficulty(bot, update, args):
+def cmd_difficulty(update: Update, context: CallbackContext):
     '''Command /difficulty message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1051,8 +1063,10 @@ def cmd_difficulty(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_captcha_mode(bot, update, args):
+def cmd_captcha_mode(update: Update, context: CallbackContext):
     '''Command /captcha_mode message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1084,8 +1098,10 @@ def cmd_captcha_mode(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_welcome_msg(bot, update, args):
+def cmd_welcome_msg(update: Update, context: CallbackContext):
     '''Command /welcome_msg message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1120,8 +1136,10 @@ def cmd_welcome_msg(bot, update, args):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_add_ignore(bot, update, args):
+def cmd_add_ignore(update: Update, context: CallbackContext):
     '''Command /add_ignore message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1161,8 +1179,10 @@ def cmd_add_ignore(bot, update, args):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_remove_ignore(bot, update, args):
+def cmd_remove_ignore(update: Update, context: CallbackContext):
     '''Command /remove_ignore message handler'''
+    bot = context.bot
+    args = context.args
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1199,8 +1219,9 @@ def cmd_remove_ignore(bot, update, args):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_ignore_list(bot, update):
+def cmd_ignore_list(update: Update, context: CallbackContext):
     '''Command /ignore_list message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1227,8 +1248,9 @@ def cmd_ignore_list(bot, update):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_enable(bot, update):
+def cmd_enable(update: Update, context: CallbackContext):
     '''Command /enable message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1253,8 +1275,9 @@ def cmd_enable(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_disable(bot, update):
+def cmd_disable(update: Update, context: CallbackContext):
     '''Command /disable message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
@@ -1279,8 +1302,9 @@ def cmd_disable(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_version(bot, update):
+def cmd_version(update: Update, context: CallbackContext):
     '''Command /version message handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
@@ -1292,8 +1316,9 @@ def cmd_version(bot, update):
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-def cmd_about(bot, update):
+def cmd_about(update: Update, context: CallbackContext):
     '''Command /about handler'''
+    bot = context.bot
     chat_id = update.message.chat_id
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
@@ -1301,7 +1326,8 @@ def cmd_about(bot, update):
     bot.send_message(chat_id, bot_msg)
 
 
-def cmd_captcha(bot, update):
+def cmd_captcha(update: Update, context: CallbackContext):
+    bot = context.bot
     chat_id = update.message.chat_id
     user_id = update.message.from_user.id
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
@@ -1500,18 +1526,8 @@ def main():
     initialize_resources()
     printts("Resources initialized.")
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
-    updater = Updater(CONST["TOKEN"])
+    updater = Updater(CONST["TOKEN"], use_context=True)
     dp = updater.dispatcher
-    # Set to dispatcher not text messages handler
-    dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice |
-            Filters.video | Filters.sticker | Filters.document | Filters.location |
-            Filters.contact, msg_notext, edited_updates=True))
-    # Set to dispatcher a not-command text messages handler
-    dp.add_handler(MessageHandler(Filters.text, msg_nocmd, edited_updates=True))
-    # Set to dispatcher a new member join the group and member left the group events handlers
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
-    # Set to dispatcher request new captcha button callback handler
-    dp.add_handler(CallbackQueryHandler(button_request_captcha))
     # Set to dispatcher all expected commands messages handler
     dp.add_handler(CommandHandler("start", cmd_start))
     dp.add_handler(CommandHandler("help", cmd_help))
@@ -1529,6 +1545,16 @@ def main():
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
     #dp.add_handler(CommandHandler("captcha", cmd_captcha)) # Just for debug
+    # Set to dispatcher a not-command text messages handler
+    dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
+    # Set to dispatcher not text messages handler
+    dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice |
+            Filters.video | Filters.sticker | Filters.document | Filters.location |
+            Filters.contact, msg_notext))
+    # Set to dispatcher a new member join the group and member left the group events handlers
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
+    # Set to dispatcher request new captcha button callback handler
+    dp.add_handler(CallbackQueryHandler(button_request_captcha))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (cllowed_uptades=[])
     updater.start_polling(clean=True, allowed_updates=[])
     printts("Bot setup completed. Bot is now running.")
