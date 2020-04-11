@@ -1,65 +1,65 @@
 {
-    "START" :
+    "START":
         "Kaixo, Bot bat naiz eta captcha irudi bat bidaltzen diot taldera elkartzen den erabiltzaile berri bakoitzari, baina denbora jakin batean captcha asmatzen ez dutenak kanporatzen (kick) ditut ere.\n\nErabiltzaileren bat 5 aldiz ahalegintzen bada taldera batzen eta ez badu captcha asmatzea lortzen, \"erabiltzaile\" hori Bot bat dela suposatuko dut eta kanporatu ostean blokeatu (ban) egingo dut ezin dezan berriz taldera batu. Gainera, captcha asmatu aurretik \"erabiltzaile\" berri batek URL-rik duen mezurik bidaliko balu, hau Spam bezala tratatuko da eta beraz ezabatua izango da.\n\nGogoratu era egoki batean funtzionatzeko administrazio baimenak eman behar dizkidazula, erabiltzaileak eten eta mezuak taldetik ezabatzeko.\n\nErabili /help komandoa niri buruzko informazio gehiago izan dezazun.\n\nErabilgarria al naiz?Erabili /about komandoa eta pentsa ezazu dohaintza bat egitea aktibo mantentzeko.",
 
-    "HELP" :
+    "HELP":
         "Botari buruzko laguntza:\n————————————————\n- Bot bat naiz eta captcha irudi bat bidaltzen diot taldera elkartzen den erabiltzaile berri bakoitzari, baina denbora jakin batean captcha asmatzen ez dutenak kanporatzen (kick) ditut ere.\n\nErabiltzaileren bat 5 aldiz ahalegintzen bada taldera batzen eta ez badu captcha asmatzea lortzen, \"erabiltzaile\" hori Bot bat dela suposatuko dut eta kanporatu ostean blokeatu (ban) egingo dut ezin dezan berriz taldera batu. Gainera, captcha asmatu aurretik \"erabiltzaile\" berri batek URL-rik duen mezurik bidaliko balu, hau Spam bezala tratatuko da eta beraz ezabatua izango da.\n\nGogoratu era egoki batean funtzionatzeko administrazio baimenak eman behar dizkidazula, erabiltzaileak eten eta mezuak taldetik ezabatzeko.\n\n- Taldea garbi mantentzeko nirekin zer ikusia duten mezuak ezabatzen ditut, captcha ez denean asmatu eta erabiltzailea kanporatua izan denean (5 minutu pasa ostean).\n\n- Erabiltzaileek 5 minutu dituzte captcha asmatzeko baina denbora tarte hori /timer komandoaz alda daiteke.\n\n- Captcha bidezko babesa /enable eta /disable komandoen bidez aktibatu eta desaktibatu dezakezu.\n\n- Konfigurazio komandoak taldeko administratzaileek soilik erabili ditzakete.\n\n- Erabiltzen dudan hizkuntza /language komandoaren bitartez alda dezakezu.\n\n- Captcha-ren zailtasun maila /difficulty komandoaren bidez aldatu dezakezu.\n\n- Captcha-ek zenbakiak soilik (defektuz) edo zenbaki eta letrak izatea konfiguratu dezakezu /captcha_mode komandoaren bidez.\n\n- Ongietorri mezu pertsonalizatua konfigura dezakezu komandoarekin /welcome_msg.\n\n- Erabili /commands komandoa erabilgarri dauden komandoen zerrenda eta hauen deskribatpen txiki bat ikusteko.",
 
-    "CMD_NOT_ALLOW" :
+    "CMD_NOT_ALLOW":
         "Admin batek soilik erabili dezake komando hau.",
 
-    "LANG_CHANGE" :
+    "LANG_CHANGE":
         "Hizkuntza euskarara aldatu da.",
 
-    "LANG_SAME" :
+    "LANG_SAME":
         "Euskaraz dago jada.\n\nOnartzen diren hizkuntzak:\n{}",
 
-    "LANG_BAD_LANG" :
+    "LANG_BAD_LANG":
         "Baliogabetutako hizkuntza.\n\nOnartzen diren hizkuntzak:\n{}",
 
-    "LANG_NOT_ARG" :
+    "LANG_NOT_ARG":
         "Komandoak ezarri beharreko hizkuntza behar du.\n\nAdibideak:\n{}",
 
-    "TIME_CHANGE" :
+    "TIME_CHANGE":
         "Captcha asmatzeko denbora {} minututara aldatua izan da.",
 
-    "TIME_MAX_NOT_ALLOW" :
+    "TIME_MAX_NOT_ALLOW":
         "Captcha asmatzeko gehienezko denbora 120 minutu dura. Ez da denbora tartea aldatu.",
 
-    "TIME_NOT_NUM" :
+    "TIME_NOT_NUM":
         "Ezarri nahi zen denbora ez da zenbaki osoa.",
 
-    "TIME_NOT_ARG" :
+    "TIME_NOT_ARG":
         "Komandoak ezarri beharreko denboraren balioa behar du (minututan),\n\nAdibideak:\n/time 3\n/time 5\n/time 10",
 
-    "DIFFICULTY_CHANGE" :
+    "DIFFICULTY_CHANGE":
         "Captchen zailtasun maila {}-ra aldatu da.",
 
-    "DIFFICULTY_NOT_NUM" :
+    "DIFFICULTY_NOT_NUM":
         "Adierazitako zailtasun maila ez da zenbaki bat.",
 
-    "DIFFICULTY_NOT_ARG" :
+    "DIFFICULTY_NOT_ARG":
         "Komandoak ezarri beharreko zailtasun maila behar du (1etik 5era).\n\nAdibideak:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
-    "CAPTCHA_MODE_CHANGE" :
+    "CAPTCHA_MODE_CHANGE":
         "Captcharen karaktere-modua \"{}\"-ra aldatua izan da.",
 
-    "CAPTCHA_MODE_INVALID" :
+    "CAPTCHA_MODE_INVALID":
         "Karaktere-modua ez baliagarria. Erabilgarri dauden moduak honakoak dira: \"nums\", \"hex\" eta \"ascii\".\n\nAdibideak:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
-    "CAPTCHA_MODE_NOT_ARG" :
+    "CAPTCHA_MODE_NOT_ARG":
         "Komandoak ezarri beharreko karaktere-modua behar du. Erabilgarri dauden moduak honakoak dira:\n- Zenbakizko captchak (\"nums\").\n- Hamaseitarrezko captchak, zenbaki eta A-F tarteko letrekin (\"hex\").\n- Zenbaki eta A-Z tarteko letradun captchak (\"ascii\").\n\nAdibideak:\n/captcha_mode hex\n/captcha_mode ascii",
 
-    "WELCOME_MSG_SET" :
+    "WELCOME_MSG_SET":
         "Ongi etorri mezua ongi konfiguratuta.",
 
-    "WELCOME_MSG_UNSET" :
+    "WELCOME_MSG_UNSET":
         "Ongietorri mezua desgaituta dago.",
 
-    "IGNORE_LIST_ADD_NOT_ARG" :
+    "IGNORE_LIST_ADD_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 
-    "IGNORE_LIST_ADD_DUPLICATED" :
+    "IGNORE_LIST_ADD_DUPLICATED":
         "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
@@ -74,7 +74,7 @@
     "IGNORE_LIST_NO_PRIVATE_CHATS":
         "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
 
-    "IGNORE_LIST_REMOVE_NOT_ARG" :
+    "IGNORE_LIST_REMOVE_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
@@ -86,84 +86,84 @@
     "IGNORE_LIST_EMPTY":
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
-    "WELCOME_MSG_SET_NOT_ARG" :
+    "WELCOME_MSG_SET_NOT_ARG":
         "Jarri komandoaren ondoren ongietorri mezua.\n\nAdibideak:\n/welcome_msg Kaixo $user, ongi etorri taldeari eta gogoratu beste erabiltzaileekiko begirunea izatea.\n\nDesgaitu mezua:\n/welcome_msg disable",
 
-    "NEW_USER_CAPTCHA_CAPTION" :
+    "NEW_USER_CAPTCHA_CAPTION":
         "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} minututan asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
 
-    "CAPTCHA_SOLVED" :
+    "CAPTCHA_SOLVED":
         "Captcha asmatuta, erabiltzailea egiaztatua.\nOngi etorri {} taldera",
 
-    "CAPTCHA_INCORRECT_0" :
+    "CAPTCHA_INCORRECT_0":
         "Zenbaki okerra. Ahalegindu berriz...",
 
-    "CAPTCHA_INCORRECT_1" :
+    "CAPTCHA_INCORRECT_1":
         "Zenbaki okerra. Arretaz begiratu, captchak 4 zenbaki ditu...",
 
-    "NEW_USER_KICK" :
+    "NEW_USER_KICK":
         "{}-k ez du captcha denboraz asmatu. \"Erabiltzailea\" kanporatua (kick) izan da.",
 
-    "NEW_USER_KICK_NOT_RIGHTS" :
+    "NEW_USER_KICK_NOT_RIGHTS":
         "{}-k ez du captcha denboraz asmatu. \"Erabiltzailea\" kanporatua (kick) izan beharko litzateke, baina ez zaizkit eman beharrezko administrazio baimenak taldetik erabiltzaileak kanporatzeko.",
 
-    "NEW_USER_KICK_NOT_IN_CHAT" :
+    "NEW_USER_KICK_NOT_IN_CHAT":
         "{}-k ez du captcha denboraz asmatu. \"Erabiltzailea\" kanporatu (kick) egin behar nuen baina jada ez dago taldean (taldetik atera da edo Admin batek kanporatu du).",
 
-    "BOT_CANT_KICK" :
+    "BOT_CANT_KICK":
         "{}-k ez du captcha denboraz asmatu. \"Erabiltzailea\" kanporatzen (kick) saiatu naiz baina ustekabeko arazo bat (agian sarea edo zerbitzariarekin zerikusia duena) dela eta ezin izan dut gauzatu.",
 
-    "CANT_DEL_MSG" :
+    "CANT_DEL_MSG":
         "Mezu hau ezabatzen saiatu naiz baina ez zaizkit eman beharrezko administrazio baimenak nireak ez diren mezuak ezabatu ahal izateko.",
 
-    "NEW_USER_BAN" :
+    "NEW_USER_BAN":
         "Adi: Bostgarren aldia da {} erabiltzailea taldera batzen saiatu dena captcha asmatu gabe. \"Erabiltzailea\" kanporatua eta blokeatua (ban) izan da. Taldera berriz elkartzen saiatzen uzteko Admin batek erabiltzaileari ezarritako muga eskuz kendu beharko du taldearen administrazio aukeretatik.",
 
-    "NEW_USER_BAN_NOT_IN_CHAT" :
+    "NEW_USER_BAN_NOT_IN_CHAT":
         "Adi: Bostgarren aldia da {} erabiltzailea taldera batzen saiatu dena captcha asmatu gabe. \"Erabiltzailea\" kanporatua eta blokeatua (ban) izan beharko litzateke, baina jada ez dago taldean (taldetik irten da edo Admin baten kanporatu du).",
 
-    "NEW_USER_BAN_NOT_RIGHTS" :
+    "NEW_USER_BAN_NOT_RIGHTS":
         "Adi: Bostgarren aldia da {} erabiltzailea taldera batzen saiatu dena captcha asmatu gabe. \"Erabiltzailea\" kanporatua eta blokeatua (ban) izan beharko litzateke, baina ez zaizkit eman beharrezko administrazio baimenak taldetik erabiltzaileak kanporatzeko.",
 
-    "BOT_CANT_BAN" :
+    "BOT_CANT_BAN":
         "Adi: Bostgarren aldia da {} erabiltzailea taldera batzen saiatu dena captcha asmatu gabe. \"Erabiltzailea\" kanporatua eta blokeatua (ban) izan beharko litzateke, baina ustekabeko arazo bategatik (agian sarea edo zerbitzariarekin zerikusia duena) ezin izan dut gauzatu.",
 
-    "SPAM_DETECTED_RM" :
-        "{}-k bidalitako URL (edo alias) bat duen mezua detektatu da eta oraindik ez du captcha asmatu. Mezua ezabatua izan da Spam gabeko Telegram baten alde :)",
+    "SPAM_DETECTED_RM":
+        "{}-k bidalitako URL (edo alias) bat duen mezua detektatu da eta oraindik ez du captcha asmatu. Mezua ezabatua izan da Spam gabeko Telegram baten alde:)",
 
-    "SPAM_DETECTED_NOT_RM" :
+    "SPAM_DETECTED_NOT_RM":
         "{}-k bidalitako URL (edo alias) bat duen mezua detektatu da eta oraindik ez du captcha asmatu. Mezua ezabatzen saiatu naiz, baina ez zaizkit eman beharrezko administrazio baimenak nireak ez diren mezuak ezabatu ahal izateko.",
 
-    "NOT_TEXT_MSG_ALLOWED" :
+    "NOT_TEXT_MSG_ALLOWED":
         "{}-k bidalitako testua ez den mezua ezabatu da (irudia, audioa, fitxategia...) Spam gabeko Telegram baten alde.\n\nCaptcha asmatzen duzunean testua ez diren mezuak bidali aahl izango dituzu.",
 
-    "OTHER_CAPTCHA_BTN_TEXT" :
+    "OTHER_CAPTCHA_BTN_TEXT":
         "Beste captcha bat",
 
-    "BOT_LEAVE_CHANNEL" : 
+    "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
 
-    "ENABLE" :
+    "ENABLE":
         "Captcha babesa aktibatuta. Desaktibatzeko /disable komandoa erabili.",
 
-    "DISABLE" :
+    "DISABLE":
         "Captcha babesa desaktibatuta. Aktibatzeko /enable komandoa erabili.",
 
-    "ALREADY_ENABLE" :
+    "ALREADY_ENABLE":
         "Captcha babesa aktibatuta dago jada.",
 
-    "ALREADY_DISABLE" :
+    "ALREADY_DISABLE":
         "Captcha babesa desaktibatuta dago jada.",
 
-    "CAN_NOT_GET_ADMINS" :
+    "CAN_NOT_GET_ADMINS":
         "Ezin da komando hau txat honetan erabili.",
 
-    "VERSION" :
+    "VERSION":
         "Botaren bertsioa: {}",
 
-    "ABOUT_MSG" :
+    "ABOUT_MSG":
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu.\n\nPaypal:\n{}\n\nBTC:\n{}.",
 
-    "COMMANDS" :
+    "COMMANDS":
         "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak).\n\n/welcome_msg - Aukera ematen du captcha ebatzi ondoren bidaltzen den harrera mezu bat konfiguratzeko.\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du."
 }

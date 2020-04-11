@@ -1,68 +1,68 @@
 {
-    "START" :
-        "Hola, sóc un bot que envia una imatge captcha a cada usuari nou que s'uneix al grup, i expulso (kick) als que no resolen el captcha en un temps determinat.\n\nSi un usuari ha intentat unir-se al grup 5 vegades i mai no ha resolt el captcha, suposaré que aquell \"usuari\" és un bot i el bandejaré (ban). A més, qualsevol missatge que contingui un URL i hagi estat enviat per un \"usuari\" nou abans que aquest hagi resolt el captcha, serà considerat un missatge brossa (SPAM) \ni l'esborraré.\n\nRecordeu que per a funcionar de forma adequada heu de donar-me permisos d'administració per a suspendre (expulsar) usuaris i eliminar missatges del grup.\n\nDoneu un cop d'ull a l'ordre /help per a obtenir més informació sobre el meu ús.\n\nUs sóc útil? Feu una ullada a l'ordre /about i penseu en fer una donació per mantenir-me actiu.", 
+    "START":
+        "Hola, sóc un bot que envia una imatge captcha a cada usuari nou que s'uneix al grup, i expulso (kick) als que no resolen el captcha en un temps determinat.\n\nSi un usuari ha intentat unir-se al grup 5 vegades i mai no ha resolt el captcha, suposaré que aquell \"usuari\" és un bot i el bandejaré (ban). A més, qualsevol missatge que contingui un URL i hagi estat enviat per un \"usuari\" nou abans que aquest hagi resolt el captcha, serà considerat un missatge brossa (SPAM) \ni l'esborraré.\n\nRecordeu que per a funcionar de forma adequada heu de donar-me permisos d'administració per a suspendre (expulsar) usuaris i eliminar missatges del grup.\n\nDoneu un cop d'ull a l'ordre /help per a obtenir més informació sobre el meu ús.\n\nUs sóc útil? Feu una ullada a l'ordre /about i penseu en fer una donació per mantenir-me actiu.",
 
-    "HELP" :
+    "HELP":
         "Ajuda sobre el bot:\n————————————————\n- Sóc un bot que envia un captcha a cada usuari nou que s'uneix al grup, i expulso (kick) als que no resolen el captcha en un temps determinat.\n\n- Si un usuari ha intentat unir-se al grup 5 vegades i mai no ha resolt el captcha, suposaré que aquell \"usuari\" és un bot i el bandejaré (ban).\n\n- Qualsevol missatge que contingui un URL i hagi estat enviat per un \"usuari\" nou abans que aquest hagi resolt el captcha, serà considerat un missatge brossa (SPAM) i l'esborraré.\n\n- Heu de donar-me permisos d'administració per a expulsar usuaris i eliminar missatges.\n\n- Per tal de mantenir net el grup, elimino aquells missatges que tinguin relació amb mi quan no s'hagi resolt el captcha i l'usuari hagi estat expulsat (kick) (transcorreguts 5 minuts).\n\n- El temps del que disposen els usuaris per a resoldre el captcha són 5 minuts, però es pot canviar mitjançant l'ordre /time.\n\n- Podeu activar o desactivar la protecció captcha mitjançant les ordres /enable i /disable.\n\n- Les ordres de configuració només les poden utilitzar els administradors del grup.\n\n- Podeu canviar l'idioma en el que parlo mitjançant l'ordre /language.\n\n- Podeu configurar el nivell de dificultat del captcha mitjançant l'ordre /difficulty.\n\n- Podeu establir que els captcha només continguin números (per defecte), o números i lletres, a través de l'ordre /captcha_mode.\n\n- Podeu configurar un missatge de benvinguda personalitzat amb ordre /welcome_msg.\n\n- Doneu un cop d'ull a l'ordre /commands per a veure un llistat amb totes les ordres disponibles i una breu descripció de cadascuna.",
 
-    "CMD_NOT_ALLOW" :
+    "CMD_NOT_ALLOW":
         "Aquesta ordre només la pot utilitar un administrador.",
 
-    "LANG_CHANGE" :
+    "LANG_CHANGE":
         "S'ha canviat l'idioma a català.",
 
-    "LANG_SAME" :
+    "LANG_SAME":
         "Ja parlo en català.\n\nIdiomes compatibles:\n{}",
 
-    "LANG_BAD_LANG" :
+    "LANG_BAD_LANG":
         "Idioma no vàlid.\n\nIdiomes compatibles:\n{}",
 
-    "LANG_NOT_ARG" :
+    "LANG_NOT_ARG":
         "Cal que especifiqueu un idioma.\n\nExemples:\n{}",
 
-    "TIME_CHANGE" :
+    "TIME_CHANGE":
         "S'ha canviat el temps per a resoldre el captcha a {} minuts.",
 
-    "TIME_MAX_NOT_ALLOW" :
+    "TIME_MAX_NOT_ALLOW":
         "El temps màxim per a resoldre el captcha són 120 minuts. No s'ha canviat el temps.",
 
-    "TIME_NOT_NUM" :
+    "TIME_NOT_NUM":
         "El temps introduït no és un número enter.",
 
-    "TIME_NOT_ARG" :
+    "TIME_NOT_ARG":
         "Cal que especifiqueu un valor de temps (en minuts).\n\nExemples:\n/time 3\n/time 5\n/time 10",
 
-    "DIFFICULTY_CHANGE" :
+    "DIFFICULTY_CHANGE":
         "S'ha canviat el nivell de dificultat dels captcha a {}.",
 
-    "DIFFICULTY_NOT_NUM" :
+    "DIFFICULTY_NOT_NUM":
         "El nivell de dificultat introduït no és un número.",
 
-    "DIFFICULTY_NOT_ARG" :
+    "DIFFICULTY_NOT_ARG":
         "Cal que especifiqueu un nivell de dificultat (de l'1 al 5).\n\nExemples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
-    "CAPTCHA_MODE_CHANGE" :
+    "CAPTCHA_MODE_CHANGE":
         "S'ha canviat el mode-caràcter dels captcha a \"{}\".",
 
-    "CAPTCHA_MODE_INVALID" :
+    "CAPTCHA_MODE_INVALID":
         "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\" i \"ascii\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
-    "CAPTCHA_MODE_NOT_ARG" :
+    "CAPTCHA_MODE_NOT_ARG":
         "Cal que especifiqueu un mode-caràcter. Els modes disponibles són:\n- Captcha numèrics (\"nums\").\n- Captcha hexadecimals, amb números i lletres A-F (\"hex\").\n- Captcha amb números i lletres A-Z (\"ascii\").\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
-    "WELCOME_MSG_SET" :
+    "WELCOME_MSG_SET":
         "El missatge de benvinguda s'ha configurat correctament.",
 
-    "WELCOME_MSG_UNSET" :
+    "WELCOME_MSG_UNSET":
         "Missatge de benvinguda desactivat.",
 
-    "WELCOME_MSG_SET_NOT_ARG" :
+    "WELCOME_MSG_SET_NOT_ARG":
         "Escriviu el missatge de benvinguda després de l'ordre.\n\nExemple:\n/welcome_msg Hola $user, benvingut al grup i recordeu ser respectuosos amb els altres usuaris.\n\nDesactiva el missatge:\n/welcome_msg disable",
 
-    "IGNORE_LIST_ADD_NOT_ARG" :
+    "IGNORE_LIST_ADD_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 
-    "IGNORE_LIST_ADD_DUPLICATED" :
+    "IGNORE_LIST_ADD_DUPLICATED":
         "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
@@ -77,7 +77,7 @@
     "IGNORE_LIST_NO_PRIVATE_CHATS":
         "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
 
-    "IGNORE_LIST_REMOVE_NOT_ARG" :
+    "IGNORE_LIST_REMOVE_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
@@ -89,81 +89,81 @@
     "IGNORE_LIST_EMPTY":
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
-    "NEW_USER_CAPTCHA_CAPTION" :
+    "NEW_USER_CAPTCHA_CAPTION":
         "Hola {}, benvingut/da a {}. Podeu enviar un missatge amb el número que apareix en aquesta imatge per a verificar que sou un humà. Si no resoleu aquest captcha en {} minuts, sereu expulsat del grup automàticament.",
 
-    "CAPTCHA_SOLVED" :
+    "CAPTCHA_SOLVED":
         "Heu resolt el captcha correctament. Ja sou un usuari verificat.\nBenvingut/da al grup, {}",
 
-    "CAPTCHA_INCORRECT_0" :
+    "CAPTCHA_INCORRECT_0":
         "Aquest codi no és correcte. Intenteu-ho una altra vegada...",
 
-    "CAPTCHA_INCORRECT_1" :
+    "CAPTCHA_INCORRECT_1":
         "Aquest codi no és correcte. Fixeu-vos-hi bé, el captcha té 4 caràcters...",
 
-    "NEW_USER_KICK" :
+    "NEW_USER_KICK":
         "{} no ha completat el captcha a temps. L'\"usuari\" ha estat expulsat.",
 
-    "NEW_USER_KICK_NOT_RIGHTS" :
+    "NEW_USER_KICK_NOT_RIGHTS":
         "{} no ha completat el captcha a temps. L'\"usuari\" hauria de ser expulsat, però no se m'han donat els permisos d'administració necessaris per a expulsar usuaris del grup.",
 
-    "NEW_USER_KICK_NOT_IN_CHAT" :
+    "NEW_USER_KICK_NOT_IN_CHAT":
         "{} no ha completat el captcha a temps. Estava a punt d'expulsar l'\"usuari\", però ja no és al grup (ha sortit del grup o ha estat expulsat/bandejat per un administrador).",
 
-    "BOT_CANT_KICK" :
+    "BOT_CANT_KICK":
         "{} no ha completat el captcha a temps. He intentat expulsar l'\"usuari\", però a causa d'un problema inesperat (potser relacionat amb la xarxa o el servidor), no ho he pogut fer.",
 
-    "CANT_DEL_MSG" :
+    "CANT_DEL_MSG":
         "He intentat esborrar aquest missatge, però no se m'han donat els permisos d'administració necessaris per tal d'eliminar els missatges que no són meus.",
 
-    "NEW_USER_BAN" :
+    "NEW_USER_BAN":
         "Atenció! Aquesta és la cinquena vegada que l'usuari {} ha intentat unir-se al grup i no ha pogut resoldre el captcha. L'\"usuari\" ha estat bandejat. Per permetre que intenti entrar novament al grup, un administrador ha de treure la restricció de l'usuari de forma manual a les opcions d'administració del grup.",
 
-    "NEW_USER_BAN_NOT_IN_CHAT" :
+    "NEW_USER_BAN_NOT_IN_CHAT":
         "Atenció! Aquesta és la cinquena vegada que l'usuari {} ha intentat unir-se al grup i no ha pogut resoldre el captcha. L'\"usuari\" hauria de ser bandejat, però ja no és al grup (ha sortit del grup o ha estat expulsat/bandejat per un administrador).",
 
-    "NEW_USER_BAN_NOT_RIGHTS" :
+    "NEW_USER_BAN_NOT_RIGHTS":
         "Atenció! Aquesta és la cinquena vegada que l'usuari {} ha intentat unir-se al grup i no ha pogut resoldre el captcha. L'\"usuari\" hauria de ser bandejat, però no se m'han donat els permisos d'administració necessaris per a expulsar usuaris del grup.",
 
-    "BOT_CANT_BAN" :
+    "BOT_CANT_BAN":
         "Atenció! Aquesta és la cinquena vegada que l'usuari {} ha intentat unir-se al grup i no ha pogut resoldre el captcha. L'\"usuari\" hauria de ser bandejat, però a causa d'un problema inesperat (potser relacionat amb la xarxa o el servidor), no ho he pogut fer.",
 
-    "SPAM_DETECTED_RM" :
-        "S'ha detectat un missatge que conté un URL (o àlies) enviat per {}, que encara no ha resolt el captcha. He eliminat el missatge per tal de tenir el grup net de brossa :)",
+    "SPAM_DETECTED_RM":
+        "S'ha detectat un missatge que conté un URL (o àlies) enviat per {}, que encara no ha resolt el captcha. He eliminat el missatge per tal de tenir el grup net de brossa:)",
 
-    "SPAM_DETECTED_NOT_RM" :
+    "SPAM_DETECTED_NOT_RM":
         "S'ha detectat un missatge amb URL (o àlies) enviat per {}, que encara no ha resolt el captcha. He intentat esborrar el missatge, però no se m'han donat els permisos d'administració necessaris per tal d'eliminar missatges que no són meus.",
 
-    "NOT_TEXT_MSG_ALLOWED" :
+    "NOT_TEXT_MSG_ALLOWED":
         "He eliminat un missatge que no és de text (imatge, àudio, fitxer...) enviat per {}, per tal de mantenir el grup net de brossa.\n\nPodreu enviar missatges que no siguin de text un cop hàgiu resolt el captcha.",
 
-    "OTHER_CAPTCHA_BTN_TEXT" :
+    "OTHER_CAPTCHA_BTN_TEXT":
         "Mostra un altre captcha",
 
-    "BOT_LEAVE_CHANNEL" : 
+    "BOT_LEAVE_CHANNEL":
         "Aquest bot no es pot utilitzar en canals, només en grups.",
 
-    "ENABLE" :
+    "ENABLE":
         "S'ha activat la protecció per captcha. Podeu desactivar-la amb l'ordre /disable.",
 
-    "DISABLE" :
+    "DISABLE":
         "S'ha desactivat la protecció per captcha. Podeu activar-la amb l'ordre /enable.",
 
-    "ALREADY_ENABLE" :
+    "ALREADY_ENABLE":
         "La protecció per captcha ja està activada.",
 
-    "ALREADY_DISABLE" :
+    "ALREADY_DISABLE":
         "La protecció per captcha ja està desactivada.",
 
-    "CAN_NOT_GET_ADMINS" :
+    "CAN_NOT_GET_ADMINS":
         "No es pot utilitzar aquesta ordre en el xat actual.",
 
-    "VERSION" :
+    "VERSION":
         "La versió actual del bot és: {}",
 
-    "ABOUT_MSG" :
+    "ABOUT_MSG":
         "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè.\nPaypal:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS" :
+    "COMMANDS":
         "Llistat d'ordres:\n————————————————\n/start - Mostra la informació inicial sobre el bot.\n\n/help - Mostra la informació d'ajuda.\n\n/commands - Mostra el missatge actual: informació sobre totes les ordres disponibles i la seva descripció.\n\n/language - Permet canviar l'idioma en que parla el bot.\n\n/time - Permet canviar el temps disponible per a resoldre un captcha.\n\n/difficulty - Permet canviar el nivell de dificultat del captcha (d'1 a 5).\n\n/captcha_mode - Permet canviar el mode-caràcter del captcha (nums: només números, hex: números i lletres A-F, ascii: números i lletres A-Z).\n\n/welcome_msg - Permet configurar un missatge de benvinguda que s’envia després de resoldre el captcha.\n\n/enable - Activa la protecció per captcha en el grup.\n\n/disable - Desactiva la protecció per captcha en el grup.\n\n/version - Consulta la versió del bot.\n\n/about - Mostra la informació \"Quant a...\" del bot."
 }
