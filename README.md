@@ -85,7 +85,7 @@ To add support for a new language you must follow next steps:
 
  - Catalán: Adela Casals i Jorba
 
- - Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores)
+ - Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores); Iváns
 
  - Basque: [xa2er](https://github.com/xa2er)
 
