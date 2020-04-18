@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    04/04/2020
+    18/04/2020
 Version:
-    1.8.1
+    1.9.0
 '''
 
 ####################################################################################################
@@ -32,7 +32,8 @@ from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
 from random import randint
-from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup)
+from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup,
+    ChatPermissions)
 from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters, 
     CallbackQueryHandler, Defaults)
 
@@ -247,6 +248,7 @@ def get_default_config_data():
         ("Title", CONST["INIT_TITLE"]),
         ("Link", CONST["INIT_LINK"]),
         ("Enabled", CONST["INIT_ENABLE"]),
+        ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
@@ -473,6 +475,20 @@ def tlg_leave_chat(bot, chat_id):
         printts("[{}] {}".format(chat_id, str(e)))
     return left
 
+
+def tlg_restrict_user(bot, chat_id, user_id, send_msg=None, send_media=None, 
+        send_stickers_gifs=None, insert_links=None, send_polls=None, 
+        invite_members=None, pin_messages=None, change_group_info=None):
+    '''Telegram Bot try to restrict user permissions in a group.'''
+    result = False
+    try:
+        permissions = ChatPermissions(send_msg, send_media, send_polls, send_stickers_gifs, 
+            insert_links, change_group_info, invite_members, pin_messages)
+        result = bot.restrictChatMember(chat_id, user_id, permissions)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
+        result = False
+    return result
 
 ####################################################################################################
 
@@ -785,6 +801,12 @@ def msg_nocmd(update: Update, context: CallbackContext):
             welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
             if welcome_msg != "-":
                 tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"])
+            # Check for send just text message option and apply user restrictions
+            restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
+            if restrict_non_text_msgs:
+                tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False, 
+                    send_stickers_gifs=False, insert_links=False, send_polls=False, 
+                    invite_members=False, pin_messages=False, change_group_info=False)
         # The provided message doesn't has the valid captcha number
         else:
             # Check if the message has 4 chars
@@ -1134,6 +1156,47 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     else:
         tlg_msg_to_selfdestruct(update.message)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_restrict_non_text(update: Update, context: CallbackContext):
+    '''Command /restrict_non_text message handler'''
+    bot = context.bot
+    args = context.args
+    chat_id = update.message.chat_id
+    user_id = update.message.from_user.id
+    chat_type = update.message.chat.type
+    # Check and ignore command if in private chat
+    if chat_type == "private":
+        bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update.message)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check if the user is an Admin of the chat
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if is_admin is None:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAN_NOT_GET_ADMINS"])
+        return
+    if not is_admin:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
+        return
+    # Check for provided command argument
+    if len(args) == 0:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"])
+        return
+    restrict_non_text_msgs = args[0]
+    # Check for valid expected argument
+    if restrict_non_text_msgs != "enable" and restrict_non_text_msgs != "disable":
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"])
+        return
+    # Enable/Disable just text messages option
+    if restrict_non_text_msgs == "enable":
+        save_config_property(chat_id, "Restrict_Non_Text", True)
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RESTRICT_NON_TEXT_MSG_ENABLED"])
+    else:
+        save_config_property(chat_id, "Restrict_Non_Text", False)
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RESTRICT_NON_TEXT_MSG_DISABLED"])
 
 
 def cmd_add_ignore(update: Update, context: CallbackContext):
@@ -1539,6 +1602,7 @@ def main():
     dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
     dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
     dp.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
+    dp.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text, pass_args=True))
     dp.add_handler(CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
     dp.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore, pass_args=True))
     dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))

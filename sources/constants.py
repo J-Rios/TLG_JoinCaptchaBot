@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    04/04/2020
+    18/04/2020
 Version:
-    1.8.1
+    1.9.0
 '''
 
 ####################################################################################################
@@ -68,6 +68,9 @@ CONST = {
     # Initial captcha characters mode (nums, hex or ascci)
     "INIT_CAPTCHA_CHARS_MODE": "nums",
 
+    # Initial new users just allow to send text messages
+    "INIT_RESTRICT_NON_TEXT_MSG": False,
+
     # Default time (in mins) to remove self-destruct sent messages from the Bot
     "T_DEL_MSG": 5,
 
@@ -79,6 +82,10 @@ CONST = {
 
     # Maximum number of users ID allowed in each chat ignore list
     "IGNORE_LIST_MAX_ID": 100,
+
+    # Command don't allow in private chat text (just english due in private chats we 
+    # don't have language configuration
+    "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
 
     # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     "F_TLDS": "tlds-alpha-by-domain.txt",
@@ -115,7 +122,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.8.1 (04/04/2020)"
+    "VERSION": "1.9.0 (18/04/2020)"
 }
 
 

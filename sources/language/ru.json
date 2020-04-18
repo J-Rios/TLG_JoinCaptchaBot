@@ -59,6 +59,15 @@
     "WELCOME_MSG_SET_NOT_ARG":
         "Поместите приветственное сообщение после команды.\n\nПримеры:\n/welcome_msg Привет, $user, добро пожаловать в чат, ознакомьтесь пожалуйста с правилами и ведите себя уважительно по отношению к другим пользователям.\n\nОтключить сообщение:\n/welcome_msg disable",
 
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+
     "IGNORE_LIST_ADD_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 

@@ -56,6 +56,18 @@
     "WELCOME_MSG_UNSET":
         "Ongietorri mezua desgaituta dago.",
 
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Jarri komandoaren ondoren ongietorri mezua.\n\nAdibideak:\n/welcome_msg Kaixo $user, ongi etorri taldeari eta gogoratu beste erabiltzaileekiko begirunea izatea.\n\nDesgaitu mezua:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+
     "IGNORE_LIST_ADD_NOT_ARG":
         "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
 
@@ -85,9 +97,6 @@
 
     "IGNORE_LIST_EMPTY":
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
-
-    "WELCOME_MSG_SET_NOT_ARG":
-        "Jarri komandoaren ondoren ongietorri mezua.\n\nAdibideak:\n/welcome_msg Kaixo $user, ongi etorri taldeari eta gogoratu beste erabiltzaileekiko begirunea izatea.\n\nDesgaitu mezua:\n/welcome_msg disable",
 
     "NEW_USER_CAPTCHA_CAPTION":
         "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} minututan asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
