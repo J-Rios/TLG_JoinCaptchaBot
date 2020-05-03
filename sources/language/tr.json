@@ -1,0 +1,178 @@
+{
+    "START":
+        "Merhaba, ben bir gruba katılan her yeni kullanıcı için bir görüntü captcha gönderen ve belirli bir süre içinde captcha'yı çözemeyen herkesi gruptan atan bir Botum.\n\nBir kullanıcı arka arkaya 5 kez gruba katılmaya çalışır ve captcha'yı yinede çözemezse, bu \"kullanıcının\" bir bot olduğunu varsayarım ve banlarım. Ayrıca, captcha tamamlanmadan önce yeni bir \"kullanıcı\" tarafından gönderilen bir URL içeren tüm iletiler spam olarak kabul edilir ve silinir.\n\nKullanıcıları yasaklamak ve iletileri kaldırmak için bana yönetim ayrıcalıkları vermeyi unutmayın.\n\nKullanımım hakkında daha fazla bilgi için /help komutunu kullanın.\n\nBeni kullanışlı mı buldunuz? /about komutunu kullan ve beni aktif tutmak için bağış yapmayı düşün.",
+
+    "HELP":
+        "Bot yardımı:\n————————————————\n- Ben bir gruba katılan her yeni kullanıcı için bir görüntü captcha gönderen ve belirli bir süre içinde captcha'yı çözemeyen herkesi gruptan atan bir Botum.\n\n- Bir kullanıcı arka arkaya 5 kez gruba katılmaya çalışır ve captcha'yı yinede çözemezse, bu \"kullanıcının\" bir bot olduğunu varsayarım ve banlarım.\n\n- Captcha tamamlanmadan önce yeni bir \"kullanıcı\" tarafından gönderilen bir URL içeren tüm iletiler spam olarak kabul edilir ve silinir.\n\n- Kullanıcıları yasaklamak ve iletileri kaldırmak için bana yönetim ayrıcalıkları vermeyi unutmayın.\n\n- Grubu temiz tutmak için, bir captcha çözülmediğinde ve kullanıcı atıldığında (5 dakika sonra) benimle ilgili tüm mesajları otomatik olarak kaldırırım.\n\n- Yeni kullanıcıların captcha'yı çözmesi gereken süre varsayılan olarak 5 dakikadır, ancak bu süre /time komutu kullanılarak değiştirilebilir.\n\n- /enable ve /disable komutlarını kullanarak captcha korumasını açabilir / kapatabilirsiniz.\n\n- Yapılandırma komutları yalnızca grup Yöneticileri tarafından kullanılabilir.\n\n- /language komutunu kullanarak konuştuğum dili değiştirebilirsiniz.\n\n- /difficulty komutunu kullanarak captcha zorluk seviyesini değiştirebilirsiniz.\n\n- /captcha_mode komutunu kullanarak captcha'yı yalnızca sayı (varsayılan) veya sayı ve harf kullanacak şekilde ayarlayabilirsiniz.\n\n- /welcome_msg komutuyla özel bir karşılama iletisi ayarlayabilirsiniz.\n\n- /restrict_non_text komutunu kullanarak yeni kullanıcılara metin mesajı dışında gönderi yapmamaları için kısıtlama uygulamama izin ver seçeneğini etkinleştirebilirsiniz.\n\n- Kullanılabilir tüm komutların bir listesini ve hepsinin kısa bir açıklamasını almak için /commands komutunu kullanın.",
+
+    "CMD_NOT_ALLOW":
+        "Bu komutu yalnızca Yönetici kullanabilir.",
+
+    "LANG_CHANGE":
+        "Dil Türkçe olarak değiştirildi.",
+
+    "LANG_SAME":
+        "Ben zaten Türkçeyim.\n\nDesteklenen diller:\n{}",
+
+    "LANG_BAD_LANG":
+        "Geçersiz dil sağlandı.\n\nDesteklenen diller:\n{}",
+
+    "LANG_NOT_ARG":
+        "Komutun ayarlanması için bir dile ihtiyacı var.\n\nÖrnekler:\n{}",
+
+    "TIME_CHANGE":
+        "Captcha'yı çözme süresi başarıyla {} dakikaya ayarlandı.",
+
+    "TIME_MAX_NOT_ALLOW":
+        "İzin verilen maksimum captcha çözüm süresi 120 dakikadır. Zaman değiştirilmedi.",
+
+    "TIME_NOT_NUM":
+        "Sağlanan süre bir tamsayı değil.",
+
+    "TIME_NOT_ARG":
+        "Komutun ayarlanması için bir zaman değerine ihtiyacı var (dakika olarak).\n\nÖrnekler:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE":
+        "Captcha zorluğu başarıyla {} seviyesine değiştirildi.",
+
+    "DIFFICULTY_NOT_NUM":
+        "Sağlanan captcha zorluğu bir sayı değil.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Komutun ayarlanması için bir zorluk seviyesi gerekiyor (1'den 5'e).\n\nÖrnekler:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Captcha karakter modu başarıyla buna değiştirildi \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\" ve \"ascii\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+
+    "WELCOME_MSG_SET":
+        "Karşılama mesajı başarıyla değiştirildi.",
+
+    "WELCOME_MSG_UNSET":
+        "Karşılama mesajı kapatıldı.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Karşılama iletisini komuttan sonra yerleştirin.\n\nÖrnek:\n/welcome_msg Merhaba $user, gruba hoş geldiniz, diğer kullanıcılara saygılı olmayı unutmayın.\n\nMesajı kapatmak için:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Yeni kullanıcılar için metin harici mesaj gönderme kısıtlaması etkin. Metin mesaıj gönderme dışında yeni katılmış kullanıcı izinlerini kaldıracağım.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Yeni kullanıcılar için metin harici mesaj gönderme kısıtlaması kapalı.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Metin olmayan mesajlar göndermek için yeni katılan kullanıcıların kısıtlamasını etkinleştirmek veya devre dışı bırakmak isteyip istemediğinizi belirleyin (Kullanıcının metin yerine medya veya başka mesaj göndermesine izin verme. Yöneticiler bu izinleri gelecekte kullanıcılara manuel olarak verebilir).\n\nÖrnek:\n/restrict_non_text enable\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Lütfen komuttan sonra kullanıcının ID'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/add_ignore 1234567890",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Bu kimlik zaten yoksayma listesinde.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Maalesef yoksayma listesine eklenen maksimum kullanıcı sınırına ulaştınız, daha fazlasını eklemek için birini kaldırın.",
+
+    "IGNORE_LIST_ADD_INCORRECT_ID":
+        "Bu kimlik yanlış, sadece rakamlardan oluşmalı.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "Bu kimlik başarıyla eklendi!",
+
+    "IGNORE_LIST_NO_PRIVATE_CHATS":
+        "Ne yazık ki, bu komutu özel sohbetler için kullanmak yasaktır.",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Lütfen komuttan sonra kullanıcının ID'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/remove_ignore 1234567890",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "Bu kimlik başarıyla kaldırıldı!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "Bu kimlik yoksay listesinde değil, hiçbir şey yapılmadı.",
+
+    "IGNORE_LIST_EMPTY":
+        "Sohbet listesi yoksay boş.",
+
+    "NEW_USER_CAPTCHA_CAPTION":
+        "Merhaba {}, {} grubuna hoş geldin, lütfen insan olduğunuzu doğrulamak için bu resimde görünen rakamları ve/veya harfleri içeren bir mesaj yazın. Eğer captcha'yı {} dakika içinde çözmezseniz, otomatik olarak gruptan atılacaksınız.",
+
+    "CAPTCHA_SOLVED":
+        "Captcha çözüldü, kullanıcı doğrulandı.\nGruba hoş geldiniz {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "Doğru kod bu değil. Tekrar deneyin...",
+
+    "CAPTCHA_INCORRECT_1":
+        "Bu doğru sayı değil. Yakından kontrol edin, captcha'nın 4 numarası var...",
+
+    "NEW_USER_KICK":
+        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\" atıldı.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak gruptaki kullanıcıları atmak için yönetici haklarına sahip değilim.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak kullanıcı grupta değil (gruptan ayrıldı veya başka bir Yönetici tarafından atıldı).",
+
+    "BOT_CANT_KICK":
+        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak beklenmedik bir sorun nedeniyle (belki ağ/sunucu ile ilgili), yapamadım.",
+
+    "CANT_DEL_MSG":
+        "Bu iletiyi silmeye çalıştım, ancak tarafımdan gönderilmeyen iletileri kaldırmak için yönetici haklarına sahip değilim.",
+
+    "NEW_USER_BAN":
+        "Uyarı: {} gruba beşinci kez katılmaya çalıştı ve captcha'yı hiç çözemedi. \"Kullanıcı\" banlandı. Yönetici tekrar girmesine izin vermek için bu \"kullanıcı\"nın kısıtlamalarını manuel olarak kaldırmalıdır.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Uyarı: {} gruba beşinci kez katılmaya çalıştı ve captcha'yı hiç çözemedi. \"Kullanıcı\"yı banlamayı denedim, ancak kullanıcı grupta değil (gruptan ayrıldı veya başka bir Yönetici tarafından banlandı).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Uyarı: {} gruba beşinci kez katılmaya çalıştı ve captcha'yı hiç çözemedi. \"Kullanıcı\"yı banlamayı denedim, ancak gruptaki kullanıcıları banlamak için yönetici haklarına sahip değilim.",
+
+    "BOT_CANT_BAN":
+        "Uyarı: {} gruba beşinci kez katılmaya çalıştı ve captcha'yı hiç çözemedi. \"Kullanıcı\"yı banlamayı denedim, ancak beklenmedik bir sorun nedeniyle (belki ağ/sunucu ile ilgili), yapamadım.",
+
+    "SPAM_DETECTED_RM":
+        "Henüz captchayı çözmeyen {} tarafından yollanan bir URL (veya takma ad) içeren bir ileti algılandı. Mesaj, grubu Spam'den uzak tutmak için kaldırıldı :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Henüz captchayı çözmeyen {} tarafından yollanan bir URL (veya takma ad) içeren bir ileti algılandı. Spam iletisini kaldırmaya çalıştım, ancak tarafımdan gönderilmeyen iletileri kaldırmak için yönetici haklarına sahip değilim.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Grubu Spam'den uzak tutmak için {} tarafından yollanan metin olmayan bir mesaj (resim, ses, dosya...) kaldırdı.\n\nSadece Captcha kodunu çözdükten sonra metin harici mesaj gönderebilirsiniz.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Captcha'yı değiştir",
+
+    "BOT_LEAVE_CHANNEL":
+        "Bu Bot kanallarda kullanılamaz, sadece gruplarda kullanılır.",
+
+    "ENABLE":
+        "Captcha koruması etkin. Devre dışı bırakmak için /disable komutunu kullanın.",
+
+    "DISABLE":
+        "Captcha koruması kapalı. Etkinleştirmek için /enable komutunu kullanın.",
+
+    "ALREADY_ENABLE":
+        "Captcha koruması zaten etkin.",
+
+    "ALREADY_DISABLE":
+        "Captcha koruması zaten kapalı.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Geçerli sohbette bu komut kullanılamıyor.",
+
+    "VERSION":
+        "Mevcut Bot versiyonu: {}",
+
+    "ABOUT_MSG":
+        "Bu Bot ücretsiz bir yazılımdır ve GNU-GPL lisansı altında açık kaynaklıdır.\nBot {} tarafından geliştirilmiştir.\n\nKodu burada görebilirsiniz:\n{}\n\nÇalışmamı beğendiniz mi? Bana bir kahve ısmarlayın.\n\nPaypal:\n{}\n\nBTC:\n{}",
+
+    "COMMANDS":
+        "Komutların listesi:\n————————————————\n/start - Bot hakkında ilk bilgileri gösterir.\n\n/help - Yardım bilgilerini gösterir.\n\n/commands - Bu mesajı gösterir. Mevcut tüm komutlar ve açıklamaları hakkında bilgi.\n\n/language - Bot mesajlarının dilini değiştirmeye izin verir.\n\n/time - Bir captcha'yı çözmek için gereken zamanı değiştirmeye izin verir.\n\n/difficulty - Captcha zorluk seviyesini değiştirmeye izin verir (1'den 5'e).\n\n/captcha_mode - Captcha karakter modunu değiştirmeye izin verir (nums: sadece numaralar, hex: sayılar ve A-F karakterleri, ascii: sayılar ve A-Z karakterleri).\n\n/welcome_msg - Güvenlik kodunu çözdükten sonra gönderilen bir hoş geldiniz mesajının yapılandırılmasına izin verir.\n\n/restrict_non_text - Metin olmayan mesajlar göndermek için yeni katılan kullanıcılara kısıtlama uygulamayı etkinleştir.\n\n/add_ignore - Yok sayılan bir kullanıcıya Captcha sorma.\n\n/remove_ignore - Bir kullanıcıyı yoksaymayı durdur.\n\n/ignore_list - yok sayılan kullanıcıların ID'lerinin listesi.\n\n/enable - Grubun captcha korumasını etkinleştir.\n\n/disable - Grubun captcha korumasını kapat.\n\n/version - Bot versiyonunu göster.\n\n/about - Bilgi hakkında göster."
+}
