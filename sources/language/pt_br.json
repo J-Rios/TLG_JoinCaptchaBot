@@ -1,9 +1,9 @@
 {
     "START":
-        "Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\nSe um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou assumir que esse \"usuário\" é um Bot, e ele será banido. Também, qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\nLembre-se de dar privilégios de administrador para que eu possa expulsar-banir usuários e excluir mensagens do grupo.\n\nConfira o comando /help para saber mais sobre como me usar.\n\nEu sou útil? Confira o comando /about e considere fazer uma doação para me manter ativo.",
+        "Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\nSe um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou presumir que esse \"usuário\" é um Bot, e ele será banido. Também, qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\nLembre-se de dar privilégios de administrador para que eu possa expulsar-banir usuários e excluir mensagens do grupo.\n\nConfira o comando /help para saber mais sobre como me usar.\n\nEu sou útil? Confira o comando /about e considere fazer uma doação para me manter ativo.",
 
     "HELP":
-        "Ajuda do Bot:\n————————————————\n- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\n- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou assumir que esse “usuário” é um Bot, e ele será banido.\n\n- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\n- Você tem que me dar privilégios de administrador para que eu possa expulsar e banir usuários, e remover mensagens.\n\n- Para manter o grupo limpo, eu removo automaticamente todas as mensagens relacionadas a mim quando um captcha não é enviado e o usuário é expulso (depois de 5 minutos).\n\n- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ser configurado usando o comando /time.\n\n- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e /disable.\n\n- Comandos de configuração somente podem ser usados pelos Administradores do grupo.\n\n- Você pode definir o idioma que eu falo usando o comando /language.\n\n- Você pode configurar o grau de dificuldade do captcha usando a opção /difficulty.\n\nVocê pode definir se o captcha terá apenas números (o padrão) ou números e letras, usando a opção /captcha_mode.\n\n- Você pode configurar uma mensagem de boas-vindas personalizada com o comando /welcome_msg.\n\n- Use a opção /commands para ver a lista de todos os comandos com uma breve descrição de cada um deles.",
+        "Ajuda do Bot:\n————————————————\n- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\n- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou presumir que esse “usuário” é um Bot, e ele será banido.\n\n- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\n- Você tem que me dar privilégios de administrador para que eu possa expulsar e banir usuários, e remover mensagens.\n\n- Para manter o grupo limpo, eu removo automaticamente todas as mensagens relacionadas a mim quando um captcha não é enviado e o usuário é expulso (depois de 5 minutos).\n\n- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ser configurado usando o comando /time.\n\n- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e /disable.\n\n- Comandos de configuração somente podem ser usados pelos Administradores do grupo.\n\n- Você pode definir o idioma que eu falo usando o comando /language.\n\n- Você pode configurar o grau de dificuldade do captcha usando a opção /difficulty.\n\nVocê pode definir se o captcha terá apenas números (o padrão) ou números e letras, usando a opção /captcha_mode.\n\n- Você pode configurar uma mensagem de boas-vindas personalizada com o comando /welcome_msg.\n\n- Use a opção /commands para ver a lista de todos os comandos com uma breve descrição de cada um deles.",
 
     "CMD_NOT_ALLOW":
         "Apenas um Admin pode usar esse comando",
@@ -12,7 +12,7 @@
         "Idioma definido para português (Brasil).",
 
     "LANG_SAME":
-        "Eu já estou em Português (Brasil).\n\nIdiomas suportados:\n{}",
+        "Eu já estou em português (Brasil).\n\nIdiomas suportados:\n{}",
 
     "LANG_BAD_LANG":
         "Idioma inválido.\n\nIdiomas suportados:\n{}",
@@ -60,43 +60,43 @@
         "Coloque a mensagem de boas-vindas após o comando.\n\nExemplo:\n/welcome_msg Olá $user, seja bem-vindo ao grupo e lembre-se de ser respeitoso com outros usuários.\n\nDesativar a mensagem:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+        "Restrição ao envio de mensagens não textuais para novos usuários ativada. Vou remover permissões de novos usuários, exceto para envio de mensagens de texto.",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+        "Restrição ao envio de mensagens não textuais para novos usuários desativada.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+        "Defina se você deseja ativar ou desativar a restrição de novos usuários para o envio de mensagens que não textuais (não permitir que o usuário envie mídia ou outras mensagens além de mensagens de texto. Os administradores podem conceder essas permissões manualmente aos usuários novamente no futuro).\n\nExemplo:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+        "Informe o ID do usuário (não o nome de usuário) após o comando.\n\nExemplo:\n/add_ignore 1234567890",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+        "Este ID já está na lista de ignorados.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+        "Infelizmente, você atingiu o limite máximo de usuários adicionados na lista de ignorados. Remova alguém para adicionar mais.",
 
     "IGNORE_LIST_ADD_INCORRECT_ID":
-        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+        "Esse ID está incorreto. Ele deve conter apenas números.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
+        "Este ID foi adicionado com sucesso!",
 
     "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+        "Infelizmente, o uso deste comando é proibido em chats privados.",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+        "Informe o ID do usuário (não o nome de usuário) após o comando.\n\nExemplo:\n/remove_ignore 1234567890",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+        "Este ID foi removido com sucesso!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+        "Este ID não está na lista de ignorados, nada para fazer.",
 
     "IGNORE_LIST_EMPTY":
-        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+        "Lista de ignorados do chat está vazia.",
 
     "NEW_USER_CAPTCHA_CAPTION":
         "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo. Se houver letras, maiúsculo e minúsculo faz diferença.",
@@ -150,7 +150,7 @@
         "Outro Captcha",
 
     "BOT_LEAVE_CHANNEL":
-        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
+        "Este Bot não pode ser usado em canais, apenas em grupos.",
 
     "ENABLE":
         "Proteção Captcha ativada. Desative com o comando /disable.",
