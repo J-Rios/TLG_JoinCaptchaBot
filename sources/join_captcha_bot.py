@@ -463,6 +463,9 @@ def initialize_resources():
     if path.exists(CONST["CAPTCHAS_DIR"]):
         rmtree(CONST["CAPTCHAS_DIR"])
     makedirs(CONST["CAPTCHAS_DIR"])
+    # Create whitelist file if it does not exists
+    if not path.exists(CONST["F_WHITE_LIST"]):
+        file_write(CONST["F_WHITE_LIST"], "")
     # Create data directory if it does not exists
     if not path.exists(CONST["CHATS_DIR"]):
         makedirs(CONST["CHATS_DIR"])
