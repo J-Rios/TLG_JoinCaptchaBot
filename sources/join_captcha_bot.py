@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     16/05/2020
 Version:
-    1.9.3
+    1.10.0
 '''
 
 ####################################################################################################
@@ -54,7 +54,8 @@ CaptchaGen = CaptchaGenerator(2)
 
 ####################################################################################################
 
-### Termination signals handler for program process ###
+### Termination Signals Handler For Program Process ###
+
 def signal_handler(signal,  frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
     printts("Termination signal received. Releasing resources (Waiting for files to be closed)")
@@ -73,113 +74,7 @@ signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
 
 ####################################################################################################
 
-### General functions ###
-
-def initialize_resources():
-    '''Initialize resources by populating files list with chats found files'''
-    global files_config_list
-    # Remove old captcha directory and create it again
-    if path.exists(CONST["CAPTCHAS_DIR"]):
-        rmtree(CONST["CAPTCHAS_DIR"])
-    makedirs(CONST["CAPTCHAS_DIR"])
-    # Create data directory if it does not exists
-    if not path.exists(CONST["CHATS_DIR"]):
-        makedirs(CONST["CHATS_DIR"])
-    else:
-        # If chats directory exists, check all subdirectories names (chats ID)
-        files = listdir(CONST["CHATS_DIR"])
-        if files:
-            for f_chat_id in files:
-                # Populate config files list
-                file_path = "{}/{}/{}".format(CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
-                files_config_list.append(OrderedDict([("ID", f_chat_id),
-                    ("File", TSjson(file_path))]))
-                # Create default configuration file if it does not exists
-                if not path.exists(file_path):
-                    default_conf = get_default_config_data()
-                    for key, value in default_conf.items():
-                        save_config_property(f_chat_id, key, value)
-    # Load and generate URL detector regex from TLD list file
-    actual_script_path = path.dirname(path.realpath(__file__))
-    load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
-    # Load all languages texts
-    load_texts_languages()
-
-
-def load_urls_regex(file_path):
-    '''Load URL detection Regex from IANA TLD list text file.'''
-    tlds_str = ""
-    list_file_lines = []
-    try:
-        with open(file_path, "r") as f:
-            for line in f:
-                if line is None:
-                    continue
-                if (line == "") or (line == "\r\n") or (line == "\r") or (line == "\n"):
-                    continue
-                # Ignore lines that start with # (first header line of IANA TLD list file)
-                if line[0] == "#":
-                    continue
-                line = line.lower()
-                line = line.replace("\r", "")
-                line = line.replace("\n", "|")
-                list_file_lines.append(line)
-    except Exception as e:
-        printts("Error opening file \"{}\". {}".format(file_path, str(e)))
-    if len(list_file_lines) > 0:
-        tlds_str = "".join(list_file_lines)
-    CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
-
-
-def load_texts_languages():
-    '''Load all texts from each language file.'''
-    for lang_iso_code in TEXT:
-        lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code.lower())
-        json_lang_file = TSjson(lang_file)
-        json_lang_texts = json_lang_file.read()
-        if (json_lang_texts is None) or (json_lang_texts == {}):
-            printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
-                    "sintax.".format(lang_iso_code, lang_file))
-            printts("Exit.\n")
-            exit(0)
-        TEXT[lang_iso_code] = json_lang_texts
-
-
-def create_image_captcha(img_file_name, difficult_level, chars_mode):
-    '''Generate an image captcha from pseudo numbers'''
-    image_file_path = "{}/{}.png".format(CONST["CAPTCHAS_DIR"], img_file_name)
-    # If it doesn't exists, create captchas folder to store generated captchas
-    if not path.exists(CONST["CAPTCHAS_DIR"]):
-        makedirs(CONST["CAPTCHAS_DIR"])
-    else:
-        # If the captcha file exists remove it
-        if path.exists(image_file_path):
-            remove(image_file_path)
-    # Generate and save the captcha with a random captcha background mono-color or multi-color
-    captcha = CaptchaGen.gen_captcha_image(difficult_level, chars_mode, bool(randint(0, 1)))
-    image = captcha["image"]
-    image.save(image_file_path, "png")
-    # Return a dictionary with captcha file path and captcha resolve characters
-    generated_captcha = {"image": "", "number": ""}
-    generated_captcha["image"] = image_file_path
-    generated_captcha["number"] = captcha["characters"]
-    return generated_captcha
-
-
-def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_msg_id_value):
-    '''Update the msg_id_value from his key of the to_delete_join_messages_list'''
-    global to_delete_join_messages_list
-    i = 0
-    while i < len(to_delete_join_messages_list):
-        msg = to_delete_join_messages_list[i]
-        if (msg["user_id"] == msg_user_id) and (msg["chat_id"] == msg_chat_id):
-            msg[message_id_key] = new_msg_id_value
-            if msg in to_delete_join_messages_list:
-                to_delete_join_messages_list.remove(msg)
-            to_delete_join_messages_list.append(msg)
-            break
-        i = i + 1
-
+### Auxiliar Functions ###
 
 def printts(to_print="", timestamp=True):
     '''printts with timestamp.'''
@@ -237,9 +132,55 @@ def add_lrm(str_to_modify):
     str_to_modify = barray.decode("utf-8")
     return str_to_modify
 
+
+def create_parents_dirs(file_path):
+    '''Create all parents directories from provided file path (mkdir -p $file_path).'''
+    try:
+        parentdirpath = path.dirname(file_path)
+        if not path.exists(parentdirpath):
+            makedirs(parentdirpath, 0o775)
+    except Exception as e:
+        print("ERROR - Can't create parents directories of {}. {}".format(file_path, str(e)))
+
+
+def file_write(file_path, text="", mode="a"):
+    '''Write a text or a list of text lines to plain text file.'''
+    # Create file path directories and determine if file exists
+    create_parents_dirs(file_path)
+    if not path.exists(file_path):
+        print("File {} not found, creating it...".format(file_path))
+    # Try to Open and write to the file
+    try:
+        with open(file_path, mode, encoding="utf-8") as f:
+            if type(text) is str:
+                f.write(text)
+            elif type(text) is list:
+                for line in text:
+                    f.write("{}\n".format(line))
+    except Exception as e:
+        print("ERROR - Can't write to file {}. {}".format(file_path, str(e)))
+
+
+def file_read(file_path):
+    '''Read content of a plain text file and return a list of each text line.'''
+    list_read_lines = []
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                if line is None:
+                    continue
+                if (line == "") or (line == "\r\n") or (line == "\r") or (line == "\n"):
+                    continue
+                line = line.replace("\r", "")
+                line = line.replace("\n", "")
+                list_read_lines.append(line)
+    except Exception as e:
+        print("Error when opening file \"{}\". {}".format(file_path, str(e)))
+    return list_read_lines
+
 ####################################################################################################
 
-### JSON chat config file functions ###
+### JSON Chat Config File Functions ###
 
 def get_default_config_data():
     '''Get default config data structure'''
@@ -490,21 +431,6 @@ def tlg_restrict_user(bot, chat_id, user_id, send_msg=None, send_media=None,
         result = False
     return result
 
-####################################################################################################
-
-### Auxiliar Functions ###
-
-def is_user_inignored_list(chat_id, user):
-    '''Check if user is in ignored users list.'''
-    ignored_users = get_chat_config(chat_id, "Ignore_List")
-    if user.id in ignored_users:
-        return True
-    if user.username is not None:
-        user_alias = "@{}".format(user.username)
-        if user_alias in ignored_users:
-            return True
-    return False
-
 
 def is_valid_user_id_or_alias(user_id_alias):
     '''Check if given telegram ID or alias has a valid expected format.'''
@@ -519,6 +445,139 @@ def is_valid_user_id_or_alias(user_id_alias):
             return True
     except ValueError:
         return False
+    return False
+
+####################################################################################################
+
+### General Functions ###
+
+def initialize_resources():
+    '''Initialize resources by populating files list with chats found files'''
+    global files_config_list
+    # Remove old captcha directory and create it again
+    if path.exists(CONST["CAPTCHAS_DIR"]):
+        rmtree(CONST["CAPTCHAS_DIR"])
+    makedirs(CONST["CAPTCHAS_DIR"])
+    # Create data directory if it does not exists
+    if not path.exists(CONST["CHATS_DIR"]):
+        makedirs(CONST["CHATS_DIR"])
+    else:
+        # If chats directory exists, check all subdirectories names (chats ID)
+        files = listdir(CONST["CHATS_DIR"])
+        if files:
+            for f_chat_id in files:
+                # Populate config files list
+                file_path = "{}/{}/{}".format(CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
+                files_config_list.append(OrderedDict([("ID", f_chat_id),
+                    ("File", TSjson(file_path))]))
+                # Create default configuration file if it does not exists
+                if not path.exists(file_path):
+                    default_conf = get_default_config_data()
+                    for key, value in default_conf.items():
+                        save_config_property(f_chat_id, key, value)
+    # Load and generate URL detector regex from TLD list file
+    actual_script_path = path.dirname(path.realpath(__file__))
+    load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
+    # Load all languages texts
+    load_texts_languages()
+
+
+def load_urls_regex(file_path):
+    '''Load URL detection Regex from IANA TLD list text file.'''
+    tlds_str = ""
+    list_file_lines = []
+    try:
+        with open(file_path, "r") as f:
+            for line in f:
+                if line is None:
+                    continue
+                if (line == "") or (line == "\r\n") or (line == "\r") or (line == "\n"):
+                    continue
+                # Ignore lines that start with # (first header line of IANA TLD list file)
+                if line[0] == "#":
+                    continue
+                line = line.lower()
+                line = line.replace("\r", "")
+                line = line.replace("\n", "|")
+                list_file_lines.append(line)
+    except Exception as e:
+        printts("Error opening file \"{}\". {}".format(file_path, str(e)))
+    if len(list_file_lines) > 0:
+        tlds_str = "".join(list_file_lines)
+    CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
+
+
+def load_texts_languages():
+    '''Load all texts from each language file.'''
+    for lang_iso_code in TEXT:
+        lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code.lower())
+        json_lang_file = TSjson(lang_file)
+        json_lang_texts = json_lang_file.read()
+        if (json_lang_texts is None) or (json_lang_texts == {}):
+            printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
+                    "sintax.".format(lang_iso_code, lang_file))
+            printts("Exit.\n")
+            exit(0)
+        TEXT[lang_iso_code] = json_lang_texts
+
+
+def create_image_captcha(img_file_name, difficult_level, chars_mode):
+    '''Generate an image captcha from pseudo numbers'''
+    image_file_path = "{}/{}.png".format(CONST["CAPTCHAS_DIR"], img_file_name)
+    # If it doesn't exists, create captchas folder to store generated captchas
+    if not path.exists(CONST["CAPTCHAS_DIR"]):
+        makedirs(CONST["CAPTCHAS_DIR"])
+    else:
+        # If the captcha file exists remove it
+        if path.exists(image_file_path):
+            remove(image_file_path)
+    # Generate and save the captcha with a random captcha background mono-color or multi-color
+    captcha = CaptchaGen.gen_captcha_image(difficult_level, chars_mode, bool(randint(0, 1)))
+    image = captcha["image"]
+    image.save(image_file_path, "png")
+    # Return a dictionary with captcha file path and captcha resolve characters
+    generated_captcha = {"image": "", "number": ""}
+    generated_captcha["image"] = image_file_path
+    generated_captcha["number"] = captcha["characters"]
+    return generated_captcha
+
+
+def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_msg_id_value):
+    '''Update the msg_id_value from his key of the to_delete_join_messages_list'''
+    global to_delete_join_messages_list
+    i = 0
+    while i < len(to_delete_join_messages_list):
+        msg = to_delete_join_messages_list[i]
+        if (msg["user_id"] == msg_user_id) and (msg["chat_id"] == msg_chat_id):
+            msg[message_id_key] = new_msg_id_value
+            if msg in to_delete_join_messages_list:
+                to_delete_join_messages_list.remove(msg)
+            to_delete_join_messages_list.append(msg)
+            break
+        i = i + 1
+
+
+def is_user_in_white_list(user):
+    '''Check if user is in global whitelist.'''
+    l_white_users = file_read(CONST["F_WHITE_LIST"])
+    if user.id in l_white_users:
+        return True
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+        if user_alias in l_white_users:
+            return True
+    return False
+
+
+def is_user_inignored_list(chat_id, user):
+    '''Check if user is in ignored users list.'''
+    ignored_users = get_chat_config(chat_id, "Ignore_List")
+    if user.id in ignored_users:
+        return True
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+        if user_alias in ignored_users:
+            return True
     return False
 
 ####################################################################################################
@@ -598,9 +657,12 @@ def msg_new_user(update: Update, context: CallbackContext):
             if join_user.is_bot:
                 printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
                 continue
-            # Ignore if the member that has joined is in ignore list
+            # Ignore if the member that has joined is in chat ignore list
             if is_user_inignored_list(chat_id, join_user):
                 printts("[{}] User is in ignore list. Skipping the captcha process.".format(chat_id))
+                continue
+            if is_user_in_white_list(join_user):
+                printts("[{}] User is in global whitelist. Skipping the captcha process.".format(chat_id))
                 continue
             # Check and remove previous join messages of that user (if any)
             i = 0
@@ -1452,19 +1514,94 @@ def cmd_about(update: Update, context: CallbackContext):
 
 
 def cmd_captcha(update: Update, context: CallbackContext):
+    '''Command /captcha message handler. Usefull to test. Just Bot Owner can use it.'''
     bot = context.bot
     chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-    captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
-    # Generate a pseudorandom captcha send it to telegram group and program message selfdestruct
+    user = update.message.from_user
+    user_id = user.id
+    user_alias = ""
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+    # Check if command was execute by Bot owner
+    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update.message)
+    # Generate a random difficulty captcha
+    captcha_level = randint(1, 5)
+    captcha_chars_mode = randint(1, 3)
+    if captcha_chars_mode == 2:
+        captcha_chars_mode = "hex"
+    elif captcha_chars_mode == 3:
+        captcha_chars_mode = "ascii"
+    else:
+        captcha_chars_mode = "nums"
     captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
     printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
+    img_caption = "Captcha Level: {}\nCaptcha Mode: {}\nCaptcha Code: {}".format(captcha_level,
+            captcha_chars_mode, captcha["number"])
     try:
         # Note: Img caption must be <= 1024 chars
-        bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"), timeout=20)
+        sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"),
+                caption=img_caption, timeout=20)
+        tlg_msg_to_selfdestruct_in(sent_img_msg, 1)
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
+
+
+def cmd_whitelist(update: Update, context: CallbackContext):
+    '''Command /whitelist message handler. To Global Whitelist blind users.
+    Just Bot Owner can use it.'''
+    bot = context.bot
+    args = context.args
+    chat_id = update.message.chat_id
+    user = update.message.from_user
+    user_id = user.id
+    user_alias = ""
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+    # Check if command was execute by Bot owner
+    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+        bot.send_message(chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update.message)
+    # Check if no argument was provided with the command
+    if len(args) == 0:
+        # Show Actual Global Whitelisted Users
+        l_white_users = file_read(CONST["F_WHITE_LIST"])
+        bot_msg = "\n".join([str(user) for user in l_white_users])
+        bot_msg = "Global WhiteList:\n--------------------\n{}".format(bot_msg)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        return
+    else:
+        if len(args) <= 1:
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
+            return
+        if (args[0] != "add") and (args[0] != "rm"):
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
+            return
+        add_rm = args[0]
+        user = args[1]
+        l_white_users = file_read(CONST["F_WHITE_LIST"])
+        if add_rm == "add":
+            if not is_valid_user_id_or_alias(user):
+                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
+                return
+            if user not in l_white_users:
+                file_write(CONST["F_WHITE_LIST"], "{}\n".format(user))
+                tlg_send_selfdestruct_msg(bot, chat_id, "User added to Global Whitelist.")
+            else:
+                tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global Whitelist.")
+            return
+        if add_rm == "rm":
+            if user in l_white_users:
+                index = l_white_users.index(user)
+                del l_white_users[index]
+                file_write(CONST["F_WHITE_LIST"], l_white_users, "w")
+                tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global Whitelist.")
+            else:
+                tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global Whitelist.")
 
 ####################################################################################################
 
@@ -1671,7 +1808,8 @@ def main():
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
-    #dp.add_handler(CommandHandler("captcha", cmd_captcha)) # Just for debug
+    dp.add_handler(CommandHandler("whitelist", cmd_whitelist, pass_args=True))
+    dp.add_handler(CommandHandler("captcha", cmd_captcha))
     # Set to dispatcher a not-command text messages handler
     dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
     # Set to dispatcher not text messages handler

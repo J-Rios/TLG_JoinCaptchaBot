@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     16/05/2020
 Version:
-    1.9.3
+    1.10.0
 '''
 
 ####################################################################################################
@@ -35,6 +35,9 @@ CONST = {
     # Bot Token (get it from @BotFather)
     "TOKEN": "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 
+    # Bot Owner (i.e. "@JoseTLG" or "123456789")
+    "BOT_OWNER": "XXXXXXXXX",
+
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
 
@@ -43,6 +46,9 @@ CONST = {
 
     # Directory where create/generate temporary captchas
     "CAPTCHAS_DIR": SCRIPT_PATH + "/data/captchas",
+
+    # Global whitelist file path (to allow whitelist blind users in all groups)
+    "F_WHITE_LIST": SCRIPT_PATH + "/data/whitelist.txt",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",
@@ -87,6 +93,14 @@ CONST = {
     # don't have language configuration
     "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
 
+    # Command just allow for Bot owner
+    "CMD_JUST_ALLOW_OWNER": "This command just can be use by the Bot Owner",
+
+    # Whitelist usage
+    "WHITELIST_USAGE": "Command usage (user ID or Alias):\n" \
+        "/whitelist add @peter123\n" \
+        "/whitelist rm 123456789",
+
     # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     "F_TLDS": "tlds-alpha-by-domain.txt",
 
@@ -123,7 +137,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.9.3 (16/05/2020)"
+    "VERSION": "1.10.0 (16/05/2020)"
 }
 
 
