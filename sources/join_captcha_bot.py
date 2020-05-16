@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     16/05/2020
 Version:
-    1.10.0
+    1.10.1
 '''
 
 ####################################################################################################
@@ -44,6 +44,7 @@ from lib.multicolor_captcha_generator.img_captcha_gen import CaptchaGenerator
 ####################################################################################################
 
 ### Globals ###
+updater = None
 files_config_list = []
 to_delete_in_time_messages_list = []
 to_delete_join_messages_list = []
@@ -58,11 +59,15 @@ CaptchaGen = CaptchaGenerator(2)
 
 def signal_handler(signal,  frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
-    printts("Termination signal received. Releasing resources (Waiting for files to be closed)")
+    global updater
+    printts("Termination signal received. Releasing resources (Waiting for files to be closed)...")
     # Acquire all messages and users files mutex to ensure not read/write operation on them
     for chat_config_file in files_config_list:
         chat_config_file["File"].lock.acquire()
     printts("All resources successfully released.")
+    if updater is not None:
+        printts("Closing Bot...")
+        updater.stop()
     # Close the program
     printts("Exit")
     exit(0)
@@ -1776,6 +1781,7 @@ def check_time_to_kick_not_verify_users(bot):
 
 def main():
     '''Main Function'''
+    global updater
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         printts("Error: Bot Token has not been set.")
