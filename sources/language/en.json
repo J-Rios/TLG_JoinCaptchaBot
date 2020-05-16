@@ -69,31 +69,28 @@
         "Set if you want to enable or disable recently joined user restrictions to send non-text messages (Don't allow a user to send media or other messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890",
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID is already in ignore list.",
+        "This ID/alias is already in ignore list.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
         "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "This ID is incorrect, it has to consist only of numbers.",
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "This ID has been added successfully!",
-
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Unfortunately, using this command is forbidden for private chats.",
+        "The ID/alias has been added successfully!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890",
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "This ID has been removed successfully!",
+        "The ID/alias has been removed successfully!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "This ID is not in ignore list, nothing was done.",
+        "The ID/alias is not in ignore list, nothing was done.",
 
     "IGNORE_LIST_EMPTY":
         "Ignore list of the chat is empty.",

@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/05/2020
+    16/05/2020
 Version:
-    1.9.1
+    1.9.2
 '''
 
 ####################################################################################################
@@ -80,8 +80,8 @@ CONST = {
     # Custom Welcome message max length
     "MAX_WELCOME_MSG_LENGTH": 3968,
 
-    # Maximum number of users ID allowed in each chat ignore list
-    "IGNORE_LIST_MAX_ID": 100,
+    # Maximum number of users allowed in each chat ignore list
+    "IGNORE_LIST_MAX": 100,
 
     # Command don't allow in private chat text (just english due in private chats we 
     # don't have language configuration

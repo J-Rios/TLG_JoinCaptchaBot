@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/05/2020
+    16/05/2020
 Version:
-    1.9.1
+    1.9.2
 '''
 
 ####################################################################################################
@@ -492,6 +492,37 @@ def tlg_restrict_user(bot, chat_id, user_id, send_msg=None, send_media=None,
 
 ####################################################################################################
 
+### Auxiliar Functions ###
+
+def is_user_inignored_list(chat_id, user):
+    '''Check if user is in ignored users list.'''
+    ignored_users = get_chat_config(chat_id, "Ignore_List")
+    if user.id in ignored_users:
+        return True
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+        if user_alias in ignored_users:
+            return True
+    return False
+
+
+def is_valid_user_id_or_alias(user_id_alias):
+    '''Check if given telegram ID or alias has a valid expected format.'''
+    # Check if it is a valid alias (start with a @ and have 5 characters or more)
+    if user_id_alias[0] == '@':
+        if len(user_id_alias) > 5:
+            return True
+    # Check if it is a valid ID (is a number larger than 0)
+    try:
+        user_id = int(user_id_alias)
+        if user_id > 0:
+            return True
+    except ValueError:
+        return False
+    return False
+
+####################################################################################################
+
 ### Received Telegram not-command messages handlers ###
 
 def msg_new_user(update: Update, context: CallbackContext):
@@ -568,8 +599,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                 printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
                 continue
             # Ignore if the member that has joined is in ignore list
-            ignored_ids = get_chat_config(chat_id, "Ignore_List")
-            if join_user_id in ignored_ids:
+            if is_user_inignored_list(chat_id, join_user):
                 printts("[{}] User is in ignore list. Skipping the captcha process.".format(chat_id))
                 continue
             # Check and remove previous join messages of that user (if any)
@@ -1208,30 +1238,30 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
     allow_command = True
-    if chat_type != "private":
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if not is_admin:
-            allow_command = False
-    else: # private chats are forbidden for this command
-        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+    if chat_type == "private":
+        update.message.reply_text(TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if not is_admin:
+        allow_command = False
     if allow_command:
         if len(args) >= 1:
-            ignore_list = get_chat_config(chat_id, "Ignore_List")
-            try: # conversion of an incorrect string to integer can return ValueError
-                user_id = int(args[0])
+            user_id_alias = args[0]
+            # Check if it is a valid user ID or alias
+            if is_valid_user_id_or_alias(user_id_alias):
+                ignore_list = get_chat_config(chat_id, "Ignore_List")
                 # Ignore list limit enforcement
-                if len(ignore_list) < CONST["IGNORE_LIST_MAX_ID"]:
-                    if user_id not in ignore_list:
-                        ignore_list.append(user_id)
+                if len(ignore_list) < CONST["IGNORE_LIST_MAX"]:
+                    if user_id_alias not in ignore_list:
+                        ignore_list.append(user_id_alias)
                         save_config_property(chat_id, "Ignore_List", ignore_list)
                         bot_msg = TEXT[lang]["IGNORE_LIST_ADD_SUCCESS"]
                     else:
                         bot_msg = TEXT[lang]["IGNORE_LIST_ADD_DUPLICATED"]
                 else:
                     bot_msg = TEXT[lang]["IGNORE_LIST_ADD_LIMIT_EXCEEDED"]
-            except ValueError:
-                bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
+            else:
+                bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INVALID"]
         else:
             bot_msg = TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"]
     elif not is_admin:
@@ -1251,27 +1281,23 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
     allow_command = True
-    if chat_type != "private":
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if not is_admin:
-            allow_command = False
-    else: # private chats are forbidden for this command
-        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+    if chat_type == "private":
+        update.message.reply_text(TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if not is_admin:
+        allow_command = False
     if allow_command:
         if len(args) >= 1:
             ignore_list = get_chat_config(chat_id, "Ignore_List")
-            try: # conversion of an incorrect string to integer can return ValueError
-                user_id = int(args[0])
-                try: # user_id can be absent in ignore_list
-                    index = ignore_list.index(user_id)
-                    del ignore_list[index]
-                    save_config_property(chat_id, "Ignore_List", ignore_list)
-                    bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_SUCCESS"]
-                except ValueError:
-                    bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_IN_LIST"]
+            user_id_alias = args[0]
+            try: # user_id_alias can be absent in ignore_list
+                index = ignore_list.index(user_id_alias)
+                del ignore_list[index]
+                save_config_property(chat_id, "Ignore_List", ignore_list)
+                bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_SUCCESS"]
             except ValueError:
-                bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INCORRECT_ID"]
+                bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_IN_LIST"]
         else:
             bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"]
     elif not is_admin:
@@ -1289,20 +1315,16 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     user_id = update.message.from_user.id
     chat_type = update.message.chat.type
     lang = get_chat_config(chat_id, "Language")
-    allow_command = True
-    if chat_type != "private":
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if not is_admin:
-            allow_command = False
-    else: # private chats are forbidden for this command
-        update.message.reply_text(TEXT[lang]["IGNORE_LIST_NO_PRIVATE_CHATS"])
+    if chat_type == "private":
+        update.message.reply_text(TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
-    if allow_command:
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if is_admin:
         ignore_list = get_chat_config(chat_id, "Ignore_List")
         if not ignore_list:
             bot_msg = TEXT[lang]["IGNORE_LIST_EMPTY"]
         else:
-            bot_msg = " ".join([str(x) for x in ignore_list])
+            bot_msg = "\n".join([str(x) for x in ignore_list])
     elif not is_admin:
         bot_msg = TEXT[lang]["CMD_NOT_ALLOW"]
     else:

@@ -69,31 +69,28 @@
         "Especifica si quieres activar o desactivar que se le aplique restricción a los nuevos usuarios para que solo puedan enviar mensajes de texto (no permitir que envíen mensajes multimedia u otros a menos que un Admin manualmente se los quite posteriormente).\n\nEjemplo:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Por favor, pon el ID del usuario (no el nombre ni el alias) después del comando.\n\nEjemplo:\n/add_ignore 1234567890",
+        "Por favor, pon el ID o el alias del usuario después del comando.\n\nEjemplos:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "Este ID ya se encuentra en la lista de ignorados.",
+        "Este ID/alias ya se encuentra en la lista de ignorados.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
         "Has alcanzado el limite máximo de usuarios añadidos a la lista de ignorados, elimina alguno para añadir más.",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "El ID no es válido, solo puede contener números.",
+    "IGNORE_LIST_ADD_INVALID":
+        "Este ID/alias no es válido.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "El ID ha sido añadido correctamente a la lista de usuarios ignorados!",
-
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Este comando no está soportado en chats privados.",
+        "El ID/alias ha sido añadido correctamente a la lista de usuarios ignorados!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Por favor, pon el ID del usuario (no el nombre ni el alias) después del comando.\n\nEjemplo:\n/remove_ignore 1234567890",
+        "Por favor, pon el ID o el alias del usuario después del comando.\n\nEjemplo:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "El ID ha sido eliminado correctamente de la lista de usuarios ignorados!",
+        "El ID/alias ha sido eliminado correctamente de la lista de usuarios ignorados!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "El ID proporcionado no se encuentra en la lista de usuarios ignorados.",
+        "El ID/alias proporcionado no se encuentra en la lista de usuarios ignorados.",
 
     "IGNORE_LIST_EMPTY":
         "La lista de usuarios ignorados está vacía.",

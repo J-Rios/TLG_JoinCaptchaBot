@@ -69,28 +69,25 @@
         "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/add_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID is already in ignore list.\n\n[This text needs translate to actual configured language]",
+        "This ID/alias is already in ignore list.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
     "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "This ID is incorrect, it has to consist only of numbers.\n\n[This text needs translate to actual configured language]",
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "This ID has been added successfully!\n\n[This text needs translate to actual configured language]",
-
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Unfortunately, using this command is forbidden for private chats.\n\n[This text needs translate to actual configured language]",
+        "The ID/alias has been added successfully!\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID (not username) after the command.\n\nExample:\n/remove_ignore 1234567890\n\n[This text needs translate to actual configured language]",
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "This ID has been removed successfully!\n\n[This text needs translate to actual configured language]",
+        "The ID/alias has been removed successfully!\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
         "This ID is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",

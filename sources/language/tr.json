@@ -69,7 +69,7 @@
         "Metin olmayan mesajlar göndermek için yeni katılan kullanıcıların kısıtlamasını etkinleştirmek veya devre dışı bırakmak isteyip istemediğinizi belirleyin (Kullanıcının metin yerine medya veya başka mesaj göndermesine izin verme. Yöneticiler bu izinleri gelecekte kullanıcılara manuel olarak verebilir).\n\nÖrnek:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Lütfen komuttan sonra kullanıcının ID'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/add_ignore 1234567890",
+        "Lütfen komuttan sonra kullanıcının ID/alias'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
         "Bu kimlik zaten yoksayma listesinde.",
@@ -77,17 +77,14 @@
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
         "Maalesef yoksayma listesine eklenen maksimum kullanıcı sınırına ulaştınız, daha fazlasını eklemek için birini kaldırın.",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "Bu kimlik yanlış, sadece rakamlardan oluşmalı.",
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_SUCCESS":
         "Bu kimlik başarıyla eklendi!",
 
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Ne yazık ki, bu komutu özel sohbetler için kullanmak yasaktır.",
-
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Lütfen komuttan sonra kullanıcının ID'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/remove_ignore 1234567890",
+        "Lütfen komuttan sonra kullanıcının ID/alias'sini (kullanıcı adı değil) yerleştirin.\n\nÖrnek:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
         "Bu kimlik başarıyla kaldırıldı!",

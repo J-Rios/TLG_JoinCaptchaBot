@@ -69,31 +69,28 @@
         "Defina se você deseja ativar ou desativar a restrição de novos usuários para o envio de mensagens que não textuais (não permitir que o usuário envie mídia ou outras mensagens além de mensagens de texto. Os administradores podem conceder essas permissões manualmente aos usuários novamente no futuro).\n\nExemplo:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Informe o ID do usuário (não o nome de usuário) após o comando.\n\nExemplo:\n/add_ignore 1234567890",
+        "Informe o ID/alias do usuário após o comando.\n\nExemplo:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "Este ID já está na lista de ignorados.",
+        "Este ID/alias já está na lista de ignorados.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
         "Infelizmente, você atingiu o limite máximo de usuários adicionados na lista de ignorados. Remova alguém para adicionar mais.",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "Esse ID está incorreto. Ele deve conter apenas números.",
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "Este ID foi adicionado com sucesso!",
-
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Infelizmente, o uso deste comando é proibido em chats privados.",
+        "Este ID/alias foi adicionado com sucesso!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Informe o ID do usuário (não o nome de usuário) após o comando.\n\nExemplo:\n/remove_ignore 1234567890",
+        "Informe o ID/alias do usuário após o comando.\n\nExemplo:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "Este ID foi removido com sucesso!",
+        "Este ID/alias foi removido com sucesso!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "Este ID não está na lista de ignorados, nada para fazer.",
+        "Este ID/alias não está na lista de ignorados, nada para fazer.",
 
     "IGNORE_LIST_EMPTY":
         "Lista de ignorados do chat está vazia.",

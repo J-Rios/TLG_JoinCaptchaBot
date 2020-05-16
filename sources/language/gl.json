@@ -69,31 +69,28 @@
         "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Coloca a ID do usuario (non o nome de usuario) após o comando. \n\nExemplo:\n/add_ignore 1234567890",
+        "Coloca a ID/alias do usuario após o comando. \n\nExemplo:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "Esta ID xa está na listaxe de ignorados.",
+        "Esta ID/alias xa está na listaxe de ignorados.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
         "Sentímolo, acadaches o límite máximo de usuarios engadidos na listaxe de ignorados, elimina alguén para engadir máis.",
 
-    "IGNORE_LIST_ADD_INCORRECT_ID":
-        "Esta ID é incorrecta, ten que ter só números.",
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "Esta ID foi engadida de xeito correcto!",
-
-    "IGNORE_LIST_NO_PRIVATE_CHATS":
-        "Sentímolo, o emprego deste comando está prohibido para conversas privadas.",
+        "Esta ID/alias foi engadida de xeito correcto!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Por favor, coloca a ID do usuario (non o nome do usuario) após o comando.\n\nExemplo:\n/remove_ignore 1234567890",
+        "Por favor, coloca a ID/alias do usuario após o comando.\n\nExemplo:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "Esta ID foi eliminada de xeito correcto!",
+        "Esta ID/alias foi eliminada de xeito correcto!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "Esta ID non está na listaxe de ignorados, non se fixo ren.",
+        "Esta ID/alias non está na listaxe de ignorados, non se fixo ren.",
 
     "IGNORE_LIST_EMPTY":
         "Ignorar a listaxe da conversa que está baleira.",
