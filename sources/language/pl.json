@@ -3,173 +3,172 @@
         "Witaj, jestem botem wysyłającym kod captcha każdemu nowemu użytkownikowi w grupie i wyrzucającym każdego, kto nie rozwiąże kodu w określonym czasie.\n\nJeśli użytkownik spróbuje dołączyć 5 razy bez rozwiązania captcha, zakładam, że ten \"użytkownik\" jest botem i zostanie zbanowany. Ponadto, każda wiadomość z linkiem URL wysłanym przez nowego \"użytkownika\" zanim rozwiąże on captcha zostanie uznana za spam i usunięta.\n\nPamiętaj by dać mi uprawnienia administratora bym mógł zarządzać użytkownikami i wiadomościami.\n\nSprawdź komendę /help by dowiedzieć się więcej jak mnie używać.\n\nJestem przydatny? Sprawdź komendę /about i rozważ darowiznę, bym nadal był aktywnie rozwijany dla Ciebie.",
 
     "HELP":
-        "Pomoc bota:\n————————————————\n- Jestem botem wysyłającym kod captcha każdemu nowemu użytkownikowi w grupie i wyrzucającym każdego, kto nie rozwiąże kodu w określonym czasie.\n\n- Jeśli użytkownik spróbuje dołączyć 5 razy bez rozwiązania captcha, zakładam, że ten \"użytkownik\" jest botem i zostanie zbanowany.\n\n- Każda wiadomość z linkiem URL wysłanym przez nowego \"użytkownika\" zanim rozwiąże on captcha zostanie uznana za spam i usunięta.\n\n- Musisz mi przyznać prawa administratora bym mógł zarządzać użytkownikami i wiadomościami.\n\n- By zachować czystość na grupie, automatycznie usuwam wszystkie wiadomości związane ze mną gdy captcha nie zostało rozwiązane i użytkownik został zbanowany (po 5 minutach).\n\n- Domyślny czas na rozwiązanie captcha to 5 minut, ale można to zmienić komendą /time.\n\n- Możesz włączyć lub wyłączyć captcha używając komend /enable oraz /disable.\n\n- Komend konfiguracyjnych używać mogą tylko administratorzy grupy.\n\n- Możesz zmienić język, którym się z Tobą porozumiewam używając komendy /language.\n\n- Możesz zmienić stopień trudności captcha komendą /difficulty.\n\n- Możesz ustawić by captcha używało tylko cyfr (domyślnie) lub wszystkich cyfr i liter używając komendy /captcha_mode.\n\n- Możesz wprowadzić własną wiadomość powitalną komendą /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- Check /commands to get a list of all avaliable commands, and a short description of all of them.",
+        "Pomoc bota:\n————————————————\n- Jestem botem wysyłającym kod captcha każdemu nowemu użytkownikowi w grupie i wyrzucającym każdego, kto nie rozwiąże kodu w określonym czasie.\n\n- Jeśli użytkownik spróbuje dołączyć 5 razy bez rozwiązania captcha, zakładam, że ten \"użytkownik\" jest botem i zostanie zbanowany.\n\n- Każda wiadomość z linkiem URL wysłanym przez nowego \"użytkownika\" zanim rozwiąże on captcha zostanie uznana za spam i usunięta.\n\n- Musisz mi przyznać prawa administratora bym mógł zarządzać użytkownikami i wiadomościami.\n\n- By zachować czystość na grupie, automatycznie usuwam wszystkie wiadomości związane ze mną gdy captcha nie zostało rozwiązane i użytkownik został zbanowany (po 5 minutach).\n\n- Domyślny czas na rozwiązanie captcha to 5 minut, ale można to zmienić komendą /time.\n\n- Możesz włączyć lub wyłączyć captcha używając komend /enable oraz /disable.\n\n- Komend konfiguracyjnych używać mogą tylko administratorzy grupy.\n\n- Możesz zmienić język, którym się z Tobą porozumiewam używając komendy /language.\n\n- Możesz zmienić stopień trudności captcha komendą /difficulty.\n\n- Możesz ustawić by captcha używało tylko cyfr (domyślnie) lub wszystkich cyfr i liter używając komendy /captcha_mode.\n\n- Możesz wprowadzić własną wiadomość powitalną komendą /welcome_msg.\n\n- Możesz włączyć ograniczenie dla nowych użytkowników do wysyłania tylko wiadomości tekstowych komendą /restrict_non_text.\n\n- Sprawdź /commands bym pokazał Ci listę wszystkich dostępnych komend oraz ich krótkie opisy.",
 
     "CMD_NOT_ALLOW":
-        "Only an Admin can use this command.",
+        "Tylko admin może użyć tej komendy.",
 
     "LANG_CHANGE":
-        "Language changed to English.",
+        "Język zmieniono na Polski.",
 
     "LANG_SAME":
-        "I am already in English.\n\nSupported languages:\n{}",
+        "Już mówię po polsku.\n\nWspierane języki:\n{}",
 
     "LANG_BAD_LANG":
-        "Invalid language provided.\n\nSupported languages:\n{}",
+        "Podałeś zły język.\n\nWspierane języki:\n{}",
 
     "LANG_NOT_ARG":
-        "The command needs a language to set.\n\nExamples:\n{}",
+        "Komenda wymaga jeszcze kodu języka.\n\nPrzykłady:\n{}",
 
     "TIME_CHANGE":
-        "Time to solve the captcha successfully changed to {} minutes.",
+        "Czas na rozwiązanie captcha pomyślnie zmieniony na ilość minut równą {}.",
 
     "TIME_MAX_NOT_ALLOW":
-        "The maximum allowed captcha solve time is 120 minutes. The time has not been changed.",
+        "Maksymalny czas na rozwiązanie captcha to 120 minut. Nie zmieniono czasu.",
 
     "TIME_NOT_NUM":
-        "The provided time is not an integer number.",
+        "Podany czas nie jest liczbą całkowitą.",
 
     "TIME_NOT_ARG":
-        "The command needs a time value to set (in minutes).\n\nExamples:\n/time 3\n/time 5\n/time 10",
+        "Komenda wymaga ustawienia wartości czasu (w minutach).\n\nPrzykłady:\n/time 3\n/time 5\n/time 10",
 
     "DIFFICULTY_CHANGE":
-        "Captcha difficulty successfully changed to level {}.",
+        "Stopień trudności captcha pomyślnie zmieniony na {}.",
 
     "DIFFICULTY_NOT_NUM":
-        "The provided captcha difficulty is not a number.",
+        "Podany stopień trudności captcha nie jest numerem.",
 
     "DIFFICULTY_NOT_ARG":
-        "The command needs a difficulty level to set (from 1 to 5).\n\nExamples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "Komenda wymaga ustawienia poziomu trudności captcha (od 1 do 5).\n\nPrzykłady:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
-        "Captcha character-mode successfully changed to \"{}\".",
+        "Tryb znaków captcha pomyślnie zmieniony na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Invalid captcha character-mode. Supported modes are: \"nums\", \"hex\" and \"ascii\".\n\nExample:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Niepoprawny tryb znaków captcha. Wspierane tryby to: \"nums\", \"hex\" oraz \"ascii\".\n\nPrzykład:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "The command needs a character-mode to set. Available modes are:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Komenda wymaga ustawienia trybu znaków captcha. Dostępne tryby to:\n- Numeryczny (\"nums\").\n- Hexadecymalny, cyfry i litery A-F (\"hex\").\n- cyfry i litery A-Z (\"ascii\").\n\nPrzykłady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
 
     "WELCOME_MSG_SET":
-        "Welcome message successfully configured.",
+        "Wiadomość powitalna skonfigurowana pomyślnie.",
 
     "WELCOME_MSG_UNSET":
-        "Welcome message disabled.",
+        "Wiadomość powitalna wyłączona.",
 
     "WELCOME_MSG_SET_NOT_ARG":
-        "Place the welcome message after the command.\n\nExample:\n/welcome_msg Hi $user, welcome to the group and remember to be respectful with other users.\n\nDisable the message:\n/welcome_msg disable",
+        "Podaj nową wiadomość po komendzie.\n\nPrzykład:\n/welcome_msg Cześć $user, witamy na grupie i pamiętaj o szacunku wobec innych.\n\nWyłączanie wiadomości powitalnej:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Restriction to send non-text messages for new users enabled. I'm gonna remove recently joined user messages that are not text messages.",
+        "Ograniczenie do wiadomości tekstowych dla nowych użytkowników włączone. Będę usuwał wszystkie wiadomości nowych użytkowników, które nie są tekstem.",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Restriction to send non-text messages for new users disabled.",
+        "Ograniczenie do wiadomości tekstowych dla nowych użytkowników wyłączone.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Set if you want to enable or disable recently joined user restrictions to send non-text messages (Don't allow a user to send media or other messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable",
+        "Ustaw jeśli chcesz włączyć lub wyłączyć ograniczenie do wiadomości tekstowych dla nowych użytkowników (Nie pozwalaj użytkownikom wysyłać innych wiadomości niż tekstowe. Administratorzy mogą zmienić te ustawienia ręcznie).\n\nPrzykład:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter",
+        "Wprowadź ID/Użytkownika po komendzie.\n\nPrzykład:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID/alias is already in ignore list.",
+        "Ten ID/Użytkownik już jest na liście ignorowanych.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.",
+        "Osiągnąłeś limit użytkowników na liście ignorowanych, usuń kogoś by dodać nowego.",
 
     "IGNORE_LIST_ADD_INVALID":
-        "This ID/alias is invalid.",
+        "Ten ID/Użytkownik jest niepoprawny.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "The ID/alias has been added successfully!",
+        "ID/Użytkownik dodany pomyślnie!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+        "Podaj ID/Użytkownika po komendzie.\n\nPrzykład:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "The ID/alias has been removed successfully!",
+        "ID/Użytkownik usunięty pomyślnie!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "The ID/alias is not in ignore list, nothing was done.",
+        "Ten ID/Użytkownik nie jest na liście ignorowanych, nic nie zmieniono.",
 
     "IGNORE_LIST_EMPTY":
-        "Ignore list of the chat is empty.",
+        "Lista ignorowanych jest pusta.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Hello {}, welcome to {}, please write a message with the numbers and/or letters that appear in this image to verify that you are a human. If you don't solve the captcha in {} mins, you will be automatically kicked out of the group.",
+        "Cześć {}, witamy na {}, przepisz znaki z obrazka by udowodnić, że jesteś człowiekiem. Jeśli tego nie zrobisz w ciągu {} minut(y) zostaniesz automatycznie usunięty z grupy.",
 
     "CAPTCHA_SOLVED":
-        "Captcha solved, user verified.\nWelcome to the group {}",
+        "Pomyślnie rozwiązano captcha, użytkownik uwierzytelniony.\nWitamy na {}",
 
     "CAPTCHA_INCORRECT_0":
-        "That is not the correct code. Try again...",
+        "To nie jest poprawny kod. Spróbuj ponownie...",
 
     "CAPTCHA_INCORRECT_1":
-        "That is not the correct number. Check closely, the captcha has 4 numbers...",
+        "To nie są właściwe cyfry. Sprawdź uważnie, kod ma 4 cyfry...",
 
     "NEW_USER_KICK":
-        "{} has not completed the captcha in time. \"User\" was kicked out.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. \"User\" został wyrzucony.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} has not completed the captcha in time. I tried to kick out the \"User\", but I don't have administration rights to kick out users from the group.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale nie mam uprawnień do wyrzucania użytkowników.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} has not completed the captcha in time. I tried to kick out the \"User\", but the user is not in the group any more (has left the group or has been kicked out by an Admin).",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony przez admina).",
 
     "BOT_CANT_KICK":
-        "{} has not completed the captcha in time. I tried to kick out the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
 
     "CANT_DEL_MSG":
-        "I tried to delete this message, but I don't have the administration rights to remove messages that have not been sent by me.",
+        "Próbowałem usunąć tą wiadomość, ale nie mam uprawnień do usuwanie nie moich wiadomości.",
 
     "NEW_USER_BAN":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\".",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. \"User\" został zbanowany. By mógł dołączyć ponownie, administrator musi ręcznie zdjąć ograniczenia z \"user\".",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tride to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"User\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony/zbanowany przez admina).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"User\", nie mam uprawnień do banowania użytkowników.",
 
     "BOT_CANT_BAN":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha.  Próbowałem zbanować \"User\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
 
     "SPAM_DETECTED_RM":
-        "Detected a message with an URL (or alias) from {}, who has not solved the captcha yet. The message has been removed for the sake of keeping Telegram free of Spam :)",
+        "Wykryto wiadomość z linkiem URL od {}, który jeszcze nie rozwiązał captcha. Wiadomość usunięto, by Telegram był wolny od Spamu wszelkiego :)",
 
     "SPAM_DETECTED_NOT_RM":
-        "Message with an URL (or an alias) detected from {}, who has not solved the captcha yet. I tried to remove the Spam message, but I don't have administration rights to remove messages that have not been sent by me.",
+        "Wykryto wiadomość z linkiem URL od {}, który jeszcze nie rozwiązał captcha. Próbowałem usunąć tą wiadomość, ale nie mam uprawnień do usuwania nie moich wiadomości.",
 
     "NOT_TEXT_MSG_ALLOWED":
-        "Removed a non-text message (image, audio, file...) from {}, for the sake of keeping Telegram free of Spam.\n\nYou can send non-text messages after you have solved the captcha.",
+        "Usunąłem wiadomość nie tekstową (obraz, audio, plik...) od {}, by Telegram był wolny od Spamu wszelkiego.\n\nMożna wysyłać wiadomości nie tekstowe po rozwiązaniu captcha.",
 
     "OTHER_CAPTCHA_BTN_TEXT":
-        "Other Captcha",
+        "Nowe Captcha",
 
     "BOT_LEAVE_CHANNEL":
-        "This Bot can't be used in channels, just in groups.",
+        "Tego bota nie można używać na kanałach, tylko w grupach.",
 
     "ENABLE":
-        "Captcha protection enabled. Disable it with /disable command.",
+        "Zabezpieczenie captcha włączone. Wyłączysz je komendą /disable",
 
     "DISABLE":
-        "Captcha protection disabled. Enable it with /enable command.",
+        "Zabezpieczenie captcha wyłączone. Włączysz je komendą /enable",
 
     "ALREADY_ENABLE":
-        "The captcha protection is already enabled.",
+        "Zabezpieczenie captcha jest już włączone.",
 
     "ALREADY_DISABLE":
-        "The captcha protection is already disabled.",
+        "Zabezpieczenie captcha jest już wyłączone.",
 
     "CAN_NOT_GET_ADMINS":
-        "Can't use this command in the current chat.",
+        "Nie mogę użyć tej komendy w tym czacie.",
 
     "VERSION":
-        "Current Bot version: {}",
+        "Aktualna wersja bota: {}",
 
     "ABOUT_MSG":
-        "This Bot is free software and open-sourced under the GNU-GPL license.\nBot Developed by {}.\n\nYou can check the code here:\n{}\n\nDo you like my work? Buy me a coffee.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "List of commands:\n————————————————\n/start - Shows the initial information about the bot.\n\n/help - Shows the help information.\n\n/commands - Shows this message. Information about all the available commands and their description.\n\n/language - Allows to change the language of the bot's messages.\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha character-mode (nums: just numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars).\n\n/welcome_msg - Allows to configure a welcome message that is sent after solving the captcha.\n\n/restrict_non_text - Enable apply restriction to recently joined users to send non-text messages.\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/version - Show the version of the Bot.\n\n/about - Show about info."
-}
+        "Lista komend:\n————————————————\n/start - pokazuje wstępne informacje o bocie.\n\n/help - pokazuje pomoc.\n\n/commands - pokazuje tą wiadomość. Informacje o wszystkich komendach oraz ich krótkie opisy.\n\n/language - pozwala zmienić język bota.\n\n/time - pozwala zmienić czas na rozwiązanie captcha.\n\n/difficulty - pozwala zmienić stopień trudności captcha (od 1 do 5).\n\n/captcha_mode - pozwala zmienić tryb znaków captcha (nums: tylko cyfry, hex: cyfry oraz znaki A-F, ascii: cyfry oraz znaki A-Z).\n\n/welcome_msg - pozwala na konfigurację wiadomości powitalnej po rozwiązaniu captcha.\n\n/restrict_non_text - opcja ograniczenia wiadomości do tylko tekstowych.\n\n/add_ignore - nie pytaj zignorowanych użytkowników o captcha.\n\n/remove_ignore - przestań ignorować użytkownika.\n\n/ignore_list - lista ignorowanych użytkowników/ID.\n\n/enable - włącza zabezpieczenie captcha.\n\n/disable - wyłącza zabezpieczenie captcha.\n\n/version - pokazuje wersję bota.\n\n/about - pokazuje inne informcje o bocie."
