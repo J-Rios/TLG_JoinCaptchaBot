@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    16/05/2020
+    17/05/2020
 Version:
-    1.10.1
+    1.10.2
 '''
 
 ####################################################################################################
@@ -145,7 +145,7 @@ def create_parents_dirs(file_path):
         if not path.exists(parentdirpath):
             makedirs(parentdirpath, 0o775)
     except Exception as e:
-        print("ERROR - Can't create parents directories of {}. {}".format(file_path, str(e)))
+        printts("ERROR - Can't create parents directories of {}. {}".format(file_path, str(e)))
 
 
 def file_write(file_path, text="", mode="a"):
@@ -153,7 +153,7 @@ def file_write(file_path, text="", mode="a"):
     # Create file path directories and determine if file exists
     create_parents_dirs(file_path)
     if not path.exists(file_path):
-        print("File {} not found, creating it...".format(file_path))
+        printts("File {} not found, creating it...".format(file_path))
     # Try to Open and write to the file
     try:
         with open(file_path, mode, encoding="utf-8") as f:
@@ -163,7 +163,7 @@ def file_write(file_path, text="", mode="a"):
                 for line in text:
                     f.write("{}\n".format(line))
     except Exception as e:
-        print("ERROR - Can't write to file {}. {}".format(file_path, str(e)))
+        printts("ERROR - Can't write to file {}. {}".format(file_path, str(e)))
 
 
 def file_read(file_path):
@@ -180,8 +180,20 @@ def file_read(file_path):
                 line = line.replace("\n", "")
                 list_read_lines.append(line)
     except Exception as e:
-        print("Error when opening file \"{}\". {}".format(file_path, str(e)))
+        printts("Error when opening file \"{}\". {}".format(file_path, str(e)))
     return list_read_lines
+
+
+def list_remove_element(the_list, the_element):
+    '''Safe remove an element from a list.'''
+    try:
+        i = the_list.index(the_element)
+        del the_list[i]
+    except Exception as e:
+        # The element could not be in the list
+        printts("ERROR - Can't remove element from a list. {}".format(str(e)))
+        return False
+    return True
 
 ####################################################################################################
 
@@ -558,8 +570,7 @@ def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_m
         msg = to_delete_join_messages_list[i]
         if (msg["user_id"] == msg_user_id) and (msg["chat_id"] == msg_chat_id):
             msg[message_id_key] = new_msg_id_value
-            if msg in to_delete_join_messages_list:
-                to_delete_join_messages_list.remove(msg)
+            list_remove_element(to_delete_join_messages_list, msg)
             to_delete_join_messages_list.append(msg)
             break
         i = i + 1
@@ -604,7 +615,7 @@ def msg_new_user(update: Update, context: CallbackContext):
     # Leave the chat if it is a channel
     msg = getattr(update, "message", None)
     if msg.chat.type == "channel":
-        print("Bot try to be added to a channel")
+        printts("Bot try to be added to a channel")
         tlg_send_selfdestruct_msg_in(bot, chat_id, TEXT[lang]["BOT_LEAVE_CHANNEL"], 1)
         tlg_leave_chat(bot, chat_id)
         return
@@ -680,8 +691,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join0"].message_id)
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                     tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
-                    if msg in to_delete_join_messages_list:
-                        to_delete_join_messages_list.remove(msg)
+                    list_remove_element(to_delete_join_messages_list, msg)
                 i = i + 1
             # Ignore if the captcha protection is not enable in this chat
             captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -886,8 +896,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                     #tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join0"].message_id)
                     tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join1"])
                     tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
-                    if msg_del in to_delete_join_messages_list:
-                        to_delete_join_messages_list.remove(msg_del)
+                    list_remove_element(to_delete_join_messages_list, msg_del)
                     break
                 j = j + 1
             # Remove user captcha numbers message
@@ -895,8 +904,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
             bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
             # Set Bot to auto-remove captcha solved message too after 5mins
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
-            if new_user in new_users_list:
-                new_users_list.remove(new_user)
+            list_remove_element(new_users_list, new_user)
             # Check for custom welcome message and send it
             welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
             if welcome_msg != "-":
@@ -1390,12 +1398,10 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     # Check and remove user ID/alias form ignore list
     ignore_list = get_chat_config(chat_id, "Ignore_List")
     user_id_alias = args[0]
-    try: # user_id_alias can be absent in ignore_list
-        index = ignore_list.index(user_id_alias)
-        del ignore_list[index]
+    if list_remove_element(ignore_list, user_id_alias):
         save_config_property(chat_id, "Ignore_List", ignore_list)
         bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_SUCCESS"]
-    except ValueError:
+    else:
         bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_IN_LIST"]
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
@@ -1603,9 +1609,7 @@ def cmd_whitelist(update: Update, context: CallbackContext):
                 tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global Whitelist.")
             return
         if add_rm == "rm":
-            if user in l_white_users:
-                index = l_white_users.index(user)
-                del l_white_users[index]
+            if list_remove_element(l_white_users, user):
                 file_write(CONST["F_WHITE_LIST"], l_white_users, "w")
                 tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global Whitelist.")
             else:
@@ -1639,8 +1643,7 @@ def selfdestruct_messages(bot):
                     sent_msg["Chat_id"], sent_msg["Msg_id"]))
             try:
                 if bot.delete_message(sent_msg["Chat_id"], sent_msg["Msg_id"]):
-                    if sent_msg in to_delete_in_time_messages_list:
-                        to_delete_in_time_messages_list.remove(sent_msg)
+                    list_remove_element(to_delete_in_time_messages_list, sent_msg)
             except Exception as e:
                 printts("[{}] {}".format(sent_msg["Chat_id"], str(e)))
                 # The bot has no privileges to delete messages
@@ -1654,8 +1657,7 @@ def selfdestruct_messages(bot):
                         printts(str(e))
                         printts(str(ee))
                         pass
-                if sent_msg in to_delete_in_time_messages_list:
-                    to_delete_in_time_messages_list.remove(sent_msg)
+                list_remove_element(to_delete_in_time_messages_list, sent_msg)
         i = i + 1
 
 
@@ -1673,8 +1675,7 @@ def check_time_to_kick_not_verify_users(bot):
             # captcha 5 times in the past hour)
             if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
                 # Remove user from new users list
-                if new_user in new_users_list:
-                    new_users_list.remove(new_user)
+                list_remove_element(new_users_list, new_user)
         else:
             # If time for kick/ban has not arrived yet
             if time() < new_user["join_time"] + captcha_timeout*60:
@@ -1729,8 +1730,7 @@ def check_time_to_kick_not_verify_users(bot):
                 # Try to ban the user and notify Admins
                 ban_result = tlg_ban_user(bot, chat_id, new_user["user_id"])
                 # Remove user from new users list
-                if new_user in new_users_list:
-                    new_users_list.remove(new_user)
+                list_remove_element(new_users_list, new_user)
                 if ban_result == 1:
                     # Ban success
                     bot_msg = TEXT[lang]["NEW_USER_BAN"].format(new_user["user_name"])
@@ -1770,8 +1770,7 @@ def check_time_to_kick_not_verify_users(bot):
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join1"])
                         tlg_delete_msg(bot, msg["chat_id"], msg["msg_id_join2"])
                         tlg_msg_to_selfdestruct(msg["msg_id_join0"])
-                        if msg in to_delete_join_messages_list:
-                            to_delete_join_messages_list.remove(msg)
+                        list_remove_element(to_delete_join_messages_list, msg)
                         break
                 j = j + 1
             printts("[{}] Kick/Ban process complete".format(chat_id))
