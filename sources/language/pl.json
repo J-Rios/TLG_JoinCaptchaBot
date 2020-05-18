@@ -114,7 +114,7 @@
         "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale nie mam uprawnień do wyrzucania użytkowników.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony przez admina).",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale już go nie ma na grupie (opuścił ją sam, lub został wyrzucony przez admina).",
 
     "BOT_CANT_KICK":
         "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
