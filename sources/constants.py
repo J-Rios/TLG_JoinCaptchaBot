@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/05/2020
+    18/05/2020
 Version:
-    1.10.2
+    1.10.3
 '''
 
 ####################################################################################################
@@ -121,6 +121,7 @@ CONST = {
         "\nBasque / Euskal\n/language eu\n" \
         "\nGalician / Galego\n/language gl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
+        "\nPolish / Polskie\n/language pl\n" \
         "\nTurkish / Türkçe\n/language tr\n" \
         "\nChinese-Simplified / 中文\n/language zh_cn",
 
@@ -137,7 +138,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.10.2 (17/05/2020)"
+    "VERSION": "1.10.3 (18/05/2020)"
 }
 
 
@@ -154,6 +155,7 @@ TEXT = {
     "EU": None, # Basque
     "RU": None, # Rusian
     "PT_BR": None, # Portuguese (Brasil)
+    "PL": None, # Polish
     #"FA": None, # Persian (The json file is broken or json parser library doesn't support it)
     "TR": None, # Turkish
     "ZH_CN": None # Chinese (Mainland)

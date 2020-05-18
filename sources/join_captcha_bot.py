@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/05/2020
+    18/05/2020
 Version:
-    1.10.2
+    1.10.3
 '''
 
 ####################################################################################################
@@ -712,7 +712,8 @@ def msg_new_user(update: Update, context: CallbackContext):
                     callback_data=join_user_id)]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             send_problem = False
-            printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
+            printts("[{}] Sending captcha message to {}: {}...".format(chat_id, join_user_name, \
+                    captcha["number"]))
             try:
                 # Note: Img caption must be <= 1024 chars
                 sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"),
