@@ -108,31 +108,31 @@
         "To nie są właściwe cyfry. Sprawdź uważnie, kod ma 4 cyfry...",
 
     "NEW_USER_KICK":
-        "{} nie rozwiązał captcha w odpowiednim czasie. \"User\" został wyrzucony.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. \"Użytkownik\" został wyrzucony.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale nie mam uprawnień do wyrzucania użytkowników.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale nie mam uprawnień do wyrzucania użytkowników.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony przez admina).",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony przez admina).",
 
     "BOT_CANT_KICK":
-        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"User\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
+        "{} nie rozwiązał captcha w odpowiednim czasie. Próbowałem wyrzucić \"Użytkownika\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
 
     "CANT_DEL_MSG":
         "Próbowałem usunąć tą wiadomość, ale nie mam uprawnień do usuwanie nie moich wiadomości.",
 
     "NEW_USER_BAN":
-        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. \"User\" został zbanowany. By mógł dołączyć ponownie, administrator musi ręcznie zdjąć ograniczenia z \"user\".",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. \"Użytkownik\" został zbanowany. By mógł dołączyć ponownie, administrator musi ręcznie zdjąć ograniczenia z \"Użytkownika\".",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"User\", ale użytkownika już nie ma na grupie (opuścił ją sam, lub został wyrzucony/zbanowany przez admina).",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"Użytkownika\", ale już go nie ma na grupie (opuścił ją sam, lub został wyrzucony/zbanowany przez admina).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"User\", nie mam uprawnień do banowania użytkowników.",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha. Próbowałem zbanować \"Użytkownika\", nie mam uprawnień do banowania użytkowników.",
 
     "BOT_CANT_BAN":
-        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha.  Próbowałem zbanować \"User\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
+        "Uwaga: To jest piąty raz jak {} próbował dołączyć do grupy i nie rozwiązał captcha.  Próbowałem zbanować \"Użytkownika\", ale z powodu niewyjaśnionego błędu (być może związanego z siecią lub serwerem), nie mogłem tego dokonać.",
 
     "SPAM_DETECTED_RM":
         "Wykryto wiadomość z linkiem URL od {}, który jeszcze nie rozwiązał captcha. Wiadomość usunięto, by Telegram był wolny od Spamu wszelkiego :)",
