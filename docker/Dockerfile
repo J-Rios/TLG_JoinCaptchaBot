@@ -11,6 +11,7 @@ ARG BOT_USER="nobody"
 ARG BOT_GROUP="nogroup"
 ARG BOT_HOME_DIR="/srv"
 ARG REPO_NAME="TLG_JoinCaptchaBot"
+ARG APP_DIR="${BOT_HOME_DIR}/app"
 ARG GITHUB_URL="https://github.com/J-Rios/${REPO_NAME}"
 
 # This represents an invalid token and should always exist in
@@ -32,6 +33,7 @@ ENV BOT_PROJECT="${BOT_PROJECT}" \
     BOT_GROUP="${BOT_GROUP}" \
     BOT_HOME_DIR="${BOT_HOME_DIR}" \
     REPO_NAME="${REPO_NAME}" \
+    APP_DIR="${APP_DIR}" \
     GITHUB_URL="${GITHUB_URL}" \
     INVALID_TOKEN="${INVALID_TOKEN}" \
     BOT_TOKEN="${BOT_TOKEN}" \
@@ -71,13 +73,14 @@ FROM builder-deps AS builder
 # Build the code as unprivileged user
 USER ${BOT_USER}
 WORKDIR ${BOT_HOME_DIR}
-RUN git clone --recurse-submodules ${GITHUB_URL} && \
-    pip3 install --user --requirement ${REPO_NAME}/requirements.txt && \
-    cd ${REPO_NAME}/sources && \
+RUN git clone --recurse-submodules ${GITHUB_URL} ${APP_DIR} && \
+    pip3 install --user --requirement ${APP_DIR}/requirements.txt && \
+    cd ${APP_DIR}/sources && \
     sed -i -e "s/${INVALID_TOKEN}/${BOT_TOKEN}/g" constants.py && \
     sed -i -e "s/^\(\s\+\"INIT_LANG\"\)[^:]*:.*/\1 : \"${BOT_LANG}\",/g" constants.py && \
     chown -cR ${BOT_USER}:${BOT_GROUP} ${BOT_HOME_DIR} && \
-    rm -rf ${BOT_HOME_DIR}/.cache ${BOT_HOME_DIR}/${REPO_NAME}/.git
+    rm -rf ${BOT_HOME_DIR}/.cache && \
+    find ${APP_DIR} -iname '.git*' -print0 | xargs -0 -r -t rm -rf
 
 ################################################################################
 
@@ -95,6 +98,6 @@ RUN chown -R "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 
 # Set up to run as an unprivileged user
 USER ${BOT_USER}
-WORKDIR ${BOT_HOME_DIR}/${REPO_NAME}/sources
+WORKDIR ${APP_DIR}/sources
 CMD ["./entrypoint.sh"]
 
