@@ -1,6 +1,8 @@
+SHELL = /bin/bash
 NAME = captcha-bot
 BOT_LANG ?= EN
 SUPPORTED_LANGUAGES = EN FR DE ID IT ES CA GL EU RU PT_BR ZH_CN
+DOCKERFILE = Dockerfile
 
 # Check if Bot token has been provided
 ifndef BOT_TOKEN
@@ -22,10 +24,14 @@ ifneq ($(strip $(VALID_LANG)), true)
     $(error Invalid default language provided)
 endif
 
+.PHONY: build force test
+
 build:
-	docker build -t "${NAME_LOW}" --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
+	docker build -f "${DOCKERFILE}" -t "${NAME_LOW}" --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
 
 force:
-	docker build -t "${NAME_LOW}" --no-cache --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
+	docker build -f "${DOCKERFILE}" -t "${NAME_LOW}" --no-cache --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
 
-.PHONY: build force
+test:
+	$(MAKE) -e BOT_TOKEN=XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	docker run -it $(NAME_LOW):latest
