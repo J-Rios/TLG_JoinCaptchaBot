@@ -24,7 +24,7 @@ ifneq ($(strip $(VALID_LANG)), true)
     $(error Invalid default language provided)
 endif
 
-.PHONY: build force test
+.PHONY: build force test debug
 
 build:
 	docker build -f "${DOCKERFILE}" -t "${NAME_LOW}" --build-arg BOT_TOKEN="${BOT_TOKEN}" --build-arg BOT_LANG="${BOT_LANG_UPP}" .
@@ -35,3 +35,6 @@ force:
 test:
 	$(MAKE) -e BOT_TOKEN=XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	docker run -it $(NAME_LOW):latest
+
+debug:	test
+	docker run -it --user=root --entrypoint ${SHELL} $(NAME_LOW):latest
