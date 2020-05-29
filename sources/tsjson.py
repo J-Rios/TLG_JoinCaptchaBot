@@ -54,7 +54,7 @@ class TSjson(object):
             read = None # Devolver None
         finally: # Para acabar, haya habido excepcion o no
             self.lock.release() # Abrimos (liberamos) el mutex
-        
+
         return read # Devolver el resultado de la lectura de la funcion
 
 
@@ -64,7 +64,7 @@ class TSjson(object):
         directory = os.path.dirname(self.file_name) # Obtener el nombre del directorio que contiene al archivo
         if not os.path.exists(directory): # Si el directorio (ruta) no existe
             os.makedirs(directory) # Creamos el directorio
-        
+
         try: # Intentar abrir el archivo
             self.lock.acquire() # Cerramos (adquirimos) el mutex
             with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
@@ -78,7 +78,7 @@ class TSjson(object):
     def read_content(self):
         '''Funcion para leer el contenido de un archivo json (datos json)'''
         read = self.read() # Leer todo el archivo json
-        
+
         if read != {}: # Si la lectura no es vacia
             return read['Content'] # Devolvemos el contenido de la lectura (datos json)
         else: # Lectura vacia
@@ -91,23 +91,23 @@ class TSjson(object):
         directory = os.path.dirname(self.file_name) # Obtener el nombre del directorio que contiene al archivo
         if not os.path.exists(directory): # Si el directorio (ruta) no existe
             os.makedirs(directory) # Creamos el directorio
-        
+
         try: # Intentar abrir el archivo
             self.lock.acquire() # Cerramos (adquirimos) el mutex
-            
+
             if data: # Si el dato no esta vacio
                 if os.path.exists(self.file_name) and os.stat(self.file_name).st_size: # Si el archivo existe y no esta vacio
                     with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
                         content = json.load(f, object_pairs_hook=OrderedDict) # Leer todo el archivo y devolver la lectura de los datos json usando un diccionario ordenado
 
                     content['Content'].append(data) # Añadir los nuevos datos al contenido del json
-                    
+
                     with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
                         json.dump(content, fp=f, ensure_ascii=False, indent=4)
                 else: # El archivo no existe o esta vacio
                     with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
                         f.write('\n{\n    "Content": []\n}\n') # Escribir la estructura de contenido basica
-                    
+
                     with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
                         content = json.load(f) # Leer todo el archivo
 
@@ -188,7 +188,7 @@ class TSjson(object):
         [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la actualizacion se producira en el primer dato con dicho elemento uide que se encuentre]
         '''
         file_data = self.read() # Leer todo el archivo json
-        
+
         # Buscar la posicion del dato en el contenido json
         found = 0 # Posicion encontrada a 0
         i = 0 # Posicion inicial del dato a 0
@@ -197,7 +197,7 @@ class TSjson(object):
                 found = 1 # Marcar que se ha encontrado la posicion
                 break # Interrumpir y salir del bucle
             i = i + 1 # Incrementar la posicion del dato
-        
+
         if found: # Si se encontro en el archivo json datos con el UIDE buscado
             file_data['Content'][i] = data # Actualizamos los datos json que contiene ese UIDE
             self.write(file_data) # Escribimos el dato actualizado en el archivo json
@@ -211,7 +211,7 @@ class TSjson(object):
         [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la actualizacion se producira en el primer elemento que se encuentre]
         '''
         file_data = self.read() # Leer todo el archivo json
-        
+
         # Buscar la posicion del dato en el contenido json
         found = 0 # Posicion encontrada a 0
         i = 0 # Posicion inicial del dato a 0
@@ -220,7 +220,7 @@ class TSjson(object):
                 found = 1 # Marcar que se ha encontrado la posicion
                 break # Interrumpir y salir del bucle
             i = i + 1 # Incrementar la posicion del dato
-        
+
         if found: # Si se encontro en el archivo json datos con el UIDE buscado
             file_data['Content'][i] = data # Actualizamos los datos json que contiene ese UIDE
             self.write(file_data) # Escribimos el dato actualizado en el archivo json
@@ -239,7 +239,7 @@ class TSjson(object):
             print("    Error cuando se abria para escritura, el archivo {}".format(self.file_name)) # Escribir en consola el error
         finally: # Para acabar, haya habido excepcion o no
             self.lock.release() # Abrimos (liberamos) el mutex
-    
+
 
     def delete(self):
         '''Funcion para eliminar un archivo json'''
