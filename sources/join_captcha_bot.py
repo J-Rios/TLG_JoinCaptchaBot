@@ -5,9 +5,9 @@
 Script:
     join_captcha_bot.py
 Description:
-    Telegram Bot that send a captcha for each new user who join a group, and ban them if they 
-    can not solve the captcha in a specified time. This is an approach to deny access to groups of 
-    non-humans "users".
+    Telegram Bot that send a captcha for each new user who join a group, and ban them if they
+    can not solve the captcha in a specified time. This is an approach to deny access to groups of
+    non-humans "users"
 Author:
     Jose Rios Rubio
 Creation date:
@@ -18,9 +18,9 @@ Version:
     1.10.3
 '''
 
-####################################################################################################
+################################################################################
+### Imported modules
 
-### Imported modules ###
 import re
 from sys import exit
 from signal import signal, SIGTERM, SIGINT
@@ -34,16 +34,16 @@ from collections import OrderedDict
 from random import randint
 from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup,
     ChatPermissions)
-from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters, 
+from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters,
     CallbackQueryHandler, Defaults)
 
 from constants import CONST, TEXT
 from tsjson import TSjson
 from lib.multicolor_captcha_generator.img_captcha_gen import CaptchaGenerator
 
-####################################################################################################
+################################################################################
+### Globals
 
-### Globals ###
 updater = None
 files_config_list = []
 to_delete_in_time_messages_list = []
@@ -53,9 +53,8 @@ new_users_list = []
 # Create Captcha Generator object of specified size (2 -> 640x360)
 CaptchaGen = CaptchaGenerator(2)
 
-####################################################################################################
-
-### Termination Signals Handler For Program Process ###
+################################################################################
+### Termination Signals Handler For Program Process
 
 def signal_handler(signal,  frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
@@ -73,13 +72,13 @@ def signal_handler(signal,  frame):
     exit(0)
 
 
-### Signals attachment ###
+### Signals attachment
+
 signal(SIGTERM, signal_handler) # SIGTERM (kill pid) to signal_handler
 signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
 
-####################################################################################################
-
-### Auxiliar Functions ###
+################################################################################
+### Auxiliar Functions
 
 def printts(to_print="", timestamp=True):
     '''printts with timestamp.'''
@@ -195,9 +194,8 @@ def list_remove_element(the_list, the_element):
         return False
     return True
 
-####################################################################################################
-
-### JSON Chat Config File Functions ###
+################################################################################
+### JSON Chat Config File Functions
 
 def get_default_config_data():
     '''Get default config data structure'''
@@ -264,9 +262,8 @@ def get_chat_config_file(chat_id):
         files_config_list.append(file)
     return file["File"]
 
-####################################################################################################
-
-### Telegram Related Functions ###
+################################################################################
+### Telegram Related Functions
 
 def tlg_user_is_admin(bot, user_id, chat_id):
     '''Check if the specified user is an Administrator of a group given by IDs'''
@@ -434,13 +431,13 @@ def tlg_leave_chat(bot, chat_id):
     return left
 
 
-def tlg_restrict_user(bot, chat_id, user_id, send_msg=None, send_media=None, 
-        send_stickers_gifs=None, insert_links=None, send_polls=None, 
+def tlg_restrict_user(bot, chat_id, user_id, send_msg=None, send_media=None,
+        send_stickers_gifs=None, insert_links=None, send_polls=None,
         invite_members=None, pin_messages=None, change_group_info=None):
     '''Telegram Bot try to restrict user permissions in a group.'''
     result = False
     try:
-        permissions = ChatPermissions(send_msg, send_media, send_polls, send_stickers_gifs, 
+        permissions = ChatPermissions(send_msg, send_media, send_polls, send_stickers_gifs,
             insert_links, change_group_info, invite_members, pin_messages)
         result = bot.restrictChatMember(chat_id, user_id, permissions)
     except Exception as e:
@@ -464,9 +461,8 @@ def is_valid_user_id_or_alias(user_id_alias):
         return False
     return False
 
-####################################################################################################
-
-### General Functions ###
+################################################################################
+### General Functions
 
 def initialize_resources():
     '''Initialize resources by populating files list with chats found files'''
@@ -599,9 +595,8 @@ def is_user_inignored_list(chat_id, user):
             return True
     return False
 
-####################################################################################################
-
-### Received Telegram not-command messages handlers ###
+################################################################################
+### Received Telegram not-command messages handlers
 
 def msg_new_user(update: Update, context: CallbackContext):
     '''New member join the group event handler'''
@@ -634,7 +629,7 @@ def msg_new_user(update: Update, context: CallbackContext):
             join_user_name = join_user_name[0:35]
         # If the added user is myself (this Bot)
         if bot.id == join_user_id:
-            # Get the language of the Telegram client software the Admin that has added the Bot 
+            # Get the language of the Telegram client software the Admin that has added the Bot
             # has, to assume this is the chat language and configure Bot language of this chat
             admin_language = update.message.from_user.language_code[0:2].upper()
             if admin_language not in TEXT:
@@ -701,7 +696,7 @@ def msg_new_user(update: Update, context: CallbackContext):
             # Determine configured bot language in actual chat
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
             captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
-            # Generate a pseudorandom captcha send it to telegram group and program message 
+            # Generate a pseudorandom captcha send it to telegram group and program message
             # selfdestruct
             captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
@@ -913,8 +908,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
             # Check for send just text message option and apply user restrictions
             restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
             if restrict_non_text_msgs:
-                tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False, 
-                    send_stickers_gifs=False, insert_links=False, send_polls=False, 
+                tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+                    send_stickers_gifs=False, insert_links=False, send_polls=False,
                     invite_members=False, pin_messages=False, change_group_info=False)
         # The provided message doesn't has the valid captcha number
         else:
@@ -952,7 +947,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                             has_alias = True
                             #alias = word
                             break
-                    # Check if the detected alias is from a valid chat (commented due to getChat 
+                    # Check if the detected alias is from a valid chat (commented due to getChat
                     # request doesnt tell us if an alias is from an user, just group or channel)
                     #has_alias = False
                     #if has_alias:
@@ -1034,9 +1029,8 @@ def button_request_captcha(update: Update, context: CallbackContext):
     printts(" ")
     bot.answer_callback_query(query.id)
 
-####################################################################################################
-
-### Received Telegram command messages handlers ###
+################################################################################
+### Received Telegram command messages handlers
 
 def cmd_start(update: Update, context: CallbackContext):
     '''Command /start message handler'''
@@ -1616,9 +1610,8 @@ def cmd_whitelist(update: Update, context: CallbackContext):
             else:
                 tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global Whitelist.")
 
-####################################################################################################
-
-### Main Loop Functions ###
+################################################################################
+### Main Loop Functions
 
 def handle_remove_and_kicks(bot):
     '''Handle remove of sent messages and not verify new users ban'''
@@ -1671,8 +1664,8 @@ def check_time_to_kick_not_verify_users(bot):
         new_user = new_users_list[i]
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
         if new_user["kicked_ban"]:
-            # Remove from new users list the remaining kicked users that have not solve the captcha 
-            # in 1 hour (user ban just happen if a user try to join the group and fail to solve the 
+            # Remove from new users list the remaining kicked users that have not solve the captcha
+            # in 1 hour (user ban just happen if a user try to join the group and fail to solve the
             # captcha 5 times in the past hour)
             if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
                 # Remove user from new users list
@@ -1778,9 +1771,8 @@ def check_time_to_kick_not_verify_users(bot):
             printts(" ")
         i = i + 1
 
-####################################################################################################
-
-### Main Function ###
+################################################################################
+### Main Function
 
 def main():
     '''Main Function'''
@@ -1838,5 +1830,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-### End Of Code ###

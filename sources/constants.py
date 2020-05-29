@@ -4,7 +4,7 @@
 Script:
     constants.py
 Description:
-    Constants values for join_captcha_bot.py.
+    Constants values for join_captcha_bot.py
 Author:
     Jose Rios Rubio
 Creation date:
@@ -15,14 +15,12 @@ Version:
     1.10.3
 '''
 
-####################################################################################################
-
+################################################################################
 ### Imported modules ###
 
 from os import path
 
-####################################################################################################
-
+################################################################################
 ### Constants ###
 
 # Actual constants.py full path directory name
@@ -89,7 +87,7 @@ CONST = {
     # Maximum number of users allowed in each chat ignore list
     "IGNORE_LIST_MAX": 100,
 
-    # Command don't allow in private chat text (just english due in private chats we 
+    # Command don't allow in private chat text (just english due in private chats we
     # don't have language configuration
     "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
 

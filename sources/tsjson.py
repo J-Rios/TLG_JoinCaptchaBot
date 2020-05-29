@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 '''
 Script:
     tsjson.py
 Description:
-    Thread-Safe json files read/write library.
+    Thread-Safe json files read/write library
 Author:
     Jose Rios Rubio
 Creation date:
@@ -15,17 +15,17 @@ Version:
     1.2.0
 '''
 
-####################################################################################################
+################################################################################
+### Modulos importados
 
-### Modulos importados ###
 import os
 import json
 from threading import Lock
 from collections import OrderedDict
 
-####################################################################################################
+################################################################################
+### Clase
 
-### Clase ###
 class TSjson(object):
     '''
     Thread-Safe json files read/write library
