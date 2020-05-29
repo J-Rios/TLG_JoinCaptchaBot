@@ -11,7 +11,7 @@ ARG BOT_USER="nobody"
 ARG BOT_GROUP="nogroup"
 ARG BOT_HOME_DIR="/srv"
 ARG REPO_NAME="TLG_JoinCaptchaBot"
-ARG GITHUB_URL="https://github.com/LIDSoL/${REPO_NAME}"
+ARG GITHUB_URL="https://github.com/J-Rios/${REPO_NAME}"
 
 # This represents an invalid token and should always exist in
 # the "stock" constants.py file.
