@@ -99,7 +99,7 @@
         "Cześć {}, witamy na {}, przepisz znaki z obrazka by udowodnić, że jesteś człowiekiem. Jeśli tego nie zrobisz w ciągu {} minut(y) zostaniesz automatycznie usunięty z grupy.",
 
     "CAPTCHA_SOLVED":
-        "Pomyślnie rozwiązano captcha, użytkownik uwierzytelniony.\nWitamy na {}",
+        "Pomyślnie rozwiązano captcha, użytkownik uwierzytelniony.\nWitamy {}",
 
     "CAPTCHA_INCORRECT_0":
         "To nie jest poprawny kod. Spróbuj ponownie...",
