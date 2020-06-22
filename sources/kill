@@ -4,8 +4,10 @@ PID=`ps -aux | grep -e "[j]oin_captcha_bot.py" | awk 'FNR == 1 {print $2}'`
 
 if [ ! -z "$PID" ]; then
     kill $PID
-    echo "Killing script..."
-    sleep 10
+    echo "Killing script, please wait..."
+    while $(kill -0 $PID 2>/dev/null); do
+        sleep 1
+    done
     ./status
     exit 0
 else

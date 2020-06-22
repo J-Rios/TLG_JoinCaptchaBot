@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/05/2020
+    22/06/2020
 Version:
-    1.10.3
+    1.10.4
 '''
 
 ################################################################################
@@ -59,17 +59,32 @@ CaptchaGen = CaptchaGenerator(2)
 def signal_handler(signal,  frame):
     '''Termination signals (SIGINT, SIGTERM) handler for program process'''
     global updater
-    printts("Termination signal received. Releasing resources (Waiting for files to be closed)...")
-    # Acquire all messages and users files mutex to ensure not read/write operation on them
-    for chat_config_file in files_config_list:
-        chat_config_file["File"].lock.acquire()
-    printts("All resources successfully released.")
+    printts("Termination signal received. Releasing resources...")
+    # Close the Bot instance (it wait for updater, dispatcher and other internals threads to end)
     if updater is not None:
         printts("Closing Bot...")
         updater.stop()
+    # Launch threads to acquire all messages and users files mutex to ensure that them are closed
+    # (make sure to close the script when no read/write operation on files)
+    if files_config_list:
+        printts("Closing resource files...")
+        th_list = []
+        for chat_config_file in files_config_list:
+            t = Thread(target=th_close_resource_file, args=(chat_config_file["File"],))
+            th_list.append(t)
+            t.start()
+        # Wait for all threads to end
+        for th in th_list:
+            th.join()
     # Close the program
+    printts("All resources released.")
     printts("Exit")
     exit(0)
+
+
+def th_close_resource_file(file_to_close):
+    '''Threaded function to close resource files in parallel when closing Bot Script.'''
+    file_to_close.lock.acquire()
 
 
 ### Signals attachment
@@ -277,24 +292,6 @@ def tlg_user_is_admin(bot, user_id, chat_id):
     return False
 
 
-def tlg_get_bot_admin_privileges(bot, chat_id):
-    '''Get the actual Bot administration privileges'''
-    try:
-        bot_data = bot.get_me()
-    except Exception:
-        return None
-    bot_admin_privileges = OrderedDict(
-    [
-        ("can_change_info", bot_data.can_change_info),
-        ("can_delete_messages", bot_data.can_delete_messages),
-        ("can_restrict_members", bot_data.can_restrict_members),
-        ("can_invite_users", bot_data.can_invite_users),
-        ("can_pin_messages", bot_data.can_pin_messages),
-        ("can_promote_members", bot_data.can_promote_members)
-    ])
-    return bot_admin_privileges
-
-
 def tlg_send_selfdestruct_msg(bot, chat_id, message):
     '''tlg_send_selfdestruct_msg_in() with default delete time'''
     return tlg_send_selfdestruct_msg_in(bot, chat_id, message, CONST["T_DEL_MSG"])
@@ -480,17 +477,16 @@ def initialize_resources():
     else:
         # If chats directory exists, check all subdirectories names (chats ID)
         files = listdir(CONST["CHATS_DIR"])
-        if files:
-            for f_chat_id in files:
-                # Populate config files list
-                file_path = "{}/{}/{}".format(CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
-                files_config_list.append(OrderedDict([("ID", f_chat_id),
-                    ("File", TSjson(file_path))]))
-                # Create default configuration file if it does not exists
-                if not path.exists(file_path):
-                    default_conf = get_default_config_data()
-                    for key, value in default_conf.items():
-                        save_config_property(f_chat_id, key, value)
+        for f_chat_id in files:
+            # Populate config files list
+            file_path = "{}/{}/{}".format(CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
+            files_config_list.append(OrderedDict([("ID", f_chat_id),
+                ("File", TSjson(file_path))]))
+            # Create default configuration file if it does not exists
+            if not path.exists(file_path):
+                default_conf = get_default_config_data()
+                for key, value in default_conf.items():
+                    save_config_property(f_chat_id, key, value)
     # Load and generate URL detector regex from TLD list file
     actual_script_path = path.dirname(path.realpath(__file__))
     load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
@@ -836,16 +832,17 @@ def msg_nocmd(update: Update, context: CallbackContext):
         msg_text = getattr(msg, "caption", None)
     # Check if message has a text link (embedded url in text) and get it
     msg_entities = getattr(msg, "entities", None)
-    if msg_entities is not None:
-        for entity in msg_entities:
-            url = getattr(entity, "url", None)
-            if url is not None:
-                if url != "":
-                    if msg_text is None:
-                        msg_text = url
-                    else:
-                        msg_text = "{} [{}]".format(msg_text, url)
-                    break
+    if msg_entities is None:
+        msg_entities = []
+    for entity in msg_entities:
+        url = getattr(entity, "url", None)
+        if url is not None:
+            if url != "":
+                if msg_text is None:
+                    msg_text = url
+                else:
+                    msg_text = "{} [{}]".format(msg_text, url)
+                break
     # Get others message data
     chat_id = msg.chat_id
     user_id = msg.from_user.id
@@ -1037,10 +1034,10 @@ def cmd_start(update: Update, context: CallbackContext):
     bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
-    lang = get_chat_config(chat_id, "Language")
     if chat_type == "private":
-        bot.send_message(chat_id, TEXT[lang]["START"])
+        bot.send_message(chat_id, TEXT["EN"]["START"])
     else:
+        lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update.message)
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["START"])
 
@@ -1050,11 +1047,12 @@ def cmd_help(update: Update, context: CallbackContext):
     bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
-    lang = get_chat_config(chat_id, "Language")
-    bot_msg = TEXT[lang]["HELP"]
     if chat_type == "private":
+        bot_msg = TEXT["EN"]["HELP"]
         bot.send_message(chat_id, bot_msg)
     else:
+        lang = get_chat_config(chat_id, "Language")
+        bot_msg = TEXT[lang]["HELP"]
         tlg_msg_to_selfdestruct(update.message)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
@@ -1064,11 +1062,12 @@ def cmd_commands(update: Update, context: CallbackContext):
     bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
-    lang = get_chat_config(chat_id, "Language")
-    commands_text = TEXT[lang]["COMMANDS"]
     if chat_type == "private":
+        commands_text = TEXT["EN"]["COMMANDS"]
         bot.send_message(chat_id, commands_text)
     else:
+        lang = get_chat_config(chat_id, "Language")
+        commands_text = TEXT[lang]["COMMANDS"]
         tlg_msg_to_selfdestruct(update.message)
         tlg_send_selfdestruct_msg(bot, chat_id, commands_text)
 
@@ -1503,11 +1502,12 @@ def cmd_version(update: Update, context: CallbackContext):
     bot = context.bot
     chat_id = update.message.chat_id
     chat_type = update.message.chat.type
-    lang = get_chat_config(chat_id, "Language")
-    bot_msg = TEXT[lang]["VERSION"].format(CONST["VERSION"])
     if chat_type == "private":
+        bot_msg = TEXT["EN"]["VERSION"].format(CONST["VERSION"])
         bot.send_message(chat_id, bot_msg)
     else:
+        lang = get_chat_config(chat_id, "Language")
+        bot_msg = TEXT[lang]["VERSION"].format(CONST["VERSION"])
         tlg_msg_to_selfdestruct(update.message)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
@@ -1516,9 +1516,14 @@ def cmd_about(update: Update, context: CallbackContext):
     '''Command /about handler'''
     bot = context.bot
     chat_id = update.message.chat_id
-    lang = get_chat_config(chat_id, "Language")
-    bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
+    chat_type = update.message.chat.type
+    if chat_type == "private":
+        bot_msg = TEXT["EN"]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
         CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
+    else:
+        lang = get_chat_config(chat_id, "Language")
+        bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
+            CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
     bot.send_message(chat_id, bot_msg)
 
 
@@ -1821,7 +1826,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
     # Set to dispatcher request new captcha button callback handler
     dp.add_handler(CallbackQueryHandler(button_request_captcha))
-    # Launch the Bot ignoring pending messages (clean=True) and get all updates (cllowed_uptades=[])
+    # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
     updater.start_polling(clean=True, allowed_updates=[])
     printts("Bot setup completed. Bot is now running.")
     # Handle remove of sent messages and not verify new users ban (main loop)
