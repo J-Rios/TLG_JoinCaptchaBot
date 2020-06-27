@@ -1271,9 +1271,9 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
         return
     # Get and configure chat to provided welcome message
     welcome_msg = " ".join(args)
-    welcome_msg = welcome_msg.replace("$user", "{0}")
     welcome_msg = welcome_msg.replace("{", "{{")
     welcome_msg = welcome_msg.replace("}", "}}")
+    welcome_msg = welcome_msg.replace("$user", "{0}")
     welcome_msg = welcome_msg[:CONST["MAX_WELCOME_MSG_LENGTH"]]
     if welcome_msg == "disable":
         welcome_msg = '-'
