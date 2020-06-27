@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/06/2020
+    27/06/2020
 Version:
     1.10.4
 '''
@@ -21,6 +21,7 @@ Version:
 ################################################################################
 ### Imported modules
 
+import logging
 import re
 from sys import exit
 from signal import signal, SIGTERM, SIGINT
@@ -52,6 +53,13 @@ new_users_list = []
 
 # Create Captcha Generator object of specified size (2 -> 640x360)
 CaptchaGen = CaptchaGenerator(2)
+
+################################################################################
+### Setup Bot Logger
+
+log_level=logging.INFO
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=log_level)
+#logger = logging.getLogger("CaptchaBot")
 
 ################################################################################
 ### Termination Signals Handler For Program Process
@@ -1264,6 +1272,8 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     # Get and configure chat to provided welcome message
     welcome_msg = " ".join(args)
     welcome_msg = welcome_msg.replace("$user", "{0}")
+    welcome_msg = welcome_msg.replace("{", "{{")
+    welcome_msg = welcome_msg.replace("}", "}}")
     welcome_msg = welcome_msg[:CONST["MAX_WELCOME_MSG_LENGTH"]]
     if welcome_msg == "disable":
         welcome_msg = '-'
