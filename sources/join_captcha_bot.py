@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/06/2020
+    28/06/2020
 Version:
-    1.10.4
+    1.10.5
 '''
 
 ################################################################################
@@ -321,6 +321,9 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
     # It has been an unsuccesfull sent
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
+        if str(e) != "User_banned_in_channel":
+            tlg_leave_chat(bot, chat_id)
+            printts("Bot left chat where is ban.")
     return sent_msg_id
 
 
@@ -608,18 +611,31 @@ def msg_new_user(update: Update, context: CallbackContext):
     global new_users_list
     bot = context.bot
     # Get message data
-    chat_id = update.message.chat_id
+    msg = getattr(update, "message", None)
+    if msg is None:
+        print("Warning: Received an unexpected new user update.")
+        print(update)
+        return
+    chat_id = getattr(msg, "chat_id", None)
+    if chat_id is None:
+        print("Warning: Received an unexpected new user update without chat id.")
+        print(update)
+        return
+    chat = getattr(msg, "chat", None)
+    if chat is None:
+        print("Warning: Received an unexpected new user update without chat.")
+        print(update)
+        return
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
     # Leave the chat if it is a channel
-    msg = getattr(update, "message", None)
-    if msg.chat.type == "channel":
+    if chat.type == "channel":
         printts("Bot try to be added to a channel")
         tlg_send_selfdestruct_msg_in(bot, chat_id, TEXT[lang]["BOT_LEAVE_CHANNEL"], 1)
         tlg_leave_chat(bot, chat_id)
         return
     # For each new user that join or has been added
-    for join_user in update.message.new_chat_members:
+    for join_user in msg.new_chat_members:
         join_user_id = join_user.id
         # Get user name
         if join_user.name is not None:
@@ -635,15 +651,15 @@ def msg_new_user(update: Update, context: CallbackContext):
         if bot.id == join_user_id:
             # Get the language of the Telegram client software the Admin that has added the Bot
             # has, to assume this is the chat language and configure Bot language of this chat
-            admin_language = update.message.from_user.language_code[0:2].upper()
+            admin_language = msg.from_user.language_code[0:2].upper()
             if admin_language not in TEXT:
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat_id, "Language", admin_language)
             # Get and save chat data
-            chat_title = update.message.chat.title
+            chat_title = chat.title
             if chat_title:
                 save_config_property(chat_id, "Title", chat_title)
-            chat_link = update.message.chat.username
+            chat_link = chat.username
             if chat_link:
                 chat_link = "@{}".format(chat_link)
                 save_config_property(chat_id, "Link", chat_link)
@@ -658,12 +674,12 @@ def msg_new_user(update: Update, context: CallbackContext):
             printts(" ")
             printts("[{}] New join detected: {} ({})".format(chat_id, join_user_name, join_user_id))
             # Get and update chat data
-            chat_title = update.message.chat.title
+            chat_title = chat.title
             if chat_title:
                 save_config_property(chat_id, "Title", chat_title)
             # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
             chat_title = add_lrm(chat_title)
-            chat_link = update.message.chat.username
+            chat_link = chat.username
             if chat_link:
                 chat_link = "@{}".format(chat_link)
                 save_config_property(chat_id, "Link", chat_link)
@@ -721,6 +737,9 @@ def msg_new_user(update: Update, context: CallbackContext):
                 printts("[{}] {}".format(chat_id, str(e)))
                 if str(e) != "Timed out":
                     send_problem = True
+                    if str(e) == "User_banned_in_channel":
+                        tlg_leave_chat(bot, chat_id)
+                        printts("Bot left chat where is ban.")
                 else:
                     printts("sent_img_msg: {}".format(sent_img_msg))
             # Remove sent captcha image file from file system
@@ -761,7 +780,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                 {
                     "chat_id": chat_id,
                     "user_id": join_user_id,
-                    "msg_id_join0": update.message,
+                    "msg_id_join0": msg,
                     "msg_id_join1": sent_img_msg.message_id,
                     "msg_id_join2": None
                 }
@@ -773,22 +792,41 @@ def msg_new_user(update: Update, context: CallbackContext):
 def msg_notext(update: Update, context: CallbackContext):
     '''All non-text messages handler.'''
     bot = context.bot
-    # Check for normal or edited message
+    # Get message data
     msg = getattr(update, "message", None)
     if msg is None:
         msg = getattr(update, "edited_message", None)
+    if msg is None:
+        msg = getattr(update, "channel_post", None)
+        if msg is not None:
+            chat = getattr(msg, "chat", None)
+            if chat is not None:
+                tlg_leave_chat(bot, chat.id)
+                return        
+        print("Warning: Received an unexpected no-text update.")
+        print(update)
+        return
+    chat_id = getattr(msg, "chat_id", None)
+    if chat_id is None:
+        print("Warning: Received an unexpected no-text update without chat id.")
+        print(update)
+        return
+    chat = getattr(msg, "chat", None)
+    if chat is None:
+        print("Warning: Received an unexpected no-text update without chat.")
+        print(update)
+        return
     # Ignore if message comes from a private chat
-    if msg.chat.type == "private":
+    if chat.type == "private":
         return
     # Ignore if message comes from a channel
-    if msg.chat.type == "channel":
+    if chat.type == "channel":
         return
     # Ignore if captcha protection is not enable int his chat
     captcha_enable = get_chat_config(msg.chat_id, "Enabled")
     if not captcha_enable:
         return
     # Get message data
-    chat_id = msg.chat_id
     user_id = msg.from_user.id
     msg_id = msg.message_id
     # Determine configured bot language in actual chat
@@ -818,18 +856,38 @@ def msg_nocmd(update: Update, context: CallbackContext):
     global to_delete_join_messages_list
     global new_users_list
     bot = context.bot
-    # Check for normal or edited message
+    # Get message data
     msg = getattr(update, "message", None)
     if msg is None:
         msg = getattr(update, "edited_message", None)
+    if msg is None:
+        msg = getattr(update, "channel_post", None)
+        if msg is not None:
+            chat = getattr(msg, "chat", None)
+            if chat is not None:
+                tlg_leave_chat(bot, chat.id)
+                return        
+        print("Warning: Received an unexpected no-command update.")
+        print(update)
+        return
+    chat_id = getattr(msg, "chat_id", None)
+    if chat_id is None:
+        print("Warning: Received an unexpected no-command update without chat id.")
+        print(update)
+        return
+    chat = getattr(msg, "chat", None)
+    if chat is None:
+        print("Warning: Received an unexpected no-command update without chat.")
+        print(update)
+        return
     # Ignore if message comes from a private chat
-    if msg.chat.type == "private":
+    if chat.type == "private":
         return
     # Ignore if message comes from a channel
-    if msg.chat.type == "channel":
+    if chat.type == "channel":
         return
     # Ignore if captcha protection is not enable in this chat
-    captcha_enable = get_chat_config(msg.chat_id, "Enabled")
+    captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
         return
     # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
@@ -852,14 +910,13 @@ def msg_nocmd(update: Update, context: CallbackContext):
                     msg_text = "{} [{}]".format(msg_text, url)
                 break
     # Get others message data
-    chat_id = msg.chat_id
     user_id = msg.from_user.id
     msg_id = msg.message_id
     # Get and update chat data
-    chat_title = msg.chat.title
+    chat_title = chat.title
     if chat_title:
         save_config_property(chat_id, "Title", chat_title)
-    chat_link = msg.chat.username
+    chat_link = chat.username
     if chat_link:
         chat_link = "@{}".format(chat_link)
         save_config_property(chat_id, "Link", chat_link)
@@ -988,7 +1045,10 @@ def button_request_captcha(update: Update, context: CallbackContext):
     query = update.callback_query
     # Ignore if the query come from an unexpected user
     if query.data != str(query.from_user.id):
-        bot.answer_callback_query(query.id)
+        try:
+            bot.answer_callback_query(query.id)
+        except Exception as e:
+            printts("[{}] {}".format(query.message.chat_id, str(e)))
         return
     # Get query data
     chat_id = query.message.chat_id
@@ -1019,20 +1079,27 @@ def button_request_captcha(update: Update, context: CallbackContext):
             # Generate a new captcha and edit previous captcha image message with this one
             captcha = create_image_captcha(str(usr_id), captcha_level, captcha_chars_mode)
             printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
-            bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto(
-                    media=open(captcha["image"], "rb"), caption=img_caption),
-                    reply_markup=reply_markup, timeout=20)
-            # Set and modified to new expected captcha number
-            new_user["captcha_num"] = captcha["number"]
-            new_users_list[i] = new_user
-            # Remove sent captcha image file from file system
-            if path.exists(captcha["image"]):
-                remove(captcha["image"])
+            try:
+                bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto(
+                        media=open(captcha["image"], "rb"), caption=img_caption),
+                        reply_markup=reply_markup, timeout=20)
+                # Set and modified to new expected captcha number
+                new_user["captcha_num"] = captcha["number"]
+                new_users_list[i] = new_user
+                # Remove sent captcha image file from file system
+                if path.exists(captcha["image"]):
+                    remove(captcha["image"])
+            except Exception as e:
+                printts("[{}] {}".format(chat_id, str(e)))
             break
         i = i + 1
     printts("[{}] New captcha request process complete.".format(chat_id))
     printts(" ")
-    bot.answer_callback_query(query.id)
+    try:
+        bot.answer_callback_query(query.id)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
+    
 
 ################################################################################
 ### Received Telegram command messages handlers
@@ -1660,11 +1727,15 @@ def selfdestruct_messages(bot):
                     lang = get_chat_config(sent_msg["Chat_id"], "Language")
                     try:
                         cant_del_msg = bot.send_message(sent_msg["Chat_id"],
-                                TEXT[lang]["CANT_DEL_MSG"], reply_to_message_id=sent_msg["Msg_id"])
+                                TEXT[lang]["CANT_DEL_MSG"],
+                                reply_to_message_id=sent_msg["Msg_id"])
                         tlg_msg_to_selfdestruct(cant_del_msg)
                     except Exception as ee:
                         printts(str(e))
                         printts(str(ee))
+                        if str(e) != "User_banned_in_channel":
+                            tlg_leave_chat(bot, sent_msg["Chat_id"])
+                            printts("Bot left chat where is ban.")
                         pass
                 list_remove_element(to_delete_in_time_messages_list, sent_msg)
         i = i + 1
@@ -1679,9 +1750,9 @@ def check_time_to_kick_not_verify_users(bot):
         new_user = new_users_list[i]
         captcha_timeout = get_chat_config(new_user["chat_id"], "Captcha_Time")
         if new_user["kicked_ban"]:
-            # Remove from new users list the remaining kicked users that have not solve the captcha
-            # in 1 hour (user ban just happen if a user try to join the group and fail to solve the
-            # captcha 5 times in the past hour)
+            # Remove from new users list the remaining kicked users that have not solve
+            # the captcha in 1 hour (user ban just happen if a user try to join the group
+            # and fail to solve the captcha 5 times in the past hour)
             if time() >= (new_user["join_time"] + captcha_timeout*60) + 3600:
                 # Remove user from new users list
                 list_remove_element(new_users_list, new_user)
@@ -1693,7 +1764,8 @@ def check_time_to_kick_not_verify_users(bot):
             # The time has come for this user
             chat_id = new_user["chat_id"]
             lang = get_chat_config(chat_id, "Language")
-            printts("[{}] Captcha reply timed out for user {}.".format(chat_id, new_user["user_name"]))
+            printts("[{}] Captcha reply timed out for user {}.".format(
+                chat_id, new_user["user_name"]))
             # Check if this "user" has not join this chat more than 5 times (just kick)
             if new_user["join_retries"] < 5:
                 printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
@@ -1727,6 +1799,9 @@ def check_time_to_kick_not_verify_users(bot):
                             bot.send_message(chat_id, bot_msg)
                         except Exception as e:
                             printts("[{}] {}".format(chat_id, str(e)))
+                            if str(e) != "User_banned_in_channel":
+                                tlg_leave_chat(bot, chat_id)
+                                printts("Bot left chat where is ban.")
                     else:
                         # For other reason, the Bot can't ban
                         bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
@@ -1762,13 +1837,17 @@ def check_time_to_kick_not_verify_users(bot):
                     bot.send_message(chat_id, bot_msg)
                 except Exception as e:
                     printts("[{}] {}".format(chat_id, str(e)))
+                    if str(e) != "User_banned_in_channel":
+                        tlg_leave_chat(bot, chat_id)
+                        printts("Bot left chat where is ban.")
             # Update user info (join_retries & kick_ban)
             new_user["kicked_ban"] = True
             if new_user in new_users_list:
                 pos = new_users_list.index(new_user)
                 new_users_list[pos] = new_user
             # Remove join messages
-            printts("[{}] Removing messages from user {}...".format(chat_id, new_user["user_name"]))
+            printts("[{}] Removing messages from user {}...".format(
+                chat_id, new_user["user_name"]))
             j = 0
             while j < len(to_delete_join_messages_list):
                 msg = to_delete_join_messages_list[j]
