@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     28/06/2020
 Version:
-    1.11.0
+    1.11.1
 '''
 
 ################################################################################
@@ -1933,7 +1933,19 @@ def main():
     # Set to dispatcher request new captcha button callback handler
     dp.add_handler(CallbackQueryHandler(button_request_captcha))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
-    updater.start_polling(clean=True, allowed_updates=[])
+    if CONST["WEBHOOK_HOST"] == "None":
+        printts("Setup Bot for Polling.")
+        updater.start_polling(
+            clean=True,
+            allowed_updates=[]
+        )
+    else:
+        printts("Setup Bot for Webhook.")
+        updater.start_webhook(
+            clean=True, listen="0.0.0.0", port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
+            key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
+            webhook_url="https://{}:{}/{}".format(CONST["WEBHOOK_HOST"], CONST["WEBHOOK_PORT"], CONST["TOKEN"])
+        )
     printts("Bot setup completed. Bot is now running.")
     # Launch self-messages delete and users kick/ban threads
     th_0 = Thread(target=th_selfdestruct_messages, args=(updater.bot,))

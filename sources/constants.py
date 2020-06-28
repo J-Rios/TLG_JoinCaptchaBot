@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     28/06/2020
 Version:
-    1.11.0
+    1.11.1
 '''
 
 ################################################################################
@@ -35,6 +35,18 @@ CONST = {
 
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
     "BOT_OWNER": "XXXXXXXXX",
+
+    # Bot Webhook Host addres (keep in None for Polling or set to a valid address for Webhook)
+    "WEBHOOK_HOST": "None",
+
+    # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
+    "WEBHOOK_PORT": 8443,
+
+    # Bot Webhook Certificate file path (this is not used if WEBHOOK_HOST is None)
+    "WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
+
+    # Bot Webhook Certificate private key file path (this is not used if WEBHOOK_HOST is None)
+    "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
 
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
@@ -136,7 +148,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.11.0 (28/06/2020)"
+    "VERSION": "1.11.1 (28/06/2020)"
 }
 
 
