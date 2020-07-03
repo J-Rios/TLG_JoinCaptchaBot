@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     03/07/2020
 Version:
-    1.11.2
+    1.12.0
 '''
 
 ################################################################################
@@ -483,6 +483,21 @@ def is_valid_user_id_or_alias(user_id_alias):
         return False
     return False
 
+
+def is_valid_group(group):
+    '''Check if given telegram Group ID has a valid expected format.'''
+    # Check if it start with '-'
+    if group[0] != '-':
+        return False
+    # Check if it is a valid ID (is a number larger than 0)
+    try:
+        user_id = int(group)
+    except ValueError:
+        return False
+    if user_id == 0:
+        return False
+    return True
+
 ################################################################################
 ### General Functions
 
@@ -496,6 +511,10 @@ def initialize_resources():
     # Create whitelist file if it does not exists
     if not path.exists(CONST["F_WHITE_LIST"]):
         file_write(CONST["F_WHITE_LIST"], "")
+    # Create allowed groups file if it does not exists
+    if CONST["BOT_PRIVATE"]:
+        if not path.exists(CONST["F_ALLOWED_GROUPS"]):
+            file_write(CONST["F_ALLOWED_GROUPS"], "")
     # Create data directory if it does not exists
     if not path.exists(CONST["CHATS_DIR"]):
         makedirs(CONST["CHATS_DIR"])
@@ -593,6 +612,18 @@ def update_to_delete_join_msg_id(msg_chat_id, msg_user_id, message_id_key, new_m
         i = i + 1
 
 
+def is_user_in_ignored_list(chat_id, user):
+    '''Check if user is in ignored users list.'''
+    ignored_users = get_chat_config(chat_id, "Ignore_List")
+    if user.id in ignored_users:
+        return True
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+        if user_alias in ignored_users:
+            return True
+    return False
+
+
 def is_user_in_white_list(user):
     '''Check if user is in global whitelist.'''
     l_white_users = file_read(CONST["F_WHITE_LIST"])
@@ -605,15 +636,14 @@ def is_user_in_white_list(user):
     return False
 
 
-def is_user_inignored_list(chat_id, user):
-    '''Check if user is in ignored users list.'''
-    ignored_users = get_chat_config(chat_id, "Ignore_List")
-    if user.id in ignored_users:
+def is_group_in_allowed_list(chat_id):
+    '''Check if group is in allowed list.'''
+    # True if Bot is Public
+    if not CONST["BOT_PRIVATE"]:
         return True
-    if user.username is not None:
-        user_alias = "@{}".format(user.username)
-        if user_alias in ignored_users:
-            return True
+    l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
+    if str(chat_id) in l_allowed_groups:
+        return True
     return False
 
 ################################################################################
@@ -639,6 +669,13 @@ def msg_new_user(update: Update, context: CallbackContext):
     if chat is None:
         printts("Warning: Received an unexpected new user update without chat.")
         printts(update)
+        return
+    # Check if Group is allowed to be used by the Bot
+    if not is_group_in_allowed_list(chat_id):
+        printts("Warning: Bot added to not allowed group: {}".format(chat_id))
+        msg = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
+        tlg_send_selfdestruct_msg_in(bot, chat_id, msg, 1)
+        tlg_leave_chat(bot, chat_id)
         return
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
@@ -706,7 +743,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                 printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
                 continue
             # Ignore if the member that has joined is in chat ignore list
-            if is_user_inignored_list(chat_id, join_user):
+            if is_user_in_ignored_list(chat_id, join_user):
                 printts("[{}] User is in ignore list. Skipping the captcha process.".format(chat_id))
                 continue
             if is_user_in_white_list(join_user):
@@ -1632,6 +1669,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
     if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update.message)
@@ -1704,11 +1742,71 @@ def cmd_whitelist(update: Update, context: CallbackContext):
                 tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global Whitelist.")
             return
         if add_rm == "rm":
+            if not is_valid_user_id_or_alias(user):
+                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
+                return
             if list_remove_element(l_white_users, user):
                 file_write(CONST["F_WHITE_LIST"], l_white_users, "w")
                 tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global Whitelist.")
             else:
                 tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global Whitelist.")
+
+
+def cmd_allowgroup(update: Update, context: CallbackContext):
+    '''Command /allowgroup message handler. To allow Bot usage in groups when Bot is private.
+    Just Bot Owner can use it.'''
+    bot = context.bot
+    args = context.args
+    chat_id = update.message.chat_id
+    user = update.message.from_user
+    user_id = user.id
+    user_alias = ""
+    if user.username is not None:
+        user_alias = "@{}".format(user.username)
+    # Check if command was execute by Bot owner
+    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update.message)
+    # Check if no argument was provided with the command
+    if len(args) == 0:
+        # Show Actual Allowed Groups
+        l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
+        bot_msg = "\n".join([str(group) for group in l_allowed_groups])
+        bot_msg = "Allowed Groups:\n--------------------\n{}".format(bot_msg)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+        return
+    else:
+        if len(args) <= 1:
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+            return
+        if (args[0] != "add") and (args[0] != "rm"):
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+            return
+        add_rm = args[0]
+        group = args[1]
+        l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
+        if add_rm == "add":
+            if not is_valid_group(group):
+                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid Group ID.")
+                return
+            if group not in l_allowed_groups:
+                file_write(CONST["F_ALLOWED_GROUPS"], "{}\n".format(group))
+                tlg_send_selfdestruct_msg(bot, chat_id, "Group added to allowed list.")
+            else:
+                tlg_send_selfdestruct_msg(bot, chat_id, "The group is already in the allowed list.")
+            return
+        if add_rm == "rm":
+            if not is_valid_group(group):
+                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid Group ID.")
+                return
+            if list_remove_element(l_allowed_groups, group):
+                file_write(CONST["F_ALLOWED_GROUPS"], l_allowed_groups, "w")
+                tlg_send_selfdestruct_msg(bot, chat_id, "Group removed from allowed list.")
+            else:
+                tlg_send_selfdestruct_msg(bot, chat_id, "The group is not in allowed list.")
 
 ################################################################################
 ### Main Loop Functions
@@ -1924,8 +2022,11 @@ def main():
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
-    dp.add_handler(CommandHandler("whitelist", cmd_whitelist, pass_args=True))
-    dp.add_handler(CommandHandler("captcha", cmd_captcha))
+    if (CONST["BOT_OWNER"] != "XXXXXXXXX"):
+        dp.add_handler(CommandHandler("captcha", cmd_captcha))
+        dp.add_handler(CommandHandler("whitelist", cmd_whitelist, pass_args=True))
+    if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
+        dp.add_handler(CommandHandler("allowgroup", cmd_allowgroup, pass_args=True))
     # Set to dispatcher a not-command text messages handler
     dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
     # Set to dispatcher not text messages handler

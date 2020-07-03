@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     03/07/2020
 Version:
-    1.11.2
+    1.12.0
 '''
 
 ################################################################################
@@ -29,6 +29,11 @@ SCRIPT_PATH = path.dirname(path.realpath(__file__))
 
 # General Bots Parameters
 CONST = {
+
+    # Set if you wan't the Bot to be Public or Private
+    # Public: can be used by any group
+    # Private: just can be used in allowed groups (Bot owner allow them with /allow_group command)
+    "BOT_PRIVATE": False,
 
     # Bot Token (get it from @BotFather)
     "TOKEN": "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -59,6 +64,9 @@ CONST = {
 
     # Global whitelist file path (to allow whitelist blind users in all groups)
     "F_WHITE_LIST": SCRIPT_PATH + "/data/whitelist.txt",
+
+    # Global whitelist file path (to allow whitelist blind users in all groups)
+    "F_ALLOWED_GROUPS": SCRIPT_PATH + "/data/allowedgroups.txt",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",
@@ -111,6 +119,21 @@ CONST = {
         "/whitelist add @peter123\n" \
         "/whitelist rm 123456789",
 
+    # Allowgroup usage
+    "ALLOWGROUP_USAGE": "Command usage (group ID):\n" \
+        "/allowgroup add -1001142817523\n" \
+        "/allowgroup rm -1001142817523",
+
+    # Allowgroup usage
+    "NOT_ALLOW_GROUP": "Hi, this Bot account is private and is not allowed to be used here. " \
+        "Contact to Bot account owner ({}) if you want to use the Bot in this group.\n" \
+        "\n" \
+        "Actual chat ID (Bot owner needs this to allow this group):\n" \
+        "{}\n" \
+        "\n" \
+        "Also, remember that you can create your own Bot account for free:\n" \
+        "{}",
+
     # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
     "F_TLDS": "tlds-alpha-by-domain.txt",
 
@@ -148,7 +171,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.11.2 (03/07/2020)"
+    "VERSION": "1.12.0 (03/07/2020)"
 }
 
 
