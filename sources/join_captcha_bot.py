@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/06/2020
+    03/07/2020
 Version:
-    1.11.1
+    1.11.2
 '''
 
 ################################################################################
@@ -625,20 +625,20 @@ def msg_new_user(update: Update, context: CallbackContext):
     global new_users_list
     bot = context.bot
     # Get message data
-    msg = getattr(update, "message", None)
-    if msg is None:
-        print("Warning: Received an unexpected new user update.")
-        print(update)
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        printts("Warning: Received an unexpected new user update.")
+        printts(update)
         return
-    chat_id = getattr(msg, "chat_id", None)
+    chat_id = getattr(update_msg, "chat_id", None)
     if chat_id is None:
-        print("Warning: Received an unexpected new user update without chat id.")
-        print(update)
+        printts("Warning: Received an unexpected new user update without chat id.")
+        printts(update)
         return
-    chat = getattr(msg, "chat", None)
+    chat = getattr(update_msg, "chat", None)
     if chat is None:
-        print("Warning: Received an unexpected new user update without chat.")
-        print(update)
+        printts("Warning: Received an unexpected new user update without chat.")
+        printts(update)
         return
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
@@ -649,7 +649,7 @@ def msg_new_user(update: Update, context: CallbackContext):
         tlg_leave_chat(bot, chat_id)
         return
     # For each new user that join or has been added
-    for join_user in msg.new_chat_members:
+    for join_user in update_msg.new_chat_members:
         join_user_id = join_user.id
         # Get user name
         if join_user.name is not None:
@@ -665,7 +665,7 @@ def msg_new_user(update: Update, context: CallbackContext):
         if bot.id == join_user_id:
             # Get the language of the Telegram client software the Admin that has added the Bot
             # has, to assume this is the chat language and configure Bot language of this chat
-            admin_language = msg.from_user.language_code[0:2].upper()
+            admin_language = update_msg.from_user.language_code[0:2].upper()
             if admin_language not in TEXT:
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat_id, "Language", admin_language)
@@ -794,7 +794,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                 {
                     "chat_id": chat_id,
                     "user_id": join_user_id,
-                    "msg_id_join0": msg,
+                    "msg_id_join0": update_msg,
                     "msg_id_join1": sent_img_msg.message_id,
                     "msg_id_join2": None
                 }
@@ -807,25 +807,25 @@ def msg_notext(update: Update, context: CallbackContext):
     '''All non-text messages handler.'''
     bot = context.bot
     # Get message data
-    msg = getattr(update, "message", None)
-    if msg is None:
-        msg = getattr(update, "edited_message", None)
-    if msg is None:
-        msg = getattr(update, "channel_post", None)
-        if msg is not None:
-            chat = getattr(msg, "chat", None)
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        update_msg = getattr(update, "edited_message", None)
+    if update_msg is None:
+        update_msg = getattr(update, "channel_post", None)
+        if update_msg is not None:
+            chat = getattr(update_msg, "chat", None)
             if chat is not None:
                 tlg_leave_chat(bot, chat.id)
                 return        
         print("Warning: Received an unexpected no-text update.")
         print(update)
         return
-    chat_id = getattr(msg, "chat_id", None)
+    chat_id = getattr(update_msg, "chat_id", None)
     if chat_id is None:
         print("Warning: Received an unexpected no-text update without chat id.")
         print(update)
         return
-    chat = getattr(msg, "chat", None)
+    chat = getattr(update_msg, "chat", None)
     if chat is None:
         print("Warning: Received an unexpected no-text update without chat.")
         print(update)
@@ -837,12 +837,12 @@ def msg_notext(update: Update, context: CallbackContext):
     if chat.type == "channel":
         return
     # Ignore if captcha protection is not enable int his chat
-    captcha_enable = get_chat_config(msg.chat_id, "Enabled")
+    captcha_enable = get_chat_config(update_msg.chat_id, "Enabled")
     if not captcha_enable:
         return
     # Get message data
-    user_id = msg.from_user.id
-    msg_id = msg.message_id
+    user_id = update_msg.from_user.id
+    msg_id = update_msg.message_id
     # Determine configured bot language in actual chat
     lang = get_chat_config(chat_id, "Language")
     # Search if this user is a new user that has not completed the captcha yet
@@ -871,25 +871,25 @@ def msg_nocmd(update: Update, context: CallbackContext):
     global new_users_list
     bot = context.bot
     # Get message data
-    msg = getattr(update, "message", None)
-    if msg is None:
-        msg = getattr(update, "edited_message", None)
-    if msg is None:
-        msg = getattr(update, "channel_post", None)
-        if msg is not None:
-            chat = getattr(msg, "chat", None)
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        update_msg = getattr(update, "edited_message", None)
+    if update_msg is None:
+        update_msg = getattr(update, "channel_post", None)
+        if update_msg is not None:
+            chat = getattr(update_msg, "chat", None)
             if chat is not None:
                 tlg_leave_chat(bot, chat.id)
                 return        
         print("Warning: Received an unexpected no-command update.")
         print(update)
         return
-    chat_id = getattr(msg, "chat_id", None)
+    chat_id = getattr(update_msg, "chat_id", None)
     if chat_id is None:
         print("Warning: Received an unexpected no-command update without chat id.")
         print(update)
         return
-    chat = getattr(msg, "chat", None)
+    chat = getattr(update_msg, "chat", None)
     if chat is None:
         print("Warning: Received an unexpected no-command update without chat.")
         print(update)
@@ -905,13 +905,13 @@ def msg_nocmd(update: Update, context: CallbackContext):
     if not captcha_enable:
         return
     # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
-    msg_text = getattr(msg, "text", None)
+    msg_text = getattr(update_msg, "text", None)
     if msg_text is None:
-        msg_text = getattr(msg, "caption_html", None)
+        msg_text = getattr(update_msg, "caption_html", None)
     if msg_text is None:
-        msg_text = getattr(msg, "caption", None)
+        msg_text = getattr(update_msg, "caption", None)
     # Check if message has a text link (embedded url in text) and get it
-    msg_entities = getattr(msg, "entities", None)
+    msg_entities = getattr(update_msg, "entities", None)
     if msg_entities is None:
         msg_entities = []
     for entity in msg_entities:
@@ -924,8 +924,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
                     msg_text = "{} [{}]".format(msg_text, url)
                 break
     # Get others message data
-    user_id = msg.from_user.id
-    msg_id = msg.message_id
+    user_id = update_msg.from_user.id
+    msg_id = update_msg.message_id
     # Get and update chat data
     chat_title = chat.title
     if chat_title:
@@ -934,9 +934,9 @@ def msg_nocmd(update: Update, context: CallbackContext):
     if chat_link:
         chat_link = "@{}".format(chat_link)
         save_config_property(chat_id, "Link", chat_link)
-    user_name = msg.from_user.full_name
-    if msg.from_user.username is not None:
-        user_name = "{}(@{})".format(user_name, msg.from_user.username)
+    user_name = update_msg.from_user.full_name
+    if update_msg.from_user.username is not None:
+        user_name = "{}(@{})".format(user_name, update_msg.from_user.username)
     # Set default text message if not received
     if msg_text is None:
         msg_text = "[Not a text message]"
@@ -972,7 +972,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                     break
                 j = j + 1
             # Remove user captcha numbers message
-            tlg_delete_msg(bot, chat_id, msg.message_id)
+            tlg_delete_msg(bot, chat_id, update_msg.message_id)
             bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
             # Set Bot to auto-remove captcha solved message too after 5mins
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
@@ -999,7 +999,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                         TEXT[lang]["CAPTCHA_INCORRECT_0"])
                 update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
                 # Promise remove bad message data in one minute
-                tlg_msg_to_selfdestruct_in(msg, 1)
+                tlg_msg_to_selfdestruct_in(update_msg, 1)
             else:
                 # Check if the message was just a 4 numbers msg
                 if is_int(msg_text):
@@ -1011,7 +1011,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                             TEXT[lang]["CAPTCHA_INCORRECT_1"])
                     update_to_delete_join_msg_id(chat_id, user_id, "msg_id_join2", sent_msg_id)
                     # Promise remove bad message data in one minute
-                    tlg_msg_to_selfdestruct_in(msg, 1)
+                    tlg_msg_to_selfdestruct_in(update_msg, 1)
                 else:
                     # Check if the message contains any URL
                     has_url = re.findall(CONST["REGEX_URLS"], msg_text)
@@ -1615,7 +1615,10 @@ def cmd_about(update: Update, context: CallbackContext):
         lang = get_chat_config(chat_id, "Language")
         bot_msg = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
             CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
-    bot.send_message(chat_id, bot_msg)
+    try:
+        bot.send_message(chat_id, bot_msg)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
 
 
 def cmd_captcha(update: Update, context: CallbackContext):
@@ -1667,7 +1670,7 @@ def cmd_whitelist(update: Update, context: CallbackContext):
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
     if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
-        bot.send_message(chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update.message)
@@ -1678,6 +1681,7 @@ def cmd_whitelist(update: Update, context: CallbackContext):
         bot_msg = "\n".join([str(user) for user in l_white_users])
         bot_msg = "Global WhiteList:\n--------------------\n{}".format(bot_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
         return
     else:
         if len(args) <= 1:
