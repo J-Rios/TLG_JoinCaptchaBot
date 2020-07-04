@@ -7,7 +7,7 @@ if [ -z "$PID" ]; then
     exit 1
 fi
 
-kill $PID
+kill -9 $PID
 echo "Killing script, please wait..."
 while $(kill -0 $PID 2>/dev/null); do
     sleep 1
