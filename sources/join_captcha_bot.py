@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/07/2020
+    04/07/2020
 Version:
-    1.12.0
+    1.12.1
 '''
 
 ################################################################################
@@ -702,7 +702,12 @@ def msg_new_user(update: Update, context: CallbackContext):
         if bot.id == join_user_id:
             # Get the language of the Telegram client software the Admin that has added the Bot
             # has, to assume this is the chat language and configure Bot language of this chat
-            admin_language = update_msg.from_user.language_code[0:2].upper()
+            admin_language = ""
+            msg_from_user = getattr(update_msg, "from_user", None)
+            if msg_from_user:
+                language_code = getattr(msg_from_user, "language_code", None)
+                if language_code:
+                    admin_language = language_code[0:2].upper()
             if admin_language not in TEXT:
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat_id, "Language", admin_language)
@@ -1158,43 +1163,55 @@ def button_request_captcha(update: Update, context: CallbackContext):
 def cmd_start(update: Update, context: CallbackContext):
     '''Command /start message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
     if chat_type == "private":
         bot.send_message(chat_id, TEXT["EN"]["START"])
     else:
         lang = get_chat_config(chat_id, "Language")
-        tlg_msg_to_selfdestruct(update.message)
+        tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["START"])
 
 
 def cmd_help(update: Update, context: CallbackContext):
     '''Command /help message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
     if chat_type == "private":
         bot_msg = TEXT["EN"]["HELP"]
         bot.send_message(chat_id, bot_msg)
     else:
         lang = get_chat_config(chat_id, "Language")
         bot_msg = TEXT[lang]["HELP"]
-        tlg_msg_to_selfdestruct(update.message)
+        tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
 def cmd_commands(update: Update, context: CallbackContext):
     '''Command /commands message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
     if chat_type == "private":
         commands_text = TEXT["EN"]["COMMANDS"]
         bot.send_message(chat_id, commands_text)
     else:
         lang = get_chat_config(chat_id, "Language")
         commands_text = TEXT[lang]["COMMANDS"]
-        tlg_msg_to_selfdestruct(update.message)
+        tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, commands_text)
 
 
@@ -1202,15 +1219,19 @@ def cmd_language(update: Update, context: CallbackContext):
     '''Command /language message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1244,15 +1265,19 @@ def cmd_time(update: Update, context: CallbackContext):
     '''Command /time message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1286,15 +1311,19 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     '''Command /difficulty message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1327,15 +1356,19 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
     '''Command /captcha_mode message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1364,15 +1397,19 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     '''Command /welcome_msg message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1406,15 +1443,19 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     '''Command /restrict_non_text message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1448,15 +1489,19 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     '''Command /add_ignore message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1494,15 +1539,19 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     '''Command /remove_ignore message handler'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1531,15 +1580,19 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
 def cmd_ignore_list(update: Update, context: CallbackContext):
     '''Command /ignore_list message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1562,15 +1615,19 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
 def cmd_enable(update: Update, context: CallbackContext):
     '''Command /enable message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1595,15 +1652,19 @@ def cmd_enable(update: Update, context: CallbackContext):
 def cmd_disable(update: Update, context: CallbackContext):
     '''Command /disable message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    user_id = update.message.from_user.id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
     # Check and deny usage in private chat
     if chat_type == "private":
         bot.send_message(chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
     # Check if command was execute by an Admin
@@ -1628,23 +1689,31 @@ def cmd_disable(update: Update, context: CallbackContext):
 def cmd_version(update: Update, context: CallbackContext):
     '''Command /version message handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
     if chat_type == "private":
         bot_msg = TEXT["EN"]["VERSION"].format(CONST["VERSION"])
         bot.send_message(chat_id, bot_msg)
     else:
         lang = get_chat_config(chat_id, "Language")
         bot_msg = TEXT[lang]["VERSION"].format(CONST["VERSION"])
-        tlg_msg_to_selfdestruct(update.message)
+        tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
 def cmd_about(update: Update, context: CallbackContext):
     '''Command /about handler'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    chat_type = update.message.chat.type
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
     if chat_type == "private":
         bot_msg = TEXT["EN"]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
         CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
@@ -1661,8 +1730,12 @@ def cmd_about(update: Update, context: CallbackContext):
 def cmd_captcha(update: Update, context: CallbackContext):
     '''Command /captcha message handler. Usefull to test. Just Bot Owner can use it.'''
     bot = context.bot
-    chat_id = update.message.chat_id
-    user = update.message.from_user
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user = update_msg.from_user
     user_id = user.id
     user_alias = ""
     if user.username is not None:
@@ -1672,7 +1745,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Generate a random difficulty captcha
     captcha_level = randint(1, 5)
     captcha_chars_mode = randint(1, 3)
@@ -1700,8 +1773,12 @@ def cmd_whitelist(update: Update, context: CallbackContext):
     Just Bot Owner can use it.'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user = update.message.from_user
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user = update_msg.from_user
     user_id = user.id
     user_alias = ""
     if user.username is not None:
@@ -1711,7 +1788,7 @@ def cmd_whitelist(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Check if no argument was provided with the command
     if len(args) == 0:
         # Show Actual Global Whitelisted Users
@@ -1757,8 +1834,12 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     Just Bot Owner can use it.'''
     bot = context.bot
     args = context.args
-    chat_id = update.message.chat_id
-    user = update.message.from_user
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user = update_msg.from_user
     user_id = user.id
     user_alias = ""
     if user.username is not None:
@@ -1768,7 +1849,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update.message)
+    tlg_msg_to_selfdestruct(update_msg)
     # Check if no argument was provided with the command
     if len(args) == 0:
         # Show Actual Allowed Groups
