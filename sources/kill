@@ -9,7 +9,7 @@ fi
 
 kill $PID
 echo "Killing script, please wait..."
-while $(kill -0 $PID 2>/dev/null); do
+while $(kill -9 $PID 2>/dev/null); do
     sleep 1
 done
 ./status
