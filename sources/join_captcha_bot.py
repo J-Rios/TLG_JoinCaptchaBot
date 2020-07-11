@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     11/07/2020
 Version:
-    1.12.2
+    1.12.3
 '''
 
 ################################################################################
@@ -2131,7 +2131,8 @@ def main():
         updater.start_webhook(
             clean=True, listen="0.0.0.0", port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
-            webhook_url="https://{}:{}/{}".format(CONST["WEBHOOK_HOST"], CONST["WEBHOOK_PORT"], CONST["TOKEN"])
+            webhook_url="https://{}:{}/{}".format(CONST["WEBHOOK_HOST"], CONST["WEBHOOK_PORT"],
+            CONST["TOKEN"])
         )
     printts("Bot setup completed. Bot is now running.")
     # Launch self-messages delete and users kick/ban threads
@@ -2139,8 +2140,11 @@ def main():
     th_1 = Thread(target=th_check_time_to_kick_not_verify_users, args=(updater.bot,))
     th_0.start()
     th_1.start()
-    # Set main thread to idle Bot
-    updater.idle()
+    # Set main thread to idle
+    #updater.idle()
+    # let's avoid using Bot idle(), due it catch external signals instead our signal handler
+    while True:
+        sleep(10)
 
 
 if __name__ == "__main__":

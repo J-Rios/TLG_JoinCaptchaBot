@@ -7,10 +7,7 @@ if [ -z "$PID" ]; then
     exit 1
 fi
 
-# Kill twice (first SIGTERM signal to stop the Bot and second one to stop our code)
 echo "Killing script, please wait..."
-kill $PID
-sleep 1
 kill $PID
 while $(kill -0 $PID 2>/dev/null); do
     sleep 1
