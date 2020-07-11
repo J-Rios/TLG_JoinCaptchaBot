@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    04/07/2020
+    11/07/2020
 Version:
-    1.12.1
+    1.12.2
 '''
 
 ################################################################################
@@ -796,8 +796,6 @@ def msg_new_user(update: Update, context: CallbackContext):
                     if str(e) == "User_banned_in_channel":
                         tlg_leave_chat(bot, chat_id)
                         printts("Bot left chat where is ban.")
-                else:
-                    printts("sent_img_msg: {}".format(sent_img_msg))
             # Remove sent captcha image file from file system
             if path.exists(captcha["image"]):
                 remove(captcha["image"])
@@ -1087,8 +1085,11 @@ def msg_nocmd(update: Update, context: CallbackContext):
                         if rm_result == -2:
                             bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(new_user["user_name"])
                         # Get chat kick timeout and send spam detection message with autoremove
-                        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-                        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+                        if (rm_result == 1) or (rm_result == -2):
+                            captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+                            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+                        else:
+                            printts("Message can't be deleted.")
         printts("[{}] Captcha reply process complete.".format(chat_id))
         printts(" ")
         break
