@@ -247,6 +247,7 @@ def get_default_config_data():
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
         ("Language", CONST["INIT_LANG"]),
         ("Welcome_Msg", "-"),
+        ("Welcome_Msg_Use_Markdown", False),
         ("Ignore_List", [])
     ])
     return config_data
@@ -324,12 +325,12 @@ def tlg_msg_to_selfdestruct(message):
     tlg_msg_to_selfdestruct_in(message, CONST["T_DEL_MSG"])
 
 
-def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
+def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min, kwargs_for_send_message = {}):
     '''Send a telegram message that will be auto-delete in specified time'''
     sent_msg_id = None
     # Send the message
     try:
-        sent_msg = bot.send_message(chat_id, message)
+        sent_msg = bot.send_message(chat_id, message, **kwargs_for_send_message)
         tlg_msg_to_selfdestruct_in(sent_msg, time_delete_min)
         sent_msg_id = sent_msg["message_id"]
     # It has been an unsuccesfull sent
@@ -1019,8 +1020,11 @@ def msg_nocmd(update: Update, context: CallbackContext):
             list_remove_element(new_users_list, new_user)
             # Check for custom welcome message and send it
             welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
+            is_using_markdown = get_chat_config(chat_id, "Welcome_Msg_Use_Markdown")
             if welcome_msg != "-":
-                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"])
+                # Send the message as Markdown if Welcome_Msg_Use_Markdown config is True
+                kwargs_for_send_message = {"parse_mode": "Markdown"} if is_using_markdown else {}
+                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"], kwargs_for_send_message)
             # Check for send just text message option and apply user restrictions
             restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
             if restrict_non_text_msgs:
@@ -1426,17 +1430,23 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"])
         return
     # Get and configure chat to provided welcome message
-    welcome_msg = " ".join(args)
+    # If user writes like: /welcome_msg use_markdown <Text>
+    # then the bot cuts down use_markdown from the text
+    welcome_msg = " ".join(args[1:] if args[0] == "use_markdown" else args)
     welcome_msg = welcome_msg.replace("{", "{{")
     welcome_msg = welcome_msg.replace("}", "}}")
     welcome_msg = welcome_msg.replace("$user", "{0}")
     welcome_msg = welcome_msg[:CONST["MAX_WELCOME_MSG_LENGTH"]]
     if welcome_msg == "disable":
         welcome_msg = '-'
+        save_config_property(chat_id, "Welcome_Msg_Use_Markdown", False)
         bot_msg = TEXT[lang]["WELCOME_MSG_UNSET"]
     else:
         bot_msg = TEXT[lang]["WELCOME_MSG_SET"]
     save_config_property(chat_id, "Welcome_Msg", welcome_msg)
+    # Support for markdown welcome messages
+    if args[0] == "use_markdown":
+        save_config_property(chat_id, "Welcome_Msg_Use_Markdown", True)
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
