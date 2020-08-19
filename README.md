@@ -90,10 +90,16 @@ You can set Bot to be Private in "constants.py" file:
 
 By default, Bot checks and receives updates from Telegram Servers by **Polling** (requests and get if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use a **Webhook** instead if you expect to handle a large number of users/groups.
 
-To use Webhook instead Polling, you need a signed certificate file in the system and setup the next lines in "configs.py" file to point to expected Webhook Host address, port and certificate file:
+To use Webhook instead Polling, you need a signed certificate file in the system, you can create the key file and self-sign the cert through openssl tool:
+
+```bash
+openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
+```
+
+Once you have the key and cert files, setup the next lines in "configs.py" file to point to expected Webhook Host address, port and certificate file:
 
 ```python
-"WEBHOOK_HOST": "Some IP or DNS here",
+"WEBHOOK_HOST": "Current system IP/DNS here",
 "WEBHOOK_PORT": 8443,
 "WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
 "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
