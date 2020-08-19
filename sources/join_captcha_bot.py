@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     19/08/2020
 Version:
-    1.12.4
+    1.12.5
 '''
 
 ################################################################################
@@ -38,7 +38,7 @@ from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeybo
 from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters,
     CallbackQueryHandler, Defaults)
 
-from constants import CONST, TEXT
+from constants import SCRIPT_PATH, CONST, TEXT
 from tsjson import TSjson
 from lib.multicolor_captcha_generator.img_captcha_gen import CaptchaGenerator
 
@@ -335,9 +335,6 @@ def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min, kwargs_
     # It has been an unsuccesfull sent
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
-        if str(e) != "User_banned_in_channel":
-            tlg_leave_chat(bot, chat_id)
-            printts("Bot left chat where is ban.")
     return sent_msg_id
 
 
@@ -532,8 +529,7 @@ def initialize_resources():
                 for key, value in default_conf.items():
                     save_config_property(f_chat_id, key, value)
     # Load and generate URL detector regex from TLD list file
-    actual_script_path = path.dirname(path.realpath(__file__))
-    load_urls_regex("{}/{}".format(actual_script_path, CONST["F_TLDS"]))
+    load_urls_regex("{}/{}".format(SCRIPT_PATH, CONST["F_TLDS"]))
     # Load all languages texts
     load_texts_languages()
 
@@ -793,9 +789,6 @@ def msg_new_user(update: Update, context: CallbackContext):
                 printts("[{}] {}".format(chat_id, str(e)))
                 if str(e) != "Timed out":
                     send_problem = True
-                    if str(e) == "User_banned_in_channel":
-                        tlg_leave_chat(bot, chat_id)
-                        printts("Bot left chat where is ban.")
             # Remove sent captcha image file from file system
             if path.exists(captcha["image"]):
                 remove(captcha["image"])
@@ -855,8 +848,7 @@ def msg_notext(update: Update, context: CallbackContext):
         if update_msg is not None:
             chat = getattr(update_msg, "chat", None)
             if chat is not None:
-                tlg_leave_chat(bot, chat.id)
-                return        
+                return
         print("Warning: Received an unexpected no-text update.")
         print(update)
         return
@@ -919,8 +911,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         if update_msg is not None:
             chat = getattr(update_msg, "chat", None)
             if chat is not None:
-                tlg_leave_chat(bot, chat.id)
-                return        
+                return
         print("Warning: Received an unexpected no-command update.")
         print(update)
         return
@@ -1021,7 +1012,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
             welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
             if welcome_msg != "-":
                 # Send the message as Markdown
-                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
+                sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
+                    CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
+                if sent_result is None:
+                    printts("[{}] Error: Can't send the welcome message.".format(chat_id))
             # Check for send just text message option and apply user restrictions
             restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
             if restrict_non_text_msgs:
@@ -1157,7 +1151,6 @@ def button_request_captcha(update: Update, context: CallbackContext):
         bot.answer_callback_query(query.id)
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
-    
 
 ################################################################################
 ### Received Telegram command messages handlers
@@ -1925,9 +1918,6 @@ def th_selfdestruct_messages(bot):
                         except Exception as ee:
                             printts(str(e))
                             printts(str(ee))
-                            if str(e) != "User_banned_in_channel":
-                                tlg_leave_chat(bot, sent_msg["Chat_id"])
-                                printts("Bot left chat where is ban.")
                             pass
                     list_remove_element(to_delete_in_time_messages_list, sent_msg)
             i = i + 1
@@ -1997,9 +1987,6 @@ def th_check_time_to_kick_not_verify_users(bot):
                                 bot.send_message(chat_id, bot_msg)
                             except Exception as e:
                                 printts("[{}] {}".format(chat_id, str(e)))
-                                if str(e) != "User_banned_in_channel":
-                                    tlg_leave_chat(bot, chat_id)
-                                    printts("Bot left chat where is ban.")
                         else:
                             # For other reason, the Bot can't ban
                             bot_msg = TEXT[lang]['BOT_CANT_KICK'].format(new_user["user_name"])
@@ -2035,9 +2022,6 @@ def th_check_time_to_kick_not_verify_users(bot):
                         bot.send_message(chat_id, bot_msg)
                     except Exception as e:
                         printts("[{}] {}".format(chat_id, str(e)))
-                        if str(e) != "User_banned_in_channel":
-                            tlg_leave_chat(bot, chat_id)
-                            printts("Bot left chat where is ban.")
                 # Update user info (join_retries & kick_ban)
                 new_user["kicked_ban"] = True
                 if new_user in new_users_list:
