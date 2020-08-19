@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    11/07/2020
+    19/08/2020
 Version:
-    1.12.3
+    1.12.4
 '''
 
 ################################################################################
@@ -324,12 +324,12 @@ def tlg_msg_to_selfdestruct(message):
     tlg_msg_to_selfdestruct_in(message, CONST["T_DEL_MSG"])
 
 
-def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min):
+def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min, kwargs_for_send_message = {}):
     '''Send a telegram message that will be auto-delete in specified time'''
     sent_msg_id = None
     # Send the message
     try:
-        sent_msg = bot.send_message(chat_id, message)
+        sent_msg = bot.send_message(chat_id, message, **kwargs_for_send_message)
         tlg_msg_to_selfdestruct_in(sent_msg, time_delete_min)
         sent_msg_id = sent_msg["message_id"]
     # It has been an unsuccesfull sent
@@ -1020,7 +1020,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
             # Check for custom welcome message and send it
             welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
             if welcome_msg != "-":
-                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"])
+                # Send the message as Markdown
+                tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg, CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
             # Check for send just text message option and apply user restrictions
             restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
             if restrict_non_text_msgs:
@@ -1425,8 +1426,8 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     if len(args) == 0:
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"])
         return
-    # Get and configure chat to provided welcome message
-    welcome_msg = " ".join(args)
+    # Get welcome message in markdown and remove "/Welcome_msg " text from it
+    welcome_msg = update.message.text_markdown_v2[14:]
     welcome_msg = welcome_msg.replace("{", "{{")
     welcome_msg = welcome_msg.replace("}", "}}")
     welcome_msg = welcome_msg.replace("$user", "{0}")
