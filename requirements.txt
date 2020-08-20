@@ -1,2 +1,2 @@
-python_telegram_bot==12.5.1
+python_telegram_bot==12.8.0
 Pillow==7.1.2

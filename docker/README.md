@@ -24,14 +24,14 @@ docker image containing the bot (below).
 
 Create a docker image:
 
-```
+```bash
 make BOT_TOKEN="<your_bot_token_here>"
 ```
 
 It is also possible to specify a different default language for the bot to use
 by setting the `BOT_LANG` variable at build time, like:
 
-```
+```bash
 make BOT_TOKEN="<your_bot_token_here>" BOT_LANG="PT_BR"
 ```
 
@@ -39,7 +39,7 @@ The build process may take a while, depending on your computer and connection
 speeds.  Docker will indicate a successful build at the end of the process with
 something like:
 
-```
+```bash
 Successfully built (number)
 Successfully tagged captcha-bot:latest
 ```
@@ -55,7 +55,7 @@ history from disk.
 
 To run an instance, use:
 
-```
+```bash
 docker run -d --name captcha-bot captcha-bot
 ```
 
@@ -67,7 +67,7 @@ investigate the logs.
 
 To stop the bot, use
 
-```
+```bash
 docker stop captcha-bot
 docker rm captcha-bot
 ```

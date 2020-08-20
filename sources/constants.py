@@ -181,16 +181,16 @@ TEXT = {
     "EN": None, # English
     "DE": None, # German
     "FR": None, # French
-    "ID": None, # Indonesian
     "IT": None, # Italian
     "ES": None, # Spanish
-    "CA": None, # Catalan
     "GL": None, # Galician
     "EU": None, # Basque
-    "RU": None, # Rusian
+    "CA": None, # Catalan
     "PT_BR": None, # Portuguese (Brasil)
+    "RU": None, # Rusian
     "PL": None, # Polish
     "TR": None, # Turkish
+    "ID": None, # Indonesian
     "ZH_CN": None, # Chinese (Mainland)
     "EO": None # Esperanto
 }
