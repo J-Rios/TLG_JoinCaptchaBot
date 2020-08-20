@@ -152,3 +152,5 @@ To add support for a new language you must follow this steps:
 - [Unsupported, not working] Persian (Iran): [sajjad taheri](https://github.com/tgMember)
 
 - Russian: Unattributed (anonymous)
+
+- Esperanto: Pablo Busto & Porrumentzio.
