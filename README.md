@@ -84,7 +84,9 @@ You can set Bot to be Private in "constants.py" file:
 "BOT_PRIVATE" : True,
 ```
 
-**Note:** If you have a Public Bot and set it to Private, it will leave any group where is not allowed to be used.
+**Note:** If you have a Public Bot and set it to Private, it will leave any group where is not allowed to be used when a new user joins.
+
+**Note:** Telegram Private Groups could changes their chat ID when it become a public supergroup, so the Bot will leave the group and the owner has to set the new group chat ID with /allow_group.
 
 ## Scalability (Polling or Webhook)
 
