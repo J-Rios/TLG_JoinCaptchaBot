@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     27/08/2020
 Version:
-    1.12.7
+    1.12.8
 '''
 
 ################################################################################
@@ -1748,7 +1748,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
-    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+    if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
@@ -1791,7 +1791,7 @@ def cmd_whitelist(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
-    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+    if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
@@ -1852,7 +1852,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
-    if (user_id != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+    if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
