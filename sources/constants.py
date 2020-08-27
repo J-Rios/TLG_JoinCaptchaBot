@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    20/08/2020
+    27/08/2020
 Version:
-    1.12.6
+    1.12.7
 '''
 
 ################################################################################
@@ -172,25 +172,25 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.12.6 (20/08/2020)"
+    "VERSION": "1.12.7 (27/08/2020)"
 }
 
 
 # Supported languages list
 TEXT = {
-    "EN": None, # English
-    "DE": None, # German
-    "FR": None, # French
-    "IT": None, # Italian
-    "ES": None, # Spanish
-    "GL": None, # Galician
-    "EU": None, # Basque
-    "CA": None, # Catalan
-    "PT_BR": None, # Portuguese (Brasil)
-    "RU": None, # Rusian
-    "PL": None, # Polish
-    "TR": None, # Turkish
-    "ID": None, # Indonesian
-    "ZH_CN": None, # Chinese (Mainland)
-    "EO": None # Esperanto
+    "EN": {}, # English
+    "DE": {}, # German
+    "FR": {}, # French
+    "IT": {}, # Italian
+    "ES": {}, # Spanish
+    "GL": {}, # Galician
+    "EU": {}, # Basque
+    "CA": {}, # Catalan
+    "PT_BR": {}, # Portuguese (Brasil)
+    "RU": {}, # Rusian
+    "PL": {}, # Polish
+    "TR": {}, # Turkish
+    "ID": {}, # Indonesian
+    "ZH_CN": {}, # Chinese (Mainland)
+    "EO": {} # Esperanto
 }

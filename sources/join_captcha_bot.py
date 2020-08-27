@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    20/08/2020
+    27/08/2020
 Version:
-    1.12.6
+    1.12.7
 '''
 
 ################################################################################
@@ -737,18 +737,30 @@ def msg_new_user(update: Update, context: CallbackContext):
                 save_config_property(chat_id, "Link", chat_link)
             # Ignore Admins
             if tlg_user_is_admin(bot, join_user_id, chat_id):
-                printts("[{}] User is an administrator. Skipping the captcha process.".format(chat_id))
+                printts("[{}] User is an administrator.".format(chat_id))
+                printts("Skipping the captcha process.")
                 continue
+            # Ignore Members added by an Admin
+            join_by = getattr(update_msg, "from_user", None)
+            if join_by:
+                join_by_id = update_msg.from_user.id
+                if tlg_user_is_admin(bot, join_by_id, chat_id):
+                    printts("[{}] User has been added by an administrator.".format(chat_id))
+                    printts("Skipping the captcha process.")
+                    continue
             # Ignore if the member that has been join the group is a Bot
             if join_user.is_bot:
-                printts("[{}] User is a Bot. Skipping the captcha process.".format(chat_id))
+                printts("[{}] User is a Bot.".format(chat_id))
+                printts("Skipping the captcha process.")
                 continue
             # Ignore if the member that has joined is in chat ignore list
             if is_user_in_ignored_list(chat_id, join_user):
-                printts("[{}] User is in ignore list. Skipping the captcha process.".format(chat_id))
+                printts("[{}] User is in ignore list.".format(chat_id))
+                printts("Skipping the captcha process.")
                 continue
             if is_user_in_white_list(join_user):
-                printts("[{}] User is in global whitelist. Skipping the captcha process.".format(chat_id))
+                printts("[{}] User is in global whitelist.".format(chat_id))
+                printts("Skipping the captcha process.")
                 continue
             # Check and remove previous join messages of that user (if any)
             i = 0
@@ -2061,6 +2073,12 @@ def main():
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         printts("Error: Bot Token has not been set.")
         printts("Please add your Bot Token to constants.py file.")
+        printts("Exit.\n")
+        exit(0)
+    # Check if Bot owner has been set in Private Bot mode
+    if (CONST["BOT_OWNER"] == "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
+        printts("Error: Bot Owner has not been set for Private Bot.")
+        printts("Please add the Bot Owner to constants.py file.")
         printts("Exit.\n")
         exit(0)
     printts("Bot started.")
