@@ -32,7 +32,7 @@ from time import time, sleep, strptime, mktime, strftime
 from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
-from random import randint
+from random import choice, randint
 from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup,
     ChatPermissions)
 from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters,
@@ -777,37 +777,56 @@ def msg_new_user(update: Update, context: CallbackContext):
             if not captcha_enable:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
                 continue
-            # Determine configured bot language in actual chat
+            # Determine configured captcha settings
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
             captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
-            # Generate a pseudorandom captcha send it to telegram group and program message
             # selfdestruct
-            captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-            img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,
-                    chat_title, str(captcha_timeout))
-            # Prepare inline keyboard button to let user request another catcha
-            keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                    callback_data=join_user_id)]]
-            reply_markup = InlineKeyboardMarkup(keyboard)
             send_problem = False
-            printts("[{}] Sending captcha message to {}: {}...".format(chat_id, join_user_name, \
-                    captcha["number"]))
-            try:
-                # Note: Img caption must be <= 1024 chars
-                sent_img_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"),
-                        reply_markup=reply_markup, caption=img_caption, timeout=20)
-            except Exception as e:
-                printts("[{}] {}".format(chat_id, str(e)))
-                if str(e) != "Timed out":
-                    send_problem = True
-            # Remove sent captcha image file from file system
-            if path.exists(captcha["image"]):
-                remove(captcha["image"])
+            if captcha_chars_mode != "button":
+                # Generate a pseudorandom captcha send it to telegram group and program message
+                captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
+                captcha_num = captcha["number"]
+                img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,
+                        chat_title, str(captcha_timeout))
+                # Prepare inline keyboard button to let user request another catcha
+                keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
+                        callback_data=join_user_id)]]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                printts("[{}] Sending captcha message to {}: {}...".format(chat_id, join_user_name, \
+                        captcha_num))
+                try:
+                    # Note: Img caption must be <= 1024 chars
+                    sent_msg = bot.send_photo(chat_id=chat_id, photo=open(captcha["image"],"rb"),
+                            reply_markup=reply_markup, caption=img_caption, timeout=20)
+                except Exception as e:
+                    printts("[{}] {}".format(chat_id, str(e)))
+                    if str(e) != "Timed out":
+                        send_problem = True
+                # Remove sent captcha image file from file system
+                if path.exists(captcha["image"]):
+                    remove(captcha["image"])
+            else:
+                # Send a button-only challenge
+                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE_TEXT"].format(join_user_name,
+                        chat_title, str(captcha_timeout))
+                captcha_num = ""
+                # Prepare inline keyboard button to let user pass
+                keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
+                        callback_data=join_user_id)]]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                printts("[{}] Sending captcha message to {}: [button]".format(chat_id, join_user_name))
+                try:
+                    sent_msg = bot.send_message(chat_id=chat_id, text=challenge_text,
+                                                reply_markup=reply_markup, timeout=20)
+                except Exception as e:
+                    printts("[{}] {}".format(chat_id, str(e)))
+                    if str(e) != "Timed out":
+                        send_problem = True
             if not send_problem:
                 # Add sent image to self-destruct list
-                if not tlg_msg_to_selfdestruct_in(sent_img_msg, captcha_timeout+0.5):
-                    printts("[{}] sent_img_msg does not have all expected attributes. "
+                if not tlg_msg_to_selfdestruct_in(sent_msg, captcha_timeout+0.5):
+                    printts("[{}] sent_msg does not have all expected attributes. "
                             "Scheduled for deletion".format(chat_id))
                 # Default user data
                 new_user = \
@@ -815,7 +834,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                     "chat_id": chat_id,
                     "user_id": join_user_id,
                     "user_name": join_user_name,
-                    "captcha_num": captcha["number"],
+                    "captcha_num": captcha_num,
                     "join_time": time(),
                     "join_retries": 1,
                     "kicked_ban": False
@@ -840,7 +859,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                     "chat_id": chat_id,
                     "user_id": join_user_id,
                     "msg_id_join0": update_msg,
-                    "msg_id_join1": sent_img_msg.message_id,
+                    "msg_id_join1": sent_msg.message_id,
                     "msg_id_join2": None
                 }
                 to_delete_join_messages_list.append(msg)
@@ -1164,6 +1183,74 @@ def button_request_captcha(update: Update, context: CallbackContext):
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
 
+def button_request_pass(update: Update, context: CallbackContext):
+    '''Button "I'm not a bot" pressed handler'''
+    global new_users_list
+    bot = context.bot
+    query = update.callback_query
+    # Ignore if the query come from an unexpected user
+    if query.data != str(query.from_user.id):
+        try:
+            bot.answer_callback_query(query.id)
+        except Exception as e:
+            printts("[{}] {}".format(query.message.chat_id, str(e)))
+        return
+    # Get query data
+    chat_id = query.message.chat_id
+    usr_id = query.from_user.id
+    message_id = query.message.message_id
+    chat_title = query.message.chat.title
+    # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
+    chat_title = add_lrm(chat_title)
+    # Get chat language
+    lang = get_chat_config(chat_id, "Language")
+    # Search if this user is a new user that has not completed the captcha
+    i = 0
+    while i < len(new_users_list):
+        new_user = new_users_list[i]
+        if (new_user["user_id"] == usr_id) and (new_user["chat_id"] == chat_id):
+            printts("[{}] User {} solved a button-only challenge.".format(chat_id, new_user["user_name"]))
+            # Remove join messages
+            j = 0
+            while j < len(to_delete_join_messages_list):
+                msg_del = to_delete_join_messages_list[j]
+                if (msg_del["user_id"] == user_id) and (msg_del["chat_id"] == chat_id):
+                    # Uncomment next line to remove "user join" message too
+                    #tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join0"].message_id)
+                    tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join1"])
+                    tlg_delete_msg(bot, msg_del["chat_id"], msg_del["msg_id_join2"])
+                    list_remove_element(to_delete_join_messages_list, msg_del)
+                    break
+                j = j + 1
+            # Remove user's button challenge message
+            tlg_delete_msg(bot, chat_id, update_msg.message_id)
+            bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
+            # Set Bot to auto-remove captcha solved message too after 5mins
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
+            list_remove_element(new_users_list, new_user)
+            # Check for custom welcome message and send it
+            welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(new_user["user_name"])
+            if welcome_msg != "-":
+                # Send the message as Markdown
+                sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
+                    CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
+                if sent_result is None:
+                    printts("[{}] Error: Can't send the welcome message.".format(chat_id))
+            # Check for send just text message option and apply user restrictions
+            restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
+            if restrict_non_text_msgs:
+                tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+                    send_stickers_gifs=False, insert_links=False, send_polls=False,
+                    invite_members=False, pin_messages=False, change_group_info=False)
+            break
+        i = i + 1
+    printts("[{}] Button-only challenge pass request process complete.".format(chat_id))
+    printts(" ")
+    try:
+        bot.answer_callback_query(query.id)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
+
 ################################################################################
 ### Received Telegram command messages handlers
 
@@ -1392,7 +1479,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         return
     # Get and configure chat to provided captcha mode
     new_captcha_mode = args[0]
-    if (new_captcha_mode == "nums") or (new_captcha_mode == "hex") or (new_captcha_mode == "ascii"):
+    if new_captcha_mode in { "button", "nums", "hex", "ascii" }:
         save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
@@ -1755,13 +1842,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
     tlg_msg_to_selfdestruct(update_msg)
     # Generate a random difficulty captcha
     captcha_level = randint(1, 5)
-    captcha_chars_mode = randint(1, 3)
-    if captcha_chars_mode == 2:
-        captcha_chars_mode = "hex"
-    elif captcha_chars_mode == 3:
-        captcha_chars_mode = "ascii"
-    else:
-        captcha_chars_mode = "nums"
+    captcha_chars_mode = choice(["nums", "hex", "ascii"]) # "button" doesn't generate an image
     captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
     printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
     img_caption = "Captcha Level: {}\nCaptcha Mode: {}\nCaptcha Code: {}".format(captcha_level,
@@ -2122,6 +2203,8 @@ def main():
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
     # Set to dispatcher request new captcha button callback handler
     dp.add_handler(CallbackQueryHandler(button_request_captcha))
+    # Set to dispatcher request button challenge callback handler
+    dp.add_handler(CallbackQueryHandler(button_request_pass))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
         printts("Setup Bot for Polling.")
