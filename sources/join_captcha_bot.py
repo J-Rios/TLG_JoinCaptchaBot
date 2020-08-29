@@ -561,16 +561,29 @@ def load_urls_regex(file_path):
 
 def load_texts_languages():
     '''Load all texts from each language file.'''
+    primary_lang_iso_code = ""
     for lang_iso_code in TEXT:
+        lang_strings = { }
+        
+        # Set the language we first encounter as the primary (fallback) language
+        # For subsequent languages, copy the primary language's strings as a fallback
+        if primary_lang_iso_code == "":
+            primary_lang_iso_code = lang_iso_code
+        else:
+            lang_strings = TEXT[primary_lang_iso_code].copy() # Note: this is a shallow copy
+        
+        # Update the strings we have in the current language
         lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code.lower())
-        json_lang_file = TSjson(lang_file)
-        json_lang_texts = json_lang_file.read()
-        if (json_lang_texts is None) or (json_lang_texts == {}):
+        json_lang_texts = TSjson(lang_file).read()
+        if (json_lang_texts is None) or (json_lang_texts == { }):
             printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
-                    "sintax.".format(lang_iso_code, lang_file))
+                    "syntax.".format(lang_iso_code, lang_file))
             printts("Exit.\n")
             exit(0)
-        TEXT[lang_iso_code] = json_lang_texts
+        lang_strings.update(json_lang_texts)
+        
+        # Save the final dictionary of strings for this language
+        TEXT[lang_iso_code] = lang_strings
 
 
 def create_image_captcha(img_file_name, difficult_level, chars_mode):
