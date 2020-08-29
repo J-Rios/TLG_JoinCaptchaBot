@@ -89,7 +89,7 @@ CONST = {
     # Initial captcha difficult level
     "INIT_CAPTCHA_DIFFICULTY_LEVEL": 2,
 
-    # Initial captcha characters mode (nums, hex or ascci)
+    # Initial captcha characters mode (ascii, hex, nums, or button)
     "INIT_CAPTCHA_CHARS_MODE": "nums",
 
     # Initial new users just allow to send text messages
