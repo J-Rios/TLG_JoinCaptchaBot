@@ -96,10 +96,13 @@
         "Ignore list of the chat is empty.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Hello {}, welcome to {}, please write a message with the numbers and/or letters that appear in this image to verify that you are a human. If you don't solve the captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the numbers and/or letters that appear in this image to verify that you are a human. If you don't solve the captcha in {} mins, you will be automatically kicked out of the group.",
+
+    "NEW_USER_BUTTON_MODE_TEXT":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.",
 
     "CAPTCHA_SOLVED":
-        "Captcha solved, user verified.\nWelcome to the group {}",
+        "Captcha solved, user verified.\nWelcome to the group, {}",
 
     "CAPTCHA_INCORRECT_0":
         "That is not the correct code. Try again...",
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Other Captcha",
+
+    "PASS_BTN_TEXT":
+        "I'm not a bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.",
