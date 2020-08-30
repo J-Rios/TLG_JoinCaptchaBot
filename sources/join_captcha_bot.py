@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/08/2020
+    30/08/2020
 Version:
-    1.12.8
+    1.13.0
 '''
 
 ################################################################################
@@ -804,7 +804,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                         chat_title, str(captcha_timeout))
                 # Prepare inline keyboard button to let user request another catcha
                 keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                        callback_data=join_user_id)]]
+                        callback_data="image_captcha {}".format(join_user_id))]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 printts("[{}] Sending captcha message to {}: {}...".format(chat_id, join_user_name, \
                         captcha_num))
@@ -826,7 +826,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                 captcha_num = ""
                 # Prepare inline keyboard button to let user pass
                 keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
-                        callback_data=join_user_id)]]
+                        callback_data="button_captcha {}".format(join_user_id))]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 printts("[{}] Sending captcha message to {}: [button]".format(chat_id, join_user_name))
                 try:
@@ -1134,21 +1134,35 @@ def msg_nocmd(update: Update, context: CallbackContext):
         break
 
 
-def button_request_captcha(update: Update, context: CallbackContext):
-    '''Button "Other Captcha" pressed handler'''
-    global new_users_list
+def key_inline_keyboard(update: Update, context: CallbackContext):
+    '''Inline Keyboard button pressed handler'''
     bot = context.bot
     query = update.callback_query
-    # Ignore if the query come from an unexpected user
-    if query.data != str(query.from_user.id):
-        try:
-            bot.answer_callback_query(query.id)
-        except Exception as e:
-            printts("[{}] {}".format(query.message.chat_id, str(e)))
+    # Confirm query received
+    try:
+        bot.answer_callback_query(query.id)
+    except Exception as e:
+        printts("[{}] {}".format(query.message.chat_id, str(e)))
+    # Convert query provided data into list
+    button_data = query.data.split(" ")
+    # Ignore if the query data unexpected or comes from an unexpected user
+    if (len(button_data) < 2) or (button_data[1] != str(query.from_user.id)):
         return
+    # Get type of inline keyboard button pressed and user ID associated to that button
+    key_pressed = button_data[0]
+    # Check and handle "request new img captcha" or "button captcha challenge" buttons
+    if "image_captcha" in key_pressed:
+        button_request_captcha(bot, query)
+    elif "button_captcha" in key_pressed:
+        button_request_pass(bot, query)
+
+
+def button_request_captcha(bot, query):
+    '''Button "Another captcha" pressed handler'''
+    global new_users_list
     # Get query data
     chat_id = query.message.chat_id
-    usr_id = query.from_user.id
+    user_id = query.from_user.id
     message_id = query.message.message_id
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
@@ -1159,11 +1173,11 @@ def button_request_captcha(update: Update, context: CallbackContext):
     i = 0
     while i < len(new_users_list):
         new_user = new_users_list[i]
-        if (new_user["user_id"] == usr_id) and (new_user["chat_id"] == chat_id):
+        if (new_user["user_id"] == user_id) and (new_user["chat_id"] == chat_id):
             printts("[{}] User {} requested a new captcha.".format(chat_id, new_user["user_name"]))
             # Prepare inline keyboard button to let user request another catcha
             keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                    callback_data=str(query.from_user.id))]]
+                    callback_data="image_captcha {}".format(str(query.from_user.id)))]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             # Get captcha timeout and set image caption
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
@@ -1173,7 +1187,7 @@ def button_request_captcha(update: Update, context: CallbackContext):
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
             captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
             # Generate a new captcha and edit previous captcha image message with this one
-            captcha = create_image_captcha(str(usr_id), captcha_level, captcha_chars_mode)
+            captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
             printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
             try:
                 bot.edit_message_media(chat_id, message_id, media=InputMediaPhoto(
@@ -1191,26 +1205,14 @@ def button_request_captcha(update: Update, context: CallbackContext):
         i = i + 1
     printts("[{}] New captcha request process complete.".format(chat_id))
     printts(" ")
-    try:
-        bot.answer_callback_query(query.id)
-    except Exception as e:
-        printts("[{}] {}".format(chat_id, str(e)))
 
-def button_request_pass(update: Update, context: CallbackContext):
+
+def button_request_pass(bot, query):
     '''Button "I'm not a bot" pressed handler'''
     global new_users_list
-    bot = context.bot
-    query = update.callback_query
-    # Ignore if the query come from an unexpected user
-    if query.data != str(query.from_user.id):
-        try:
-            bot.answer_callback_query(query.id)
-        except Exception as e:
-            printts("[{}] {}".format(query.message.chat_id, str(e)))
-        return
     # Get query data
     chat_id = query.message.chat_id
-    usr_id = query.from_user.id
+    user_id = query.from_user.id
     message_id = query.message.message_id
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
@@ -1221,7 +1223,7 @@ def button_request_pass(update: Update, context: CallbackContext):
     i = 0
     while i < len(new_users_list):
         new_user = new_users_list[i]
-        if (new_user["user_id"] == usr_id) and (new_user["chat_id"] == chat_id):
+        if (new_user["user_id"] == user_id) and (new_user["chat_id"] == chat_id):
             printts("[{}] User {} solved a button-only challenge.".format(chat_id, new_user["user_name"]))
             # Remove join messages
             j = 0
@@ -1235,8 +1237,6 @@ def button_request_pass(update: Update, context: CallbackContext):
                     list_remove_element(to_delete_join_messages_list, msg_del)
                     break
                 j = j + 1
-            # Remove user's button challenge message
-            tlg_delete_msg(bot, chat_id, update_msg.message_id)
             bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(new_user["user_name"])
             # Set Bot to auto-remove captcha solved message too after 5mins
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
@@ -1259,10 +1259,6 @@ def button_request_pass(update: Update, context: CallbackContext):
         i = i + 1
     printts("[{}] Button-only challenge pass request process complete.".format(chat_id))
     printts(" ")
-    try:
-        bot.answer_callback_query(query.id)
-    except Exception as e:
-        printts("[{}] {}".format(chat_id, str(e)))
 
 ################################################################################
 ### Received Telegram command messages handlers
@@ -2214,10 +2210,9 @@ def main():
             Filters.contact, msg_notext))
     # Set to dispatcher a new member join the group and member left the group events handlers
     dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_new_user))
-    # Set to dispatcher request new captcha button callback handler
-    dp.add_handler(CallbackQueryHandler(button_request_captcha))
-    # Set to dispatcher request button challenge callback handler
-    dp.add_handler(CallbackQueryHandler(button_request_pass))
+    # Set to dispatcher inline keyboard callback handler for new captcha request and
+    # button captcha challenge
+    dp.add_handler(CallbackQueryHandler(key_inline_keyboard))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
         printts("Setup Bot for Polling.")
