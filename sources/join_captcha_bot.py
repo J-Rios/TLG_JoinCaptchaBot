@@ -2233,10 +2233,11 @@ def main():
     th_0 = Thread(target=th_selfdestruct_messages, args=(updater.bot,))
     th_1 = Thread(target=th_check_time_to_kick_not_verify_users, args=(updater.bot,))
     th_0.start()
+    sleep(2.5) # 2.5s between starts to avoid sync
     th_1.start()
     # Set main thread to idle
     #updater.idle()
-    # let's avoid using Bot idle(), due it catch external signals instead our signal handler
+    # Let's avoid using Bot idle(), due it catch external signals instead our signal handler
     while True:
         sleep(10)
 
