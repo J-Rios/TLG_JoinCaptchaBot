@@ -45,10 +45,10 @@
         "Modo-caracter dos captchas mudado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo-caracter non valido. Os modos dispoñíbeis son: \"nums\", \"hex\" e \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Modo-caracter non valido. Os modos dispoñíbeis son: \"nums\", \"hex\" e \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "O comando precisa do modo-caracter a estabelecer. Os modos dispoñíbeis son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, con números e letras A-F (\"hex\").\n- Captchas con números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "O comando precisa do modo-caracter a estabelecer. Os modos dispoñíbeis son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, con números e letras A-F (\"hex\").\n- Captchas con números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "A mensaxe de benvida configurouse de xeito correcto.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Ola {}, benvido a {}, por favor envía unha mensaxe co número que aparece nesta imaxe para verificar que es un humano. Se non resolves ese captcha en {} mins, serás expulsado (kick) do grupo de xeito automático.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha resolto, usuario verificado.\nBenvido ó grupo {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Outro Captcha",
+
+    "PASS_BTN_TEXT":
+        "Non son un Bot",
 
     "BOT_LEAVE_CHANNEL":
         "Este Bot non se pode empregar en canles, só en grupos.",

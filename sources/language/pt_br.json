@@ -45,10 +45,10 @@
         "O modo-caractere do captcha mudou para \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo-caractere inválido. As opções disponíveis são: \"nums\", \"hex\" ou \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Modo-caractere inválido. As opções disponíveis são: \"nums\", \"hex\" ou \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Mensagem de boas-vindas configurada com sucesso.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Olá {}, seja bem-vindo ao {}. Por favor envie uma mensagem com o número que aparece neste captcha para que possamos nos certificar que você é humano. Se você não enviar o captcha em {} minutos, você será automaticamente expulso do grupo. Se houver letras, maiúsculo e minúsculo faz diferença.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha enviado, usuário verificado.\nSeja bem-vindo ao grupo {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Outro Captcha",
+
+    "PASS_BTN_TEXT":
+        "Eu não sou um Bot",
 
     "BOT_LEAVE_CHANNEL":
         "Este Bot não pode ser usado em canais, apenas em grupos.",

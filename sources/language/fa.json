@@ -45,10 +45,10 @@
         "حالت کاراکتر کد کپچا با موفقیت به\"{}\"تغییر یافت.",
 
     "CAPTCHA_MODE_INVALID":
-        "حالت کاراکتر کد کپچا نامعتبر است. حالتهای پشتیبانی شده عبارتند از:\"nums\"،\"hex\"و\"ascii\".\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "حالت کاراکتر کد کپچا نامعتبر است. حالتهای پشتیبانی شده عبارتند از:\"nums\"،\"hex\"و\"ascii\".\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "این دستور برای تنظیم یک حالت کاراکتر نیاز دارد. حالتهای موجود عبارتند از:\n- ضبط های عددی (\"nums\").\n- ضبط های شش ضلعی ، اعداد و شخصیت های AF (\"hex\").\n- اعداد و شخصیت های AZ Captchas (\"ascii\").\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "این دستور برای تنظیم یک حالت کاراکتر نیاز دارد. حالتهای موجود عبارتند از:\n- ضبط های عددی (\"nums\").\n- ضبط های شش ضلعی ، اعداد و شخصیت های AF (\"hex\").\n- اعداد و شخصیت های AZ Captchas (\"ascii\").\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "پیام خوش آمدید با موفقیت پیکربندی شده است.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Hello {}, welcome to {}, لطفاً پیامی را با شماره موجود در این کد کپچا ارسال کنید تا تأیید کنید که یک انسان هستید. اگر کد کپچا را در {} دقیقه حل نکنید ، به طور خودکار از گروه اخراج خواهید شد. اگر حروف وجود داشته باشد ، حروف بزرگ و کوچک تفاوت می کنند.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "کد کپچا حل شد ، کاربر تأیید شد.\nبه گروه خوش آمدید",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "دیگر کپچا",
+
+    "PASS_BTN_TEXT":
+        "I'm not a Bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups..\n\n[This text needs translate to actual configured language]",

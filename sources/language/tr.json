@@ -45,10 +45,10 @@
         "Captcha karakter modu başarıyla buna değiştirildi \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\" ve \"ascii\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\" ve \"ascii\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Karşılama mesajı başarıyla değiştirildi.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Merhaba {}, {} grubuna hoş geldin, lütfen insan olduğunuzu doğrulamak için bu resimde görünen rakamları ve/veya harfleri içeren bir mesaj yazın. Eğer captcha'yı {} dakika içinde çözmezseniz, otomatik olarak gruptan atılacaksınız.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha çözüldü, kullanıcı doğrulandı.\nGruba hoş geldiniz {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Captcha'yı değiştir",
+
+    "PASS_BTN_TEXT":
+        "ben bir Bot değilim",
 
     "BOT_LEAVE_CHANNEL":
         "Bu Bot kanallarda kullanılamaz, sadece gruplarda kullanılır.",

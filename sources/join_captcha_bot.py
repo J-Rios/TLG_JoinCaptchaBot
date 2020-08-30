@@ -561,29 +561,39 @@ def load_urls_regex(file_path):
 
 def load_texts_languages():
     '''Load all texts from each language file.'''
-    primary_lang_iso_code = ""
+    # Initialize all languages to english texts by default, so if
+    # some language file miss some field, the english text is used
+    lang_file = "{}/{}.json".format(CONST["LANG_DIR"], CONST["INIT_LANG"].lower())
+    json_init_lang_texts = TSjson(lang_file).read()
+    if (json_init_lang_texts is None) or (json_init_lang_texts == {}):
+        printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
+                "syntax.".format(CONST["INIT_LANG"].lower(), lang_file))
+        printts("Exit.\n")
+        exit(0)
     for lang_iso_code in TEXT:
-        lang_strings = { }
-        
-        # Set the language we first encounter as the primary (fallback) language
-        # For subsequent languages, copy the primary language's strings as a fallback
-        if primary_lang_iso_code == "":
-            primary_lang_iso_code = lang_iso_code
-        else:
-            lang_strings = TEXT[primary_lang_iso_code].copy() # Note: this is a shallow copy
-        
-        # Update the strings we have in the current language
+        TEXT[lang_iso_code] = json_init_lang_texts.copy()
+    # Load supported languages texts
+    for lang_iso_code in TEXT:
         lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code.lower())
-        json_lang_texts = TSjson(lang_file).read()
-        if (json_lang_texts is None) or (json_lang_texts == { }):
+        json_lang_file = TSjson(lang_file)
+        json_lang_texts = json_lang_file.read()
+        if (json_lang_texts is None) or (json_lang_texts == {}):
             printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
-                    "syntax.".format(lang_iso_code, lang_file))
+                    "sintax.".format(lang_iso_code, lang_file))
             printts("Exit.\n")
             exit(0)
-        lang_strings.update(json_lang_texts)
-        
-        # Save the final dictionary of strings for this language
-        TEXT[lang_iso_code] = lang_strings
+        for text in json_lang_texts:
+            TEXT[lang_iso_code][text] = json_lang_texts[text]
+    # Check if there is some missing text in any language
+    for lang_iso_code in TEXT:
+        lang_iso_code = lang_iso_code.lower()
+        lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code)
+        json_lang_file = TSjson(lang_file)
+        json_lang_texts = json_lang_file.read()
+        for text in json_init_lang_texts:
+            if text not in json_lang_texts:
+                printts("Warning: text \"{}\" missing from language file \"{}\".json".format(
+                text, lang_iso_code))
 
 
 def create_image_captcha(img_file_name, difficult_level, chars_mode):
@@ -821,7 +831,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                     remove(captcha["image"])
             else:
                 # Send a button-only challenge
-                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE_TEXT"].format(join_user_name,
+                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(join_user_name,
                         chat_title, str(captcha_timeout))
                 captcha_num = ""
                 # Prepare inline keyboard button to let user pass
@@ -1213,7 +1223,6 @@ def button_request_pass(bot, query):
     # Get query data
     chat_id = query.message.chat_id
     user_id = query.from_user.id
-    message_id = query.message.message_id
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
     chat_title = add_lrm(chat_title)

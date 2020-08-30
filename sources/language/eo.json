@@ -45,10 +45,10 @@
         "La uzo de literoj aŭ ciferoj ŝanĝis al \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\" kaj \"ascii\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\" kaj \"ascii\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Bonveniga mesaĝo ŝangita.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Saluton {}, bonvenon al {}, bonvole skribu mesaĝon kun la ciferoj kaj/aŭ literoj kiuj aperas ĉe jena bildo por kontroli ke vi estas homo. Se vi ne solvos ĝin dum {} minutoj, vi estos forigita de la grupo.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Solvite.\nBonvenon en la grupon {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Alian CAPTCHA-teston",
+
+    "PASS_BTN_TEXT":
+        "Mi ne estas Roboto",
 
     "BOT_LEAVE_CHANNEL":
         "Tiu ĉi roboto ne povas esti uzata en kanaloj, nur en grupoj.",

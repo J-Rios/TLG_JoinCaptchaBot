@@ -45,10 +45,10 @@
         "Tryb znaków captcha pomyślnie zmieniony na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Niepoprawny tryb znaków captcha. Wspierane tryby to: \"nums\", \"hex\" oraz \"ascii\".\n\nPrzykład:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Niepoprawny tryb znaków captcha. Wspierane tryby to: \"nums\", \"hex\" oraz \"ascii\".\n\nPrzykład:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komenda wymaga ustawienia trybu znaków captcha. Dostępne tryby to:\n- Numeryczny (\"nums\").\n- Hexadecymalny, cyfry i litery A-F (\"hex\").\n- cyfry i litery A-Z (\"ascii\").\n\nPrzykłady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Komenda wymaga ustawienia trybu znaków captcha. Dostępne tryby to:\n- Numeryczny (\"nums\").\n- Hexadecymalny, cyfry i litery A-F (\"hex\").\n- cyfry i litery A-Z (\"ascii\").\n\nPrzykłady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Wiadomość powitalna skonfigurowana pomyślnie.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Cześć {}, witamy na {}, przepisz znaki z obrazka by udowodnić, że jesteś człowiekiem. Jeśli tego nie zrobisz w ciągu {} minut(y) zostaniesz automatycznie usunięty z grupy.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Pomyślnie rozwiązano captcha, użytkownik uwierzytelniony.\nWitamy {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Nowe Captcha",
+
+    "PASS_BTN_TEXT":
+        "Nie jestem Bot",
 
     "BOT_LEAVE_CHANNEL":
         "Tego bota nie można używać na kanałach, tylko w grupach.",

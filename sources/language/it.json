@@ -48,7 +48,7 @@
         "Modalità caratteri captcha non valida. Le modalità supportate sono: \"nums\", \"hex\" e \"ascii\".\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n /captcha_mode ascii" ,
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Il comando ha bisogno di una modalità carattere da impostare. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Numbers e caratteri AZ Captchas (\"ascii\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Il comando ha bisogno di una modalità carattere da impostare. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Numbers e caratteri AZ Captchas (\"ascii\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Messaggio di benvenuto configurato correttamente.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Ciao {}, benvenuto in {}, invia un messaggio con il numero che appare in questo captcha per verificare che sei un essere umano. Se non risolvi il captcha in {} min, verrai automaticamente espulso dal gruppo. se ci sono lettere, le lettere maiuscole e minuscole fanno la differenza ",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha risolto, verificato dall'utente.\nBenvenuto nel gruppo {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Altro captcha",
+
+    "PASS_BTN_TEXT":
+        "Non sono un Bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",

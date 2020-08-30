@@ -3,7 +3,7 @@
         "Hola, soy un Bot que envía una imagen captcha a cada nuevo usuario que se une al grupo, y expulso (kick) a los que no resuelvan el captcha en un tiempo determinado.\n\nSi un usuario ha intentado unirse al grupo 5 veces y nunca consiguió resolver el captcha, supondré que ese \"usuario\" es un Bot y, trás expulsarlo, lo bloquearé (ban) para que no pueda volver a entrar en el grupo. Además, cualquier mensaje que contenga una URL y haya sido enviado por un nuevo \"usuario\" antes de que este haya resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n\nRecuerda que para funcionar de forma adecuada debes darme permisos de administración para suspender usuarios y eliminar mensajes del grupo.\n\nEcha un vistazo al comando /help para conocer más información sobre mi uso.\n\nSoy útil? Echa un vistazo al comando /about y considera hacer una donación para mantenerme activo.",
 
     "HELP":
-        "Ayuda sobre el Bot:\n————————————————\n- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y expulso (kick) a los que no resuelvan el captcha en un tiempo determinado.\n\n- Si un usuario ha intentado unirse al grupo 5 veces y nunca consiguió resolver el captcha, supondré que ese \"usuario\" es un Bot y, trás expulsarlo, lo bloquearé (ban) para que no pueda volver a entrar en el grupo.\n\n- Cualquier mensaje que contenga una URL y haya sido enviado por un nuevo \"usuario\" antes de que este haya resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n\n- Debes darme permisos de Administración para suspender usuarios y eliminar mensajes.\n\n- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación conmigo cuando no se haya resuelto el captcha y el usuario haya sido expulsado (transcurridos 5 minutos).\n\n- El tiempo que disponen los usuarios para resolver el captcha son 5 minutos, pero este tiempo puede ser cambiado mediante el comando /time.\n\n- Puedes activar o desactivar la protección captcha mediante los comandos /enable y /disable.\n\n- Los comandos de configuraciones solo pueden ser usados por los Administradores del grupo.\n\n- Puedes cambiar el idioma en el que hablo mediante el comando /language.\n\n- Puedes configurar el nivel de dificultad del captcha mediante el comando /difficulty.\n\n- Puedes establecer que los captchas solo contengan números (por defecto), o números y letras, a través del comando /captcha_mode.\n\n- Puedes configurar un mensaje de bienvenida personalizado con el comando /welcome_msg.\n\n- Puedes configurarme para que restrinja a los nuevos usuarios para que no puedan enviar mensajes que no sean de texto mediante el comando /restrict_non_text.\n\n- Si el Bot es Privado, habilita grupos donde usar el Bot con el comando /allowgroup.\n\n- Echa un vistazo al comando /commands para ver una lista con todos los comandos disponibles y una breve descripción de cada uno de ellos.",
+        "Ayuda sobre el Bot:\n————————————————\n- Soy un Bot que envia un captcha a cada nuevo usuario que se une al grupo, y expulso (kick) a los que no resuelvan el captcha en un tiempo determinado.\n\n- Si un usuario ha intentado unirse al grupo 5 veces y nunca consiguió resolver el captcha, supondré que ese \"usuario\" es un Bot y, trás expulsarlo, lo bloquearé (ban) para que no pueda volver a entrar en el grupo.\n\n- Cualquier mensaje que contenga una URL y haya sido enviado por un nuevo \"usuario\" antes de que este haya resuelto el captcha, será considerado un mensaje de Spam y será borrado.\n\n- Debes darme permisos de Administración para suspender usuarios y eliminar mensajes.\n\n- Para mantener limpio el grupo, elimino aquellos mensajes que tengan relación conmigo cuando no se haya resuelto el captcha y el usuario haya sido expulsado (transcurridos 5 minutos).\n\n- El tiempo que disponen los usuarios para resolver el captcha son 5 minutos, pero este tiempo puede ser cambiado mediante el comando /time.\n\n- Puedes activar o desactivar la protección captcha mediante los comandos /enable y /disable.\n\n- Los comandos de configuraciones solo pueden ser usados por los Administradores del grupo.\n\n- Puedes cambiar el idioma en el que hablo mediante el comando /language.\n\n- Puedes configurar el nivel de dificultad del captcha mediante el comando /difficulty.\n\n- Puedes establecer el tipo de captcha a utilizar, y si el captcha de imagen solo contendrá números (por defecto), números y letras, o si el captcha simplemente será un botón, todo ello a través del comando /captcha_mode.\n\n- Puedes configurar un mensaje de bienvenida personalizado con el comando /welcome_msg.\n\n- Puedes configurarme para que restrinja a los nuevos usuarios para que no puedan enviar mensajes que no sean de texto mediante el comando /restrict_non_text.\n\n- Si el Bot es Privado, habilita grupos donde usar el Bot con el comando /allowgroup.\n\n- Echa un vistazo al comando /commands para ver una lista con todos los comandos disponibles y una breve descripción de cada uno de ellos.",
 
     "CMD_NOT_ALLOW":
         "Solo un Admin puede utilizar este comando.",
@@ -39,16 +39,16 @@
         "El nivel de dificultad proporcionado no es un número.",
 
     "DIFFICULTY_NOT_ARG":
-        "El comando necesita un nivel de dificultad a establecer (de 1 a 5).\n\nEjemplos:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "El comando necesita un nivel de dificultad a establecer (de 1 a 5).\nNo afecta al modo de captcha botón.\n\nEjemplos:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "Modo-caracter de los captchas cambiado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo-caracter inválido. Los modos disponibles son: \"nums\", \"hex\" y \"ascii\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Modo-caracter inválido. Los modos disponibles son: \"nums\", \"hex\", \"ascii\" y \"button\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\ncaptcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "El comando necesita el modo-caracter a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "El comando necesita el modo a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n- Captcha de presionar un botón.\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\ncaptcha_mode button",
 
     "WELCOME_MSG_SET":
         "Mensaje de bienvenida configurado correctamente.",
@@ -96,10 +96,13 @@
         "La lista de usuarios ignorados está vacía.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Hola {}, bienvenido/a a {}, por favor escribe los números y/o letras que aparecen en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
+        "Hola {}, bienvenido/a al grupo {}. Por favor, escribe los números y/o letras que aparecen en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Hola {}, bienvenido/a al grupo {}. Por favor, presiona el botón de abajo para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
 
     "CAPTCHA_SOLVED":
-        "Captcha resuelto, usuario verificado.\nBienvenido/a al grupo {}",
+        "Captcha resuelto, usuario verificado.\nBienvenido/a al grupo, {}",
 
     "CAPTCHA_INCORRECT_0":
         "Ese no es el código correcto. Prueba otra vez...",
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Otro Captcha",
+
+    "PASS_BTN_TEXT":
+        "No soy un Bot",
 
     "BOT_LEAVE_CHANNEL":
         "Este Bot no puede ser utilizado en canales, solo en grupos.",

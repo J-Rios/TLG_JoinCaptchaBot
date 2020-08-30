@@ -45,10 +45,10 @@
         "Captcha-Zeichenmodus erfolgreich geändert in \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Ungültiger Captcha-Zeichenmodus. Unterstützte Modi sind: \"nums\", \"hex\" und \"ascii\".\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Ungültiger Captcha-Zeichenmodus. Unterstützte Modi sind: \"nums\", \"hex\" und \"ascii\".\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Der Befehl benötigt einen Zeichenmodus zum Setzen. Verfügbare Modi sind:\n- Numerisch Captchas (\"nums\").\n- Hexadezimal Captchas, Zahlen und Zeichen A-F (\"hex\").\n- Zahlen und Zeichen von A bis Z Captchas(\"ascii\").\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Der Befehl benötigt einen Zeichenmodus zum Setzen. Verfügbare Modi sind:\n- Numerisch Captchas (\"nums\").\n- Hexadezimal Captchas, Zahlen und Zeichen A-F (\"hex\").\n- Zahlen und Zeichen von A bis Z Captchas(\"ascii\").\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Begrüßungsnachricht erfolgreich konfiguriert.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Hallo {}, willkommen bei {}, bitte senden Sie eine Nachricht mit der Nummer, die in diesem Captcha angezeigt wird, um zu bestätigen, dass Sie ein Mensch sind. Wenn Sie das Captcha in {} Minuten nicht auflösen, werden Sie automatisch aus der Gruppe ausgeschlossen. Wenn es Buchstaben gibt, machen Groß- und Kleinschreibung einen Unterschied.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha gelöst, Benutzer verifiziert.\nWillkommen in der Gruppe {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Anderes Captcha",
+
+    "PASS_BTN_TEXT":
+        "Ich bin kein Bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",

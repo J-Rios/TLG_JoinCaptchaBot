@@ -45,10 +45,10 @@
         "Mode karakter captcha berhasil diubah ke \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\" and \"ascii\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\" and \"ascii\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Pesan selamat datang berhasil diatur.",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "Halo {}, selamat datang di {}, tolong kirimkan pesan dengan angka yang terdapat dalam captcha untuk memastikan kamu benar- benar orang. Jika kamu tidak menyelesaikan verifikasi captcha dalam {} menit, kamu akan otomatis dikeluarkan dari grup. Bila dalam verifikasi terdapat huruf, besar dan kecilnya huruf wajib diperhatikan.",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+
     "CAPTCHA_SOLVED":
         "Captcha selesai, Pengguna telah diverifikasi.\nSelamat datang di grup {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Captcha lainnya",
+
+    "PASS_BTN_TEXT":
+        "Saya bukan Bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",

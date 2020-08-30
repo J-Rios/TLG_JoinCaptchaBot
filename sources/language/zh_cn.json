@@ -45,10 +45,10 @@
         "验证码字符模式已成功更改为\"{}\"。",
 
     "CAPTCHA_MODE_INVALID":
-        "验证码字符模式无效。 支持的模式有：\"nums\" - 数字，\"hex\" - 十六进制可表示数值，和\"ascii\" - 数字、英文组合。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "验证码字符模式无效。 支持的模式有：\"nums\" - 数字，\"hex\" - 十六进制可表示数值，和\"ascii\" - 数字、英文组合。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii",
+        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "欢迎消息已成功配置。",
@@ -98,6 +98,9 @@
     "NEW_USER_CAPTCHA_CAPTION":
         "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 分钟内输入验证码，你将会被自动踢出群组。",
 
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
     "CAPTCHA_SOLVED":
         "验证码已输入，用户已验证。欢迎加入群组 {}",
 
@@ -145,6 +148,9 @@
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "其他验证码",
+
+    "PASS_BTN_TEXT":
+        "I'm not a Bot",
 
     "BOT_LEAVE_CHANNEL":
         "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
