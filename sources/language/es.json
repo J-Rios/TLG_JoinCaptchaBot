@@ -42,13 +42,13 @@
         "El comando necesita un nivel de dificultad a establecer (de 1 a 5).\nNo afecta al modo de captcha botón.\n\nEjemplos:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
-        "Modo-caracter de los captchas cambiado a \"{}\".",
+        "Modo de los captchas cambiado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo-caracter inválido. Los modos disponibles son: \"nums\", \"hex\", \"ascii\" y \"button\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\ncaptcha_mode button",
+        "Modo inválido. Los modos disponibles son: \"nums\", \"hex\", \"ascii\" y \"button\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "El comando necesita el modo a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n- Captcha de presionar un botón.\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\ncaptcha_mode button",
+        "El comando necesita el modo a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n- Captcha de presionar un botón.\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "WELCOME_MSG_SET":
         "Mensaje de bienvenida configurado correctamente.",
@@ -177,5 +177,5 @@
         "Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por {}.\n\nPuedes consultar el código aquí:\n{}\n\n¿Te gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el modo-caracter de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/restrict_non_text - Activa la restricción de nuevos usuarios para que no puedan enviar mensajes que no sean de texto.\n\n/add_ignore - Añadir a un usuario a la lista de ignorados para que el Bot no le pida resolver el captcha en este grupo.\n\n/remove_ignore - Elimina a un usuario de la lista de ignorados en este chat.\n\n/ignore_list - Muestra la lista de IDs de usuarios ignorados en este chat.\n\n/allowgroup - Permitir que un grupo pueda usar al Bot (si el Bot es Privado).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
+        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el tipo/modo de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z, button: captcha de presionar un botón).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/restrict_non_text - Activa la restricción de nuevos usuarios para que no puedan enviar mensajes que no sean de texto.\n\n/add_ignore - Añadir a un usuario a la lista de ignorados para que el Bot no le pida resolver el captcha en este grupo.\n\n/remove_ignore - Elimina a un usuario de la lista de ignorados en este chat.\n\n/ignore_list - Muestra la lista de IDs de usuarios ignorados en este chat.\n\n/allowgroup - Permitir que un grupo pueda usar al Bot (si el Bot es Privado).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
 }
