@@ -60,9 +60,15 @@ To ease usage a `run`, `status`, and `kill` scripts have been provided.
 
 ## Systemd service
 
-`vim or nano /etc/systemd/system/bot.service`
+For systemd based systems, you can setup the Bot as daemon service.
 
+To do that, you need to create a new service description file for the Bot as follow:
+
+```bash
+[vim or nano] /etc/systemd/system/bot.service
 ```
+
+```bash
 [Unit]
 Description=Bot Telegram Daemon
 Wants=network-online.target
@@ -77,7 +83,18 @@ ExecReload=/path/to/dir/sources/kill
 [Install]
 WantedBy=multi-user.target
 ```
-`systemctl enable --now bot.service`
+
+Then, to add the new service into systemd, you should enable it:
+
+```bash
+systemctl enable --now bot.service
+```
+
+Remembert that, if you wan't to disable it, you should execute:
+
+```bash
+systemctl disable bot.service
+```
 
 ## Docker
 
