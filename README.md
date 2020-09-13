@@ -68,6 +68,8 @@ To do that, you need to create a new service description file for the Bot as fol
 [vim or nano] /etc/systemd/system/bot.service
 ```
 
+File content:
+
 ```bash
 [Unit]
 Description=Bot Telegram Daemon
@@ -90,7 +92,7 @@ Then, to add the new service into systemd, you should enable it:
 systemctl enable --now bot.service
 ```
 
-Remembert that, if you wan't to disable it, you should execute:
+Remember that, if you wan't to disable it, you should execute:
 
 ```bash
 systemctl disable bot.service
