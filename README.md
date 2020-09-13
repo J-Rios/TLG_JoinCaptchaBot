@@ -175,7 +175,7 @@ To add support for a new language you must follow this steps:
 
 ## Languages Contributors
 
-- French: [Mathieu H (Aurnytoraink)](https://github.com/Aurnytoraink)
+- French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
 
 - Italian: Noquitt
 
@@ -185,7 +185,7 @@ To add support for a new language you must follow this steps:
 
 - Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores); Iváns
 
-- Basque: [xa2er](https://github.com/xa2er)
+- Basque: [@xa2er](https://github.com/xa2er)
 
 - Chinese (Mainland): [神林](https://github.com/jyxjjj)
 
@@ -193,6 +193,8 @@ To add support for a new language you must follow this steps:
 
 - [Unsupported, not working] Persian (Iran): [sajjad taheri](https://github.com/tgMember)
 
-- Russian: Unattributed (anonymous)
+- Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy)
 
 - Esperanto: Pablo Busto & Porrumentzio.
+
+- Arabic: [@damascene](https://github.com/damascene)
