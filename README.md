@@ -58,6 +58,27 @@ To ease usage a `run`, `status`, and `kill` scripts have been provided.
 - Stop the Bot:  
 `./kill`
 
+## Systemd service
+
+`vim or nano /etc/systemd/system/bot.service`
+
+```
+[Unit]
+Description=Bot Telegram Daemon
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+WorkingDirectory=/path/to/dir/sources/
+ExecStart=/path/to/dir/sources/run
+ExecReload=/path/to/dir/sources/kill
+
+[Install]
+WantedBy=multi-user.target
+```
+`systemctl enable --now bot.service`
+
 ## Docker
 
 You can also run the bot on [Docker](http://docker.com). This allows easy
