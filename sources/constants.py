@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/08/2020
+    13/09/2020
 Version:
-    1.13.0
+    1.13.1
 '''
 
 ################################################################################
@@ -143,21 +143,22 @@ CONST = {
 
     # List string of supported languages commands shows in invalid language set
     "SUPPORTED_LANGS_CMDS": \
-        "\nEnglish / English\n/language en\n" \
-        "\nSpanish / Español\n/language es\n" \
-        "\nFrench / Francais\n/language fr\n" \
-        "\nGerman / Deutch\n/language de\n" \
-        "\nItalian / Italiano\n/language it\n" \
-        "\nRussian / Pусский\n/language ru\n" \
-        "\nIndonesian / Indonesia\n/language id\n" \
-        "\nCatalan / Català\n/language ca\n" \
+        "\nArabic / Arabic\n/language ar\n" \
         "\nBasque / Euskal\n/language eu\n" \
-        "\nGalician / Galego\n/language gl\n" \
-        "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
-        "\nPolish / Polskie\n/language pl\n" \
-        "\nTurkish / Türkçe\n/language tr\n" \
+        "\nCatalan / Català\n/language ca\n" \
         "\nChinese-Simplified / 中文\n/language zh_cn\n" \
-        "\nEsperanto\n/language eo",
+        "\nEnglish / English\n/language en\n" \
+        "\nEsperanto\n/language eo\n" \
+        "\nFrench / Francais\n/language fr\n" \
+        "\nGalician / Galego\n/language gl\n" \
+        "\nGerman / Deutch\n/language de\n" \
+        "\nIndonesian / Indonesia\n/language id\n" \
+        "\nItalian / Italiano\n/language it\n" \
+        "\nPolish / Polskie\n/language pl\n" \
+        "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
+        "\nRussian / Pусский\n/language ru\n" \
+        "\nSpanish / Español\n/language es\n" \
+        "\nTurkish / Türkçe\n/language tr\n",
 
     # Bot developer
     "DEVELOPER": "@JoseTLG",
@@ -172,25 +173,26 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.13.0 (30/08/2020)"
+    "VERSION": "1.13.1 (13/09/2020)"
 }
 
 
 # Supported languages list
 TEXT = {
-    "EN": {}, # English
-    "DE": {}, # German
-    "FR": {}, # French
-    "IT": {}, # Italian
-    "ES": {}, # Spanish
-    "GL": {}, # Galician
-    "EU": {}, # Basque
+    "AR": {}, # Arabic
     "CA": {}, # Catalan
+    "DE": {}, # German
+    "EN": {}, # English
+    "EO": {}, # Esperanto
+    "ES": {}, # Spanish
+    "EU": {}, # Basque
+    "FR": {}, # French
+    "GL": {}, # Galician
+    "ID": {}, # Indonesian
+    "IT": {}, # Italian
+    "PL": {}, # Polish
     "PT_BR": {}, # Portuguese (Brasil)
     "RU": {}, # Rusian
-    "PL": {}, # Polish
     "TR": {}, # Turkish
-    "ID": {}, # Indonesian
-    "ZH_CN": {}, # Chinese (Mainland)
-    "EO": {} # Esperanto
+    "ZH_CN": {} # Chinese (Mainland)
 }
