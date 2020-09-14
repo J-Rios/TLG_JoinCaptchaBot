@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 NAME = captcha-bot
 BOT_LANG ?= EN
-SUPPORTED_LANGUAGES = EN DE FR IT ES GL EU CA PT_BR RU PL TR ID ZH_CN EO
+SUPPORTED_LANGUAGES = AR CA DE EN EO ES EU FR GL ID IT PL PT_BR RU TR ZH_CN
 DOCKERFILE = Dockerfile
 
 # Check if Bot token has been provided
