@@ -6,3 +6,5 @@ data/
 *.pyc
 *.log
 test.py
+.venv/
+.env/
