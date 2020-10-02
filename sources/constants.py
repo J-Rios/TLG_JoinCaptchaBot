@@ -174,7 +174,7 @@ CONST = {
     "DEV_BTC": os.getenv("DEV_BTC", "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR"),
 
     # Bot version
-    "VERSION" os.getenv("VERSION", "1.13.1 (13/09/2020)"):
+    "VERSION": os.getenv("VERSION", "1.13.1 (13/09/2020)"),
 }
 
 
