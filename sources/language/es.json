@@ -96,13 +96,13 @@
         "La lista de usuarios ignorados está vacía.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Hola {}, bienvenido/a al grupo {}. Por favor, escribe los números y/o letras que aparecen en esta imagen para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
+        "Hola {}, te damos la bienvenida al grupo {}. Por favor, escribe los números y/o letras que aparecen en esta imagen para verificar que eres humano. Si no resuelves este captcha en {} mins, se te expulsará (kick) del grupo automáticamente.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hola {}, bienvenido/a al grupo {}. Por favor, presiona el botón de abajo para verificar que eres un humano. Si no resuelves este captcha en {} mins, serás expulsado/a (kick) del grupo automáticamente.",
+        "Hola {}, te damos la bienvenida al grupo {}. Por favor, presiona el botón de abajo para verificar que eres humano. Si no resuelves este captcha en {} mins, se te expulsará (kick) del grupo automáticamente.",
 
     "CAPTCHA_SOLVED":
-        "Captcha resuelto, usuario verificado.\nBienvenido/a al grupo, {}",
+        "Captcha resuelto, usuario verificado.\nDisfruta del grupo, {}",
 
     "CAPTCHA_INCORRECT_0":
         "Ese no es el código correcto. Prueba otra vez...",
