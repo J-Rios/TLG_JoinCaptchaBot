@@ -40,7 +40,7 @@ from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandl
 
 from constants import SCRIPT_PATH, CONST, TEXT
 from tsjson import TSjson
-from lib.multicolor_captcha_generator.img_captcha_gen import CaptchaGenerator
+from multicolorcaptcha import CaptchaGenerator
 
 ################################################################################
 ### Globals
