@@ -847,6 +847,8 @@ def msg_new_user(update: Update, context: CallbackContext):
                     new_users[chat_id][join_user_id] = {}
                 if "join_data" not in new_users[chat_id][join_user_id]:
                     new_users[chat_id][join_user_id]["join_data"] = {}
+                if "join_msg" not in new_users[chat_id][join_user_id]:
+                    new_users[chat_id][join_user_id]["join_msg"] = None
                 if "msg_to_rm" not in new_users[chat_id][join_user_id]:
                     new_users[chat_id][join_user_id]["msg_to_rm"] = []
                 # Check if this user was before in the chat without solve the captcha
@@ -855,7 +857,7 @@ def msg_new_user(update: Update, context: CallbackContext):
                     join_data["join_retries"] = new_users[chat_id][join_user_id]["join_data"]["join_retries"]
                 # Add new user join data and messages to be removed
                 new_users[chat_id][join_user_id]["join_data"] = join_data
-                new_users[chat_id][join_user_id]["msg_to_rm"].append(update_msg.message_id)
+                new_users[chat_id][join_user_id]["join_msg"] = update_msg.message_id
                 new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_msg.message_id)
                 printts("[{}] Captcha send process complete.".format(chat_id))
                 printts(" ")
@@ -2075,16 +2077,17 @@ def handle_time_to_kick_not_verify_users(bot):
                     new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
                     # Remove join messages
                     printts("[{}] Removing messages from user {}...".format(chat_id, user_name))
+                    tlg_delete_msg(bot, chat_id, new_users[chat_id][user_id]["join_msg"])
                     for msg in new_users[chat_id][user_id]["msg_to_rm"]:
                         tlg_delete_msg(bot, chat_id, msg)
                     new_users[chat_id][user_id]["msg_to_rm"].clear()
                     # Delete user join info if was ban
                     if join_retries >= 5:
                         del new_users[chat_id][user_id]
+                    printts("[{}] Kick/Ban process complete".format(chat_id))
+                    printts(" ")
             except Exception as e:
                 printts("Error handling kick/ban:\n{}".format(str(e)))
-            printts("[{}] Kick/Ban process complete".format(chat_id))
-            printts(" ")
 
 ################################################################################
 ### Telegram Errors Callback
