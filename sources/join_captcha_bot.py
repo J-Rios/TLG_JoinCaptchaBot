@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    13/09/2020
+    17/10/2020
 Version:
-    1.13.1
+    1.13.2
 '''
 
 ################################################################################
@@ -33,10 +33,12 @@ from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
 from random import choice, randint
-from telegram import (Update, InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup,
-    ChatPermissions)
-from telegram.ext import (CallbackContext, Updater, CommandHandler, MessageHandler, Filters,
-    CallbackQueryHandler, Defaults)
+from telegram import (Update, InputMediaPhoto, InlineKeyboardButton,
+    InlineKeyboardMarkup, ChatPermissions)
+from telegram.ext import (CallbackContext, Updater, CommandHandler,
+    MessageHandler, Filters, CallbackQueryHandler, Defaults)
+from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut,
+    ChatMigrated, NetworkError)
 
 from constants import SCRIPT_PATH, CONST, TEXT
 from tsjson import TSjson
@@ -2161,6 +2163,24 @@ def th_check_time_to_kick_not_verify_users(bot):
         sleep(5)
 
 ################################################################################
+### Telegram Errors Callback
+
+def tlg_error_callback(update, context):
+    '''Telegram errors handler.'''
+    try:
+        raise context.error
+    except Unauthorized:
+        printts("TLG Error: Unauthorized")
+    except BadRequest:
+        printts("TLG Error: Bad Request")
+    except TimedOut:
+        printts("TLG Error: Timeout (slow connection issue)")
+    except NetworkError:
+        printts("TLG Error: network problem")
+    except TelegramError as e:
+        printts("TLG Error: {}".format(str(e)))
+
+################################################################################
 ### Main Function
 
 def main():
@@ -2189,6 +2209,8 @@ def main():
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
     updater = Updater(CONST["TOKEN"], use_context=True, defaults=msgs_defaults)
     dp = updater.dispatcher
+    # Set Telegram errors handler
+    dp.add_error_handler(tlg_error_callback)
     # Set to dispatcher all expected commands messages handler
     dp.add_handler(CommandHandler("start", cmd_start))
     dp.add_handler(CommandHandler("help", cmd_help))
