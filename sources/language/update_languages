@@ -12,6 +12,7 @@ wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/gl.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/id.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/it.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/nl.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/pl.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/pt_br.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/ru.json

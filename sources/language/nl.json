@@ -1,0 +1,181 @@
+{
+    "START":
+        "Hello, Ik ben een bot die een captcha afbeelding stuurt voor elke nieuwe gebruiker die lid wordt van een groep, en ik kick iedereen die de captcha niet binnen een bepaalde tijd kan oplossen.\n\nAls een gebruiker 5 keer achter elkaar probeert lid te worden van de groep en de captcha niet oplost, neem ik aan dat deze \"user\" een bot is en zal worden gebanned. Elk bericht dat een URL bevat die door een nieuwe \"user\" is verzonden voordat de captcha is voltooid, wordt als spam beschouwd en zal worden verwijderd.\n\nVergeet niet om mij adminrechten te geven om gebruikers te kicken en berichten te verwijderen.\n\nTyp het /help commando voor meer informatie over mijn gebruik.\n\nBen ik nuttig? Typ het /about commando en overweeg een donatie te doen om mij actief te houden.",
+
+    "HELP":
+        "Bot help:\n————————————————\n- Ik ben een bot die een captcha afbeelding stuurt voor elke nieuwe gebruiker die lid wordt van een groep, en ik kick iedereen die de captcha niet binnen een bepaalde tijd kan oplossen.\n\n- Als een gebruiker 5 keer achter elkaar probeert lid te worden van de groep en de captcha niet oplost, neem ik aan dat deze \"user\" een bot is en zal worden gebanned.\n\n- Elk bericht dat een URL bevat die door een nieuwe \"user\" is verzonden voordat de captcha is voltooid, wordt als spam beschouwd en zal worden verwijderd.\n\n- Je moet mij adminrechten geven om gebruikers te kicken en berichten te verwijderen.\n\n- Om de groep schoon te houden verwijder ik automatisch alle berichten die aan mij gerelateerd zijn, wanneer een captcha niet is opgelost en de gebruiker is gekickt (na 5 minuten).\n\n- De tijd die nieuwe gebruikers hebben om de captcha op te lossen is standaard 5 minuten, maar dit kan worden geconfigureerd met het commando /time.\n\n- Je kunt de captcha-bescherming aan/uit zetten met de commando's /enable en /disable.\n\n- Configuratie commando's kunnen alleen uitgevoerd worden door de groep Administrators.\n\n- Je kunt de taal die ik spreek wijzigen met de opdracht /language.\n\n- Je kunt het moeilijkheidsniveau van de captcha configureren met de opdracht /difficulty.\n\n- Je kunt de captcha instellen door complete cijfers en letters A-Z te gebruiken, of cijfers en letters A-F, of alleen cijfers (standaard), of alleen een knop, met het commando /captcha_mode.\n\n- Je kunt een aangepast welkomstbericht configureren met het commando /welcome_msg.\n\n- Je kunt een optie inschakelen zodat ik een restrictie kan toepassen voor nieuwe gebruikers om niet-tekstberichten te verzenden met de opdracht /restrict_non_text.\n\n- Als de bot privé is, sta dan groepen toe met het commando /allowgroup.\n\n- Typ /commands om een lijst te krijgen van alle beschikbare commando's en een korte beschrijving daarvan.",
+
+    "CMD_NOT_ALLOW":
+        "Alleen een admin kan deze opdracht gebruiken.",
+
+    "LANG_CHANGE":
+        "Taal veranderd in Nederlands.",
+
+    "LANG_SAME":
+        "Ik praat al Nederlands.\n\nSupported languages:\n{}",
+
+    "LANG_BAD_LANG":
+        "Ongeldige taal opgegeven.\n\nSupported languages:\n{}",
+
+    "LANG_NOT_ARG":
+        "Het commando heeft een taal parameter nodig om de juiste taal in te stellen.\n\nExamples:\n{}",
+
+    "TIME_CHANGE":
+        "De tijd om de captcha met succes op te lossen, is gewijzigd in {} minuten.",
+
+    "TIME_MAX_NOT_ALLOW":
+        "De maximaal toegestane captcha-oplostijd is 120 minuten. De tijd is niet gewijzigd.",
+
+    "TIME_NOT_NUM":
+        "De opgegeven tijd is geen geheel getal.",
+
+    "TIME_NOT_ARG":
+        "De opdracht heeft een tijdwaarde nodig om in te stellen (in minuten).\n\nVoorbeelden:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE":
+        "Captcha-moeilijkheidsgraad is succesvol gewijzigd naar niveau {}.",
+
+    "DIFFICULTY_NOT_NUM":
+        "De opgegeven captcha-moeilijkheid is geen getal.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Het commando heeft een moeilijkheidsgraad nodig om in te stellen (van 1 tot 5). Dit heeft geen effect voor de \"button\" -modus.\n\nExamples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Captcha-modus is succesvol gewijzigd naar \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Ongeldige captcha-modus. Ondersteunde modi zijn: \"nums\", \"hex\", \"ascii\", en \"button\".\n\nVoorbeeld:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "De opdracht heeft een instelling nodig. Beschikbare modi zijn:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Button-only uitdaging (\"button\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+
+    "WELCOME_MSG_SET":
+        "Welkomstbericht succesvol geconfigureerd.",
+
+    "WELCOME_MSG_UNSET":
+        "Welkomstbericht uitgeschakeld.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Plaats het welkomstbericht na het commando.\n\nVoorbeeld:\n/welcome_msg Hoi $user, welkom bij de groep en wees respectvol naar andere leden.\n\nSchakel het bericht uit:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Beperking voor het verzenden van niet-tekstberichten voor nieuwe gebruikers ingeschakeld. Ik ga berichten van recent toegetreden gebruikers verwijderen die geen tekst berichten zijn.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Beperking om niet-tekstberichten voor nieuwe gebruikers te verzenden, is uitgeschakeld.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Stel in of je beperkingen voor recent toegetreden gebruikers wilt in- of uitschakelen voor het verzenden van niet-tekstberichten (Sta een gebruiker niet toe media of andere berichten te verzenden anders dan tekstberichten. Beheerders kunnen die rechten in de toekomst handmatig weer aan gebruikers geven).\n\nVoorbeeld:\n/restrict_non_text enable\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Plaats de gebruikersnaam/alias van de gebruiker na het commando.\n\nVoorbeeld:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Deze ID/alias staat al in de bloklijst.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Helaas heb je het maximale aantal gebruikers bereikt dat is toegevoegd aan de bloklijst, verwijder een gebruiker uit de lijst om ruimte te maken.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "Het opgegeven ID/alias is ongeldig.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "Het opgegeven ID/alias is succesvol toegevoegd!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Plaats de gebruikersnaam/alias van de gebruiker achter het commando.\n\nVoorbeeld:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "Het opgegeven ID/alias is succesvol verwijderd!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "Het opgegeven ID/alias staat niet in de bloklijst, er is niets uitgevoerd.",
+
+    "IGNORE_LIST_EMPTY":
+        "Bloklijst van de chat is leeg.",
+
+    "NEW_USER_CAPTCHA_CAPTION":
+        "Hallo {}, welkom bij {}. Schrijf een bericht met de cijfers en/of letters die in deze afbeelding voorkomen om te bevestigen dat je een mens bent. Als je de captcha niet binnen {} minuten oplost, word je automatisch uit de groep gezet.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Hallo {}, welkom bij {}. Druk op de onderstaande knop om te bevestigen dat je een mens bent. Als je dit niet binnen {} minuten doet, word je automatisch uit de groep gezet.",
+
+    "CAPTCHA_SOLVED":
+        "Captcha opgelost, gebruiker geverifieerd. \nWelkom bij de groep, {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "Dat is niet de juiste code. Probeer het nog eens...",
+
+    "CAPTCHA_INCORRECT_1":
+        "Dat is niet het juiste aantal. Kijk goed, de captcha heeft 4 cijfers...",
+
+    "NEW_USER_KICK":
+        "{} heeft de captcha niet op tijd voltooid. \"User\" werd eruit getrapt.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "{} heeft de captcha niet op tijd voltooid. Ik probeerde \"User\" eruit te trappen, maar ik heb geen adminrechten om gebruikers uit de groep te verwijderen.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "{} heeft de captcha niet op tijd voltooid. Ik probeerde \"User\" eruit te trappen, maar de gebruiker zit niet meer in de groep (heeft de groep verlaten of is eruit gegooid door een Admin).",
+
+    "BOT_CANT_KICK":
+        "{} heeft de captcha niet op tijd voltooid. Ik probeerde \"User\" eruit te trappen, maar vanwege een onverwacht probleem (misschien gerelateerd aan netwerk/server?), lukt dat niet.",
+
+    "CANT_DEL_MSG":
+        "Ik heb geprobeerd dit bericht te verwijderen, maar ik heb niet de adminrechten om berichten te verwijderen die niet door mij zijn verzonden.",
+
+    "NEW_USER_BAN":
+        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. \"User\" is gebanned. Om hem/haar weer binnen te laten, moet een Admin deze ban handmatig opheffen \"user\".",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar de gebruiker zit niet meer in de groep (heeft de groep verlaten of is eruit gegooid door een Admin).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar heb hiervoor niet de adminrechten om gebruikers uit de groep te verwijderen.",
+
+    "BOT_CANT_BAN":
+        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar vanwege een onverwacht probleem (misschien gerelateerd aan netwerk/server?), lukt dat niet.",
+
+    "SPAM_DETECTED_RM":
+        "Bericht gevonden met een URL (of alias) van {}, die de captcha nog niet heeft opgelost. Het bericht is verwijderd om Telegram spamvrij te houden :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Bericht gevonden met een URL (of alias) van {}, die de captcha nog niet heeft opgelost. Ik heb geprobeerd dit bericht te verwijderen, maar ik heb niet de adminrechten om berichten te verwijderen die niet door mij zijn verzonden.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Een niet-tekstbericht (afbeelding, audio, bestand ...) verwijderd uit {}, om Telegram spamvrij te houden. \n\nJe kunt niet-tekstberichten verzenden nadat je de captcha hebt opgelost.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Andere Captcha",
+
+    "PASS_BTN_TEXT":
+        "Ik ben geen bot",
+
+    "BOT_LEAVE_CHANNEL":
+        "Deze Bot kan niet in kanalen worden gebruikt, alleen in groepen.",
+
+    "ENABLE":
+        "Captcha-bescherming ingeschakeld. Schakel uit met het /disable commando.",
+
+    "DISABLE":
+        "Captcha-bescherming uitgeschakeld. Schakel in met het /enable commando.",
+
+    "ALREADY_ENABLE":
+        "De captcha-bescherming is al ingeschakeld.",
+
+    "ALREADY_DISABLE":
+        "De captcha-bescherming is al uitgeschakeld.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Ik kan dit commando niet gebruiken in de huidige chat.",
+
+    "VERSION":
+        "Huidige Bot versie: {}",
+
+    "ABOUT_MSG":
+        "Deze Bot is gratis software en open source onder de GNU-GPL-licentie.\nBot Ontwikkeld door {}.\n\nJe kunt de code hier controleren:\n{}\n\nVind je mijn werk leuk? Koop een kop koffie voor me.\n\nPaypal:\n{}\n\nBTC:\n{}",
+
+    "COMMANDS":
+        "Lijst met commando's:\n————————————————\n/start - Toont de initiele informatie over de bot.\n\n/help - Toont de helpinformatie.\n\n/commands - Toont dit bericht. Informatie over alle beschikbare commando's en hun beschrijving.\n\n/language - Hiermee kan de berichtentaal van de bot worden gewijzigd.\n\n/time - Hiermee kunt u de beschikbare tijd wijzigen om een captcha op te lossen.\n\n/difficulty - Hiermee kunt u de moeilijkheidsgraad van de captcha wijzigen (van 1 tot 5).\n\n/captcha_mode - Mogelijkheid om de captcha-modus te wijzigen (nums: getallen, hex: getallen en de letters A-F, ascii: getallen en de letters A-Z, button: alleen een knop).\n\n/welcome_msg - Mogelijkheid om een welkomstbericht te configureren dat wordt verzonden na het oplossen van de captcha.\n\n/restrict_non_text - Inschakelen van beperkingingen op nieuwe gebruikers om niet-tekstberichten te verzenden.\n\n/add_ignore - Vraag een geblokte gebruiker niet om de captcha.\n\n/remove_ignore - Stop het blokkeren van een gebruiker.\n\n/ignore_list - lijst met geblokte gebruikers-ID's.\n\n/allowgroup - Toestaan dat een groep de bot gebruikt (als de bot privé is).\n\n/enable - Schakel de captcha-bescherming van de groep in.\n\n/disable - Schakel de captcha-bescherming van de groep uit.\n\n/version - Laat de versie van de Bot zien.\n\n/about - Toon informatie over deze bot."
+}
