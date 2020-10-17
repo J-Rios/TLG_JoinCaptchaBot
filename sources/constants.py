@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/10/2020
+    18/10/2020
 Version:
-    1.14.0
+    1.14.1
 '''
 
 ################################################################################
@@ -108,7 +108,7 @@ CONST = {
     "IGNORE_LIST_MAX": 100,
 
     # Command don't allow in private chat text (just english due in private chats we
-    # don't have language configuration
+    # don't have language configuration)
     "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
 
     # Command just allow for Bot owner
@@ -147,6 +147,7 @@ CONST = {
         "\nBasque / Euskal\n/language eu\n" \
         "\nCatalan / Català\n/language ca\n" \
         "\nChinese-Simplified / 中文\n/language zh_cn\n" \
+        "\nDutch / Nederlands\n/language nl\n" \
         "\nEnglish / English\n/language en\n" \
         "\nEsperanto\n/language eo\n" \
         "\nFrench / Francais\n/language fr\n" \
@@ -173,7 +174,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.14.0 (17/10/2020)"
+    "VERSION": "1.14.1 (18/10/2020)"
 }
 
 
@@ -190,6 +191,7 @@ TEXT = {
     "GL": {}, # Galician
     "ID": {}, # Indonesian
     "IT": {}, # Italian
+    "NL": {}, # Dutch
     "PL": {}, # Polish
     "PT_BR": {}, # Portuguese (Brasil)
     "RU": {}, # Rusian

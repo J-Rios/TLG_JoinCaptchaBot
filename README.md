@@ -198,3 +198,5 @@ To add support for a new language you must follow this steps:
 - Esperanto: Pablo Busto & Porrumentzio.
 
 - Arabic: [@damascene](https://github.com/damascene)
+
+- Dutch: [@weerdenburg](https://github.com/weerdenburg)
