@@ -24,7 +24,7 @@
         "Le temps pour résoudre le captcha est de {} minute(s).",
 
     "TIME_MAX_NOT_ALLOW":
-        "Le temps maximum autorisé pour résoudre le captcha est de 120 minutes. Le temps n'a pas été changé.",
+        "Le temps maximum autorisé pour résoudre le captcha est de 20 minutes. Le temps n'a pas été changé.",
 
     "TIME_NOT_NUM":
         "La valeur entrée n'est pas un nombre entier.",

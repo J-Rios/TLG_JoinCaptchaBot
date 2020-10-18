@@ -24,7 +24,7 @@
         "Die Zeit zum Lösen des Captcha wurde in {} Minuten geändert.",
 
     "TIME_MAX_NOT_ALLOW":
-        "Die maximal zulässige Zeit zum Lösen von Captchas beträgt 120 Minuten. Die Uhrzeit wurde nicht geändert.",
+        "Die maximal zulässige Zeit zum Lösen von Captchas beträgt 20 Minuten. Die Uhrzeit wurde nicht geändert.",
 
     "TIME_NOT_NUM":
         "Die angegebene Zeit ist keine Ganzzahl.",

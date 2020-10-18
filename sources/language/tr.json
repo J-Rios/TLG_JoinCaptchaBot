@@ -24,7 +24,7 @@
         "Captcha'yı çözme süresi başarıyla {} dakikaya ayarlandı.",
 
     "TIME_MAX_NOT_ALLOW":
-        "İzin verilen maksimum captcha çözüm süresi 120 dakikadır. Zaman değiştirilmedi.",
+        "İzin verilen maksimum captcha çözüm süresi 20 dakikadır. Zaman değiştirilmedi.",
 
     "TIME_NOT_NUM":
         "Sağlanan süre bir tamsayı değil.",

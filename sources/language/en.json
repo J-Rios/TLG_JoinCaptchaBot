@@ -24,7 +24,7 @@
         "Time to solve the captcha successfully changed to {} minutes.",
 
     "TIME_MAX_NOT_ALLOW":
-        "The maximum allowed captcha solve time is 120 minutes. The time has not been changed.",
+        "The maximum allowed captcha solve time is 20 minutes. The time has not been changed.",
 
     "TIME_NOT_NUM":
         "The provided time is not an integer number.",

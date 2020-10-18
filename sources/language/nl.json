@@ -24,7 +24,7 @@
         "De tijd om de captcha met succes op te lossen, is gewijzigd in {} minuten.",
 
     "TIME_MAX_NOT_ALLOW":
-        "De maximaal toegestane captcha-oplostijd is 120 minuten. De tijd is niet gewijzigd.",
+        "De maximaal toegestane captcha-oplostijd is 20 minuten. De tijd is niet gewijzigd.",
 
     "TIME_NOT_NUM":
         "De opgegeven tijd is geen geheel getal.",

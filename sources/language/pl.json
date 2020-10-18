@@ -24,7 +24,7 @@
         "Czas na rozwiązanie captcha pomyślnie zmieniony na ilość minut równą {}.",
 
     "TIME_MAX_NOT_ALLOW":
-        "Maksymalny czas na rozwiązanie captcha to 120 minut. Nie zmieniono czasu.",
+        "Maksymalny czas na rozwiązanie captcha to 20 minut. Nie zmieniono czasu.",
 
     "TIME_NOT_NUM":
         "Podany czas nie jest liczbą całkowitą.",

@@ -24,7 +24,7 @@
         "Captcha asmatzeko denbora {} minututara aldatua izan da.",
 
     "TIME_MAX_NOT_ALLOW":
-        "Captcha asmatzeko gehienezko denbora 120 minutu dura. Ez da denbora tartea aldatu.",
+        "Captcha asmatzeko gehienezko denbora 20 minutu dura. Ez da denbora tartea aldatu.",
 
     "TIME_NOT_NUM":
         "Ezarri nahi zen denbora ez da zenbaki osoa.",

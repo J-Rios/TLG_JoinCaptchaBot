@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     18/10/2020
 Version:
-    1.14.1
+    1.14.2
 '''
 
 ################################################################################
@@ -1344,7 +1344,7 @@ def cmd_time(update: Update, context: CallbackContext):
         new_time = int(args[0])
         if new_time < 1:
             new_time = 1
-        if new_time <= 120:
+        if new_time <= 20:
             save_config_property(chat_id, "Captcha_Time", new_time)
             bot_msg = TEXT[lang]["TIME_CHANGE"].format(new_time)
         else:

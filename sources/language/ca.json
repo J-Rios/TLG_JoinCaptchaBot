@@ -24,7 +24,7 @@
         "S'ha canviat el temps per a resoldre el captcha a {} minuts.",
 
     "TIME_MAX_NOT_ALLOW":
-        "El temps màxim per a resoldre el captcha són 120 minuts. No s'ha canviat el temps.",
+        "El temps màxim per a resoldre el captcha són 20 minuts. No s'ha canviat el temps.",
 
     "TIME_NOT_NUM":
         "El temps introduït no és un número enter.",

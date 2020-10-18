@@ -24,7 +24,7 @@
         "Tenggat waktu penyelesaian captcha berhasil diubah ke {} menit.",
 
     "TIME_MAX_NOT_ALLOW":
-        "Maksimal tenggat waktu yang diperbolehkan untuk menyelesaikan captcha adalah 120 menit. Tenggat waktu tetap belum diubah.",
+        "Maksimal tenggat waktu yang diperbolehkan untuk menyelesaikan captcha adalah 20 menit. Tenggat waktu tetap belum diubah.",
 
     "TIME_NOT_NUM":
         "Tenggat waktu yang kamu ketik bukanlah angka.",
