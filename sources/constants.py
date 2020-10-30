@@ -160,7 +160,7 @@ CONST = {
         "\nRussian / Pусский\n/language ru\n" \
         "\nSpanish / Español\n/language es\n" \
         "\nTurkish / Türkçe\n/language tr\n" \
-        "\nUkrainian / Українську\n/language tr\n",
+        "\nUkrainian / Українську\n/language uk\n",
 
     # Bot developer
     "DEVELOPER": "@JoseTLG",
