@@ -200,3 +200,5 @@ To add support for a new language you must follow this steps:
 - Arabic: [@damascene](https://github.com/damascene)
 
 - Dutch: [@weerdenburg](https://github.com/weerdenburg)
+
+- Ukrainian: Vadym Zhushman (@zhushman00)

@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/10/2020
+    30/10/2020
 Version:
-    1.14.2
+    1.14.3
 '''
 
 ################################################################################
@@ -159,7 +159,8 @@ CONST = {
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nRussian / Pусский\n/language ru\n" \
         "\nSpanish / Español\n/language es\n" \
-        "\nTurkish / Türkçe\n/language tr\n",
+        "\nTurkish / Türkçe\n/language tr\n" \
+        "\nUkrainian / Українську\n/language tr\n",
 
     # Bot developer
     "DEVELOPER": "@JoseTLG",
@@ -174,7 +175,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.14.2 (18/10/2020)"
+    "VERSION": "1.14.3 (30/10/2020)"
 }
 
 
@@ -196,5 +197,6 @@ TEXT = {
     "PT_BR": {}, # Portuguese (Brasil)
     "RU": {}, # Rusian
     "TR": {}, # Turkish
+    "UK": {}, # Ukrainian
     "ZH_CN": {} # Chinese (Mainland)
 }
