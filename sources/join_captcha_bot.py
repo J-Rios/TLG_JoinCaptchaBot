@@ -858,7 +858,8 @@ def msg_new_user(update: Update, context: CallbackContext):
                 # Add new user join data and messages to be removed
                 new_users[chat_id][join_user_id]["join_data"] = join_data
                 new_users[chat_id][join_user_id]["join_msg"] = update_msg.message_id
-                new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_msg.message_id)
+                if sent_msg:
+                    new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_msg.message_id)
                 printts("[{}] Captcha send process complete.".format(chat_id))
                 printts(" ")
 
@@ -1965,6 +1966,7 @@ def th_selfdestruct_messages(bot):
                             printts(str(ee))
                             pass
                 list_remove_element(to_delete_in_time_messages_list, sent_msg)
+                sleep(0.1)
             i = i + 1
         # Wait 10s (release CPU usage)
         sleep(10)
@@ -2088,6 +2090,7 @@ def handle_time_to_kick_not_verify_users(bot):
                     printts(" ")
             except Exception as e:
                 printts("Error handling kick/ban:\n{}".format(str(e)))
+            sleep(0.1)
 
 ################################################################################
 ### Telegram Errors Callback
