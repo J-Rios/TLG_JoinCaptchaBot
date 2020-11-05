@@ -24,6 +24,11 @@ from telegram import TelegramError
 from commons import printts
 
 ###############################################################################
+### Specific Telegram constants
+
+ANONYMOUS_ADMIN_ID = 1087968824
+
+###############################################################################
 
 def tlg_get_chat(bot, chat_id_or_alias, timeout=None):
     '''Telegram get chat data.'''
@@ -207,12 +212,17 @@ def tlg_restrict_user(bot, chat_id, user_id, until_date=None, timeout=None,
 def tlg_user_is_admin(bot, user_id, chat_id, timeout=None):
     '''Check if the specified user is an Administrator of a group given
     by IDs'''
+    # Check if it is an Admin with anonymous config enabled
+    if user_id == ANONYMOUS_ADMIN_ID:
+        return True
+    # Get group Admins
     try:
         group_admins = bot.get_chat_administrators(chat_id=chat_id,
             timeout=timeout)
     except Exception as e:
         printts("[{}] {}".format(chat_id, str(e)))
         return None
+    # Check if the user is one of the group Admins
     for admin in group_admins:
         if user_id == admin.user.id:
             return True
