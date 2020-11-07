@@ -39,7 +39,7 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
     chmod +x run status kill
     ```
 
-4. Specify Telegram Bot account Token (get it from @BotFather) in "constants.py" file:
+4. Specify Telegram Bot account Token (get it from @BotFather) in "settings.py" file:
 
     ```python
     'TOKEN' : 'XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
@@ -100,15 +100,15 @@ systemctl disable bot.service
 
 ## Docker
 
-You can also run the bot on [Docker](http://docker.com). This allows easy
+You can also run the bot on [Docker](https://docs.docker.com/get-started/). This allows easy
 server migration and automates the download of all dependencies. Look at the
-[docker specific documentation](docker/README.md) for more details.
+[docker specific documentation](docker/README.md) for more details about how to create a Docker Container for Captcha Bot.
 
 ## Bot Owner
 
 The **Bot Owner** can run special commands that no one else can use, like /allowgroup (if the Bot is private, this allow groups where the Bot can be used) or /whitelist (to make Bot don't ask for captcha to some users, useful for blind users).
 
-You can setup a Bot Owner by specifying the Telegram User ID or Alias in "constants.py" file:
+You can setup a Bot Owner by specifying the Telegram User ID or Alias in "settings.py" file:
 
 ```python
 "BOT_OWNER": "@JoseTLG",
@@ -118,7 +118,7 @@ You can setup a Bot Owner by specifying the Telegram User ID or Alias in "consta
 
 By default, the Bot is **Public**, so any Telegram user can add and use the Bot in any group, but you can set it to be **Private** so the Bot just can be used in allowed groups (Bot owner allows them with **/allow_group** command).
 
-You can set Bot to be Private in "constants.py" file:
+You can set Bot to be Private in "settings.py" file:
 
 ```python
 "BOT_PRIVATE" : True,
@@ -138,7 +138,7 @@ To use Webhook instead Polling, you need a signed certificate file in the system
 openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
 ```
 
-Once you have the key and cert files, setup the next lines in "configs.py" file to point to expected Webhook Host address, port and certificate file:
+Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected Webhook Host address, port and certificate file:
 
 ```python
 "WEBHOOK_HOST": "Current system IP/DNS here",
@@ -152,6 +152,10 @@ To use Polling instead Webhook, just set host value back to none:
 ```python
 "WEBHOOK_HOST": "None",
 ```
+
+## Environment Variables Setup
+
+You can setup some Bot properties manually changing their values in settings.py file, but also you can use enviroment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Enviroments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
 
 ## Adding a New Language
 

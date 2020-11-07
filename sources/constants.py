@@ -10,63 +10,132 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/11/2020
+    07/11/2020
 Version:
-    1.15.0
+    1.15.1
 '''
 
-################################################################################
+###############################################################################
 ### Imported modules ###
 
-from os import path
+from os import path as os_path
+from os import getenv as os_getenv
+from settings import SETTINGS
 
-################################################################################
+###############################################################################
 ### Constants ###
 
 # Actual constants.py full path directory name
-SCRIPT_PATH = path.dirname(path.realpath(__file__))
-
+SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
 
 # General Bots Parameters
 CONST = {
 
-    # Set if you wan't the Bot to be Public or Private
-    # Public: can be used by any group
-    # Private: just can be used in allowed groups (Bot owner allow them with /allow_group command)
-    "BOT_PRIVATE": False,
+    # Bot Public or Private
+    "BOT_PRIVATE": \
+        bool(int(os_getenv("CAPTCHABOT_PRIVATE", \
+            SETTINGS["CAPTCHABOT_PRIVATE"]))),
 
     # Bot Token (get it from @BotFather)
-    "TOKEN": "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "TOKEN": \
+        os_getenv("CAPTCHABOT_TOKEN", SETTINGS["CAPTCHABOT_TOKEN"]),
 
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
-    "BOT_OWNER": "XXXXXXXXX",
+    "BOT_OWNER": \
+        os_getenv("CAPTCHABOT_OWNER", SETTINGS["CAPTCHABOT_OWNER"]),
 
-    # Bot Webhook Host addres (keep in None for Polling or set to a valid address for Webhook)
-    "WEBHOOK_HOST": "None",
+    # Bot Webhook Host addres (keep in None for Polling or set to a
+    # valid address for Webhook)
+    "WEBHOOK_HOST": \
+        os_getenv("CAPTCHABOT_WEBHOOK_HOST", \
+            SETTINGS["CAPTCHABOT_WEBHOOK_HOST"]),
 
     # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
-    "WEBHOOK_PORT": 8443,
+    "WEBHOOK_PORT": \
+        int(os_getenv("CAPTCHABOT_WEBHOOK_PORT", \
+            SETTINGS["CAPTCHABOT_WEBHOOK_PORT"])),
 
-    # Bot Webhook Certificate file path (this is not used if WEBHOOK_HOST is None)
-    "WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
+    # Bot Webhook Certificate file path (this is not used if
+    # WEBHOOK_HOST is None)
+    "WEBHOOK_CERT": \
+        os_getenv("CAPTCHABOT_WEBHOOK_CERT", \
+            SETTINGS["CAPTCHABOT_WEBHOOK_CERT"]),
 
-    # Bot Webhook Certificate private key file path (this is not used if WEBHOOK_HOST is None)
-    "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
+    # Bot Webhook Certificate private key file path (this is not used
+    # if WEBHOOK_HOST is None)
+    "WEBHOOK_CERT_PRIV_KEY": \
+        os_getenv("CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY", \
+            SETTINGS["CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY"]),
+
+    # Chats directory path
+    "CHATS_DIR": \
+        os_getenv("CAPTCHABOT_CHATS_DIR", SETTINGS["CAPTCHABOT_CHATS_DIR"]),
+
+    # Directory where create/generate temporary captchas
+    "CAPTCHAS_DIR": \
+        os_getenv("CAPTCHABOT_CAPTCHAS_DIR", \
+            SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"]),
+
+    # Global whitelist file path (to allow whitelist blind users in
+    # all groups)
+    "F_WHITE_LIST": \
+        os_getenv("CAPTCHABOT_F_WHITE_LIST", \
+            SETTINGS["CAPTCHABOT_F_WHITE_LIST"]),
+
+    # Global whitelist file path (to allow whitelist blind users in
+    # all groups)
+    "F_ALLOWED_GROUPS": \
+        os_getenv("CAPTCHABOT_F_ALLOWED_GROUPS", \
+            SETTINGS["CAPTCHABOT_F_ALLOWED_GROUPS"]),
+
+    # Initial enable/disable status at Bot start
+    "INIT_ENABLE": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE", \
+            SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
+
+    # Initial captcha solve time (in minutes)
+    "INIT_CAPTCHA_TIME_MIN": \
+        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN", \
+            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_TIME_MIN"])),
+
+    # Initial captcha difficult level
+    "INIT_CAPTCHA_DIFFICULTY_LEVEL": \
+        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL", \
+            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL"])),
+
+    # Initial captcha characters mode (ascii, hex, nums, or button)
+    "INIT_CAPTCHA_CHARS_MODE": \
+        os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
+            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
+
+    # Default time (in mins) to remove self-destruct sent messages
+    # from the Bot
+    "T_DEL_MSG": \
+        int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
+            SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
+
+    # Auto-remove custom welcome message timeout
+    "T_DEL_WELCOME_MSG": \
+        int(os_getenv("CAPTCHABOT_T_DEL_WELCOME_MSG", \
+            SETTINGS["CAPTCHABOT_T_DEL_WELCOME_MSG"])),
+
+    # Maximum number of users allowed in each chat ignore list
+    "IGNORE_LIST_MAX": \
+        int(os_getenv("CAPTCHABOT_IGNORE_LIST_MAX", \
+            SETTINGS["CAPTCHABOT_IGNORE_LIST_MAX"])),
+
+    # Initial new users just allow to send text messages
+    "INIT_RESTRICT_NON_TEXT_MSG": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG", \
+            SETTINGS["CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG"]))),
+
+    # Custom Welcome message max length
+    "MAX_WELCOME_MSG_LENGTH": \
+        int(os_getenv("CAPTCHABOT_MAX_WELCOME_MSG_LENGTH", \
+            SETTINGS["CAPTCHABOT_MAX_WELCOME_MSG_LENGTH"])),
 
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
-
-    # Chats directory path
-    "CHATS_DIR": SCRIPT_PATH + "/data/chats",
-
-    # Directory where create/generate temporary captchas
-    "CAPTCHAS_DIR": SCRIPT_PATH + "/data/captchas",
-
-    # Global whitelist file path (to allow whitelist blind users in all groups)
-    "F_WHITE_LIST": SCRIPT_PATH + "/data/whitelist.txt",
-
-    # Global whitelist file path (to allow whitelist blind users in all groups)
-    "F_ALLOWED_GROUPS": SCRIPT_PATH + "/data/allowedgroups.txt",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",
@@ -80,35 +149,8 @@ CONST = {
     # Initial language at Bot start
     "INIT_LANG": "EN",
 
-    # Initial enable/disable status at Bot start
-    "INIT_ENABLE": True,
-
-    # Initial captcha solve time (in minutes)
-    "INIT_CAPTCHA_TIME_MIN": 5,
-
-    # Initial captcha difficult level
-    "INIT_CAPTCHA_DIFFICULTY_LEVEL": 2,
-
-    # Initial captcha characters mode (ascii, hex, nums, or button)
-    "INIT_CAPTCHA_CHARS_MODE": "nums",
-
-    # Initial new users just allow to send text messages
-    "INIT_RESTRICT_NON_TEXT_MSG": False,
-
-    # Default time (in mins) to remove self-destruct sent messages from the Bot
-    "T_DEL_MSG": 5,
-
-    # Auto-remove custom welcome message timeout
-    "T_DEL_WELCOME_MSG": 5,
-
-    # Custom Welcome message max length
-    "MAX_WELCOME_MSG_LENGTH": 3968,
-
-    # Maximum number of users allowed in each chat ignore list
-    "IGNORE_LIST_MAX": 100,
-
-    # Command don't allow in private chat text (just english due in private chats we
-    # don't have language configuration)
+    # Command don't allow in private chat text (just english due in
+    # private chats we don't have language configuration)
     "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
 
     # Command just allow for Bot owner
@@ -125,23 +167,28 @@ CONST = {
         "/allowgroup rm -1001142817523",
 
     # Allowgroup usage
-    "NOT_ALLOW_GROUP": "Hi, this Bot account is private and is not allowed to be used here. " \
-        "Contact to Bot account owner ({}) if you want to use the Bot in this group.\n" \
+    "NOT_ALLOW_GROUP": "Hi, this Bot account is private and is not allowed " \
+        "to be used here. Contact to Bot account owner ({}) if you want to " \
+        "use the Bot in this group.\n" \
         "\n" \
         "Actual chat ID (Bot owner needs this to allow this group):\n" \
         "{}\n" \
         "\n" \
-        "Also, remember that you can create your own Bot account for free:\n" \
+        "Also, remember that you can create your own Bot account for " \
+        "free:\n" \
         "{}",
 
-    # IANA Top-Level-Domain List (https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
+    # IANA Top-Level-Domain List
+    # https://data.iana.org/TLD/tlds-alpha-by-domain.txt
     "F_TLDS": "tlds-alpha-by-domain.txt",
 
-    # Regular expression to detect URLs in a string based in TLD domains
-    "REGEX_URLS": r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)" \
+    # Regular expression to detect URLs in a string
+    "REGEX_URLS": \
+        r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)" \
         r"(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))",
 
-    # List string of supported languages commands shows in invalid language set
+    # List string of supported languages commands shows in invalid
+    # language set
     "SUPPORTED_LANGS_CMDS": \
         "\nArabic / Arabic\n/language ar\n" \
         "\nBasque / Euskal\n/language eu\n" \
@@ -175,7 +222,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.15.0 (03/11/2020)"
+    "VERSION": "1.15.1 (07/11/2020)"
 }
 
 

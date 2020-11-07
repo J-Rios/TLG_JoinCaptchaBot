@@ -13,12 +13,12 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/11/2020
+    07/11/2020
 Version:
-    1.15.0
+    1.15.1
 '''
 
-################################################################################
+###############################################################################
 ### Imported modules
 
 import logging
@@ -61,16 +61,16 @@ from commons import (
 
 from tlgbotutils import (
     tlg_send_msg, tlg_send_image, tlg_answer_callback_query,
-    tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user,
-    tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
-    tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group
+    tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user, tlg_kick_user,
+    tlg_user_is_admin, tlg_leave_chat, tlg_restrict_user,
+    tlg_is_valid_user_id_or_alias, tlg_is_valid_group
 )
 
 from constants import (
     SCRIPT_PATH, CONST, TEXT
 )
 
-################################################################################
+###############################################################################
 ### Globals
 
 updater = None
@@ -83,14 +83,14 @@ force_exit = False
 # Create Captcha Generator object of specified size (2 -> 640x360)
 CaptchaGen = CaptchaGenerator(2)
 
-################################################################################
+###############################################################################
 ### Setup Bot Logger
 
 log_level=logging.INFO
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=log_level)
 #logger = logging.getLogger("CaptchaBot")
 
-################################################################################
+###############################################################################
 ### Termination Signals Handler For Program Process
 
 def signal_handler(signal,  frame):
@@ -136,7 +136,7 @@ def th_close_resource_file(file_to_close):
 signal(SIGTERM, signal_handler) # SIGTERM (kill pid) to signal_handler
 signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
 
-################################################################################
+###############################################################################
 ### JSON Chat Config File Functions
 
 def get_default_config_data():
@@ -204,7 +204,7 @@ def get_chat_config_file(chat_id):
         files_config_list.append(file)
     return file["File"]
 
-################################################################################
+###############################################################################
 ### Telegram Related Functions
 
 def tlg_send_selfdestruct_msg(bot, chat_id, message):
@@ -256,7 +256,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     to_delete_in_time_messages_list.append(sent_msg_data)
     return True
 
-################################################################################
+###############################################################################
 ### General Functions
 
 def initialize_resources():
@@ -412,7 +412,7 @@ def is_group_in_allowed_list(chat_id):
         return True
     return False
 
-################################################################################
+###############################################################################
 ### Received Telegram not-command messages handlers
 
 def new_member_join(update: Update, context: CallbackContext):
@@ -944,7 +944,7 @@ def button_request_pass(bot, query):
     printts("[{}] Button-only challenge pass request process complete.".format(chat_id))
     printts(" ")
 
-################################################################################
+###############################################################################
 ### Received Telegram command messages handlers
 
 def cmd_start(update: Update, context: CallbackContext):
@@ -1661,7 +1661,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
             else:
                 tlg_send_selfdestruct_msg(bot, chat_id, "The group is not in allowed list.")
 
-################################################################################
+###############################################################################
 ### Bot automatic remove sent messages thread
 
 def th_selfdestruct_messages(bot):
@@ -1693,7 +1693,7 @@ def th_selfdestruct_messages(bot):
         # Wait 10s (release CPU usage)
         sleep(10)
 
-################################################################################
+###############################################################################
 ### Main loop function to handle time to kick users
 
 def handle_time_to_kick_not_verify_users(bot):
@@ -1808,7 +1808,7 @@ def handle_time_to_kick_not_verify_users(bot):
                 printts("Error handling kick/ban:\n{}".format(str(e)))
             sleep(0.1)
 
-################################################################################
+###############################################################################
 ### Telegram Errors Callback
 
 def tlg_error_callback(update, context):
@@ -1826,7 +1826,7 @@ def tlg_error_callback(update, context):
     except TelegramError as e:
         printts("TLG Error: {}".format(str(e)))
 
-################################################################################
+###############################################################################
 ### Main Function
 
 def main():
@@ -1836,13 +1836,13 @@ def main():
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         printts("Error: Bot Token has not been set.")
-        printts("Please add your Bot Token to constants.py file.")
+        printts("Please add your Bot Token to settings.py file.")
         printts("Exit.\n")
         exit(0)
     # Check if Bot owner has been set in Private Bot mode
     if (CONST["BOT_OWNER"] == "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         printts("Error: Bot Owner has not been set for Private Bot.")
-        printts("Please add the Bot Owner to constants.py file.")
+        printts("Please add the Bot Owner to settings.py file.")
         printts("Exit.\n")
         exit(0)
     printts("Bot started.")
