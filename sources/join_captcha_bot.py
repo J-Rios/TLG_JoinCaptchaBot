@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/11/2020
+    23/11/2020
 Version:
-    1.15.1
+    1.15.2
 '''
 
 ###############################################################################
@@ -1752,7 +1752,8 @@ def handle_time_to_kick_not_verify_users(bot):
                         else:
                             # Kick fail
                             printts("[{}] Unable to kick".format(chat_id))
-                            if kick_result["error"] == "User not found":
+                            if (kick_result["error"] == "The user has left the group") or \
+                                    (kick_result["error"] == "The user was already kicked"):
                                 # The user is not in the chat
                                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
                                 # Set to auto-remove the kick message too, after a while

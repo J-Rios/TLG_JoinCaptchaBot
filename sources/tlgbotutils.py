@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    03/11/2020
+    23/11/2020
 Version:
-    1.0.0
+    1.0.1
 '''
 
 ###############################################################################
@@ -170,8 +170,14 @@ def tlg_kick_user(bot, chat_id, user_id, timeout=None):
     kick_result = dict()
     kick_result["error"] = ""
     # Ban the user (telegram doesn't have a kick method, so we need first
-    # to ban and then remove ban restrictions of the user
+    # to ban and then remove ban restrictions of the user)
     kick_result = tlg_ban_user(bot, chat_id, user_id)
+    # If user was already kicked by another Admin, keep restrictions
+    if (kick_result["error"] == "The user has left the group"):
+        return kick_result
+    if (kick_result["error"] == "The user was already kicked"):
+        return kick_result
+    # Remove restrictions
     try:
         bot.unban_chat_member(chat_id=chat_id, user_id=user_id,
             timeout=timeout)
