@@ -69,7 +69,7 @@
         "Pembatasan untuk mengirim pesan non-teks untuk pengguna baru diaktifkan. Saya akan menghapus izin pengguna baru yang bergabung kecuali pengiriman pesan teks (Jangan izinkan pengguna mengirim media atau pesan lain selain pesan teks. Admin dapat secara manual memberikan izin itu lagi kepada pengguna di masa mendatang).\n\nContoh:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Tolong, tempatkan ID/alias pengguna setelah perintah.\n\Contoh:\n/add_ignore 1234567890\n/add_ignore @peter",
+        "Tolong, tempatkan ID/alias pengguna setelah perintah.\n\nContoh:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
         "ID/alias ini sudah ada dalam daftar abaikan.",
