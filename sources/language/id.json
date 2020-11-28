@@ -12,13 +12,13 @@
         "Bahasa diubah ke Bahasa Indonesia.",
 
     "LANG_SAME":
-        "Aku sudah berbahasa Indonesia!.\n\nSupported languages:\n{}",
+        "Aku sudah berbahasa Indonesia!.\n\nBahasa yang didukung:\n{}",
 
     "LANG_BAD_LANG":
-        "Bahasa tidak tersedia.\n\nSupported languages:\n{}",
+        "Bahasa tidak tersedia.\n\nBahasa yang didukung:\n{}",
 
     "LANG_NOT_ARG":
-        "Perintah ini memerlukan penyetingan bahasa.\n\nExamples:\n{}",
+        "Perintah ini memerlukan penyetingan bahasa.\n\nContoh:\n{}",
 
     "TIME_CHANGE":
         "Tenggat waktu penyelesaian captcha berhasil diubah ke {} menit.",
@@ -60,46 +60,46 @@
         "Taruh pesan selamat datangnya setelah perintah.\n\nContoh:\n/welcome_msg Hai $user, selamat datang di grup dan ingatlah untuk menghormati pengguna lain.\n\nMenonatifkan pesan selamat datang:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+        "Pembatasan untuk mengirim pesan non-teks untuk pengguna baru diaktifkan. Saya akan menghapus izin pengguna baru yang bergabung kecuali pengiriman pesan teks.",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+        "Pembatasan untuk mengirim pesan non-teks untuk pengguna baru dinonaktifkan.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExample:\n/restrict_non_text enable\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+        "Pembatasan untuk mengirim pesan non-teks untuk pengguna baru diaktifkan. Saya akan menghapus izin pengguna baru yang bergabung kecuali pengiriman pesan teks (Jangan izinkan pengguna mengirim media atau pesan lain selain pesan teks. Admin dapat secara manual memberikan izin itu lagi kepada pengguna di masa mendatang).\n\nContoh:\n/restrict_non_text enable\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter\n\n[This text needs translate to actual configured language]",
+        "Tolong, tempatkan ID/alias pengguna setelah perintah.\n\Contoh:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID/alias is already in ignore list.\n\n[This text needs translate to actual configured language]",
+        "ID/alias ini sudah ada dalam daftar abaikan.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+        "Sayangnya, Anda telah mencapai batas maksimum pengguna yang ditambahkan dalam daftar abaikan, hapus seseorang untuk menambahkan lebih banyak.",
 
     "IGNORE_LIST_ADD_INVALID":
-        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
+        "ID/alias ini tidak valid.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "The ID/alias has been added successfully!\n\n[This text needs translate to actual configured language]",
+        "ID/alias berhasil ditambahkan!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter\n\n[This text needs translate to actual configured language]",
+        "Tolong, tempatkan ID/alias pengguna setelah perintah.\n\nContoh:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "The ID/alias has been removed successfully!\n\n[This text needs translate to actual configured language]",
+        "ID/alias berhasil dihapus!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "This ID/alias is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+        "ID/alias ini tidak ada dalam daftar abaikan, tidak ada yang dilakukan.",
 
     "IGNORE_LIST_EMPTY":
-        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+        "Abaikan daftar obrolan kosong.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Halo {}, selamat datang di {}, tolong kirimkan pesan dengan angka yang terdapat dalam captcha untuk memastikan kamu benar- benar orang. Jika kamu tidak menyelesaikan verifikasi captcha dalam {} menit, kamu akan otomatis dikeluarkan dari grup. Bila dalam verifikasi terdapat huruf, besar dan kecilnya huruf wajib diperhatikan.",
+        "Halo {}, selamat datang di {}, harap kirimkan pesan dengan angka yang terdapat dalam captcha untuk memastikan kamu benar - benar orang. Jika kamu tidak menyelesaikan verifikasi captcha dalam {} menit, kamu akan otomatis dikeluarkan dari grup. Bila dalam verifikasi terdapat huruf, besar dan kecilnya huruf wajib diperhatikan.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Halo {}, selamat datang di {}. Harap tekan tombol di bawah untuk memverifikasi bahwa Anda adalah manusia. Jika anda tidak melakukan ini dalam {} menit, anda akan dikeluarkan dari grup secara otomatis.",
 
     "CAPTCHA_SOLVED":
         "Captcha selesai, Pengguna telah diverifikasi.\nSelamat datang di grup {}",
