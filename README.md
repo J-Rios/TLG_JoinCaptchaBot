@@ -7,6 +7,9 @@ The Bot sends an image captcha for each new user, and kicks any of them that can
 
 Do you like this Bot? Buy me a coffee :)
 
+BuyMeACoffee:
+[https://www.buymeacoffee.com/joincaptchabot](https://www.buymeacoffee.com/joincaptchabot)
+
 Paypal:
 [https://www.paypal.me/josrios](https://www.paypal.me/josrios)
 

@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    23/11/2020
+    28/11/2020
 Version:
-    1.15.2
+    1.15.3
 '''
 
 ###############################################################################
@@ -1724,7 +1724,7 @@ def handle_time_to_kick_not_verify_users(bot):
                     # the captcha in 1 hour (user ban just happen if a user try to join the group
                     # and fail to solve the captcha 5 times in the past 30 mins)
                     if time() - user_join_time >= (captcha_timeout*60) + 1800:
-                        printts("Removing kicked user {} after 30 mins")
+                        printts("Removing kicked user {} after 30 mins".format(user_id))
                         del new_users[chat_id][user_id]
                 else:
                     # If time for kick/ban has not arrived yet
