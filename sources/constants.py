@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/11/2020
+    30/11/2020
 Version:
-    1.15.3
+    1.15.4
 '''
 
 ###############################################################################
@@ -202,6 +202,7 @@ CONST = {
         "\nGerman / Deutch\n/language de\n" \
         "\nIndonesian / Indonesia\n/language id\n" \
         "\nItalian / Italiano\n/language it\n" \
+        "\nKannada / Kannada\n/language kn\n" \
         "\nPolish / Polskie\n/language pl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nRussian / Pусский\n/language ru\n" \
@@ -222,7 +223,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.15.3 (28/11/2020)"
+    "VERSION": "1.15.4 (30/11/2020)"
 }
 
 
@@ -239,6 +240,7 @@ TEXT = {
     "GL": {}, # Galician
     "ID": {}, # Indonesian
     "IT": {}, # Italian
+    "KN": {}, # Kannada
     "NL": {}, # Dutch
     "PL": {}, # Polish
     "PT_BR": {}, # Portuguese (Brasil)
