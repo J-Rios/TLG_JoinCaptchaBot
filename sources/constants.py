@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/11/2020
+    25/12/2020
 Version:
-    1.15.4
+    1.15.5
 '''
 
 ###############################################################################
@@ -126,8 +126,8 @@ CONST = {
 
     # Initial new users just allow to send text messages
     "INIT_RESTRICT_NON_TEXT_MSG": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG", \
-            SETTINGS["CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG"]))),
+        int(os_getenv("CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG", \
+            SETTINGS["CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG"])),
 
     # Custom Welcome message max length
     "MAX_WELCOME_MSG_LENGTH": \
@@ -148,6 +148,9 @@ CONST = {
 
     # Initial language at Bot start
     "INIT_LANG": "EN",
+
+    # Number of seconds in a day (60s x 60m x 24h)
+    "T_SECONDS_IN_A_DAY": 86400,
 
     # Command don't allow in private chat text (just english due in
     # private chats we don't have language configuration)
@@ -199,7 +202,7 @@ CONST = {
         "\nEsperanto\n/language eo\n" \
         "\nFrench / Francais\n/language fr\n" \
         "\nGalician / Galego\n/language gl\n" \
-        "\nGerman / Deutch\n/language de\n" \
+        "\nGerman / Deutsch\n/language de\n" \
         "\nIndonesian / Indonesia\n/language id\n" \
         "\nItalian / Italiano\n/language it\n" \
         "\nKannada / Kannada\n/language kn\n" \
@@ -223,7 +226,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.15.4 (30/11/2020)"
+    "VERSION": "1.15.5 (25/12/2020)"
 }
 
 

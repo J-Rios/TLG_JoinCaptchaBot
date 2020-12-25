@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/11/2020
+    25/12/2020
 Version:
-    1.15.4
+    1.15.5
 '''
 
 ###############################################################################
@@ -763,10 +763,6 @@ def msg_nocmd(update: Update, context: CallbackContext):
             tlg_delete_msg(bot, chat_id, msg)
         new_users[chat_id][user_id]["msg_to_rm"].clear()
         del new_users[chat_id][user_id]
-        # Next commented due I don't trust that something could go wrong if other thread
-        # modify it at same time
-        #if len(new_users[chat_id]) == 0: # Commented
-        #    del new_users[chat_id]
         # Remove user captcha numbers message
         tlg_delete_msg(bot, chat_id, update_msg.message_id)
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
@@ -782,7 +778,15 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 printts("[{}] Error: Can't send the welcome message.".format(chat_id))
         # Check for send just text message option and apply user restrictions
         restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
-        if restrict_non_text_msgs:
+        # Restrict for 1 day
+        if restrict_non_text_msgs == 1:
+            tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+            tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+                send_stickers_gifs=False, insert_links=False, send_polls=False,
+                invite_members=False, pin_messages=False, change_group_info=False,
+                until_date=tomorrow_epoch)
+        # Restrict forever
+        elif restrict_non_text_msgs == 2:
             tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False, change_group_info=False)
@@ -937,7 +941,15 @@ def button_request_pass(bot, query):
             printts("[{}] Error: Can't send the welcome message.".format(chat_id))
     # Check for send just text message option and apply user restrictions
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
-    if restrict_non_text_msgs:
+    # Restrict for 1 day
+    if restrict_non_text_msgs == 1:
+        tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+        tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+            send_stickers_gifs=False, insert_links=False, send_polls=False,
+            invite_members=False, pin_messages=False, change_group_info=False,
+            until_date=tomorrow_epoch)
+    # Restrict forever
+    elif restrict_non_text_msgs == 2:
         tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
             send_stickers_gifs=False, insert_links=False, send_polls=False,
             invite_members=False, pin_messages=False, change_group_info=False)
@@ -1258,12 +1270,19 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     if restrict_non_text_msgs != "enable" and restrict_non_text_msgs != "disable":
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"])
         return
+    # Check for forever restriction argument
+    restrict_forever = False
+    if (len(args) > 1) and (args[1] == "forever"):
+        restrict_forever = True
     # Enable/Disable just text messages option
     if restrict_non_text_msgs == "enable":
-        save_config_property(chat_id, "Restrict_Non_Text", True)
+        if restrict_forever:
+            save_config_property(chat_id, "Restrict_Non_Text", 2)
+        else:
+            save_config_property(chat_id, "Restrict_Non_Text", 1)
         bot_msg = TEXT[lang]["RESTRICT_NON_TEXT_MSG_ENABLED"]
     else:
-        save_config_property(chat_id, "Restrict_Non_Text", False)
+        save_config_property(chat_id, "Restrict_Non_Text", 0)
         bot_msg = TEXT[lang]["RESTRICT_NON_TEXT_MSG_DISABLED"]
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 

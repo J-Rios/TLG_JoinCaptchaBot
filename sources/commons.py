@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    03/11/2020
+    25/12/2020
 Version:
-    1.0.0
+    1.0.1
 '''
 
 ################################################################################
@@ -20,6 +20,11 @@ Version:
 
 from os import path, remove, makedirs
 from datetime import datetime
+
+################################################################################
+### Constants
+
+DATE_EPOCH = datetime.utcfromtimestamp(0)
 
 ################################################################################
 ### Functions
@@ -61,6 +66,16 @@ def printts(to_print="", timestamp=True):
         # Get actual time and print with timestamp
         actual_date = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
         print("{}: {}".format(actual_date, to_print))
+
+
+def get_unix_epoch():
+    '''Get UNIX Epoch time (seconds sins 1970)'''
+    epoch = 0
+    try:
+        epoch = int((datetime.today().utcnow() - DATE_EPOCH).total_seconds())
+    except Exception as e:
+        printts("{}".format(file_path, str(e)))
+    return epoch
 
 
 def is_int(s):

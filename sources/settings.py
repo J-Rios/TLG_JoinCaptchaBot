@@ -76,7 +76,7 @@ SETTINGS = {
     "CAPTCHABOT_IGNORE_LIST_MAX": 100,
 
     # Initial new users just allow to send text messages
-    "CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG": False,
+    "CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG": 0,
 
     # Custom Welcome message max length
     "CAPTCHABOT_MAX_WELCOME_MSG_LENGTH": 3968
