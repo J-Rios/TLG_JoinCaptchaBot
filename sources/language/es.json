@@ -60,13 +60,13 @@
         "Escribe el mensaje de bienvenida después del comando.\n\nEjemplo:\n/welcome_msg Hola $user, disfruta del grupo y recuerda ser respetuoso con los demás usuarios.\n\nDesactivar el mensaje:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Activada la restricción de envío de mensajes que no sean de texto para nuevos usuarios. Ahora a los usuarios que se unan al grupo les quitaré todos permisos salvo el de envío de mensajes de texto.",
+        "Activada la restricción de envío de mensajes que no sean de texto para nuevos usuarios. Ahora, a los usuarios que se unan al grupo y resuelvan el captcha, les quitaré todos los permisos salvo el de envío de mensajes de texto (no podrán enviar imagenes, video o audio).",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Desactivada la restricción de envío de mensajes que no sean de texto para nuevos usuarios.",
+        "Desactivada la restricción de envío de mensajes multimedia (que no sean de texto), para nuevos usuarios.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Especifica si quieres activar o desactivar que se le aplique restricción a los nuevos usuarios para que solo puedan enviar mensajes de texto (no permitir que envíen mensajes multimedia u otros a menos que un Admin manualmente se los quite posteriormente).\n\nEjemplos:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+        "Especifica si quieres activar o desactivar que se le aplique restricción a los nuevos usuarios para que solo puedan enviar mensajes de texto (no permitir que envíen mensajes multimedia u otros a menos que un Admin manualmente se lo permita posteriormente).\n\nEjemplos:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
         "Por favor, pon el ID o el alias del usuario después del comando.\n\nEjemplos:\n/add_ignore 1234567890\n/add_ignore @peter",
