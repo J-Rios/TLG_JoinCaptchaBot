@@ -21,13 +21,13 @@
         "Perintah ini memerlukan penyetingan bahasa.\n\nContoh:\n{}",
 
     "TIME_CHANGE":
-        "Tenggat waktu penyelesaian captcha berhasil diubah ke {} menit.",
+        "Waktu untuk menyelesaikan captcha berhasil diubah menjadi {} menit.",
 
     "TIME_MAX_NOT_ALLOW":
-        "Maksimal tenggat waktu yang diperbolehkan untuk menyelesaikan captcha adalah 20 menit. Tenggat waktu tetap belum diubah.",
+        "Waktu penyelesaian captcha maksimum yang diizinkan adalah 20 menit. Waktu belum diubah.",
 
     "TIME_NOT_NUM":
-        "Tenggat waktu yang kamu ketik bukanlah angka.",
+        "Waktu yang diberikan bukanlah bukanlah angka.",
 
     "TIME_NOT_ARG":
         "Perintah memerlukan jumlah waktu untuk diatur (dalam menit).\n\nContoh:\n/time 3\n/time 5\n/time 10",
@@ -45,7 +45,7 @@
         "Mode karakter captcha berhasil diubah ke \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\" and \"ascii\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\" dan \"ascii\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
 
     "CAPTCHA_MODE_NOT_ARG":
         "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
@@ -153,7 +153,7 @@
         "Saya bukan Bot",
 
     "BOT_LEAVE_CHANNEL":
-        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
+        "Bot ini tidak dapat digunakan di saluran, hanya dalam grup.",
 
     "ENABLE":
         "Proteksi Captcha diaktifkan. Nonaktifkan captcha dengan perintah /disable ",
@@ -177,5 +177,5 @@
         "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya."
+        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - Setelah pengguna baru memecahkan captha, terapkan batasan untuk tidak mengizinkan mereka mengirim pesan non-teks (gambar, video, audio) selama 1 hari (atau selamanya, menggunakan kata kunci \"forever\").\n\n/add_ignore - Jangan meminta captcha kepada pengguna yang diabaikan.\n\n/remove_ignore - Berhenti mengabaikan pengguna.\n\n/ignore_list - daftar ID pengguna yang diabaikan.\n\n/allowgroup - Izinkan grup untuk menggunakan Bot (jika Bot bersifat Pribadi).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya."
 }
