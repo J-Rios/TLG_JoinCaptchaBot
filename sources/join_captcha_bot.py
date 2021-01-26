@@ -710,6 +710,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
         return
+    # Ignore if captcha mode is "button"
+    captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    if captcha_chars_mode not in { "nums", "hex", "ascii" }:
+        return
     # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
     msg_text = getattr(update_msg, "text", None)
     if msg_text is None:
