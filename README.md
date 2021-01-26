@@ -211,3 +211,5 @@ To add support for a new language you must follow this steps:
 - Ukrainian: Vadym Zhushman (@zhushman00)
 
 - Kannada: [@itsAPK](https://github.com/itsAPK)
+
+- Slovak: [@dumontiskooo](https://t.me/dumontiskooo)

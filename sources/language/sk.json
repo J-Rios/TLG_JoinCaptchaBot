@@ -1,0 +1,181 @@
+{
+    "START":
+        "Ahoj, som Bot, ktorý posiela captcha obrázok s kódom pre každého nového užívateľa ktorý sa pridá do tvojej skupiny, a vyhodí každého kto nedokáže opísať kód z obrázka v špecifikovanom čase.\n\nAk sa užívateľ pokúsi pridať do skupiny 5 krát za sebou a ani raz neopíše captcha kód, budem predpokladať, že tento \"užívateľ\" je bot, a bude zabanovaný. Taktiež akákoľvek správa, ktorá obsahuje URL a je poslaná novým \"užívateľom\" predtým ako opíše captcha kód, bude považovaná za spam a bude zmazaná.\n\nNezabudni mi dať práva administrátora aby som mohol vyhadzovať a banovať užívateľov a odstraňovať správy.\n\nPozri si /help príkaz pre získanie viacej informácií o tom ako ma používať.\n\nSom užitočný? Pozri si príkaz /about a zváž či máš záujem prispieť na to aby si ma podporil a pomohol udržať aktívnym.",
+
+    "HELP":
+        "Bot pomôcky:\n————————————————\n- Som Bot, ktorý posiela captcha obrázok pre každého nového užívateľa ktorý sa pridá do tvojej skupiny, a vyhodí každého kto nedokáže opísať kód z obrázka v špecifikovanom čase.\n\n- Ak sa užívateľ pokúsi pridať do skupiny 5 krát za sebou a ani raz neopíše captcha kód, budem predpokladať, že tento \"užívateľ\" je bot, a bude zabanovaný.\n\n- Akákoľvek správa, ktorá obsahuje URL a je poslaná novým \"užívateľom\" predtým ako opíše captcha kód, bude považovaná za spam a bude zmazaná.\n\n- Musíš mi dať práva Administrátora, aby som mohol vyhadzovať užívateľov a mazať správy.\n\n- Pre zachovanie čistej skupiny, automaticky mažem všetky správy ktoré sa týkajú mňa, keď užívateľ neopíše captcha kód a je vyhodený (po 5 minutách).\n\n- Prednastavený časový limit na opísanie captcha kódu novým užívateľom je 5 minút, dá sa ale nastaviť príkazom /time.\n\n- Captcha ochranu môžeš kedykoľvek vypnúť a zapnúť použitím príkazov /enable a /disable.\n\n- Príkazy na moje nastavenia môžu byť použité len administrátorom danej skupiny.\n\n- Môžeš zmeniť jazyk ktorým hovorím zadaním príkazu /language.\n\n- Môžeš nastaviť obtiažnosť captcha obrázka použitím príkazu /difficulty.\n\n- Môžeš nastaviť captcha kód tak aby sa skladal len z celých čísel a písmen A-Z, alebo čísel a písmen A-F, alebo len čísel (prednastavené), alebo len v podobe tlačidla, použitím príkazu /captcha_mode.\n\n- Môžeš nastaviť vlastnú uvítaciu správu príkazom /welcome_msg.\n\n- Môžeš povoliť možnosť, ktorá mi umožní obmedziť nového užívateľa v posielaní netextových správ použitím príkazu /restrict_non_text.\n\n- Ak je bot Súkromný, povoľ skupiny príkazom /allowgroup.\n\n- Pozri si príkaz /commands pre zobrazenie zoznamu všetkých dostupných príkazov spolu s ich krátkymi popismi.",
+
+    "CMD_NOT_ALLOW":
+        "Len Admin môže použiť tento príkaz.",
+
+    "LANG_CHANGE":
+        "Jazyk zmenený na slovenčinu.",
+
+    "LANG_SAME":
+        "Už som v slovenčine.\n\nPodporované jazyky:\n{}",
+
+    "LANG_BAD_LANG":
+        "Nesprávne zadaný jazyk.\n\nPodporované jazyky:\n{}",
+
+    "LANG_NOT_ARG":
+        "Príkaz vyžaduje zadanie skratky jazyka.\n\nPríklady:\n{}",
+
+    "TIME_CHANGE":
+        "Čas na opísanie captcha kódu bol úspešne zmenený na {} minút.",
+
+    "TIME_MAX_NOT_ALLOW":
+        "Maximálny povolený čas na opísanie captcha kódu je 20 minút. Čas nebol zmenený.",
+
+    "TIME_NOT_NUM":
+        "Zadaný čas nie je celé číslo.",
+
+    "TIME_NOT_ARG":
+        "Príkaz vyžaduje zadanie hodnoty času (v minútach).\n\nPríklady:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE":
+        "Obtiažnosť captcha kódu bola úspešne zmenená na úroveň {}.",
+
+    "DIFFICULTY_NOT_NUM":
+        "Zadaná captcha obtiažnosť nie je číslo.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Príkaz vyžaduje zadanie úrovne obtiažnosti (od 1 do 5). Nemá vplyv na \"button\" mód.\n\nPríklady:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Captcha mód bol úspešne zmenený na \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", a \"button\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Len stlačenie tlačidla (\"button\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+
+    "WELCOME_MSG_SET":
+        "Uvítacia správa bola úspešne nastavená.",
+
+    "WELCOME_MSG_UNSET":
+        "Uvítacia správa bola zrušená.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Zadaj uvítaciu správu za príkazom.\n\nPríklad:\n/welcome_msg Ahoj $user, vitaj v skupine a nezabudni rešpektovať ostatných užívateľov.\n\nZrušenie uvítacej správy:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Obmedzenie nových užívateľov v posielaní netextových správ bolo aktivované. Zmažem netextové správy nedávno pripojených užívateľov.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Obmedzenie nových užívateľov v posielaní netextových správ bolo deaktivované.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Zadaj či chceš aktivovať alebo deaktivovať možnosť obmedenia nových užívateľov v posielaní netextových správ (Nepovoliť užívateľom posielať média alebo iné správy okrem textových. Admini môžu neskôr manuálne vrátiť tieto povolenia užívateľom).\n\nPríklady:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Prosím, zadaj užívateľove ID/prezývku za príkazom.\n\nPríklad:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Toto ID/prezývka sa už nachádza v zozname ignorovaných.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Žiaľ, dosiahol si maximálny limit užívateľov pridaných do zoznamu ignorovaných, odstráň niekoho aby si mohol pridať ďalších.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "Toto ID/prezývka je nesprávne.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "Toto ID/prezývka bolo úspešne pridané!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Prosím, zadaj užívateľove ID/prezývku za príkazom.\n\nPríklad:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "Toto ID/prezývka bolo úspešne odstránené!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "Toto ID/prezývka sa nenachádzalo v zozname ignorovaných, nevykonalo sa nič.",
+
+    "IGNORE_LIST_EMPTY":
+        "Zoznam ignorovaných pre tento chat je prázdny.",
+
+    "NEW_USER_CAPTCHA_CAPTION":
+        "Ahoj {}, vitaj v {}. Prosím, opíš captcha kód (čísla a/alebo písmená), ktoré vidíš na tomto obrázku pre overenie že si človek. Ak tento captcha kód neopíšeš do {} minút, budeš automaticky vyhodený zo skupiny.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Ahoj {}, vitaj v {}. Prosím, stlač tlačidlo pre overenie, že si človek. Ak to neurobíš do {} minút, budeš automaticky vyhodený zo skupiny.",
+
+    "CAPTCHA_SOLVED":
+        "Captcha kód správny, užívateľ overený.\nVitaj v skupine, {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "Toto nie je správny kód, skús to znova...",
+
+    "CAPTCHA_INCORRECT_1":
+        "Toto nie je správne číslo. Pozeraj pozorne, kód obsahuje 4 čísla...",
+
+    "NEW_USER_KICK":
+        "{} neopísal captcha kód načas. \"Užívateľ\" bol vyhodený.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale nemám administrátorské práva vyhadzovať užívateľov zo skupiny.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale užívateľ už nie je členom skupiny (opustil skupinu, alebo bol vyhodený adminom).",
+
+    "BOT_CANT_KICK":
+        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale nemôžem to vykonať z dôsledku neočakávaných problémov (možno problémy s pripojením/serverom).",
+
+    "CANT_DEL_MSG":
+        "Pokúsil som sa zmazať túto správu, ale nemám administrátorské práva mazať správy ktoré neboli poslané mnou.",
+
+    "NEW_USER_BAN":
+        "Varovanie: Toto je piaty pokus čo sa {} pokúša pridať do skupiny a zlyhal v opísaní captcha kódu. \"Užívateľ\" bol zabanovaný. Pre umožnenie opätovného prístupu, musí administrátor manuálne zrušiť obmedzenie pre tohto \"užívateľa\".",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Varovanie: Toto je piaty pokus čo sa {} pokúša pridať do skupiny a zlyhal v opísaní captcha kódu. Pokúsil som sa \"Užívateľa\" zabanovať, ale už nie je členom tejto skupiny (opustil skupinu alebo bol vyhodený/zabanovaný adminom).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Varovanie: Toto je piaty pokus čo sa {} pokúša pridať do skupiny a zlyhal v opísaní captcha kódu. Pokúsil som sa \"Užívateľa\" zabanovať, ale nemám administrátorské práva banovať užívateľov v tejto skupine.",
+
+    "BOT_CANT_BAN":
+        "Varovanie: Toto je piaty pokus čo sa {} pokúša pridať do skupiny a zlyhal v opísaní captcha kódu. Pokúsil som sa \"Užívateľa\" zabanovať, ale nemôžem to vykonať z dôsledku neočakávaných problémov (možno problémy s pripojením/serverom).",
+
+    "SPAM_DETECTED_RM":
+        "Detekovaná správa s URL (alebo prezývkou) od {}, ktorý zatiaľ úspešne neopísal captcha kód. Správa bola zmazaná pre ochranu skupiny pred potenciálnym spamom :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Detekovaná správa s URL (alebo prezývkou) od {}, ktorý zatiaľ úspešne neopísal captcha kód. Pokúsil som sa zmazať Spam správu, ale nemám administrátorské práva mazať správy ktoré neboli poslané mnou.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Zmazanie netextovej správy (obrázok, audio, súbor...) od {}, pre ochranu skupiny pred potenciálnym spamom.\n\nMôžeš posielať netextové správy po tom ako úspešne opíšeš captcha kód.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Iný captcha kód",
+
+    "PASS_BTN_TEXT":
+        "Nie som bot",
+
+    "BOT_LEAVE_CHANNEL":
+        "Tento bot nemôže byť použitý v kanáloch, len v skupinách.",
+
+    "ENABLE":
+        "Captcha ochrana aktivovaná. Deaktivuj ju príkazom /disable .",
+
+    "DISABLE":
+        "Captcha ochrana deaktivovaná. Aktivuj ju príkazom /enable .",
+
+    "ALREADY_ENABLE":
+        "Captcha ochrana už je aktivovaná.",
+
+    "ALREADY_DISABLE":
+        "Captcha ochrana už je deaktivovaná.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Nemožno použiť tento príkaz v tomto chate.",
+
+    "VERSION":
+        "Súčasná verzia bota: {}",
+
+    "ABOUT_MSG":
+        "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu.\n\nPaypal:\n{}\n\nBTC:\n{}",
+
+    "COMMANDS":
+        "Zoznam príkazov:\n————————————————\n/start - Zobrazí počiatočné informácie o botovi.\n\n/help - Zobrazí nápomocné informácie.\n\n/commands - Zobrazí túto správu. Informáciu o všetkých dostupných príkazoch a ich popis.\n\n/language - Umožňuje zmeniť jazyk správ bota.\n\n/time - Umožňuje zmeniť čas dostupný na opísanie captcha kódu.\n\n/difficulty - Umožňuje zmeniť obtiažnosť captcha kódu (od 1 po 5).\n\n/captcha_mode - Umožňuje zmeniť captcha mód (nums: čísla, hex: čísla a A-F znaky, ascii: čísla a A-Z znaky, button: len tlačidlo).\n\n/welcome_msg - Umožňuje nastaviť uvítaciu správu ktorá je poslaná po správnom opísaní captcha kódu.\n\n/restrict_non_text - Umožňuje obmedziť užívateľa po úspešnom opísaní captcha kódu v posielaní netextových správ (obrázkov, videí, audio súborov) na 1 deň (alebo navždy, použitím hesla \"forever\" ).\n\n/add_ignore - Nepýtať opísanie captcha kódu od užívateľa v zozname ignorovaných.\n\n/remove_ignore - Prestať ignorovať užívateľa.\n\n/ignore_list - zoznam IDčiek ignorovaných užívateľov.\n\n/allowgroup - Povoľ skupine využívať bota (v prípade, že je bot súkromný).\n\n/enable - Aktivuj captcha ochranu pre danú skupinu.\n\n/disable - Deaktivuj captcha ochranu pre danú skupinu.\n\n/version - Zobraz verziu bota.\n\n/about - Zobraz informácie o botovi."
+}
