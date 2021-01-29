@@ -1,8 +1,7 @@
-.vscode/
-sources/.vscode/
-sources/__pycache__/
-sources/data/
-data/
-*.pyc
-*.log
-test.py
+**/.vscode/
+**/__pycache__/
+**/data/
+
+**/*.pyc
+**/*.log
+**/*.ignore
