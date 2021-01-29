@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Ni ez naiz Bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "This Bot can't be used in channels, just in groups.\n\n[This text needs translate to actual configured language]",
-
     "ENABLE":
         "Captcha babesa aktibatuta. Desaktibatzeko /disable komandoa erabili.",
 

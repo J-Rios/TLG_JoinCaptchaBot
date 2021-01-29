@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Mi ne estas Roboto",
 
-    "BOT_LEAVE_CHANNEL":
-        "Tiu ĉi roboto ne povas esti uzata en kanaloj, nur en grupoj.",
-
     "ENABLE":
         "CAPTCHA-testo ŝaltita. Malŝaltu ĝin per la komando /disable.",
 

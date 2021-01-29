@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Saya bukan Bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "Bot ini tidak dapat digunakan di saluran, hanya dalam grup.",
-
     "ENABLE":
         "Proteksi Captcha diaktifkan. Nonaktifkan captcha dengan perintah /disable ",
 

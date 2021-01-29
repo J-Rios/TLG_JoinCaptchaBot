@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "ben bir Bot değilim",
 
-    "BOT_LEAVE_CHANNEL":
-        "Bu Bot kanallarda kullanılamaz, sadece gruplarda kullanılır.",
-
     "ENABLE":
         "Captcha koruması etkin. Devre dışı bırakmak için /disable komutunu kullanın.",
 

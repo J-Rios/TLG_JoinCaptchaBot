@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Nie som bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "Tento bot nemôže byť použitý v kanáloch, len v skupinách.",
-
     "ENABLE":
         "Captcha ochrana aktivovaná. Deaktivuj ju príkazom /disable .",
 

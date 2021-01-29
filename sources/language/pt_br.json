@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Eu não sou um Bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "Este Bot não pode ser usado em canais, apenas em grupos.",
-
     "ENABLE":
         "Proteção Captcha ativada. Desative com o comando /disable.",
 

@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "I'm not a Bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "This Bot can't be used in channels, just in groups..\n\n[This text needs translate to actual configured language]",
-
     "ENABLE":
         "محافظت از کد کپچا فعال است. آن را با دستور /غیرفعال کردن غیرفعال کنید.",
 

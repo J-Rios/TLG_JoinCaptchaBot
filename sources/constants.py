@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    26/01/2021
+    30/01/2021
 Version:
-    1.15.6
+    1.15.7
 '''
 
 ###############################################################################
@@ -159,6 +159,9 @@ CONST = {
     # Command just allow for Bot owner
     "CMD_JUST_ALLOW_OWNER": "This command just can be use by the Bot Owner",
 
+    # Bot added to channel, leave text
+    "BOT_LEAVE_CHANNEL": "This Bot can't be used in channels, just in groups.",
+
     # Whitelist usage
     "WHITELIST_USAGE": "Command usage (user ID or Alias):\n" \
         "/whitelist add @peter123\n" \
@@ -227,7 +230,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.15.6 (26/01/2021)"
+    "VERSION": "1.15.7 (30/01/2021)"
 }
 
 

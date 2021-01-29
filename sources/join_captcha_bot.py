@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    26/01/2021
+    30/01/2021
 Version:
-    1.15.6
+    1.15.7
 '''
 
 ###############################################################################
@@ -442,12 +442,10 @@ def new_member_join(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg_in(bot, chat_id, msg, 1)
         tlg_leave_chat(bot, chat_id)
         return
-    # Determine configured bot language in actual chat
-    lang = get_chat_config(chat_id, "Language")
     # Leave the chat if it is a channel
     if chat.type == "channel":
         printts("Bot try to be added to a channel")
-        tlg_send_selfdestruct_msg_in(bot, chat_id, TEXT[lang]["BOT_LEAVE_CHANNEL"], 1)
+        tlg_send_selfdestruct_msg_in(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"], 1)
         tlg_leave_chat(bot, chat_id)
         return
     # For each new user that join or has been added
@@ -539,7 +537,8 @@ def new_member_join(update: Update, context: CallbackContext):
             if not captcha_enable:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
                 continue
-            # Determine configured captcha settings
+            # Determine configured language and captcha settings
+            lang = get_chat_config(chat_id, "Language")
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
             captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
             # selfdestruct

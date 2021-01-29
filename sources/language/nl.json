@@ -152,9 +152,6 @@
     "PASS_BTN_TEXT":
         "Ik ben geen bot",
 
-    "BOT_LEAVE_CHANNEL":
-        "Deze Bot kan niet in kanalen worden gebruikt, alleen in groepen.",
-
     "ENABLE":
         "Captcha-bescherming ingeschakeld. Schakel uit met het /disable commando.",
 
