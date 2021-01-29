@@ -163,6 +163,8 @@ def save_config_property(chat_id, param, value):
     config_data = fjson_config.read()
     if not config_data:
         config_data = get_default_config_data()
+    if (param in config_data) and (value == config_data[param]):
+        return
     config_data[param] = value
     fjson_config.write(config_data)
 
