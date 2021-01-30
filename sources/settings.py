@@ -42,13 +42,15 @@ SETTINGS = {
     # Directory where create/generate temporary captchas
     "CAPTCHABOT_CAPTCHAS_DIR": SCRIPT_PATH + "/data/captchas",
 
-    # Global whitelist file path (to allow whitelist blind users in all
-    # groups)
-    "CAPTCHABOT_F_WHITE_LIST": SCRIPT_PATH + "/data/whitelist.txt",
+    # Global allowed users file path (i.e. to allow blind users)
+    "CAPTCHABOT_F_ALLOWED_USERS": SCRIPT_PATH + "/data/allowedusers.txt",
 
-    # Global whitelist file path (to allow whitelist blind users in all
-    # groups)
+    # Allowed groups to use the Bot when it is Private
     "CAPTCHABOT_F_ALLOWED_GROUPS": SCRIPT_PATH + "/data/allowedgroups.txt",
+
+    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot and
+    # cause overload)
+    "CAPTCHABOT_F_BAN_GROUPS": SCRIPT_PATH + "/data/bannedgroups.txt",
 
     # Initial language at Bot start
     "CAPTCHABOT_INIT_LANG": "EN",

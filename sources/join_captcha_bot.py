@@ -268,9 +268,12 @@ def initialize_resources():
     if path.exists(CONST["CAPTCHAS_DIR"]):
         rmtree(CONST["CAPTCHAS_DIR"])
     makedirs(CONST["CAPTCHAS_DIR"])
-    # Create whitelist file if it does not exists
-    if not path.exists(CONST["F_WHITE_LIST"]):
-        file_write(CONST["F_WHITE_LIST"], "")
+    # Create allowed users file if it does not exists
+    if not path.exists(CONST["F_ALLOWED_USERS"]):
+        file_write(CONST["F_ALLOWED_USERS"], "")
+    # Create banned groups file if it does not exists
+    if not path.exists(CONST["F_BAN_GROUPS"]):
+        file_write(CONST["F_BAN_GROUPS"], "")
     # Create allowed groups file if it does not exists
     if CONST["BOT_PRIVATE"]:
         if not path.exists(CONST["F_ALLOWED_GROUPS"]):
@@ -392,9 +395,9 @@ def is_user_in_ignored_list(chat_id, user):
     return False
 
 
-def is_user_in_white_list(user):
-    '''Check if user is in global whitelist.'''
-    l_white_users = file_read(CONST["F_WHITE_LIST"])
+def is_user_in_allowed_list(user):
+    '''Check if user is in global allowed list.'''
+    l_white_users = file_read(CONST["F_ALLOWED_USERS"])
     if user.id in l_white_users:
         return True
     if user.username is not None:
@@ -411,6 +414,14 @@ def is_group_in_allowed_list(chat_id):
         return True
     l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
     if str(chat_id) in l_allowed_groups:
+        return True
+    return False
+
+
+def is_group_in_banned_list(chat_id):
+    '''Check if group is in banned list.'''
+    l_banned_groups = file_read(CONST["F_BAN_GROUPS"])
+    if str(chat_id) in l_banned_groups:
         return True
     return False
 
@@ -442,6 +453,10 @@ def new_member_join(update: Update, context: CallbackContext):
         printts("Warning: Bot added to not allowed group: {}".format(chat_id))
         msg = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
         tlg_send_selfdestruct_msg_in(bot, chat_id, msg, 1)
+        tlg_leave_chat(bot, chat_id)
+        return
+    if is_group_in_banned_list(chat_id):
+        printts("Warning: Bot added to banned group: {}".format(chat_id))
         tlg_leave_chat(bot, chat_id)
         return
     # Leave the chat if it is a channel
@@ -523,8 +538,8 @@ def new_member_join(update: Update, context: CallbackContext):
                 printts("[{}] User is in ignore list.".format(chat_id))
                 printts("Skipping the captcha process.")
                 continue
-            if is_user_in_white_list(join_user):
-                printts("[{}] User is in global whitelist.".format(chat_id))
+            if is_user_in_allowed_list(join_user):
+                printts("[{}] User is in global allowed list.".format(chat_id))
                 printts("Skipping the captcha process.")
                 continue
             # Check and remove previous join messages of that user (if any)
@@ -1565,8 +1580,8 @@ def cmd_captcha(update: Update, context: CallbackContext):
         remove(captcha["image"])
 
 
-def cmd_whitelist(update: Update, context: CallbackContext):
-    '''Command /whitelist message handler. To Global Whitelist blind users.
+def cmd_allowuserlist(update: Update, context: CallbackContext):
+    '''Command /allowuserlist message handler. To Global allowed list blind users.
     Just Bot Owner can use it.'''
     bot = context.bot
     args = context.args
@@ -1588,42 +1603,42 @@ def cmd_whitelist(update: Update, context: CallbackContext):
     tlg_msg_to_selfdestruct(update_msg)
     # Check if no argument was provided with the command
     if len(args) == 0:
-        # Show Actual Global Whitelisted Users
-        l_white_users = file_read(CONST["F_WHITE_LIST"])
+        # Show Actual Global allowed list Users
+        l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         bot_msg = "\n".join([str(user) for user in l_white_users])
-        bot_msg = "Global WhiteList:\n--------------------\n{}".format(bot_msg)
+        bot_msg = "Global Allowed Users List:\n--------------------\n{}".format(bot_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-        tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
+        tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
         return
     else:
         if len(args) <= 1:
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
             return
         if (args[0] != "add") and (args[0] != "rm"):
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["WHITELIST_USAGE"])
+            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
             return
         add_rm = args[0]
         user = args[1]
-        l_white_users = file_read(CONST["F_WHITE_LIST"])
+        l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         if add_rm == "add":
             if not tlg_is_valid_user_id_or_alias(user):
                 tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
                 return
             if user not in l_white_users:
-                file_write(CONST["F_WHITE_LIST"], "{}\n".format(user))
-                tlg_send_selfdestruct_msg(bot, chat_id, "User added to Global Whitelist.")
+                file_write(CONST["F_ALLOWED_USERS"], "{}\n".format(user))
+                tlg_send_selfdestruct_msg(bot, chat_id, "User added to Global allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global Whitelist.")
+                tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global allowed list.")
             return
         if add_rm == "rm":
             if not tlg_is_valid_user_id_or_alias(user):
                 tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
                 return
             if list_remove_element(l_white_users, user):
-                file_write(CONST["F_WHITE_LIST"], l_white_users, "w")
-                tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global Whitelist.")
+                file_write(CONST["F_ALLOWED_USERS"], l_white_users, "w")
+                tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global Whitelist.")
+                tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global allowed list.")
 
 
 def cmd_allowgroup(update: Update, context: CallbackContext):
@@ -1899,7 +1914,7 @@ def main():
     dp.add_handler(CommandHandler("about", cmd_about))
     if (CONST["BOT_OWNER"] != "XXXXXXXXX"):
         dp.add_handler(CommandHandler("captcha", cmd_captcha))
-        dp.add_handler(CommandHandler("whitelist", cmd_whitelist, pass_args=True))
+        dp.add_handler(CommandHandler("allowuserlist", cmd_allowuserlist, pass_args=True))
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         dp.add_handler(CommandHandler("allowgroup", cmd_allowgroup, pass_args=True))
     # Set to dispatcher a not-command text messages handler

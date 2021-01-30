@@ -109,7 +109,7 @@ server migration and automates the download of all dependencies. Look at the
 
 ## Bot Owner
 
-The **Bot Owner** can run special commands that no one else can use, like /allowgroup (if the Bot is private, this allow groups where the Bot can be used) or /whitelist (to make Bot don't ask for captcha to some users, useful for blind users).
+The **Bot Owner** can run special commands that no one else can use, like /allowgroup (if the Bot is private, this allow groups where the Bot can be used) or /allowuserlist (to make Bot don't ask for captcha to some users, useful for blind users).
 
 You can setup a Bot Owner by specifying the Telegram User ID or Alias in "settings.py" file:
 

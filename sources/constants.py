@@ -76,17 +76,21 @@ CONST = {
         os_getenv("CAPTCHABOT_CAPTCHAS_DIR", \
             SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"]),
 
-    # Global whitelist file path (to allow whitelist blind users in
-    # all groups)
-    "F_WHITE_LIST": \
-        os_getenv("CAPTCHABOT_F_WHITE_LIST", \
-            SETTINGS["CAPTCHABOT_F_WHITE_LIST"]),
+    # Global allowed users file path (i.e. to allow blind users)
+    "F_ALLOWED_USERS": \
+        os_getenv("CAPTCHABOT_F_ALLOWED_USERS", \
+            SETTINGS["CAPTCHABOT_F_ALLOWED_USERS"]),
 
-    # Global whitelist file path (to allow whitelist blind users in
-    # all groups)
+    # Allowed groups to use the Bot when it is Private
     "F_ALLOWED_GROUPS": \
         os_getenv("CAPTCHABOT_F_ALLOWED_GROUPS", \
             SETTINGS["CAPTCHABOT_F_ALLOWED_GROUPS"]),
+
+    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot and
+    # cause overload)
+    "F_BAN_GROUPS": \
+        os_getenv("CAPTCHABOT_F_BAN_GROUPS", \
+            SETTINGS["CAPTCHABOT_F_BAN_GROUPS"]),
 
     # Initial enable/disable status at Bot start
     "INIT_ENABLE": \
@@ -162,10 +166,10 @@ CONST = {
     # Bot added to channel, leave text
     "BOT_LEAVE_CHANNEL": "This Bot can't be used in channels, just in groups.",
 
-    # Whitelist usage
-    "WHITELIST_USAGE": "Command usage (user ID or Alias):\n" \
-        "/whitelist add @peter123\n" \
-        "/whitelist rm 123456789",
+    # Allowed users list usage
+    "ALLOWUSERLIST_USAGE": "Command usage (user ID or Alias):\n" \
+        "/allowuserlist add @peter123\n" \
+        "/allowuserlist rm 123456789",
 
     # Allowgroup usage
     "ALLOWGROUP_USAGE": "Command usage (group ID):\n" \
