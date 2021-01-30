@@ -662,14 +662,13 @@ def msg_notext(update: Update, context: CallbackContext):
     # If has an alias, just use the alias
     if update_msg.from_user.username is not None:
         user_name = "@{}".format(update_msg.from_user.username)
-    # Determine configured bot language in actual chat
-    lang = get_chat_config(chat_id, "Language")
     # If this msg comes from a user that has not completed the captcha yet
     # Remove send message and notify that not text messages are not allowed until solve captcha
     if chat_id in new_users:
         if user_id in new_users[chat_id]:
             printts("[{}] Removing non-text message sent by {}".format(chat_id, user_name))
             tlg_delete_msg(bot, chat_id, msg_id)
+            lang = get_chat_config(chat_id, "Language")
             bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
             tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
@@ -1714,10 +1713,8 @@ def th_selfdestruct_messages(bot):
                     if sent_result["msg"] is not None:
                         tlg_msg_to_selfdestruct(sent_result["msg"])
                 list_remove_element(to_delete_in_time_messages_list, sent_msg)
-                sleep(0.1)
+            sleep(0.1)
             i = i + 1
-        # Wait 10s (release CPU usage)
-        sleep(10)
 
 ###############################################################################
 ### Main loop function to handle time to kick users
