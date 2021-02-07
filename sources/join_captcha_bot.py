@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/01/2021
+    07/02/2021
 Version:
-    1.15.7
+    1.16.0
 '''
 
 ###############################################################################
@@ -448,6 +448,12 @@ def new_member_join(update: Update, context: CallbackContext):
         printts("Warning: Received an unexpected new user update without chat.")
         printts(update)
         return
+    # Leave the chat if it is a channel
+    if chat.type == "channel":
+        printts("Bot try to be added to a channel")
+        tlg_send_selfdestruct_msg_in(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"], 1)
+        tlg_leave_chat(bot, chat_id)
+        return
     # Check if Group is allowed to be used by the Bot
     if not is_group_in_allowed_list(chat_id):
         printts("Warning: Bot added to not allowed group: {}".format(chat_id))
@@ -457,12 +463,6 @@ def new_member_join(update: Update, context: CallbackContext):
         return
     if is_group_in_banned_list(chat_id):
         printts("Warning: Bot added to banned group: {}".format(chat_id))
-        tlg_leave_chat(bot, chat_id)
-        return
-    # Leave the chat if it is a channel
-    if chat.type == "channel":
-        printts("Bot try to be added to a channel")
-        tlg_send_selfdestruct_msg_in(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"], 1)
         tlg_leave_chat(bot, chat_id)
         return
     # For each new user that join or has been added
@@ -666,26 +666,27 @@ def msg_notext(update: Update, context: CallbackContext):
     # Ignore if message comes from a channel
     if chat.type == "channel":
         return
-    # Ignore if captcha protection is not enable int his chat
-    captcha_enable = get_chat_config(update_msg.chat_id, "Enabled")
+    # Ignore if captcha protection is not enable in this chat
+    captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
         return
-    # Get message data
+    # Ignore if msg not from a new user that needs to solve the captcha
     user_id = update_msg.from_user.id
-    msg_id = update_msg.message_id
+    if chat_id not in new_users:
+        return
+    if user_id not in new_users[chat_id]:
+        return
+    # Get username, if has an alias, just use the alias
     user_name = update_msg.from_user.full_name
-    # If has an alias, just use the alias
     if update_msg.from_user.username is not None:
         user_name = "@{}".format(update_msg.from_user.username)
-    # If this msg comes from a user that has not completed the captcha yet
     # Remove send message and notify that not text messages are not allowed until solve captcha
-    if chat_id in new_users:
-        if user_id in new_users[chat_id]:
-            printts("[{}] Removing non-text message sent by {}".format(chat_id, user_name))
-            tlg_delete_msg(bot, chat_id, msg_id)
-            lang = get_chat_config(chat_id, "Language")
-            bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
-            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    msg_id = update_msg.message_id
+    printts("[{}] Removing non-text message sent by {}".format(chat_id, user_name))
+    tlg_delete_msg(bot, chat_id, msg_id)
+    lang = get_chat_config(chat_id, "Language")
+    bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
 def msg_nocmd(update: Update, context: CallbackContext):
@@ -1509,6 +1510,23 @@ def cmd_disable(update: Update, context: CallbackContext):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
+def cmd_chatid(update: Update, context: CallbackContext):
+    '''Command /version message handler'''
+    bot = context.bot
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    chat_type = update_msg.chat.type
+    msg_text = "Current Chat ID:\n———————————\n{}".format(chat_id)
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, msg_text)
+    else:
+        tlg_msg_to_selfdestruct(update_msg)
+        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+
+
 def cmd_version(update: Update, context: CallbackContext):
     '''Command /version message handler'''
     bot = context.bot
@@ -1910,6 +1928,7 @@ def main():
     dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
+    dp.add_handler(CommandHandler("chatid", cmd_chatid))
     dp.add_handler(CommandHandler("version", cmd_version))
     dp.add_handler(CommandHandler("about", cmd_about))
     if (CONST["BOT_OWNER"] != "XXXXXXXXX"):
