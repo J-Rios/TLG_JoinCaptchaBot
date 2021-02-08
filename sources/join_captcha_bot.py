@@ -451,14 +451,14 @@ def new_member_join(update: Update, context: CallbackContext):
     # Leave the chat if it is a channel
     if chat.type == "channel":
         printts("Bot try to be added to a channel")
-        tlg_send_selfdestruct_msg_in(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"], 1)
+        tlg_send_msg(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"])
         tlg_leave_chat(bot, chat_id)
         return
     # Check if Group is allowed to be used by the Bot
     if not is_group_in_allowed_list(chat_id):
         printts("Warning: Bot added to not allowed group: {}".format(chat_id))
-        msg = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
-        tlg_send_selfdestruct_msg_in(bot, chat_id, msg, 1)
+        msg_text = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
+        tlg_send_msg(bot, chat_id, msg_text)
         tlg_leave_chat(bot, chat_id)
         return
     if is_group_in_banned_list(chat_id):
