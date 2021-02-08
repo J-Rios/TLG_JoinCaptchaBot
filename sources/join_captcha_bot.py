@@ -1748,6 +1748,7 @@ def th_selfdestruct_messages(bot):
                 list_remove_element(to_delete_in_time_messages_list, sent_msg)
             sleep(0.1)
             i = i + 1
+        sleep(0.1)
 
 ###############################################################################
 ### Main loop function to handle time to kick users
@@ -1971,7 +1972,7 @@ def main():
     while not force_exit:
         # Handle users kick/ban
         handle_time_to_kick_not_verify_users(updater.bot)
-        sleep(10)
+        sleep(0.1)
     # Set main thread to idle
     #updater.idle()
     # Let's avoid using Bot idle(), due it catch external signals instead our signal handler
