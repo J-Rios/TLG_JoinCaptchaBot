@@ -1,6 +1,6 @@
 {
     "START":
-        "Bonjour, je suis un bot qui envoie un captcha à chaque nouvel utilisateur qui rejoint un groupe, et qui éjecte toute personne qui ne le résout pas dans le temps imparti.\n\nSi un utilisateur essaye de rejoindre le groupe plus de 5 fois d'affilé sans résoudre le captcha, je vais en déduire que l'utilisateur est un bot, et il sera alors banni. De plus, si un nouvel utilisateur envoie un message contenant une adresse URL avant de résoudre le captcha, cela sera considéré comme un message indésirable et il sera supprimé.\n\nN'oubliez pas de me rajouter les droits d'administrations afin que je puisse bannir les personnes et supprimer les messages.\n\nUtilisez la commande /help pour plus d'informations sur mon utilisation.\n\nVous-m'apprécié ? Jetez un coup d'œil à la commande /about et pensez à faire me un don pour que je puisse rester actif.",
+        "Bonjour, je suis un bot qui envoie un captcha à chaque nouvel utilisateur qui rejoint un groupe, et qui éjecte toute personne qui ne le résout pas dans le temps imparti.\n\nSi un utilisateur essaye de rejoindre le groupe plus de 5 fois d'affilé sans résoudre le captcha, je vais en déduire que l'utilisateur est un bot, et il sera alors banni. De plus, si un nouvel utilisateur envoie un message contenant une adresse URL avant de résoudre le captcha, cela sera considéré comme un message indésirable et il sera supprimé.\n\nN'oubliez pas de me rajouter les droits d'administrations afin que je puisse bannir les personnes et supprimer les messages.\n\nUtilisez la commande /help pour plus d'informations sur mon utilisation.\n\nVous-m'apprécié ? Jetez un coup d'œil à la commande /about et pensez à me faire un don pour que je puisse rester actif.",
 
     "HELP":
         "Aide:\n————————————————\n- Je suis un bot qui envoie un captcha à chaque nouvel utilisateur qui rejoint un groupe, et qui éjecte toute personne qui ne le résout pas dans le temps imparti.\n\n- Si un utilisateur essaye de rejoindre le groupe plus de 5 fois d'affilé sans résoudre le captcha, je vais en déduire que l'utilisateur est un bot, et il sera alors banni.\n\n- De plus, si un nouvel utilisateur envoie un message contenant une adresse URL avant de résoudre le captcha, cela sera considéré comme un message indésirable et il sera supprimé.\n\n- N'oubliez pas de me rajouter les droits d'administrations afin que je puisse bannir les personnes et supprimer les messages.\n\n- Afin d'obtenir une discussion claire, je supprime automatiquement les messages ayant un rapport avec le captcha lorsqu'il n'a pas été résolu, ainsi que que les utilisateur qui ont été banni (au bout de 5 minutes).\n\n- Le temps pour résoudre un captcha est par défaut réglé à 5 minutes, mais vous pouvez changer cette valeur avec la commande /time.\n\n- Vous pouvez activer/désactiver le captcha en utilisant les commandes /enable et /disable.\n\n- Les commandes de configurations peuvent seulement être utilisées par un administrateur.\n\n- Vous pouvez changer ma langue avec la commande /language.\n\n- Vous pouvez choisir la difficulté du captcha avec la commande /difficulty.\n\n- Vous pouvez configuer le captcha pour qu'il n'utilise uniquement les chiffres (option par défaut) ou bien les chiffres et les lettres à l'aider de la commande /captcha_mode.\n\n- Vous pouvez modifier le message de bienvenue avec la commande /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- Pour obtenir plus d'informations sur les commandes, ou la liste complète de toutes les commandes, utilisez la commande /commands.",
@@ -57,49 +57,49 @@
         "Message de bienvenue désactivé.",
 
     "WELCOME_MSG_SET_NOT_ARG":
-        "Écriver le message de bienvenue après la commande.\n\nExemple:\n/welcome_msg Bonjour $user, bienvenue dans le groupe et rappelez vous d'être respectueux avec les autres utilisateurs.\n\nDésactiver le message:\n/welcome_msg désactivé",
+        "Écrivez le message de bienvenue après la commande.\n\nExemple:\n/welcome_msg Bonjour $user, bienvenue dans le groupe et rappelez-vous d'être respectueux avec les autres utilisateurs.\n\nDésactiver le message:\n/welcome_msg désactivé",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+        "Restriction pour l'envoi de messages non-textuels pour les nouveaux utilisateurs, activée. Je vais supprimer les permissions des nouveaux utilisateur connectés sauf pour l'envoi de messages texte",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+        "Restriction pour l'envoi de messages non texuel pour les nouveaux utilisateurs, désactivée.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExemples:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+        "Configurez si vous voulez activer ou pas la restriction pour les nouveaux utilisateurs d'envoyer des messages non-textuels. Ne permettez pas aux utilisateurs d'envoyer des messages contenants des images ou autres médias. Les administrateurs pouront ensuite redonner manuellement ces autorisations à certains utilisateurs.\n\nExemples:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable\n\n",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter\n\n[This text needs translate to actual configured language]",
+        "Veuillez utiliser l'id/alias de l'utilisatteur après la commande.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter\n\n",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID/alias is already in ignore list.\n\n[This text needs translate to actual configured language]",
+        "Cet id/alias et déjà dans la liste à ignorer.\n\n",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+        "Malheureusement, vous avez atteint la limite maximale d'utilisateurs ajoutés dans la liste des ignorés, retirez quelqu'un pour en ajouter d'autres.\n\n",
 
     "IGNORE_LIST_ADD_INVALID":
-        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
+        "Cet id/alias n'est pas reconnu\n\n",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "The ID/alias has been added successfully!\n\n[This text needs translate to actual configured language]",
+        "Cet id/alias a été ajouté avec succès !\n\n",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter\n\n[This text needs translate to actual configured language]",
+        "Veuillez ajouter l'ID/alias de l'utilisateur après la commande.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter\n\n",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "The ID/alias has been removed successfully!\n\n[This text needs translate to actual configured language]",
+        "L'id/alias a été retiré avec succès !\n\n",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "The ID/alias is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+        "cet id/alias n'est pas dans la liste à ignorer, rien n'a été fait.\n\n",
 
     "IGNORE_LIST_EMPTY":
-        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+        "La liste est vide\n\n",
 
     "NEW_USER_CAPTCHA_CAPTION":
         "Bonjour {}, et bienvenue dans le groupe {}. S'il-vous-plaît, envoyez un message avec le numéro qui apparaît dans le captcha pour vérifier que vous êtes un humain. Si vous ne résolvez pas le captcha en {} minute(s), vous allez être automatiquement éjecté du groupe. Faites attention aux majuscules et minuscules.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Bonjour {}, Bienvenue {}. Afin de vérifier que vous n'êtes pas un robot, veuillez appuyer sur le bouton. Si cette action n'est pas réalisée dans {} minute(s), vous serez automatiquement prélevé à la source.\n\n",
 
     "CAPTCHA_SOLVED":
         "Captcha résolu, utilisateur vérifié\nBienvenue dans le groupe {}",
@@ -153,10 +153,10 @@
         "Je ne suis pas un Bot",
 
     "ENABLE":
-        "Captcha activé. Désactiver le avec la commande /disable",
+        "Captcha activé. Désactivez-le avec la commande /disable",
 
     "DISABLE":
-        "Captcha désactivé. Activer le avec la commande /enable",
+        "Captcha désactivé. Activez-le avec la commande /enable",
 
     "ALREADY_ENABLE":
         "Le captcha est déjà activé.",
@@ -171,7 +171,7 @@
         "Version actuelle du bot: {}",
 
     "ABOUT_MSG":
-        "Ce bot est un logiciel gratuit et open-source basé sur la licence GNU-GPL.\nBot développé par {}.\n\nVous pouvez jeter un coup d'œil au code ici:\n{}\n\nVou aimez mon travail? Payez moi un café!\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Ce bot est un logiciel gratuit et open-source basé sur la licence GNU-GPL.\nBot développé par {}.\n\nVous pouvez jeter un coup d'œil au code ici:\n{}\n\nVous aimez mon travail? Offrez-moi un café!\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
         "Liste des commandes:\n————————————————\n/start - Montre les informations initiales du bot.\n\n/help - Affiche les informations d'aide.\n\n/commands - Affiche ce message. Informations sur toutes les commandes disponibles et leur description.\n\n/language - Permet de changer la langue du bot.\n\n/time - Permet de changer le temps disponible pour résoudre le captcha.\n\n/difficulty - Permet de choisir le niveau de difficulté (de 1 à 5).\n\n/captcha_mode - Permet de choisir le mode de caractère du captcha (nums: nombres uniquement, hex: nombres et A-F, ascii: nombres et A-Z).\n\n/welcome_msg - Permet de configurer le message de bienvenue qui est envoyé après avoir résolu le captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Active le captcha sur ce groupe.\n\n/disable - Désactive le captcha sur ce groupe.\n\n/version - Affiche la version du bot.\n\n/about - Affiche le \"À propos\""
