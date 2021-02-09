@@ -99,7 +99,7 @@
         "Bonjour {}, et bienvenue dans le groupe {}. S'il-vous-plaît, envoyez un message avec le numéro qui apparaît dans le captcha pour vérifier que vous êtes un humain. Si vous ne résolvez pas le captcha en {} minute(s), vous allez être automatiquement éjecté du groupe. Faites attention aux majuscules et minuscules.",
 
     "NEW_USER_BUTTON_MODE":
-        "Bonjour {}, Bienvenue {}. Afin de vérifier que vous n'êtes pas un robot, veuillez appuyer sur le bouton. Si cette action n'est pas réalisée dans {} minute(s), vous serez automatiquement prélevé à la source.\n\n",
+        "Bonjour {}, et bienvenue dans le groupe {}. Afin de vérifier que vous n'êtes pas un robot, veuillez appuyer sur le bouton. Si cette action n'est pas réalisée dans {} minute(s), vous serez automatiquement prélevé à la source.\n\n",
 
     "CAPTCHA_SOLVED":
         "Captcha résolu, utilisateur vérifié\nBienvenue dans le groupe {}",
