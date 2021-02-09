@@ -63,7 +63,8 @@ from tlgbotutils import (
     tlg_send_msg, tlg_send_image, tlg_answer_callback_query,
     tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user, tlg_kick_user,
     tlg_user_is_admin, tlg_leave_chat, tlg_restrict_user,
-    tlg_is_valid_user_id_or_alias, tlg_is_valid_group
+    tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
+    tlg_get_chat_members_count
 )
 
 from constants import (
@@ -463,6 +464,19 @@ def new_member_join(update: Update, context: CallbackContext):
         return
     if is_group_in_banned_list(chat_id):
         printts("Warning: Bot added to banned group: {}".format(chat_id))
+        tlg_leave_chat(bot, chat_id)
+        return
+    # Check if Free Bot Limit has been reached
+    num_members = 0
+    max_usr_group = CONST["FREE_LIMIT_MAX_USER_IN_GROUP"]
+    chat_members_count = tlg_get_chat_members_count(bot, chat_id)
+    if chat_members_count["num_members"] is not None:
+        num_members = chat_members_count["num_members"]
+    if num_members > max_usr_group:
+        printts("Warning: Group {} with more than {} users ({} users). Leaving it...".format(
+                chat_id, max_usr_group, num_members))
+        msg_text = CONST["FREE_LIMIT_REACH"].format(chat_id, max_usr_group+1)
+        tlg_send_msg(bot, chat_id, msg_text)
         tlg_leave_chat(bot, chat_id)
         return
     # For each new user that join or has been added

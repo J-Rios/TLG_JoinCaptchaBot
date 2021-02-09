@@ -188,6 +188,30 @@ CONST = {
         "free:\n" \
         "{}",
 
+    # Maximum number of users in a group to allow usage of free Bot
+    "FREE_LIMIT_MAX_USER_IN_GROUP": 999,
+
+    # Free Bot Group number of users limit reached
+    "FREE_LIMIT_REACH": "WARNING:\n———————————\n" \
+        "Current Group Chat ID:\n{}\n" \
+        "\n" \
+        "The Group has reached the free usage Limit.\n" \
+        "\n" \
+        "To avoid overload and keep the Bot working ok without delay, " \
+        "this Bot account just can be used in groups with less than {} " \
+        "members.\n" \
+        "\n" \
+        "If you want to use this captcha Bot without restriction in large " \
+        "groups, use the \"pro Bot\" account (@pro_join_captcha_bot) " \
+        "for just 5 eurs each month following next instructions:\n" \
+        "https://www.buymeacoffee.com/joincaptchabot\n" \
+        "\n" \
+        "Also, remember that Bot is free software and open-source, so you " \
+        "can always deploy, host and maintain your own Bot instance from " \
+        "source code without limitations.\n" \
+        "\n" \
+        "Best Regards.",
+
     # IANA Top-Level-Domain List
     # https://data.iana.org/TLD/tlds-alpha-by-domain.txt
     "F_TLDS": "tlds-alpha-by-domain.txt",
