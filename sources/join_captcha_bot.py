@@ -1746,7 +1746,7 @@ def th_selfdestruct_messages(bot):
                     if sent_result["msg"] is not None:
                         tlg_msg_to_selfdestruct(sent_result["msg"])
                 list_remove_element(to_delete_in_time_messages_list, sent_msg)
-            sleep(0.1)
+            sleep(0.01)
             i = i + 1
         sleep(0.1)
 
@@ -1772,6 +1772,7 @@ def handle_time_to_kick_not_verify_users(bot):
                 return
             # Ignore if user is not in this chat
             if user_id not in new_users[chat_id]:
+                sleep(0.01)
                 continue
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
             try:
@@ -1786,6 +1787,7 @@ def handle_time_to_kick_not_verify_users(bot):
                 else:
                     # If time for kick/ban has not arrived yet
                     if time() - user_join_time < captcha_timeout*60:
+                        sleep(0.01)
                         continue
                     # The time has come for this user
                     lang = get_chat_config(chat_id, "Language")
@@ -1864,7 +1866,7 @@ def handle_time_to_kick_not_verify_users(bot):
                     printts(" ")
             except Exception as e:
                 printts("Error handling kick/ban:\n{}".format(str(e)))
-            sleep(0.1)
+            sleep(0.01)
 
 ###############################################################################
 ### Telegram Errors Callback
