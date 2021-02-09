@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PID=`ps -aux | grep -e "[j]oin_captcha_bot.py" | awk 'FNR == 1 {print $2}'`
+PID=`ps -aux | grep -e "[j]oin_captcha_bot_pro.py" | awk 'FNR == 1 {print $2}'`
 
 if [ ! -z "$PID" ]; then
     echo "Already running."
@@ -8,7 +8,7 @@ if [ ! -z "$PID" ]; then
 fi
 
 rm -f ./data/captchas/*
-nohup python3 -u join_captcha_bot.py > output.log 2>&1 &
+nohup python3 -u join_captcha_bot_pro.py > output.log 2>&1 &
 echo "Starting Script..."
 sleep 1
 ./status
