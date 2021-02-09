@@ -177,16 +177,18 @@ CONST = {
         "/allowgroup rm -1001142817523",
 
     # Allowgroup usage
-    "NOT_ALLOW_GROUP": "Hi, this Bot account is private and is not allowed " \
-        "to be used here. Contact to Bot account owner ({}) if you want to " \
-        "use the Bot in this group.\n" \
-        "\n" \
-        "Actual chat ID (Bot owner needs this to allow this group):\n" \
+    "NOT_ALLOW_GROUP": "WARNING:\n———————————\n" \
+        "Current Group Chat ID:\n" \
         "{}\n" \
+         "\n" \
+        "This Bot account is Private and just can be used in allowed " \
+        "groups by making a donation of 5 eurs each month.\n" \
+         "\n" \
+        "If you want to use this captcha Bot without restriction in large " \
+        "groups, follow next instructions:\n" \
+        "https://www.buymeacoffee.com/joincaptchabot/joincaptchabot-large-groups\n" \
         "\n" \
-        "Also, remember that you can create your own Bot account for " \
-        "free:\n" \
-        "{}",
+        "Best Regards.",
 
     # IANA Top-Level-Domain List
     # https://data.iana.org/TLD/tlds-alpha-by-domain.txt
@@ -234,7 +236,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.16.0 (07/02/2021)"
+    "VERSION": "Private 1.16.0 (07/02/2021)"
 }
 
 

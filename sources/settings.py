@@ -13,7 +13,7 @@ SETTINGS = {
     # Public: can be used by any group
     # Private: just can be used in allowed groups (Bot owner allow them
     # with /allow_group command)
-    "CAPTCHABOT_PRIVATE": False,
+    "CAPTCHABOT_PRIVATE": True,
 
     # Bot Token (get it from @BotFather)
     "CAPTCHABOT_TOKEN": "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",

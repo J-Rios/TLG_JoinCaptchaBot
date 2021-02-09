@@ -457,7 +457,7 @@ def new_member_join(update: Update, context: CallbackContext):
     # Check if Group is allowed to be used by the Bot
     if not is_group_in_allowed_list(chat_id):
         printts("Warning: Bot added to not allowed group: {}".format(chat_id))
-        msg_text = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
+        msg_text = CONST["NOT_ALLOW_GROUP"].format(chat_id)
         tlg_send_msg(bot, chat_id, msg_text)
         tlg_leave_chat(bot, chat_id)
         return
