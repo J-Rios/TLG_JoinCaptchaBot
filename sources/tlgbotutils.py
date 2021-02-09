@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    23/11/2020
+    09/02/2020
 Version:
-    1.0.1
+    1.0.2
 '''
 
 ###############################################################################
@@ -52,6 +52,20 @@ def tlg_get_chat_member(bot, chat_id, user_id, timeout=None):
     try:
         result["member"] = bot.get_chat_member(chat_id=chat_id,
             user_id=user_id, timeout=timeout)
+    except Exception as e:
+        result["error"] = str(e)
+        printts("[{}] {}".format(chat_id, result["error"]))
+    return result
+
+
+def tlg_get_chat_members_count(bot, chat_id, timeout=None):
+    '''telegram Get number of members in a Chat.'''
+    result = dict()
+    result["num_members"] = None
+    result["error"] = ""
+    try:
+        result["num_members"] = bot.get_chat_members_count(chat_id=chat_id,
+            timeout=timeout)
     except Exception as e:
         result["error"] = str(e)
         printts("[{}] {}".format(chat_id, result["error"]))
