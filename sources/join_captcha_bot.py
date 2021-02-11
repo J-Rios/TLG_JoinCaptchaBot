@@ -49,6 +49,10 @@ from telegram.ext import (
     Defaults
 )
 
+from telegram.utils.helpers import (
+    escape_markdown
+)
+
 from telegram.error import (
     TelegramError, Unauthorized, BadRequest,
     TimedOut, ChatMigrated, NetworkError
@@ -803,7 +807,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         # Send and set Bot to auto-remove captcha solved message too after 5mins
         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
         # Check for custom welcome message and send it
-        welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(user_name)
+        welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
         if welcome_msg != "-":
             # Send the message as Markdown
             sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
@@ -968,7 +972,7 @@ def button_request_pass(bot, query):
     tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
     del new_users[chat_id][user_id]
     # Check for custom welcome message and send it
-    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(user_name)
+    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
     if welcome_msg != "-":
         # Send the message as Markdown
         sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
