@@ -25,7 +25,7 @@ import logging
 import re
 
 from sys import exit
-from signal import signal, alarm, SIGTERM, SIGINT, SIGUSR1
+from signal import signal, SIGTERM, SIGINT, SIGUSR1
 from os import kill, getpid, path, remove, makedirs, listdir
 from shutil import rmtree
 from datetime import datetime, timedelta
@@ -474,7 +474,16 @@ def new_member_join(update: Update, context: CallbackContext):
         return
     # Check if Group is allowed to be used by the Bot
     if not is_group_in_allowed_list(chat_id):
-        printts("Warning: Bot added to not allowed group: {}".format(chat_id))
+        printts("Warning: Bot added to not allowed group.")
+        from_user_name = ""
+        if update_msg.from_user.name is not None:
+            from_user_name = update_msg.from_user.name
+        else:
+            from_user_name = update_msg.from_user.full_name
+        chat_link = ""
+        if chat.username:
+            chat_link = "@{}".format(chat.username)
+        printts("{}, {}, {}, {}".format(chat_id, from_user_name, chat.title, chat_link))
         msg_text = CONST["NOT_ALLOW_GROUP"].format(chat_id)
         tlg_send_msg(bot, chat_id, msg_text)
         tlg_leave_chat(bot, chat_id)
