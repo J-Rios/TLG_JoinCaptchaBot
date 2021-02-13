@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/02/2021
+    13/02/2021
 Version:
-    1.16.0
+    1.17.0
 '''
 
 ###############################################################################
@@ -234,7 +234,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.16.0 (07/02/2021)"
+    "VERSION": "1.17.0 (13/02/2021)"
 }
 
 
