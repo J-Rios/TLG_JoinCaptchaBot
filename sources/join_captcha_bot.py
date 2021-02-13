@@ -815,7 +815,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         tlg_delete_msg(bot, chat_id, msg_id)
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         # Send and set Bot to auto-remove captcha solved message too after 5mins
-        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
         if welcome_msg != "-":
@@ -979,7 +979,7 @@ def button_request_pass(bot, query):
     # Send and set Bot to auto-remove captcha solved message too after 5mins
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-    tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, 5)
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
     del new_users[chat_id][user_id]
     # Check for custom welcome message and send it
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
@@ -1756,16 +1756,13 @@ def th_selfdestruct_messages(bot):
     while not force_exit:
         # Thread sleep for each iteration
         sleep(0.1)
-        # Shallow copy of delete messages list
-        to_delete_msgs = list(to_delete_in_time_messages_list)
-        len_msg = len(to_delete_msgs)
         # Check each Bot sent message
         i = 0
-        while i < len_msg:
+        while i < len(to_delete_in_time_messages_list):
             # Check for break iterating if script must exit
             if force_exit:
                 return
-            sent_msg = to_delete_msgs[i]
+            sent_msg = to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
             if i > 100:
