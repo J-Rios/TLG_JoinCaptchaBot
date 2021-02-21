@@ -63,6 +63,12 @@ This will start the container in the background. Use `docker ps` to check if
 the container is up and running, and `docker logs captcha-bot` to
 investigate the logs.
 
+You can also run with other environment variable. For list of available environment variable, please check `sources/settings.py`. For example:
+
+```bash
+docker run -d --name captcha-bot --env CAPTCHABOT_OWNER="@owner" captcha-bot
+```
+
 ## Stopping the bot
 
 To stop the bot, use
