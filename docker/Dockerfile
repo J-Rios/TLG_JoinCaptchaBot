@@ -3,7 +3,7 @@
 
 # TODO: Check if we can build this FROM python:3-alpine to slim down the image
 
-FROM python:3-slim-buster AS base
+FROM python:3.8.8-slim-buster AS base
 
 # Build ARGs
 ARG BOT_PROJECT="captcha-bot"
@@ -76,8 +76,8 @@ WORKDIR ${BOT_HOME_DIR}
 RUN git clone --recurse-submodules ${GITHUB_URL} ${APP_DIR} && \
     pip3 install --user --requirement ${APP_DIR}/requirements.txt && \
     cd ${APP_DIR}/sources && \
-    sed -i -e "s/${INVALID_TOKEN}/${BOT_TOKEN}/g" constants.py && \
-    sed -i -e "s/^\(\s\+\"INIT_LANG\"\)[^:]*:.*/\1 : \"${BOT_LANG}\",/g" constants.py && \
+    sed -i -e "s/${INVALID_TOKEN}/${BOT_TOKEN}/g" settings.py && \
+    sed -i -e "s/\"${BOT_LANG}\"/\"${BOT_LANG}\"/g" settings.py && \
     chown -cR ${BOT_USER}:${BOT_GROUP} ${BOT_HOME_DIR} && \
     rm -rf ${BOT_HOME_DIR}/.cache && \
     find ${APP_DIR} -iname '.git*' -print0 | xargs -0 -r -t rm -rf
