@@ -19,7 +19,7 @@ ENV BOT_PROJECT="${BOT_PROJECT}" \
     APP_DIR="${APP_DIR}" \
     GITHUB_URL="${GITHUB_URL}" \
     DEBIAN_FRONTEND=noninteractive \
-    APT_OPTS="-q=2 --yes"
+    APT_OPTS="-q=2 --no-install-recommends --yes"
 
 # Prepare a directory to run with an unprivileged user
 RUN chown -cR "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
@@ -30,9 +30,8 @@ RUN chown -cR "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 FROM base AS builder-deps
 
 # Install build dependencies
-RUN apt ${APT_OPTS} update && \
-    apt ${APT_OPTS} --no-install-recommends install apt-utils && \
-    apt ${APT_OPTS} --no-install-recommends install \
+RUN apt-get ${APT_OPTS} update && \
+    apt-get ${APT_OPTS} install \
       build-essential \
       git \
       procps  \
@@ -44,7 +43,7 @@ RUN apt ${APT_OPTS} update && \
       libwebp-dev \
       tcl8.6-dev \
       tk8.6-dev \
-      python-tk
+      python3-tk
 
 ################################################################################
 
@@ -54,7 +53,7 @@ FROM builder-deps AS builder
 USER ${BOT_USER}
 WORKDIR ${BOT_HOME_DIR}
 RUN git clone ${GITHUB_URL} ${APP_DIR} && \
-    pip3 install --user --requirement ${APP_DIR}/requirements.txt && \
+    python3 -m pip install --user --requirement ${APP_DIR}/requirements.txt && \
     cd ${APP_DIR}/sources && \
     chown -cR ${BOT_USER}:${BOT_GROUP} ${BOT_HOME_DIR} && \
     rm -rf ${BOT_HOME_DIR}/.cache && \
