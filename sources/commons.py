@@ -10,28 +10,27 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    25/12/2020
+    24/02/2021
 Version:
-    1.0.1
+    1.0.2
 '''
 
-################################################################################
+###############################################################################
 ### Imported modules
 
 from os import path, remove, makedirs
 from datetime import datetime
 
-################################################################################
+###############################################################################
 ### Constants
 
 DATE_EPOCH = datetime.utcfromtimestamp(0)
 
-################################################################################
+###############################################################################
 ### Functions
 
-
 def printts(to_print="", timestamp=True):
-    '''printts with timestamp.'''
+    '''Print with timestamp.'''
     print_without_ts = False
     # Normal print if timestamp is disabled
     if (not timestamp):
@@ -74,7 +73,7 @@ def get_unix_epoch():
     try:
         epoch = int((datetime.today().utcnow() - DATE_EPOCH).total_seconds())
     except Exception as e:
-        printts("{}".format(file_path, str(e)))
+        printts("{}".format(str(e)))
     return epoch
 
 

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+###############################################################################
+
 from os import path as os_path
 
 # Actual settings.py full path directory name

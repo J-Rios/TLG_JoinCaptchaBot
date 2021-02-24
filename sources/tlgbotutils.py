@@ -29,6 +29,7 @@ from commons import printts
 ANONYMOUS_ADMIN_ID = 1087968824
 
 ###############################################################################
+### Functions
 
 def tlg_get_chat(bot, chat_id_or_alias, timeout=None):
     '''Telegram get chat data.'''
