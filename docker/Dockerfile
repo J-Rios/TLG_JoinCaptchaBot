@@ -1,45 +1,25 @@
 # This Dockerfile has buildkit syntax, to allow build steps to be cached
 # and speed up when rebuilding
 
-# TODO: Check if we can build this FROM python:3-alpine to slim down the image
-
-FROM python:3-slim-buster AS base
+FROM python:3.8.8-slim-buster AS base
 
 # Build ARGs
 ARG BOT_PROJECT="captcha-bot"
 ARG BOT_USER="nobody"
 ARG BOT_GROUP="nogroup"
 ARG BOT_HOME_DIR="/srv"
-ARG REPO_NAME="TLG_JoinCaptchaBot"
 ARG APP_DIR="${BOT_HOME_DIR}/app"
-ARG GITHUB_URL="https://github.com/J-Rios/${REPO_NAME}"
-
-# This represents an invalid token and should always exist in
-# the "stock" constants.py file.
-ARG INVALID_TOKEN="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-
-# Use the BOT_TOKEN argument to override your token.  We don't use environment
-# here, since there's no need to have the token available to the container as
-# an environment variable.
-ARG BOT_TOKEN
-
-# Default language (override when building -- must be all CAPS.)
-# check Makefile for a list of supported languages
-ARG BOT_LANG="EN"
+ARG GITHUB_URL="https://github.com/J-Rios/TLG_JoinCaptchaBot"
 
 # Export ARGs as ENV vars so they can be shared among steps
 ENV BOT_PROJECT="${BOT_PROJECT}" \
     BOT_USER="${BOT_USER}" \
     BOT_GROUP="${BOT_GROUP}" \
     BOT_HOME_DIR="${BOT_HOME_DIR}" \
-    REPO_NAME="${REPO_NAME}" \
     APP_DIR="${APP_DIR}" \
     GITHUB_URL="${GITHUB_URL}" \
-    INVALID_TOKEN="${INVALID_TOKEN}" \
-    BOT_TOKEN="${BOT_TOKEN}" \
-    BOT_LANG="${BOT_LANG}" \
     DEBIAN_FRONTEND=noninteractive \
-    APT_OPTS="-q=2 --yes"
+    APT_OPTS="-q=2 --no-install-recommends --yes"
 
 # Prepare a directory to run with an unprivileged user
 RUN chown -cR "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
@@ -50,9 +30,8 @@ RUN chown -cR "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 FROM base AS builder-deps
 
 # Install build dependencies
-RUN apt ${APT_OPTS} update && \
-    apt ${APT_OPTS} --no-install-recommends install apt-utils && \
-    apt ${APT_OPTS} --no-install-recommends install \
+RUN apt-get ${APT_OPTS} update && \
+    apt-get ${APT_OPTS} install \
       build-essential \
       git \
       procps  \
@@ -64,7 +43,7 @@ RUN apt ${APT_OPTS} update && \
       libwebp-dev \
       tcl8.6-dev \
       tk8.6-dev \
-      python-tk
+      python3-tk
 
 ################################################################################
 
@@ -73,11 +52,9 @@ FROM builder-deps AS builder
 # Build the code as unprivileged user
 USER ${BOT_USER}
 WORKDIR ${BOT_HOME_DIR}
-RUN git clone --recurse-submodules ${GITHUB_URL} ${APP_DIR} && \
-    pip3 install --user --requirement ${APP_DIR}/requirements.txt && \
+RUN git clone ${GITHUB_URL} ${APP_DIR} && \
+    python3 -m pip install --user --requirement ${APP_DIR}/requirements.txt && \
     cd ${APP_DIR}/sources && \
-    sed -i -e "s/${INVALID_TOKEN}/${BOT_TOKEN}/g" constants.py && \
-    sed -i -e "s/^\(\s\+\"INIT_LANG\"\)[^:]*:.*/\1 : \"${BOT_LANG}\",/g" constants.py && \
     chown -cR ${BOT_USER}:${BOT_GROUP} ${BOT_HOME_DIR} && \
     rm -rf ${BOT_HOME_DIR}/.cache && \
     find ${APP_DIR} -iname '.git*' -print0 | xargs -0 -r -t rm -rf
@@ -100,4 +77,3 @@ RUN chown -R "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 USER ${BOT_USER}
 WORKDIR ${APP_DIR}/sources
 CMD ["./entrypoint.sh"]
-

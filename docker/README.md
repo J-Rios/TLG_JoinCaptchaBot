@@ -15,24 +15,17 @@ container.
 ## Building a new image
 
 Create a new bot on Telegram using [The BotFather](http://t.me/BotFather). Make
-sure your bot can be invited to channels and has privacy set to _disabled_.
-Without this, the bot won't be able to read messages on the channel.
+sure your bot can be invited to groups and has privacy set to _disabled_.
+Without this, the bot won't be able to read messages on the group.
 
 Save the bot token. The token _should not publicly visible_ as anyone with it
-could take control of your bot instance.  We'll use the token to create the
+could take control of your bot instance. We'll use the token to create the
 docker image containing the bot (below).
 
-Create a docker image:
+Create the docker image:
 
 ```bash
-make BOT_TOKEN="<your_bot_token_here>"
-```
-
-It is also possible to specify a different default language for the bot to use
-by setting the `BOT_LANG` variable at build time, like:
-
-```bash
-make BOT_TOKEN="<your_bot_token_here>" BOT_LANG="PT_BR"
+make
 ```
 
 The build process may take a while, depending on your computer and connection
@@ -44,24 +37,28 @@ Successfully built (number)
 Successfully tagged captcha-bot:latest
 ```
 
-**Note on token security**: A little bit of paranoia never hurts! Once your
-container has been built, remove the lines from your bash history containing
-your token. This can be accomplished with the `history -d` command on
-individual lines. An easier (but coarser) approach is to run `history -c`,
-followed by `history -r`. This will clear the history buffer and re-read the
-history from disk.
-
 ## Running
 
-To run an instance, use:
+To run an instance, use the next command placing your Bot token to pass it as
+an enviroment variable:
 
 ```bash
-docker run -d --name captcha-bot captcha-bot
+sudo docker run -d --name captcha-bot --env CAPTCHABOT_TOKEN="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" captcha-bot
 ```
 
 This will start the container in the background. Use `docker ps` to check if
 the container is up and running, and `docker logs captcha-bot` to
 investigate the logs.
+
+You can also run with other environment variable. For list available
+environment variables, please check `sources/settings.py`.
+
+**Note on Token security**: A little bit of paranoia never hurts! Once your
+container has been built, remove the lines from your bash history containing
+your token. This can be accomplished with the `history -d` command on
+individual lines. An easier (but coarser) approach is to run `history -c`,
+followed by `history -r`. This will clear the history buffer and re-read the
+history from disk.
 
 ## Stopping the bot
 
