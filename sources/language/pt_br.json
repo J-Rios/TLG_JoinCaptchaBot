@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Removida uma mensagem que não é de texto (imagem, áudio, arquivo...) de {}, por causa de um Telegram livre de spam\n.\nVocê pode enviar mensagens sem texto depois de ter resolvido o captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Outro Captcha",
 
@@ -174,5 +192,5 @@
         "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot.\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-caractere do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/welcome_msg - Permite configurar uma mensagem de boas-vindas que é enviada após a resolução do captcha.\n\n/restrict_non_text - Depois de um novo utilizador resolver o captcha, aplicar a restrição para poder enviar mensagens apenas de texto (excluindo imagens, vídeos, audios) por 1 dia (ou para sempre, por usar a palavra \"forever\").\n\n/add_ignore - Não pedir a resolução do captcha a um utilizador ignorado.\n\n/remove_ignore - Parar de ignorar um utilizador.\n\n/ignore_list - lista de todos os IDs dos utilizadores ignorados.\n\n/allowgroup - Permitir ao grupo que use o Bot (se o Bot for Privado).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
+        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot.\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-caractere do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/welcome_msg - Permite configurar uma mensagem de boas-vindas que é enviada após a resolução do captcha.\n\n/restrict_non_text - Depois de um novo utilizador resolver o captcha, aplicar a restrição para poder enviar mensagens apenas de texto (excluindo imagens, vídeos, audios) por 1 dia (ou para sempre, por usar a palavra \"forever\").\n\n/add_ignore - Não pedir a resolução do captcha a um utilizador ignorado.\n\n/remove_ignore - Parar de ignorar um utilizador.\n\n/ignore_list - lista de todos os IDs dos utilizadores ignorados.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Permitir ao grupo que use o Bot (se o Bot for Privado).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
 }

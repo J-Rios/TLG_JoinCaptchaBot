@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    09/02/2020
+    27/02/2021
 Version:
-    1.0.2
+    1.0.3
 '''
 
 ###############################################################################
@@ -20,6 +20,7 @@ Version:
 
 from telegram import ChatPermissions
 from telegram import TelegramError
+from telegram import ParseMode
 
 from commons import printts
 
@@ -80,6 +81,10 @@ def tlg_send_msg(bot, chat_id, text, parse_mode=None,
     sent_result = dict()
     sent_result["msg"] = None
     sent_result["error"] = ""
+    if parse_mode == "HTML":
+        parse_mode = ParseMode.HTML
+    elif parse_mode == "MARKDOWN":
+        parse_mode = ParseMode.MARKDOWN_V2
     try:
         sent_result["msg"] = bot.send_message(chat_id=chat_id, text=text,
             parse_mode=parse_mode, reply_markup=reply_markup,
@@ -94,7 +99,7 @@ def tlg_send_msg(bot, chat_id, text, parse_mode=None,
 
 def tlg_send_image(bot, chat_id, photo, caption=None,
     disable_notification=False, reply_to_message_id=None,
-    reply_markup=None, timeout=20, parse_mode=None):
+    reply_markup=None, timeout=40, parse_mode=None):
     '''Bot try to send an image message'''
     sent_result = dict()
     sent_result["msg"] = None

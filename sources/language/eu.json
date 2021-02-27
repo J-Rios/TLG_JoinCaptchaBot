@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "{}-k bidalitako testua ez den mezua ezabatu da (irudia, audioa, fitxategia...) Spam gabeko Telegram baten alde.\n\nCaptcha asmatzen duzunean testua ez diren mezuak bidali aahl izango dituzu.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Beste captcha bat",
 
@@ -174,5 +192,5 @@
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu.\n\nPaypal:\n{}\n\nBTC:\n{}.",
 
     "COMMANDS":
-        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak).\n\n/welcome_msg - Aukera ematen du captcha ebatzi ondoren bidaltzen den harrera mezu bat konfiguratzeko.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du."
+        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak).\n\n/welcome_msg - Aukera ematen du captcha ebatzi ondoren bidaltzen den harrera mezu bat konfiguratzeko.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du."
 }

@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    13/02/2021
+    27/02/2021
 Version:
-    1.17.0
+    1.18.0
 '''
 
 ###############################################################################
@@ -162,12 +162,14 @@ def get_default_config_data():
     [
         ("Title", CONST["INIT_TITLE"]),
         ("Link", CONST["INIT_LINK"]),
+        ("Language", CONST["INIT_LANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
-        ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
+        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
-        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
-        ("Language", CONST["INIT_LANG"]),
+        ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
+        ("Rm_Result_Msg", CONST["INIT_RM_RESULT_MSG"]),
+        ("Rm_Welcome_Msg", CONST["INIT_RM_WELCOME_MSG"]),
         ("Welcome_Msg", "-"),
         ("Ignore_List", [])
     ])
@@ -236,7 +238,7 @@ def tlg_msg_to_selfdestruct(message):
     tlg_msg_to_selfdestruct_in(message, CONST["T_DEL_MSG"])
 
 
-def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min, kwargs_for_send_message = {}):
+def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min, **kwargs_for_send_message):
     '''Send a telegram message that will be auto-delete in specified time'''
     sent_result = tlg_send_msg(bot, chat_id, message, **kwargs_for_send_message)
     if sent_result["msg"] is None:
@@ -814,14 +816,22 @@ def msg_nocmd(update: Update, context: CallbackContext):
         # Remove user captcha numbers message
         tlg_delete_msg(bot, chat_id, msg_id)
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-        # Send and set Bot to auto-remove captcha solved message too after 5mins
-        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        # Send message solve message
+        rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+        if rm_result_msg:
+            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        else:
+            tlg_send_msg(bot, chat_id, bot_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
         if welcome_msg != "-":
             # Send the message as Markdown
-            sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
-                CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
+            rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
+            if rm_welcome_msg:
+                sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
+                        CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+            else:
+                sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
                 printts("[{}] Error: Can't send the welcome message.".format(chat_id))
         # Check for send just text message option and apply user restrictions
@@ -976,17 +986,25 @@ def button_request_pass(bot, query):
     for msg in new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
     new_users[chat_id][user_id]["msg_to_rm"].clear()
-    # Send and set Bot to auto-remove captcha solved message too after 5mins
+    # Send message solve message
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    if rm_result_msg:
+        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    else:
+        tlg_send_msg(bot, chat_id, bot_msg)
     del new_users[chat_id][user_id]
     # Check for custom welcome message and send it
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
     if welcome_msg != "-":
         # Send the message as Markdown
-        sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
-            CONST["T_DEL_WELCOME_MSG"], {"parse_mode": "MarkdownV2"})
+        rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
+        if rm_welcome_msg:
+            sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
+                    CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+        else:
+            sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
         if sent_result is None:
             printts("[{}] Error: Can't send the welcome message.".format(chat_id))
     # Check for send just text message option and apply user restrictions
@@ -1464,6 +1482,94 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
+def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
+    '''Command /remove_solve_kick_msg message handler'''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update_msg)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check if command was execute by an Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if is_admin is None:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAN_NOT_GET_ADMINS"])
+        return
+    if not is_admin:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
+        return
+    # Check if no argument was provided with the command
+    if len(args) == 0:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RM_SOLVE_KICK_MSG"])
+        return
+    # Get remove solve/kick messages config to set
+    yes_or_no = args[0].lower()
+    if yes_or_no == "yes":
+        save_config_property(chat_id, "Rm_Result_Msg", True)
+        bot_msg = TEXT[lang]["RM_SOLVE_KICK_MSG_YES"]
+    elif yes_or_no == "no":
+        save_config_property(chat_id, "Rm_Result_Msg", False)
+        bot_msg = TEXT[lang]["RM_SOLVE_KICK_MSG_NO"]
+    else:
+        bot_msg = TEXT[lang]["RM_SOLVE_KICK_MSG"]
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
+    '''Command /remove_welcome_msg message handler'''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update_msg)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check if command was execute by an Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if is_admin is None:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAN_NOT_GET_ADMINS"])
+        return
+    if not is_admin:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
+        return
+    # Check if no argument was provided with the command
+    if len(args) == 0:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["RM_WELCOME_MSG"])
+        return
+    # Get remove welcome messages config to set
+    yes_or_no = args[0].lower()
+    if yes_or_no == "yes":
+        save_config_property(chat_id, "Rm_Welcome_Msg", True)
+        bot_msg = TEXT[lang]["RM_WELCOME_MSG_YES"]
+    elif yes_or_no == "no":
+        save_config_property(chat_id, "Rm_Welcome_Msg", False)
+        bot_msg = TEXT[lang]["RM_WELCOME_MSG_NO"]
+    else:
+        bot_msg = TEXT[lang]["RM_WELCOME_MSG"]
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
 def cmd_enable(update: Update, context: CallbackContext):
     '''Command /enable message handler'''
     bot = context.bot
@@ -1835,6 +1941,8 @@ def th_time_to_kick_not_verify_users(bot):
                         user_name = new_users[chat_id][user_id]["join_data"]["user_name"]
                         join_retries = new_users[chat_id][user_id]["join_data"]["join_retries"]
                         printts("[{}] Captcha reply timed out for user {}.".format(chat_id, user_name))
+                        # Get current group remove kick/ban messages config
+                        rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
                         # Check if this "user" has not join this chat more than 5 times (just kick)
                         if join_retries < 5:
                             printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
@@ -1847,8 +1955,11 @@ def th_time_to_kick_not_verify_users(bot):
                                 # Increase join retries
                                 join_retries = join_retries + 1
                                 printts("[{}] Increased join_retries to {}".format(chat_id, join_retries))
-                                # Set to auto-remove the kick message too, after a while
-                                tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                # Send kicked message
+                                if rm_result_msg:
+                                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                else:
+                                    tlg_send_msg(bot, chat_id, msg_text)
                             else:
                                 # Kick fail
                                 printts("[{}] Unable to kick".format(chat_id))
@@ -1856,8 +1967,10 @@ def th_time_to_kick_not_verify_users(bot):
                                         (kick_result["error"] == "The user was already kicked"):
                                     # The user is not in the chat
                                     msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
-                                    # Set to auto-remove the kick message too, after a while
-                                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                    if rm_result_msg:
+                                        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                    else:
+                                        tlg_send_msg(bot, chat_id, msg_text)
                                 elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
                                     # Bot has no privileges to kick
                                     msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(user_name)
@@ -1866,8 +1979,10 @@ def th_time_to_kick_not_verify_users(bot):
                                 else:
                                     # For other reason, the Bot can't ban
                                     msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                                    # Set to auto-remove the kick message too, after a while
-                                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                    if rm_result_msg:
+                                        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                    else:
+                                        tlg_send_msg(bot, chat_id, msg_text)
                         # The user has join this chat 5 times and never succes to solve the captcha (ban)
                         else:
                             printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id,
@@ -1890,7 +2005,10 @@ def th_time_to_kick_not_verify_users(bot):
                                     msg_text = TEXT[lang]["BOT_CANT_BAN"].format(user_name)
                             # Send ban notify message
                             printts("[{}] {}".format(chat_id, msg_text))
-                            tlg_send_msg(bot, chat_id, msg_text)
+                            if rm_result_msg:
+                                tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                            else:
+                                tlg_send_msg(bot, chat_id, msg_text)
                         # Update user info (join_retries & kick_ban)
                         new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
                         new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
@@ -1971,6 +2089,8 @@ def main():
     dp.add_handler(CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
     dp.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore, pass_args=True))
     dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
+    dp.add_handler(CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg, pass_args=True))
+    dp.add_handler(CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg, pass_args=True))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("chatid", cmd_chatid))

@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Eliminada unha mensaxe que non é de texto (imaxe, son, ficheiro...) enviado por {}, para manter un Telegram libre de Spam.\n\nPoderás enviar mensaxes que non sexan de texto unha vez que resolvas o captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Outro Captcha",
 
@@ -174,5 +192,5 @@
         "Este é un Bot de software libre open-source con licenza GNU-GPL, desenvolvido por {}.\n\nPodes consultar o código aquí:\n{}\n\nGóstache o que fago? Convídame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Listaxe de comandos:\n————————————————\n/start - Amosa a información inicial sobre o Bot.\n\n/help - Amosa a información de axuda.\n\n/commands - Amosa a mensaxe actual. Información sobre todos os comandos dispoñíbeis e a súa descrición.\n\n/language - Permite mudar a lingua na que fala o Bot.\n\n/time - Permite mudar o tempo dispoñíbel para resolver un captcha.\n\n/difficulty - Permite mudar o nivel de dificultade do captcha (do 1 ó 5).\n\n/captcha_mode - Permite mudar o modo-caracter dos captchas (nums: só números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/welcome_msg - Permite configurar unha mensaxe de benvida que se envía após resolver o captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Activa a protección captcha no grupo.\n\n/disable - Desactiva a protección captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Consulta a versión do Bot.\n\n/about - Amosa a información \"acerca do...\" do Bot."
+        "Listaxe de comandos:\n————————————————\n/start - Amosa a información inicial sobre o Bot.\n\n/help - Amosa a información de axuda.\n\n/commands - Amosa a mensaxe actual. Información sobre todos os comandos dispoñíbeis e a súa descrición.\n\n/language - Permite mudar a lingua na que fala o Bot.\n\n/time - Permite mudar o tempo dispoñíbel para resolver un captcha.\n\n/difficulty - Permite mudar o nivel de dificultade do captcha (do 1 ó 5).\n\n/captcha_mode - Permite mudar o modo-caracter dos captchas (nums: só números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/welcome_msg - Permite configurar unha mensaxe de benvida que se envía após resolver o captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Activa a protección captcha no grupo.\n\n/disable - Desactiva a protección captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Consulta a versión do Bot.\n\n/about - Amosa a información \"acerca do...\" do Bot."
 }

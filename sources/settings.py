@@ -69,6 +69,12 @@ SETTINGS = {
     # Initial captcha characters mode (ascii, hex, nums, or button)
     "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
 
+    # Initial remove result messages cgroup onfiguration
+    "CAPTCHABOT_INIT_RM_RESULT_MSG": True,
+
+    # Initial remove welcome message group configuration
+    "CAPTCHABOT_INIT_RM_WELCOME_MSG": True,
+
     # Default time (in mins) to remove self-destruct sent messages from
     # the Bot
     "CAPTCHABOT_T_DEL_MSG": 5,

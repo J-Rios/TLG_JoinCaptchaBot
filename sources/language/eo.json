@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Forviŝita neteksta mesaĝo (bildo, sono, dosiero...) de {}, por teni la grupon sen spamo.\n\nVi povas sendi netekstajn mesaĝojn post solvi la CAPTCHA-teston.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Alian CAPTCHA-teston",
 
@@ -174,5 +192,5 @@
         "Ĉi tiu roboto estas libera softvaro sur la permesilo GNU-GPL.\nRoboto disvolvigita de {}.\n\nVi povas legi la kodon ĉe:\n{}\n\nĈu vi ŝatas ĝin? Regalu min per kafo.\n\nPaypal:\n{}\nBTC:\n{}",
 
     "COMMANDS":
-        "Listo de komandoj:\n————————————————\n/start - Montras la komencigan informon pri la roboto.\n\n/help - Montras helpan informon.\n\n/commands - Montras ĉi tiun mesaĝon. Informon pri ĉiuj disponeblaj komandoj kaj iliaj priskriboj.\n\n/language - Permesas ŝanĝi la lingvo de la robotaj mesaĝoj.\n\n/time - Permesas ŝanĝi la tempon por solvi la CAPTCHA-teston.\n\n/difficulty - Permesas ŝanĝi la malfacilecon (niveloj el 1 al 5).\n\n/captcha_mode - Permesas ŝanĝi la modon (nums: nur nombroj, hex: nombroj kaj A-F literojn, ascii: nombroj kaj  A-Z literoj).\n\n/welcome_msg - Permesas agordi bonvenigan mesaĝon por sendi post solvi la CAPTCHA-teston.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Ne demandu CAPTCHA-teston al ignorita uzanto.\n\n/remove_ignore - Ne plu ignoru uzanton.\n\n/ignore_list - listo de ID de ignoritaj uzantoj.\n\n/allowgroup - Permesi grupon uzi la roboton (se ĝi estas privata).\n\n/enable - Ebligas la CAPTCHA-teston en la grupo.\n\n/disable - Malebligas la CAPTCHA-teston en la grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Montras la version de la roboto.\n\n/about - Montras \"pri\" informon."
+        "Listo de komandoj:\n————————————————\n/start - Montras la komencigan informon pri la roboto.\n\n/help - Montras helpan informon.\n\n/commands - Montras ĉi tiun mesaĝon. Informon pri ĉiuj disponeblaj komandoj kaj iliaj priskriboj.\n\n/language - Permesas ŝanĝi la lingvo de la robotaj mesaĝoj.\n\n/time - Permesas ŝanĝi la tempon por solvi la CAPTCHA-teston.\n\n/difficulty - Permesas ŝanĝi la malfacilecon (niveloj el 1 al 5).\n\n/captcha_mode - Permesas ŝanĝi la modon (nums: nur nombroj, hex: nombroj kaj A-F literojn, ascii: nombroj kaj  A-Z literoj).\n\n/welcome_msg - Permesas agordi bonvenigan mesaĝon por sendi post solvi la CAPTCHA-teston.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Ne demandu CAPTCHA-teston al ignorita uzanto.\n\n/remove_ignore - Ne plu ignoru uzanton.\n\n/ignore_list - listo de ID de ignoritaj uzantoj.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Permesi grupon uzi la roboton (se ĝi estas privata).\n\n/enable - Ebligas la CAPTCHA-teston en la grupo.\n\n/disable - Malebligas la CAPTCHA-teston en la grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Montras la version de la roboto.\n\n/about - Montras \"pri\" informon."
 }

@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Eliminado un mensaje que no es de texto (imagen, audio, archivo...) enviado por {}, en aras de un Telegram libre de Spam.\n\nPodrás enviar mensajes que no sean de texto una vez que hayas resuelto el captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configura si los mensajes de captcha resuelto y usuario expulsado deben ser eliminados de forma automática después de un tiempo.\n\nEjemplos:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuración aplicada, los mensajes de captcha resuelto y los de usuario expulsado, serán eliminados de forma automática después de un tiempo.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuración aplicada, los mensajes de captcha resuelto y los de usuario expulsado ya no serán eliminados.",
+
+    "RM_WELCOME_MSG":
+        "Configura si los mensajes de bienvenida deben ser eliminados de forma automática después de un tiempo.\n\nEjemplos:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuración aplicada, los mensajes de bienvenida serán eliminados de forma automática después de un tiempo.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuración aplicada, los mensajes de bienvenida ya no serán eliminados.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Otro Captcha",
 
@@ -174,5 +192,5 @@
         "Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por {}.\n\nPuedes consultar el código aquí:\n{}\n\n¿Te gusta lo que hago? Invítame a un café.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el tipo/modo de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z, button: captcha de presionar un botón).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/restrict_non_text - Activa la restricción de nuevos usuarios para que, tras resolver el captcha, no puedan enviar mensajes que no sean de texto (imagenes, videos, audios) durante 1 día (o para siempre, si se usa la palabra clave \"forever\").\n\n/add_ignore - Añadir a un usuario a la lista de ignorados para que el Bot no le pida resolver el captcha en este grupo.\n\n/remove_ignore - Elimina a un usuario de la lista de ignorados en este chat.\n\n/ignore_list - Muestra la lista de IDs de usuarios ignorados en este chat.\n\n/allowgroup - Permitir que un grupo pueda usar al Bot (si el Bot es Privado).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/chatid - Muestra el Chat ID del chat actual.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
+        "Lista de comandos:\n————————————————\n/start - Muestra la información inicial sobre el Bot.\n\n/help - Muestra la información de ayuda.\n\n/commands - Muestra el mensaje actual. Información sobre todos los comandos disponibles y su descripción.\n\n/language - Permite cambiar el idioma en el que habla el Bot.\n\n/time - Permite cambiar el tiempo disponible para resolver un captcha.\n\n/difficulty - Permite cambiar el nivel de dificultad del captcha (de 1 a 5).\n\n/captcha_mode - Permite cambiar el tipo/modo de los captchas (nums: solo números, hex: números y letras A-F, ascii: números y letras A-Z, button: captcha de presionar un botón).\n\n/welcome_msg - Permite configurar un mensaje de bienvenida que se envía trás resolver el captcha.\n\n/restrict_non_text - Activa la restricción de nuevos usuarios para que, tras resolver el captcha, no puedan enviar mensajes que no sean de texto (imagenes, videos, audios) durante 1 día (o para siempre, si se usa la palabra clave \"forever\").\n\n/add_ignore - Añadir a un usuario a la lista de ignorados para que el Bot no le pida resolver el captcha en este grupo.\n\n/remove_ignore - Elimina a un usuario de la lista de ignorados en este chat.\n\n/ignore_list - Muestra la lista de IDs de usuarios ignorados en este chat.\n\n/remove_solve_kick_msg - Configurar si los mensajes de captcha resuelto y los mensajes de usuario expulsado deben, o no, ser eliminados de forma automática después de un tiempo.\n\n/remove_welcome_msg - Configurar si los mensajes de bienvenida deben, o no, ser eliminados de forma automática después de un tiempo.\n\n/allowgroup - Permitir que un grupo pueda usar al Bot (si el Bot es Privado).\n\n/enable - Activa la protección captcha en el grupo.\n\n/disable - Desactiva la protección captcha en el grupo.\n\n/chatid - Muestra el Chat ID del chat actual.\n\n/version - Consulta la versión del Bot.\n\n/about - Muestra la información \"acerca de...\" del Bot."
 }
