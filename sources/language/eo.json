@@ -186,7 +186,7 @@
         "Ne eblas uzi tiun komandon en ĉi tiu babilejo.",
 
     "VERSION":
-        "Nuna versio de la roboto: {}",
+        "Nuna versio de la roboto:\n{}",
 
     "ABOUT_MSG":
         "Ĉi tiu roboto estas libera softvaro sur la permesilo GNU-GPL.\nRoboto disvolvigita de {}.\n\nVi povas legi la kodon ĉe:\n{}\n\nĈu vi ŝatas ĝin? Regalu min per kafo.\n\nPaypal:\n{}\nBTC:\n{}",

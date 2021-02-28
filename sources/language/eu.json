@@ -186,7 +186,7 @@
         "Ezin da komando hau txat honetan erabili.",
 
     "VERSION":
-        "Botaren bertsioa: {}",
+        "Botaren bertsioa:\n{}",
 
     "ABOUT_MSG":
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu.\n\nPaypal:\n{}\n\nBTC:\n{}.",

@@ -186,7 +186,7 @@
         "Nie mogę użyć tej komendy w tym czacie.",
 
     "VERSION":
-        "Aktualna wersja bota: {}",
+        "Aktualna wersja bota:\n{}",
 
     "ABOUT_MSG":
         "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to.\n\nPaypal:\n{}\n\nBTC:\n{}",

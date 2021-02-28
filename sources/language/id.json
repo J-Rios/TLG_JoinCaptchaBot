@@ -186,7 +186,7 @@
         "Tidak dapat menggunakan perintah ini dalam grup saat ini.",
 
     "VERSION":
-        "Versi Bot saat ini: {}",
+        "Versi Bot saat ini:\n{}",
 
     "ABOUT_MSG":
         "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi.\n\nPaypal:\n{}\n\nBTC:\n{}",

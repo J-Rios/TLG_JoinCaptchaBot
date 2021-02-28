@@ -186,7 +186,7 @@
         "No es pot utilitzar aquesta ordre en el xat actual.",
 
     "VERSION":
-        "La versió actual del bot és: {}",
+        "La versió actual del bot és:\n{}",
 
     "ABOUT_MSG":
         "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè.\nPaypal:\n{}\n\nBTC:\n{}",

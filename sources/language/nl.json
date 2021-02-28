@@ -186,7 +186,7 @@
         "Ik kan dit commando niet gebruiken in de huidige chat.",
 
     "VERSION":
-        "Huidige Bot versie: {}",
+        "Huidige Bot versie:\n{}",
 
     "ABOUT_MSG":
         "Deze Bot is gratis software en open source onder de GNU-GPL-licentie.\nBot Ontwikkeld door {}.\n\nJe kunt de code hier controleren:\n{}\n\nVind je mijn werk leuk? Koop een kop koffie voor me.\n\nPaypal:\n{}\n\nBTC:\n{}",

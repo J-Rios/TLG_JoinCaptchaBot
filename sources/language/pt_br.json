@@ -186,7 +186,7 @@
         "Não posso usar esse comando neste chat.",
 
     "VERSION":
-        "Versão atual do Bot: {}",
+        "Versão atual do Bot:\n{}",
 
     "ABOUT_MSG":
         "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}",

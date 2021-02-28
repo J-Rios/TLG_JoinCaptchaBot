@@ -186,7 +186,7 @@
         "Dieser Befehl kann im aktuellen Chat nicht verwendet werden.",
 
     "VERSION":
-        "Aktuelle Bot-Version: {}",
+        "Aktuelle Bot-Version:\n{}",
 
     "ABOUT_MSG":
         "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee.\n\nPaypal:\n{}\n\nBTC:\n{}",

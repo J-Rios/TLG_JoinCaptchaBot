@@ -186,7 +186,7 @@
         "Geçerli sohbette bu komut kullanılamıyor.",
 
     "VERSION":
-        "Mevcut Bot versiyonu: {}",
+        "Mevcut Bot versiyonu:\n{}",
 
     "ABOUT_MSG":
         "Bu Bot ücretsiz bir yazılımdır ve GNU-GPL lisansı altında açık kaynaklıdır.\nBot {} tarafından geliştirilmiştir.\n\nKodu burada görebilirsiniz:\n{}\n\nÇalışmamı beğendiniz mi? Bana bir kahve ısmarlayın.\n\nPaypal:\n{}\n\nBTC:\n{}",

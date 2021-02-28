@@ -186,7 +186,7 @@
         "Nemožno použiť tento príkaz v tomto chate.",
 
     "VERSION":
-        "Súčasná verzia bota: {}",
+        "Súčasná verzia bota:\n{}",
 
     "ABOUT_MSG":
         "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu.\n\nPaypal:\n{}\n\nBTC:\n{}",
