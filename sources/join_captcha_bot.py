@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/02/2021
+    28/02/2021
 Version:
-    1.18.0
+    1.18.1
 '''
 
 ###############################################################################
@@ -502,11 +502,11 @@ def new_member_join(update: Update, context: CallbackContext):
             join_user_name = join_user.name
         else:
             join_user_name = join_user.full_name
-        # Add an unicode Left to Right Mark (LRM) to user name (names fix for arabic, hebrew, etc.)
-        join_user_name = add_lrm(join_user_name)
         # If the user name is too long, truncate it to 35 characters
         if len(join_user_name) > 35:
             join_user_name = join_user_name[0:35]
+        # Add an unicode Left to Right Mark (LRM) to user name (names fix for arabic, hebrew, etc.)
+        user_name_lrm = add_lrm(join_user_name)
         # If the added user is myself (this Bot)
         if bot.id == join_user_id:
             # Get the language of the Telegram client software the Admin that has added the Bot
@@ -595,7 +595,7 @@ def new_member_join(update: Update, context: CallbackContext):
                 captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
                 captcha_num = captcha["number"]
                 # Note: Img caption must be <= 1024 chars
-                img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(join_user_name,
+                img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(user_name_lrm,
                         chat_title, str(captcha_timeout))
                 # Prepare inline keyboard button to let user request another catcha
                 keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
@@ -612,7 +612,7 @@ def new_member_join(update: Update, context: CallbackContext):
                     remove(captcha["image"])
             else:
                 # Send a button-only challenge
-                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(join_user_name,
+                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(user_name_lrm,
                         chat_title, str(captcha_timeout))
                 captcha_num = ""
                 # Prepare inline keyboard button to let user pass
@@ -621,7 +621,7 @@ def new_member_join(update: Update, context: CallbackContext):
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 printts("[{}] Sending captcha message to {}: [button]".format(chat_id, join_user_name))
                 sent_result = tlg_send_msg(bot, chat_id, challenge_text,
-                        reply_markup=reply_markup, timeout=20)
+                        reply_markup=reply_markup, timeout=30)
                 if sent_result["msg"] is None:
                     send_problem = True
             if not send_problem:
