@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    13/02/2021
+    28/02/2021
 Version:
-    1.17.0
+    1.18.1
 '''
 
 ###############################################################################
@@ -138,6 +138,16 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_WELCOME_MSG_LENGTH", \
             SETTINGS["CAPTCHABOT_MAX_WELCOME_MSG_LENGTH"])),
 
+    # Initial remove result messages cgroup onfiguration
+    "INIT_RM_RESULT_MSG": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_RESULT_MSG", \
+            SETTINGS["CAPTCHABOT_INIT_RM_RESULT_MSG"]))),
+
+    # Initial remove welcome message group configuration
+    "INIT_RM_WELCOME_MSG": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_WELCOME_MSG", \
+            SETTINGS["CAPTCHABOT_INIT_RM_WELCOME_MSG"]))),
+
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
 
@@ -258,7 +268,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.17.0 (13/02/2021)"
+    "VERSION": "1.18.1 (28/02/2021)"
 }
 
 

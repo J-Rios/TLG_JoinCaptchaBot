@@ -10,28 +10,27 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    25/12/2020
+    28/02/2021
 Version:
-    1.0.1
+    1.0.3
 '''
 
-################################################################################
+###############################################################################
 ### Imported modules
 
 from os import path, remove, makedirs
 from datetime import datetime
 
-################################################################################
+###############################################################################
 ### Constants
 
 DATE_EPOCH = datetime.utcfromtimestamp(0)
 
-################################################################################
+###############################################################################
 ### Functions
 
-
 def printts(to_print="", timestamp=True):
-    '''printts with timestamp.'''
+    '''Print with timestamp.'''
     print_without_ts = False
     # Normal print if timestamp is disabled
     if (not timestamp):
@@ -60,12 +59,16 @@ def printts(to_print="", timestamp=True):
                 # Remove all text start EOLs (if any)
                 if num_eol != -1:
                     to_print = to_print[num_eol+1:]
-    if print_without_ts:
-        print(to_print)
-    else:
-        # Get actual time and print with timestamp
-        actual_date = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-        print("{}: {}".format(actual_date, to_print))
+    try:
+        #to_print = str(to_print.encode('utf-8'))
+        if print_without_ts:
+            print(to_print)
+        else:
+            # Get actual time and print with timestamp
+            actual_date = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            print("{}: {}".format(actual_date, to_print))
+    except Exception as e:
+        print("{}".format(str(e)))
 
 
 def get_unix_epoch():
@@ -74,7 +77,7 @@ def get_unix_epoch():
     try:
         epoch = int((datetime.today().utcnow() - DATE_EPOCH).total_seconds())
     except Exception as e:
-        printts("{}".format(file_path, str(e)))
+        printts("{}".format(str(e)))
     return epoch
 
 
@@ -89,11 +92,24 @@ def is_int(s):
 
 def add_lrm(str_to_modify):
     '''Add a Left to Right Mark (LRM) at provided string start'''
-    barray = bytearray(b"\xe2\x80\x8e")
-    str_to_modify = str_to_modify.encode("utf-8")
-    for b in str_to_modify:
-        barray.append(b)
-    str_to_modify = barray.decode("utf-8")
+    try:
+        barray = bytearray(b"\xe2\x80\x8e")
+        str_to_modify = str_to_modify.encode("utf-8")
+        for b in str_to_modify:
+            barray.append(b)
+        str_to_modify = barray.decode("utf-8")
+    except Exception as e:
+        printts("{}".format(str(e)))
+    return str_to_modify
+
+
+def rm_lrm(str_to_modify):
+    '''Remove Left to Right Mark (LRM) from provided string start'''
+    try:
+        if str_to_modify[0] == "\u200e":
+            str_to_modify = str_to_modify[1:]
+    except Exception as e:
+        printts("{}".format(str(e)))
     return str_to_modify
 
 

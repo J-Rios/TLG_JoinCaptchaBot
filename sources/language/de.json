@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Eine Nicht-Textnachricht (Bild, Audio, Datei ...) wurde aus {} entfernt, um Telegram frei von Spam zu halten.\n\nSie können Nicht-Textnachrichten senden, nachdem Sie das Captcha gelöst haben.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Anderes Captcha",
 
@@ -168,11 +186,11 @@
         "Dieser Befehl kann im aktuellen Chat nicht verwendet werden.",
 
     "VERSION":
-        "Aktuelle Bot-Version: {}",
+        "Aktuelle Bot-Version:\n{}",
 
     "ABOUT_MSG":
         "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Liste der Befehle:\n————————————————\n/start - Zeigt die anfänglichen Informationen zum Bot an.\n\n/help - Zeigt die Hilfeinformationen an.\n\n/commands - Zeigt diese Nachricht an. Informationen zu allen verfügbaren Befehlen und deren Beschreibung.\n\n/language - Ermöglicht das Ändern der Sprache der Bot-Nachrichten.\n\n/time - Ermöglicht das Ändern der verfügbaren Zeit zum Lösen eines Captchas.\n\n/difficulty - Ermöglicht das Ändern des Captcha-Schwierigkeitsgrades (von 1 bis 5).\n\n/captcha_mode - Ermöglicht das Ändern des Captcha-Zeichenmodus (nums: nur Zahlen, hex: Zahlen und A-F-Zeichen, ascii: Zahlen und A-Z-Zeichen).\n\n/welcome_msg - Ermöglicht die Konfiguration einer Willkommensnachricht, die nach dem Auflösen des Captcha gesendet wird.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Aktivieren Sie den Captcha-Schutz der Gruppe.\n\n/disable - Deaktivieren Sie den Captcha-Schutz der Gruppe.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Zeigen Sie die Version des Bot an.\n\n/about - About info anzeigen."
+        "Liste der Befehle:\n————————————————\n/start - Zeigt die anfänglichen Informationen zum Bot an.\n\n/help - Zeigt die Hilfeinformationen an.\n\n/commands - Zeigt diese Nachricht an. Informationen zu allen verfügbaren Befehlen und deren Beschreibung.\n\n/language - Ermöglicht das Ändern der Sprache der Bot-Nachrichten.\n\n/time - Ermöglicht das Ändern der verfügbaren Zeit zum Lösen eines Captchas.\n\n/difficulty - Ermöglicht das Ändern des Captcha-Schwierigkeitsgrades (von 1 bis 5).\n\n/captcha_mode - Ermöglicht das Ändern des Captcha-Zeichenmodus (nums: nur Zahlen, hex: Zahlen und A-F-Zeichen, ascii: Zahlen und A-Z-Zeichen).\n\n/welcome_msg - Ermöglicht die Konfiguration einer Willkommensnachricht, die nach dem Auflösen des Captcha gesendet wird.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Aktivieren Sie den Captcha-Schutz der Gruppe.\n\n/disable - Deaktivieren Sie den Captcha-Schutz der Gruppe.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Zeigen Sie die Version des Bot an.\n\n/about - About info anzeigen."
 }
