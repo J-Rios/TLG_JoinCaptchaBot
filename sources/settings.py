@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+###############################################################################
+
 from os import path as os_path
 
 # Actual settings.py full path directory name
@@ -66,6 +68,12 @@ SETTINGS = {
 
     # Initial captcha characters mode (ascii, hex, nums, or button)
     "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
+
+    # Initial remove result messages cgroup onfiguration
+    "CAPTCHABOT_INIT_RM_RESULT_MSG": True,
+
+    # Initial remove welcome message group configuration
+    "CAPTCHABOT_INIT_RM_WELCOME_MSG": True,
 
     # Default time (in mins) to remove self-destruct sent messages from
     # the Bot

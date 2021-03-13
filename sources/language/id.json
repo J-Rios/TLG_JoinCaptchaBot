@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Menghapus pesan media (gambar, audio, file...) dari {}, untuk menjaga telegram tetap bebas dari spam.\n\nKamu bjsa mengirimkan pesan media setelah kamu menyelesaikan captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Captcha lainnya",
 
@@ -168,11 +186,11 @@
         "Tidak dapat menggunakan perintah ini dalam grup saat ini.",
 
     "VERSION":
-        "Versi Bot saat ini: {}",
+        "Versi Bot saat ini:\n{}",
 
     "ABOUT_MSG":
         "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - Setelah pengguna baru memecahkan captha, terapkan batasan untuk tidak mengizinkan mereka mengirim pesan non-teks (gambar, video, audio) selama 1 hari (atau selamanya, menggunakan kata kunci \"forever\").\n\n/add_ignore - Jangan meminta captcha kepada pengguna yang diabaikan.\n\n/remove_ignore - Berhenti mengabaikan pengguna.\n\n/ignore_list - daftar ID pengguna yang diabaikan.\n\n/allowgroup - Izinkan grup untuk menggunakan Bot (jika Bot bersifat Pribadi).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya."
+        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - Setelah pengguna baru memecahkan captha, terapkan batasan untuk tidak mengizinkan mereka mengirim pesan non-teks (gambar, video, audio) selama 1 hari (atau selamanya, menggunakan kata kunci \"forever\").\n\n/add_ignore - Jangan meminta captcha kepada pengguna yang diabaikan.\n\n/remove_ignore - Berhenti mengabaikan pengguna.\n\n/ignore_list - daftar ID pengguna yang diabaikan.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Izinkan grup untuk menggunakan Bot (jika Bot bersifat Pribadi).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya."
 }

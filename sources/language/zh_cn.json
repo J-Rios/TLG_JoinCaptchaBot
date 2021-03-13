@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "为了保持Telegram不被垃圾消息困扰，从 {} 中删除了非文本消息（图像，音频，文件...）没有电子邮件的电报。\n\n输入验证码后，您可以发送非文本消息。",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "其他验证码",
 
@@ -168,11 +186,11 @@
         "在当前聊天中无法使用此命令。",
 
     "VERSION":
-        "当前机器人版本号： {}",
+        "当前机器人版本号：\n{}",
 
     "ABOUT_MSG":
         "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧。\n\nPaypal账号：\n{}\n\nBTC型比特币地址：\n{}",
 
     "COMMANDS":
-        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/welcome_msg - 允许配置解析验证码后发送的欢迎消息。\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/chatid - Shows Chat ID of current chat.\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
+        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合。）\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/welcome_msg - 允许配置解析验证码后发送的欢迎消息。\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/chatid - Shows Chat ID of current chat.\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。"
 }

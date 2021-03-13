@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "Usunąłem wiadomość nie tekstową (obraz, audio, plik...) od {}, by Telegram był wolny od Spamu wszelkiego.\n\nMożna wysyłać wiadomości nie tekstowe po rozwiązaniu captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Nowe Captcha",
 
@@ -168,11 +186,11 @@
         "Nie mogę użyć tej komendy w tym czacie.",
 
     "VERSION":
-        "Aktualna wersja bota: {}",
+        "Aktualna wersja bota:\n{}",
 
     "ABOUT_MSG":
         "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to.\n\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Lista komend:\n————————————————\n/start - pokazuje wstępne informacje o bocie.\n\n/help - pokazuje pomoc.\n\n/commands - pokazuje tą wiadomość. Informacje o wszystkich komendach oraz ich krótkie opisy.\n\n/language - pozwala zmienić język bota.\n\n/time - pozwala zmienić czas na rozwiązanie captcha.\n\n/difficulty - pozwala zmienić stopień trudności captcha (od 1 do 5).\n\n/captcha_mode - pozwala zmienić tryb znaków captcha (nums: tylko cyfry, hex: cyfry oraz znaki A-F, ascii: cyfry oraz znaki A-Z).\n\n/welcome_msg - pozwala na konfigurację wiadomości powitalnej po rozwiązaniu captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - nie pytaj zignorowanych użytkowników o captcha.\n\n/remove_ignore - przestań ignorować użytkownika.\n\n/ignore_list - lista ignorowanych użytkowników/ID.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - włącza zabezpieczenie captcha.\n\n/disable - wyłącza zabezpieczenie captcha.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - pokazuje wersję bota.\n\n/about - pokazuje inne informcje o bocie."
+        "Lista komend:\n————————————————\n/start - pokazuje wstępne informacje o bocie.\n\n/help - pokazuje pomoc.\n\n/commands - pokazuje tą wiadomość. Informacje o wszystkich komendach oraz ich krótkie opisy.\n\n/language - pozwala zmienić język bota.\n\n/time - pozwala zmienić czas na rozwiązanie captcha.\n\n/difficulty - pozwala zmienić stopień trudności captcha (od 1 do 5).\n\n/captcha_mode - pozwala zmienić tryb znaków captcha (nums: tylko cyfry, hex: cyfry oraz znaki A-F, ascii: cyfry oraz znaki A-Z).\n\n/welcome_msg - pozwala na konfigurację wiadomości powitalnej po rozwiązaniu captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - nie pytaj zignorowanych użytkowników o captcha.\n\n/remove_ignore - przestań ignorować użytkownika.\n\n/ignore_list - lista ignorowanych użytkowników/ID.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - włącza zabezpieczenie captcha.\n\n/disable - wyłącza zabezpieczenie captcha.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - pokazuje wersję bota.\n\n/about - pokazuje inne informcje o bocie."
 }

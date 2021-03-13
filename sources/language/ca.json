@@ -146,6 +146,24 @@
     "NOT_TEXT_MSG_ALLOWED":
         "He eliminat un missatge que no és de text (imatge, àudio, fitxer...) enviat per {}, per tal de mantenir el grup net de brossa.\n\nPodreu enviar missatges que no siguin de text un cop hàgiu resolt el captcha.",
 
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
     "OTHER_CAPTCHA_BTN_TEXT":
         "Mostra un altre captcha",
 
@@ -168,11 +186,11 @@
         "No es pot utilitzar aquesta ordre en el xat actual.",
 
     "VERSION":
-        "La versió actual del bot és: {}",
+        "La versió actual del bot és:\n{}",
 
     "ABOUT_MSG":
         "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè.\nPaypal:\n{}\n\nBTC:\n{}",
 
     "COMMANDS":
-        "Llistat d'ordres:\n————————————————\n/start - Mostra la informació inicial sobre el bot.\n\n/help - Mostra la informació d'ajuda.\n\n/commands - Mostra el missatge actual: informació sobre totes les ordres disponibles i la seva descripció.\n\n/language - Permet canviar l'idioma en que parla el bot.\n\n/time - Permet canviar el temps disponible per a resoldre un captcha.\n\n/difficulty - Permet canviar el nivell de dificultat del captcha (d'1 a 5).\n\n/captcha_mode - Permet canviar el mode-caràcter del captcha (nums: només números, hex: números i lletres A-F, ascii: números i lletres A-Z).\n\n/welcome_msg - Permet configurar un missatge de benvinguda que s’envia després de resoldre el captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Activa la protecció per captcha en el grup.\n\n/disable - Desactiva la protecció per captcha en el grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Consulta la versió del bot.\n\n/about - Mostra la informació \"Quant a...\" del bot."
+        "Llistat d'ordres:\n————————————————\n/start - Mostra la informació inicial sobre el bot.\n\n/help - Mostra la informació d'ajuda.\n\n/commands - Mostra el missatge actual: informació sobre totes les ordres disponibles i la seva descripció.\n\n/language - Permet canviar l'idioma en que parla el bot.\n\n/time - Permet canviar el temps disponible per a resoldre un captcha.\n\n/difficulty - Permet canviar el nivell de dificultat del captcha (d'1 a 5).\n\n/captcha_mode - Permet canviar el mode-caràcter del captcha (nums: només números, hex: números i lletres A-F, ascii: números i lletres A-Z).\n\n/welcome_msg - Permet configurar un missatge de benvinguda que s’envia després de resoldre el captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Activa la protecció per captcha en el grup.\n\n/disable - Desactiva la protecció per captcha en el grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Consulta la versió del bot.\n\n/about - Mostra la informació \"Quant a...\" del bot."
 }
