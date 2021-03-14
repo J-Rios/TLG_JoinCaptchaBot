@@ -874,16 +874,15 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 if has_url or has_alias:
                     printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
                     printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
+                    captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                     # Try to remove the message and notify detection
-                    rm_result = tlg_delete_msg(bot, chat_id, msg_id)
-                    if rm_result == 1:
+                    delete_result = tlg_delete_msg(bot, chat_id, msg_id)
+                    if delete_result["error"] == "":
                         bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
+                        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
                     # Check if message cant be removed due to not delete msg privileges
-                    if rm_result == -2:
+                    elif delete_result["error"] == "Message can't be deleted":
                         bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
-                    # Get chat kick timeout and send spam detection message with autoremove
-                    if (rm_result == 1) or (rm_result == -2):
-                        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
                     else:
                         printts("Message can't be deleted.")
