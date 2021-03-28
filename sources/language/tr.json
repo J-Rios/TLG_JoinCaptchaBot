@@ -5,6 +5,9 @@
     "HELP":
         "Bot yardımı:\n————————————————\n- Ben bir gruba katılan her yeni kullanıcı için bir görüntü captcha gönderen ve belirli bir süre içinde captcha'yı çözemeyen herkesi gruptan atan bir Botum.\n\n- Bir kullanıcı arka arkaya 5 kez gruba katılmaya çalışır ve captcha'yı yinede çözemezse, bu \"kullanıcının\" bir bot olduğunu varsayarım ve banlarım.\n\n- Captcha tamamlanmadan önce yeni bir \"kullanıcı\" tarafından gönderilen bir URL içeren tüm iletiler spam olarak kabul edilir ve silinir.\n\n- Kullanıcıları yasaklamak ve iletileri kaldırmak için bana yönetim ayrıcalıkları vermeyi unutmayın.\n\n- Grubu temiz tutmak için, bir captcha çözülmediğinde ve kullanıcı atıldığında (5 dakika sonra) benimle ilgili tüm mesajları otomatik olarak kaldırırım.\n\n- Yeni kullanıcıların captcha'yı çözmesi gereken süre varsayılan olarak 5 dakikadır, ancak bu süre /time komutu kullanılarak değiştirilebilir.\n\n- /enable ve /disable komutlarını kullanarak captcha korumasını açabilir / kapatabilirsiniz.\n\n- Yapılandırma komutları yalnızca grup Yöneticileri tarafından kullanılabilir.\n\n- /language komutunu kullanarak konuştuğum dili değiştirebilirsiniz.\n\n- /difficulty komutunu kullanarak captcha zorluk seviyesini değiştirebilirsiniz.\n\n- /captcha_mode komutunu kullanarak captcha'yı yalnızca sayı (varsayılan) veya sayı ve harf kullanacak şekilde ayarlayabilirsiniz.\n\n- /welcome_msg komutuyla özel bir karşılama iletisi ayarlayabilirsiniz.\n\n- /restrict_non_text komutunu kullanarak yeni kullanıcılara metin mesajı dışında gönderi yapmamaları için kısıtlama uygulamama izin ver seçeneğini etkinleştirebilirsiniz.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- Kullanılabilir tüm komutların bir listesini ve hepsinin kısa bir açıklamasını almak için /commands komutunu kullanın.",
 
+    "COMMANDS":
+        "Komutların listesi:\n————————————————\n/start - Bot hakkında ilk bilgileri gösterir.\n\n/help - Yardım bilgilerini gösterir.\n\n/commands - Bu mesajı gösterir. Mevcut tüm komutlar ve açıklamaları hakkında bilgi.\n\n/language - Bot mesajlarının dilini değiştirmeye izin verir.\n\n/time - Bir captcha'yı çözmek için gereken zamanı değiştirmeye izin verir.\n\n/difficulty - Captcha zorluk seviyesini değiştirmeye izin verir (1'den 5'e).\n\n/captcha_mode - Captcha karakter modunu değiştirmeye izin verir (nums: sadece numaralar, hex: sayılar ve A-F karakterleri, ascii: sayılar ve A-Z karakterleri).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Güvenlik kodunu çözdükten sonra gönderilen bir hoş geldiniz mesajının yapılandırılmasına izin verir.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Yok sayılan bir kullanıcıya Captcha sorma.\n\n/remove_ignore - Bir kullanıcıyı yoksaymayı durdur.\n\n/ignore_list - yok sayılan kullanıcıların ID'lerinin listesi.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Grubun captcha korumasını etkinleştir.\n\n/disable - Grubun captcha korumasını kapat.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Bot versiyonunu göster.\n\n/about - Bilgi hakkında göster.",
+
     "CMD_NOT_ALLOW":
         "Bu komutu yalnızca Yönetici kullanabilir.",
 
@@ -45,10 +48,10 @@
         "Captcha karakter modu başarıyla buna değiştirildi \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\" ve \"ascii\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\", \"ascii\", \"button\" ve \"poll\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "Karşılama mesajı başarıyla değiştirildi.",
@@ -114,13 +117,13 @@
         "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\" atıldı.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak gruptaki kullanıcıları atmak için yönetici haklarına sahip değilim.",
+        "{} \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak gruptaki kullanıcıları atmak için yönetici haklarına sahip değilim.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak kullanıcı grupta değil (gruptan ayrıldı veya başka bir Yönetici tarafından atıldı).",
+        "{} \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak kullanıcı grupta değil (gruptan ayrıldı veya başka bir Yönetici tarafından atıldı).",
 
     "BOT_CANT_KICK":
-        "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak beklenmedik bir sorun nedeniyle (belki ağ/sunucu ile ilgili), yapamadım.",
+        "{} \"Kullanıcı\"yı gruptan atmaya çalıştım, ancak beklenmedik bir sorun nedeniyle (belki ağ/sunucu ile ilgili), yapamadım.",
 
     "CANT_DEL_MSG":
         "Bu iletiyi silmeye çalıştım, ancak tarafımdan gönderilmeyen iletileri kaldırmak için yönetici haklarına sahip değilim.",
@@ -189,8 +192,32 @@
         "Mevcut Bot versiyonu:\n{}",
 
     "ABOUT_MSG":
-        "Bu Bot ücretsiz bir yazılımdır ve GNU-GPL lisansı altında açık kaynaklıdır.\nBot {} tarafından geliştirilmiştir.\n\nKodu burada görebilirsiniz:\n{}\n\nÇalışmamı beğendiniz mi? Bana bir kahve ısmarlayın.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Bu Bot ücretsiz bir yazılımdır ve GNU-GPL lisansı altında açık kaynaklıdır.\nBot {} tarafından geliştirilmiştir.\n\nKodu burada görebilirsiniz:\n{}\n\nÇalışmamı beğendiniz mi? Bana bir kahve ısmarlayın:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "Komutların listesi:\n————————————————\n/start - Bot hakkında ilk bilgileri gösterir.\n\n/help - Yardım bilgilerini gösterir.\n\n/commands - Bu mesajı gösterir. Mevcut tüm komutlar ve açıklamaları hakkında bilgi.\n\n/language - Bot mesajlarının dilini değiştirmeye izin verir.\n\n/time - Bir captcha'yı çözmek için gereken zamanı değiştirmeye izin verir.\n\n/difficulty - Captcha zorluk seviyesini değiştirmeye izin verir (1'den 5'e).\n\n/captcha_mode - Captcha karakter modunu değiştirmeye izin verir (nums: sadece numaralar, hex: sayılar ve A-F karakterleri, ascii: sayılar ve A-Z karakterleri).\n\n/welcome_msg - Güvenlik kodunu çözdükten sonra gönderilen bir hoş geldiniz mesajının yapılandırılmasına izin verir.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Yok sayılan bir kullanıcıya Captcha sorma.\n\n/remove_ignore - Bir kullanıcıyı yoksaymayı durdur.\n\n/ignore_list - yok sayılan kullanıcıların ID'lerinin listesi.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Grubun captcha korumasını etkinleştir.\n\n/disable - Grubun captcha korumasını kapat.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Bot versiyonunu göster.\n\n/about - Bilgi hakkında göster."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }
