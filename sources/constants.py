@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/02/2021
+    29/03/2021
 Version:
-    1.18.1
+    1.19.0
 '''
 
 ###############################################################################
@@ -148,6 +148,21 @@ CONST = {
         bool(int(os_getenv("CAPTCHABOT_INIT_RM_WELCOME_MSG", \
             SETTINGS["CAPTCHABOT_INIT_RM_WELCOME_MSG"]))),
 
+    # Maximum number of allowed captcha Poll options
+    "MAX_POLL_OPTIONS": \
+        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTIONS", \
+            SETTINGS["CAPTCHABOT_MAX_POLL_OPTIONS"])),
+
+    # Poll captcha question max length
+    "MAX_POLL_QUESTION_LENGTH": \
+        int(os_getenv("CAPTCHABOT_MAX_POLL_QUESTION_LENGTH", \
+            SETTINGS["CAPTCHABOT_MAX_POLL_QUESTION_LENGTH"])),
+
+    # Poll captcha question max length
+    "MAX_POLL_OPTION_LENGTH": \
+        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
+            SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
+
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
 
@@ -268,7 +283,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.18.1 (28/02/2021)"
+    "VERSION": "1.19.0 (29/03/2021)"
 }
 
 

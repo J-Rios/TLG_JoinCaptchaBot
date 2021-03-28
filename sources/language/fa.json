@@ -5,6 +5,9 @@
     "HELP":
         "راهنما ربات:\n\n- من یک ربات هستم که برای هر کاربر جدیدی که به گروه می پیوندد ، کپچا ارسال می کند و به کسانی که نمی توانند کد کپچا را در یک زمان مشخص حل کنید.\n\n- اگر کاربر 5 بار پیاپی سعی کند به گروه بپیوندد و هرگز کد کپچا را حل نکند ، فرض می کنم که\"کاربر\"یک ربات است و خواهد بود. ممنوع است.\n\n- هر پیام که حاوی URL باشد که قبل از اتمام کد کپچا توسط یک \"کاربر\" جدید ارسال شده باشد ، هرزنامه تلقی خواهد شد و حذف خواهد شد.\n\n- شما باید به من مدیریت کنید حقوق برای کاربران لگد زدن و حذف پیام ها.\n\n- برای حفظ یک گروه تمیز ، وقتی پیام کد کپچا حل نشد و کاربر لگد خورد شد ، پیام های مربوط به من را به طور خودکار حذف می کنم.\n\n- زمان استفاده کاربران جدید برای حل کد کپچا 5 دقیقه به طور پیش فرض است ، اما می توان آن را با استفاده از دستور /time پیکربندی کرد .=n\n- شما می توانید با استفاده از دستورات /محافظت از کد کپچا را با استفاده از دستورات /فعال یا غیرفعال کنید. n\n- دستورات پیکربندی فقط توسط gr قابل استفاده هستند شما می توانید با استفاده از دستور /زبان. زبانی را که من صحبت می کنم تغییر دهید. می توانید سطح دشواری کد کپچا را با استفاده از دستور /difficulty. پیکربندی کنید. فقط اعداد (پیش فرض) یا تعداد کامل و نامه ها را با استفاده از دستور /captcha_mode.\n\n- می توانید پیغام خوش آمد گویی سفارشی را با دستور پیکربندی کنید /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- چک /دستورات را برای دریافت لیستی از تمام دستورات قابل دسترسی تنظیم کنید و شرح مختصری از همه آنها.",
 
+    "COMMANDS":
+        "List of commands:\n————————————————\n/start - Shows the initial information about the bot.\n\n/help - Shows the help information.\n\n/commands - Shows this message. Information about all the available commands and their description.\n\n/language - Allows to change the language of the bot's messages.\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha mode (nums: numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars, button: just a button).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Allows to configure a welcome message that is sent after solving the captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Show the version of the Bot.\n\n/about - Show about info.",
+
     "CMD_NOT_ALLOW":
         "فقط یک سرپرست می تواند از این دستور استفاده کند.",
 
@@ -45,10 +48,10 @@
         "حالت کاراکتر کد کپچا با موفقیت به\"{}\"تغییر یافت.",
 
     "CAPTCHA_MODE_INVALID":
-        "حالت کاراکتر کد کپچا نامعتبر است. حالتهای پشتیبانی شده عبارتند از:\"nums\"،\"hex\"و\"ascii\".\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "حالت کاراکتر کد کپچا نامعتبر است. حالتهای پشتیبانی شده عبارتند از:\"nums\"،\"hex\"،\"ascii\"،\"button\"و\"poll\".\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "این دستور برای تنظیم یک حالت کاراکتر نیاز دارد. حالتهای موجود عبارتند از:\n- ضبط های عددی (\"nums\").\n- ضبط های شش ضلعی ، اعداد و شخصیت های AF (\"hex\").\n- اعداد و شخصیت های AZ Captchas (\"ascii\").\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "این دستور برای تنظیم یک حالت کاراکتر نیاز دارد. حالتهای موجود عبارتند از:\n- ضبط های عددی (\"nums\").\n- ضبط های شش ضلعی ، اعداد و شخصیت های AF (\"hex\").\n- اعداد و شخصیت های AZ Captchas (\"ascii\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nمثال:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "پیام خوش آمدید با موفقیت پیکربندی شده است.",
@@ -189,8 +192,32 @@
         "نسخه فعلی Bot:\n{}",
 
     "ABOUT_MSG":
-        "این Bot نرم افزار رایگان است و با مجوز GNU-GPL منبع باز است.\nایجاد شده توسط {}.\n\nشما می توانید کد را در اینجا بررسی کنید:\n}\n\nآیا کارهای من را دوست دارید؟ من بخرید قهوه.\n\nپی پال:\n{}\n\nBTC:\n{}",
+        "این Bot نرم افزار رایگان است و با مجوز GNU-GPL منبع باز است.\nایجاد شده توسط {}.\n\nشما می توانید کد را در اینجا بررسی کنید:\n}\n\nآیا کارهای من را دوست دارید؟ من بخرید قهوه:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "List of commands:\n————————————————\n/start - Shows the initial information about the bot.\n\n/help - Shows the help information.\n\n/commands - Shows this message. Information about all the available commands and their description.\n\n/language - Allows to change the language of the bot's messages.\n\n/time - Allows changing the time available to solve a captcha.\n\n/difficulty - Allows changing captcha difficulty level (from 1 to 5).\n\n/captcha_mode - Allows changing captcha mode (nums: numbers, hex: numbers and A-F chars, ascii: numbers and A-Z chars, button: just a button).\n\n/welcome_msg - Allows to configure a welcome message that is sent after solving the captcha.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Enable the captcha protection of the group.\n\n/disable - Disable the captcha protection of the group.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Show the version of the Bot.\n\n/about - Show about info."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }

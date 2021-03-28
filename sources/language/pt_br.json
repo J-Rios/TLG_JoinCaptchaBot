@@ -3,7 +3,10 @@
         "Olá, eu sou um Bot que envia um captcha de imagem para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\nSe um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou presumir que esse \"usuário\" é um Bot, e ele será banido. Também, qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\nLembre-se de dar privilégios de administrador para que eu possa expulsar-banir usuários e excluir mensagens do grupo.\n\nConfira o comando /help para saber mais sobre como me usar.\n\nEu sou útil? Confira o comando /about e considere fazer uma doação para me manter ativo.",
 
     "HELP":
-        "Ajuda do Bot:\n————————————————\n- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\n- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou presumir que esse “usuário” é um Bot, e ele será banido.\n\n- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\n- Você tem que me dar privilégios de administrador para que eu possa expulsar e banir usuários, e remover mensagens.\n\n- Para manter o grupo limpo, eu removo automaticamente todas as mensagens relacionadas a mim quando um captcha não é enviado e o usuário é expulso (depois de 5 minutos).\n\n- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ser configurado usando o comando /time.\n\n- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e /disable.\n\n- Comandos de configuração somente podem ser usados pelos Administradores do grupo.\n\n- Você pode definir o idioma que eu falo usando o comando /language.\n\n- Você pode configurar o grau de dificuldade do captcha usando a opção /difficulty.\n\nVocê pode definir se o captcha terá apenas números (o padrão) ou números e letras, usando a opção /captcha_mode.\n\n- Você pode configurar uma mensagem de boas-vindas personalizada com o comando /welcome_msg.\n\n- Você pode ativar a opção para me deixar aplicar a restrição de mensagens apenas em texto para utilizadores que acabaram de ingressar no grupo com o comando /restrict_non_text.\n\n- Se o Bot for Privado, você pode permitir grupos com o comando /allowgroup.\n\n- Use a opção /commands para ver a lista de todos os comandos com uma breve descrição de cada um deles.",
+        "Ajuda do Bot:\n————————————————\n- Eu sou um Bot que envia um captcha para cada novo usuário que entra no grupo e expulsa aquele que não enviar o captcha no tempo definido.\n\n- Se um usuário tentar entrar no grupo 5 vezes sem enviar o captcha corretamente, vou presumir que esse “usuário” é um Bot, e ele será banido.\n\n- Qualquer mensagem que contenha um URL que tenha sido enviado por um novo \"usuário\" antes da conclusão do captcha, será considerada Spam e será excluída.\n\n- Você tem que me dar privilégios de administrador para que eu possa expulsar e banir usuários, e remover mensagens.\n\n- Para manter o grupo limpo, eu removo automaticamente todas as mensagens relacionadas a mim quando um captcha não é enviado e o usuário é expulso (depois de 5 minutos).\n\n- O tempo de espera para que o usuário envie o captcha é de 5 minutos, mas ele pode ser configurado usando o comando /time.\n\n- Você pode ativar ou desativar a proteção captcha usando os comandos /enable e /disable.\n\n- Comandos de configuração somente podem ser usados pelos Administradores do grupo.\n\n- Você pode definir o idioma que eu falo usando o comando /language.\n\n- Você pode configurar o grau de dificuldade do captcha usando a opção /difficulty.\n\nVocê pode definir se o captcha terá apenas números (o padrão) ou números e letras, or a custom poll, or just a button, usando a opção /captcha_mode.\n\n- Você pode configurar uma mensagem de boas-vindas personalizada com o comando /welcome_msg.\n\n- Você pode ativar a opção para me deixar aplicar a restrição de mensagens apenas em texto para utilizadores que acabaram de ingressar no grupo com o comando /restrict_non_text.\n\n- Se o Bot for Privado, você pode permitir grupos com o comando /allowgroup.\n\n- Use a opção /commands para ver a lista de todos os comandos com uma breve descrição de cada um deles.",
+
+    "COMMANDS":
+        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot.\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-caractere do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Permite configurar uma mensagem de boas-vindas que é enviada após a resolução do captcha.\n\n/restrict_non_text - Depois de um novo utilizador resolver o captcha, aplicar a restrição para poder enviar mensagens apenas de texto (excluindo imagens, vídeos, audios) por 1 dia (ou para sempre, por usar a palavra \"forever\").\n\n/add_ignore - Não pedir a resolução do captcha a um utilizador ignorado.\n\n/remove_ignore - Parar de ignorar um utilizador.\n\n/ignore_list - lista de todos os IDs dos utilizadores ignorados.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Permitir ao grupo que use o Bot (se o Bot for Privado).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\".",
 
     "CMD_NOT_ALLOW":
         "Apenas um Admin pode usar esse comando",
@@ -45,10 +48,10 @@
         "O modo-caractere do captcha mudou para \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo-caractere inválido. As opções disponíveis são: \"nums\", \"hex\" ou \"ascii\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Modo-caractere inválido. As opções disponíveis são: \"nums\", \"hex\", \"ascii\", \"button\" ou \"poll\".\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "O comando exite um modo definido. As opções disponíveis são:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimais, com números e letras A-F (\"hex\").\n- Captchas com números e letras A-Z (\"ascii\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "Mensagem de boas-vindas configurada com sucesso.",
@@ -114,13 +117,13 @@
         "{} não enviou o captcha em tempo útil. O \"utilizador\" foi expulso.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} não completou o captcha em tempo. Eu tentei expulsar o \"utilizador\", mas eu não tenho poderes administrativos para expulsar utilizadores do grupo.",
+        "Eu tentei expulsar o \"utilizador\" {}, mas eu não tenho poderes administrativos para expulsar utilizadores do grupo.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} não completou o captcha em tempo. Eu tentei expulsar o \"utilizador\", mas o utilizador não está mais no grupo (ele saiu ou foi expulso por um Admin).",
+        "Eu tentei expulsar o \"utilizador\" {}, mas o utilizador não está mais no grupo (ele saiu ou foi expulso por um Admin).",
 
     "BOT_CANT_KICK":
-        "{} não completou o captcha em tempo. Eu tentei expulsar o \"usuário\", mas algo deu errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.",
+        "Eu tentei expulsar o \"utilizador\" {}, mas algo deu errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.",
 
     "CANT_DEL_MSG":
         "Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para remover mensagens que não foram enviadas por mim",
@@ -189,8 +192,32 @@
         "Versão atual do Bot:\n{}",
 
     "ABOUT_MSG":
-        "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Este é um Software Livre licenciado pela GNU-GPL Bot desenvolvido pelo {}.\n\nVocê pode acessar o código fonte aqui:\n{}\n\nGosta do meu trabalho? Me pague um café:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "Lista de comandos:\n————————————————\n/start - Mostrar informações básicas sobre o bot.\n\n/help - Mostra informações de ajuda.\n\n/commands - Mostra a lista de todos os comandos disponíveis e suas descrições.\n\n/language - Permite definir o idioma das mensagens do bot.\n\n/time - Permite alterar o tempo disponível para resolver um captcha.\n\n/difficulty - Permite alterar o nível de dificuldade do captcha (de 1 a 5).\n\n/captcha_mode - Permite alterar o modo-caractere do captcha (nums: apenas números, hex: números e letras A-F, ascii: números e letras A-Z).\n\n/welcome_msg - Permite configurar uma mensagem de boas-vindas que é enviada após a resolução do captcha.\n\n/restrict_non_text - Depois de um novo utilizador resolver o captcha, aplicar a restrição para poder enviar mensagens apenas de texto (excluindo imagens, vídeos, audios) por 1 dia (ou para sempre, por usar a palavra \"forever\").\n\n/add_ignore - Não pedir a resolução do captcha a um utilizador ignorado.\n\n/remove_ignore - Parar de ignorar um utilizador.\n\n/ignore_list - lista de todos os IDs dos utilizadores ignorados.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Permitir ao grupo que use o Bot (se o Bot for Privado).\n\n/enable - Ativa a proteção captcha no grupo.\n\n/disable - Desativa a proteção captcha no grupo.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Mostra a versão do Bot.\n\n/about - Mostra informações \"sobre\"."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }
