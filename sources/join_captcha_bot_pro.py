@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/02/2021
+    29/03/2021
 Version:
-    1.18.1
+    1.19.0
 '''
 
 ###############################################################################
@@ -40,13 +40,13 @@ from multicolorcaptcha import CaptchaGenerator
 
 from telegram import (
     Update, InputMediaPhoto, InlineKeyboardButton,
-    InlineKeyboardMarkup, ChatPermissions
+    InlineKeyboardMarkup, ChatPermissions, Poll
 )
 
 from telegram.ext import (
     CallbackContext, Updater, CommandHandler,
     MessageHandler, Filters, CallbackQueryHandler,
-    Defaults
+    PollAnswerHandler, Defaults
 )
 
 from telegram.ext.dispatcher import (
@@ -68,10 +68,11 @@ from commons import (
 )
 
 from tlgbotutils import (
-    tlg_send_msg, tlg_send_image, tlg_answer_callback_query,
-    tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user, tlg_kick_user,
-    tlg_user_is_admin, tlg_leave_chat, tlg_restrict_user,
-    tlg_is_valid_user_id_or_alias, tlg_is_valid_group
+    tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
+    tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
+    tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
+    tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
+    tlg_alias_in_string
 )
 
 from constants import (
@@ -170,9 +171,15 @@ def get_default_config_data():
         ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
         ("Rm_Result_Msg", CONST["INIT_RM_RESULT_MSG"]),
         ("Rm_Welcome_Msg", CONST["INIT_RM_WELCOME_MSG"]),
+        ("Poll_Q", ""),
+        ("Poll_A", []),
+        ("Poll_C_A", 0),
         ("Welcome_Msg", "-"),
         ("Ignore_List", [])
     ])
+    # Feed Captcha Poll Options with empty answers for expected max num
+    for _ in range(0, CONST["MAX_POLL_OPTIONS"]):
+        config_data["Poll_A"].append("")
     return config_data
 
 
@@ -402,6 +409,15 @@ def create_image_captcha(img_file_name, difficult_level, chars_mode):
     return generated_captcha
 
 
+def num_config_poll_options(poll_options):
+    '''Check how many poll options are configured.'''
+    configured_options = 0
+    for i in range(0, CONST["MAX_POLL_OPTIONS"]):
+        if poll_options[i] != "":
+            configured_options = configured_options + 1
+    return configured_options
+
+
 def is_user_in_ignored_list(chat_id, user):
     '''Check if user is in ignored users list.'''
     ignored_users = get_chat_config(chat_id, "Ignore_List")
@@ -586,13 +602,64 @@ def new_member_join(update: Update, context: CallbackContext):
             # Determine configured language and captcha settings
             lang = get_chat_config(chat_id, "Language")
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-            captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+            captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
             # selfdestruct
             captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
             send_problem = False
-            if captcha_chars_mode != "button":
+            captcha_num = ""
+            if captcha_mode == "button":
+                # Send a button-only challenge
+                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(user_name_lrm,
+                        chat_title, str(captcha_timeout))
+                # Prepare inline keyboard button to let user pass
+                keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
+                        callback_data="button_captcha {}".format(join_user_id))]]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                printts("[{}] Sending captcha message to {}: [button]".format(chat_id, join_user_name))
+                sent_result = tlg_send_msg(bot, chat_id, challenge_text,
+                        reply_markup=reply_markup, timeout=40)
+                if sent_result["msg"] is None:
+                    send_problem = True
+            elif captcha_mode == "poll":
+                poll_question = get_chat_config(chat_id, "Poll_Q")
+                poll_options = get_chat_config(chat_id, "Poll_A")
+                poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
+                if (poll_question == "") or (num_config_poll_options(poll_options) < 2) \
+                or (poll_correct_option == 0):
+                    tlg_send_selfdestruct_msg(bot, chat_id,
+                            TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"])
+                    continue
+                # Send request to solve the poll text message
+                poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(user_name_lrm,
+                    chat_title, str(captcha_timeout))
+                sent_result = tlg_send_selfdestruct_msg(bot, chat_id, poll_request_msg_text)
+                solve_poll_request_msg_id = None
+                if sent_result is not None:
+                    solve_poll_request_msg_id = sent_result
+                # Send the Poll
+                sent_result = tlg_send_poll(bot, chat_id, poll_question,
+                        poll_options, poll_correct_option-1, captcha_timeout*60,
+                        False, Poll.QUIZ)
+                if sent_result["msg"] is None:
+                    send_problem = True
+                else:
+                    # Save some info about the poll the bot_data for
+                    # later use in receive_quiz_answer
+                    poll_id = sent_result["msg"].poll.id
+                    poll_msg_id = sent_result["msg"].message_id
+                    poll_data = {
+                        poll_id:
+                        {
+                            "chat_id": chat_id,
+                            "poll_msg_id": poll_msg_id,
+                            "user_id": join_user_id,
+                            "correct_option": poll_correct_option
+                        }
+                    }
+                    context.bot_data.update(poll_data)
+            else: # Image captcha
                 # Generate a pseudorandom captcha send it to telegram group and program message
-                captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_chars_mode)
+                captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_mode)
                 captcha_num = captcha["number"]
                 # Note: Img caption must be <= 1024 chars
                 img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(user_name_lrm,
@@ -610,26 +677,10 @@ def new_member_join(update: Update, context: CallbackContext):
                 # Remove sent captcha image file from file system
                 if path.exists(captcha["image"]):
                     remove(captcha["image"])
-            else:
-                # Send a button-only challenge
-                challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(user_name_lrm,
-                        chat_title, str(captcha_timeout))
-                captcha_num = ""
-                # Prepare inline keyboard button to let user pass
-                keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
-                        callback_data="button_captcha {}".format(join_user_id))]]
-                reply_markup = InlineKeyboardMarkup(keyboard)
-                printts("[{}] Sending captcha message to {}: [button]".format(chat_id, join_user_name))
-                sent_result = tlg_send_msg(bot, chat_id, challenge_text,
-                        reply_markup=reply_markup, timeout=30)
-                if sent_result["msg"] is None:
-                    send_problem = True
             if not send_problem:
-                # Add sent image to self-destruct list
+                # Add sent captcha message to self-destruct list
                 if sent_result["msg"] is not None:
-                    if not tlg_msg_to_selfdestruct_in(sent_result["msg"], captcha_timeout+0.5):
-                        printts("[{}] sent_msg does not have all expected attributes. "
-                                "Scheduled for deletion".format(chat_id))
+                    tlg_msg_to_selfdestruct_in(sent_result["msg"], captcha_timeout+0.5)
                 # Default user join data
                 join_data = \
                 {
@@ -659,6 +710,8 @@ def new_member_join(update: Update, context: CallbackContext):
                 new_users[chat_id][join_user_id]["join_msg"] = update_msg.message_id
                 if sent_result["msg"]:
                     new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_result["msg"].message_id)
+                if (captcha_mode == "poll") and (solve_poll_request_msg_id is not None):
+                    new_users[chat_id][join_user_id]["msg_to_rm"].append(solve_poll_request_msg_id)
                 printts("[{}] Captcha send process complete.".format(chat_id))
                 printts(" ")
 
@@ -756,10 +809,6 @@ def msg_nocmd(update: Update, context: CallbackContext):
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
         return
-    # Ignore if captcha mode is "button"
-    captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
-    if captcha_chars_mode not in { "nums", "hex", "ascii" }:
-        return
     # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
     msg_text = getattr(update_msg, "text", None)
     if msg_text is None:
@@ -802,8 +851,32 @@ def msg_nocmd(update: Update, context: CallbackContext):
         return
     if user_id not in new_users[chat_id]:
         return
-    # Determine configured bot language in actual chat
+    # Get Chat settings
     lang = get_chat_config(chat_id, "Language")
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    # Check for Spam (check if the message contains any URL or alias)
+    has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+    has_alias = tlg_alias_in_string(msg_text)
+    if has_url or has_alias:
+        printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
+        printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
+        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+        # Try to remove the message and notify detection
+        delete_result = tlg_delete_msg(bot, chat_id, msg_id)
+        if delete_result["error"] == "":
+            bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+        # Check if message cant be removed due to not delete msg privileges
+        elif delete_result["error"] == "Message can't be deleted":
+            bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+        else:
+            printts("Message can't be deleted.")
+        return
+    # End here if no image captcha mode
+    if captcha_mode not in { "nums", "hex", "ascii" }:
+        return
     # Check if the expected captcha solve number is in the message
     printts("[{}] Received captcha reply from {}: {}".format(chat_id, user_name, msg_text))
     if new_users[chat_id][user_id]["join_data"]["captcha_num"].lower() in msg_text.lower():
@@ -817,7 +890,6 @@ def msg_nocmd(update: Update, context: CallbackContext):
         tlg_delete_msg(bot, chat_id, msg_id)
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         # Send message solve message
-        rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
         if rm_result_msg:
             tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
         else:
@@ -861,33 +933,130 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
-            else:
-                # Check if the message contains any URL
-                has_url = re.findall(CONST["REGEX_URLS"], msg_text)
-                # Check if the message contains any alias and if it is a group or channel alias
-                has_alias = False
-                for word in msg_text.split():
-                    if (len(word) > 1) and (word[0] == '@'):
-                        has_alias = True
-                        break
-                # Remove and notify if url/alias detection
-                if has_url or has_alias:
-                    printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
-                    printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
-                    # Try to remove the message and notify detection
-                    rm_result = tlg_delete_msg(bot, chat_id, msg_id)
-                    if rm_result == 1:
-                        bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
-                    # Check if message cant be removed due to not delete msg privileges
-                    if rm_result == -2:
-                        bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
-                    # Get chat kick timeout and send spam detection message with autoremove
-                    if (rm_result == 1) or (rm_result == -2):
-                        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-                        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
-                    else:
-                        printts("Message can't be deleted.")
     printts("[{}] Captcha reply process complete.".format(chat_id))
+    printts(" ")
+
+
+@run_async
+def receive_poll_answer(update: Update, context: CallbackContext):
+    '''User poll vote received'''
+    global new_users
+    bot = context.bot
+    active_polls = context.bot_data
+    poll_id = update.poll_answer.poll_id
+    from_user = update.poll_answer.user
+    option_answer = update.poll_answer.option_ids[0] + 1
+    msg_text = "User {} select poll option {}".format(from_user.username, option_answer)
+    print(msg_text)
+    # Ignore any Poll vote that comes from unexpected poll
+    if poll_id not in active_polls:
+        return
+    poll_data = active_polls[poll_id]
+    # Ignore Poll votes that doesn't come from expected user in captcha process
+    if from_user.id != poll_data["user_id"]:
+        return
+    # Handle poll vote
+    chat_id = poll_data["chat_id"]
+    user_id = poll_data["user_id"]
+    poll_msg_id = poll_data["poll_msg_id"]
+    poll_correct_option = poll_data["correct_option"]
+    # The vote come from expected user, let's stop the Poll
+    tlg_stop_poll(bot, chat_id, poll_msg_id)
+    # Get user name (if has an alias, just use the alias)
+    user_name = from_user.full_name
+    if from_user.username is not None:
+        user_name = "@{}".format(from_user.username)
+    # Get chat settings
+    lang = get_chat_config(chat_id, "Language")
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
+    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
+    restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
+    # Remove previous join messages
+    for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+        tlg_delete_msg(bot, chat_id, msg)
+    new_users[chat_id][user_id]["msg_to_rm"].clear()
+    # Check if user vote the correct option
+    if option_answer == poll_correct_option:
+        printts("[{}] User {} solved a poll challenge.".format(chat_id, user_name))
+        bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
+        if rm_result_msg:
+            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        else:
+            tlg_send_msg(bot, chat_id, bot_msg)
+        del new_users[chat_id][user_id]
+        # Check for custom welcome message and send it
+        if welcome_msg != "-":
+            if rm_welcome_msg:
+                sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
+                        CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+            else:
+                sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
+            if sent_result is None:
+                printts("[{}] Error: Can't send the welcome message.".format(chat_id))
+        # Check for send just text message option and apply user restrictions
+        if restrict_non_text_msgs == 1: # Restrict for 1 day
+            tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+            tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+                send_stickers_gifs=False, insert_links=False, send_polls=False,
+                invite_members=False, pin_messages=False, change_group_info=False,
+                until_date=tomorrow_epoch)
+        elif restrict_non_text_msgs == 2: # Restrict forever
+            tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
+                send_stickers_gifs=False, insert_links=False, send_polls=False,
+                invite_members=False, pin_messages=False, change_group_info=False)
+    else:
+        # Notify captcha fail
+        printts("[{}] User {} fail a poll challenge.".format(chat_id, user_name))
+        bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL_0"].format(user_name)
+        sent_msg_id = None
+        if rm_result_msg:
+            sent_result = tlg_send_msg(bot, chat_id, bot_msg)
+            if sent_result["msg"] is not None:
+                sent_msg_id = sent_result["msg"].message_id
+        else:
+            tlg_send_msg(bot, chat_id, bot_msg)
+        # Wait 10s
+        sleep(10)
+        # Try to kick the user
+        kick_result = tlg_kick_user(bot, chat_id, user_id)
+        if kick_result["error"] == "":
+            # Kick success
+            msg_text = TEXT[lang]["CAPTCHA_POLL_FAIL_1"].format(user_name)
+            # Send kicked message
+            if rm_result_msg:
+                tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+            else:
+                tlg_send_msg(bot, chat_id, msg_text)
+        else:
+            # Kick fail
+            printts("[{}] Unable to kick".format(chat_id))
+            if (kick_result["error"] == "The user has left the group") or \
+                    (kick_result["error"] == "The user was already kicked"):
+                # The user is not in the chat
+                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
+                if rm_result_msg:
+                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                else:
+                    tlg_send_msg(bot, chat_id, msg_text)
+            elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
+                # Bot has no privileges to kick
+                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(user_name)
+                # Send no rights for kick message without auto-remove
+                tlg_send_msg(bot, chat_id, msg_text)
+            else:
+                # For other reason, the Bot can't ban
+                msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
+                if rm_result_msg:
+                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                else:
+                    tlg_send_msg(bot, chat_id, msg_text)
+        # Remove user from captcha process
+        del new_users[chat_id][user_id]
+        # Remove fail message
+        if sent_msg_id is not None:
+            tlg_delete_msg(bot, chat_id, sent_msg_id)
+    printts("[{}] Poll captcha process complete.".format(chat_id))
     printts(" ")
 
 
@@ -943,11 +1112,14 @@ def button_request_captcha(bot, query):
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
     img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(user_name,
             chat_title, str(captcha_timeout))
-    # Determine configured bot language in actual chat
+    # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-    captcha_chars_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    # Use nums mode if captcha_mode was changed while captcha was in progress
+    if captcha_mode not in { "nums", "hex", "ascii" }:
+        captcha_mode = "nums"
     # Generate a new captcha and edit previous captcha image message with this one
-    captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
+    captcha = create_image_captcha(str(user_id), captcha_level, captcha_mode)
     printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
     input_media = InputMediaPhoto(media=open(captcha["image"], "rb"), caption=img_caption)
     edit_result = tlg_edit_msg_media(bot, chat_id, msg_id, media=input_media,
@@ -975,13 +1147,14 @@ def button_request_pass(bot, query):
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
     chat_title = add_lrm(chat_title)
-    # Ignore if request come from not a a new user that has not completed the captcha
+    # Ignore if request doesn't come from a new user in captcha process
     if chat_id not in new_users:
         return
     if user_id not in new_users[chat_id]:
         return
-    # Get chat language
+    # Get chat settings
     lang = get_chat_config(chat_id, "Language")
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     # Remove previous join messages
     for msg in new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
@@ -989,7 +1162,6 @@ def button_request_pass(bot, query):
     # Send message solve message
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     if rm_result_msg:
         tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
     else:
@@ -1248,7 +1420,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         return
     # Get and configure chat to provided captcha mode
     new_captcha_mode = args[0]
-    if new_captcha_mode in { "button", "nums", "hex", "ascii" }:
+    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii" }:
         save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
@@ -1300,6 +1472,123 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
         bot_msg = TEXT[lang]["WELCOME_MSG_SET"]
     save_config_property(chat_id, "Welcome_Msg", welcome_msg)
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_captcha_poll(update: Update, context: CallbackContext):
+    '''Command /captcha_poll message handler'''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update_msg)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check if command was execute by an Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if is_admin is None:
+        tlg_send_selfdestruct_msg(bot, chat_id,
+                TEXT[lang]["CAN_NOT_GET_ADMINS"])
+        return
+    if not is_admin:
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
+        return
+    # Format command usage text
+    text_cmd_usage = TEXT[lang]["CAPTCHA_POLL_USAGE"].format(
+            CONST["MAX_POLL_QUESTION_LENGTH"],
+            CONST["MAX_POLL_OPTION_LENGTH"],
+            CONST["MAX_POLL_OPTIONS"])
+    # Check if no argument was provided with the command
+    if len(args) < 2:
+        tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+        return
+    # Get poll message command
+    poll_cmd = args[0]
+    print("poll_cmd: {}".format(poll_cmd))
+    if poll_cmd not in ["question", "option", "correct_option"]:
+        tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+        return
+    if poll_cmd == "question":
+        # get Poll Question
+        poll_question = " ".join(args[1:])
+        print("poll_question: {}".format(poll_question))
+        if len(poll_question) > CONST["MAX_POLL_QUESTION_LENGTH"]:
+            poll_question = poll_question[:CONST["MAX_POLL_QUESTION_LENGTH"]]
+        # Save Poll Question
+        save_config_property(chat_id, "Poll_Q", poll_question)
+        tlg_send_selfdestruct_msg(bot, chat_id,
+                TEXT[lang]["POLL_QUESTION_CONFIGURED"])
+    elif poll_cmd == "correct_option":
+        # get Poll correct option and check if is a number
+        option_num = args[1]
+        if not is_int(option_num):
+            tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+            return
+        option_num = int(option_num)
+        # Check if correct option number is configured
+        if (option_num < 1) or (option_num > CONST["MAX_POLL_OPTIONS"]):
+            tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+            return
+        poll_options = get_chat_config(chat_id, "Poll_A")
+        if option_num > num_config_poll_options(poll_options):
+            tlg_send_selfdestruct_msg(bot, chat_id,
+                    TEXT[lang]["POLL_CORRECT_OPTION_NOT_CONFIGURED"].format(
+                    option_num))
+            return
+        # Save Poll correct option number
+        save_config_property(chat_id, "Poll_C_A", option_num)
+        tlg_send_selfdestruct_msg(bot, chat_id,
+                TEXT[lang]["POLL_CORRECT_OPTION_CONFIGURED"].format(
+                option_num))
+    elif poll_cmd == "option":
+        # Check if option argument is valid
+        if len(args) < 3:
+            tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+            return
+        option_num = args[1]
+        print("option_num: {}".format(option_num))
+        if not is_int(option_num):
+            tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+            return
+        option_num = int(option_num)
+        if (option_num < 1) or (option_num > CONST["MAX_POLL_OPTIONS"]):
+            tlg_send_selfdestruct_msg(bot, chat_id, text_cmd_usage)
+            return
+        option_num = option_num - 1
+        # Resize poll options list if missing options slots
+        poll_options = get_chat_config(chat_id, "Poll_A")
+        if len(poll_options) < CONST["MAX_POLL_OPTIONS"]:
+            missing_options = CONST["MAX_POLL_OPTIONS"] - len(poll_options)
+            for _ in range(missing_options, CONST["MAX_POLL_OPTIONS"]):
+                poll_options.append("")
+        # Modify option number if previous option is not defined
+        for i in range(0, CONST["MAX_POLL_OPTIONS"]):
+            if (poll_options[i] == "") and (i < option_num):
+                option_num = i
+                break
+        # Parse provided Poll option text to configure and limit length
+        poll_option = " ".join(args[2:])
+        print("poll_option: {}".format(poll_option))
+        if len(poll_option) > CONST["MAX_POLL_OPTION_LENGTH"]:
+            poll_option = poll_option[:CONST["MAX_POLL_OPTION_LENGTH"]]
+        # Check if requested an option remove and remove it
+        if poll_option.lower() == "remove":
+            del poll_options[option_num]
+            poll_options.append("")
+        # Save Poll option
+        poll_options[option_num] = poll_option
+        save_config_property(chat_id, "Poll_A", poll_options)
+        tlg_send_selfdestruct_msg(bot, chat_id,
+                TEXT[lang]["POLL_OPTION_CONFIGURED"].format(option_num+1))
 
 
 def cmd_restrict_non_text(update: Update, context: CallbackContext):
@@ -2085,6 +2374,7 @@ def main():
     dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
     dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
     dp.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
+    dp.add_handler(CommandHandler("captcha_poll", cmd_captcha_poll, pass_args=True))
     dp.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text, pass_args=True))
     dp.add_handler(CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
     dp.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore, pass_args=True))
@@ -2112,6 +2402,8 @@ def main():
     # Set to dispatcher inline keyboard callback handler for new captcha request and
     # button captcha challenge
     dp.add_handler(CallbackQueryHandler(key_inline_keyboard))
+    # Set to dispatcher users poll vote handler
+    dp.add_handler(PollAnswerHandler(receive_poll_answer))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
         printts("Setup Bot for Polling.")

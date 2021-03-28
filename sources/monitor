@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-tail -n100 -f output.log | grep -e "New join detected: ‎" -e "Captcha not solved, kicking " -e "Captcha solved by ‎"
+tail -n1000 -f output.log | grep -e "New join detected:" -e "Captcha not solved, kicking" -e "Captcha solved by"
 
 exit 0
