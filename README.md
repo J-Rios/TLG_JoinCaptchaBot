@@ -213,3 +213,5 @@ To add support for a new language you must follow this steps:
 - Kannada: [@itsAPK](https://github.com/itsAPK)
 
 - Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
+
+- Korean: [@dakeshi](https://github.com/dakeshi)
