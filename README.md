@@ -198,8 +198,6 @@ To add support for a new language you must follow this steps:
 
 - Indonesian: ForIndonesian
 
-- [Unsupported, not working] Persian (Iran): [sajjad taheri](https://github.com/tgMember)
-
 - Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy)
 
 - Esperanto: Pablo Busto & Porrumentzio.
