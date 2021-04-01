@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    31/03/2021
+    01/04/2021
 Version:
     1.19.1
 '''
@@ -987,6 +987,8 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
+    # Wait 3s to let poll animation be shown
+    sleep(3)
     # Remove previous join messages
     for msg in new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
