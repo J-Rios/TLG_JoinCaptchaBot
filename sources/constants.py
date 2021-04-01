@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    29/03/2021
+    31/03/2021
 Version:
-    1.19.0
+    1.19.1
 '''
 
 ###############################################################################
@@ -240,6 +240,7 @@ CONST = {
         "\nIndonesian / Indonesia\n/language id\n" \
         "\nItalian / Italiano\n/language it\n" \
         "\nKannada / Kannada\n/language kn\n" \
+        "\nKorean / 한국어\n/language ko\n" \
         "\nPolish / Polskie\n/language pl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nRussian / Pусский\n/language ru\n" \
@@ -279,6 +280,7 @@ TEXT = {
     "ID": {}, # Indonesian
     "IT": {}, # Italian
     "KN": {}, # Kannada
+    "KO": {}, # Korean
     "NL": {}, # Dutch
     "PL": {}, # Polish
     "PT_BR": {}, # Portuguese (Brasil)
