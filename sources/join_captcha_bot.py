@@ -2066,38 +2066,38 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
         l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         bot_msg = "\n".join([str(user) for user in l_white_users])
         bot_msg = "Global Allowed Users List:\n--------------------\n{}".format(bot_msg)
-        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-        tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
+        tlg_send_msg(bot, chat_id, bot_msg)
+        tlg_send_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
         return
     else:
         if len(args) <= 1:
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
+            tlg_send_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
             return
         if (args[0] != "add") and (args[0] != "rm"):
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
+            tlg_send_msg(bot, chat_id, CONST["ALLOWUSERLIST_USAGE"])
             return
         add_rm = args[0]
         user = args[1]
         l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         if add_rm == "add":
             if not tlg_is_valid_user_id_or_alias(user):
-                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
+                tlg_send_msg(bot, chat_id, "Invalid User ID/Alias.")
                 return
             if user not in l_white_users:
                 file_write(CONST["F_ALLOWED_USERS"], "{}\n".format(user))
-                tlg_send_selfdestruct_msg(bot, chat_id, "User added to Global allowed list.")
+                tlg_send_msg(bot, chat_id, "User added to Global allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The User is already in Global allowed list.")
+                tlg_send_msg(bot, chat_id, "The User is already in Global allowed list.")
             return
         if add_rm == "rm":
             if not tlg_is_valid_user_id_or_alias(user):
-                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid User ID/Alias.")
+                tlg_send_msg(bot, chat_id, "Invalid User ID/Alias.")
                 return
             if list_remove_element(l_white_users, user):
                 file_write(CONST["F_ALLOWED_USERS"], l_white_users, "w")
-                tlg_send_selfdestruct_msg(bot, chat_id, "User removed from Global allowed list.")
+                tlg_send_msg(bot, chat_id, "User removed from Global allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The User is not in Global allowed list.")
+                tlg_send_msg(bot, chat_id, "The User is not in Global allowed list.")
 
 
 def cmd_allowgroup(update: Update, context: CallbackContext):
@@ -2127,38 +2127,38 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
         l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
         bot_msg = "\n".join([str(group) for group in l_allowed_groups])
         bot_msg = "Allowed Groups:\n--------------------\n{}".format(bot_msg)
-        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
-        tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+        tlg_send_msg(bot, chat_id, bot_msg)
+        tlg_send_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
         return
     else:
         if len(args) <= 1:
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+            tlg_send_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
             return
         if (args[0] != "add") and (args[0] != "rm"):
-            tlg_send_selfdestruct_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
+            tlg_send_msg(bot, chat_id, CONST["ALLOWGROUP_USAGE"])
             return
         add_rm = args[0]
         group = args[1]
         l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
         if add_rm == "add":
             if not tlg_is_valid_group(group):
-                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid Group ID.")
+                tlg_send_msg(bot, chat_id, "Invalid Group ID.")
                 return
             if group not in l_allowed_groups:
                 file_write(CONST["F_ALLOWED_GROUPS"], "{}\n".format(group))
-                tlg_send_selfdestruct_msg(bot, chat_id, "Group added to allowed list.")
+                tlg_send_msg(bot, chat_id, "Group added to allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The group is already in the allowed list.")
+                tlg_send_msg(bot, chat_id, "The group is already in the allowed list.")
             return
         if add_rm == "rm":
             if not tlg_is_valid_group(group):
-                tlg_send_selfdestruct_msg(bot, chat_id, "Invalid Group ID.")
+                tlg_send_msg(bot, chat_id, "Invalid Group ID.")
                 return
             if list_remove_element(l_allowed_groups, group):
                 file_write(CONST["F_ALLOWED_GROUPS"], l_allowed_groups, "w")
-                tlg_send_selfdestruct_msg(bot, chat_id, "Group removed from allowed list.")
+                tlg_send_msg(bot, chat_id, "Group removed from allowed list.")
             else:
-                tlg_send_selfdestruct_msg(bot, chat_id, "The group is not in allowed list.")
+                tlg_send_msg(bot, chat_id, "The group is not in allowed list.")
 
 ###############################################################################
 ### Bot automatic remove sent messages thread
