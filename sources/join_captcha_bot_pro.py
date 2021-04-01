@@ -629,6 +629,8 @@ def new_member_join(update: Update, context: CallbackContext):
                     tlg_send_selfdestruct_msg(bot, chat_id,
                             TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"])
                     continue
+                # Remove empty strings from options list
+                poll_options = list(filter(None, poll_options))
                 # Send request to solve the poll text message
                 poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(user_name_lrm,
                     chat_title, str(captcha_timeout))
