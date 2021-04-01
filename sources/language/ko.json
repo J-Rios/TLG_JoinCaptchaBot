@@ -1,0 +1,223 @@
+{
+    "START":
+        "안녕하세요. 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다. 또한, 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n캡차 봇이 사용자 추방, 제한, 메시지 삭제를 하려면 관리자 권한이 필요합니다.\n\n/help 명령어를 통해 자세한 캡차 봇 사용법을 확인하실 수 있습니다.\n\n유용한 봇이라고 생각하신다면 /about 명령어를 입력해서 저에게 기부할 수 있는 방법을 확인해보세요.",
+
+    "HELP":
+        "봇 도움말:\n————————————————\n- 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n- 특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다.\n\n- 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n- 사용자 추방, 메시지 삭제를 하려면 관리자 그룹에 캡차 봇을 추가해야 합니다.\n\n- 캡차를 풀지 못한 사용자가 추방되면 채팅방을 깔끔하게 유지하기 위해 봇과 관련된 모든 메시지는 5분 뒤에 자동으로 삭제됩니다. \n\n- 신규 사용자가 캡차를 입력해야 하는 시간은 5분으로 기본 설정되어 있으며, /time 명령어를 이용해 시간은 조정할 수 있습니다.\n\n- 캡차 기능은 /enable 과 /disable 명령어로 활성화/비활성화 여부를 설정할 수 있습니다.\n\n- 설정과 관련된 명령어는 관리자 그룹만 이용할 수 있습니다.\n\n- 봇에서 제공하는 언어는 /language 명령어를 이용해 다른 언어로 변경할 수 있습니다.\n\n- 캡차 난이도는 /difficulty 명령어로 조정할 수 있습니다.\n\n- 캡차는 기본적으로 숫자로만 제공되며 숫자와 문자 A-Z가 결합된 형태 또는 숫자와 문자 A-F, 객관식 문제 풀기, 버튼 등의 형태로 제공할 수 있으며 /captcha_mode 명령어로 모드를 변경하실 수 있습니다.\n\n- /welcome_msg 명령어로 환영 메시지를 변경할 수 있습니다.\n\n- /restrict_non_text 명령어는 신규 사용자가 텍스트 이외의 메시지는 입력하지 못하게 제한하는 명령어 입니다.\n\n- 비공개 버전 봇이라면 /allowgroup 명령어를 이용해 그룹을 허용해줄 수 있습니다.\n\n- /commands 명령어를 입력하면 이용 가능한 명령어 목록을 짧은 설명과 함께 확인하실 수 있습니다.",
+
+    "COMMANDS":
+        "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 변경할 수 있습니다.\n\n/time - 캡차 입력 제한 시간을 변경할 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 변경할 수 있습니다.\n\n/captcha_mode - 캡차 모드를 변경할 수 있습니다. (nums: 숫자, hex: 숫자와 문자 A-F, ascii: 숫자와 문자 A-Z, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 문제 풀기 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/restrict_non_text - 신규 사용자가 캡차를 푼 이후에 텍스트 이외의 메시지(이미지, 비디오, 오디오 등)를 하루 동안(또는 \"forever\" 키워드를 통해 영원히 입력 못하게 제한 가능) 입력하지 못하게 제한할 수 있습니다.\n\n/add_ignore - 예외 목록에 등록된 사용자는 캡차를 입력하지 않아도 됩니다.\n\n/remove_ignore - 사용자에 대한 예외 처리 중단.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 일정 시간이 지난 후 캡차 입력 완료, 추방, 제한 메시지를 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/remove_welcome_msg - 일정 시간이 지난 후 환영 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/allowgroup - 비공개 버전의 봇을 그룹에서 이용할 수 있게 설정할 수 있습니다.\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
+
+    "CMD_NOT_ALLOW":
+        "이 명령어는 관리자만 사용할 수 있습니다.",
+
+    "LANG_CHANGE":
+        "언어 설정이 English로 변경되었습니다.",
+
+    "LANG_SAME":
+        "영어로 이미 설정되어 있습니다.\n\n지원되는 언어 목록:\n{}",
+
+    "LANG_BAD_LANG":
+        "지원되지 않는 언어입니다.\n\n지원되는 언어 목록:\n{}",
+
+    "LANG_NOT_ARG":
+        "설정할 언어를 입력해주세요.\n\n예시:\n{}",
+
+    "TIME_CHANGE":
+        "캡차 입력 가능 시간이 {} 분으로 변경되었습니다.",
+
+    "TIME_MAX_NOT_ALLOW":
+        "캡차 입력 가능 최대 시간은 20 분이며 이 값은 변경할 수 없습니다.",
+
+    "TIME_NOT_NUM":
+        "시간은 숫자로만 입력해주세요.",
+
+    "TIME_NOT_ARG":
+        "분 단위 형태의 시간을 입력해주세요.\n\n예시:\n/time 3\n/time 5\n/time 10",
+
+    "DIFFICULTY_CHANGE":
+        "캡차 난이도가 {}으로 변경되었습니다.",
+
+    "DIFFICULTY_NOT_NUM":
+        "캡차 난이도는 숫자로 설정하셔야 합니다.",
+
+    "DIFFICULTY_NOT_ARG":
+        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "캡차 모드가 \"{}\"로 변경되었습니다.",
+
+    "CAPTCHA_MODE_INVALID":
+        "올바르지 않은 캡차 모드입니다. 설정 가능한 모드는 다음과 같습니다: \"nums\", \"hex\", \"ascii\", \"button\", \"poll\".\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
+
+    "WELCOME_MSG_SET":
+        "환영 메시지가 설정되었습니다.",
+
+    "WELCOME_MSG_UNSET":
+        "환영 메시지가 비활성화되었습니다.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "명령어 뒤에 환영 메시지를 입력해주세요.\n\nExample:\n/welcome_msg $user 님 안녕하세요. 채널 방문을 환영합니다. 상대방을 배려하는 채팅 매너는 필수입니다.\n\n환영 메시지 비활성화:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "신규 사용자는 텍스트 메시지 이외는 입력할 수 없게 설정되었습니다. 최근에 가입한 사용자가 텍스트 이외의 메시지를 입력하면 삭제할 것입니다.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "신규 사용자가 텍스트 메시지 이외는 입력할 수 없게 제한하는 기능이 비활성화되었습니다.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "신규 사용자가 텍스트 메시지 이외는 입력할 수 없게 제한하려면 enable 또는 disable로 설정하셔야 합니다. (설정 시 사용자는 텍스트 이외의 미디어나 다른 형태의 메시지를 입력할 수 없습니다. 관리자는 언제든지 이 설정을 변경할 수 있습니다).\n\n예시:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "명령어 뒤에 사용자 ID/alias를 입력해주세요.\n\n예시:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "예외 목록에 해당 ID/alias가 등록되어 있습니다.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "예외 목록에 더 이상 추가할 수 없습니다. 기존에 등록된 사용자를 삭제하면 추가 등록이 가능합니다.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "올바른 ID/alias가 아닙니다.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "ID/alias가 예외 목록에 추가되었습니다!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "명령어 뒤에 사용자 ID/alias를 입력해주세요.\n\n예시:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "ID/alias가 예외 목록에서 삭제되었습니다!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "요청하신 ID/alias는 예외 목록에 등록되어 있지 않습니다.",
+
+    "IGNORE_LIST_EMPTY":
+        "예외 목록이 비어있습니다.",
+
+    "NEW_USER_CAPTCHA_CAPTION":
+        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 화면에 나타난 숫자 또는 문자를 채팅창에 입력해주세요. {} 분 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
+
+    "NEW_USER_BUTTON_MODE":
+        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 사람이라면 아래 버튼을 클릭해주세요. {} 분 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
+
+    "CAPTCHA_SOLVED":
+        "캡차 답안 제출이 완료되어 사용자가 인증되었습니다.\n{} 방문을 환영합니다",
+
+    "CAPTCHA_INCORRECT_0":
+        "올바른 캡차 코드가 아닙니다. 다시 시도해주세요...",
+
+    "CAPTCHA_INCORRECT_1":
+        "올바른 숫자가 아닙니다. 캡차는 숫자 4개로 구성되어 있으니 참고바랍니다...",
+
+    "NEW_USER_KICK":
+        "{} 님은 시간 안에 캡차 코드를 입력하지 못했습니다. \"User\" 님은 추방되었습니다.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "봇에 관리자 권한이 부여되지 않아 \"User\" {} 님을 추방하지 못했습니다.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "\"User\" {} 님을 추방하려고 했으나 사용자가 더 이상 채팅방에 존재하지 않습니다. (채팅방을 나갔거나 관리자에 의해 이미 추방된 것 같습니다).",
+
+    "BOT_CANT_KICK":
+        "\"User\" {} 님을 추방하려고 했으나 예상하지 못한 문제(네트워크 또는 서버 문제)가 발생하여 추방하지 못했습니다.",
+
+    "CANT_DEL_MSG":
+        "이 메시지를 삭제하고 했으나 봇에 관리자 권한이 부여되지 않아 메시지를 삭제하지 못했습니다.",
+
+    "NEW_USER_BAN":
+        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치가 내려졌습니다. 이 사용자가 다시 가입하려면 관리자가 수동으로 이 \"user\" 에 대한 제한을 해제해야 합니다.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 사용자가 더 이상 채팅방에 존재하지 않습니다. (채팅방을 나갔거나 관리자에 의해 이미 추방/제한된 것 같습니다).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 봇에 관리자 권한이 부여되지 않아서 성공하지 못했습니다.",
+
+    "BOT_CANT_BAN":
+        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 예상하지 못한 문제(네트워크 또는 서버 문제)가 발생하여 성공하지 못했습니다.",
+
+    "SPAM_DETECTED_RM":
+        "캡차를 아직 풀지 않는 {} 로부터 URL (또는 alias)이 포함된 메시지가 감지되었습니다. 깔끔한 채팅방 유지를 위해 메시지는 삭제되었습니다.:)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "캡차를 아직 풀지 않는 {} 로부터 URL (또는 alias)이 포함된 메시지가 감지되었습니다. 스팸 메시지 삭제를 시도했지만 봇에 관리자 권한이 부여되지 않아 성공하지 못했습니다.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "스팸 방지를 위해 {}가 입력한 메시지(이미지, 오디오, 파일...)가 삭제 처리되었습니다.\n\n텍스트 이외의 메시지는 캡차를 푸신 다음에 입력할 수 있습니다..",
+
+    "RM_SOLVE_KICK_MSG":
+        "일정 시간이 지난 뒤에 캡차 입력 완료, 추방/제한 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n예시:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "설정 변경 완료. 일정 시간이 지난 뒤에 캡차 입력 완료, 추방/제한 메시지는 자동으로 삭제될 것입니다.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "설정 변경 완료. 캡차 입력 완료, 추방/제한 메시지가 삭제되지 않을 것입니다.",
+
+    "RM_WELCOME_MSG":
+        "일정 시간이 지난 뒤에 환영 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n예시:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "설정 변경 완료. 일정 시간이 지난 뒤에 환영 메시지는 자동으로 삭제될 것입니다",
+
+    "RM_WELCOME_MSG_NO":
+        "설정 변경 완료. 환영 메시지는 삭제되지 않을 것입니다.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "다른 캡차 보기",
+
+    "PASS_BTN_TEXT":
+        "봇이 아니라면 버튼을 클릭해주세요.",
+
+    "ENABLE":
+        "캡차 기능이 활성화되었습니다. 캡차 비활성화 명령은 /disable 입니다.",
+
+    "DISABLE":
+        "캡차 기능이 비활성화되었습니다. 캡차 활성화 명령은 /enable 입니다.",
+
+    "ALREADY_ENABLE":
+        "캡차 기능이 이미 활성화되어있습니다.",
+
+    "ALREADY_DISABLE":
+        "캡차 기능이 이미 비활성화되어있습니다.",
+
+    "CAN_NOT_GET_ADMINS":
+        "관리자만 이 명령어를 사용할 수 있습니다.",
+
+    "VERSION":
+        "봇 버전:\n{}",
+
+    "ABOUT_MSG":
+        "이 봇은 GNU-GPL 라이센스로 배포된 오픈 소스이자 무료 소프트웨어입니다.\n봇 개발자는 {}입니다.\n\n코드는 이곳에서 확인하실 수 있습니다:\n{}\n\n제 작업이 마음에 드신다면 저에게 커피 한 잔 사주세요:\n{}\n\nBTC:\n{}",
+
+    "POLL_NEW_USER":
+        "안녕하세요 {} 님, {} 방문을 환영합니다. 봇 계정이 아니라면 아래에 있는 객관식 문제를 풀어주세요. {} 분 안에 객관식 문제를 풀지 못하면 채팅방에서 자동 추방되니 주의바랍니다.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "객관식 문제 풀기 실패. {} 님은 오답을 선택하셨습니다. 10 초 안에 추방될 것입니다. 채팅방에 다시 입장해주시길 바랍니다...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "객관식 문제 풀기 실패. {} 님은 오답을 선택하셨습니다. \"User\" 님은 추방되셨습니다.",
+
+    "CAPTCHA_POLL_USAGE":
+        "객관식 문제 풀기 캡차 모드에 사용될 질문과 답안 설정\n————————————————\n질문은 {} 자 미만으로 작성해주세요.\n\n객관식 답안은 {} 자 미만으로 작성해주세요.\n\n답안 갯수는 최대 {} 개까지 만들 수 있습니다.\n————————————————\n객관식 질문 설정:\n/captcha_poll question 이 채팅방에 가입하시겠습니까?\n\n객관식 1번 답안  설정:\n/captcha_poll option 1 아니요, 가입하고 싶지 않습니다.\n\n객관식 2번 답안 설정:\n/captcha_poll option 2 네. 채팅방에 가입하고 싶습니다.\n\n객관식 3번 답안 설정:\n/captcha_poll option 3 난 누구인가, 여긴 어디인가\n\n객관식 2번 답안 삭제:\n/captcha_poll option 2 remove\n\n2번 답안을 정답으로 설정하기:\n/captcha_poll correct_option 2\n\n캡차 모드를 객관식 문제 풀기 모드로 변경하기:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "객관식 문제 풀기 캡차에 사용될 질문이 설정되었습니다.",
+
+    "POLL_OPTION_CONFIGURED":
+        "객관식 문제 풀기 캡차에 사용될 {} 번 답안이 설정되었습니다.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "객관식 문제 풀기 캡차의 정답은 보기 {} 번으로 설정되었습니다.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "정답으로 설정한 {} 번 항목은 존재하지 않습니다. 객관식 답안을 먼저 설정해주세요.\n\n예시:\ncaptcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "신규 사용자가 입장했는데 객관식 문제 풀기 캡차가 제대로 설정되지 않아 캡차가 정상적으로 동작하지 않고 있습니다. \n\n객관식 질문과 함께 보기 문항은 최소 2개 이상으로 구성해주시고 정답을 설정해주시길 바랍니다. /captcha_poll 명령어로 설정하실 수 있습니다.\n\n예시:\ncaptcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
+}
