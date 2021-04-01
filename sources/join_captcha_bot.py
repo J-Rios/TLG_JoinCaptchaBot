@@ -1588,8 +1588,9 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
         if poll_option.lower() == "remove":
             del poll_options[option_num]
             poll_options.append("")
+        else:
+            poll_options[option_num] = poll_option
         # Save Poll option
-        poll_options[option_num] = poll_option
         save_config_property(chat_id, "Poll_A", poll_options)
         tlg_send_selfdestruct_msg(bot, chat_id,
                 TEXT[lang]["POLL_OPTION_CONFIGURED"].format(option_num+1))
