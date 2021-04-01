@@ -68,7 +68,7 @@ from commons import (
 )
 
 from tlgbotutils import (
-    tlg_send_msg, tlg_send_image, tlg_send_poll,
+    tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
