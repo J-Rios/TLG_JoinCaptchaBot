@@ -3,7 +3,10 @@
         "Привіт, я бот, який надсилає капчу для кожного нового користувача, який приєднується до групи, і викидує всіх, хто не може розв’язати капчу протягом певного часу.\n\nЯкщо користувач намагається приєднатися до групи 5 разів поспіль і ніколи не вирішує капчу, я вважаю, що цей \"користувач\" є ботом, і він буде заблокований. Також будь-яке повідомлення, що містить URL-адресу, надіслану новим \"користувачем\" до завершення введення капчі буде розглянуто як спам і буде видалено.\n\nНе забудьте надати мені адміністративні привілеї для блокування користувачів і видалення повідомлень.\n\nПеревірте команду /help для отримання додаткової інформації про моє використання.\n\nЯ корисний? Перевірте команду /about і подумайте про пожертвування, щоб я залишався активним.",
 
     "HELP":
-        "Довідка бота:\n————————————————\n- Я бот, який надсилає капчу для кожного нового користувача, який приєднується до групи, і викидую будь-кого з них, який не може вирішити капчу протягом певного часу.\n\n- Якщо користувач намагається приєднатися до групи 5 разів поспіль і ніколи не вирішує капчу, я вважаю, що цей \"користувач\" є ботом, і його буде заблоковано.\n\n- Будь-яке повідомлення, яке містить URL-адресу, надіслану новим \"користувачем\" до завершення введення капчі буде розглянуто як спам і його буде видалено.\n\n- Вам потрібно надати мені права адміністратора, щоб я міг викидувати користувачів і видаляти повідомлення.\n\n- Щоб зберегти чисту групу, я автоматично видаляю всі повідомлення, пов’язані зі мною, коли капчу не вдається вирішити і користувача викинуто (через 5 хвилин).\n\n- Час за який нові користувачі мають вирішити капчу, за замовчуванням становить 5 хвилин, але її можна налаштувати за допомогою команди /time.\n\n- Ви можете увімкнути/вимкнути захист капчею за допомогою команд /enable та /disable.\n\n- Команди конфігурації можуть використовувати лише адміністратори групи.\n\n- Ви можете змінити мову, якою я розмовляю, за допомогою команди /language.\n\n- Ви можете налаштувати рівень складності капчі за допомогою команди /difficulty.\n\n- Ви можете встановити капчу для використання повних цифр і букв A–Z, або цифри та літери A–F, або просто цифри (за замовчуванням), або просто кнопку, використовуючи команду /captcha_mode.\n\n- Ви можете налаштувати власне привітальне повідомлення за допомогою команди /welcome_msg.\n\n- Ви можете увімкнути опцію дозволити мені застосовувати обмеження до нових приєднаних користувачів для надсилання нетекстових повідомлень за допомогою команди /restrict_non_text.\n\n- Якщо бот в приваті, дозвольте її з командою /allowgroup.\n\n- Перевірте /commands отримати список усіх доступних команд та короткий опис усіх них.",
+        "Довідка бота:\n————————————————\n- Я бот, який надсилає капчу для кожного нового користувача, який приєднується до групи, і викидую будь-кого з них, який не може вирішити капчу протягом певного часу.\n\n- Якщо користувач намагається приєднатися до групи 5 разів поспіль і ніколи не вирішує капчу, я вважаю, що цей \"користувач\" є ботом, і його буде заблоковано.\n\n- Будь-яке повідомлення, яке містить URL-адресу, надіслану новим \"користувачем\" до завершення введення капчі буде розглянуто як спам і його буде видалено.\n\n- Вам потрібно надати мені права адміністратора, щоб я міг викидувати користувачів і видаляти повідомлення.\n\n- Щоб зберегти чисту групу, я автоматично видаляю всі повідомлення, пов’язані зі мною, коли капчу не вдається вирішити і користувача викинуто (через 5 хвилин).\n\n- Час за який нові користувачі мають вирішити капчу, за замовчуванням становить 5 хвилин, але її можна налаштувати за допомогою команди /time.\n\n- Ви можете увімкнути/вимкнути захист капчею за допомогою команд /enable та /disable.\n\n- Команди конфігурації можуть використовувати лише адміністратори групи.\n\n- Ви можете змінити мову, якою я розмовляю, за допомогою команди /language.\n\n- Ви можете налаштувати рівень складності капчі за допомогою команди /difficulty.\n\n- Ви можете встановити капчу для використання повних цифр і букв A–Z, або цифри та літери A–F, або просто цифри (за замовчуванням), , or a custom poll, або просто кнопку, використовуючи команду /captcha_mode.\n\n- Ви можете налаштувати власне привітальне повідомлення за допомогою команди /welcome_msg.\n\n- Ви можете увімкнути опцію дозволити мені застосовувати обмеження до нових приєднаних користувачів для надсилання нетекстових повідомлень за допомогою команди /restrict_non_text.\n\n- Якщо бот в приваті, дозвольте її з командою /allowgroup.\n\n- Перевірте /commands отримати список усіх доступних команд та короткий опис усіх них.",
+
+    "COMMANDS":
+        "Список команд:\n————————————————\n/start - Показує початкову інформацію про бота.\n\n/help - Показує довідкову інформацію.\n\n/commands - Показує це повідомлення. Інформація про всі доступні команди та їх опис.\n\n/language - Дозволяє змінювати мову повідомлень бота.\n\n/time - Дозволяє змінювати час, доступний для вирішення капчі.\n\n/difficulty - Дозволяє змінювати рівень складності капчі (від 1 до 5).\n\n/captcha_mode - Дозволяє змінювати режим капчі (nums: цифри, hex: цифри та A-F букви, ascii: цифри та A-Z букви, button: лише кнопка).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Дозволяє налаштувати привітальне повідомлення, яке надсилається після вирішення капчі.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Не запитувати у проігнорованого користувача капчу.\n\n/remove_ignore - Припинити ігнорувати користувача.\n\n/ignore_list - список ідентифікаторів ігнорованих користувачів.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Дозвольте групі використовувати бота (якщо бот в приваті).\n\n/enable - Увімкніть захист капчею для групи.\n\n/disable - Вимкніть захист капчею для групи.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Показати версію бота.\n\n/about - Показати інформацію про бота.",
 
     "CMD_NOT_ALLOW":
         "Цю команду може використовувати лише адміністратор.",
@@ -45,10 +48,10 @@
         "Режим капчі успішно змінено на \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", та \"button\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", \"button\" та \"poll\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Лише кнопка (\"button\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Лише кнопка (\"button\").\n- Custom Poll challenge (\"poll\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "Вітальне повідомлення успішно налаштовано.",
@@ -114,13 +117,13 @@
         "{} не виконав капчу вчасно. \"Користувача\" викинуто.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} не виконав капчу вчасно. Я намагався вигнати \"користувача\", але я не маю прав адміністратора, щоб виганяти користувачів із групи.",
+        "Я намагався вигнати \"користувача\" {}, але я не маю прав адміністратора, щоб виганяти користувачів із групи.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} не виконав капчу вчасно. Я намагався вигнати \"користувача\", але користувач більше не входить до групи (покинув групу або був вигнаний адміністратором).",
+        "Я намагався вигнати \"користувача\" {}, але користувач більше не входить до групи (покинув групу або був вигнаний адміністратором).",
 
     "BOT_CANT_KICK":
-        "{} не виконав капчу вчасно. Я намагався вигнати \"користувача\", але через несподівану проблему (можливо, пов'язану з мережею/сервером), я не можу цього зробити.",
+        "Я намагався вигнати \"користувача\" {}, але через несподівану проблему (можливо, пов'язану з мережею/сервером), я не можу цього зробити.",
 
     "CANT_DEL_MSG":
         "Я намагався видалити це повідомлення, але у мене немає прав адміністратора на видалення повідомлень, які я не надсилав.",
@@ -189,8 +192,32 @@
         "Поточна версія бота:\n{}",
 
     "ABOUT_MSG":
-        "Цей бот є безкоштовним програмним забезпеченням та відкритим кодом під ліцензією GNU-GPL.\nБот розроблено {}.\n\nВи можете перевірити код тут:\n{}\n\nВам подобається моя робота? Купіть мені каву.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Цей бот є безкоштовним програмним забезпеченням та відкритим кодом під ліцензією GNU-GPL.\nБот розроблено {}.\n\nВи можете перевірити код тут:\n{}\n\nВам подобається моя робота? Купіть мені каву:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "Список команд:\n————————————————\n/start - Показує початкову інформацію про бота.\n\n/help - Показує довідкову інформацію.\n\n/commands - Показує це повідомлення. Інформація про всі доступні команди та їх опис.\n\n/language - Дозволяє змінювати мову повідомлень бота.\n\n/time - Дозволяє змінювати час, доступний для вирішення капчі.\n\n/difficulty - Дозволяє змінювати рівень складності капчі (від 1 до 5).\n\n/captcha_mode - Дозволяє змінювати режим капчі (nums: цифри, hex: цифри та A-F букви, ascii: цифри та A-Z букви, button: лише кнопка).\n\n/welcome_msg - Дозволяє налаштувати привітальне повідомлення, яке надсилається після вирішення капчі.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Не запитувати у проігнорованого користувача капчу.\n\n/remove_ignore - Припинити ігнорувати користувача.\n\n/ignore_list - список ідентифікаторів ігнорованих користувачів.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Дозвольте групі використовувати бота (якщо бот в приваті).\n\n/enable - Увімкніть захист капчею для групи.\n\n/disable - Вимкніть захист капчею для групи.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Показати версію бота.\n\n/about - Показати інформацію про бота."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }

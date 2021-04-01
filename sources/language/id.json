@@ -3,7 +3,10 @@
         "Halo, Saya adalah Bot yang akan mengirimkan verifikasi captcha untuk setiap pengguna yang bergabung ke grup, dan akan mengeluarkannya bila tidak menyelesaikan captcha dalam waktu yang ditentukan. \n\nIf Pengguna yang mencoba bergabung dengan grup sebanyak 5 kali dan tidak menyelesaikan captcha, saya akan mengasumsikan  \"user\" adalah bot, dan akan dibanned. Juga, setiap pesan yang terdapat URL dikirim oleh \"user\"  sebelum menyelesaikan verifikasi captcha, akan dianggap spam dan akan dihapus.\n\nIngatlah untuk memberikan saya hak istimewa administrator untuk mengkick-banned pengguna dan menghapus pesannya.\n\nCek perintah /help untuk informasi lebih lanjut tentang cara penggunaanku.\n\nAku Berguna? Cek perintah /about dan silahkan berdonasi untukku dan menjaga bot tetap aktif.",
 
     "HELP":
-        "Bantuan Bot:\n————————————————\n- Aku adalah bot yang akan mengirimkan verifikasi captcha untuk setiap pengguna yang bergabung ke grup, dan akan mengeluarkannya bila tidak menyelesaikan captcha dalam waktu yang ditentukan.\n\n- If Pengguna yang mencoba bergabung dengan grup sebanyak 5 kali dan tidak menyelesaikan captcha, saya akan mengasumsikan  \"user\" adalah bot, dan akan dibanned.\n\n- setiap pesan yang terdapat URL dikirim oleh \"user\"  sebelum menyelesaikan verifikasi captcha, akan dianggap spam dan akan dihapus.\n\n- berikan saya hak istimewa administrator untuk mengkick-banned pengguna dan menghapus pesannya.\n\n- Untuk meciptakan grup yang bersih, saya akan otomatis menghapus semua pesan yang dikirimkan kepadaku ketika pengguna tidak menyelesaikan captcha dan pengguna telah dikeluarkan (setelah 5 menit).\n\n- Tenggat waktu yang diberikan kepada pengguna baru untuk menyelesaikan captcha adalah 5 menit, dan bisa dikonfigurasikan ulang menggunakan perintah /time.\n\n- Kamu bisa mematikan/menyalakan perlindungan captcha dengan menggunakan perintah /enable dan /disable.\n\n- Perintah konfigurasi hanya bisa digunakan oleh Administrator grup.\n\n- Kamu bisa mengganti bahasa yang aku gunakan, dengan menggunakan perintah /language.\n\n- Kamu bisa mengatur tingkat kesulitan captcha dengan menggunakan perintah /difficulty.\n\n- Kamu bisa mengatur captcha agar hanya menggunakan angka (bawaannya) atau kombinasi angka dan huruf, dengan menggunakan perintah /captcha_mode.\n\n- Kamu bisa mengatur pesan selamat datang khusus dengan perintah /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- Cek /commands untuk mendapatkan daftar semua perintah yang tersedia, dan penjelasan singkatnya.",
+        "Bantuan Bot:\n————————————————\n- Aku adalah bot yang akan mengirimkan verifikasi captcha untuk setiap pengguna yang bergabung ke grup, dan akan mengeluarkannya bila tidak menyelesaikan captcha dalam waktu yang ditentukan.\n\n- If Pengguna yang mencoba bergabung dengan grup sebanyak 5 kali dan tidak menyelesaikan captcha, saya akan mengasumsikan  \"user\" adalah bot, dan akan dibanned.\n\n- setiap pesan yang terdapat URL dikirim oleh \"user\"  sebelum menyelesaikan verifikasi captcha, akan dianggap spam dan akan dihapus.\n\n- berikan saya hak istimewa administrator untuk mengkick-banned pengguna dan menghapus pesannya.\n\n- Untuk meciptakan grup yang bersih, saya akan otomatis menghapus semua pesan yang dikirimkan kepadaku ketika pengguna tidak menyelesaikan captcha dan pengguna telah dikeluarkan (setelah 5 menit).\n\n- Tenggat waktu yang diberikan kepada pengguna baru untuk menyelesaikan captcha adalah 5 menit, dan bisa dikonfigurasikan ulang menggunakan perintah /time.\n\n- Kamu bisa mematikan/menyalakan perlindungan captcha dengan menggunakan perintah /enable dan /disable.\n\n- Perintah konfigurasi hanya bisa digunakan oleh Administrator grup.\n\n- Kamu bisa mengganti bahasa yang aku gunakan, dengan menggunakan perintah /language.\n\n- Kamu bisa mengatur tingkat kesulitan captcha dengan menggunakan perintah /difficulty.\n\n- Kamu bisa mengatur captcha agar hanya menggunakan angka (bawaannya) atau kombinasi angka dan huruf, or a custom poll, or just a button, dengan menggunakan perintah /captcha_mode.\n\n- Kamu bisa mengatur pesan selamat datang khusus dengan perintah /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- Cek /commands untuk mendapatkan daftar semua perintah yang tersedia, dan penjelasan singkatnya.",
+
+    "COMMANDS":
+        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - Setelah pengguna baru memecahkan captha, terapkan batasan untuk tidak mengizinkan mereka mengirim pesan non-teks (gambar, video, audio) selama 1 hari (atau selamanya, menggunakan kata kunci \"forever\").\n\n/add_ignore - Jangan meminta captcha kepada pengguna yang diabaikan.\n\n/remove_ignore - Berhenti mengabaikan pengguna.\n\n/ignore_list - daftar ID pengguna yang diabaikan.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Izinkan grup untuk menggunakan Bot (jika Bot bersifat Pribadi).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya.",
 
     "CMD_NOT_ALLOW":
         "Hanya admin yang dapat menggunakan perintah ini!.",
@@ -45,10 +48,10 @@
         "Mode karakter captcha berhasil diubah ke \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\" dan \"ascii\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\", \"ascii\", \"button\" dan \"poll\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "Pesan selamat datang berhasil diatur.",
@@ -114,13 +117,13 @@
         "{} tidak menyelesaikan captcha dalam waktu yang ditentukan. \"User\" Telah dikeluarkan.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} tidak menyelesaikan captcha. Saya mencoba mengeluarkan \"User\", tetapi aku tidak memiliki hak istimewa administrator untuk mengeluarkan pengguna dari grup.",
+        "Saya mencoba mengeluarkan \"User\" {}, tetapi aku tidak memiliki hak istimewa administrator untuk mengeluarkan pengguna dari grup.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} tidak menyelesaikan captcha. Saya mencoba mengeluarkan \"User\", tapi pengguna ini tidak berada dalam grup (telah meninggalkan grup atau telah dikeluarkan oleh admin).",
+        "Saya mencoba mengeluarkan \"User\" {}, tapi pengguna ini tidak berada dalam grup (telah meninggalkan grup atau telah dikeluarkan oleh admin).",
 
     "BOT_CANT_KICK":
-        "{} tidak menyelesaikan captcha. Saya mencoba mengeluarkan \"User\", tapi gagal diakibatkan oleh masalah yang tidak diketahui (mungkin server down atau mengalami gangguan).",
+        "Saya mencoba mengeluarkan \"User\" {}, tapi gagal diakibatkan oleh masalah yang tidak diketahui (mungkin server down atau mengalami gangguan).",
 
     "CANT_DEL_MSG":
         "Saya mencoba menghapus pesan ini, tetapi saya tidak memiliki hak istimewa administrator untuk menghapus pesan yang belum dikirimkan oleh saya.",
@@ -189,8 +192,32 @@
         "Versi Bot saat ini:\n{}",
 
     "ABOUT_MSG":
-        "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "Daftar Perintah:\n————————————————\n/start - Menampilkan informasi awal tentang bot.\n\n/help - Menampilkan informasi yang berguna.\n\n/commands - Menampilkan pesan ini. Informasi tentang semua perintah yang tersedia dan penjelasannya.\n\n/language - Mengganti bahasa dalam pesan bot.\n\n/time - Mengganti waktu yang tersedia untuk menyelesaikan captcha.\n\n/difficulty - Mengganti tingkat kesulitan captcha (dari 1 sampai 5).\n\n/captcha_mode - Mengganti mode karakter captcha (nums: hanya angka, hex: angka dan huruf A-F, ascii: Angka dan huruf A-Z).\n\n/welcome_msg - Mengatur pesan selamat datang yang dikirimkan setelah pengguna menyelesaikan captcha.\n\n/restrict_non_text - Setelah pengguna baru memecahkan captha, terapkan batasan untuk tidak mengizinkan mereka mengirim pesan non-teks (gambar, video, audio) selama 1 hari (atau selamanya, menggunakan kata kunci \"forever\").\n\n/add_ignore - Jangan meminta captcha kepada pengguna yang diabaikan.\n\n/remove_ignore - Berhenti mengabaikan pengguna.\n\n/ignore_list - daftar ID pengguna yang diabaikan.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Izinkan grup untuk menggunakan Bot (jika Bot bersifat Pribadi).\n\n/enable - Mengaktifkan proteksi captcha dalam grup.\n\n/disable - Menonaktifkan proteksi captcha dalam grup.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Menampilkan versi Bot.\n\n/about - Menampilkan info tentang saya."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }

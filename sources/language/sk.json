@@ -3,7 +3,10 @@
         "Ahoj, som Bot, ktorý posiela captcha obrázok s kódom pre každého nového užívateľa ktorý sa pridá do tvojej skupiny, a vyhodí každého kto nedokáže opísať kód z obrázka v špecifikovanom čase.\n\nAk sa užívateľ pokúsi pridať do skupiny 5 krát za sebou a ani raz neopíše captcha kód, budem predpokladať, že tento \"užívateľ\" je bot, a bude zabanovaný. Taktiež akákoľvek správa, ktorá obsahuje URL a je poslaná novým \"užívateľom\" predtým ako opíše captcha kód, bude považovaná za spam a bude zmazaná.\n\nNezabudni mi dať práva administrátora aby som mohol vyhadzovať a banovať užívateľov a odstraňovať správy.\n\nPozri si /help príkaz pre získanie viacej informácií o tom ako ma používať.\n\nSom užitočný? Pozri si príkaz /about a zváž či máš záujem prispieť na to aby si ma podporil a pomohol udržať aktívnym.",
 
     "HELP":
-        "Bot pomôcky:\n————————————————\n- Som Bot, ktorý posiela captcha obrázok pre každého nového užívateľa ktorý sa pridá do tvojej skupiny, a vyhodí každého kto nedokáže opísať kód z obrázka v špecifikovanom čase.\n\n- Ak sa užívateľ pokúsi pridať do skupiny 5 krát za sebou a ani raz neopíše captcha kód, budem predpokladať, že tento \"užívateľ\" je bot, a bude zabanovaný.\n\n- Akákoľvek správa, ktorá obsahuje URL a je poslaná novým \"užívateľom\" predtým ako opíše captcha kód, bude považovaná za spam a bude zmazaná.\n\n- Musíš mi dať práva Administrátora, aby som mohol vyhadzovať užívateľov a mazať správy.\n\n- Pre zachovanie čistej skupiny, automaticky mažem všetky správy ktoré sa týkajú mňa, keď užívateľ neopíše captcha kód a je vyhodený (po 5 minutách).\n\n- Prednastavený časový limit na opísanie captcha kódu novým užívateľom je 5 minút, dá sa ale nastaviť príkazom /time.\n\n- Captcha ochranu môžeš kedykoľvek vypnúť a zapnúť použitím príkazov /enable a /disable.\n\n- Príkazy na moje nastavenia môžu byť použité len administrátorom danej skupiny.\n\n- Môžeš zmeniť jazyk ktorým hovorím zadaním príkazu /language.\n\n- Môžeš nastaviť obtiažnosť captcha obrázka použitím príkazu /difficulty.\n\n- Môžeš nastaviť captcha kód tak aby sa skladal len z celých čísel a písmen A-Z, alebo čísel a písmen A-F, alebo len čísel (prednastavené), alebo len v podobe tlačidla, použitím príkazu /captcha_mode.\n\n- Môžeš nastaviť vlastnú uvítaciu správu príkazom /welcome_msg.\n\n- Môžeš povoliť možnosť, ktorá mi umožní obmedziť nového užívateľa v posielaní netextových správ použitím príkazu /restrict_non_text.\n\n- Ak je bot Súkromný, povoľ skupiny príkazom /allowgroup.\n\n- Pozri si príkaz /commands pre zobrazenie zoznamu všetkých dostupných príkazov spolu s ich krátkymi popismi.",
+        "Bot pomôcky:\n————————————————\n- Som Bot, ktorý posiela captcha obrázok pre každého nového užívateľa ktorý sa pridá do tvojej skupiny, a vyhodí každého kto nedokáže opísať kód z obrázka v špecifikovanom čase.\n\n- Ak sa užívateľ pokúsi pridať do skupiny 5 krát za sebou a ani raz neopíše captcha kód, budem predpokladať, že tento \"užívateľ\" je bot, a bude zabanovaný.\n\n- Akákoľvek správa, ktorá obsahuje URL a je poslaná novým \"užívateľom\" predtým ako opíše captcha kód, bude považovaná za spam a bude zmazaná.\n\n- Musíš mi dať práva Administrátora, aby som mohol vyhadzovať užívateľov a mazať správy.\n\n- Pre zachovanie čistej skupiny, automaticky mažem všetky správy ktoré sa týkajú mňa, keď užívateľ neopíše captcha kód a je vyhodený (po 5 minutách).\n\n- Prednastavený časový limit na opísanie captcha kódu novým užívateľom je 5 minút, dá sa ale nastaviť príkazom /time.\n\n- Captcha ochranu môžeš kedykoľvek vypnúť a zapnúť použitím príkazov /enable a /disable.\n\n- Príkazy na moje nastavenia môžu byť použité len administrátorom danej skupiny.\n\n- Môžeš zmeniť jazyk ktorým hovorím zadaním príkazu /language.\n\n- Môžeš nastaviť obtiažnosť captcha obrázka použitím príkazu /difficulty.\n\n- Môžeš nastaviť captcha kód tak aby sa skladal len z celých čísel a písmen A-Z, alebo čísel a písmen A-F, alebo len čísel (prednastavené), or a custom poll, alebo len v podobe tlačidla, použitím príkazu /captcha_mode.\n\n- Môžeš nastaviť vlastnú uvítaciu správu príkazom /welcome_msg.\n\n- Môžeš povoliť možnosť, ktorá mi umožní obmedziť nového užívateľa v posielaní netextových správ použitím príkazu /restrict_non_text.\n\n- Ak je bot Súkromný, povoľ skupiny príkazom /allowgroup.\n\n- Pozri si príkaz /commands pre zobrazenie zoznamu všetkých dostupných príkazov spolu s ich krátkymi popismi.",
+
+    "COMMANDS":
+        "Zoznam príkazov:\n————————————————\n/start - Zobrazí počiatočné informácie o botovi.\n\n/help - Zobrazí nápomocné informácie.\n\n/commands - Zobrazí túto správu. Informáciu o všetkých dostupných príkazoch a ich popis.\n\n/language - Umožňuje zmeniť jazyk správ bota.\n\n/time - Umožňuje zmeniť čas dostupný na opísanie captcha kódu.\n\n/difficulty - Umožňuje zmeniť obtiažnosť captcha kódu (od 1 po 5).\n\n/captcha_mode - Umožňuje zmeniť captcha mód (nums: čísla, hex: čísla a A-F znaky, ascii: čísla a A-Z znaky, button: len tlačidlo).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Umožňuje nastaviť uvítaciu správu ktorá je poslaná po správnom opísaní captcha kódu.\n\n/restrict_non_text - Umožňuje obmedziť užívateľa po úspešnom opísaní captcha kódu v posielaní netextových správ (obrázkov, videí, audio súborov) na 1 deň (alebo navždy, použitím hesla \"forever\" ).\n\n/add_ignore - Nepýtať opísanie captcha kódu od užívateľa v zozname ignorovaných.\n\n/remove_ignore - Prestať ignorovať užívateľa.\n\n/ignore_list - zoznam IDčiek ignorovaných užívateľov.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Povoľ skupine využívať bota (v prípade, že je bot súkromný).\n\n/enable - Aktivuj captcha ochranu pre danú skupinu.\n\n/disable - Deaktivuj captcha ochranu pre danú skupinu.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Zobraz verziu bota.\n\n/about - Zobraz informácie o botovi.",
 
     "CMD_NOT_ALLOW":
         "Len Admin môže použiť tento príkaz.",
@@ -45,10 +48,10 @@
         "Captcha mód bol úspešne zmenený na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", a \"button\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", \"button\" a \"poll\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Len stlačenie tlačidla (\"button\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button",
+        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Len stlačenie tlačidla (\"button\").\n- Custom Poll challenge (\"poll\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode button\n/captcha_mode poll",
 
     "WELCOME_MSG_SET":
         "Uvítacia správa bola úspešne nastavená.",
@@ -114,13 +117,13 @@
         "{} neopísal captcha kód načas. \"Užívateľ\" bol vyhodený.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale nemám administrátorské práva vyhadzovať užívateľov zo skupiny.",
+        "Pokúsil som sa vyhodiť \"Užívateľa\" {}, ale nemám administrátorské práva vyhadzovať užívateľov zo skupiny.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale užívateľ už nie je členom skupiny (opustil skupinu, alebo bol vyhodený adminom).",
+        "Pokúsil som sa vyhodiť \"Užívateľa\" {}, ale užívateľ už nie je členom skupiny (opustil skupinu, alebo bol vyhodený adminom).",
 
     "BOT_CANT_KICK":
-        "{} neopísal captcha kód načas. Pokúsil som sa vyhodiť \"Užívateľa\", ale nemôžem to vykonať z dôsledku neočakávaných problémov (možno problémy s pripojením/serverom).",
+        "Pokúsil som sa vyhodiť \"Užívateľa\" {}, ale nemôžem to vykonať z dôsledku neočakávaných problémov (možno problémy s pripojením/serverom).",
 
     "CANT_DEL_MSG":
         "Pokúsil som sa zmazať túto správu, ale nemám administrátorské práva mazať správy ktoré neboli poslané mnou.",
@@ -189,8 +192,32 @@
         "Súčasná verzia bota:\n{}",
 
     "ABOUT_MSG":
-        "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu.\n\nPaypal:\n{}\n\nBTC:\n{}",
+        "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu:\n{}\n\nBTC:\n{}",
 
-    "COMMANDS":
-        "Zoznam príkazov:\n————————————————\n/start - Zobrazí počiatočné informácie o botovi.\n\n/help - Zobrazí nápomocné informácie.\n\n/commands - Zobrazí túto správu. Informáciu o všetkých dostupných príkazoch a ich popis.\n\n/language - Umožňuje zmeniť jazyk správ bota.\n\n/time - Umožňuje zmeniť čas dostupný na opísanie captcha kódu.\n\n/difficulty - Umožňuje zmeniť obtiažnosť captcha kódu (od 1 po 5).\n\n/captcha_mode - Umožňuje zmeniť captcha mód (nums: čísla, hex: čísla a A-F znaky, ascii: čísla a A-Z znaky, button: len tlačidlo).\n\n/welcome_msg - Umožňuje nastaviť uvítaciu správu ktorá je poslaná po správnom opísaní captcha kódu.\n\n/restrict_non_text - Umožňuje obmedziť užívateľa po úspešnom opísaní captcha kódu v posielaní netextových správ (obrázkov, videí, audio súborov) na 1 deň (alebo navždy, použitím hesla \"forever\" ).\n\n/add_ignore - Nepýtať opísanie captcha kódu od užívateľa v zozname ignorovaných.\n\n/remove_ignore - Prestať ignorovať užívateľa.\n\n/ignore_list - zoznam IDčiek ignorovaných užívateľov.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Povoľ skupine využívať bota (v prípade, že je bot súkromný).\n\n/enable - Aktivuj captcha ochranu pre danú skupinu.\n\n/disable - Deaktivuj captcha ochranu pre danú skupinu.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - Zobraz verziu bota.\n\n/about - Zobraz informácie o botovi."
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL_0":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_FAIL_1":
+        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }

@@ -75,6 +75,17 @@ SETTINGS = {
     # Initial remove welcome message group configuration
     "CAPTCHABOT_INIT_RM_WELCOME_MSG": True,
 
+    # Maximum number of allowed captcha Poll options
+    "CAPTCHABOT_MAX_POLL_OPTIONS": 6,
+
+    # Poll captcha question max length
+    # Telegram maximum Poll Question length is 300
+    "CAPTCHABOT_MAX_POLL_QUESTION_LENGTH": 300,
+
+    # Poll captcha question max length
+    # Telegram maximum Poll Option length is 100
+    "CAPTCHABOT_MAX_POLL_OPTION_LENGTH": 100,
+
     # Default time (in mins) to remove self-destruct sent messages from
     # the Bot
     "CAPTCHABOT_T_DEL_MSG": 5,

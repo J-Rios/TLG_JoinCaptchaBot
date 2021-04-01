@@ -10,17 +10,19 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    27/02/2021
+    29/03/2021
 Version:
-    1.0.3
+    1.0.4
 '''
 
 ###############################################################################
 ### Imported modules
 
-from telegram import ChatPermissions
-from telegram import TelegramError
-from telegram import ParseMode
+from telegram import (
+    ChatPermissions, TelegramError, ParseMode, Poll
+)
+
+from telegram.utils.helpers import DEFAULT_NONE
 
 from commons import printts
 
@@ -113,6 +115,48 @@ def tlg_send_image(bot, chat_id, photo, caption=None,
         sent_result["error"] = str(e)
         printts("[{}] {}".format(chat_id, sent_result["error"]))
     return sent_result
+
+
+def tlg_send_poll(bot, chat_id, question, options, correct_option_id=None,
+                  open_period=None, is_anonymous=True, type=Poll.REGULAR,
+                  explanation=None, allows_multiple_answers=False,
+                  is_closed=None, disable_notification=True,
+                  reply_to_message_id=None, reply_markup=None,
+                  explanation_parse_mode=DEFAULT_NONE, close_date=None,
+                  timeout=40, **kwargs):
+    '''Bot try to send a Poll message'''
+    sent_result = dict()
+    sent_result["msg"] = None
+    sent_result["error"] = ""
+    try:
+        sent_result["msg"] = bot.send_poll(chat_id=chat_id, question=question,
+            options=options, is_anonymous=is_anonymous, type=type,
+            allows_multiple_answers=allows_multiple_answers,
+            correct_option_id=correct_option_id, is_closed=is_closed,
+            disable_notification=disable_notification,
+            reply_to_message_id=reply_to_message_id, reply_markup=reply_markup,
+            timeout=timeout, explanation=explanation,
+            explanation_parse_mode=explanation_parse_mode,
+            open_period=open_period, close_date=close_date, **kwargs)
+    except TelegramError as e:
+        sent_result["error"] = str(e)
+        printts("[{}] {}".format(chat_id, sent_result["error"]))
+    return sent_result
+
+
+def tlg_stop_poll(bot, chat_id, message_id, reply_markup=None,
+                  timeout=None, **kwargs):
+    '''Bot try to stop a Poll.'''
+    result = dict()
+    result["msg"] = None
+    result["error"] = ""
+    try:
+        result["msg"] = bot.stop_poll(chat_id=chat_id, message_id=message_id,
+            reply_markup=reply_markup, timeout=timeout, **kwargs)
+    except Exception as e:
+            result["error"] = str(e)
+            printts("[{}] {}".format(chat_id, result["error"]))
+    return result
 
 
 def tlg_delete_msg(bot, chat_id, msg_id, timeout=None):
@@ -294,3 +338,11 @@ def tlg_is_valid_group(group):
     if user_id == 0:
         return False
     return True
+
+
+def tlg_alias_in_string(str_text):
+    ''' Check if a string contains an alias.'''
+    for word in str_text.split():
+        if (len(word) > 1) and (word[0] == '@'):
+            return True
+    return False
