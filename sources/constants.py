@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/04/2021
+    15/04/2021
 Version:
     1.19.2
 '''
@@ -254,8 +254,8 @@ CONST = {
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
 
-    # Developer Paypal address
-    "DEV_PAYPAL": "https://www.buymeacoffee.com/joincaptchabot",
+    # Developer Donation address
+    "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Developer Bitcoin address
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",

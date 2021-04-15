@@ -1985,11 +1985,11 @@ def cmd_about(update: Update, context: CallbackContext):
     chat_type = update_msg.chat.type
     if chat_type == "private":
         msg_text = TEXT["EN"]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
-        CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
+                CONST["DEV_DONATION_ADDR"], CONST["DEV_BTC"])
     else:
         lang = get_chat_config(chat_id, "Language")
         msg_text = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"], CONST["REPOSITORY"],
-            CONST["DEV_PAYPAL"], CONST["DEV_BTC"])
+                CONST["DEV_DONATION_ADDR"], CONST["DEV_BTC"])
     tlg_send_msg(bot, chat_id, msg_text)
 
 

@@ -177,7 +177,7 @@
         "Η προστασία captcha ενεργοποιήθηκε. Μπορεί να απενεργοποιηθεί με την εντολή /disable .",
 
     "DISABLE":
-    		"Η προστασία captcha απενεργοποιήθηκε. Μπορεί να ενεργοποιηθεί με την εντολή /enable .",
+        "Η προστασία captcha απενεργοποιήθηκε. Μπορεί να ενεργοποιηθεί με την εντολή /enable .",
 
     "ALREADY_ENABLE":
         "Η προστασία catpcha έχει ήδη ενεργοποιηθεί.",
@@ -203,7 +203,7 @@
     "CAPTCHA_POLL_FAIL_1":
         "Captcha poll fail, {} απάντησες λάθος. \"User\" αφαιρέθηκε.",
 
-    "CAPTCHA_POLL_USAGE":        
+    "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\n Το κείμενο της ερώτησης δεν μπορεί να έχει περισσότερους από {} χαρακτήρες.\n\n Option text δεν μπορεί να έχει περισσότερους από {} χαρακτήρες \n\n Maximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Είσαι σίγουρος ότι θες να μπεις σε αυτό το group?\n\n Set Poll Option 1:\n/captcha_poll option 1 Μπα, δε θέλω να μπω σε αυτό το group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Σίγουρα, είμαι άνθρωπος και θέλω να μπω σε αυτό το group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Ποιος είμαι και τι κάνω?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
