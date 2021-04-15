@@ -12,10 +12,10 @@
         "Only an Admin can use this command.",
 
     "LANG_CHANGE":
-        "Language changed to English.",
+        "Language successfully changed.",
 
     "LANG_SAME":
-        "I am already in English.\n\nSupported languages:\n{}",
+        "I'm already in that language.\n\nSupported languages:\n{}",
 
     "LANG_BAD_LANG":
         "Invalid language provided.\n\nSupported languages:\n{}",

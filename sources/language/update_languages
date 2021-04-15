@@ -3,11 +3,13 @@
 # Actual script directory path
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
+cd $DIR
 rm -f $DIR/*.json
 
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/ar.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/ca.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/de.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/el.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/en.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/eo.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/es.json
