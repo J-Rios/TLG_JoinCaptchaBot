@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     01/04/2021
 Version:
-    1.19.1
+    1.19.2
 '''
 
 ###############################################################################
@@ -235,6 +235,7 @@ CONST = {
         "\nFrench / Francais\n/language fr\n" \
         "\nGalician / Galego\n/language gl\n" \
         "\nGerman / Deutsch\n/language de\n" \
+        "\nGreek / Ελληνικά\n/language el\n" \
         "\nIndonesian / Indonesia\n/language id\n" \
         "\nItalian / Italiano\n/language it\n" \
         "\nKannada / Kannada\n/language kn\n" \
@@ -260,7 +261,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.19.1 (01/04/2021)"
+    "VERSION": "1.19.2 (15/04/2021)"
 }
 
 
@@ -269,6 +270,7 @@ TEXT = {
     "AR": {}, # Arabic
     "CA": {}, # Catalan
     "DE": {}, # German
+    "EL": {}, # Greek
     "EN": {}, # English
     "EO": {}, # Esperanto
     "ES": {}, # Spanish
