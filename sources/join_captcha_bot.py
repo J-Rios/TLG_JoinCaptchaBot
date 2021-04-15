@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/04/2021
+    15/04/2021
 Version:
-    1.19.1
+    1.19.2
 '''
 
 ###############################################################################
@@ -2058,8 +2058,6 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
     if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
     # Check if no argument was provided with the command
     if len(args) == 0:
         # Show Actual Global allowed list Users
@@ -2119,8 +2117,6 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
     # Check if no argument was provided with the command
     if len(args) == 0:
         # Show Actual Allowed Groups
