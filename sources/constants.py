@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/04/2021
+    27/05/2021
 Version:
-    1.19.2
+    1.19.3
 '''
 
 ###############################################################################
@@ -176,7 +176,9 @@ CONST = {
     "INIT_LINK": "Unknown",
 
     # Initial language at Bot start
-    "INIT_LANG": "EN",
+    "INIT_LANG": \
+        os_getenv("CAPTCHABOT_INIT_LANG", \
+            SETTINGS["CAPTCHABOT_INIT_LANG"]),
 
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
@@ -261,7 +263,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.19.2 (15/04/2021)"
+    "VERSION": "1.19.3 (27/05/2021)"
 }
 
 
