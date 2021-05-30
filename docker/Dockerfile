@@ -32,18 +32,18 @@ FROM base AS builder-deps
 # Install build dependencies
 RUN apt-get ${APT_OPTS} update && \
     apt-get ${APT_OPTS} install \
-      build-essential \
-      git \
-      procps  \
-      libtiff5-dev \
-      libjpeg62-turbo-dev \
-      zlib1g-dev \
-      libfreetype6-dev \
-      liblcms2-dev \
-      libwebp-dev \
-      tcl8.6-dev \
-      tk8.6-dev \
-      python3-tk
+    build-essential \
+    git \
+    procps  \
+    libtiff5-dev \
+    libjpeg62-turbo-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    tcl8.6-dev \
+    tk8.6-dev \
+    python3-tk
 
 ################################################################################
 

@@ -10,16 +10,19 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    29/03/2021
+    30/05/2021
 Version:
-    1.0.4
+    1.1.0
 '''
 
 ###############################################################################
 ### Imported modules
 
+from typing import Tuple, Optional
+
 from telegram import (
-    ChatPermissions, TelegramError, ParseMode, Poll
+    ChatPermissions, TelegramError, ParseMode, Poll, ChatMemberUpdated,
+    ChatMember
 )
 
 from telegram.utils.helpers import DEFAULT_NONE
@@ -311,7 +314,7 @@ def tlg_get_chat_type(bot, chat_id_or_alias, timeout=None):
 
 def tlg_is_valid_user_id_or_alias(user_id_alias):
     '''Check if given telegram ID or alias has a valid expected format.'''
-    # Check if it is a valid alias (start with a @ and have 5 characters or more)
+    # Check if it is a valid alias (start with @ and have 5 characters or more)
     if user_id_alias[0] == '@':
         if len(user_id_alias) > 5:
             return True
@@ -346,3 +349,37 @@ def tlg_alias_in_string(str_text):
         if (len(word) > 1) and (word[0] == '@'):
             return True
     return False
+
+
+def tlg_extract_members_status_change(
+    chat_member_update: ChatMemberUpdated,
+) -> Optional[Tuple[bool, bool]]:
+    '''Takes a ChatMemberUpdated instance and extracts whether the
+    "old_chat_member" was a member of the chat and whether the
+    "new_chat_member" is a member of the chat. Returns None, if the status
+    didn't change.'''
+    members_diff = chat_member_update.difference()
+    status_change = members_diff.get("status")
+    if status_change is None:
+        return None
+    old_status, new_status = status_change
+    old_is_member, new_is_member = members_diff.get("is_member", (None, None))
+    was_member = (
+        old_status
+        in [
+            ChatMember.MEMBER,
+            ChatMember.CREATOR,
+            ChatMember.ADMINISTRATOR,
+        ]
+        or (old_status == ChatMember.RESTRICTED and old_is_member is True)
+    )
+    is_member = (
+        new_status
+        in [
+            ChatMember.MEMBER,
+            ChatMember.CREATOR,
+            ChatMember.ADMINISTRATOR,
+        ]
+        or (new_status == ChatMember.RESTRICTED and new_is_member is True)
+    )
+    return was_member, is_member

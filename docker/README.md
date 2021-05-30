@@ -43,7 +43,7 @@ To run an instance, use the next command placing your Bot token to pass it as
 an enviroment variable:
 
 ```bash
-sudo docker run -d --name captcha-bot --env CAPTCHABOT_TOKEN="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" captcha-bot
+docker run -d --name captcha-bot --env CAPTCHABOT_TOKEN="XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" --restart always captcha-bot
 ```
 
 This will start the container in the background. Use `docker ps` to check if

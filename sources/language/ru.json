@@ -99,13 +99,13 @@
         "Список игнорируемых чата пуст.",
 
     "NEW_USER_CAPTCHA_CAPTION":
-        "Привет {}, добро пожаловать в {}, пожалуйста, решите капчу с цифрами или буквами на этом изображении, чтобы убедиться, что вы человек. Если вы не решите капчу в течение {} минут, вы будете автоматически удалены из группы.",
+        "Привет, {}, добро пожаловать в {}, пожалуйста, решите капчу с цифрами или буквами на этом изображении, чтобы подтвердить, что вы человек. Если вы не решите капчу в течение {} минут, вы будете автоматически удалены из группы.",
 
     "NEW_USER_BUTTON_MODE":
         "Привет, {}, добро пожаловать в {}. Нажмите на кнопку ниже, чтобы подтвердить, что вы человек. Если вы не сделаете этого в течение {} минут, вас автоматически исключат из группы.",
 
     "CAPTCHA_SOLVED":
-        "Капча решена, пользователь подтвержден.\nДобро пожаловать в чат {}",
+        "Капча решена, пользователь подтвержден.\nДобро пожаловать в чат, {}",
 
     "CAPTCHA_INCORRECT_0":
         "Код был введён неправильно. Попробуйте еще раз...",
@@ -117,13 +117,13 @@
         "{} не решил капчу вовремя. пользователь был удалён из чата.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "Я попытался его выгнать {}, но у меня нет прав администратора, чтобы выгнать пользователя из чата.",
+        "Я попытался выгнать {}, но у меня нет прав администратора, чтобы выгнать пользователя из чата.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "Я попытался его выгнать {}, но пользователь не состоит в чате (покинул или был удален администратором).",
+        "Я попытался выгнать {}, но пользователь не состоит в чате (покинул или был удален администратором).",
 
     "BOT_CANT_KICK":
-        "Я попытался его выгнать {}, но из-за непредвиденной проблемы (возможно, связанной с сетью или сервером) я не могу это сделать.",
+        "Я попытался выгнать {}, но из-за непредвиденной проблемы (возможно, связанной с сетью или сервером) я не могу это сделать.",
 
     "CANT_DEL_MSG":
         "Я попытался удалить это сообщение, но у меня нет прав администратора для этого",
@@ -195,13 +195,13 @@
         "Этот бот является свободным программным обеспечением и с открытым исходным кодом под лицензией GNU-GPL.\nBot Developed by {}.\n\nВы можете проверить код здесь:\n{}\n\nТебе нравится моя работа? Сделай добровольное пожертвование:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Привет, {}, добро пожаловать в {}. Пожалуйста, ответьте на вопрос ниже, чтобы подтвердить, что вы человек. Если вы не сделаете этого в течение {} минут, вы будете автоматически удалены из группы.",
 
     "CAPTCHA_POLL_FAIL_0":
-        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+        "Капча-вопрос не решена, {} выбрал неправильный вариант. Вы будете исключены через 10s, пожалуйста попробуйте зайти в группу снова...",
 
     "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+        "Капча-вопрос не решена, {} выбрал неправильный вариант. \"Пользователь\" был исключен.",
 
     "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",

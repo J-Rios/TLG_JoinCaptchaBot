@@ -18,14 +18,14 @@ BTC:
 
 ## Installation
 
-Note: Use Python 3 to install and run the Bot, Python 2 support could be broken.
+Note: Use Python 3.6 or above to install and run the Bot, previous version are unsupported.
 
 To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), wich uses Pillow to generate the images.
 
 1. Install Pillow prerequisites:
 
     ```bash
-    apt-get install -y libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+    sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
     ```
 
 2. Get the project and install JoinCaptchaBot requirements:

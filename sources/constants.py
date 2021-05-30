@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/04/2021
+    30/05/2021
 Version:
-    1.19.2
+    1.20.1
 '''
 
 ###############################################################################
@@ -176,7 +176,14 @@ CONST = {
     "INIT_LINK": "Unknown",
 
     # Initial language at Bot start
-    "INIT_LANG": "EN",
+    "INIT_LANG": \
+        os_getenv("CAPTCHABOT_INIT_LANG", \
+            SETTINGS["CAPTCHABOT_INIT_LANG"]),
+
+    # Time to restrict sending no-text messages
+    "T_RESTRICT_NO_TEXT_MSG": \
+        int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG", \
+            SETTINGS["CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG"])),
 
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
@@ -278,14 +285,14 @@ CONST = {
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
 
-    # Developer Paypal address
-    "DEV_PAYPAL": "https://www.buymeacoffee.com/joincaptchabot",
+    # Developer Donation address
+    "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Developer Bitcoin address
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.19.2 (15/04/2021)"
+    "VERSION": "1.20.1 (30/05/2021)"
 }
 
 
