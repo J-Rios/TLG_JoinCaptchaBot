@@ -968,7 +968,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
         # Restrict for 1 day
         if restrict_non_text_msgs == 1:
-            tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+            tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
             tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False, change_group_info=False,
@@ -1055,7 +1055,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                 printts("[{}] Error: Can't send the welcome message.".format(chat_id))
         # Check for send just text message option and apply user restrictions
         if restrict_non_text_msgs == 1: # Restrict for 1 day
-            tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+            tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
             tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False, change_group_info=False,
@@ -1242,7 +1242,7 @@ def button_request_pass(bot, query):
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Restrict for 1 day
     if restrict_non_text_msgs == 1:
-        tomorrow_epoch = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+        tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
         tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
             send_stickers_gifs=False, insert_links=False, send_polls=False,
             invite_members=False, pin_messages=False, change_group_info=False,

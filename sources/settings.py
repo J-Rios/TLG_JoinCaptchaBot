@@ -93,6 +93,9 @@ SETTINGS = {
     # Auto-remove custom welcome message timeout
     "CAPTCHABOT_T_DEL_WELCOME_MSG": 5,
 
+    # Time to restrict sending no-text messages (in seconds, default 24h)
+    "CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG": 86400,
+
     # Maximum number of users allowed in each chat ignore list
     "CAPTCHABOT_IGNORE_LIST_MAX": 100,
 

@@ -180,6 +180,11 @@ CONST = {
         os_getenv("CAPTCHABOT_INIT_LANG", \
             SETTINGS["CAPTCHABOT_INIT_LANG"]),
 
+    # Time to restrict sending no-text messages
+    "T_RESTRICT_NO_TEXT_MSG": \
+        int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG", \
+            SETTINGS["CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG"])),
+
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
 
