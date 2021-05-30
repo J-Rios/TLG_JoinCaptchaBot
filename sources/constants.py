@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     30/05/2021
 Version:
-    1.20.0
+    1.20.1
 '''
 
 ###############################################################################
@@ -263,7 +263,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.20.0 (30/05/2021)"
+    "VERSION": "1.20.1 (30/05/2021)"
 }
 
 
