@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/04/2021
+    30/05/2021
 Version:
-    1.19.2
+    1.20.0
 '''
 
 ###############################################################################
@@ -45,8 +45,8 @@ from telegram import (
 
 from telegram.ext import (
     CallbackContext, Updater, CommandHandler,
-    MessageHandler, Filters, CallbackQueryHandler,
-    PollAnswerHandler, Defaults
+    ChatMemberHandler, MessageHandler, Filters,
+    CallbackQueryHandler, PollAnswerHandler, Defaults
 )
 
 from telegram.ext.dispatcher import (
@@ -72,7 +72,7 @@ from tlgbotutils import (
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
-    tlg_alias_in_string
+    tlg_alias_in_string, tlg_extract_members_status_change
 )
 
 from constants import (
@@ -463,55 +463,52 @@ def is_group_in_banned_list(chat_id):
 ###############################################################################
 ### Received Telegram not-command messages handlers
 
-@run_async
 def new_member_join(update: Update, context: CallbackContext):
     '''New member join the group event handler'''
     global new_users
     bot = context.bot
-    # Get message data
-    update_msg = getattr(update, "message", None)
-    if update_msg is None:
-        printts("Warning: Received an unexpected new user update.")
-        printts(update)
+    # Check members changes
+    result = tlg_extract_members_status_change(update.chat_member)
+    if result is None:
         return
-    chat_id = getattr(update_msg, "chat_id", None)
-    if chat_id is None:
-        printts("Warning: Received an unexpected new user update without chat id.")
-        printts(update)
-        return
-    chat = getattr(update_msg, "chat", None)
-    if chat is None:
-        printts("Warning: Received an unexpected new user update without chat.")
-        printts(update)
-        return
-    # Leave the chat if it is a channel
-    if chat.type == "channel":
-        printts("Bot try to be added to a channel")
-        tlg_send_msg(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"])
-        tlg_leave_chat(bot, chat_id)
-        return
-    # Check if Group is allowed to be used by the Bot
-    if not is_group_in_allowed_list(chat_id):
-        printts("Warning: Bot added to not allowed group.")
-        from_user_name = ""
-        if update_msg.from_user.name is not None:
-            from_user_name = update_msg.from_user.name
-        else:
-            from_user_name = update_msg.from_user.full_name
-        chat_link = ""
-        if chat.username:
-            chat_link = "@{}".format(chat.username)
-        printts("{}, {}, {}, {}".format(chat_id, from_user_name, chat.title, chat_link))
-        msg_text = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
-        tlg_send_msg(bot, chat_id, msg_text)
-        tlg_leave_chat(bot, chat_id)
-        return
-    if is_group_in_banned_list(chat_id):
-        printts("Warning: Bot added to banned group: {}".format(chat_id))
-        tlg_leave_chat(bot, chat_id)
-        return
-    # For each new user that join or has been added
-    for join_user in update_msg.new_chat_members:
+    was_member, is_member = result
+    # Ignore member leave group
+    #if not is_member and was_member:
+    #    return
+    # Check if it is a new member join
+    if not was_member and is_member:
+        chat = update.chat_member.chat
+        member_added_by = update.chat_member.from_user
+        join_user = update.chat_member.new_chat_member.user
+        chat_id = chat.id
+        chat_type = chat.type
+        # Leave the chat if it is a channel
+        if chat_type == "channel":
+            printts("Bot try to be added to a channel")
+            tlg_send_msg(bot, chat_id, CONST["BOT_LEAVE_CHANNEL"])
+            tlg_leave_chat(bot, chat_id)
+            return
+        # Check if Group is allowed to be used by the Bot
+        if not is_group_in_allowed_list(chat_id):
+            printts("Warning: Bot added to not allowed group.")
+            from_user_name = ""
+            if member_added_by.name is not None:
+                from_user_name = member_added_by.name
+            else:
+                from_user_name = member_added_by.full_name
+            chat_link = ""
+            if chat.username:
+                chat_link = "@{}".format(chat.username)
+            printts("{}, {}, {}, {}".format(chat_id, from_user_name, chat.title, chat_link))
+            msg_text = CONST["NOT_ALLOW_GROUP"].format(CONST["BOT_OWNER"], chat_id, CONST["REPOSITORY"])
+            tlg_send_msg(bot, chat_id, msg_text)
+            tlg_leave_chat(bot, chat_id)
+            return
+        if is_group_in_banned_list(chat_id):
+            printts("Warning: Bot added to banned group: {}".format(chat_id))
+            tlg_leave_chat(bot, chat_id)
+            return
+        # Get User ID
         join_user_id = join_user.id
         # Get user name
         if join_user.name is not None:
@@ -528,11 +525,9 @@ def new_member_join(update: Update, context: CallbackContext):
             # Get the language of the Telegram client software the Admin that has added the Bot
             # has, to assume this is the chat language and configure Bot language of this chat
             admin_language = ""
-            msg_from_user = getattr(update_msg, "from_user", None)
-            if msg_from_user:
-                language_code = getattr(msg_from_user, "language_code", None)
-                if language_code:
-                    admin_language = language_code[0:2].upper()
+            language_code = getattr(member_added_by, "language_code", None)
+            if language_code:
+                admin_language = language_code[0:2].upper()
             if admin_language not in TEXT:
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat_id, "Language", admin_language)
@@ -564,29 +559,27 @@ def new_member_join(update: Update, context: CallbackContext):
             if tlg_user_is_admin(bot, join_user_id, chat_id):
                 printts("[{}] User is an administrator.".format(chat_id))
                 printts("Skipping the captcha process.")
-                continue
+                return
             # Ignore Members added by an Admin
-            join_by = getattr(update_msg, "from_user", None)
-            if join_by:
-                join_by_id = update_msg.from_user.id
-                if tlg_user_is_admin(bot, join_by_id, chat_id):
-                    printts("[{}] User has been added by an administrator.".format(chat_id))
-                    printts("Skipping the captcha process.")
-                    continue
+            join_by_id = member_added_by.id
+            if tlg_user_is_admin(bot, join_by_id, chat_id):
+                printts("[{}] User has been added by an administrator.".format(chat_id))
+                printts("Skipping the captcha process.")
+                return
             # Ignore if the member that has been join the group is a Bot
             if join_user.is_bot:
                 printts("[{}] User is a Bot.".format(chat_id))
                 printts("Skipping the captcha process.")
-                continue
+                return
             # Ignore if the member that has joined is in chat ignore list
             if is_user_in_ignored_list(chat_id, join_user):
                 printts("[{}] User is in ignore list.".format(chat_id))
                 printts("Skipping the captcha process.")
-                continue
+                return
             if is_user_in_allowed_list(join_user):
                 printts("[{}] User is in global allowed list.".format(chat_id))
                 printts("Skipping the captcha process.")
-                continue
+                return
             # Check and remove previous join messages of that user (if any)
             if chat_id in new_users:
                 if join_user_id in new_users[chat_id]:
@@ -598,7 +591,7 @@ def new_member_join(update: Update, context: CallbackContext):
             captcha_enable = get_chat_config(chat_id, "Enabled")
             if not captcha_enable:
                 printts("[{}] Captcha is not enabled in this chat".format(chat_id))
-                continue
+                return
             # Determine configured language and captcha settings
             lang = get_chat_config(chat_id, "Language")
             captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
@@ -628,7 +621,7 @@ def new_member_join(update: Update, context: CallbackContext):
                 or (poll_correct_option == 0):
                     tlg_send_selfdestruct_msg(bot, chat_id,
                             TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"])
-                    continue
+                    return
                 # Remove empty strings from options list
                 poll_options = list(filter(None, poll_options))
                 # Send request to solve the poll text message
@@ -709,7 +702,8 @@ def new_member_join(update: Update, context: CallbackContext):
                     join_data["join_retries"] = new_users[chat_id][join_user_id]["join_data"]["join_retries"]
                 # Add new user join data and messages to be removed
                 new_users[chat_id][join_user_id]["join_data"] = join_data
-                new_users[chat_id][join_user_id]["join_msg"] = update_msg.message_id
+                if update.message:
+                    new_users[chat_id][join_user_id]["join_msg"] = update.message.message_id
                 if sent_result["msg"]:
                     new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_result["msg"].message_id)
                 if (captcha_mode == "poll") and (solve_poll_request_msg_id is not None):
@@ -773,7 +767,6 @@ def msg_notext(update: Update, context: CallbackContext):
     tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
 
 
-@run_async
 def msg_nocmd(update: Update, context: CallbackContext):
     '''Non-command text messages handler'''
     global new_users
@@ -939,7 +932,6 @@ def msg_nocmd(update: Update, context: CallbackContext):
     printts(" ")
 
 
-@run_async
 def receive_poll_answer(update: Update, context: CallbackContext):
     '''User poll vote received'''
     global new_users
@@ -2304,7 +2296,9 @@ def th_time_to_kick_not_verify_users(bot):
                         new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
                         # Remove join messages
                         printts("[{}] Removing messages from user {}...".format(chat_id, user_name))
-                        tlg_delete_msg(bot, chat_id, new_users[chat_id][user_id]["join_msg"])
+                        join_msg = new_users[chat_id][user_id]["join_msg"]
+                        if join_msg is not None:
+                            tlg_delete_msg(bot, chat_id, join_msg)
                         for msg in new_users[chat_id][user_id]["msg_to_rm"]:
                             tlg_delete_msg(bot, chat_id, msg)
                         new_users[chat_id][user_id]["msg_to_rm"].clear()
@@ -2362,7 +2356,7 @@ def main():
     # Set messages to be sent silently by default
     msgs_defaults = Defaults(disable_notification=True)
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
-    updater = Updater(CONST["TOKEN"], workers=12, use_context=True, defaults=msgs_defaults)
+    updater = Updater(CONST["TOKEN"], workers=12, defaults=msgs_defaults)
     dp = updater.dispatcher
     # Set Telegram errors handler
     dp.add_error_handler(tlg_error_callback)
@@ -2393,32 +2387,32 @@ def main():
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         dp.add_handler(CommandHandler("allowgroup", cmd_allowgroup, pass_args=True))
     # Set to dispatcher a not-command text messages handler
-    dp.add_handler(MessageHandler(Filters.text, msg_nocmd))
+    dp.add_handler(MessageHandler(Filters.text, msg_nocmd, run_async=True))
     # Set to dispatcher not text messages handler
     dp.add_handler(MessageHandler(Filters.photo | Filters.audio | Filters.voice |
             Filters.video | Filters.sticker | Filters.document | Filters.location |
             Filters.contact, msg_notext))
     # Set to dispatcher a new member join the group and member left the group events handlers
-    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, new_member_join))
+    dp.add_handler(ChatMemberHandler(new_member_join, ChatMemberHandler.ANY_CHAT_MEMBER, run_async=True))
     # Set to dispatcher inline keyboard callback handler for new captcha request and
     # button captcha challenge
     dp.add_handler(CallbackQueryHandler(key_inline_keyboard))
     # Set to dispatcher users poll vote handler
-    dp.add_handler(PollAnswerHandler(receive_poll_answer))
+    dp.add_handler(PollAnswerHandler(receive_poll_answer, run_async=True))
     # Launch the Bot ignoring pending messages (clean=True) and get all updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
         printts("Setup Bot for Polling.")
         updater.start_polling(
-            clean=True,
-            allowed_updates=[]
+            drop_pending_updates=True,
+            allowed_updates=Update.ALL_TYPES
         )
     else:
         printts("Setup Bot for Webhook.")
         updater.start_webhook(
-            clean=True, listen="0.0.0.0", port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
+            drop_pending_updates=True, listen="0.0.0.0", port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
             webhook_url="https://{}:{}/{}".format(CONST["WEBHOOK_HOST"], CONST["WEBHOOK_PORT"],
-            CONST["TOKEN"])
+            CONST["TOKEN"]), allowed_updates=Update.ALL_TYPES
         )
     printts("Bot setup completed. Bot is now running.")
     # Launch delete mesages and kick users threads

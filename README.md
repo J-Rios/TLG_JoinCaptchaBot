@@ -18,7 +18,7 @@ BTC:
 
 ## Installation
 
-Note: Use Python 3 to install and run the Bot, Python 2 support could be broken.
+Note: Use Python 3.6 or above to install and run the Bot, previous version are unsupported.
 
 To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), wich uses Pillow to generate the images.
 
