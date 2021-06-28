@@ -21,11 +21,16 @@ Version:
 ###############################################################################
 ### Imported modules
 
+from platform import system as os_system
+
+from signal import signal, SIGTERM, SIGINT
+if os_system() != "Windows":
+    from signal import SIGUSR1
+
 import logging
 import re
 
 from sys import exit
-from signal import signal, SIGTERM, SIGINT, SIGUSR1
 from os import kill, getpid, path, remove, makedirs, listdir
 from shutil import rmtree
 from datetime import datetime, timedelta
@@ -152,7 +157,8 @@ def th_close_resource_file(file_to_close):
 
 signal(SIGTERM, signal_handler) # SIGTERM (kill pid) to signal_handler
 signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
-signal(SIGUSR1, signal_handler) # SIGUSR1 (self-send) to signal_handler
+if os_system() != "Windows":
+    signal(SIGUSR1, signal_handler) # SIGUSR1 (self-send) to signal_handler
 
 ###############################################################################
 ### JSON Chat Config File Functions
@@ -2535,7 +2541,10 @@ def main():
     # Using Bot idle() catch external signals instead our signal handler
     updater.idle()
     print("Bot Threads end")
-    kill(getpid(), SIGUSR1)
+    if os_system() == "Windows":
+        kill(getpid(), SIGTERM)
+    else:
+        kill(getpid(), SIGUSR1)
     sleep(1)
     printts("Exit 1")
     exit(1)
