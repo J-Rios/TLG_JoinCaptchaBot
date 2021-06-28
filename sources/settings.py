@@ -66,7 +66,7 @@ SETTINGS = {
     # Initial captcha difficult level
     "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 2,
 
-    # Initial captcha characters mode (ascii, hex, nums, or button)
+    # Initial captcha characters mode (ascii, hex, nums, math, poll, or button)
     "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
 
     # Initial remove result messages cgroup onfiguration
