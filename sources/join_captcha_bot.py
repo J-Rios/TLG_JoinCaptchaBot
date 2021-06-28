@@ -13,19 +13,24 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/05/2021
+    28/06/2021
 Version:
-    1.20.1
+    1.21.0
 '''
 
 ###############################################################################
 ### Imported modules
 
+from platform import system as os_system
+
+from signal import signal, SIGTERM, SIGINT
+if os_system() != "Windows":
+    from signal import SIGUSR1
+
 import logging
 import re
 
 from sys import exit
-from signal import signal, SIGTERM, SIGINT, SIGUSR1
 from os import kill, getpid, path, remove, makedirs, listdir
 from shutil import rmtree
 from datetime import datetime, timedelta
@@ -153,7 +158,8 @@ def th_close_resource_file(file_to_close):
 
 signal(SIGTERM, signal_handler) # SIGTERM (kill pid) to signal_handler
 signal(SIGINT, signal_handler)  # SIGINT (Ctrl+C) to signal_handler
-signal(SIGUSR1, signal_handler) # SIGUSR1 (self-send) to signal_handler
+if os_system() != "Windows":
+    signal(SIGUSR1, signal_handler) # SIGUSR1 (self-send) to signal_handler
 
 ###############################################################################
 ### JSON Chat Config File Functions
@@ -389,7 +395,7 @@ def load_texts_languages():
                 text, lang_iso_code))
 
 
-def create_image_captcha(img_file_name, difficult_level, chars_mode):
+def create_image_captcha(img_file_name, difficult_level, captcha_mode):
     '''Generate an image captcha from pseudo numbers'''
     image_file_path = "{}/{}.png".format(CONST["CAPTCHAS_DIR"], img_file_name)
     # If it doesn't exists, create captchas folder to store generated captchas
@@ -399,15 +405,16 @@ def create_image_captcha(img_file_name, difficult_level, chars_mode):
         # If the captcha file exists remove it
         if path.exists(image_file_path):
             remove(image_file_path)
-    # Generate and save the captcha with a random captcha background mono-color or multi-color
-    captcha = CaptchaGen.gen_captcha_image(difficult_level, chars_mode, bool(randint(0, 1)))
-    image = captcha["image"]
-    image.save(image_file_path, "png")
-    # Return a dictionary with captcha file path and captcha resolve characters
-    generated_captcha = {"image": "", "number": ""}
-    generated_captcha["image"] = image_file_path
-    generated_captcha["number"] = captcha["characters"]
-    return generated_captcha
+    # Generate and save the captcha with a random background
+    # mono-color or multi-color
+    if captcha_mode == "math":
+        captcha = CaptchaGen.gen_math_captcha_image(2, bool(randint(0, 1)))
+    else:
+        captcha = CaptchaGen.gen_captcha_image(difficult_level, captcha_mode,
+                bool(randint(0, 1)))
+    captcha["image"].save(image_file_path, "png")
+    captcha["image"] = image_file_path
+    return captcha
 
 
 def num_config_poll_options(poll_options):
@@ -729,19 +736,32 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             }
             context.bot_data.update(poll_data)
     else: # Image captcha
-        # Generate a pseudorandom captcha send it to telegram group and program message
-        captcha = create_image_captcha(str(join_user_id), captcha_level, captcha_mode)
-        captcha_num = captcha["number"]
-        # Note: Img caption must be <= 1024 chars
-        img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(user_name_lrm,
-                chat_title, str(captcha_timeout))
+        # Generate a pseudorandom captcha send it to telegram group and
+        # program message
+        captcha = create_image_captcha(str(join_user_id), captcha_level, \
+                captcha_mode)
+        if captcha_mode == "math":
+            captcha_num = captcha["equation_result"]
+            printts("[{}] Sending captcha message to {}: {}={}...".format( \
+                    chat_id, join_user_name, captcha["equation_str"], \
+                    captcha["equation_result"]))
+            # Note: Img caption must be <= 1024 chars
+            img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format( \
+                    user_name_lrm, chat_title, str(captcha_timeout))
+        else:
+            captcha_num = captcha["characters"]
+            printts("[{}] Sending captcha message to {}: {}...".format( \
+                    chat_id, join_user_name, captcha_num))
+            # Note: Img caption must be <= 1024 chars
+            img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format( \
+                    user_name_lrm, chat_title, str(captcha_timeout))
         # Prepare inline keyboard button to let user request another catcha
         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
                 callback_data="image_captcha {}".format(join_user_id))]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        printts("[{}] Sending captcha message to {}: {}...".format(chat_id, join_user_name, \
-                captcha_num))
-        sent_result = tlg_send_image(bot, chat_id, open(captcha["image"],"rb"), img_caption,
+        # Send the image
+        sent_result = tlg_send_image(bot, chat_id, \
+                open(captcha["image"],"rb"), img_caption, \
                 reply_markup=reply_markup)
         if sent_result["msg"] is None:
             send_problem = True
@@ -946,11 +966,12 @@ def msg_nocmd(update: Update, context: CallbackContext):
             printts("Message can't be deleted.")
         return
     # End here if no image captcha mode
-    if captcha_mode not in { "nums", "hex", "ascii" }:
+    if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         return
-    # Check if the expected captcha solve number is in the message
     printts("[{}] Received captcha reply from {}: {}".format(chat_id, user_name, msg_text))
-    if new_users[chat_id][user_id]["join_data"]["captcha_num"].lower() in msg_text.lower():
+    # Check if the expected captcha solve number is in the message
+    solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
+    if solve_num.lower() in msg_text.lower():
         # Remove join messages
         printts("[{}] Captcha solved by {}".format(chat_id, user_name))
         for msg in new_users[chat_id][user_id]["msg_to_rm"]:
@@ -993,17 +1014,27 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 invite_members=False, pin_messages=False, change_group_info=False)
     # The provided message doesn't has the valid captcha number
     else:
-        # Check if the message has 4 chars
-        if len(msg_text) == 4:
-            sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"])
-            new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
-            new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
-        else:
-            # Check if the message was just a 4 numbers msg
-            if is_int(msg_text):
-                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"])
-                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+        # Check if the message is for a math captcha and has 4 numbers
+        if (captcha_mode == "math"):
+            if is_int(msg_text) and (len(msg_text) == 4):
+                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_0"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
+                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+        # If "nums", "hex" or "ascii" captcha
+        else:
+            # Check if the message has 4 chars
+            if len(msg_text) == 4:
+                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_0"])
+                new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
+                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+            # Check if the message was just a 4 numbers msg
+            elif is_int(msg_text):
+                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_1"])
+                new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
+                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
     printts("[{}] Captcha reply process complete.".format(chat_id))
     printts(" ")
 
@@ -1166,9 +1197,11 @@ def button_request_captcha(bot, query):
     if query.from_user.username is not None:
         user_name = "@{}".format(query.from_user.username)
     chat_title = query.message.chat.title
-    # Add an unicode Left to Right Mark (LRM) to chat title (fix for arabic, hebrew, etc.)
+    # Add an unicode Left to Right Mark (LRM) to chat title
+    # (fix for arabic, hebrew, etc.)
     chat_title = add_lrm(chat_title)
-    # Ignore if message is not from a new user that has not completed the captcha yet
+    # Ignore if message is not from a new user that has not
+    # completed the captcha yet
     if chat_id not in new_users:
         return
     if user_id not in new_users[chat_id]:
@@ -1180,25 +1213,35 @@ def button_request_captcha(bot, query):
     keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
             callback_data="image_captcha {}".format(str(query.from_user.id)))]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    # Get captcha timeout and set image caption
+    # Get captcha timeout
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-    img_caption = TEXT[lang]["NEW_USER_CAPTCHA_CAPTION"].format(user_name,
-            chat_title, str(captcha_timeout))
     # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
     captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
     # Use nums mode if captcha_mode was changed while captcha was in progress
-    if captcha_mode not in { "nums", "hex", "ascii" }:
+    if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         captcha_mode = "nums"
-    # Generate a new captcha and edit previous captcha image message with this one
+    # Generate a new captcha and edit previous captcha image message
     captcha = create_image_captcha(str(user_id), captcha_level, captcha_mode)
-    printts("[{}] Sending new captcha message: {}...".format(chat_id, captcha["number"]))
-    input_media = InputMediaPhoto(media=open(captcha["image"], "rb"), caption=img_caption)
-    edit_result = tlg_edit_msg_media(bot, chat_id, msg_id, media=input_media,
-        reply_markup=reply_markup, timeout=20)
+    if captcha_mode == "math":
+        captcha_num = captcha["equation_result"]
+        printts("[{}] Sending new captcha msg: {} = {}...".format(chat_id, \
+                captcha["equation_str"], captcha_num))
+        img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(user_name, \
+            chat_title, str(captcha_timeout))
+    else:
+        captcha_num = captcha["characters"]
+        printts("[{}] Sending new captcha msg: {}...".format( \
+                chat_id, captcha_num))
+        img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(user_name, \
+            chat_title, str(captcha_timeout))
+    input_media = InputMediaPhoto(media=open(captcha["image"], "rb"), \
+            caption=img_caption)
+    edit_result = tlg_edit_msg_media(bot, chat_id, msg_id, media=input_media, \
+            reply_markup=reply_markup, timeout=20)
     if edit_result["error"] == "":
         # Set and modified to new expected captcha number
-        new_users[chat_id][user_id]["join_data"]["captcha_num"] = captcha["number"]
+        new_users[chat_id][user_id]["join_data"]["captcha_num"] = captcha_num
         # Remove sent captcha image file from file system
         if path.exists(captcha["image"]):
             remove(captcha["image"])
@@ -1492,7 +1535,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         return
     # Get and configure chat to provided captcha mode
     new_captcha_mode = args[0]
-    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii" }:
+    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii", "math" }:
         save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
@@ -2062,7 +2105,8 @@ def cmd_about(update: Update, context: CallbackContext):
 
 
 def cmd_captcha(update: Update, context: CallbackContext):
-    '''Command /captcha message handler. Usefull to test. Just Bot Owner can use it.'''
+    '''Command /captcha message handler. Usefull to test.
+    Just Bot Owner can use it.'''
     bot = context.bot
     # Ignore command if it was a edited message
     update_msg = getattr(update, "message", None)
@@ -2075,19 +2119,25 @@ def cmd_captcha(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     # Check if command was execute by Bot owner
-    if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
+    if (str(user_id) != CONST["BOT_OWNER"]) and \
+    (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
         return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update_msg)
     # Generate a random difficulty captcha
-    captcha_level = randint(1, 5)
-    captcha_chars_mode = choice(["nums", "hex", "ascii"]) # "button" doesn't generate an image
-    captcha = create_image_captcha(str(user_id), captcha_level, captcha_chars_mode)
-    printts("[{}] Sending captcha message: {}...".format(chat_id, captcha["number"]))
+    difficulty = randint(1, 5)
+    captcha_mode = choice(["nums", "hex", "ascii", "math"])
+    captcha = create_image_captcha(str(user_id), difficulty, captcha_mode)
+    if captcha_mode == "math":
+        captcha_code = "{} = {}".format(captcha["equation_str"], \
+                captcha["equation_result"])
+    else:
+        captcha_code = captcha["characters"]
+    printts("[{}] Sending captcha msg: {}".format(chat_id, captcha_code))
     # Note: Img caption must be <= 1024 chars
-    img_caption = "Captcha Level: {}\nCaptcha Mode: {}\nCaptcha Code: {}".format(captcha_level,
-            captcha_chars_mode, captcha["number"])
+    img_caption = "Captcha Level: {}\nCaptcha Mode: {}\n" \
+            "Captcha Code: {}".format(difficulty, captcha_mode, captcha_code)
     tlg_send_image(bot, chat_id, open(captcha["image"],"rb"), img_caption)
     # Remove sent captcha image file from file system
     if path.exists(captcha["image"]):
@@ -2504,7 +2554,10 @@ def main():
     # Using Bot idle() catch external signals instead our signal handler
     updater.idle()
     print("Bot Threads end")
-    kill(getpid(), SIGUSR1)
+    if os_system() == "Windows":
+        kill(getpid(), SIGTERM)
+    else:
+        kill(getpid(), SIGUSR1)
     sleep(1)
     printts("Exit 1")
     exit(1)

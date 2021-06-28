@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/05/2021
+    28/06/2021
 Version:
-    1.20.1
+    1.21.0
 '''
 
 ###############################################################################
@@ -107,7 +107,7 @@ CONST = {
         int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL", \
             SETTINGS["CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL"])),
 
-    # Initial captcha characters mode (ascii, hex, nums, or button)
+    # Initial captcha characters mode (ascii, hex, nums, math or button)
     "INIT_CAPTCHA_CHARS_MODE": \
         os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
             SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
@@ -292,7 +292,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.20.1 (30/05/2021)"
+    "VERSION": "1.21.0 (28/06/2021)"
 }
 
 
