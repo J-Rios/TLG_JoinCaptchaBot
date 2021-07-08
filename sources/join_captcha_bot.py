@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     28/06/2021
 Version:
-    1.21.0
+    1.21.1
 '''
 
 ###############################################################################
@@ -394,16 +394,20 @@ def load_texts_languages():
                 text, lang_iso_code))
 
 
-def create_image_captcha(img_file_name, difficult_level, captcha_mode):
+def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
     '''Generate an image captcha from pseudo numbers'''
-    image_file_path = "{}/{}.png".format(CONST["CAPTCHAS_DIR"], img_file_name)
     # If it doesn't exists, create captchas folder to store generated captchas
+    img_dir_path = "{}/{}".format(CONST["CAPTCHAS_DIR"], chat_id)
+    img_file_path = "{}/{}.png".format(img_dir_path, file_name)
     if not path.exists(CONST["CAPTCHAS_DIR"]):
         makedirs(CONST["CAPTCHAS_DIR"])
     else:
-        # If the captcha file exists remove it
-        if path.exists(image_file_path):
-            remove(image_file_path)
+        if not path.exists(img_dir_path):
+            makedirs(img_dir_path)
+        else:
+            # If the captcha file exists remove it
+            if path.exists(img_file_path):
+                remove(img_file_path)
     # Generate and save the captcha with a random background
     # mono-color or multi-color
     if captcha_mode == "math":
@@ -411,8 +415,8 @@ def create_image_captcha(img_file_name, difficult_level, captcha_mode):
     else:
         captcha = CaptchaGen.gen_captcha_image(difficult_level, captcha_mode,
                 bool(randint(0, 1)))
-    captcha["image"].save(image_file_path, "png")
-    captcha["image"] = image_file_path
+    captcha["image"].save(img_file_path, "png")
+    captcha["image"] = img_file_path
     return captcha
 
 
@@ -725,7 +729,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     else: # Image captcha
         # Generate a pseudorandom captcha send it to telegram group and
         # program message
-        captcha = create_image_captcha(str(join_user_id), captcha_level, \
+        captcha = create_image_captcha(chat_id, join_user_id, captcha_level, \
                 captcha_mode)
         if captcha_mode == "math":
             captcha_num = captcha["equation_result"]
@@ -1209,7 +1213,8 @@ def button_request_captcha(bot, query):
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         captcha_mode = "nums"
     # Generate a new captcha and edit previous captcha image message
-    captcha = create_image_captcha(str(user_id), captcha_level, captcha_mode)
+    captcha = create_image_captcha(chat_id, user_id, captcha_level, \
+            captcha_mode)
     if captcha_mode == "math":
         captcha_num = captcha["equation_result"]
         printts("[{}] Sending new captcha msg: {} = {}...".format(chat_id, \
@@ -2115,7 +2120,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
     # Generate a random difficulty captcha
     difficulty = randint(1, 5)
     captcha_mode = choice(["nums", "hex", "ascii", "math"])
-    captcha = create_image_captcha(str(user_id), difficulty, captcha_mode)
+    captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
     if captcha_mode == "math":
         captcha_code = "{} = {}".format(captcha["equation_str"], \
                 captcha["equation_result"])
