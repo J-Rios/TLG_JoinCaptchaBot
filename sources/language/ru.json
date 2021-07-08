@@ -207,16 +207,16 @@
         "Капча-вопрос не решена, {} выбрал неправильный вариант. \"Пользователь\" был исключен.",
 
     "CAPTCHA_POLL_USAGE":
-        "Настройка капча - вопроса и параметров опроса\n————————————————\nТекст вопроса не может быть длиннее {} символов.\n\nВариант текста не может быть больше, чем {} символов.\n\Максимальное количество опций {}.\n————————————————\nЗадайте вопрос для опроса:\n/captcha_poll вопрос - Вы уверены, что хотите войти в эту группу?\n\nSet Poll Option 1:\n/captcha_poll option 1 Нет, я не хочу входить в группу.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, Я человек и хочу войти в группу.\n\nSet Poll Option 3:\n/captcha_poll option 3 Кто я и что я делаю?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+        "Настройка капча - вопроса и параметров опроса\n————————————————\nТекст вопроса не может быть длиннее {} символов.\n\nВариант текста не может быть больше, чем {} символов.\n\nМаксимальное количество опций {}.\n————————————————\nЗадайте вопрос для опроса:\n/captcha_poll вопрос - Вы уверены, что хотите войти в эту группу?\n\nSet Poll Option 1:\n/captcha_poll option 1 Нет, я не хочу входить в группу.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, Я человек и хочу войти в группу.\n\nSet Poll Option 3:\n/captcha_poll option 3 Кто я и что я делаю?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
-        "Капча - Опрос\Вопрос успешно настроен.",
+        "Капча - Опрос\\Вопрос успешно настроен.",
 
     "POLL_OPTION_CONFIGURED":
-        "Параметр Капча - Опрос\Вопрос {} успешно настроен.",
+        "Параметр Капча - Опрос\\Вопрос {} успешно настроен.",
 
     "POLL_CORRECT_OPTION_CONFIGURED":
-        "Капча - Опрос\Вопрос. Правильный вариант успешно настроен на номер опции {}.",
+        "Капча - Опрос\\Вопрос. Правильный вариант успешно настроен на номер опции {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
         "Номер варианта опроса {} не существует, сначала настройте этот параметр.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
