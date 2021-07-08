@@ -201,26 +201,26 @@
         "Привет, {}, добро пожаловать в {}. Пожалуйста, ответьте на вопрос ниже, чтобы подтвердить, что вы человек. Если вы не сделаете этого в течение {} минут, вы будете автоматически удалены из группы.",
 
     "CAPTCHA_POLL_FAIL_0":
-        "Капча-вопрос не решена, {} выбрал неправильный вариант. Вы будете исключены через 10s, пожалуйста попробуйте зайти в группу снова...",
+        "Капча - опрос на вопрос не решена, {} выбрал неправильный вариант. Вы будете исключены через 10 сек, пожалуйста попробуйте зайти в группу снова...",
 
     "CAPTCHA_POLL_FAIL_1":
-        "Капча-вопрос не решена, {} выбрал неправильный вариант. \"Пользователь\" был исключен.",
+        "Капча - опрос на вопрос не решена, {} выбрал неправильный вариант. \"Пользователь\" был исключен.",
 
     "CAPTCHA_POLL_USAGE":
-        "Настройка капча - вопроса и параметров опроса\n————————————————\nТекст вопроса не может быть длиннее {} символов.\n\nВариант текста не может быть больше, чем {} символов.\n\nМаксимальное количество опций {}.\n————————————————\nЗадайте вопрос для опроса:\n/captcha_poll вопрос - Вы уверены, что хотите войти в эту группу?\n\nSet Poll Option 1:\n/captcha_poll option 1 Нет, я не хочу входить в группу.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, Я человек и хочу войти в группу.\n\nSet Poll Option 3:\n/captcha_poll option 3 Кто я и что я делаю?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+        "Настройка Капчи - опрос на вопрос и параметры опроса \n————————————————\nТекст вопроса не может быть длиннее {} символов.\n\nВариант опроса не может быть больше, чем {} символов.\n\nМаксимальное количество опций {}.\n————————————————\nЗадайте вопрос для опроса:\n/captcha_poll question Вы уверены, что хотите войти в эту группу?\n\nУстановить вариант опроса 1:\n/captcha_poll option 1 Нет, я не хочу входить в группу.\n\nУстановить вариант опроса 2:\n/captcha_poll option 2 Да, я человек и хочу войти в группу.\n\nУстановить вариант опроса 3:\n/captcha_poll option 3 Кто я и что я делаю?\n\nУдалить вариант опроса 2:\n/captcha_poll option 2 remove\n\nУстановить правильный вариант опроса 2:\n/captcha_poll correct_option 2\n\nСмена режима в Капча-Вопрос\\Опрос:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
-        "Капча - Опрос\\Вопрос успешно настроен.",
+        "Капча - опрос на вопрос успешно настроен.",
 
     "POLL_OPTION_CONFIGURED":
-        "Параметр Капча - Опрос\\Вопрос {} успешно настроен.",
+        "Параметр Капча - опрос на вопрос {} успешно настроен.",
 
     "POLL_CORRECT_OPTION_CONFIGURED":
-        "Капча - Опрос\\Вопрос. Правильный вариант успешно настроен на номер опции {}.",
+        "Капча - опрос на вопрос. Правильный вариант успешно настроен на номер опции {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Номер варианта опроса {} не существует, сначала настройте этот параметр.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Номер варианта опроса {} не существует, сначала настройте этот параметр.\n\nПример:\ncaptcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Нет\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
+        "Пришел новый пользователь, но Капча - опрос на вопрос настроен не полностью.\n\nНеобходимо настроить вопрос и опрос, правильный ответ на опрос и минимум 2 варианта ответа. Пожалуйста, настройте его с помощью /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Неи\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll"
 }
