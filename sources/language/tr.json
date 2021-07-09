@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Bu doğru sayı değil. Yakından kontrol edin, captcha'nın 4 numarası var...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} captcha'yı zamanında tamamlamadı. \"Kullanıcı\" atıldı.",
 

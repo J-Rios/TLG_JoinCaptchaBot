@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "这不是正确的数字。请仔细检查，验证码有4个数字。",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} 还没有及时完成验证码。“用户”已被踢出。",
 

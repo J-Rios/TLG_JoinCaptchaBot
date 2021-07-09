@@ -1005,11 +1005,20 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 invite_members=False, pin_messages=False, change_group_info=False)
     # The provided message doesn't has the valid captcha number
     else:
-        # Check if the message is for a math captcha and has 4 numbers
+        # Check if the message is for a math equation captcha
         if (captcha_mode == "math"):
+            clueless_user = False
+            # Check if message is just 4 numbers
             if is_int(msg_text) and (len(msg_text) == 4):
+                clueless_user = True
+            # Check if message is "NN+NN" or "NN-NN"
+            elif (len(msg_text) == 5) and (is_int(msg_text[:2])) and \
+            (is_int(msg_text[3:])) and (msg_text[3] in ["+", "-"]):
+                clueless_user = True
+            # Tell the user that is wrong
+            if clueless_user:
                 sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
-                        TEXT[lang]["CAPTCHA_INCORRECT_0"])
+                        TEXT[lang]["CAPTCHA_INCORRECT_MATH"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         # If "nums", "hex" or "ascii" captcha

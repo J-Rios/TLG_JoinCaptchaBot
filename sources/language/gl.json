@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Ese non é o número correcto. Fíxate ben, o captcha ten 4 números...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} non completou o captcha a tempo. O \"usuario\" foi expulsado (kick).",
 
