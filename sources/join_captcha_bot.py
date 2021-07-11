@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/06/2021
+    11/07/2021
 Version:
-    1.21.1
+    1.21.2
 '''
 
 ###############################################################################
@@ -1013,7 +1013,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 clueless_user = True
             # Check if message is "NN+NN" or "NN-NN"
             elif (len(msg_text) == 5) and (is_int(msg_text[:2])) and \
-            (is_int(msg_text[3:])) and (msg_text[3] in ["+", "-"]):
+            (is_int(msg_text[3:])) and (msg_text[2] in ["+", "-"]):
                 clueless_user = True
             # Tell the user that is wrong
             if clueless_user:
