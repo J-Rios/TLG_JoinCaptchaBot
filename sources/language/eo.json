@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Tio ne estas la ĝusta nombro, kontrolu atente, la CAPTCHA-testo havas 4 ciferojn...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} ne solvis la CAPTCHA-teston laŭtempe. \"Uzanto\" estis forigita.",
 

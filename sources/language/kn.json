@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "ಅದು ಸರಿಯಾದ ಸಂಖ್ಯೆ ಅಲ್ಲ. ಸೂಕ್ಷ್ಮವಾಗಿ ಪರಿಶೀಲಿಸಿ, ಕ್ಯಾಪ್ಚಾದಲ್ಲಿ 4 ಸಂಖ್ಯೆಗಳಿವೆ .",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} ಕ್ಯಾಪ್ಚಾವನ್ನು ಸಮಯಕ್ಕೆ ಪೂರ್ಣಗೊಳಿಸಿಲ್ಲ.  \"\" ಅನ್ನು ಹೊರಹಾಕಲಾಯಿತು.",
 

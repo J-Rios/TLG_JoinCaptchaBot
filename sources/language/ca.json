@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Aquest codi no és correcte. Fixeu-vos-hi bé, el captcha té 4 caràcters...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} no ha completat el captcha a temps. L'\"usuari\" ha estat expulsat.",
 

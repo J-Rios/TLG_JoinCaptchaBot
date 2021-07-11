@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "올바른 숫자가 아닙니다. 캡차는 숫자 4개로 구성되어 있으니 참고바랍니다...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} 님은 시간 안에 캡차 코드를 입력하지 못했습니다. \"User\" 님은 추방되었습니다.",
 
