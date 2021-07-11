@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Itu bukan nomor yang benar. Cek lebih teliti, captcha memiliki 4 angka...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} tidak menyelesaikan captcha dalam waktu yang ditentukan. \"User\" Telah dikeluarkan.",
 

@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "هذا الرقم غير صحيح. تأكد أكثر, يحوي التحقق على 4 أرقام...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} لم ينجز التحقق في مدته. \"المستخدم\" طُرد.",
 

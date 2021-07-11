@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Це не правильна цифра. Перевірте уважно, капча має 4 цифри...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} не виконав капчу вчасно. \"Користувача\" викинуто.",
 

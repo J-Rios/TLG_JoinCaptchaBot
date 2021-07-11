@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Αυτός δεν είναι ο σωστός αριθμός. Κοίτα πιο προσεκτικά, ο γρίφος (captcha) έχει 4 αριθμούς...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "Ο/Η {} δεν συμπλήρωσε τον γρίφο (captcha) μέσα στον δοσμένο χρόνο. Ο/Η \"User\" απομακρύνθηκε από το γκρουπ.",
 

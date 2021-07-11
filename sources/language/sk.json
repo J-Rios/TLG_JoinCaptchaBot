@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Toto nie je správne číslo. Pozeraj pozorne, kód obsahuje 4 čísla...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{} neopísal captcha kód načas. \"Užívateľ\" bol vyhodený.",
 

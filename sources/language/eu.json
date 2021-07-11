@@ -116,6 +116,9 @@
     "CAPTCHA_INCORRECT_1":
         "Zenbaki okerra. Arretaz begiratu, captchak 4 zenbaki ditu...",
 
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
     "NEW_USER_KICK":
         "{}-k ez du captcha denboraz asmatu. \"Erabiltzailea\" kanporatua (kick) izan da.",
 
