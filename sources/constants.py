@@ -6,7 +6,7 @@ Script:
 Description:
     Constants values for join_captcha_bot.py
 Author:
-    Jose Rios Rubio
+    Jose Miguel Rios Rubio
 Creation date:
     09/09/2018
 Last modified date:

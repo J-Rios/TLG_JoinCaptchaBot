@@ -6,10 +6,9 @@ Script:
     join_captcha_bot.py
 Description:
     Telegram Bot that send a captcha for each new user who join a group, and
-    ban them if they can not solve the captcha in a specified time. This is an
-    approach to deny access to groups of non-humans "users"
+    remove them if they can not solve the captcha in a specified time.
 Author:
-    Jose Rios Rubio
+    Jose Miguel Rios Rubio
 Creation date:
     09/09/2018
 Last modified date:
