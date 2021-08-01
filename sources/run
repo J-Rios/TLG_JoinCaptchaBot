@@ -11,7 +11,7 @@ if [ ! -z "$PID" ]; then
     exit 1
 fi
 
-rm -f $DIR/data/captchas/*
+rm -rf $DIR/data/captchas/*
 nohup python3 -u $DIR/join_captcha_bot_pro.py >> $DIR/output.log 2>&1 &
 echo "Starting Script..."
 sleep 1
