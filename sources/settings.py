@@ -86,9 +86,8 @@ SETTINGS = {
     # Telegram maximum Poll Option length is 100
     "CAPTCHABOT_MAX_POLL_OPTION_LENGTH": 100,
 
-    # Default time (in mins) to remove self-destruct sent messages from
-    # the Bot
-    "CAPTCHABOT_T_DEL_MSG": 5,
+    # Default time (in mins) to self-remove self-destruct sent messages
+    "CAPTCHABOT_T_DEL_MSG": 1,
 
     # Auto-remove custom welcome message timeout
     "CAPTCHABOT_T_DEL_WELCOME_MSG": 5,

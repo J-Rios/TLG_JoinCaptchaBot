@@ -6,13 +6,13 @@ Script:
 Description:
     Constants values for join_captcha_bot.py
 Author:
-    Jose Rios Rubio
+    Jose Miguel Rios Rubio
 Creation date:
     09/09/2018
 Last modified date:
-    11/07/2021
+    01/08/2021
 Version:
-    1.21.2
+    1.21.3
 '''
 
 ###############################################################################
@@ -112,8 +112,7 @@ CONST = {
         os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
             SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
 
-    # Default time (in mins) to remove self-destruct sent messages
-    # from the Bot
+    # Default time (in mins) to self-remove self-destruct sent messages
     "T_DEL_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
@@ -270,7 +269,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.21.2 (11/07/2021)"
+    "VERSION": "1.21.3 (01/08/2021)"
 }
 
 
