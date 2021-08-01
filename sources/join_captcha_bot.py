@@ -575,7 +575,8 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
 
 def chat_member_status_change(update: Update, context: CallbackContext):
     '''Get Members chats status changes (user join/leave/added/removed to/from
-    group/channel) event handler.'''
+    group/channel) event handler. Note: if Bot is not an Admin, "chat_member"
+    update won't be received.'''
     global new_users
     bot = context.bot
     # Check members changes
@@ -583,9 +584,6 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if result is None:
         return
     was_member, is_member = result
-    # Ignore member leave group
-    #if not is_member and was_member:
-    #    return
     # Check if it is a new member join
     if was_member:
         return
@@ -596,7 +594,6 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     member_added_by = update.chat_member.from_user
     join_user = update.chat_member.new_chat_member.user
     chat_id = chat.id
-    chat_type = chat.type
     # Check if Group is not allowed to be used by the Bot
     if not allowed_in_this_group(bot, chat, member_added_by):
         tlg_leave_chat(bot, chat.id)
@@ -633,8 +630,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         printts("Skipping the captcha process.")
         return
     # Ignore Members added by an Admin
-    join_by_id = member_added_by.id
-    if tlg_user_is_admin(bot, join_by_id, chat_id):
+    if tlg_user_is_admin(bot, member_added_by.id, chat_id):
         printts("[{}] User has been added by an administrator.".format(
                 chat_id))
         printts("Skipping the captcha process.")
@@ -818,13 +814,9 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
     for join_user in new_chat_members:
         # Ignore if the chat is not expected
         if chat_id not in new_users:
-            print("Warning: Received 'message' before 'chat_member' update?")
-            print("  chat_id not in new_users")
             continue
         # Ignore if user is not expected
         if join_user.id not in new_users[chat_id]:
-            print("Warning: Received 'message' before 'chat_member' update?")
-            print("  join_user.id not in new_users[chat_id]")
             continue
         # If user has join the group, add the "USER joined the group"
         # message ID to new user data to be removed
