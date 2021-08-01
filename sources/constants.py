@@ -112,8 +112,7 @@ CONST = {
         os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
             SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
 
-    # Default time (in mins) to remove self-destruct sent messages
-    # from the Bot
+    # Default time (in mins) to self-remove self-destruct sent messages
     "T_DEL_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
