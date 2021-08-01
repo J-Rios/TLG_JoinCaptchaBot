@@ -6,16 +6,15 @@ Script:
     join_captcha_bot.py
 Description:
     Telegram Bot that send a captcha for each new user who join a group, and
-    ban them if they can not solve the captcha in a specified time. This is an
-    approach to deny access to groups of non-humans "users"
+    remove them if they can not solve the captcha in a specified time.
 Author:
-    Jose Rios Rubio
+    Jose Miguel Rios Rubio
 Creation date:
     09/09/2018
 Last modified date:
-    11/07/2021
+    01/08/2021
 Version:
-    1.21.2
+    1.21.3
 '''
 
 ###############################################################################
@@ -810,6 +809,39 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             new_users[chat_id][join_user_id]["msg_to_rm"].append(solve_poll_request_msg_id)
         printts("[{}] Captcha send process complete.".format(chat_id))
         printts(" ")
+
+
+def msg_user_joined_group(update: Update, context: CallbackContext):
+    '''New member join the group event handler'''
+    global new_users
+    # Get message data
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = getattr(update_msg, "chat_id", None)
+    if chat_id is None:
+        return
+    msg_id = getattr(update_msg, "message_id", None)
+    if msg_id is None:
+        return
+    new_chat_members = getattr(update_msg, "new_chat_members", None)
+    if new_chat_members is None:
+        return
+    # For each new user that join or has been added
+    for join_user in new_chat_members:
+        # Ignore if the chat is not expected
+        if chat_id not in new_users:
+            print("Warning: Received 'message' before 'chat_member' update?")
+            print("  chat_id not in new_users")
+            continue
+        # Ignore if user is not expected
+        if join_user.id not in new_users[chat_id]:
+            print("Warning: Received 'message' before 'chat_member' update?")
+            print("  join_user.id not in new_users[chat_id]")
+            continue
+        # If user has join the group, add the "USER joined the group"
+        # message ID to new user data to be removed
+        new_users[chat_id][join_user.id]["join_msg"] = msg_id
 
 
 def msg_notext(update: Update, context: CallbackContext):
@@ -2534,7 +2566,9 @@ def main():
             Filters.contact, msg_notext))
     # Set to dispatcher a new member join the group and member left the group events handlers
     dp.add_handler(ChatMemberHandler(chat_bot_status_change, ChatMemberHandler.MY_CHAT_MEMBER))
-    dp.add_handler(ChatMemberHandler(chat_member_status_change, ChatMemberHandler.ANY_CHAT_MEMBER, run_async=True))
+    dp.add_handler(ChatMemberHandler(chat_member_status_change, ChatMemberHandler.ANY_CHAT_MEMBER))
+    # Set to dispatcher "USER joined the group" messages event handlers
+    dp.add_handler(MessageHandler(Filters.status_update.new_chat_members, msg_user_joined_group))
     # Set to dispatcher inline keyboard callback handler for new captcha request and
     # button captcha challenge
     dp.add_handler(CallbackQueryHandler(key_inline_keyboard))

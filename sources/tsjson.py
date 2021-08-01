@@ -6,7 +6,7 @@ Script:
 Description:
     Thread-Safe json files read/write library
 Author:
-    Jose Rios Rubio
+    Jose Miguel Rios Rubio
 Creation date:
     20/07/2017
 Last modified date:
