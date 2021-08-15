@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/08/2021
+    15/08/2021
 Version:
-    1.21.3
+    1.21.4
 '''
 
 ###############################################################################
@@ -233,6 +233,7 @@ CONST = {
     "SUPPORTED_LANGS_CMDS": \
         "\nArabic / Arabic\n/language ar\n" \
         "\nBasque / Euskal\n/language eu\n" \
+        "\nBelarusian / беларуская\n/language be\n" \
         "\nCatalan / Català\n/language ca\n" \
         "\nChinese-Simplified / 中文\n/language zh_cn\n" \
         "\nDutch / Nederlands\n/language nl\n" \
@@ -267,13 +268,14 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.21.3 (01/08/2021)"
+    "VERSION": "1.21.4 (15/08/2021)"
 }
 
 
 # Supported languages list
 TEXT = {
     "AR": {}, # Arabic
+    "BE": {}, # Belarusian
     "CA": {}, # Catalan
     "DE": {}, # German
     "EL": {}, # Greek

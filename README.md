@@ -217,3 +217,5 @@ To add support for a new language you must follow this steps:
 - Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
 
 - Korean: [@dakeshi](https://github.com/dakeshi)
+
+- Belarusian: [@antikruk](https://github.com/antikruk)
