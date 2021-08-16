@@ -24,16 +24,16 @@
         "Der Befehl benötigt eine Sprache zum Einstellen.\n\nBeispiele:\n{}",
 
     "TIME_CHANGE":
-        "Die Zeit zum Lösen des Captcha wurde in {} Minuten geändert.",
+        "Die Zeit zum Lösen des Captcha wurde in {} geändert.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Die maximal zulässige Zeit zum Lösen von Captchas beträgt 20 Minuten. Die Uhrzeit wurde nicht geändert.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Die angegebene Zeit ist keine Ganzzahl.",
 
     "TIME_NOT_ARG":
-        "Der Befehl benötigt einen Zeitwert zum Einstellen (in Minuten).\n\nBeispiele:\n/time 3\n/time 5\n/time 10",
+        "Der Befehl benötigt einen Zeitwert zum Einstellen.\n\nBeispiele:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Captcha-Schwierigkeit wurde erfolgreich auf Stufe {} geändert.",
@@ -99,13 +99,13 @@
         "Ignorierte Liste des Chats ist leer.\n\n",
 
     "NEW_USER_IMG_CAPTION":
-        "Hallo {}, willkommen bei {}, bitte sende eine Nachricht mit der Nummer, die in diesem Captcha angezeigt wird, um zu bestätigen, dass du ein Mensch bist. Wenn es Buchstaben gibt, machen Groß- und Kleinschreibung einen Unterschied. Wenn du das Captcha in {} Minuten nicht löst, wirst du automatisch aus der Gruppe gekickt.",
+        "Hallo {}, willkommen bei {}, bitte sende eine Nachricht mit der Nummer, die in diesem Captcha angezeigt wird, um zu bestätigen, dass du ein Mensch bist. Wenn es Buchstaben gibt, machen Groß- und Kleinschreibung einen Unterschied. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hallo {}, willkommen bei {}, bitte sende eine Nachricht mit der Lösung der mathematischen Gleichung, die in diesem Captcha angezeigt wird, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} Minuten nicht löst, wirst du automatisch aus der Gruppe gekickt.",
+        "Hallo {}, willkommen bei {}, bitte sende eine Nachricht mit der Lösung der mathematischen Gleichung, die in diesem Captcha angezeigt wird, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hallo {}, willkommen bei{}, bitte drück den Knopf um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} Minuten nicht löst, wirst du automatisch aus der Gruppe gekickt.",
+        "Hallo {}, willkommen bei {}, bitte drück den Knopf um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",
 
     "CAPTCHA_SOLVED":
         "Captcha gelöst, Benutzer verifiziert.\nWillkommen in der Gruppe {}",
@@ -201,7 +201,7 @@
         "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hallo {}, willkommen bei {}, bitte beantworte die Frage im Captcha, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} Minuten nicht löst, wirst du automatisch aus der Gruppe gekickt.",
+        "Hallo {}, willkommen bei {}, bitte beantworte die Frage im Captcha, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha Frage fehlgeschlagen, {} hat eine falsche Antwort ausgewählt. Du wirst in 10 Sekunden gekickt, versuche nochmal beizutreten",

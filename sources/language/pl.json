@@ -24,16 +24,16 @@
         "Komenda wymaga jeszcze kodu języka.\n\nPrzykłady:\n{}",
 
     "TIME_CHANGE":
-        "Czas na rozwiązanie captcha pomyślnie zmieniony na ilość minut równą {}.",
+        "Czas na rozwiązanie captcha pomyślnie zmieniony na ilość równą {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Maksymalny czas na rozwiązanie captcha to 20 minut. Nie zmieniono czasu.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Podany czas nie jest liczbą całkowitą.",
 
     "TIME_NOT_ARG":
-        "Komenda wymaga ustawienia wartości czasu (w minutach).\n\nPrzykłady:\n/time 3\n/time 5\n/time 10",
+        "Komenda wymaga ustawienia wartości czasu.\n\nPrzykłady:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Stopień trudności captcha pomyślnie zmieniony na {}.",
@@ -99,13 +99,13 @@
         "Lista ignorowanych jest pusta.",
 
     "NEW_USER_IMG_CAPTION":
-        "Cześć {}, witamy na {}, przepisz znaki z obrazka by udowodnić, że jesteś człowiekiem. Jeśli tego nie zrobisz w ciągu {} minut(y) zostaniesz automatycznie usunięty z grupy.",
+        "Cześć {}, witamy na {}, przepisz znaki z obrazka by udowodnić, że jesteś człowiekiem. Jeśli tego nie zrobisz w ciągu {} zostaniesz automatycznie usunięty z grupy.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Pomyślnie rozwiązano captcha, użytkownik uwierzytelniony.\nWitamy {}",
@@ -201,7 +201,7 @@
         "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

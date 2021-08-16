@@ -24,16 +24,16 @@
         "Komutun ayarlanması için bir dile ihtiyacı var.\n\nÖrnekler:\n{}",
 
     "TIME_CHANGE":
-        "Captcha'yı çözme süresi başarıyla {} dakikaya ayarlandı.",
+        "Captcha'yı çözme süresi başarıyla {} ayarlandı.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "İzin verilen maksimum captcha çözüm süresi 20 dakikadır. Zaman değiştirilmedi.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Sağlanan süre bir tamsayı değil.",
 
     "TIME_NOT_ARG":
-        "Komutun ayarlanması için bir zaman değerine ihtiyacı var (dakika olarak).\n\nÖrnekler:\n/time 3\n/time 5\n/time 10",
+        "Komutun ayarlanması için bir zaman değerine ihtiyacı var.\n\nÖrnekler:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Captcha zorluğu başarıyla {} seviyesine değiştirildi.",
@@ -99,13 +99,13 @@
         "Sohbet listesi yoksay boş.",
 
     "NEW_USER_IMG_CAPTION":
-        "Merhaba {}, {} grubuna hoş geldin, lütfen insan olduğunuzu doğrulamak için bu resimde görünen rakamları ve/veya harfleri içeren bir mesaj yazın. Eğer captcha'yı {} dakika içinde çözmezseniz, otomatik olarak gruptan atılacaksınız.",
+        "Merhaba {}, {} grubuna hoş geldin, lütfen insan olduğunuzu doğrulamak için bu resimde görünen rakamları ve/veya harfleri içeren bir mesaj yazın. Eğer captcha'yı {} içinde çözmezseniz, otomatik olarak gruptan atılacaksınız.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Captcha çözüldü, kullanıcı doğrulandı.\nGruba hoş geldiniz {}",
@@ -201,7 +201,7 @@
         "Bu Bot ücretsiz bir yazılımdır ve GNU-GPL lisansı altında açık kaynaklıdır.\nBot {} tarafından geliştirilmiştir.\n\nKodu burada görebilirsiniz:\n{}\n\nÇalışmamı beğendiniz mi? Bana bir kahve ısmarlayın:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

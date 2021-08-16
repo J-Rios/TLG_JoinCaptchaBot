@@ -24,16 +24,16 @@
         "Komandoak ezarri beharreko hizkuntza behar du.\n\nAdibideak:\n{}",
 
     "TIME_CHANGE":
-        "Captcha asmatzeko denbora {} minututara aldatua izan da.",
+        "Captcha asmatzeko denbora {} aldatua izan da.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Captcha asmatzeko gehienezko denbora 20 minutu dura. Ez da denbora tartea aldatu.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Ezarri nahi zen denbora ez da zenbaki osoa.",
 
     "TIME_NOT_ARG":
-        "Komandoak ezarri beharreko denboraren balioa behar du (minututan),\n\nAdibideak:\n/time 3\n/time 5\n/time 10",
+        "Komandoak ezarri beharreko denboraren balioa behar du,\n\nAdibideak:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Captchen zailtasun maila {}-ra aldatu da.",
@@ -99,13 +99,13 @@
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
     "NEW_USER_IMG_CAPTION":
-        "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} minututan asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
+        "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Captcha asmatuta, erabiltzailea egiaztatua.\nOngi etorri {} taldera",
@@ -201,7 +201,7 @@
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu:\n{}\n\nBTC:\n{}.",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

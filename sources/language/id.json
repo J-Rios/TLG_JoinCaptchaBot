@@ -24,16 +24,16 @@
         "Perintah ini memerlukan penyetingan bahasa.\n\nContoh:\n{}",
 
     "TIME_CHANGE":
-        "Waktu untuk menyelesaikan captcha berhasil diubah menjadi {} menit.",
+        "Waktu untuk menyelesaikan captcha berhasil diubah menjadi {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Waktu penyelesaian captcha maksimum yang diizinkan adalah 20 menit. Waktu belum diubah.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Waktu yang diberikan bukanlah bukanlah angka.",
 
     "TIME_NOT_ARG":
-        "Perintah memerlukan jumlah waktu untuk diatur (dalam menit).\n\nContoh:\n/time 3\n/time 5\n/time 10",
+        "Perintah memerlukan jumlah waktu untuk diatur.\n\nContoh:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Tingkat kesulitan captcha berhasil diubah ke level {}.",
@@ -99,13 +99,13 @@
         "Abaikan daftar obrolan kosong.",
 
     "NEW_USER_IMG_CAPTION":
-        "Halo {}, selamat datang di {}, harap kirimkan pesan dengan angka yang terdapat dalam captcha untuk memastikan kamu benar - benar orang. Jika kamu tidak menyelesaikan verifikasi captcha dalam {} menit, kamu akan otomatis dikeluarkan dari grup. Bila dalam verifikasi terdapat huruf, besar dan kecilnya huruf wajib diperhatikan.",
+        "Halo {}, selamat datang di {}, harap kirimkan pesan dengan angka yang terdapat dalam captcha untuk memastikan kamu benar - benar orang. Jika kamu tidak menyelesaikan verifikasi captcha dalam {}, kamu akan otomatis dikeluarkan dari grup. Bila dalam verifikasi terdapat huruf, besar dan kecilnya huruf wajib diperhatikan.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Halo {}, selamat datang di {}. Harap tekan tombol di bawah untuk memverifikasi bahwa Anda adalah manusia. Jika anda tidak melakukan ini dalam {} menit, anda akan dikeluarkan dari grup secara otomatis.",
+        "Halo {}, selamat datang di {}. Harap tekan tombol di bawah untuk memverifikasi bahwa Anda adalah manusia. Jika anda tidak melakukan ini dalam {}, anda akan dikeluarkan dari grup secara otomatis.",
 
     "CAPTCHA_SOLVED":
         "Captcha selesai, Pengguna telah diverifikasi.\nSelamat datang di grup {}",
@@ -201,7 +201,7 @@
         "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

@@ -24,16 +24,16 @@
         "ಆಜ್ಞೆಯನ್ನು ಹೊಂದಿಸಲು ಭಾಷೆಯ ಅಗತ್ಯವಿದೆ. \n\n ಉದಾಹರಣೆಗಳು:\n{}",
 
     "TIME_CHANGE":
-        "ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸುವ ಸಮಯವನ್ನು ಯಶಸ್ವಿಯಾಗಿ.{} ನಿಮಿಷಗಳಿಗೆ ಬದಲಾಯಿಸಲಾಗಿದೆ",
+        "ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸುವ ಸಮಯವನ್ನು ಯಶಸ್ವಿಯಾಗಿ. {} ಬದಲಾಯಿಸಲಾಗಿದೆ",
 
-    "TIME_MAX_NOT_ALLOW":
-        "ಗರಿಷ್ಠ ಅನುಮತಿಸಲಾದ ಕ್ಯಾಪ್ಚಾ ಪರಿಹಾರ ಸಮಯ 20 ನಿಮಿಷಗಳು. ಸಮಯವನ್ನು ಬದಲಾಯಿಸಲಾಗಿಲ್ಲ",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "ಒದಗಿಸಿದ ಸಮಯವು ಪೂರ್ಣಾಂಕ ಸಂಖ್ಯೆಯಲ್ಲ.",
 
     "TIME_NOT_ARG":
-        "ಆಜ್ಞೆಯನ್ನು ಹೊಂದಿಸಲು ಸಮಯದ ಮೌಲ್ಯದ ಅಗತ್ಯವಿದೆ (ನಿಮಿಷಗಳಲ್ಲಿ). \n\n ಉದಾಹರಣೆಗಳು:\n/time 3\n/time 5\n/time 10",
+        "ಆಜ್ಞೆಯನ್ನು ಹೊಂದಿಸಲು ಸಮಯದ ಮೌಲ್ಯದ ಅಗತ್ಯವಿದೆ. \n\n ಉದಾಹರಣೆಗಳು:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "ಕ್ಯಾಪ್ಚಾ ತೊಂದರೆ ಯಶಸ್ವಿಯಾಗಿ ಮಟ್ಟಕ್ಕೆ ಬದಲಾಗಿದೆ {}.",
@@ -99,13 +99,13 @@
         "ಚಾಟ್(chat) ನಿರ್ಲಕ್ಷ್ಯ ಪಟ್ಟಿ ಖಾಲಿಯಾಗಿದೆ.",
 
     "NEW_USER_IMG_CAPTION":
-        "ಹಲೋ {}, {}ಗೆ ಸ್ವಾಗತ. ನೀವು ಮನುಷ್ಯರೆಂದು ಪರಿಶೀಲಿಸಲು ದಯವಿಟ್ಟು ಈ ಚಿತ್ರದಲ್ಲಿ ಗೋಚರಿಸುವ ಸಂಖ್ಯೆಗಳು ಮತ್ತು/ಅಥವಾ ಅಕ್ಷರಗಳೊಂದಿಗೆ ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ. ನೀವು ಕ್ಯಾಪ್ಚಾವನ್ನು{} ನಿಮಿಷಗಳಲ್ಲಿ ಪರಿಹರಿಸದಿದ್ದರೆ, ನಿಮ್ಮನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಗುಂಪಿನಿಂದ ಹೊರಹಾಕಲಾಗುತ್ತದೆ.",
+        "ಹಲೋ {}, {} ಗೆ ಸ್ವಾಗತ. ನೀವು ಮನುಷ್ಯರೆಂದು ಪರಿಶೀಲಿಸಲು ದಯವಿಟ್ಟು ಈ ಚಿತ್ರದಲ್ಲಿ ಗೋಚರಿಸುವ ಸಂಖ್ಯೆಗಳು ಮತ್ತು/ಅಥವಾ ಅಕ್ಷರಗಳೊಂದಿಗೆ ಸಂದೇಶವನ್ನು ಬರೆಯಿರಿ. ನೀವು ಕ್ಯಾಪ್ಚಾವನ್ನು {} ಪರಿಹರಿಸದಿದ್ದರೆ, ನಿಮ್ಮನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಗುಂಪಿನಿಂದ ಹೊರಹಾಕಲಾಗುತ್ತದೆ.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "ಹಲೋ {}, {}ಗೆ ಸ್ವಾಗತ. ನೀವು ಮನುಷ್ಯರೆಂದು ಪರಿಶೀಲಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿರಿ. ನೀವು ಇದನ್ನು {} ನಿಮಿಷಗಳಲ್ಲಿ ಮಾಡದಿದ್ದರೆ, ನಿಮ್ಮನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಗುಂಪಿನಿಂದ ಹೊರಹಾಕಲಾಗುತ್ತದೆ.",
+        "ಹಲೋ {}, {} ಗೆ ಸ್ವಾಗತ. ನೀವು ಮನುಷ್ಯರೆಂದು ಪರಿಶೀಲಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿರಿ. ನೀವು ಇದನ್ನು {} ಮಾಡದಿದ್ದರೆ, ನಿಮ್ಮನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಗುಂಪಿನಿಂದ ಹೊರಹಾಕಲಾಗುತ್ತದೆ.",
 
     "CAPTCHA_SOLVED":
         "ಕ್ಯಾಪ್ಚಾ ಪರಿಹರಿಸಲಾಗಿದೆ, ಬಳಕೆದಾರರನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ. \n ಗುಂಪಿಗೆ ಸ್ವಾಗತ, {}",
@@ -201,7 +201,7 @@
         "ಈ ಬಾಟ್ ಉಚಿತ ಸಾಫ್ಟ್‌ವೇರ್ ಮತ್ತು GNU-GPL ಪರವಾನಗಿ ಅಡಿಯಲ್ಲಿ ಮುಕ್ತ ಮೂಲವಾಗಿದೆ (under the GNU-GPL license).\nಬೋಟ್ ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ್ದು {}. ನನಗೆ ಕಾಫಿ ಖರೀದಿಸಿ:\n{}\n\n BTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

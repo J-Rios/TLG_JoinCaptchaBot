@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/08/2021
+    17/08/2021
 Version:
-    1.21.4
+    1.21.5
 '''
 
 ###############################################################################
@@ -97,10 +97,10 @@ CONST = {
         bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE", \
             SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
 
-    # Initial captcha solve time (in minutes)
-    "INIT_CAPTCHA_TIME_MIN": \
+    # Initial captcha solve time
+    "INIT_CAPTCHA_TIME": \
         int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN", \
-            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_TIME_MIN"])),
+            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_TIME_MIN"])) * 60,
 
     # Initial captcha difficult level
     "INIT_CAPTCHA_DIFFICULTY_LEVEL": \
@@ -111,6 +111,11 @@ CONST = {
     "INIT_CAPTCHA_CHARS_MODE": \
         os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
             SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
+
+    # Maximum configurable captcha time
+    "MAX_CONFIG_CAPTCHA_TIME": \
+        int(os_getenv("CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME", \
+            SETTINGS["CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME"])),
 
     # Default time (in mins) to self-remove self-destruct sent messages
     "T_DEL_MSG": \
@@ -183,6 +188,9 @@ CONST = {
     "T_RESTRICT_NO_TEXT_MSG": \
         int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG", \
             SETTINGS["CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG"])),
+
+    # Number of seconds in a minute
+    "T_SECONDS_IN_MIN": 60,
 
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
@@ -268,7 +276,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.21.4 (15/08/2021)"
+    "VERSION": "1.21.5 (17/08/2021)"
 }
 
 

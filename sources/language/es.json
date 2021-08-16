@@ -24,16 +24,16 @@
         "El comando necesita un idioma que establecer.\n\nEjemplos:\n{}",
 
     "TIME_CHANGE":
-        "Tiempo para resolver el captcha cambiado a {} minutos.",
+        "Tiempo para resolver el captcha cambiado a {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "El tiempo máximo para resolver el captcha son 20 minutos. No se cambió el tiempo.",
+    "TIME_OUT_RANGE":
+        "Valor de tiempo no válido, el valor debe estar en el rango de 10 sec a {} min.",
 
     "TIME_NOT_NUM":
         "El tiempo entregado no es un número entero.",
 
     "TIME_NOT_ARG":
-        "El comando necesita un valor de tiempo a establecer (en minutos).\n\nEjemplos:\n/time 3\n/time 5\n/time 10",
+        "El comando necesita un valor de tiempo a establecer.\n\nEjemplos:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Nivel de dificultad de los captchas cambiado a {}.",
@@ -99,13 +99,13 @@
         "La lista de usuarios ignorados está vacía.",
 
     "NEW_USER_IMG_CAPTION":
-        "Hola {}, te damos la bienvenida al grupo {}. Por favor, escribe los números y/o letras que aparecen en esta imagen para verificar que eres humano. Si no resuelves este captcha en {} mins, se te expulsará (kick) del grupo automáticamente.",
+        "Hola {}, te damos la bienvenida al grupo {}. Por favor, escribe los números y/o letras que aparecen en esta imagen para verificar que eres humano. Si no resuelves este captcha en {}, se te expulsará (kick) del grupo automáticamente.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hola {}, te damos la bienvenida al grupo {}. Por favor, escribe el resultado de la ecuación matemática que aparecen en esta imagen para verificar que eres humano. Si no resuelves este captcha en {} mins, se te expulsará (kick) del grupo automáticamente.",
+        "Hola {}, te damos la bienvenida al grupo {}. Por favor, escribe el resultado de la ecuación matemática que aparecen en esta imagen para verificar que eres humano. Si no resuelves este captcha en {}, se te expulsará (kick) del grupo automáticamente.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hola {}, te damos la bienvenida al grupo {}. Por favor, presiona el botón de abajo para verificar que eres humano. Si no resuelves este captcha en {} mins, se te expulsará (kick) del grupo automáticamente.",
+        "Hola {}, te damos la bienvenida al grupo {}. Por favor, presiona el botón de abajo para verificar que eres humano. Si no resuelves este captcha en {}, se te expulsará (kick) del grupo automáticamente.",
 
     "CAPTCHA_SOLVED":
         "Captcha resuelto, usuario verificado.\nDisfruta del grupo, {}",
@@ -201,7 +201,7 @@
         "Este es un Bot de software libre open-source con licencia GNU-GPL, desarrollado por {}.\n\nPuedes consultar el código aquí:\n{}\n\n¿Te gusta lo que hago? Invítame a un café:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hola {}, te damos la bienvenida a {}. Por favor, resuelve la siguiente encuesta para demostrar que no eres un robot (eres humano). Si no lo haces en {} mins, se te expulsará (kick) del grupo de forma automática.",
+        "Hola {}, te damos la bienvenida a {}. Por favor, resuelve la siguiente encuesta para demostrar que no eres un robot (eres humano). Si no lo haces en {}, se te expulsará (kick) del grupo de forma automática.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Respuesta errónea de la encuesta, {} no seleccionó la respuesta correcta. Serás expulsado (kick) en 10s, por favor intenta unirte al grupo nuevamente...",

@@ -24,16 +24,16 @@
         "O comando precisa dunha lingua que estabelecer.\n\nExemplos:\n{}",
 
     "TIME_CHANGE":
-        "Tempo para resolver o captcha mudado a {} minutos.",
+        "Tempo para resolver o captcha mudado a {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "O tempo máximo para resolver o captcha son 20 minutos. Non se mudou o tempo.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "O tempo fornecido non é un número enteiro.",
 
     "TIME_NOT_ARG":
-        "O comando precisa dun valor de tempo a estabelecer (en minutos).\n\nExemplos:\n/time 3\n/time 5\n/time 10",
+        "O comando precisa dun valor de tempo a estabelecer.\n\nExemplos:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Nivel de dificultade dos captchas mudado a {}.",
@@ -99,13 +99,13 @@
         "Ignorar a listaxe da conversa que está baleira.",
 
     "NEW_USER_IMG_CAPTION":
-        "Ola {}, benvido a {}, por favor envía unha mensaxe co número que aparece nesta imaxe para verificar que es un humano. Se non resolves ese captcha en {} mins, serás expulsado (kick) do grupo de xeito automático.",
+        "Ola {}, benvido a {}, por favor envía unha mensaxe co número que aparece nesta imaxe para verificar que es un humano. Se non resolves ese captcha en {}, serás expulsado (kick) do grupo de xeito automático.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Captcha resolto, usuario verificado.\nBenvido ó grupo {}",
@@ -201,7 +201,7 @@
         "Este é un Bot de software libre open-source con licenza GNU-GPL, desenvolvido por {}.\n\nPodes consultar o código aquí:\n{}\n\nGóstache o que fago? Convídame a un café:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
