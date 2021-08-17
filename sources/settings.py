@@ -63,6 +63,9 @@ SETTINGS = {
     # Initial captcha solve time (in minutes)
     "CAPTCHABOT_INIT_CAPTCHA_TIME_MIN": 5,
 
+    # Maximum configurable captcha time (in minutes)
+    "CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME": 10,
+
     # Initial captcha difficult level
     "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 2,
 

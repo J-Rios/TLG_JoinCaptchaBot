@@ -188,7 +188,7 @@ To add support for a new language you must follow this steps:
 
 - French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
 
-- Italian: Noquitt
+- Italian: Noquitt, [@nidamanx](https://github.com/nidamanx)
 
 - Portuguese (Brazil): Anahuac de Paula Gil
 
@@ -217,3 +217,5 @@ To add support for a new language you must follow this steps:
 - Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
 
 - Korean: [@dakeshi](https://github.com/dakeshi)
+
+- Belarusian: [@antikruk](https://github.com/antikruk)

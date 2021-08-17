@@ -24,16 +24,16 @@
         "Команді потрібна мова для встановлення.\n\nПриклади:\n{}",
 
     "TIME_CHANGE":
-        "Час вирішення капчі успішно змінено до {} хвилин.",
+        "Час вирішення капчі успішно змінено до {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Максимально допустимий час розв’язання капчі - 120 хвилин. Час не змінився.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Наданий час не є цілим числом.",
 
     "TIME_NOT_ARG":
-        "Команді потрібно встановити значення часу (у хвилинах).\n\nПриклади:\n/time 3\n/time 5\n/time 10",
+        "Команді потрібно встановити значення часу.\n\nПриклади:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Складність капчі успішно змінено на рівень {}.",
@@ -48,10 +48,10 @@
         "Режим капчі успішно змінено на \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" та \"poll\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" та \"random\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Лише кнопка (\"button\").\n- Custom Poll challenge (\"poll\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Лише кнопка (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Вітальне повідомлення успішно налаштовано.",
@@ -99,13 +99,13 @@
         "Список ігнорування чату порожній.",
 
     "NEW_USER_IMG_CAPTION":
-        "Вітаю {}, ласкаво просимо у {}. Будь ласка, напишіть повідомлення з цифрами та/або літерами, які відображаються на цьому зображенні, щоб підтвердити, що ви людина. Якщо ви не вирішите капчу протягом {} хвилин, вас автоматично викинуть із групи.",
+        "Вітаю {}, ласкаво просимо у {}. Будь ласка, напишіть повідомлення з цифрами та/або літерами, які відображаються на цьому зображенні, щоб підтвердити, що ви людина. Якщо ви не вирішите капчу протягом {}, вас автоматично викинуть із групи.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Вітаю {}, ласкаво просимо у {}. Натисніть кнопку нижче, щоб підтвердити, що ви людина. Якщо ви цього не зробите протягом {} хвилин, вас автоматично викинуть із групи.",
+        "Вітаю {}, ласкаво просимо у {}. Натисніть кнопку нижче, щоб підтвердити, що ви людина. Якщо ви цього не зробите протягом {}, вас автоматично викинуть із групи.",
 
     "CAPTCHA_SOLVED":
         "Капча вирішена, користувача підтверджено.\nЛаскаво просимо до групи, {}",
@@ -201,7 +201,7 @@
         "Цей бот є безкоштовним програмним забезпеченням та відкритим кодом під ліцензією GNU-GPL.\nБот розроблено {}.\n\nВи можете перевірити код тут:\n{}\n\nВам подобається моя робота? Купіть мені каву:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
