@@ -24,16 +24,16 @@
         "Tiu komando bezonas lingvon por difini. \n\nEkzemploj:\n{}",
 
     "TIME_CHANGE":
-        "Tempo por solvi la CAPTCHA-teston ŝanĝis al {} minutoj.",
+        "Tempo por solvi la CAPTCHA-teston ŝanĝis al {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Maksimuma tempo por tio estas 20 minutoj. La tempo ne ŝanĝiĝis.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Tiu nombro ne estas entjero.",
 
     "TIME_NOT_ARG":
-        "La komando bezonas tempon por difini (en minutoj).\n\nEkzemploj:\n/time 3\n/time 5\n/time 10",
+        "La komando bezonas tempon por difini.\n\nEkzemploj:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Malfacileco de la captcharo ŝanĝita al nivelo {}.",
@@ -48,10 +48,10 @@
         "La uzo de literoj aŭ ciferoj ŝanĝis al \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\", \"ascii\", \"math\", \"button\" kaj \"poll\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" kaj \"random\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Bonveniga mesaĝo ŝangita.",
@@ -99,13 +99,13 @@
         "Listo de ignoritaj estas malplena.",
 
     "NEW_USER_IMG_CAPTION":
-        "Saluton {}, bonvenon al {}, bonvole skribu mesaĝon kun la ciferoj kaj/aŭ literoj kiuj aperas ĉe jena bildo por kontroli ke vi estas homo. Se vi ne solvos ĝin dum {} minutoj, vi estos forigita de la grupo.",
+        "Saluton {}, bonvenon al {}, bonvole skribu mesaĝon kun la ciferoj kaj/aŭ literoj kiuj aperas ĉe jena bildo por kontroli ke vi estas homo. Se vi ne solvos ĝin dum {}, vi estos forigita de la grupo.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Solvite.\nBonvenon en la grupon {}",
@@ -201,7 +201,7 @@
         "Ĉi tiu roboto estas libera softvaro sur la permesilo GNU-GPL.\nRoboto disvolvigita de {}.\n\nVi povas legi la kodon ĉe:\n{}\n\nĈu vi ŝatas ĝin? Regalu min per kafo:\n{}\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

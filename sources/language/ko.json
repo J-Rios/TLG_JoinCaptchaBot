@@ -24,16 +24,16 @@
         "설정할 언어를 입력해주세요.\n\n예시:\n{}",
 
     "TIME_CHANGE":
-        "캡차 입력 가능 시간이 {} 분으로 변경되었습니다.",
+        "캡차 입력 가능 시간이 {} 변경되었습니다.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "캡차 입력 가능 최대 시간은 20 분이며 이 값은 변경할 수 없습니다.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "시간은 숫자로만 입력해주세요.",
 
     "TIME_NOT_ARG":
-        "분 단위 형태의 시간을 입력해주세요.\n\n예시:\n/time 3\n/time 5\n/time 10",
+        "시간 입력.\n\n예시:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "캡차 난이도가 {}으로 변경되었습니다.",
@@ -48,10 +48,10 @@
         "캡차 모드가 \"{}\"로 변경되었습니다.",
 
     "CAPTCHA_MODE_INVALID":
-        "올바르지 않은 캡차 모드입니다. 설정 가능한 모드는 다음과 같습니다: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\".\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "올바르지 않은 캡차 모드입니다. 설정 가능한 모드는 다음과 같습니다: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n- Random challenge (\"random\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "환영 메시지가 설정되었습니다.",
@@ -99,13 +99,13 @@
         "예외 목록이 비어있습니다.",
 
     "NEW_USER_IMG_CAPTION":
-        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 화면에 나타난 숫자 또는 문자를 채팅창에 입력해주세요. {} 분 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
+        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 화면에 나타난 숫자 또는 문자를 채팅창에 입력해주세요. {} 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 사람이라면 아래 버튼을 클릭해주세요. {} 분 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
+        "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 사람이라면 아래 버튼을 클릭해주세요. {} 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
 
     "CAPTCHA_SOLVED":
         "캡차 답안 제출이 완료되어 사용자가 인증되었습니다.\n{} 방문을 환영합니다",
@@ -201,7 +201,7 @@
         "이 봇은 GNU-GPL 라이센스로 배포된 오픈 소스이자 무료 소프트웨어입니다.\n봇 개발자는 {}입니다.\n\n코드는 이곳에서 확인하실 수 있습니다:\n{}\n\n제 작업이 마음에 드신다면 저에게 커피 한 잔 사주세요:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "안녕하세요 {} 님, {} 방문을 환영합니다. 봇 계정이 아니라면 아래에 있는 객관식 문제를 풀어주세요. {} 분 안에 객관식 문제를 풀지 못하면 채팅방에서 자동 추방되니 주의바랍니다.",
+        "안녕하세요 {} 님, {} 방문을 환영합니다. 봇 계정이 아니라면 아래에 있는 객관식 문제를 풀어주세요. {} 안에 객관식 문제를 풀지 못하면 채팅방에서 자동 추방되니 주의바랍니다.",
 
     "CAPTCHA_POLL_FAIL_0":
         "객관식 문제 풀기 실패. {} 님은 오답을 선택하셨습니다. 10 초 안에 추방될 것입니다. 채팅방에 다시 입장해주시길 바랍니다...",

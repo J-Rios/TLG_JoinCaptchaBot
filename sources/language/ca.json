@@ -24,16 +24,16 @@
         "Cal que especifiqueu un idioma.\n\nExemples:\n{}",
 
     "TIME_CHANGE":
-        "S'ha canviat el temps per a resoldre el captcha a {} minuts.",
+        "S'ha canviat el temps per a resoldre el captcha a {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "El temps màxim per a resoldre el captcha són 20 minuts. No s'ha canviat el temps.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "El temps introduït no és un número enter.",
 
     "TIME_NOT_ARG":
-        "Cal que especifiqueu un valor de temps (en minuts).\n\nExemples:\n/time 3\n/time 5\n/time 10",
+        "Cal que especifiqueu un valor de temps.\n\nExemples:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "S'ha canviat el nivell de dificultat dels captcha a {}.",
@@ -48,10 +48,10 @@
         "S'ha canviat el mode-caràcter dels captcha a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" i \"poll\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" i \"random\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Cal que especifiqueu un mode-caràcter. Els modes disponibles són:\n- Captcha numèrics (\"nums\").\n- Captcha hexadecimals, amb números i lletres A-F (\"hex\").\n- Captcha amb números i lletres A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Cal que especifiqueu un mode-caràcter. Els modes disponibles són:\n- Captcha numèrics (\"nums\").\n- Captcha hexadecimals, amb números i lletres A-F (\"hex\").\n- Captcha amb números i lletres A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "El missatge de benvinguda s'ha configurat correctament.",
@@ -99,13 +99,13 @@
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
     "NEW_USER_IMG_CAPTION":
-        "Hola {}, benvingut/da a {}. Podeu enviar un missatge amb el número que apareix en aquesta imatge per a verificar que sou un humà. Si no resoleu aquest captcha en {} minuts, sereu expulsat del grup automàticament.",
+        "Hola {}, benvingut/da a {}. Podeu enviar un missatge amb el número que apareix en aquesta imatge per a verificar que sou un humà. Si no resoleu aquest captcha en {}, sereu expulsat del grup automàticament.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
     "CAPTCHA_SOLVED":
         "Heu resolt el captcha correctament. Ja sou un usuari verificat.\nBenvingut/da al grup, {}",
@@ -201,7 +201,7 @@
         "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

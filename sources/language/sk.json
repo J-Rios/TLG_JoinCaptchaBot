@@ -24,16 +24,16 @@
         "Príkaz vyžaduje zadanie skratky jazyka.\n\nPríklady:\n{}",
 
     "TIME_CHANGE":
-        "Čas na opísanie captcha kódu bol úspešne zmenený na {} minút.",
+        "Čas na opísanie captcha kódu bol úspešne zmenený na {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Maximálny povolený čas na opísanie captcha kódu je 20 minút. Čas nebol zmenený.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Zadaný čas nie je celé číslo.",
 
     "TIME_NOT_ARG":
-        "Príkaz vyžaduje zadanie hodnoty času (v minútach).\n\nPríklady:\n/time 3\n/time 5\n/time 10",
+        "Príkaz vyžaduje zadanie hodnoty času.\n\nPríklady:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Obtiažnosť captcha kódu bola úspešne zmenená na úroveň {}.",
@@ -48,10 +48,10 @@
         "Captcha mód bol úspešne zmenený na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" a \"poll\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" a \"random\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Len stlačenie tlačidla (\"button\").\n- Custom Poll challenge (\"poll\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Len stlačenie tlačidla (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Uvítacia správa bola úspešne nastavená.",
@@ -99,13 +99,13 @@
         "Zoznam ignorovaných pre tento chat je prázdny.",
 
     "NEW_USER_IMG_CAPTION":
-        "Ahoj {}, vitaj v {}. Prosím, opíš captcha kód (čísla a/alebo písmená), ktoré vidíš na tomto obrázku pre overenie že si človek. Ak tento captcha kód neopíšeš do {} minút, budeš automaticky vyhodený zo skupiny.",
+        "Ahoj {}, vitaj v {}. Prosím, opíš captcha kód (čísla a/alebo písmená), ktoré vidíš na tomto obrázku pre overenie že si človek. Ak tento captcha kód neopíšeš do {}, budeš automaticky vyhodený zo skupiny.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Ahoj {}, vitaj v {}. Prosím, stlač tlačidlo pre overenie, že si človek. Ak to neurobíš do {} minút, budeš automaticky vyhodený zo skupiny.",
+        "Ahoj {}, vitaj v {}. Prosím, stlač tlačidlo pre overenie, že si človek. Ak to neurobíš do {}, budeš automaticky vyhodený zo skupiny.",
 
     "CAPTCHA_SOLVED":
         "Captcha kód správny, užívateľ overený.\nVitaj v skupine, {}",
@@ -201,7 +201,7 @@
         "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

@@ -24,16 +24,16 @@
         "Het commando heeft een taal parameter nodig om de juiste taal in te stellen.\n\nExamples:\n{}",
 
     "TIME_CHANGE":
-        "De tijd om de captcha met succes op te lossen, is gewijzigd in {} minuten.",
+        "De tijd om de captcha met succes op te lossen, is gewijzigd in {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "De maximaal toegestane captcha-oplostijd is 20 minuten. De tijd is niet gewijzigd.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "De opgegeven tijd is geen geheel getal.",
 
     "TIME_NOT_ARG":
-        "De opdracht heeft een tijdwaarde nodig om in te stellen (in minuten).\n\nVoorbeelden:\n/time 3\n/time 5\n/time 10",
+        "De opdracht heeft een tijdwaarde nodig om in te stellen.\n\nVoorbeelden:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Captcha-moeilijkheidsgraad is succesvol gewijzigd naar niveau {}.",
@@ -48,10 +48,10 @@
         "Captcha-modus is succesvol gewijzigd naar \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Ongeldige captcha-modus. Ondersteunde modi zijn: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" en \"poll\".\n\nVoorbeeld:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Ongeldige captcha-modus. Ondersteunde modi zijn: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" en \"random\".\n\nVoorbeeld:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "De opdracht heeft een instelling nodig. Beschikbare modi zijn:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only uitdaging (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "De opdracht heeft een instelling nodig. Beschikbare modi zijn:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only uitdaging (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Welkomstbericht succesvol geconfigureerd.",
@@ -99,13 +99,13 @@
         "Bloklijst van de chat is leeg.",
 
     "NEW_USER_IMG_CAPTION":
-        "Hallo {}, welkom bij {}. Schrijf een bericht met de cijfers en/of letters die in deze afbeelding voorkomen om te bevestigen dat je een mens bent. Als je de captcha niet binnen {} minuten oplost, word je automatisch uit de groep gezet.",
+        "Hallo {}, welkom bij {}. Schrijf een bericht met de cijfers en/of letters die in deze afbeelding voorkomen om te bevestigen dat je een mens bent. Als je de captcha niet binnen {} oplost, word je automatisch uit de groep gezet.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hallo {}, welkom bij {}. Druk op de onderstaande knop om te bevestigen dat je een mens bent. Als je dit niet binnen {} minuten doet, word je automatisch uit de groep gezet.",
+        "Hallo {}, welkom bij {}. Druk op de onderstaande knop om te bevestigen dat je een mens bent. Als je dit niet binnen {} doet, word je automatisch uit de groep gezet.",
 
     "CAPTCHA_SOLVED":
         "Captcha opgelost, gebruiker geverifieerd. \nWelkom bij de groep, {}",
@@ -201,7 +201,7 @@
         "Deze Bot is gratis software en open source onder de GNU-GPL-licentie.\nBot Ontwikkeld door {}.\n\nJe kunt de code hier controleren:\n{}\n\nVind je mijn werk leuk? Koop een kop koffie voor me:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

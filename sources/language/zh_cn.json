@@ -24,16 +24,16 @@
         "这个命令需要一个语言参数。\n\n如:\n{}",
 
     "TIME_CHANGE":
-        "输入验证码的时间成功设置为 {} 分钟。",
+        "输入验证码的时间成功设置为 {}。",
 
-    "TIME_MAX_NOT_ALLOW":
-        "允许的验证码最大输入时间为20分钟，或，时间没有改变。",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "提供的时间不是整数。",
 
     "TIME_NOT_ARG":
-        "该命令需要设置时间值（以分钟为单位）。\n\n如:\n/time 3\n/time 5\n/time 10",
+        "该命令需要设置时间值。\n\n如:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "验证码难度成功更改为级别 {}。",
@@ -48,10 +48,10 @@
         "验证码字符模式已成功更改为\"{}\"。",
 
     "CAPTCHA_MODE_INVALID":
-        "验证码字符模式无效。 支持的模式有：\"nums\"，\"hex\", \"ascii\", \"math\", \"button\", \"poll\"。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "验证码字符模式无效。 支持的模式有：\"nums\"，\"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\"。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "欢迎消息已成功配置。",
@@ -99,13 +99,13 @@
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
     "NEW_USER_IMG_CAPTION":
-        "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 分钟内输入验证码，你将会被自动踢出群组。",
+        "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 内输入验证码，你将会被自动踢出群组。",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_SOLVED":
         "验证码已输入，用户已验证。欢迎加入群组 {}",
@@ -201,7 +201,7 @@
         "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧：\n{}\n\nBTC型比特币地址：\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",

@@ -3,7 +3,7 @@
         "مرحبا، أنا أداة آلية ترسل صورة تحققية لكل عضو جديد ينضم لمجموعة، ثم تطرد كل من لا ينجز التحقق خلال مدة معينة. \n\nإذا حاول مستخدم الانضمام لمجموعة ما خمس مرات متتالية سأفترض أن هذا \"العضو\" هو بوت آلي، وسأحظره. كذلك، أيّة رسالة مرسلة من \"عضو\" جديد لم ينجح في التحقق ستعتبر غثاء وستحذف.\n\n لا تنسى إعطائي صلاحيات إدارية لأتمكن من طرد وحظر المستخدمين وحذف رسائلهم.\n\n انظر الأمر /help لمزيد من المعلومات عن الاستخدام. \n\n هل أعجبتك خدمتي؟ انظر أمر /about وفكر بالتبرع لإبقائي فعالاً.",
 
     "HELP":
-        "تعليمات الآلي:\n————————————————\n- أنا آلي أرسل تحققا لكل مستخدم جديد ينضم لمجموعة، وأطرد من لا يستطيع إنجاز التحقق خلال مدة معينة.\n\n- إذا كرر مستخدم ما محاولة الدخول خمس مرات متتالية دون إنجاز التحقق، سأفترض أن \"المستخدم\" هو آلي، وسيحظر.\n\n- أي رسالة ترسل من قبل \"مستخدم\" فبل إنجاز التحقق ستعتبر غثاء وستحذف.\n\n- عليك منحي صلاحيات إدارية لأستطيع طرد مستخدمين وحذف رسائل.\n\n- للحفاظ على المجموعة نظيفة، سأحذف آليا كل الرسائل المتعلقة بي إذا لم ينجز التحقق وسأطرد المستخدم (بعد 5 دقائق).\n\n- الوقت المخصص لإنجاز التحقق هو 5 دقائق افتراضيا، لكن يمكنك ضبطه بالأمر /time.\n\n- يمكنك تفعيل/تعطيل التحقق بالأمر /enable و /disable.\n\n- أوامر الضبط محصورة بمدراء المجموعة.\n\n- يمكنك تغيير لغتي بالأمر /language.\n\n- يمكنك تغيير مستوى صعوبة التحقق بالأمر /difficulty.\n\n- يمكنك ضبط التحقق لاستخدام الحروف A–Z، أو الأرقام و الحروف A–F، أو مجرد أرقام (الافتراضي), or a math equation to be solved, or a custom poll, or just a button، أو مجرد ضغطة زر بالأمر /captcha_mode.\n\n- يمكنك ضبط رسالة ترحيب مخصصة بالأمر /welcome_msg.\n\n- يمكنك تفعيل حظر على إرسال المستخدمين الجدد لرسائل غير نصية بالأمر /restrict_non_text.\n\n- إن كان الآلي خاصاً، اسمح بالمجموعات بالأمر /allowgroup.\n\n- انظر /commands للحصول على قائمة بكل الأوامر الممكنة، ووصف مخصر لكل منهم.",
+        "تعليمات الآلي:\n————————————————\n- أنا آلي أرسل تحققا لكل مستخدم جديد ينضم لمجموعة، وأطرد من لا يستطيع إنجاز التحقق خلال مدة معينة.\n\n- إذا كرر مستخدم ما محاولة الدخول خمس مرات متتالية دون إنجاز التحقق، سأفترض أن \"المستخدم\" هو آلي، وسيحظر.\n\n- أي رسالة ترسل من قبل \"مستخدم\" فبل إنجاز التحقق ستعتبر غثاء وستحذف.\n\n- عليك منحي صلاحيات إدارية لأستطيع طرد مستخدمين وحذف رسائل.\n\n- للحفاظ على المجموعة نظيفة، سأحذف آليا كل الرسائل المتعلقة بي إذا لم ينجز التحقق وسأطرد المستخدم.\n\n- الوقت المخصص لإنجاز التحقق هو 5 دقائق افتراضيا، لكن يمكنك ضبطه بالأمر /time.\n\n- يمكنك تفعيل/تعطيل التحقق بالأمر /enable و /disable.\n\n- أوامر الضبط محصورة بمدراء المجموعة.\n\n- يمكنك تغيير لغتي بالأمر /language.\n\n- يمكنك تغيير مستوى صعوبة التحقق بالأمر /difficulty.\n\n- يمكنك ضبط التحقق لاستخدام الحروف A–Z، أو الأرقام و الحروف A–F، أو مجرد أرقام (الافتراضي), or a math equation to be solved, or a custom poll, or just a button، أو مجرد ضغطة زر بالأمر /captcha_mode.\n\n- يمكنك ضبط رسالة ترحيب مخصصة بالأمر /welcome_msg.\n\n- يمكنك تفعيل حظر على إرسال المستخدمين الجدد لرسائل غير نصية بالأمر /restrict_non_text.\n\n- إن كان الآلي خاصاً، اسمح بالمجموعات بالأمر /allowgroup.\n\n- انظر /commands للحصول على قائمة بكل الأوامر الممكنة، ووصف مخصر لكل منهم.",
 
     "COMMANDS":
         "قائمة الأوامر:\n————————————————\n/start - يظهر المعلومات الابتدائية عن الآلي.\n\n/help - يظهر معلومات المساعدة.\n\n/commands - يظهر هذه الرسالة. معلومات عن كل الأوامر المتاحة ووصفها.\n\n/language - يمكنك من تغيير لغة رسائل الآلي.\n\n/time - يمكنك من تغيير مدة إنجاز التحقق.\n\n/difficulty - يمكن تغيير مستوى صعوبة التحقق (من 1 إلى 5).\n\n/captcha_mode - يمكن من تغيير نمط التحقق (nums: أرقام، hex: numbers and A-F chars، ascii: أرقام وأحرف من A-Z، math: math equation، button: مجرد زر ، poll: custom and configurable poll.\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - يمكن من ضبط رسالة ترحيب ترسل بعد إنجاز التحقق.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - لا يتحقق من المستخدم في قائمة التجاهل.\n\n/remove_ignore - ألغ تجاهل مستخدم ما.\n\n/ignore_list - عرض معرفات المستخدمين المتجاهلين.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - اسمح لمجموعة باستخدام الآلي (إذا كان الآلي خاصاً).\n\n/enable - فعل حماية التحقق على مجموعة.\n\n/disable - يعطل حماية التحقق على مجموعة.\n\n/chatid - Shows Chat ID of current chat.\n\n/version - أظهر إصدار الآلي.\n\n/about - أظهر معلومات حول الآلي.",
@@ -26,14 +26,14 @@
     "TIME_CHANGE":
         "غيرت مهلة التحقق إلى {} دقائق.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "أقصى مهلة لإنجاز التحقق هو 20 دقيقة. لم أغير الوقت.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "الوقت المدخل ليس رقما.",
 
     "TIME_NOT_ARG":
-        "يحتاج الأمر إلى قيمة رقمية (بالدقائق).\n\nأمثلة:\n/time 3\n/time 5\n/time 10",
+        "يحتاج الأمر إلى قيمة رقمية.\n\nأمثلة:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "غيرت صعوبة التحقق إلى المستوى {}.",
@@ -48,10 +48,10 @@
         "غير وضع التحقق إلى \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "وضع غير صالح. الأوضاع المدعومة هي: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" و \"poll\".\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "وضع غير صالح. الأوضاع المدعومة هي: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" و \"random\".\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "يحتاج الأمر إلى وضع لضبطه. الأوضاع المتاحة هي:\n- تحقق رقمي (\"nums\").\n- تحقق هيكساديسمل, أرقام وحروف  A-F (\"hex\").\n- أرقام وحروف  A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- تحقق ضغط زر (\"button\").\n- Custom Poll challenge (\"poll\").\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "يحتاج الأمر إلى وضع لضبطه. الأوضاع المتاحة هي:\n- تحقق رقمي (\"nums\").\n- تحقق هيكساديسمل, أرقام وحروف  A-F (\"hex\").\n- أرقام وحروف  A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- تحقق ضغط زر (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "عدلت رسالة الترحيب بنجاح.",
@@ -99,13 +99,13 @@
         "قائمة التجاهل في هذه المحادثة فارغة.",
 
     "NEW_USER_IMG_CAPTION":
-        "مرحبا {}، أهلا بك في {}. رجاء اكتب رسالة بالأرقام و/أو الأحرف الظاهرة في الصورة للتحقق من أنك إنسان. إن لم تنجز التحقق في {} دقائق, ستُخرج آليا من المجموعة.",
+        "مرحبا {}، أهلا بك في {}. رجاء اكتب رسالة بالأرقام و/أو الأحرف الظاهرة في الصورة للتحقق من أنك إنسان. إن لم تنجز التحقق في {}, ستُخرج آليا من المجموعة.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "مرحبا {}، إهلا بك في {}. رجاء اضغط الزر أسفله للتأكد من أنك إنسان. إن لم تفعل ذلك خلال {} دقائق، ستُخرج آليا من المجموعة.",
+        "مرحبا {}، إهلا بك في {}. رجاء اضغط الزر أسفله للتأكد من أنك إنسان. إن لم تفعل ذلك خلال {}، ستُخرج آليا من المجموعة.",
 
     "CAPTCHA_SOLVED":
         "تم التحقق، تحققت من المستخدم.\nمرحبا في المجموعة {}",
@@ -201,7 +201,7 @@
         "هذا البوت حر ومفتوح المصدر تحت رخصة GNU-GPL .\nBot طوره {}.\n\nيمكنك الوصول لكود:\n{}\n\nهل أعجبك ما صنعته؟? اشتر لي قهوة:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
