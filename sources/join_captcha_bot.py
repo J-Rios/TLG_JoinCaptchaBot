@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/08/2021
+    17/08/2021
 Version:
-    1.21.3
+    1.22.0
 '''
 
 ###############################################################################
@@ -172,7 +172,7 @@ def get_default_config_data():
         ("Language", CONST["INIT_LANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
-        ("Captcha_Time", CONST["INIT_CAPTCHA_TIME_MIN"]),
+        ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
         ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
         ("Rm_Result_Msg", CONST["INIT_RM_RESULT_MSG"]),
@@ -678,14 +678,29 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     lang = get_chat_config(chat_id, "Language")
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
     captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
-    # selfdestruct
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+    if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
+        timeout_str = "{} sec".format(captcha_timeout)
+    else:
+        timeout_min = int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])
+        timeout_str = "{} min".format(timeout_min)
     send_problem = False
     captcha_num = ""
+    if captcha_mode == "random":
+        captcha_mode = choice(["nums", "math", "poll"])
+        # If Captcha Mode Poll is not configured use othe mode
+        if captcha_mode == "poll":
+            poll_question = get_chat_config(chat_id, "Poll_Q")
+            poll_options = get_chat_config(chat_id, "Poll_A")
+            poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
+            if (poll_question == "") or \
+            (num_config_poll_options(poll_options) < 2) or \
+            (poll_correct_option == 0):
+                captcha_mode = choice(["nums", "math"])
     if captcha_mode == "button":
         # Send a button-only challenge
         challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(user_name_lrm,
-                chat_title, str(captcha_timeout))
+                chat_title, timeout_str)
         # Prepare inline keyboard button to let user pass
         keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
                 callback_data="button_captcha {}".format(join_user_id))]]
@@ -708,15 +723,14 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         poll_options = list(filter(None, poll_options))
         # Send request to solve the poll text message
         poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(user_name_lrm,
-            chat_title, str(captcha_timeout))
+            chat_title, timeout_str)
         sent_result = tlg_send_selfdestruct_msg(bot, chat_id, poll_request_msg_text)
         solve_poll_request_msg_id = None
         if sent_result is not None:
             solve_poll_request_msg_id = sent_result
         # Send the Poll
-        sent_result = tlg_send_poll(bot, chat_id, poll_question,
-                poll_options, poll_correct_option-1, captcha_timeout*60,
-                False, Poll.QUIZ)
+        sent_result = tlg_send_poll(bot, chat_id, poll_question, poll_options,
+                poll_correct_option-1, captcha_timeout, False, Poll.QUIZ)
         if sent_result["msg"] is None:
             send_problem = True
         else:
@@ -746,14 +760,14 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                     captcha["equation_result"]))
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format( \
-                    user_name_lrm, chat_title, str(captcha_timeout))
+                    user_name_lrm, chat_title, timeout_str)
         else:
             captcha_num = captcha["characters"]
             printts("[{}] Sending captcha message to {}: {}...".format( \
                     chat_id, join_user_name, captcha_num))
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format( \
-                    user_name_lrm, chat_title, str(captcha_timeout))
+                    user_name_lrm, chat_title, timeout_str)
         # Prepare inline keyboard button to let user request another catcha
         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
                 callback_data="image_captcha {}".format(join_user_id))]]
@@ -770,12 +784,14 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if not send_problem:
         # Add sent captcha message to self-destruct list
         if sent_result["msg"] is not None:
-            tlg_msg_to_selfdestruct_in(sent_result["msg"], captcha_timeout+0.5)
+            destruct_in = (captcha_timeout + 30) / CONST["T_SECONDS_IN_MIN"]
+            tlg_msg_to_selfdestruct_in(sent_result["msg"], destruct_in)
         # Default user join data
         join_data = \
         {
             "user_name": join_user_name,
             "captcha_num": captcha_num,
+            "captcha_mode": captcha_mode,
             "join_time": time(),
             "join_retries": 1,
             "kicked_ban": False
@@ -973,7 +989,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # Get Chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Check for Spam (check if the message contains any URL or alias)
     has_url = re.findall(CONST["REGEX_URLS"], msg_text)
     has_alias = tlg_alias_in_string(msg_text)
@@ -981,6 +997,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
         printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
         captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+        captcha_timeout = captcha_timeout / CONST["T_SECONDS_IN_MIN"]
         # Try to remove the message and notify detection
         delete_result = tlg_delete_msg(bot, chat_id, msg_id)
         if delete_result["error"] == "":
@@ -1252,9 +1269,14 @@ def button_request_captcha(bot, query):
     reply_markup = InlineKeyboardMarkup(keyboard)
     # Get captcha timeout
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
+    if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
+        timeout_str = "{} sec".format(captcha_timeout)
+    else:
+        timeout_min = int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])
+        timeout_str = "{} min".format(timeout_min)
     # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Use nums mode if captcha_mode was changed while captcha was in progress
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         captcha_mode = "nums"
@@ -1266,13 +1288,13 @@ def button_request_captcha(bot, query):
         printts("[{}] Sending new captcha msg: {} = {}...".format(chat_id, \
                 captcha["equation_str"], captcha_num))
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(user_name, \
-            chat_title, str(captcha_timeout))
+            chat_title, timeout_str)
     else:
         captcha_num = captcha["characters"]
         printts("[{}] Sending new captcha msg: {}...".format( \
                 chat_id, captcha_num))
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(user_name, \
-            chat_title, str(captcha_timeout))
+            chat_title, timeout_str)
     input_media = InputMediaPhoto(media=open(captcha["image"], "rb"), \
             caption=img_caption)
     edit_result = tlg_edit_msg_media(bot, chat_id, msg_id, media=input_media, \
@@ -1480,18 +1502,41 @@ def cmd_time(update: Update, context: CallbackContext):
     if len(args) == 0:
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["TIME_NOT_ARG"])
         return
-    # Get and configure chat to provided captcha time
-    if is_int(args[0]):
-        new_time = int(args[0])
-        if new_time < 1:
-            new_time = 1
-        if new_time <= 20:
-            save_config_property(chat_id, "Captcha_Time", new_time)
-            msg_text = TEXT[lang]["TIME_CHANGE"].format(new_time)
-        else:
-            msg_text = TEXT[lang]["TIME_MAX_NOT_ALLOW"]
+    # Check if provided time argument is not a number
+    if not is_int(args[0]):
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["TIME_NOT_NUM"])
+        return
+    # Get time arguments
+    new_time = int(args[0])
+    min_sec = "min"
+    if len(args) > 1:
+        min_sec = args[1].lower()
+    # Check if time format is not minutes or seconds
+    # Convert time value to seconds if min format
+    if min_sec in ["m", "min", "mins", "minutes"]:
+        min_sec = "min"
+        new_time_str = "{} min".format(new_time)
+        new_time = new_time * CONST["T_SECONDS_IN_MIN"]
+    elif min_sec in ["s", "sec", "secs", "seconds"]:
+        min_sec = "sec"
+        new_time_str = "{} sec".format(new_time)
     else:
-        msg_text = TEXT[lang]["TIME_NOT_NUM"]
+        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["TIME_NOT_ARG"])
+        return
+    # Check if time value is out of limits
+    if new_time < 10: # Lees than 10s
+        msg_text = TEXT[lang]["TIME_OUT_RANGE"].format( \
+                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+        return
+    if new_time > CONST["MAX_CONFIG_CAPTCHA_TIME"] * CONST["T_SECONDS_IN_MIN"]:
+        msg_text = TEXT[lang]["TIME_OUT_RANGE"].format( \
+                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+        return
+    # Set the new captcha time
+    save_config_property(chat_id, "Captcha_Time", new_time)
+    msg_text = TEXT[lang]["TIME_CHANGE"].format(new_time_str)
     tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
 
 
@@ -1572,8 +1617,8 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"])
         return
     # Get and configure chat to provided captcha mode
-    new_captcha_mode = args[0]
-    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii", "math" }:
+    new_captcha_mode = args[0].lower()
+    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii", "math", "random" }:
         save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
@@ -2374,13 +2419,13 @@ def th_time_to_kick_not_verify_users(bot):
                         # Remove from new users list the remaining kicked users that have not solve
                         # the captcha in 1 hour (user ban just happen if a user try to join the group
                         # and fail to solve the captcha 5 times in the past 10 mins)
-                        if time() - user_join_time < (captcha_timeout*60) + 600:
+                        if time() - user_join_time < captcha_timeout + 600:
                             continue
                         printts("Removing kicked user {} after 10 mins".format(user_id))
                         del new_users[chat_id][user_id]
                     else:
                         # If time for kick/ban has not arrived yet
-                        if time() - user_join_time < captcha_timeout*60:
+                        if time() - user_join_time < captcha_timeout:
                             continue
                         # The time has come for this user
                         lang = get_chat_config(chat_id, "Language")

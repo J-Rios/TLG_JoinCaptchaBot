@@ -24,16 +24,16 @@
         "Il comando richiede una lingua da impostare.\n\nEsempi:\n{}",
 
     "TIME_CHANGE":
-        "Il tempo per risolvere il captcha è stato modificato con successo in {} minuti.",
+        "Il tempo per risolvere il captcha è stato modificato con successo in {}.",
 
-    "TIME_MAX_NOT_ALLOW":
-        "Il tempo massimo consentito per la risoluzione captcha è di 20 minuti. Il tempo non è stato modificato.",
+    "TIME_OUT_RANGE":
+        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
 
     "TIME_NOT_NUM":
         "Il tempo fornito non è un numero intero.",
 
     "TIME_NOT_ARG":
-        "Il comando richiede un valore di tempo da impostare (in minuti).\n\nEsempi:\n/time 3\n /time 5\n /time 10",
+        "Il comando richiede un valore di tempo da impostare.\n\nEsempi:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Difficoltà captcha modificata con successo al livello {}.",
@@ -48,10 +48,10 @@
         "La modalità carattere Captcha è stata modificata con successo in \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modalità caratteri captcha non valida. Le modalità supportate sono: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" e \"poll\".\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n /captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Modalità caratteri captcha non valida. Le modalità supportate sono: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" e \"random\".\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n /captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Il comando ha bisogno di impostare una modalità d'uso. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Captcha con umeri e caratteri (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Solo pulsante (\"button\").\n- Domanda customizzata (\"poll\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Il comando ha bisogno di impostare una modalità d'uso. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Captcha con umeri e caratteri (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Solo pulsante (\"button\").\n- Domanda customizzata (\"poll\").\n- Random challenge (\"random\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Messaggio di benvenuto configurato correttamente.",
@@ -99,13 +99,13 @@
         "La lista degli utenti da ignorare è vuota.",
 
     "NEW_USER_IMG_CAPTION":
-        "Ciao {}, benvenuto in {}, invia un messaggio con il numero che appare in questo captcha per verificare che sei un essere umano. Se non risolvi il captcha in {} min, verrai automaticamente espulso dal gruppo. Attenzione: se ci sono lettere, le lettere maiuscole e minuscole fanno la differenza ",
+        "Ciao {}, benvenuto in {}, invia un messaggio con il numero che appare in questo captcha per verificare che sei un essere umano. Se non risolvi il captcha in {}, verrai automaticamente espulso dal gruppo. Attenzione: se ci sono lettere, le lettere maiuscole e minuscole fanno la differenza ",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {} mins, you will be automatically kicked out of the group.",
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
 
     "NEW_USER_BUTTON_MODE":
-        "Ciao {}, benvenuto in {}. Premi il pulsante in basso per verificare che sei un essere umano. Se non procedi entro {} minuti, verrai automaticamente espulso dal gruppo",
+        "Ciao {}, benvenuto in {}. Premi il pulsante in basso per verificare che sei un essere umano. Se non procedi entro {}, verrai automaticamente espulso dal gruppo",
 
     "CAPTCHA_SOLVED":
         "Captcha risolto, verificato dall'utente.\nBenvenuto nel gruppo {}",
@@ -201,7 +201,7 @@
         "Questo Bot è un software gratuito e open source con licenza GNU-GPL.\nBot Sviluppato da {}.\n\nPuoi controllare il codice qui:\n{}\n\nTi piace il mio lavoro? Comprami un caffè:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Ciao {}, benvenuto in {}. Rispondi alla domanda per provare che non sei un robot. Se non risponderai entro {} minuti, verrai automaticamente espulso dal gruppo.",
+        "Ciao {}, benvenuto in {}. Rispondi alla domanda per provare che non sei un robot. Se non risponderai entro {}, verrai automaticamente espulso dal gruppo.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Errore. {} ha selezionato la risposta sbagliata. verrai espulso in 10s. Prova a rifare la richiesta...",
