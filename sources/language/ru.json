@@ -48,10 +48,10 @@
         "Режим капчи успешно был изменён на \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Неверный режим капчи. Поддерживаемые варианты капчи: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" and \"poll\".\n\nПримеры:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Неверный режим капчи. Поддерживаемые варианты капчи: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\nПримеры:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Необходимо выбрать режим. Доступные режимы:\n- Числовые капчи (\"nums\").\n- Hexadecimal капча, цифры и символы A-F (\"hex\").\n- Цифры и символы A-Z Капча (\"ascii\").\n- Математическое уравнение для решения капчи (\"math\").\n- Только кнопка (\"button\").\n- Настраиваемый опрос (\"poll\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Необходимо выбрать режим. Доступные режимы:\n- Числовые капчи (\"nums\").\n- Hexadecimal капча, цифры и символы A-F (\"hex\").\n- Цифры и символы A-Z Капча (\"ascii\").\n- Математическое уравнение для решения капчи (\"math\").\n- Только кнопка (\"button\").\n- Настраиваемый опрос (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Приветственное сообщение успешно изменено.",

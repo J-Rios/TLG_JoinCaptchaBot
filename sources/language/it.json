@@ -48,10 +48,10 @@
         "La modalità carattere Captcha è stata modificata con successo in \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modalità caratteri captcha non valida. Le modalità supportate sono: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" e \"poll\".\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n /captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Modalità caratteri captcha non valida. Le modalità supportate sono: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" e \"random\".\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n /captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Il comando ha bisogno di impostare una modalità d'uso. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Captcha con umeri e caratteri (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Solo pulsante (\"button\").\n- Domanda customizzata (\"poll\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Il comando ha bisogno di impostare una modalità d'uso. Le modalità disponibili sono:\n- Captcha numerici (\"nums\").\n- Captcha esadecimali, numeri e caratteri AF (\"hex\").\n- Captcha con umeri e caratteri (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Solo pulsante (\"button\").\n- Domanda customizzata (\"poll\").\n- Random challenge (\"random\").\n\nEsempi:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Messaggio di benvenuto configurato correttamente.",

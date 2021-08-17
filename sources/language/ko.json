@@ -48,10 +48,10 @@
         "캡차 모드가 \"{}\"로 변경되었습니다.",
 
     "CAPTCHA_MODE_INVALID":
-        "올바르지 않은 캡차 모드입니다. 설정 가능한 모드는 다음과 같습니다: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\".\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "올바르지 않은 캡차 모드입니다. 설정 가능한 모드는 다음과 같습니다: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n- Random challenge (\"random\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "환영 메시지가 설정되었습니다.",

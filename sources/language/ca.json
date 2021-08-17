@@ -48,10 +48,10 @@
         "S'ha canviat el mode-caràcter dels captcha a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" i \"poll\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Mode-caràcter no vàlid. Els modes disponibles són: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" i \"random\".\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Cal que especifiqueu un mode-caràcter. Els modes disponibles són:\n- Captcha numèrics (\"nums\").\n- Captcha hexadecimals, amb números i lletres A-F (\"hex\").\n- Captcha amb números i lletres A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Cal que especifiqueu un mode-caràcter. Els modes disponibles són:\n- Captcha numèrics (\"nums\").\n- Captcha hexadecimals, amb números i lletres A-F (\"hex\").\n- Captcha amb números i lletres A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExemples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "El missatge de benvinguda s'ha configurat correctament.",

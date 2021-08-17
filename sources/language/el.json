@@ -48,10 +48,10 @@
         "Επιτυχής αλλαγή captcha σε \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Μη έγκυρη λειτουργία captcha. Υποστηριζόμενες λειτουργίες: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" and \"poll\".\n\n Παράδειγμα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Μη έγκυρη λειτουργία captcha. Υποστηριζόμενες λειτουργίες: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\n Παράδειγμα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Η εντολή χρειάζεται να ρυθμίζει μια λειτουργία. Οι παρεχόμενες λειτουργίες είναι:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\n Παραδείγματα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Η εντολή χρειάζεται να ρυθμίζει μια λειτουργία. Οι παρεχόμενες λειτουργίες είναι:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\n Παραδείγματα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Το μήνυμα καλωσορίσματος άλλαξε επιτυχώς.",

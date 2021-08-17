@@ -48,10 +48,10 @@
         "Tryb znaków captcha pomyślnie zmieniony na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Niepoprawny tryb znaków captcha. Wspierane tryby to: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" oraz \"poll\".\n\nPrzykład:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Niepoprawny tryb znaków captcha. Wspierane tryby to: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" oraz \"random\".\n\nPrzykład:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komenda wymaga ustawienia trybu znaków captcha. Dostępne tryby to:\n- Numeryczny (\"nums\").\n- Hexadecymalny, cyfry i litery A-F (\"hex\").\n- cyfry i litery A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nPrzykłady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Komenda wymaga ustawienia trybu znaków captcha. Dostępne tryby to:\n- Numeryczny (\"nums\").\n- Hexadecymalny, cyfry i litery A-F (\"hex\").\n- cyfry i litery A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nPrzykłady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Wiadomość powitalna skonfigurowana pomyślnie.",

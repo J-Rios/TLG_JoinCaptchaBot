@@ -48,10 +48,10 @@
         "Captcharen karaktere-modua \"{}\"-ra aldatua izan da.",
 
     "CAPTCHA_MODE_INVALID":
-        "Karaktere-modua ez baliagarria. Erabilgarri dauden moduak honakoak dira: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" eta \"poll\".\n\nAdibideak:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Karaktere-modua ez baliagarria. Erabilgarri dauden moduak honakoak dira: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" eta \"random\".\n\nAdibideak:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komandoak ezarri beharreko karaktere-modua behar du. Erabilgarri dauden moduak honakoak dira:\n- Zenbakizko captchak (\"nums\").\n- Hamaseitarrezko captchak, zenbaki eta A-F tarteko letrekin (\"hex\").\n- Zenbaki eta A-Z tarteko letradun captchak (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nAdibideak:\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Komandoak ezarri beharreko karaktere-modua behar du. Erabilgarri dauden moduak honakoak dira:\n- Zenbakizko captchak (\"nums\").\n- Hamaseitarrezko captchak, zenbaki eta A-F tarteko letrekin (\"hex\").\n- Zenbaki eta A-Z tarteko letradun captchak (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nAdibideak:\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Ongi etorri mezua ongi konfiguratuta.",

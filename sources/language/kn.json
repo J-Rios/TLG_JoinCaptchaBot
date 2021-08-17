@@ -48,10 +48,10 @@
         "ಕ್ಯಾಪ್ಚಾ ಮೋಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "ಕ್ಯಾಪ್ಚಾ ಮೋಡ್ ಅಮಾನ್ಯವಾಗಿದೆ. ಬೆಂಬಲಿತ ವಿಧಾನಗಳು: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" and \"poll\".\n\nಉದಾಹರಣೆಗಳು:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "ಕ್ಯಾಪ್ಚಾ ಮೋಡ್ ಅಮಾನ್ಯವಾಗಿದೆ. ಬೆಂಬಲಿತ ವಿಧಾನಗಳು: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\nಉದಾಹರಣೆಗಳು:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "ಆಜ್ಞೆಯನ್ನು ಹೊಂದಿಸಲು ಮೋಡ್ ಅಗತ್ಯವಿದೆ. ಲಭ್ಯವಿರುವ ವಿಧಾನಗಳು:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "ಆಜ್ಞೆಯನ್ನು ಹೊಂದಿಸಲು ಮೋಡ್ ಅಗತ್ಯವಿದೆ. ಲಭ್ಯವಿರುವ ವಿಧಾನಗಳು:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "ಸ್ವಾಗತ ಸಂದೇಶವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಕಾನ್ಫಿಗರ್ ಮಾಡಲಾಗಿದೆ.",

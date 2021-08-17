@@ -48,10 +48,10 @@
         "Mode karakter captcha berhasil diubah ke \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" dan \"poll\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Mode karakter captcha tidak valid. mode yang didukung: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" dan \"random\".\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Perintah memerlukan mode karakter untuk diatur. Mode yang tersedia:\n- Captcha Angka (\"nums\").\n- Captcha HexaDesimal, angka dan huruf A-F (\"hex\").\n- Angka dan Captcha huruf A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nContoh:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Pesan selamat datang berhasil diatur.",

@@ -48,10 +48,10 @@
         "Captcha-modus is succesvol gewijzigd naar \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Ongeldige captcha-modus. Ondersteunde modi zijn: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" en \"poll\".\n\nVoorbeeld:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Ongeldige captcha-modus. Ondersteunde modi zijn: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" en \"random\".\n\nVoorbeeld:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "De opdracht heeft een instelling nodig. Beschikbare modi zijn:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only uitdaging (\"button\").\n- Custom Poll challenge (\"poll\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "De opdracht heeft een instelling nodig. Beschikbare modi zijn:\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only uitdaging (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Welkomstbericht succesvol geconfigureerd.",

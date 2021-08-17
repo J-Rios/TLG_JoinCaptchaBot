@@ -48,10 +48,10 @@
         "Режим капчі успішно змінено на \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" та \"poll\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Недійсний режим капчі. Підтримувані режими: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" та \"random\".\n\nПриклад:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Лише кнопка (\"button\").\n- Custom Poll challenge (\"poll\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Для встановлення команди потрібен режим. Доступні режими:\n- Цифрова капча (\"nums\").\n- Шістнадцяткова капча, цифри та символи A-F (\"hex\").\n- Цифри та символи A-Z капча (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Лише кнопка (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nПриклади:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Вітальне повідомлення успішно налаштовано.",

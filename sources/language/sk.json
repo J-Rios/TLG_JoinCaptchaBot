@@ -48,10 +48,10 @@
         "Captcha mód bol úspešne zmenený na \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" a \"poll\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Nesprávny captcha mód. Podporované módy sú: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" a \"random\".\n\nPríklad:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Len stlačenie tlačidla (\"button\").\n- Custom Poll challenge (\"poll\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Príkaz vyžaduje zadanie módu. Dostupné módy sú:\n- Číselný captcha kód (\"nums\").\n- Hexadecimálny captcha kód, čísla a znaky A-F (\"hex\").\n- Čísla a znaky A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Len stlačenie tlačidla (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nPríklady:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Uvítacia správa bola úspešne nastavená.",

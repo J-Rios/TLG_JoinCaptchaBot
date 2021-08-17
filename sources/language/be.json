@@ -48,10 +48,10 @@
         "Рэжым паспяхова зменены на \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Хібны рэжым. Падтрымліваюцца: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" і \"poll\".\n\nПрыклады:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Хібны рэжым. Падтрымліваюцца: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" i \"random\".\n\nПрыклады:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Патрэбна ўвесці рэжым. Даступныя рэжымы:\n\n- Лічбы (\"nums\").\n- Лічбы і літары A-F (\"hex\").\n- Лічбы і літары A-Z (\"ascii\").\n- Раўнанне (\"math\").\n- Кнопка (\"button\").\n- Апытанне (\"poll\").\n\nПрыклады:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Патрэбна ўвесці рэжым. Даступныя рэжымы:\n\n- Лічбы (\"nums\").\n- Лічбы і літары A-F (\"hex\").\n- Лічбы і літары A-Z (\"ascii\").\n- Раўнанне (\"math\").\n- Кнопка (\"button\").\n- Апытанне (\"poll\").\n- Random challenge (\"random\").\n\nПрыклады:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Вітальнае паведамленне паспяхова наладжана.",

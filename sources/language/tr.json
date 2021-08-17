@@ -48,10 +48,10 @@
         "Captcha karakter modu başarıyla buna değiştirildi \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" ve \"poll\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Geçersiz captcha karakter modu. Desteklenen modlar: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" ve \"random\".\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Komutun ayarlanması için bir karakter moduna ihtiyacı var. Kullanılabilir modlar:\n- Sayısal Captcha'lar (\"nums\").\n- Onaltılık Captcha'lar, sayılar ve karakterler A-F (\"hex\").\n- Sayılar ve karakterler A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nÖrnekler:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Karşılama mesajı başarıyla değiştirildi.",

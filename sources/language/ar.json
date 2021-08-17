@@ -48,10 +48,10 @@
         "غير وضع التحقق إلى \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "وضع غير صالح. الأوضاع المدعومة هي: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" و \"poll\".\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "وضع غير صالح. الأوضاع المدعومة هي: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" و \"random\".\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "يحتاج الأمر إلى وضع لضبطه. الأوضاع المتاحة هي:\n- تحقق رقمي (\"nums\").\n- تحقق هيكساديسمل, أرقام وحروف  A-F (\"hex\").\n- أرقام وحروف  A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- تحقق ضغط زر (\"button\").\n- Custom Poll challenge (\"poll\").\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "يحتاج الأمر إلى وضع لضبطه. الأوضاع المتاحة هي:\n- تحقق رقمي (\"nums\").\n- تحقق هيكساديسمل, أرقام وحروف  A-F (\"hex\").\n- أرقام وحروف  A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- تحقق ضغط زر (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nأمثلة:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "عدلت رسالة الترحيب بنجاح.",

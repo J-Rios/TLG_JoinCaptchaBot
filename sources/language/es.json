@@ -48,10 +48,10 @@
         "Modo de los captchas cambiado a \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Modo inválido. Los modos disponibles son: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" y \"poll\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Modo inválido. Los modos disponibles son: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" y \"random\".\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "El comando necesita el modo a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n- Captcha de resolver ecuación matemática (\"math\").\n- Captcha de presionar un botón (\"button\")\n- Captcha de resolver encuesta personalizada (\"poll\").\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "El comando necesita el modo a establecer. Los modos disponibles son:\n- Captchas numéricos (\"nums\").\n- Captchas hexadecimales, con números y letras A-F (\"hex\").\n- Captchas con números y letras A-Z (\"ascii\").\n- Captcha de resolver ecuación matemática (\"math\").\n- Captcha de presionar un botón (\"button\")\n- Captcha de resolver encuesta personalizada (\"poll\").\n- Captcha aleatorio (\"random\").\n\nEjemplos:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Mensaje de bienvenida configurado correctamente.",

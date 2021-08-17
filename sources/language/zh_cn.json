@@ -48,10 +48,10 @@
         "验证码字符模式已成功更改为\"{}\"。",
 
     "CAPTCHA_MODE_INVALID":
-        "验证码字符模式无效。 支持的模式有：\"nums\"，\"hex\", \"ascii\", \"math\", \"button\", \"poll\"。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "验证码字符模式无效。 支持的模式有：\"nums\"，\"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\"。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "欢迎消息已成功配置。",

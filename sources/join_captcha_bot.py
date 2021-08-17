@@ -14,7 +14,7 @@ Creation date:
 Last modified date:
     17/08/2021
 Version:
-    1.21.5
+    1.22.0
 '''
 
 ###############################################################################
@@ -673,6 +673,17 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         timeout_str = "{} min".format(timeout_min)
     send_problem = False
     captcha_num = ""
+    if captcha_mode == "random":
+        captcha_mode = choice(["nums", "math", "poll"])
+        # If Captcha Mode Poll is not configured use othe mode
+        if captcha_mode == "poll":
+            poll_question = get_chat_config(chat_id, "Poll_Q")
+            poll_options = get_chat_config(chat_id, "Poll_A")
+            poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
+            if (poll_question == "") or \
+            (num_config_poll_options(poll_options) < 2) or \
+            (poll_correct_option == 0):
+                captcha_mode = choice(["nums", "math"])
     if captcha_mode == "button":
         # Send a button-only challenge
         challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(user_name_lrm,
@@ -767,6 +778,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         {
             "user_name": join_user_name,
             "captcha_num": captcha_num,
+            "captcha_mode": captcha_mode,
             "join_time": time(),
             "join_retries": 1,
             "kicked_ban": False
@@ -964,7 +976,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # Get Chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Check for Spam (check if the message contains any URL or alias)
     has_url = re.findall(CONST["REGEX_URLS"], msg_text)
     has_alias = tlg_alias_in_string(msg_text)
@@ -1251,7 +1263,7 @@ def button_request_captcha(bot, query):
         timeout_str = "{} min".format(timeout_min)
     # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Use nums mode if captcha_mode was changed while captcha was in progress
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         captcha_mode = "nums"
@@ -1592,8 +1604,8 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"])
         return
     # Get and configure chat to provided captcha mode
-    new_captcha_mode = args[0]
-    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii", "math" }:
+    new_captcha_mode = args[0].lower()
+    if new_captcha_mode in { "poll", "button", "nums", "hex", "ascii", "math", "random" }:
         save_config_property(chat_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:

@@ -48,10 +48,10 @@
         "La uzo de literoj aŭ ciferoj ŝanĝis al \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\", \"ascii\", \"math\", \"button\" kaj \"poll\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Nevalida modo por CAPTCHA-testo. Mi subtenas nur \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" kaj \"random\".\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Tiu komando bezonas character-mode. La eblaj modoj estas Nombraj CAPTCHA-testoj(\"nums\").\n- Deksesumaj, nombrolj kaj literoj A-F (\"hex\").\n- Nombroj kaj literoj A-Z (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nEkzemple:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Bonveniga mesaĝo ŝangita.",

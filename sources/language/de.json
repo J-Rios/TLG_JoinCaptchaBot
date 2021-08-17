@@ -48,10 +48,10 @@
         "Captcha-Modus erfolgreich geändert in \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Ungültiger Captcha-Modus. Unterstützte Modi sind: \"nums\", \"hex\", \"ascii\", \"math\", \"button\" und \"poll\".\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Ungültiger Captcha-Modus. Unterstützte Modi sind: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" und \"random\".\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "Der Befehl benötigt einen Modus zum einsetzen. Verfügbare Modi sind:\n- Numerisch Captchas (\"nums\").\n- Hexadezimal Captchas, Zahlen und Zeichen A-F (\"hex\").\n- Zahlen und Zeichen von A bis Z Captchas(\"ascii\").\n- mathematische Gleichung Captchas (\"math\").\n- ein Knopf (\"button\").\n- Benutzerdefinierte Frage und Antworten (\"poll\").\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll",
+        "Der Befehl benötigt einen Modus zum einsetzen. Verfügbare Modi sind:\n- Numerisch Captchas (\"nums\").\n- Hexadezimal Captchas, Zahlen und Zeichen A-F (\"hex\").\n- Zahlen und Zeichen von A bis Z Captchas(\"ascii\").\n- mathematische Gleichung Captchas (\"math\").\n- ein Knopf (\"button\").\n- Benutzerdefinierte Frage und Antworten (\"poll\").\n- Random challenge (\"random\").\n\nBeispiel:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
         "Willkommensnachricht erfolgreich konfiguriert.",
