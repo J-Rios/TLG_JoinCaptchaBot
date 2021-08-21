@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    30/05/2021
+    21/08/2021
 Version:
-    1.1.0
+    1.1.1
 '''
 
 ###############################################################################
@@ -80,7 +80,7 @@ def tlg_get_chat_members_count(bot, chat_id, timeout=None):
 
 
 def tlg_send_msg(bot, chat_id, text, parse_mode=None,
-    disable_web_page_preview=None, disable_notification=False,
+    disable_web_page_preview=None, disable_notification=True,
     reply_to_message_id=None, reply_markup=None, timeout=None):
     '''Bot try to send a text message'''
     sent_result = dict()
@@ -103,7 +103,7 @@ def tlg_send_msg(bot, chat_id, text, parse_mode=None,
 
 
 def tlg_send_image(bot, chat_id, photo, caption=None,
-    disable_notification=False, reply_to_message_id=None,
+    disable_notification=True, reply_to_message_id=None,
     reply_markup=None, timeout=40, parse_mode=None):
     '''Bot try to send an image message'''
     sent_result = dict()
