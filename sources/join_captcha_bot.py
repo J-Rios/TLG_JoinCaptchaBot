@@ -32,10 +32,8 @@ import re
 from sys import exit
 from os import kill, getpid, path, remove, makedirs, listdir
 from shutil import rmtree
-from datetime import datetime, timedelta
-from time import time, sleep, strptime, mktime, strftime
-from threading import Thread, Lock
-from operator import itemgetter
+from time import time, sleep
+from threading import Thread
 from collections import OrderedDict
 from random import choice, randint
 from json import dumps as json_dumps
@@ -45,7 +43,7 @@ from multicolorcaptcha import CaptchaGenerator
 
 from telegram import (
     Update, Chat, InputMediaPhoto, InlineKeyboardButton,
-    InlineKeyboardMarkup, ChatPermissions, Poll
+    InlineKeyboardMarkup, Poll
 )
 
 from telegram.ext import (
@@ -54,17 +52,13 @@ from telegram.ext import (
     CallbackQueryHandler, PollAnswerHandler, Defaults
 )
 
-from telegram.ext.dispatcher import (
-    run_async
-)
-
 from telegram.utils.helpers import (
     escape_markdown
 )
 
 from telegram.error import (
     TelegramError, Unauthorized, BadRequest,
-    TimedOut, ChatMigrated, NetworkError
+    TimedOut, NetworkError
 )
 
 from commons import (
@@ -104,7 +98,6 @@ CaptchaGen = CaptchaGenerator(2)
 
 log_level=logging.INFO
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=log_level)
-#logger = logging.getLogger("CaptchaBot")
 
 ###############################################################################
 ### Termination Signals Handler For Program Process
