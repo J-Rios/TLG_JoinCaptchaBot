@@ -195,10 +195,6 @@ CONST = {
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
 
-    # Command don't allow in private chat text (just english due in
-    # private chats we don't have language configuration)
-    "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
-
     # Command just allow for Bot owner
     "CMD_JUST_ALLOW_OWNER": "This command just can be use by the Bot Owner",
 

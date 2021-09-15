@@ -1392,8 +1392,10 @@ def cmd_start(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT["EN"]["START"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["START"])
     else:
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
@@ -1409,8 +1411,10 @@ def cmd_help(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT["EN"]["HELP"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["HELP"])
     else:
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
@@ -1426,8 +1430,10 @@ def cmd_commands(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT["EN"]["COMMANDS"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["COMMANDS"])
     else:
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
@@ -1449,7 +1455,8 @@ def cmd_connect(update: Update, context: CallbackContext):
     user_alias = update_msg.from_user.username
     if user_alias is not None:
         user_alias = "@{}".format(user_alias)
-    lang = "EN"
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Ignore if command is not in private chat
     if chat_type != "private":
         return
@@ -1492,7 +1499,8 @@ def cmd_disconnect(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     user_id = update_msg.from_user.id
-    lang = "EN"
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Ignore if command is not in private chat
     if chat_type != "private":
         return
@@ -1519,12 +1527,13 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1549,13 +1558,14 @@ def cmd_language(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1608,13 +1618,14 @@ def cmd_time(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1688,13 +1699,14 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1743,13 +1755,14 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1794,13 +1807,14 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1849,13 +1863,14 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -1974,13 +1989,14 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2037,13 +2053,14 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2096,13 +2113,14 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2146,13 +2164,14 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2190,13 +2209,14 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2243,13 +2263,14 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
             return
-        lang = connections[user_id]["lang"]
         group_id = connections[user_id]["group_id"]
     else:
         group_id = chat_id
@@ -2295,9 +2316,11 @@ def cmd_enable(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update_msg)
@@ -2333,9 +2356,11 @@ def cmd_disable(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, CONST["CMD_NOT_ALLOW_PRIVATE"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update_msg)
@@ -2388,8 +2413,10 @@ def cmd_version(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     if chat_type == "private":
-        msg_text = TEXT["EN"]["VERSION"].format(CONST["VERSION"])
+        msg_text = TEXT[lang]["VERSION"].format(CONST["VERSION"])
         tlg_send_msg(bot, chat_id, msg_text)
     else:
         lang = get_chat_config(chat_id, "Language")
@@ -2407,9 +2434,9 @@ def cmd_about(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
-    if chat_type == "private":
-        lang = "EN"
-    else:
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
+    if chat_type != "private":
         lang = get_chat_config(chat_id, "Language")
     msg_text = TEXT[lang]["ABOUT_MSG"].format(CONST["DEVELOPER"],
             CONST["REPOSITORY"], CONST["DEV_DONATION_ADDR"], CONST["DEV_BTC"])
@@ -2430,6 +2457,8 @@ def cmd_captcha(update: Update, context: CallbackContext):
     user_alias = ""
     if user.username is not None:
         user_alias = "@{}".format(user.username)
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check if command was execute by Bot owner
     if (str(user_id) != CONST["BOT_OWNER"]) and \
     (user_alias != CONST["BOT_OWNER"]):
@@ -2471,6 +2500,8 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
     user_alias = ""
     if user.username is not None:
         user_alias = "@{}".format(user.username)
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check if command was execute by Bot owner
     if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
@@ -2530,6 +2561,8 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     user_alias = ""
     if user.username is not None:
         user_alias = "@{}".format(user.username)
+    lang = getattr(update_msg.from_user, "language_code", "EN")
+    lang = lang.upper()
     # Check if command was execute by Bot owner
     if (str(user_id) != CONST["BOT_OWNER"]) and (user_alias != CONST["BOT_OWNER"]):
         tlg_send_selfdestruct_msg(bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"])
