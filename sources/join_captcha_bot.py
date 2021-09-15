@@ -38,6 +38,7 @@ from threading import Thread, Lock
 from operator import itemgetter
 from collections import OrderedDict
 from random import choice, randint
+from json import dumps as json_dumps
 
 from tsjson import TSjson
 from multicolorcaptcha import CaptchaGenerator
@@ -1540,10 +1541,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     group_cfg = get_all_chat_config(group_id)
     group_cfg = json_dumps(group_cfg, indent=4, sort_keys=True)
     tlg_send_msg_type_chat(bot, chat_type, chat_id,
-            #TEXT[lang]["CHECK_CFG"].format(group_cfg),
-            "Group Configuration:\n" \
-            "————————————————\n" \
-            "```\n{}\n```".format(escape_markdown(group_cfg)),
+            TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg)),
             parse_mode="MARKDOWN")
 
 
