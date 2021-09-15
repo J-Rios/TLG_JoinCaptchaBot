@@ -215,6 +215,18 @@ def get_chat_config(chat_id, param):
     return config_data[param]
 
 
+def get_all_chat_config(chat_id):
+    '''Get specific stored chat configuration property'''
+    file = get_chat_config_file(chat_id)
+    if file:
+        config_data = file.read()
+        if (not config_data):
+            config_data = get_default_config_data()
+    else:
+        config_data = get_default_config_data()
+    return config_data
+
+
 def get_chat_config_file(chat_id):
     '''Determine chat config file from the list by ID. Get the file if exists or create it if not'''
     global files_config_list
@@ -1503,6 +1515,38 @@ def cmd_disconnect(update: Update, context: CallbackContext):
             TEXT[lang]["DISCONNECT_OK"].format(group_id))
 
 
+def cmd_checkcfg(update: Update, context: CallbackContext):
+    '''Command /checkcfg message handler'''
+    bot = context.bot
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    if chat_type == "private":
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    CONST["CMD_NOT_ALLOW_PRIVATE"])
+            return
+        lang = connections[user_id]["lang"]
+        group_id = connections[user_id]["group_id"]
+    else:
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        tlg_msg_to_selfdestruct(update_msg)
+    # Get all group configs
+    group_cfg = get_all_chat_config(group_id)
+    group_cfg = json_dumps(group_cfg, indent=4, sort_keys=True)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id,
+            #TEXT[lang]["CHECK_CFG"].format(group_cfg),
+            "Group Configuration:\n" \
+            "————————————————\n" \
+            "```\n{}\n```".format(escape_markdown(group_cfg)),
+            parse_mode="MARKDOWN")
+
+
 def cmd_language(update: Update, context: CallbackContext):
     '''Command /language message handler'''
     bot = context.bot
@@ -2767,6 +2811,7 @@ def main():
     dp.add_handler(CommandHandler("start", cmd_start))
     dp.add_handler(CommandHandler("help", cmd_help))
     dp.add_handler(CommandHandler("commands", cmd_commands))
+    dp.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
     dp.add_handler(CommandHandler("connect", cmd_connect, pass_args=True))
     dp.add_handler(CommandHandler("disconnect", cmd_disconnect))
     dp.add_handler(CommandHandler("language", cmd_language, pass_args=True))
