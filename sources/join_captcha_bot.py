@@ -12,7 +12,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/09/2021
+    16/09/2021
 Version:
     1.23.0
 '''
@@ -1397,6 +1397,12 @@ def cmd_start(update: Update, context: CallbackContext):
     if chat_type == "private":
         tlg_send_msg(bot, chat_id, TEXT[lang]["START"])
     else:
+        # Ignore if not requested by a group Admin
+        user_id = update_msg.from_user.id
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send the response message
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["START"])
@@ -1416,6 +1422,12 @@ def cmd_help(update: Update, context: CallbackContext):
     if chat_type == "private":
         tlg_send_msg(bot, chat_id, TEXT[lang]["HELP"])
     else:
+        # Ignore if not requested by a group Admin
+        user_id = update_msg.from_user.id
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send the response message
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["HELP"])
@@ -1435,6 +1447,12 @@ def cmd_commands(update: Update, context: CallbackContext):
     if chat_type == "private":
         tlg_send_msg(bot, chat_id, TEXT[lang]["COMMANDS"])
     else:
+        # Ignore if not requested by a group Admin
+        user_id = update_msg.from_user.id
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send the response message
         lang = get_chat_config(chat_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["COMMANDS"])
@@ -1536,6 +1554,11 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
         tlg_msg_to_selfdestruct(update_msg)
@@ -1568,21 +1591,15 @@ def cmd_language(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         msg_text = TEXT[lang]["LANG_NOT_ARG"].format(
@@ -1628,21 +1645,15 @@ def cmd_time(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -1709,21 +1720,15 @@ def cmd_difficulty(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -1765,21 +1770,15 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -1817,21 +1816,15 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -1873,21 +1866,15 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Format command usage text
     text_cmd_usage = TEXT[lang]["CAPTCHA_POLL_USAGE"].format(
             CONST["MAX_POLL_QUESTION_LENGTH"],
@@ -1999,21 +1986,15 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -2063,21 +2044,15 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -2123,21 +2098,15 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -2174,21 +2143,15 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Get and show Ignore list
     ignore_list = get_chat_config(group_id, "Ignore_List")
     if not ignore_list:
@@ -2219,21 +2182,15 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -2273,21 +2230,15 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
             return
         group_id = connections[user_id]["group_id"]
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
         group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
         # Set user command message to be deleted by Bot in default time
         tlg_msg_to_selfdestruct(update_msg)
-        # Get actual chat configured language
-        lang = get_chat_config(group_id, "Language")
-        # Check if command was execute by an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-        if is_admin is None:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CAN_NOT_GET_ADMINS"])
-            return
-        if not is_admin:
-            tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW"])
-            return
     # Check if no argument was provided with the command
     if len(args) == 0:
         tlg_send_msg_type_chat(bot, chat_type, chat_id,
@@ -2322,19 +2273,14 @@ def cmd_enable(update: Update, context: CallbackContext):
     if chat_type == "private":
         tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
+    # Ignore if not requested by a group Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if (is_admin is None) or (is_admin == False):
+        return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
-    # Check if command was execute by an Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if is_admin is None:
-        tlg_send_selfdestruct_msg(bot, chat_id,
-                TEXT[lang]["CAN_NOT_GET_ADMINS"])
-        return
-    if not is_admin:
-        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
-        return
     # Check and enable captcha protection in the chat
     enable = get_chat_config(chat_id, "Enabled")
     if enable:
@@ -2362,19 +2308,14 @@ def cmd_disable(update: Update, context: CallbackContext):
     if chat_type == "private":
         tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
+    # Ignore if not requested by a group Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if (is_admin is None) or (is_admin == False):
+        return
     # Set user command message to be deleted by Bot in default time
     tlg_msg_to_selfdestruct(update_msg)
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
-    # Check if command was execute by an Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if is_admin is None:
-        tlg_send_selfdestruct_msg(bot, chat_id,
-                TEXT[lang]["CAN_NOT_GET_ADMINS"])
-        return
-    if not is_admin:
-        tlg_send_selfdestruct_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW"])
-        return
     # Check and disable captcha protection in the chat
     enable = get_chat_config(chat_id, "Enabled")
     if not enable:
@@ -2413,12 +2354,18 @@ def cmd_version(update: Update, context: CallbackContext):
         return
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
+    user_id = update_msg.from_user.id
     lang = getattr(update_msg.from_user, "language_code", "EN")
     lang = lang.upper()
     if chat_type == "private":
         msg_text = TEXT[lang]["VERSION"].format(CONST["VERSION"])
         tlg_send_msg(bot, chat_id, msg_text)
     else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send the message
         lang = get_chat_config(chat_id, "Language")
         msg_text = TEXT[lang]["VERSION"].format(CONST["VERSION"])
         tlg_msg_to_selfdestruct(update_msg)
