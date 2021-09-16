@@ -1477,6 +1477,14 @@ def cmd_connect(update: Update, context: CallbackContext):
     lang = lang.upper()
     # Ignore if command is not in private chat
     if chat_type != "private":
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send just allowed in private chat message
+        lang = get_chat_config(chat_id, "Language")
+        tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                TEXT[lang]["CMD_JUST_IN_PRIVATE"])
         return
     # Check for group chat ID
     if len(args) == 0:
@@ -1521,6 +1529,14 @@ def cmd_disconnect(update: Update, context: CallbackContext):
     lang = lang.upper()
     # Ignore if command is not in private chat
     if chat_type != "private":
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Send just allowed in private chat message
+        lang = get_chat_config(chat_id, "Language")
+        tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                TEXT[lang]["CMD_JUST_IN_PRIVATE"])
         return
     # Check if User is connected to some group
     if user_id not in connections:
