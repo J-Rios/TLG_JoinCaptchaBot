@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/08/2021
+    16/09/2021
 Version:
-    1.22.1
+    1.23.0
 '''
 
 ###############################################################################
@@ -195,10 +195,6 @@ CONST = {
     # Number of seconds in a day (60s x 60m x 24h)
     "T_SECONDS_IN_A_DAY": 86400,
 
-    # Command don't allow in private chat text (just english due in
-    # private chats we don't have language configuration)
-    "CMD_NOT_ALLOW_PRIVATE": "Can't use this command in the current chat.",
-
     # Command just allow for Bot owner
     "CMD_JUST_ALLOW_OWNER": "This command just can be use by the Bot Owner",
 
@@ -300,7 +296,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.22.1 (21/08/2021)"
+    "VERSION": "1.23.0 (16/09/2021)"
 }
 
 
