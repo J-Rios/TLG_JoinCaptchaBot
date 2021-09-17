@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    16/09/2021
+    17/09/2021
 Version:
-    1.23.0
+    1.23.1
 '''
 
 ###############################################################################
@@ -1392,7 +1392,7 @@ def cmd_start(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type == "private":
@@ -1419,7 +1419,7 @@ def cmd_help(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type == "private":
@@ -1446,7 +1446,7 @@ def cmd_commands(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type == "private":
@@ -1479,7 +1479,7 @@ def cmd_connect(update: Update, context: CallbackContext):
     if user_alias is not None:
         user_alias = "@{}".format(user_alias)
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Ignore if command is not in private chat
@@ -1533,7 +1533,7 @@ def cmd_disconnect(update: Update, context: CallbackContext):
     chat_type = update_msg.chat.type
     user_id = update_msg.from_user.id
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Ignore if command is not in private chat
@@ -1571,7 +1571,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type == "private":
@@ -1609,7 +1609,7 @@ def cmd_language(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check usage in private chat
@@ -1665,7 +1665,7 @@ def cmd_time(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -1742,7 +1742,7 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -1794,7 +1794,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -1842,7 +1842,7 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -1894,7 +1894,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2016,7 +2016,7 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2076,7 +2076,7 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2132,7 +2132,7 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2179,7 +2179,7 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2220,7 +2220,7 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2270,7 +2270,7 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2319,7 +2319,7 @@ def cmd_enable(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2356,7 +2356,7 @@ def cmd_disable(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check and deny usage in private chat
@@ -2411,7 +2411,7 @@ def cmd_version(update: Update, context: CallbackContext):
     chat_type = update_msg.chat.type
     user_id = update_msg.from_user.id
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type == "private":
@@ -2439,7 +2439,7 @@ def cmd_about(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     if chat_type != "private":
@@ -2464,7 +2464,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check if command was execute by Bot owner
@@ -2509,7 +2509,7 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check if command was execute by Bot owner
@@ -2572,7 +2572,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     if user.username is not None:
         user_alias = "@{}".format(user.username)
     lang = getattr(update_msg.from_user, "language_code", "EN")
-    if lang is None:
+    if (lang is None) or (lang not in TEXT):
         lang = "EN"
     lang = lang.upper()
     # Check if command was execute by Bot owner
