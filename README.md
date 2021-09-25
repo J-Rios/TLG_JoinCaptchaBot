@@ -188,7 +188,7 @@ To add support for a new language you must follow this steps:
 
 - French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
 
-- Italian: Noquitt, [@nidamanx](https://github.com/nidamanx)
+- Italian: Noquitt, [Nicola Davide (@nidamanx)](https://github.com/nidamanx)
 
 - Portuguese (Brazil): Anahuac de Paula Gil
 
@@ -202,7 +202,7 @@ To add support for a new language you must follow this steps:
 
 - Indonesian: ForIndonesian
 
-- Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy)
+- Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy), [Roman (@toxi22)](https://github.com/toxi22)
 
 - Esperanto: Pablo Busto & Porrumentzio.
 
@@ -210,7 +210,7 @@ To add support for a new language you must follow this steps:
 
 - German: [@weerdenburg](https://github.com/weerdenburg), [@MossDerg](https://github.com/MossDerg)
 
-- Ukrainian: Vadym Zhushman (@zhushman00)
+- Ukrainian: Vadym Zhushman (@zhushman00), [Roman (@toxi22)](https://github.com/toxi22)
 
 - Kannada: [@itsAPK](https://github.com/itsAPK)
 
