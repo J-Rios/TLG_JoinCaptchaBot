@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/09/2021
+    25/09/2021
 Version:
-    1.23.1
+    1.23.3
 '''
 
 ###############################################################################
@@ -167,6 +167,9 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
             SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
 
+    # Last session restorable RAM data backup file path
+    "F_SESSION": SCRIPT_PATH + "/session.pkl",
+
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
 
@@ -272,7 +275,7 @@ CONST = {
     "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
 
     # Bot version
-    "VERSION": "1.23.1 (17/09/2021)"
+    "VERSION": "1.23.3 (25/09/2021)"
 }
 
 

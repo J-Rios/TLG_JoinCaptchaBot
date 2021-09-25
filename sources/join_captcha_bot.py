@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/09/2021
+    25/09/2021
 Version:
-    1.23.1
+    1.23.3
 '''
 
 ###############################################################################
@@ -62,8 +62,8 @@ from telegram.error import (
 )
 
 from commons import (
-    printts, is_int, add_lrm, file_write,
-    file_read, list_remove_element, get_unix_epoch
+    printts, is_int, add_lrm, file_exists, file_write, file_read,
+    list_remove_element, get_unix_epoch, pickle_save, pickle_restore
 )
 
 from tlgbotutils import (
@@ -136,6 +136,8 @@ def signal_handler(signal,  frame):
     if th_1 is not None:
         if th_1.is_alive():
             th_1.join()
+    # Save current session data
+    save_session()
     # Close the program
     printts("All resources released.")
     printts("Exit 0")
@@ -300,19 +302,91 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     chat_id = message.chat_id
     user_id = message.from_user.id
     msg_id = message.message_id
-    destroy_time = time() + (time_delete_min*60)
+    t0 = time()
     # Add sent message data to to-delete messages list
     sent_msg_data = OrderedDict([("Chat_id", None), ("User_id", None),
-            ("Msg_id", None), ("delete_time", None)])
+            ("Msg_id", None), ("time", None), ("delete_time", None)])
     sent_msg_data["Chat_id"] = chat_id
     sent_msg_data["User_id"] = user_id
     sent_msg_data["Msg_id"] = msg_id
-    sent_msg_data["delete_time"] = destroy_time
+    sent_msg_data["time"] = t0
+    sent_msg_data["delete_time"] = t0 + (time_delete_min*60)
     to_delete_in_time_messages_list.append(sent_msg_data)
     return True
 
 ###############################################################################
 ### General Functions
+
+def save_session():
+    '''Backup current execution data'''
+    # Update time to kick users
+    for chat_id in new_users:
+        for user_id in new_users[chat_id]:
+            t = time()
+            t_diff = t - new_users[chat_id][user_id]["join_data"]["join_time"]
+            new_timeout = new_users[chat_id][user_id]["join_data"][
+                    "captcha_timeout"] - t_diff
+            new_users[chat_id][user_id]["join_data"]["join_time"] = t
+            new_users[chat_id][user_id]["join_data"]["captcha_timeout"] = \
+                    new_timeout
+    # Update messages delete time before save
+    i = 0
+    while i < len(to_delete_in_time_messages_list):
+        msg = to_delete_in_time_messages_list[i]
+        t = time()
+        t_diff = t - msg["time"]
+        msg["delete_time"] = (msg["delete_time"] - msg["time"]) - t_diff + t
+        to_delete_in_time_messages_list[i]["delete_time"] = msg["delete_time"]
+        to_delete_in_time_messages_list[i]["time"] = t
+        i = i + 1
+    # Let's backup to file
+    data = {
+        "to_delete_in_time_messages_list": to_delete_in_time_messages_list,
+        "new_users": new_users,
+        "connections": connections
+    }
+    if not pickle_save(CONST["F_SESSION"], data):
+        printts("Fail to save current session data")
+        return False
+    printts("Current session data saved")
+    return True
+
+
+def restore_session():
+    '''Load last execution data'''
+    global to_delete_in_time_messages_list
+    global new_users
+    global connections
+    # Check if session file exists
+    if not file_exists(CONST["F_SESSION"]):
+        return False
+    # Get data from session file
+    last_session_data = pickle_restore(CONST["F_SESSION"])
+    if last_session_data is None:
+        printts("Fail to restore last session data")
+        return False
+    # Load last session data to current RAM
+    connections = last_session_data["connections"]
+    new_users = last_session_data["new_users"]
+    to_delete_in_time_messages_list = \
+            last_session_data["to_delete_in_time_messages_list"]
+    # Renew time to kick users
+    for chat_id in new_users:
+        for user_id in new_users[chat_id]:
+            t0 = time()
+            new_users[chat_id][user_id]["join_data"]["join_time"] = t0
+    # Renew time to remove messages
+    i = 0
+    while i < len(to_delete_in_time_messages_list):
+        msg = to_delete_in_time_messages_list[i]
+        t0 = time()
+        msg["delete_time"] = (msg["delete_time"] - msg["time"]) + t0
+        to_delete_in_time_messages_list[i]["delete_time"] = msg["delete_time"]
+        to_delete_in_time_messages_list[i]["time"] = t0
+        i = i + 1
+    printts("Last session data restored")
+    return True
+
 
 def initialize_resources():
     '''Initialize resources by populating files list with chats found files'''
@@ -814,6 +888,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             "captcha_num": captcha_num,
             "captcha_mode": captcha_mode,
             "join_time": time(),
+            "captcha_timeout": captcha_timeout,
             "join_retries": 1,
             "kicked_ban": False
         }
@@ -2624,9 +2699,9 @@ def th_time_to_kick_not_verify_users(bot):
                 # Ignore if user is not in this chat
                 if user_id not in new_users[chat_id]:
                     continue
-                captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
                 try:
                     user_join_time = new_users[chat_id][user_id]["join_data"]["join_time"]
+                    captcha_timeout = new_users[chat_id][user_id]["join_data"]["captcha_timeout"]
                     if new_users[chat_id][user_id]["join_data"]["kicked_ban"]:
                         # Remove from new users list the remaining kicked users that have not solve
                         # the captcha in 1 hour (user ban just happen if a user try to join the group
@@ -2774,6 +2849,7 @@ def main():
     # Initialize resources by populating files list and configs with chats found files
     initialize_resources()
     printts("Resources initialized.")
+    restore_session()
     # Set messages to be sent silently by default
     msgs_defaults = Defaults(disable_notification=True)
     # Create an event handler (updater) for a Bot with the given Token and get the dispatcher
