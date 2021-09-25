@@ -27,7 +27,7 @@
         "Время, для решения капчи успешно изменено на {}.",
 
     "TIME_OUT_RANGE":
-        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
+        "Недопустимое время ввода капчи. Оно должно быть в диапазоне от 10 секунд до {} мин.",
 
     "TIME_NOT_NUM":
         "Указанное время не является целым числом.",
@@ -201,7 +201,7 @@
         "Этот бот является свободным программным обеспечением и с открытым исходным кодом под лицензией GNU-GPL.\nBot Developed by {}.\n\nВы можете проверить код здесь:\n{}\n\nТебе нравится моя работа? Сделай добровольное пожертвование:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Привет, {}, добро пожаловать в {}. Пожалуйста, ответьте на вопрос ниже, чтобы подтвердить, что вы человек. Если вы не сделаете этого в течение {}, вы будете автоматически удалены из группы.",
+        "Привет, {}, добро пожаловать в \"{}\". Пожалуйста, ответьте на вопрос ниже, чтобы подтвердить, что вы человек. Если вы не сделаете этого в течение {}, вы будете автоматически удалены из группы.",
 
     "CAPTCHA_POLL_FAIL_0":
         "Капча - опрос на вопрос не решена, {} выбрал неправильный вариант. Вы будете исключены через 10 сек, пожалуйста попробуйте зайти в группу снова...",
@@ -228,29 +228,29 @@
         "Пришел новый пользователь, но Капча - опрос на вопрос настроен не полностью.\n\nНеобходимо настроить вопрос и опрос, правильный ответ на опрос и минимум 2 варианта ответа. Пожалуйста, настройте его с помощью /captcha_poll command.\n\nExample:\ncaptcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Неи\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "Вам необходимо указать идентификатор группового чата, к которому нужно подключиться (используйте команду /chatid внутри группы, чтобы узнать id группового чата).\n\nНапример:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "Его может настроить только администратор этой группы.",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "Подключен к группе {}. Теперь Вы можете настроить параметры групповой капчи из ЛС.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "Нет подключения.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "Исключен из группы {}.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "Неверный ID группового чата.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "Параметры конфигурации:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "Чтобы использовать эту команду в приватном чате, нужно сначала подключиться к чату через команду /connect .",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat)."
+        "Эту команду нельзя использовать внутри группы (используйте ее в приватном чате с ботом)."
 }

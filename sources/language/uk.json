@@ -117,7 +117,7 @@
         "Це не правильна цифра. Перевірте уважно, капча має 4 цифри...",
 
     "CAPTCHA_INCORRECT_MATH":
-        "That is not the correct number. Check closely, you need to solve the math equation...",
+        "Це не правильна відповідь. Уважно перевірте відповідь. Вам потрібно розв’язати математичне рівняння...",
 
     "NEW_USER_KICK":
         "{} не виконав капчу вчасно. \"Користувача\" викинуто.",
@@ -156,22 +156,22 @@
         "Видалено нетекстове повідомлення (зображення, аудіо, файл...) з {}, заради збереження Telegram від спаму.\n\nВи можете надсилати нетекстові повідомлення після того, як вирішите капчу.",
 
     "RM_SOLVE_KICK_MSG":
-        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+        "Видаляти повідомлення про кік/бан автоматично через деякий час?\n\nНаприклад:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
 
     "RM_SOLVE_KICK_MSG_YES":
-        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+        "Повідомлення про кік/бан будуть автоматично видалені через деякий час.",
 
     "RM_SOLVE_KICK_MSG_NO":
-        "Configuration change, solve and kick/ban messages won't be removed.",
+        "Повідомлення про кік/бан повідомлення не буде видалене.",
 
     "RM_WELCOME_MSG":
-        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+        "Видаляти вітальні повідомлення автоматично через деякий час?\n\nНаприклад:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
 
     "RM_WELCOME_MSG_YES":
-        "Configuration change, welcome messages will be automatically removed after a while.",
+        "Вітальні повідомлення будуть автоматично видалені через деякий час.",
 
     "RM_WELCOME_MSG_NO":
-        "Configuration change, welcome messages won't be removed.",
+        "Вітальні повідомлення не будуть автоматично видалені.",
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "Інша капча",
@@ -201,56 +201,56 @@
         "Цей бот є безкоштовним програмним забезпеченням та відкритим кодом під ліцензією GNU-GPL.\nБот розроблено {}.\n\nВи можете перевірити код тут:\n{}\n\nВам подобається моя робота? Купіть мені каву:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+        "Привіт, {}, ласкаво просимо в \"{}\". Будь ласка, дайте відповідь на питання нижче, щоб підтвердити, що ви людина. Якщо ви не зробите цього протягом {}, ви будете автоматично видалені з групи.",
 
     "CAPTCHA_POLL_FAIL_0":
-        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+        "Капча - відповідь на питання не вирішено, {} обрав невірний варіант. Ви будете виключені з групи через 10 сек. Будь-ласка, спробуйте зайти в групу знову...",
 
     "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+        "Капча - відповідь на питання не вирішено, {} обрав невірний варіант. \"Користувач\" був виключений з групи.",
 
     "CAPTCHA_POLL_USAGE":
-        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+        "Налаштування Капчі - відповіді на питання і параметри опитування \n----------------\nТекст питання не може бути довшим {} символів.\n\nВаріант опитування не може бути більше, ніж {} символів.\n\nМаксімальное кількість опцій {}.\n----------------\nЗадайте питання для опитування:\n/captcha_poll question Ви впевнені, що хочете увійти в цю групу?\n\nВстановити варіант опитування 1:\n/captcha_poll option 1 Ні, я не хочу входити в групу.\n\nУстановіть варіант опитування 2:\n/captcha_poll option 2 Так, я людина і хочу увійти в групу.\n\nВстановити варіант опитування 3:\n/captcha_poll option 3 Хто я і що я роблю?\n\nВидалити варіант опитування 2:\n/captcha_poll option 2 remove\n\nВстановити правильний варіант опитування 2:\n/captcha_poll correct_option 2\n\nЗаміна режиму в Капча - відповідь на питання:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
-        "Captcha Poll Question successfully configured.",
+        "Капча - відповіді на питання успішно налаштовано.",
 
     "POLL_OPTION_CONFIGURED":
-        "Captcha Poll Option {} successfully configured.",
+        "Параметр Капча - відповідь на питання {} успішно налаштовано.",
 
     "POLL_CORRECT_OPTION_CONFIGURED":
-        "Captcha Poll Correct Option successfully configured to option number {}.",
+        "Капча - відповідь на питання. Правильний варіант успішно налаштований на номер опції {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Номер варіанта опитування {} не існує, спочатку налаштуйте цей параметр.\n\nНаприклад:\ncaptcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Прийшов новий користувач, але Капча - відповіді на питання налаштовані не повністю.\n\nНеобхідно налаштувати питання і відповіді, правильну відповідь на питання і мінімум 2 варіанти відповіді. Будь-ласка, налаштуйте його за допомогою команди: /captcha_poll command.\n\nНаприклад:\ncaptcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "Вам необхідно вказати ID групового чату, до якого потрібно підключитися (використовуйте команду /chatid всередині групи, щоб дізнатися id групового чату).\n\nНаприклад:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "Його може налаштувати тільки адміністратор цієї групи.",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "Підключений до групи {}. Тепер Ви можете налаштувати параметри групової капчи з особистих повідомлень.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "Немає підключення.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "Виключений з групи {}.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "Невірний ID групового чату.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "Параметри конфігурації:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "Щоб використовувати цю команду в приватному чаті, потрібно спочатку підключитися до чату через команду: /connect .",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat)."
+        "Цю команду не можна використовувати всередині групи (використовуйте її в приватному чаті з ботом)."
 }
