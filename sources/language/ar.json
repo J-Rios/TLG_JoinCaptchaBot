@@ -3,10 +3,10 @@
         "مرحبا، أنا أداة آلية ترسل صورة تحققية لكل عضو جديد ينضم لمجموعة، ثم تطرد كل من لا ينجز التحقق خلال مدة معينة. \n\nإذا حاول مستخدم الانضمام لمجموعة ما خمس مرات متتالية سأفترض أن هذا \"العضو\" هو بوت آلي، وسأحظره. كذلك، أيّة رسالة مرسلة من \"عضو\" جديد لم ينجح في التحقق ستعتبر غثاء وستحذف.\n\n لا تنسى إعطائي صلاحيات إدارية لأتمكن من طرد وحظر المستخدمين وحذف رسائلهم.\n\n انظر الأمر /help لمزيد من المعلومات عن الاستخدام. \n\n هل أعجبتك خدمتي؟ انظر أمر /about وفكر بالتبرع لإبقائي فعالاً.",
 
     "HELP":
-        "تعليمات الآلي:\n————————————————\n- أنا آلي أرسل تحققا لكل مستخدم جديد ينضم لمجموعة، وأطرد من لا يستطيع إنجاز التحقق خلال مدة معينة.\n\n- إذا كرر مستخدم ما محاولة الدخول خمس مرات متتالية دون إنجاز التحقق، سأفترض أن \"المستخدم\" هو آلي، وسيحظر.\n\n- أي رسالة ترسل من قبل \"مستخدم\" فبل إنجاز التحقق ستعتبر غثاء وستحذف.\n\n- عليك منحي صلاحيات إدارية لأستطيع طرد مستخدمين وحذف رسائل.\n\n- للحفاظ على المجموعة نظيفة، سأحذف آليا كل الرسائل المتعلقة بي إذا لم ينجز التحقق وسأطرد المستخدم.\n\n- الوقت المخصص لإنجاز التحقق هو 5 دقائق افتراضيا، لكن يمكنك ضبطه بالأمر /time.\n\n- يمكنك تفعيل/تعطيل التحقق بالأمر /enable و /disable.\n\n- أوامر الضبط محصورة بمدراء المجموعة.\n\n- يمكنك تغيير لغتي بالأمر /language.\n\n- يمكنك تغيير مستوى صعوبة التحقق بالأمر /difficulty.\n\n- يمكنك ضبط التحقق لاستخدام الحروف A–Z، أو الأرقام و الحروف A–F، أو مجرد أرقام (الافتراضي), or a math equation to be solved, or a custom poll, or just a button، أو مجرد ضغطة زر بالأمر /captcha_mode.\n\n- يمكنك ضبط رسالة ترحيب مخصصة بالأمر /welcome_msg.\n\n- يمكنك تفعيل حظر على إرسال المستخدمين الجدد لرسائل غير نصية بالأمر /restrict_non_text.\n\n- إن كان الآلي خاصاً، اسمح بالمجموعات بالأمر /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- انظر /commands للحصول على قائمة بكل الأوامر الممكنة، ووصف مخصر لكل منهم.",
+        "تعليمات الآلي:\n————————————————\n- أنا آلي أرسل تحققا لكل مستخدم جديد ينضم لمجموعة، وأطرد من لا يستطيع إنجاز التحقق خلال مدة معينة.\n\n- إذا كرر مستخدم ما محاولة الدخول خمس مرات متتالية دون إنجاز التحقق، سأفترض أن \"المستخدم\" هو آلي، وسيحظر.\n\n- أي رسالة ترسل من قبل \"مستخدم\" فبل إنجاز التحقق ستعتبر غثاء وستحذف.\n\n- عليك منحي صلاحيات إدارية لأستطيع طرد مستخدمين وحذف رسائل.\n\n- للحفاظ على المجموعة نظيفة، سأحذف آليا كل الرسائل المتعلقة بي إذا لم ينجز التحقق وسأطرد المستخدم.\n\n- الوقت المخصص لإنجاز التحقق هو 5 دقائق افتراضيا، لكن يمكنك ضبطه بالأمر /time.\n\n- يمكنك تفعيل/تعطيل التحقق بالأمر /enable و /disable.\n\n- أوامر الضبط محصورة بمدراء المجموعة.\n\n- يمكنك تغيير لغتي بالأمر /language.\n\n- يمكنك تغيير مستوى صعوبة التحقق بالأمر /difficulty.\n\n- يمكنك ضبط التحقق لاستخدام الحروف A–Z، أو الأرقام و الحروف A–F، أو مجرد أرقام (الافتراضي), or a math equation to be solved, or a custom poll, or just a button، أو مجرد ضغطة زر بالأمر /captcha_mode.\n\n- يمكنك ضبط رسالة ترحيب مخصصة بالأمر /welcome_msg.\n\n- يمكنك تفعيل حظر على إرسال المستخدمين الجدد لرسائل غير نصية بالأمر /restrict_non_text.\n\n- إن كان الآلي خاصاً، اسمح بالمجموعات بالأمر /allowgroup.\n\n- يمكنك ضبط مجموعة عبر المحادثة الخاصة للآلي باستخدام أمر /connect .\n\n- انظر /commands للحصول على قائمة بكل الأوامر الممكنة، ووصف مخصر لكل منهم.",
 
     "COMMANDS":
-        "قائمة الأوامر:\n————————————————\n/start - يظهر المعلومات الابتدائية عن الآلي.\n\n/help - يظهر معلومات المساعدة.\n\n/commands - يظهر هذه الرسالة. معلومات عن كل الأوامر المتاحة ووصفها.\n\n/language - يمكنك من تغيير لغة رسائل الآلي.\n\n/time - يمكنك من تغيير مدة إنجاز التحقق.\n\n/difficulty - يمكن تغيير مستوى صعوبة التحقق (من 1 إلى 5).\n\n/captcha_mode - يمكن من تغيير نمط التحقق (nums: أرقام، hex: numbers and A-F chars، ascii: أرقام وأحرف من A-Z، math: math equation، button: مجرد زر ، poll: custom and configurable poll.\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - يمكن من ضبط رسالة ترحيب ترسل بعد إنجاز التحقق.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - لا يتحقق من المستخدم في قائمة التجاهل.\n\n/remove_ignore - ألغ تجاهل مستخدم ما.\n\n/ignore_list - عرض معرفات المستخدمين المتجاهلين.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - اسمح لمجموعة باستخدام الآلي (إذا كان الآلي خاصاً).\n\n/enable - فعل حماية التحقق على مجموعة.\n\n/disable - يعطل حماية التحقق على مجموعة.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - أظهر إصدار الآلي.\n\n/about - أظهر معلومات حول الآلي.",
+        "قائمة الأوامر:\n————————————————\n/start - يظهر المعلومات الابتدائية عن الآلي.\n\n/help - يظهر معلومات المساعدة.\n\n/commands - يظهر هذه الرسالة. معلومات عن كل الأوامر المتاحة ووصفها.\n\n/language - يمكنك من تغيير لغة رسائل الآلي.\n\n/time - يمكنك من تغيير مدة إنجاز التحقق.\n\n/difficulty - يمكن تغيير مستوى صعوبة التحقق (من 1 إلى 5).\n\n/captcha_mode - يمكن من تغيير نمط التحقق (nums: أرقام، hex: أرقام ومحارف A-F ، ascii: أرقام وأحرف من A-Z، math: معادلة رياضية، button: مجرد زر ، poll: استفتاءات خاصة يمكن ضبطها.\n\n/captcha_poll - ضبط استفتاء مخصص وخيارات للأحجية في نمط الاستفتاء.\n\n/welcome_msg - يمكن من ضبط رسالة ترحيب ترسل بعد إنجاز التحقق.\n\n/restrict_non_text - بعد حل مستخدم جديد للأحجية، ضع شرطا بمنعه من إرسال رسائل غير نصية (صور, فيديو, صوتيات) ليوم كامل (أو للأبد, مستخدما مفتاح \"forever\" ).\n\n/add_ignore - لا يتحقق من المستخدم في قائمة التجاهل.\n\n/remove_ignore - ألغ تجاهل مستخدم ما.\n\n/ignore_list - عرض معرفات المستخدمين المتجاهلين.\n\n/remove_solve_kick_msg - ضبط فيما إذا كانت رسائل الحل والطرد والحظر ستحذف بعد فترة.\n\n/remove_welcome_msg - ضبط فيما إذا كانت رسائل الترحيب ستحذف بعد فترة.\n\n/allowgroup - اسمح لمجموعة باستخدام الآلي (إذا كان الآلي خاصاً).\n\n/enable - فعل حماية التحقق على مجموعة.\n\n/disable - يعطل حماية التحقق على مجموعة.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - اتصل بمجموعة لضبطها عبر المحادثة الخاصة للآلي.\n\n/disconnect - افصل مجموعة مرتبطة كان يجري اعدادها عبر المحادثة الخاصة للآلي.\n\n/version - أظهر إصدار الآلي.\n\n/about - أظهر معلومات حول الآلي.",
 
     "CMD_NOT_ALLOW":
         "هذا الأمر محصور بالمدراء.",
@@ -27,7 +27,7 @@
         "غيرت مهلة التحقق إلى {} دقائق.",
 
     "TIME_OUT_RANGE":
-        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
+        "وقت تحقق غير صالح، يجب أن يكون من 10 ثوان إلى {} دقيقة.",
 
     "TIME_NOT_NUM":
         "الوقت المدخل ليس رقما.",
@@ -102,7 +102,7 @@
         "مرحبا {}، أهلا بك في {}. رجاء اكتب رسالة بالأرقام و/أو الأحرف الظاهرة في الصورة للتحقق من أنك إنسان. إن لم تنجز التحقق في {}, ستُخرج آليا من المجموعة.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
+        "مرحبا {}، أهلا بك في {}. رجاء أكتب نتيجة المعادلة الرياضية هذه للتحقق من كونك إنسانا. إن لم تحل التحقق في {}، ستخرج آليا من المجموعة.",
 
     "NEW_USER_BUTTON_MODE":
         "مرحبا {}، إهلا بك في {}. رجاء اضغط الزر أسفله للتأكد من أنك إنسان. إن لم تفعل ذلك خلال {}، ستُخرج آليا من المجموعة.",
@@ -117,7 +117,7 @@
         "هذا الرقم غير صحيح. تأكد أكثر, يحوي التحقق على 4 أرقام...",
 
     "CAPTCHA_INCORRECT_MATH":
-        "That is not the correct number. Check closely, you need to solve the math equation...",
+        "هذا ليس الحل الصحيح. تحقق أكثر، عليك حل المعادلة الرياضية...",
 
     "NEW_USER_KICK":
         "{} لم ينجز التحقق في مدته. \"المستخدم\" طُرد.",
@@ -156,22 +156,22 @@
         "حذفت رسالة غير نصية (صورة, صوت, ملف...) من {}، للحفاظ على تلغرام خاليا من الغثاء.\n\nيمكنك إرسال رسائل غير نصية بعد إنجاز التحقق.",
 
     "RM_SOLVE_KICK_MSG":
-        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+        "يضبط فيما إذا كانت رسائل الحل والطرد والحظر ستحذف بعد فترة.\n\nأمثلة:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
 
     "RM_SOLVE_KICK_MSG_YES":
-        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+        "تغيير الإعدادات، رسائل الحل والطرد والحظر ستحذف تلقائيا بعد فترة.",
 
     "RM_SOLVE_KICK_MSG_NO":
-        "Configuration change, solve and kick/ban messages won't be removed.",
+        "تغيير الإعدادات، لن تحذف رسائل الحل والطرد والحظر.",
 
     "RM_WELCOME_MSG":
-        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+        "ضبط فيما إذا كانت رسائل الترحيب ستحذف آليا بعد فترة.\n\nأمثلة:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
 
     "RM_WELCOME_MSG_YES":
-        "Configuration change, welcome messages will be automatically removed after a while.",
+        "تغيير الإعدادات، ستحذف رسائل الترحيب آليا بعد فترة.",
 
     "RM_WELCOME_MSG_NO":
-        "Configuration change, welcome messages won't be removed.",
+        "تغيير الإعدادات، لن تُحذف رسالة التحذير.",
 
     "OTHER_CAPTCHA_BTN_TEXT":
         "تحقق آخر",
@@ -201,56 +201,56 @@
         "هذا البوت حر ومفتوح المصدر تحت رخصة GNU-GPL .\nBot طوره {}.\n\nيمكنك الوصول لكود:\n{}\n\nهل أعجبك ما صنعته؟? اشتر لي قهوة:\n{}\n\nBTC:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+        "مرحبا {}، أهلا بك في {}. رجاء أجب على الاستفتاء أسفله للتحقق من أنك إنسان. إن لم تفعل ذلك في {}، ستخرج آليا من المجموعة.",
 
     "CAPTCHA_POLL_FAIL_0":
-        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+        "فشل تحقق الاستفتاء، {} اختار جوابا خاطئا. ستخرج خلال 10 ثوان، حاول الانضام مجددا...",
 
     "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+        "فشل تحقق الاستفتاء، {} اختار جوابا خاطئا. \"المستخدم\" طرد.",
 
     "CAPTCHA_POLL_USAGE":
-        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+        "ضبط أحجية السؤال والخيارات\n————————————————\nلا يمكن لنص السؤال أن يكون أكبر من {} حرفا.\n\nنص الخيار لا يمكن أن يكون أكبر من  {} حرفا.\n\nالحد الأقصى لعدد الخيارات هو {}.\n————————————————\nضبط السؤال:\n/captcha_poll question أمتأكد من رغبتك بالانضمام لهذه المجموعة؟\n\nضبط الخيار 1:\n/captcha_poll option 1 لا، لا أريد الانضمام للمجموعة.\n\nضبط الخيار  2:\n/captcha_poll option 2 نعم، أنا إنسان وأرغب بالانضمام للمجموعة.\n\nضبط الخيار  3:\n/captcha_poll option 3 من أنا ومالذي أفعله؟\n\nحذف الخيار 2:\n/captcha_poll option 2 remove\n\nضبط الخيار 2 كصحيح:\n/captcha_poll correct_option 2\n\nغير الأحجية لنمط السؤال:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
-        "Captcha Poll Question successfully configured.",
+        "ضُبط سؤال الأحجية بنجاح.",
 
     "POLL_OPTION_CONFIGURED":
-        "Captcha Poll Option {} successfully configured.",
+        "ضبط خيار الأحجية {} بنجاح.",
 
     "POLL_CORRECT_OPTION_CONFIGURED":
-        "Captcha Poll Correct Option successfully configured to option number {}.",
+        "ضبط خيار الأحجية الصحيح بنجاح إلى الخيار  رقم {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "خيار الأحجية {} غير موجود،  رجاء اضبط الخيار أولا.\n\nمثال:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "قدم مستخدم جديد، لكن استفتاء الأحجية غير معد تماما.\n\n يجب توفر سؤال للأحجية وجواب الصحيح وخيارين. رجاء، اضبطها مستخدما  /captcha_poll command.\n\nمثال:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "عليك تحديد معرف مجموعة المحادثة التي تريد ضبطها (استخدم أمر /chatid داخل المجموعة لمعرفته).\n\nمثال:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "تغيير إعدادات المجموعة حصر على المدراء .",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "اتصلت بمجموعة {}. يمكنك الآن ضبط إعدادت أحجية المجموعة عبر الخاص.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "لست متصلا.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "انفصل عن مجموعة {}.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "معرف مجموعة ID غير صالح.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "إعدادات المجموعة:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "لا يمكن استخدام هذا الأمر في محادثة خاصة إلا بعد اجراءك ربطا (/connect) لضبط بعض المجموعات.",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat)."
+        "لا يمكن استخدام هذا الأمر في مجموعة (استخدمه في محادثة خاصة مع الآلي)."
 }
