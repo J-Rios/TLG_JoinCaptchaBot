@@ -511,8 +511,10 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
         captcha = CaptchaGen.gen_captcha_image(difficult_level, captcha_mode,
                 bool(randint(0, 1)))
     captcha["image"].save(img_file_path, "png")
-    captcha["image"] = img_file_path
-    return captcha
+    captcha_result = {}
+    captcha_result["characters"] = captcha["characters"]
+    captcha_result["image"] = img_file_path
+    return captcha_result
 
 
 def num_config_poll_options(poll_options):
