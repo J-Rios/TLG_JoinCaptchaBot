@@ -3,5 +3,6 @@
 **/data/
 
 **/*.pyc
+**/*.pkl
 **/*.log
 **/*.ignore

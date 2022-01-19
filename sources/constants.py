@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/09/2021
+    19/01/2022
 Version:
-    1.23.1
+    1.24.0
 '''
 
 ###############################################################################
@@ -97,6 +97,11 @@ CONST = {
         bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE", \
             SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
 
+    # Initial users send URLs enable/disable at Bot start
+    "INIT_URL_ENABLE": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE", \
+            SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
+
     # Initial captcha solve time
     "INIT_CAPTCHA_TIME": \
         int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN", \
@@ -166,6 +171,9 @@ CONST = {
     "MAX_POLL_OPTION_LENGTH": \
         int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
             SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
+
+    # Last session restorable RAM data backup file path
+    "F_SESSION": SCRIPT_PATH + "/session.pkl",
 
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "/language",
@@ -275,6 +283,7 @@ CONST = {
         "\nItalian / Italiano\n/language it\n" \
         "\nKannada / Kannada\n/language kn\n" \
         "\nKorean / 한국어\n/language ko\n" \
+        "\nPersian\n/language fa\n" \
         "\nPolish / Polskie\n/language pl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nRussian / Pусский\n/language ru\n" \
@@ -292,11 +301,8 @@ CONST = {
     # Developer Donation address
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
-    # Developer Bitcoin address
-    "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
-
     # Bot version
-    "VERSION": "1.23.1 (17/09/2021)"
+    "VERSION": "1.24.0 (19/01/2022)"
 }
 
 
@@ -311,6 +317,7 @@ TEXT = {
     "EO": {}, # Esperanto
     "ES": {}, # Spanish
     "EU": {}, # Basque
+    "FA": {}, # Persian
     "FR": {}, # French
     "GL": {}, # Galician
     "ID": {}, # Indonesian
