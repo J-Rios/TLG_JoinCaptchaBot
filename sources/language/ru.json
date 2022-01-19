@@ -264,6 +264,9 @@
         "Параметры конфигурации:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
         "Чтобы использовать эту команду в приватном чате, нужно сначала подключиться к чату через команду /connect .",
 
     "CMD_JUST_IN_PRIVATE":

@@ -264,6 +264,9 @@
         "تنظیمات گروه:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
         "این دستور در پیوی کار نمیکند مگر اینکه با دستور (/connect) به یک گروه جهت تغییر تنظیمات گروه متصل شوید.",
 
     "CMD_JUST_IN_PRIVATE":

@@ -264,6 +264,9 @@
         "إعدادات المجموعة:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
         "لا يمكن استخدام هذا الأمر في محادثة خاصة إلا بعد اجراءك ربطا (/connect) لضبط بعض المجموعات.",
 
     "CMD_JUST_IN_PRIVATE":

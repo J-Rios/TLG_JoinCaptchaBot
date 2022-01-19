@@ -264,6 +264,9 @@
         "Configurazioni del gruppo:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
+        "Questo comando non può essere usato in modo privato.",
+
+    "CMD_NEEDS_CONNECTION":
         "Questo comando non può essere usato in modo privato a meno di non fare una connessione tramite il comando /connect.",
 
     "CMD_JUST_IN_PRIVATE":

@@ -1663,7 +1663,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1699,7 +1699,7 @@ def cmd_language(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1752,7 +1752,7 @@ def cmd_time(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1826,7 +1826,7 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1875,7 +1875,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1920,7 +1920,7 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -1969,7 +1969,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2088,7 +2088,7 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2145,7 +2145,7 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2198,7 +2198,7 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2242,7 +2242,7 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2280,7 +2280,7 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2327,7 +2327,7 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
     if chat_type == "private":
         if user_id not in connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = connections[user_id]["group_id"]
     else:
@@ -2371,7 +2371,7 @@ def cmd_url_enable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
         return
     # Ignore if not requested by a group Admin
     is_admin = tlg_user_is_admin(bot, user_id, chat_id)
@@ -2405,7 +2405,7 @@ def cmd_url_disable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
         return
     # Ignore if not requested by a group Admin
     is_admin = tlg_user_is_admin(bot, user_id, chat_id)
