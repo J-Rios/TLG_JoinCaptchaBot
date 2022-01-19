@@ -198,7 +198,7 @@
         "Súčasná verzia bota:\n{}",
 
     "ABOUT_MSG":
-        "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu:\n{}\n\nBTC:\n{}",
+        "Tento bot je free software s otvoreným zdrojovým kódom pod GNU-GPL licenciou.\n\nBota vyvinul {}.\n\nKód si môžeš pozrieť tu:\n{}\n\nPáči sa ti moja práca? Prispej mi na kávu:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

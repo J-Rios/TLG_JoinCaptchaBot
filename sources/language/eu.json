@@ -198,7 +198,7 @@
         "Botaren bertsioa:\n{}",
 
     "ABOUT_MSG":
-        "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu:\n{}\n\nBTC:\n{}.",
+        "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

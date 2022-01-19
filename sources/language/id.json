@@ -198,7 +198,7 @@
         "Versi Bot saat ini:\n{}",
 
     "ABOUT_MSG":
-        "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL. \nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi:\n{}\n\nBTC:\n{}",
+        "Bot ini adalah perangkat lunak gratis dan open-sourced (sumber terbuka) dalam lisensi GNU-GPL.\n\nBot dikembangkan oleh {}.\n\nKamu bisa mengecek kodenya disini:\n{}\n\nKamu menyukai hasil kerjaku? Belikan saya kopi:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

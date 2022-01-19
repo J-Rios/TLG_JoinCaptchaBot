@@ -198,7 +198,7 @@
         "La versió actual del bot és:\n{}",
 
     "ABOUT_MSG":
-        "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè:\n{}\n\nBTC:\n{}",
+        "Aquest és un bot de programari lliure i codi obert (open-source) amb llicència GNU-GPL, desenvolupat per {}\n\nPodeu consultar el codi font aquí:\n{}\n\nUs agrada el que faig? Convideu-me a un cafè:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

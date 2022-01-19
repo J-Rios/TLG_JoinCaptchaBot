@@ -198,7 +198,7 @@
         "Aktuelle Bot-Version:\n{}",
 
     "ABOUT_MSG":
-        "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee:\n{}\n\nBTC:\n{}",
+        "Dieser Bot ist freie Software und Open-Source unter der GNU-GPL-Lizenz.\n\nBot Entwickelt von {}.\n\nSie können den Code hier überprüfen:\n{}\n\nMagst du meine Arbeit? Kauf mir einen Kaffee:\n{}",
 
     "POLL_NEW_USER":
         "Hallo {}, willkommen bei {}, bitte beantworte die Frage im Captcha, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",

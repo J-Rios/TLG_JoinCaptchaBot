@@ -198,7 +198,7 @@
         "Version actuelle du bot:\n{}",
 
     "ABOUT_MSG":
-        "Ce bot est un logiciel gratuit et open-source basé sur la licence GNU-GPL.\nBot développé par {}.\n\nVous pouvez jeter un coup d'œil au code ici:\n{}\n\nVous aimez mon travail? Offrez-moi un café!:\n{}\n\nBTC:\n{}",
+        "Ce bot est un logiciel gratuit et open-source basé sur la licence GNU-GPL.\n\nBot développé par {}.\n\nVous pouvez jeter un coup d'œil au code ici:\n{}\n\nVous aimez mon travail? Offrez-moi un café!:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

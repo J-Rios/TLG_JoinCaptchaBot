@@ -272,9 +272,6 @@ CONST = {
     # Developer Donation address
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
-    # Developer Bitcoin address
-    "DEV_BTC": "3N9wf3FunR6YNXonquBeWammaBZVzTXTyR",
-
     # Bot version
     "VERSION": "1.23.4 (19/01/2022)"
 }

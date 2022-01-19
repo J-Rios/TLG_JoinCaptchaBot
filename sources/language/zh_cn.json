@@ -198,7 +198,7 @@
         "当前机器人版本号：\n{}",
 
     "ABOUT_MSG":
-        "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧：\n{}\n\nBTC型比特币地址：\n{}",
+        "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧：\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",

@@ -198,7 +198,7 @@
         "Aktualna wersja bota:\n{}",
 
     "ABOUT_MSG":
-        "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to:\n{}\n\nBTC:\n{}",
+        "Ten bot to oprogramowanie darmowe i otwartoźródłowe na licencji GNU-GPL.\n\nBot stworzony przez {}.\n\nKod źródłowy możesz sprawdzić tutaj:\n{}\n\nPodoba Ci się ten bot? Postaw mi kawę za to:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
