@@ -1,3 +1,2 @@
 python_telegram_bot==13.5
-Pillow==9.0.0
 multicolorcaptcha==1.1.3
