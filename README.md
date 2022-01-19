@@ -186,38 +186,38 @@ To add support for a new language you must follow this steps:
 
 ## Languages Contributors
 
-- French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
-
-- Italian: Noquitt, [Nicola Davide (@nidamanx)](https://github.com/nidamanx)
-
-- Portuguese (Brazil): Anahuac de Paula Gil
-
-- Catalán: Adela Casals i Jorba
-
-- Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores); Iváns
+- Arabic: [@damascene](https://github.com/damascene)
 
 - Basque: [@xa2er](https://github.com/xa2er)
 
+- Belarusian: [@antikruk](https://github.com/antikruk)
+
+- Catalán: Adela Casals i Jorba
+
 - Chinese (Mainland): [神林](https://github.com/jyxjjj)
-
-- Indonesian: ForIndonesian
-
-- Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy), [Roman (@toxi22)](https://github.com/toxi22)
 
 - Esperanto: Pablo Busto & Porrumentzio.
 
-- Arabic: [@damascene](https://github.com/damascene)
+- French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
+
+- Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores); Iváns
 
 - German: [@weerdenburg](https://github.com/weerdenburg), [@MossDerg](https://github.com/MossDerg)
 
-- Ukrainian: Vadym Zhushman (@zhushman00), [Roman (@toxi22)](https://github.com/toxi22)
+- Indonesian: ForIndonesian
+
+- Italian: Noquitt, [Nicola Davide (@nidamanx)](https://github.com/nidamanx)
 
 - Kannada: [@itsAPK](https://github.com/itsAPK)
 
-- Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
-
 - Korean: [@dakeshi](https://github.com/dakeshi)
 
-- Belarusian: [@antikruk](https://github.com/antikruk)
-
 - Persian: [@m4hbod](https://github.com/M4hbod)
+
+- Portuguese (Brazil): Anahuac de Paula Gil
+
+- Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy), [Roman (@toxi22)](https://github.com/toxi22)
+
+- Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
+
+- Ukrainian: Vadym Zhushman (@zhushman00), [Roman (@toxi22)](https://github.com/toxi22)
