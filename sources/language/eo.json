@@ -3,10 +3,10 @@
         "Saluton, mi estas roboto kiu sendas CAPTCHA-teston por ĉiu nova uzanto kiu eniras en grupon, kaj forigas ĉiujn kiuj ne povis solvi ĝin post specifa tempo. \n\nSe uzanto provas eniri en la grupon 5 fojojn kaj ne kapablas solvi ĝin, mi supozos ke tiu \"uzanto\" estas roboto, kaj ĝi estos blokita. Mi konsideros ke ĉiuj mesaĝoj senditaj de tiu uzanto, kiuj enhavas iun URL-on  antaŭ ol solvi la CAPTCHA-teston estas spamo, kaj estos forviŝitaj. Memoru ke mi bezonas esti estro (administranto) en la grupo por bloki uzantojn kaj forviŝi mesaĝojn.\n\nKontrolu la komandon /help por pli da informo pri mia uzado. \n\nĈu mi estas utila? Kontrolu la komandon /about kaj pripensu fari donacon por ke mi plu aktivos",
 
     "HELP":
-        "Helpo:\n————————————————\n- Mi estas roboto kiu sendas CAPTCHA-teston por ĉiu nova uzanto kiu eniras en grupon, kaj forigas ĉiujn post specifa tempo.\n\n- Se uzanto provas eniri en la grupon 5 fojojn kaj ne kapablas solvi ĝin, mi supozos ke tiu \"uzanto\" estas roboto, kaj ĝi estos blokita. Memoru ke mi bezonas esti estro (administranto) en la grupo por bloki uzantojn kaj forviŝi mesaĝojn. Por ke la grupo restos pura, mi forigos la mesaĝojn rilatitajn al mi se la testo ne estas solvita, kaj la uzanto estis forigita.\n\nUzantoj havas defaŭlte 5 minutojn por solvi la teston, sed tiu tempo estas agordebla per la komando /time.\n\nVi povas mal/ŝalti la CAPTCHAan protekton per komandoj /enable kaj /disable.\n\n- La agordaj komandoj povas esti uzitaj nur de administrantoj.\n\n- Vi povas ŝanĝi mian lingvon per komando /language.\n\n- Vi povas agordi la malfacileco de la CAPTCHA-testo per komando /difficulty.\n\nVi povas agordi CAPTCHA-teston por uzi nur ciferojn (defaŭlte), or a math equation to be solved, or a custom poll, or just a button, aŭ ankaŭ literojn per komando /captcha_mode.\n\n- Vi povas agordi bonvenigan mesaĝon per komando /welcome_msg.\n\n- Vi povas aktivigi eblon por permesi min limigi al novaj uzantoj sendi netekstajn mesaĝojn per komando /restrict_non_text.\n\n- Se la roboto estas privata, permesu grupojn per komando /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- Tajpu /commands por vidi liston de ĉiuj eblaj komandoj, kaj mallongan priskribon de ili ĉiuj.",
+        "Helpo:\n————————————————\n- Mi estas roboto kiu sendas CAPTCHA-teston por ĉiu nova uzanto kiu eniras en grupon, kaj forigas ĉiujn post specifa tempo.\n\n- Se uzanto provas eniri en la grupon 5 fojojn kaj ne kapablas solvi ĝin, mi supozos ke tiu \"uzanto\" estas roboto, kaj ĝi estos blokita. Memoru ke mi bezonas esti estro (administranto) en la grupo por bloki uzantojn kaj forviŝi mesaĝojn. Por ke la grupo restos pura, mi forigos la mesaĝojn rilatitajn al mi se la testo ne estas solvita, kaj la uzanto estis forigita.\n\nUzantoj havas defaŭlte 5 minutojn por solvi la teston, sed tiu tempo estas agordebla per la komando /time.\n\nVi povas mal/ŝalti la CAPTCHAan protekton per komandoj /enable kaj /disable.\n\n- La agordaj komandoj povas esti uzitaj nur de administrantoj.\n\n- Vi povas ŝanĝi mian lingvon per komando /language.\n\n- Vi povas agordi la malfacileco de la CAPTCHA-testo per komando /difficulty.\n\nVi povas agordi CAPTCHA-teston por uzi nur ciferojn (defaŭlte), or a math equation to be solved, or a custom poll, or just a button, aŭ ankaŭ literojn per komando /captcha_mode.\n\n- Vi povas agordi bonvenigan mesaĝon per komando /welcome_msg.\n\n- Vi povas aktivigi eblon por permesi min limigi al novaj uzantoj sendi netekstajn mesaĝojn per komando /restrict_non_text.\n\n- Se la roboto estas privata, permesu grupojn per komando /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- Tajpu /commands por vidi liston de ĉiuj eblaj komandoj, kaj mallongan priskribon de ili ĉiuj.",
 
     "COMMANDS":
-        "Listo de komandoj:\n————————————————\n/start - Montras la komencigan informon pri la roboto.\n\n/help - Montras helpan informon.\n\n/commands - Montras ĉi tiun mesaĝon. Informon pri ĉiuj disponeblaj komandoj kaj iliaj priskriboj.\n\n/language - Permesas ŝanĝi la lingvo de la robotaj mesaĝoj.\n\n/time - Permesas ŝanĝi la tempon por solvi la CAPTCHA-teston.\n\n/difficulty - Permesas ŝanĝi la malfacilecon (niveloj el 1 al 5).\n\n/captcha_mode - Permesas ŝanĝi la modon (nums: nur nombroj, hex: nombroj kaj A-F literojn, ascii: nombroj kaj  A-Z literoj, math: math equation, poll: custom and configurable poll, button: just a button).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Permesas agordi bonvenigan mesaĝon por sendi post solvi la CAPTCHA-teston.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Ne demandu CAPTCHA-teston al ignorita uzanto.\n\n/remove_ignore - Ne plu ignoru uzanton.\n\n/ignore_list - listo de ID de ignoritaj uzantoj.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/allowgroup - Permesi grupon uzi la roboton (se ĝi estas privata).\n\n/enable - Ebligas la CAPTCHA-teston en la grupo.\n\n/disable - Malebligas la CAPTCHA-teston en la grupo.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - Montras la version de la roboto.\n\n/about - Montras \"pri\" informon.",
+        "Listo de komandoj:\n————————————————\n/start - Montras la komencigan informon pri la roboto.\n\n/help - Montras helpan informon.\n\n/commands - Montras ĉi tiun mesaĝon. Informon pri ĉiuj disponeblaj komandoj kaj iliaj priskriboj.\n\n/language - Permesas ŝanĝi la lingvo de la robotaj mesaĝoj.\n\n/time - Permesas ŝanĝi la tempon por solvi la CAPTCHA-teston.\n\n/difficulty - Permesas ŝanĝi la malfacilecon (niveloj el 1 al 5).\n\n/captcha_mode - Permesas ŝanĝi la modon (nums: nur nombroj, hex: nombroj kaj A-F literojn, ascii: nombroj kaj  A-Z literoj, math: math equation, poll: custom and configurable poll, button: just a button).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Permesas agordi bonvenigan mesaĝon por sendi post solvi la CAPTCHA-teston.\n\n/restrict_non_text - After a new user solves the captha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Ne demandu CAPTCHA-teston al ignorita uzanto.\n\n/remove_ignore - Ne plu ignoru uzanton.\n\n/ignore_list - listo de ID de ignoritaj uzantoj.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/allowgroup - Permesi grupon uzi la roboton (se ĝi estas privata).\n\n/enable - Ebligas la CAPTCHA-teston en la grupo.\n\n/disable - Malebligas la CAPTCHA-teston en la grupo.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - Montras la version de la roboto.\n\n/about - Montras \"pri\" informon.",
 
     "CMD_NOT_ALLOW":
         "Nur Administranto rajtas uzi tiun ĉi komandon",
@@ -179,6 +179,21 @@
     "PASS_BTN_TEXT":
         "Mi ne estas Roboto",
 
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+
+    "URL_ENABLE":
+        "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
+
+    "URL_DISABLE":
+        "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
+
+    "CONFIG_ALREADY_SET":
+        "This configuration is already set/enabled.",
+
+    "CONFIG_ALREADY_UNSET":
+        "This configuration is already unset/disabled.",
+
     "ENABLE":
         "CAPTCHA-testo ŝaltita. Malŝaltu ĝin per la komando /disable.",
 
@@ -198,7 +213,7 @@
         "Nuna versio de la roboto:\n{}",
 
     "ABOUT_MSG":
-        "Ĉi tiu roboto estas libera softvaro sur la permesilo GNU-GPL.\nRoboto disvolvigita de {}.\n\nVi povas legi la kodon ĉe:\n{}\n\nĈu vi ŝatas ĝin? Regalu min per kafo:\n{}\nBTC:\n{}",
+        "Ĉi tiu roboto estas libera softvaro sur la permesilo GNU-GPL.\n\nRoboto disvolvigita de {}.\n\nVi povas legi la kodon ĉe:\n{}\n\nĈu vi ŝatas ĝin? Regalu min per kafo:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
@@ -249,6 +264,9 @@
         "Group Configuration:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
         "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
 
     "CMD_JUST_IN_PRIVATE":

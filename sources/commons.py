@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    28/02/2021
+    25/09/2021
 Version:
-    1.0.3
+    1.0.4
 '''
 
 ###############################################################################
@@ -20,6 +20,8 @@ Version:
 
 from os import path, remove, makedirs
 from datetime import datetime
+from pickle import dump as pickle_dump
+from pickle import load as pickle_load
 
 ###############################################################################
 ### Constants
@@ -123,6 +125,15 @@ def create_parents_dirs(file_path):
         printts("ERROR - Can't create parents directories of {}. {}".format(file_path, str(e)))
 
 
+def file_exists(file_path):
+    '''Check if the given file exists'''
+    if file_path is None:
+        return False
+    if not path.exists(file_path):
+        return False
+    return True
+
+
 def file_write(file_path, text="", mode="a"):
     '''Write a text or a list of text lines to plain text file.'''
     # Create file path directories and determine if file exists
@@ -169,3 +180,23 @@ def list_remove_element(the_list, the_element):
         printts("ERROR - Can't remove element from a list. {}".format(str(e)))
         return False
     return True
+
+
+def pickle_save(pickle_file_path, data):
+    '''Save data to pickle file'''
+    try:
+        with open(pickle_file_path, "wb") as f:
+            pickle_dump(data, f)
+    except Exception:
+        return False
+    return True
+
+
+def pickle_restore(pickle_file_path):
+    '''Load data from pickle file'''
+    try:
+        with open(pickle_file_path, "rb") as f:
+            last_session_data = pickle_load(f)
+    except Exception:
+        return None
+    return last_session_data
