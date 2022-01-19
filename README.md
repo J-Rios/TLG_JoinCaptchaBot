@@ -219,3 +219,5 @@ To add support for a new language you must follow this steps:
 - Korean: [@dakeshi](https://github.com/dakeshi)
 
 - Belarusian: [@antikruk](https://github.com/antikruk)
+
+- Persian: [@m4hbod](https://github.com/M4hbod)
