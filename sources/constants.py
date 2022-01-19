@@ -12,7 +12,7 @@ Creation date:
 Last modified date:
     19/01/2022
 Version:
-    1.23.4
+    1.24.0
 '''
 
 ###############################################################################
@@ -96,6 +96,11 @@ CONST = {
     "INIT_ENABLE": \
         bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE", \
             SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
+
+    # Initial users send URLs enable/disable at Bot start
+    "INIT_URL_ENABLE": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE", \
+            SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
 
     # Initial captcha solve time
     "INIT_CAPTCHA_TIME": \
@@ -273,7 +278,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.23.4 (19/01/2022)"
+    "VERSION": "1.24.0 (19/01/2022)"
 }
 
 

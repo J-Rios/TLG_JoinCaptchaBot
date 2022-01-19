@@ -3,10 +3,10 @@
         "안녕하세요. 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다. 또한, 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n캡차 봇이 사용자 추방, 제한, 메시지 삭제를 하려면 관리자 권한이 필요합니다.\n\n/help 명령어를 통해 자세한 캡차 봇 사용법을 확인하실 수 있습니다.\n\n유용한 봇이라고 생각하신다면 /about 명령어를 입력해서 저에게 기부할 수 있는 방법을 확인해보세요.",
 
     "HELP":
-        "봇 도움말:\n————————————————\n- 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n- 특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다.\n\n- 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n- 사용자 추방, 메시지 삭제를 하려면 관리자 그룹에 캡차 봇을 추가해야 합니다.\n\n- 캡차를 풀지 못한 사용자가 추방되면 채팅방을 깔끔하게 유지하기 위해 봇과 관련된 모든 메시지는 5분 뒤에 자동으로 삭제됩니다. \n\n- 신규 사용자가 캡차를 입력해야 하는 시간은 5분으로 기본 설정되어 있으며, /time 명령어를 이용해 시간은 조정할 수 있습니다.\n\n- 캡차 기능은 /enable 과 /disable 명령어로 활성화/비활성화 여부를 설정할 수 있습니다.\n\n- 설정과 관련된 명령어는 관리자 그룹만 이용할 수 있습니다.\n\n- 봇에서 제공하는 언어는 /language 명령어를 이용해 다른 언어로 변경할 수 있습니다.\n\n- 캡차 난이도는 /difficulty 명령어로 조정할 수 있습니다.\n\n- 캡차는 기본적으로 숫자로만 제공되며 숫자와 문자 A-Z가 결합된 형태 또는 숫자와 문자 A-F, or a math equation to be solved, 객관식 문제 풀기, 버튼 등의 형태로 제공할 수 있으며 /captcha_mode 명령어로 모드를 변경하실 수 있습니다.\n\n- /welcome_msg 명령어로 환영 메시지를 변경할 수 있습니다.\n\n- /restrict_non_text 명령어는 신규 사용자가 텍스트 이외의 메시지는 입력하지 못하게 제한하는 명령어 입니다.\n\n- 비공개 버전 봇이라면 /allowgroup 명령어를 이용해 그룹을 허용해줄 수 있습니다.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- /commands 명령어를 입력하면 이용 가능한 명령어 목록을 짧은 설명과 함께 확인하실 수 있습니다.",
+        "봇 도움말:\n————————————————\n- 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n- 특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다.\n\n- 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n- 사용자 추방, 메시지 삭제를 하려면 관리자 그룹에 캡차 봇을 추가해야 합니다.\n\n- 캡차를 풀지 못한 사용자가 추방되면 채팅방을 깔끔하게 유지하기 위해 봇과 관련된 모든 메시지는 5분 뒤에 자동으로 삭제됩니다. \n\n- 신규 사용자가 캡차를 입력해야 하는 시간은 5분으로 기본 설정되어 있으며, /time 명령어를 이용해 시간은 조정할 수 있습니다.\n\n- 캡차 기능은 /enable 과 /disable 명령어로 활성화/비활성화 여부를 설정할 수 있습니다.\n\n- 설정과 관련된 명령어는 관리자 그룹만 이용할 수 있습니다.\n\n- 봇에서 제공하는 언어는 /language 명령어를 이용해 다른 언어로 변경할 수 있습니다.\n\n- 캡차 난이도는 /difficulty 명령어로 조정할 수 있습니다.\n\n- 캡차는 기본적으로 숫자로만 제공되며 숫자와 문자 A-Z가 결합된 형태 또는 숫자와 문자 A-F, or a math equation to be solved, 객관식 문제 풀기, 버튼 등의 형태로 제공할 수 있으며 /captcha_mode 명령어로 모드를 변경하실 수 있습니다.\n\n- /welcome_msg 명령어로 환영 메시지를 변경할 수 있습니다.\n\n- /restrict_non_text 명령어는 신규 사용자가 텍스트 이외의 메시지는 입력하지 못하게 제한하는 명령어 입니다.\n\n- 비공개 버전 봇이라면 /allowgroup 명령어를 이용해 그룹을 허용해줄 수 있습니다.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- /commands 명령어를 입력하면 이용 가능한 명령어 목록을 짧은 설명과 함께 확인하실 수 있습니다.",
 
     "COMMANDS":
-        "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 변경할 수 있습니다.\n\n/time - 캡차 입력 제한 시간을 변경할 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 변경할 수 있습니다.\n\n/captcha_mode - 캡차 모드를 변경할 수 있습니다. (nums: 숫자, hex: 숫자와 문자 A-F, ascii: 숫자와 문자 A-Z, math: math equation, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 문제 풀기 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/restrict_non_text - 신규 사용자가 캡차를 푼 이후에 텍스트 이외의 메시지(이미지, 비디오, 오디오 등)를 하루 동안(또는 \"forever\" 키워드를 통해 영원히 입력 못하게 제한 가능) 입력하지 못하게 제한할 수 있습니다.\n\n/add_ignore - 예외 목록에 등록된 사용자는 캡차를 입력하지 않아도 됩니다.\n\n/remove_ignore - 사용자에 대한 예외 처리 중단.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 일정 시간이 지난 후 캡차 입력 완료, 추방, 제한 메시지를 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/remove_welcome_msg - 일정 시간이 지난 후 환영 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/allowgroup - 비공개 버전의 봇을 그룹에서 이용할 수 있게 설정할 수 있습니다.\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
+        "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 변경할 수 있습니다.\n\n/time - 캡차 입력 제한 시간을 변경할 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 변경할 수 있습니다.\n\n/captcha_mode - 캡차 모드를 변경할 수 있습니다. (nums: 숫자, hex: 숫자와 문자 A-F, ascii: 숫자와 문자 A-Z, math: math equation, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 문제 풀기 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/restrict_non_text - 신규 사용자가 캡차를 푼 이후에 텍스트 이외의 메시지(이미지, 비디오, 오디오 등)를 하루 동안(또는 \"forever\" 키워드를 통해 영원히 입력 못하게 제한 가능) 입력하지 못하게 제한할 수 있습니다.\n\n/add_ignore - 예외 목록에 등록된 사용자는 캡차를 입력하지 않아도 됩니다.\n\n/remove_ignore - 사용자에 대한 예외 처리 중단.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 일정 시간이 지난 후 캡차 입력 완료, 추방, 제한 메시지를 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/remove_welcome_msg - 일정 시간이 지난 후 환영 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/allowgroup - 비공개 버전의 봇을 그룹에서 이용할 수 있게 설정할 수 있습니다.\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
 
     "CMD_NOT_ALLOW":
         "이 명령어는 관리자만 사용할 수 있습니다.",
@@ -178,6 +178,21 @@
 
     "PASS_BTN_TEXT":
         "봇이 아니라면 버튼을 클릭해주세요.",
+
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+
+    "URL_ENABLE":
+        "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
+
+    "URL_DISABLE":
+        "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
+
+    "CONFIG_ALREADY_SET":
+        "This configuration is already set/enabled.",
+
+    "CONFIG_ALREADY_UNSET":
+        "This configuration is already unset/disabled.",
 
     "ENABLE":
         "캡차 기능이 활성화되었습니다. 캡차 비활성화 명령은 /disable 입니다.",

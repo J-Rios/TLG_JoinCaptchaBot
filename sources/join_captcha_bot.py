@@ -14,7 +14,7 @@ Creation date:
 Last modified date:
     19/01/2022
 Version:
-    1.23.4
+    1.24.0
 '''
 
 ###############################################################################
@@ -167,6 +167,7 @@ def get_default_config_data():
         ("Link", CONST["INIT_LINK"]),
         ("Language", CONST["INIT_LANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
+        ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
@@ -1079,6 +1080,19 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # Set default text message if not received
     if msg_text is None:
         msg_text = "[Not a text message]"
+    # Check if group is configured to deny users send URLs, and remove URLs msg
+    url_enable = get_chat_config(chat_id, "URL_Enabled")
+    if not url_enable:
+        # Get Chat configured language
+        lang = get_chat_config(chat_id, "Language")
+        # Check for Spam (check if the message contains any URL)
+        has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+        if has_url:
+            # Try to remove the message and notify detection
+            delete_result = tlg_delete_msg(bot, chat_id, msg_id)
+            if delete_result["error"] == "":
+                bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(user_name)
+                tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
     # Ignore if message is not from a new user that has not completed the captcha yet
     if chat_id not in new_users:
         return
@@ -2344,6 +2358,74 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
     tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
 
 
+def cmd_url_enable(update: Update, context: CallbackContext):
+    '''Command /url_enable message handler'''
+    bot = context.bot
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Ignore if not requested by a group Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if (is_admin is None) or (is_admin == False):
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update_msg)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check and enable users send URLs in the chat
+    enable = get_chat_config(chat_id, "URL_Enabled")
+    if enable:
+        bot_msg = TEXT[lang]["CONFIG_ALREADY_SET"]
+    else:
+        enable = True
+        save_config_property(chat_id, "URL_Enabled", enable)
+        bot_msg = TEXT[lang]["URL_ENABLE"]
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
+def cmd_url_disable(update: Update, context: CallbackContext):
+    '''Command /url_disable message handler'''
+    bot = context.bot
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
+        return
+    # Ignore if not requested by a group Admin
+    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    if (is_admin is None) or (is_admin == False):
+        return
+    # Set user command message to be deleted by Bot in default time
+    tlg_msg_to_selfdestruct(update_msg)
+    # Get actual chat configured language
+    lang = get_chat_config(chat_id, "Language")
+    # Check and disable users send URLs in the chat
+    enable = get_chat_config(chat_id, "URL_Enabled")
+    if not enable:
+        bot_msg = TEXT[lang]["CONFIG_ALREADY_UNSET"]
+    else:
+        enable = False
+        save_config_property(chat_id, "URL_Enabled", enable)
+        bot_msg = TEXT[lang]["URL_DISABLE"]
+    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+
+
 def cmd_enable(update: Update, context: CallbackContext):
     '''Command /enable message handler'''
     bot = context.bot
@@ -2878,6 +2960,8 @@ def main():
     dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
     dp.add_handler(CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg, pass_args=True))
     dp.add_handler(CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg, pass_args=True))
+    dp.add_handler(CommandHandler("url_enable", cmd_url_enable))
+    dp.add_handler(CommandHandler("url_disable", cmd_url_disable))
     dp.add_handler(CommandHandler("enable", cmd_enable))
     dp.add_handler(CommandHandler("disable", cmd_disable))
     dp.add_handler(CommandHandler("chatid", cmd_chatid))
