@@ -12,7 +12,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    19/01/2022
+    21/01/2022
 Version:
     1.24.0
 '''
@@ -514,7 +514,7 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
                 bool(randint(0, 1)))
     captcha["image"].save(img_file_path, "png")
     captcha_result = {}
-    captcha_result["characters"] = captcha["characters"]
+    captcha_result["characters"] = getattr(captcha, "characters", "")
     captcha_result["image"] = img_file_path
     return captcha_result
 
