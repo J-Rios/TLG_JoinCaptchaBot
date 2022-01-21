@@ -507,15 +507,21 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
                 remove(img_file_path)
     # Generate and save the captcha with a random background
     # mono-color or multi-color
+    captcha_result = {
+        "image": img_file_path,
+        "characters": "",
+        "equation_str": "",
+        "equation_result": ""
+    }
     if captcha_mode == "math":
         captcha = CaptchaGen.gen_math_captcha_image(2, bool(randint(0, 1)))
+        captcha_result["equation_str"] = captcha["equation_str"]
+        captcha_result["equation_result"] = captcha["equation_result"]
     else:
         captcha = CaptchaGen.gen_captcha_image(difficult_level, captcha_mode,
                 bool(randint(0, 1)))
+        captcha_result["characters"] = captcha["characters"]
     captcha["image"].save(img_file_path, "png")
-    captcha_result = {}
-    captcha_result["characters"] = getattr(captcha, "characters", "")
-    captcha_result["image"] = img_file_path
     return captcha_result
 
 
