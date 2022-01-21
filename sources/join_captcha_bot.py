@@ -1096,6 +1096,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # Check if group is configured to deny users send URLs, and remove URLs msg
     url_enable = get_chat_config(chat_id, "URL_Enabled")
     if not url_enable:
+        # Ignore if message comes from an Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if is_admin:
+            return
         # Get Chat configured language
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
