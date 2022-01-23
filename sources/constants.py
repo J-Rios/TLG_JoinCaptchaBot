@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/01/2022
+    23/01/2022
 Version:
-    1.24.0
+    1.25.0
 '''
 
 ###############################################################################
@@ -102,6 +102,11 @@ CONST = {
         bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE", \
             SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
 
+    # Initial config regarding remove all messages sent by a user kicked
+    "INIT_RM_ALL_MSG": \
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_ALL_MSG", \
+            SETTINGS["CAPTCHABOT_INIT_RM_ALL_MSG"]))),
+
     # Initial captcha solve time
     "INIT_CAPTCHA_TIME": \
         int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN", \
@@ -122,12 +127,17 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME", \
             SETTINGS["CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME"])),
 
-    # Default time (in mins) to self-remove self-destruct sent messages
+    # Standard auto-remove messages sent by Bot timeout (in seconds)
     "T_DEL_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
 
-    # Auto-remove custom welcome message timeout
+    # Fast auto-remove messages sent by Bot timeout (in seconds)
+    "T_FAST_DEL_MSG": \
+        int(os_getenv("CAPTCHABOT_T_FAST_DEL_MSG", \
+            SETTINGS["CAPTCHABOT_T_FAST_DEL_MSG"])),
+
+    # Auto-remove custom welcome message timeout (in seconds)
     "T_DEL_WELCOME_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_WELCOME_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_WELCOME_MSG"])),
@@ -302,7 +312,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.24.0 (21/01/2022)"
+    "VERSION": "1.25.0 (23/01/2022)"
 }
 
 

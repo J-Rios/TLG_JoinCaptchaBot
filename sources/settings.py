@@ -63,6 +63,9 @@ SETTINGS = {
     # Initial users send URLs enable/disable at Bot start
     "CAPTCHABOT_INIT_URL_ENABLE": True,
 
+    # Initial config regarding remove all messages sent by a user kicked
+    "CAPTCHABOT_INIT_RM_ALL_MSG": False,
+
     # Initial captcha solve time (in minutes)
     "CAPTCHABOT_INIT_CAPTCHA_TIME_MIN": 5,
 
@@ -92,11 +95,14 @@ SETTINGS = {
     # Telegram maximum Poll Option length is 100
     "CAPTCHABOT_MAX_POLL_OPTION_LENGTH": 100,
 
-    # Default time (in mins) to self-remove self-destruct sent messages
-    "CAPTCHABOT_T_DEL_MSG": 1,
+    # Standard auto-remove messages sent by Bot timeout (in seconds)
+    "CAPTCHABOT_T_DEL_MSG": 60,
 
-    # Auto-remove custom welcome message timeout
-    "CAPTCHABOT_T_DEL_WELCOME_MSG": 5,
+    # Fast auto-remove messages sent by Bot timeout (in seconds)
+    "CAPTCHABOT_T_FAST_DEL_MSG": 20,
+
+    # Auto-remove custom welcome message timeout (in seconds)
+    "CAPTCHABOT_T_DEL_WELCOME_MSG": 60,
 
     # Time to restrict sending no-text messages (in seconds, default 24h)
     "CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG": 86400,
