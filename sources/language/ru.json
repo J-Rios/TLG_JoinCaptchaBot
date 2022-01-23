@@ -237,10 +237,10 @@
         "Капча - опрос на вопрос. Правильный вариант успешно настроен на номер опции {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Номер варианта опроса {} не существует, сначала настройте этот параметр.\n\nПример:\ncaptcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Нет\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Номер варианта опроса {} не существует, сначала настройте этот параметр.\n\nПример:\n/captcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Нет\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "Пришел новый пользователь, но Капча - опрос на вопрос настроен не полностью.\n\nНеобходимо настроить вопрос и опрос, правильный ответ на опрос и минимум 2 варианта ответа. Пожалуйста, настройте его с помощью /captcha_poll command.\n\nExample:\ncaptcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Неи\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Пришел новый пользователь, но Капча - опрос на вопрос настроен не полностью.\n\nНеобходимо настроить вопрос и опрос, правильный ответ на опрос и минимум 2 варианта ответа. Пожалуйста, настройте его с помощью /captcha_poll command.\n\nExample:\n/captcha_poll question 1 + 2 равно 5?\n\n/captcha_poll option 1 Да\n\n/captcha_poll option 2 Неи\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "Вам необходимо указать идентификатор группового чата, к которому нужно подключиться (используйте команду /chatid внутри группы, чтобы узнать id группового чата).\n\nНапример:\n/connect -1234567890",

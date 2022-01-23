@@ -237,10 +237,10 @@
         "Капча - відповідь на питання. Правильний варіант успішно налаштований на номер опції {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Номер варіанта опитування {} не існує, спочатку налаштуйте цей параметр.\n\nНаприклад:\ncaptcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Номер варіанта опитування {} не існує, спочатку налаштуйте цей параметр.\n\nНаприклад:\n/captcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "Прийшов новий користувач, але Капча - відповіді на питання налаштовані не повністю.\n\nНеобхідно налаштувати питання і відповіді, правильну відповідь на питання і мінімум 2 варіанти відповіді. Будь-ласка, налаштуйте його за допомогою команди: /captcha_poll command.\n\nНаприклад:\ncaptcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Прийшов новий користувач, але Капча - відповіді на питання налаштовані не повністю.\n\nНеобхідно налаштувати питання і відповіді, правильну відповідь на питання і мінімум 2 варіанти відповіді. Будь-ласка, налаштуйте його за допомогою команди: /captcha_poll command.\n\nНаприклад:\n/captcha_poll question 1+2 дорівнює 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Ні\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "Вам необхідно вказати ID групового чату, до якого потрібно підключитися (використовуйте команду /chatid всередині групи, щоб дізнатися id групового чату).\n\nНаприклад:\n/connect -1234567890",

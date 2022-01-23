@@ -237,10 +237,10 @@
         "객관식 문제 풀기 캡차의 정답은 보기 {} 번으로 설정되었습니다.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "정답으로 설정한 {} 번 항목은 존재하지 않습니다. 객관식 답안을 먼저 설정해주세요.\n\n예시:\ncaptcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "정답으로 설정한 {} 번 항목은 존재하지 않습니다. 객관식 답안을 먼저 설정해주세요.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "신규 사용자가 입장했는데 객관식 문제 풀기 캡차가 제대로 설정되지 않아 캡차가 정상적으로 동작하지 않고 있습니다. \n\n객관식 질문과 함께 보기 문항은 최소 2개 이상으로 구성해주시고 정답을 설정해주시길 바랍니다. /captcha_poll 명령어로 설정하실 수 있습니다.\n\n예시:\ncaptcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "신규 사용자가 입장했는데 객관식 문제 풀기 캡차가 제대로 설정되지 않아 캡차가 정상적으로 동작하지 않고 있습니다. \n\n객관식 질문과 함께 보기 문항은 최소 2개 이상으로 구성해주시고 정답을 설정해주시길 바랍니다. /captcha_poll 명령어로 설정하실 수 있습니다.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",

@@ -237,10 +237,10 @@
         "Captcha richtige Antwort auf Antwort Nummer {} geändert.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Antwort Nummer {} existiert nicht, bitte erstellen sie die Antwort zuerst.\n\nBeispiel:\ncaptcha_poll question Ist 1+2 gleich 5?\n\n/captcha_poll option 1 Ja\n\n/captcha_poll option 2 Nein\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Antwort Nummer {} existiert nicht, bitte erstellen sie die Antwort zuerst.\n\nBeispiel:\n/captcha_poll question Ist 1+2 gleich 5?\n\n/captcha_poll option 1 Ja\n\n/captcha_poll option 2 Nein\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "Ein neuer Benutzer ist beigetreten, aber die Captcha Frage ist nicht vollständig.\n\n Frage, richtige Antwort und minimum 2 Antworten müssen vorhanden sein. Bitte vervollständigen Sie über den /captcha_poll Befehl.\n\nBeispiel:\ncaptcha_poll question Ist 1+2 gleich 5?\n\n/captcha_poll option 1 Ja\n\n/captcha_poll option 2 Nein\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Ein neuer Benutzer ist beigetreten, aber die Captcha Frage ist nicht vollständig.\n\n Frage, richtige Antwort und minimum 2 Antworten müssen vorhanden sein. Bitte vervollständigen Sie über den /captcha_poll Befehl.\n\nBeispiel:\n/captcha_poll question Ist 1+2 gleich 5?\n\n/captcha_poll option 1 Ja\n\n/captcha_poll option 2 Nein\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",

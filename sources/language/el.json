@@ -237,10 +237,10 @@
         "Captcha Poll Correct Option ρυθμίστηκε επιτυχώς στην επιλογή του αριθμού {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Poll option number {} δεν υπάρχει, παρακαλώ ρύθμισε πρώτα την επιλογή.\n\n Παράδειγμα:\ncaptcha_poll question 1+2 μας κάνει: 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Poll option number {} δεν υπάρχει, παρακαλώ ρύθμισε πρώτα την επιλογή.\n\n Παράδειγμα:\n/captcha_poll question 1+2 μας κάνει: 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "Υπάρχει νέος χρήστης, ωστόσο το Captcha Poll δεν έχει ρυθμιστεί πλήρως.\n\nΠρέπει να ρυθμιστούν τουλάχιστον τα εξής: Poll question, Poll correct answer and minimum 2 answer options needs to be configured. Παρακαλώ, ρύθμισέ τα με /captcha_poll command.\n\n Παράδειγμα:\ncaptcha_poll question 1+2 μας κάνει 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Υπάρχει νέος χρήστης, ωστόσο το Captcha Poll δεν έχει ρυθμιστεί πλήρως.\n\nΠρέπει να ρυθμιστούν τουλάχιστον τα εξής: Poll question, Poll correct answer and minimum 2 answer options needs to be configured. Παρακαλώ, ρύθμισέ τα με /captcha_poll command.\n\n Παράδειγμα:\n/captcha_poll question 1+2 μας κάνει 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",

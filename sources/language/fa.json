@@ -237,10 +237,10 @@
         "گزینه {} به عنوان گزینه صحیح سوال نظرسنجی کپچا تنظیم شد.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "گزینه {} برای نظرسنجی کپچا وجود ندارد, لطفا اول جواب را تنظیم کنید.\n\nمثال:\ncaptcha_poll question آیا 1+2 برابر با 5 است?\n\n/captcha_poll option 1 بله\n\n/captcha_poll option 2 خیر\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "گزینه {} برای نظرسنجی کپچا وجود ندارد, لطفا اول جواب را تنظیم کنید.\n\nمثال:\n/captcha_poll question آیا 1+2 برابر با 5 است?\n\n/captcha_poll option 1 بله\n\n/captcha_poll option 2 خیر\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "یک کاربر جدید جوین شد, ولی نظرسنجی کپچا به طور کامل تنظیم نشده است.\n\nسوال نظرسنجی, حداقل باید یک جواب صحیح و دو جواب برای نظرسنجی تنظیم بشوند 2 جواب ها باید تنظیم شوند. لطفا, با دستور /captcha_poll تنظیم کنید.\n\nمثال:\ncaptcha_poll question آیا 1+2 برابر با 5 است?\n\n/captcha_poll option 1 بله\n\n/captcha_poll option 2 خیر\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "یک کاربر جدید جوین شد, ولی نظرسنجی کپچا به طور کامل تنظیم نشده است.\n\nسوال نظرسنجی, حداقل باید یک جواب صحیح و دو جواب برای نظرسنجی تنظیم بشوند 2 جواب ها باید تنظیم شوند. لطفا, با دستور /captcha_poll تنظیم کنید.\n\nمثال:\n/captcha_poll question آیا 1+2 برابر با 5 است?\n\n/captcha_poll option 1 بله\n\n/captcha_poll option 2 خیر\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "شما باید ایدی گروهی که میخواید تنظیماتش را انجام دهید را وارد کنید (از دستور /chatid برای گرفتن ایدی گروه استفاده کنید).\n\nمثال:\n/connect -1234567890",

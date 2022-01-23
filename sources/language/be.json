@@ -237,10 +237,10 @@
         "Правільны варыянт адказу для апытання паспяхова прызначаны як {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Варыянт адказу {} не існуе, спачатку наладзьце варыянты адказу.\n\nПрыклады:\ncaptcha_poll question 1+2 = 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Не\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Варыянт адказу {} не існуе, спачатку наладзьце варыянты адказу.\n\nПрыклады:\n/captcha_poll question 1+2 = 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Не\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "Далучыўся новы карыстальнік, але апытанне яшчэ не да канца наладжана.\n\nПатрэбна наладзіць пытанне, правільны варыянт адказу і варыянты адказу. Гэта можна наладзіць загадам \"/captcha_poll\".\n\nПрыклады:\ncaptcha_poll question 1+2 = 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Не\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Далучыўся новы карыстальнік, але апытанне яшчэ не да канца наладжана.\n\nПатрэбна наладзіць пытанне, правільны варыянт адказу і варыянты адказу. Гэта можна наладзіць загадам \"/captcha_poll\".\n\nПрыклады:\n/captcha_poll question 1+2 = 5?\n\n/captcha_poll option 1 Так\n\n/captcha_poll option 2 Не\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",

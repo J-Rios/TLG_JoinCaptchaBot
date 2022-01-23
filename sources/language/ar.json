@@ -237,10 +237,10 @@
         "ضبط خيار الأحجية الصحيح بنجاح إلى الخيار  رقم {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "خيار الأحجية {} غير موجود،  رجاء اضبط الخيار أولا.\n\nمثال:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "خيار الأحجية {} غير موجود،  رجاء اضبط الخيار أولا.\n\nمثال:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "قدم مستخدم جديد، لكن استفتاء الأحجية غير معد تماما.\n\n يجب توفر سؤال للأحجية وجواب الصحيح وخيارين. رجاء، اضبطها مستخدما  /captcha_poll command.\n\nمثال:\ncaptcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "قدم مستخدم جديد، لكن استفتاء الأحجية غير معد تماما.\n\n يجب توفر سؤال للأحجية وجواب الصحيح وخيارين. رجاء، اضبطها مستخدما  /captcha_poll command.\n\nمثال:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "عليك تحديد معرف مجموعة المحادثة التي تريد ضبطها (استخدم أمر /chatid داخل المجموعة لمعرفته).\n\nمثال:\n/connect -1234567890",

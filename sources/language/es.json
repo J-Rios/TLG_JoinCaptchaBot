@@ -237,10 +237,10 @@
         "Respuesta correcta de la Encuesta configurada correctamente en la opción {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "La opción {} de la Encuesta no existe, por favor configura esa opción primero.\n\nEjemplo:\ncaptcha_poll question Es 1+2 igual a 5?\n\n/captcha_poll option 1 Si\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "La opción {} de la Encuesta no existe, por favor configura esa opción primero.\n\nEjemplo:\n/captcha_poll question Es 1+2 igual a 5?\n\n/captcha_poll option 1 Si\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "A entrado un nuevo usuario, pero la Encuesta Captcha no está totalmente configurada.\n\nEs necesario configurar la pregunta de la Encuesta, 2 o más opciones de respuesta y la opción de respuesta correcta. Recuerda configurar la encuesta mediante el comando /captcha_poll.\n\nEjemplo:\ncaptcha_poll question Es 1+2 igual a 5?\n\n/captcha_poll option 1 Si\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "A entrado un nuevo usuario, pero la Encuesta Captcha no está totalmente configurada.\n\nEs necesario configurar la pregunta de la Encuesta, 2 o más opciones de respuesta y la opción de respuesta correcta. Recuerda configurar la encuesta mediante el comando /captcha_poll.\n\nEjemplo:\n/captcha_poll question Es 1+2 igual a 5?\n\n/captcha_poll option 1 Si\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
         "Tienes que indicar el chat ID del grupo que quieres configurar (utiliza el comando /chatid dentro del grupo para conocerlo).\n\nEjemplo:\n/connect -1234567890",
