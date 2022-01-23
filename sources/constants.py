@@ -127,12 +127,17 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME", \
             SETTINGS["CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME"])),
 
-    # Default time (in mins) to self-remove self-destruct sent messages
+    # Standard auto-remove messages sent by Bot timeout (in seconds)
     "T_DEL_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
 
-    # Auto-remove custom welcome message timeout
+    # Fast auto-remove messages sent by Bot timeout (in seconds)
+    "T_FAST_DEL_MSG": \
+        int(os_getenv("CAPTCHABOT_T_FAST_DEL_MSG", \
+            SETTINGS["CAPTCHABOT_T_FAST_DEL_MSG"])),
+
+    # Auto-remove custom welcome message timeout (in seconds)
     "T_DEL_WELCOME_MSG": \
         int(os_getenv("CAPTCHABOT_T_DEL_WELCOME_MSG", \
             SETTINGS["CAPTCHABOT_T_DEL_WELCOME_MSG"])),

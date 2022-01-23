@@ -269,14 +269,14 @@ def tlg_send_selfdestruct_msg(bot, chat_id, message,
             CONST["T_DEL_MSG"], **kwargs_for_send_message)
 
 
-def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_min,
+def tlg_send_selfdestruct_msg_in(bot, chat_id, message, time_delete_sec,
         **kwargs_for_send_message):
     '''Send a telegram message that will be auto-delete in specified time'''
     sent_result = tlg_send_msg(bot, chat_id, message,
             **kwargs_for_send_message)
     if sent_result["msg"] is None:
         return None
-    tlg_msg_to_selfdestruct_in(sent_result["msg"], time_delete_min)
+    tlg_msg_to_selfdestruct_in(sent_result["msg"], time_delete_sec)
     return sent_result["msg"].message_id
 
 
@@ -285,7 +285,7 @@ def tlg_msg_to_selfdestruct(message):
     tlg_msg_to_selfdestruct_in(message, CONST["T_DEL_MSG"])
 
 
-def tlg_msg_to_selfdestruct_in(message, time_delete_min):
+def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     '''Add a telegram message to be auto-delete in specified time'''
     global to_delete_in_time_messages_list
     # Check if provided message has all necessary attributtes
@@ -312,7 +312,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_min):
     sent_msg_data["User_id"] = user_id
     sent_msg_data["Msg_id"] = msg_id
     sent_msg_data["time"] = t0
-    sent_msg_data["delete_time"] = t0 + (time_delete_min*60)
+    sent_msg_data["delete_time"] = t0 + time_delete_sec
     to_delete_in_time_messages_list.append(sent_msg_data)
     return True
 
@@ -787,8 +787,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
         timeout_str = "{} sec".format(captcha_timeout)
     else:
-        timeout_min = int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])
-        timeout_str = "{} min".format(timeout_min)
+        timeout_str = "{} min".format(int(captcha_timeout / CONST["T_SECONDS_IN_MIN"]))
     send_problem = False
     captcha_num = ""
     if captcha_mode == "random":
@@ -821,8 +820,8 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
         if (poll_question == "") or (num_config_poll_options(poll_options) < 2) \
         or (poll_correct_option == 0):
-            tlg_send_selfdestruct_msg(bot, chat_id,
-                    TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"])
+            tlg_send_selfdestruct_msg_in(bot, chat_id, TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"], \
+                    CONST["T_FAST_DEL_MSG"])
             return
         # Remove empty strings from options list
         poll_options = list(filter(None, poll_options))
@@ -889,8 +888,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if not send_problem:
         # Add sent captcha message to self-destruct list
         if sent_result["msg"] is not None:
-            destruct_in = (captcha_timeout + 30) / CONST["T_SECONDS_IN_MIN"]
-            tlg_msg_to_selfdestruct_in(sent_result["msg"], destruct_in)
+            tlg_msg_to_selfdestruct_in(sent_result["msg"], captcha_timeout+10)
         # Default user join data
         join_data = \
         {
@@ -1012,7 +1010,7 @@ def msg_notext(update: Update, context: CallbackContext):
     tlg_delete_msg(bot, chat_id, msg_id)
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
 
 
 def msg_nocmd(update: Update, context: CallbackContext):
@@ -1105,7 +1103,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
             delete_result = tlg_delete_msg(bot, chat_id, msg_id)
             if delete_result["error"] == "":
                 bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(user_name)
-                tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+                tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
     # Ignore if message is not from a new user that has not completed the captcha yet
     if chat_id not in new_users:
         return
@@ -1121,17 +1119,15 @@ def msg_nocmd(update: Update, context: CallbackContext):
     if has_url or has_alias:
         printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
         printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
-        captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
-        captcha_timeout = captcha_timeout / CONST["T_SECONDS_IN_MIN"]
         # Try to remove the message and notify detection
         delete_result = tlg_delete_msg(bot, chat_id, msg_id)
         if delete_result["error"] == "":
             bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
-            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         # Check if message cant be removed due to not delete msg privileges
         elif delete_result["error"] == "Message can't be deleted":
             bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
-            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, captcha_timeout)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
             printts("Message can't be deleted.")
         return
@@ -1158,7 +1154,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         # Send message solve message
         if rm_result_msg:
-            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
             tlg_send_msg(bot, chat_id, bot_msg)
         # Check for custom welcome message and send it
@@ -1201,22 +1197,22 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 clueless_user = True
             # Tell the user that is wrong
             if clueless_user:
-                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
-                        TEXT[lang]["CAPTCHA_INCORRECT_MATH"])
+                sent_msg_id = tlg_send_selfdestruct_msg_in(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_MATH"], CONST["T_FAST_DEL_MSG"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         # If "nums", "hex" or "ascii" captcha
         else:
             # Check if the message has 4 chars
             if len(msg_text) == 4:
-                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
-                        TEXT[lang]["CAPTCHA_INCORRECT_0"])
+                sent_msg_id = tlg_send_selfdestruct_msg_in(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_0"], CONST["T_FAST_DEL_MSG"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
             # Check if the message was just a 4 numbers msg
             elif is_int(msg_text):
-                sent_msg_id = tlg_send_selfdestruct_msg(bot, chat_id, \
-                        TEXT[lang]["CAPTCHA_INCORRECT_1"])
+                sent_msg_id = tlg_send_selfdestruct_msg_in(bot, chat_id, \
+                        TEXT[lang]["CAPTCHA_INCORRECT_1"], CONST["T_FAST_DEL_MSG"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
     printts("[{}] Captcha reply process complete.".format(chat_id))
@@ -1268,7 +1264,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
         printts("[{}] User {} solved a poll challenge.".format(chat_id, user_name))
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if rm_result_msg:
-            tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+            tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
             tlg_send_msg(bot, chat_id, bot_msg)
         del new_users[chat_id][user_id]
@@ -1312,7 +1308,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
             msg_text = TEXT[lang]["CAPTCHA_POLL_FAIL_1"].format(user_name)
             # Send kicked message
             if rm_result_msg:
-                tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
             else:
                 tlg_send_msg(bot, chat_id, msg_text)
         else:
@@ -1323,7 +1319,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
                 if rm_result_msg:
-                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                 else:
                     tlg_send_msg(bot, chat_id, msg_text)
             elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
@@ -1335,7 +1331,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                 # For other reason, the Bot can't ban
                 msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
                 if rm_result_msg:
-                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                 else:
                     tlg_send_msg(bot, chat_id, msg_text)
         # Remove user from captcha process
@@ -1468,7 +1464,7 @@ def button_request_pass(bot, query):
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
     if rm_result_msg:
-        tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+        tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
     else:
         tlg_send_msg(bot, chat_id, bot_msg)
     del new_users[chat_id][user_id]
@@ -2905,7 +2901,7 @@ def th_time_to_kick_not_verify_users(bot):
                                 printts("[{}] Increased join_retries to {}".format(chat_id, join_retries))
                                 # Send kicked message
                                 if rm_result_msg:
-                                    tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                                 else:
                                     tlg_send_msg(bot, chat_id, msg_text)
                             else:
@@ -2916,7 +2912,7 @@ def th_time_to_kick_not_verify_users(bot):
                                     # The user is not in the chat
                                     msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
                                     if rm_result_msg:
-                                        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                        tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                                     else:
                                         tlg_send_msg(bot, chat_id, msg_text)
                                 elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
@@ -2928,7 +2924,7 @@ def th_time_to_kick_not_verify_users(bot):
                                     # For other reason, the Bot can't ban
                                     msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
                                     if rm_result_msg:
-                                        tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+                                        tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                                     else:
                                         tlg_send_msg(bot, chat_id, msg_text)
                         # The user has join this chat 5 times and never succes to solve the captcha (ban)
