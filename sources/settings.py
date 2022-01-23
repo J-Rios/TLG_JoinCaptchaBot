@@ -63,6 +63,9 @@ SETTINGS = {
     # Initial users send URLs enable/disable at Bot start
     "CAPTCHABOT_INIT_URL_ENABLE": True,
 
+    # Initial config regarding remove all messages sent by a user kicked
+    "CAPTCHABOT_INIT_RM_ALL_MSG": False,
+
     # Initial captcha solve time (in minutes)
     "CAPTCHABOT_INIT_CAPTCHA_TIME_MIN": 5,
 
