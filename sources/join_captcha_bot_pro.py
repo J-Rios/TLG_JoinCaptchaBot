@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    23/01/2022
+    24/01/2022
 Version:
-    1.25.0
+    1.25.1
 '''
 
 ###############################################################################
@@ -2384,25 +2384,30 @@ def cmd_remove_all_msg_kick_on(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
-        return
-    # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if (is_admin is None) or (is_admin == False):
-        return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
-    # Get actual chat configured language
-    lang = get_chat_config(chat_id, "Language")
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = connections[user_id]["group_id"]
+    else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        # Set user command message to be deleted by Bot in default time
+        tlg_msg_to_selfdestruct(update_msg)
     # Check and enable users send URLs in the chat
-    enable = get_chat_config(chat_id, "RM_All_Msg")
+    enable = get_chat_config(group_id, "RM_All_Msg")
     if enable:
         bot_msg = TEXT[lang]["CONFIG_ALREADY_SET"]
     else:
         enable = True
-        save_config_property(chat_id, "RM_All_Msg", enable)
+        save_config_property(group_id, "RM_All_Msg", enable)
         bot_msg = TEXT[lang]["RM_ALL_MSGS_AFTER_KICK_ON"]
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
 
 
 def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
@@ -2418,25 +2423,30 @@ def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
-        return
-    # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if (is_admin is None) or (is_admin == False):
-        return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
-    # Get actual chat configured language
-    lang = get_chat_config(chat_id, "Language")
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = connections[user_id]["group_id"]
+    else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        # Set user command message to be deleted by Bot in default time
+        tlg_msg_to_selfdestruct(update_msg)
     # Check and enable users send URLs in the chat
-    enable = get_chat_config(chat_id, "RM_All_Msg")
+    enable = get_chat_config(group_id, "RM_All_Msg")
     if not enable:
         bot_msg = TEXT[lang]["CONFIG_ALREADY_UNSET"]
     else:
         enable = False
-        save_config_property(chat_id, "RM_All_Msg", enable)
+        save_config_property(group_id, "RM_All_Msg", enable)
         bot_msg = TEXT[lang]["RM_ALL_MSGS_AFTER_KICK_OFF"]
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
 
 
 def cmd_url_enable(update: Update, context: CallbackContext):
@@ -2452,25 +2462,30 @@ def cmd_url_enable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
-        return
-    # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if (is_admin is None) or (is_admin == False):
-        return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
-    # Get actual chat configured language
-    lang = get_chat_config(chat_id, "Language")
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = connections[user_id]["group_id"]
+    else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        # Set user command message to be deleted by Bot in default time
+        tlg_msg_to_selfdestruct(update_msg)
     # Check and enable users send URLs in the chat
-    enable = get_chat_config(chat_id, "URL_Enabled")
+    enable = get_chat_config(group_id, "URL_Enabled")
     if enable:
         bot_msg = TEXT[lang]["CONFIG_ALREADY_SET"]
     else:
         enable = True
-        save_config_property(chat_id, "URL_Enabled", enable)
+        save_config_property(group_id, "URL_Enabled", enable)
         bot_msg = TEXT[lang]["URL_ENABLE"]
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
 
 
 def cmd_url_disable(update: Update, context: CallbackContext):
@@ -2486,25 +2501,30 @@ def cmd_url_disable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NEEDS_CONNECTION"])
-        return
-    # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
-    if (is_admin is None) or (is_admin == False):
-        return
-    # Set user command message to be deleted by Bot in default time
-    tlg_msg_to_selfdestruct(update_msg)
-    # Get actual chat configured language
-    lang = get_chat_config(chat_id, "Language")
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = connections[user_id]["group_id"]
+    else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        # Set user command message to be deleted by Bot in default time
+        tlg_msg_to_selfdestruct(update_msg)
     # Check and disable users send URLs in the chat
-    enable = get_chat_config(chat_id, "URL_Enabled")
+    enable = get_chat_config(group_id, "URL_Enabled")
     if not enable:
         bot_msg = TEXT[lang]["CONFIG_ALREADY_UNSET"]
     else:
         enable = False
-        save_config_property(chat_id, "URL_Enabled", enable)
+        save_config_property(group_id, "URL_Enabled", enable)
         bot_msg = TEXT[lang]["URL_DISABLE"]
-    tlg_send_selfdestruct_msg(bot, chat_id, bot_msg)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
 
 
 def cmd_enable(update: Update, context: CallbackContext):

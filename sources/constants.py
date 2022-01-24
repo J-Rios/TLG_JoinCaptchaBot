@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    23/01/2022
+    24/01/2022
 Version:
-    1.25.0
+    1.25.1
 '''
 
 ###############################################################################
@@ -290,7 +290,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.25.0 (23/01/2022)"
+    "VERSION": "1.25.1 (24/01/2022)"
 }
 
 
