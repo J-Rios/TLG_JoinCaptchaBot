@@ -87,9 +87,9 @@
     "DISCONNECT_OK": "Адлучана ад суполкі \"{}\".",
     "INVALID_GROUP_ID": "Хібны ідэнтыфікатар чата.",
     "CHECK_CFG": "Канфігурацыя суполкі:\n————————————————\n```\n{}\n```",
-    "CMD_NOT_ALLOW_PRIVATE": "This command cannot be used in private chat.",
-    "CMD_NEEDS_CONNECTION": "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
-    "CMD_JUST_IN_PRIVATE": "This command can't be used inside a group (use it in private Bot chat).",
-    "RM_ALL_MSGS_AFTER_KICK_ON": "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
-    "RM_ALL_MSGS_AFTER_KICK_OFF": "Configuration changed, messages sent by users that didn't solve the captcha won't be removed."
+    "CMD_NOT_ALLOW_PRIVATE": "Гэты загад нельга выкарыстоўваць у асабістых паведамленнях.",
+    "CMD_NEEDS_CONNECTION": "Гэты загад нельга выкарыстоўваць у асабістых паведамленнях з ботам. Спачатку трэба падлучыць суполку з дапамогай загада \"/connect\".",
+    "CMD_JUST_IN_PRIVATE": "Гэты загад нельга выкарыстоўваць у суполцы ( скарыстайцеся ім у асабістых паведамленнях з ботам).",
+    "RM_ALL_MSGS_AFTER_KICK_ON": "Канфігурацыя змененая. Усе паведамленні, адпраўленыя карыстальнікамі, якія не прайшлі праверку, будуць выдаляцца.",
+    "RM_ALL_MSGS_AFTER_KICK_OFF": "Канфігурацыя змененая. Паведамленні, адпраўленыя карыстальнікамі, якія не прайшлі праверку, не будуць выдаляцца."
 }
