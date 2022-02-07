@@ -27,7 +27,7 @@
         "Tempo para enviar o captcha modificado com sucesso para {}.",
 
     "TIME_OUT_RANGE":
-        "Tempo de captcha inválido, ele precisa estar no intervalo de 10 segundos a {} min.",
+        "Tempo de captcha inválido, ele precisa estar no intervalo de 10 sec a {} min.",
 
     "TIME_NOT_NUM":
         "O tempo fornecido não é um número integral.",
@@ -174,7 +174,7 @@
         "Configuração alterada, as mensagens de boas-vindas não serão removidas.",
 
     "OTHER_CAPTCHA_BTN_TEXT":
-        "Outro captcha",
+        "Outro Captcha",
 
     "PASS_BTN_TEXT":
         "Eu não sou um Bot",
