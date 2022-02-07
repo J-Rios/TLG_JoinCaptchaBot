@@ -59,7 +59,7 @@
     "RM_WELCOME_MSG_NO": "Канфігурацыя змененая, вітальныя паведамленні не будуць выдаляцца.",
     "OTHER_CAPTCHA_BTN_TEXT": "Іншая выява",
     "PASS_BTN_TEXT": "Я не бот",
-    "URL_MSG_NOT_ALLOWED_DETECTED": "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+    "URL_MSG_NOT_ALLOWED_DETECTED": "Было выяўлена і выдалена паведамленне, якое змяшчае URL-спасылку. Паведамленне адправіў карыстальнік \"{}\".\n\nУ гэтай суполцы забароненыя паведамленні з URL-спасылкамі (каб дазволіць пісаць паведамленні са спасылкамі, адмінстратару патрэбна наладзіць бота).",
     "URL_ENABLE": "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
     "URL_DISABLE": "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
     "CONFIG_ALREADY_SET": "This configuration is already set/enabled.",
