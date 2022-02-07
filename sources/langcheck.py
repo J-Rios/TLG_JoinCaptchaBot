@@ -13,15 +13,27 @@ from constants import CONST
 ### Auxiliary Functions
 
 def is_valid(langname, lang, englang):
-    missing = []
+    l_missing_keys = []
+    l_brackets_missmatch_keys = []
     for key in englang:
         if key not in lang:
-            missing.append(key)
-    if len(missing) == 0:
-        print("{} is complete".format(langname))
-        return True
+            l_missing_keys.append(key)
+        num_expected_brackets = englang[key].count("{}")
+        num_brackets = lang[key].count("{}")
+        if num_brackets != num_expected_brackets:
+            l_brackets_missmatch_keys.append(key)
+    if len(langname) == 2:
+        langname = "{}   ".format(langname)
+    if len(l_missing_keys) == 0:
+        if len(l_brackets_missmatch_keys) == 0:
+            print("{} - OK".format(langname))
+            return True
+        else:
+            print("{} - FAIL - Brackets Missmatch in Keys: {}".format(langname,
+                    l_brackets_missmatch_keys))
+            return False
     else:
-        print("{} is missing these keys: {}".format(langname, missing))
+        print("{} - FAIL - Missing Keys: {}".format(langname, l_missing_keys))
         return False
 
 ###############################################################################
@@ -45,6 +57,7 @@ def main():
                 print("{} is not valid json".format(lang))
     if errs:
         exit(1)
+    exit(0)
 
 
 if __name__ == '__main__':
