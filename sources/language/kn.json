@@ -213,7 +213,7 @@
         "ಪ್ರಸ್ತುತ ಬಾಟ್ ಆವೃತ್ತಿ (Version):\n{}",
 
     "ABOUT_MSG":
-        "ಈ ಬಾಟ್ ಉಚಿತ ಸಾಫ್ಟ್‌ವೇರ್ ಮತ್ತು GNU-GPL ಪರವಾನಗಿ ಅಡಿಯಲ್ಲಿ ಮುಕ್ತ ಮೂಲವಾಗಿದೆ (under the GNU-GPL license).\n\nಬೋಟ್ ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ್ದು {}. ನನಗೆ ಕಾಫಿ ಖರೀದಿಸಿ:\n{}",
+        "ಈ ಬೋಟ್ ಉಚಿತ ಸಾಫ್ಟ್‌ವೇರ್ ಆಗಿದೆ ಮತ್ತು ಇದು GNU-GPL ಪರವಾನಗಿ ಅಡಿಯಲ್ಲಿ ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ GNU-GPL.\n\nಪರವಾನಗಿ ಅಡಿಯಲ್ಲಿದೆ {}.\n\nಬೋಟ್ ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ್ದು {}. ನನಗೆ ಕಾಫಿ ಖರೀದಿಸಿ:\n{}",
 
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
