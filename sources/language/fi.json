@@ -13,46 +13,46 @@
         "Lista komennoista:\n————————————————\n/start - Näyttää alustavat tiedot botista.\n\n/help - Näyttää ohjeen.\n\n/commands - Näyttää tämän viestin. Kertoo komennoista ja niiden käytöstä.\n\n/language - Botin kielen vaihtaminen.\n\n/time - Määrittää captchan ratkaisun aikarajan.\n\n/difficulty - Määrittää captchan vaikeustason (1:stä 5:teen).\n\n/captcha_mode - Vaihtaa captcha-tilan (nums: numerot, hex: numerot ja kirjaimet A-F, ascii: numerot ja kirjaimet A-Z, math: matemaattinen yhtälö, poll: mukautettu ja määritettävä kysely, button: vain painike).\n\n/captcha_poll - Määrittää mukautetun kyselyn kysymyksen ja vastausvaihtoehdot poll-tilan captchaan.\n\n/welcome_msg - Määrittää captchan ratkaisun jälkeisen mukautetun tervetuloviestin.\n\n/restrict_non_text - Käyttäjän ratkaistessa captchan, toimeenpane rajoitus estääksesi muun-kuin-tekstin lähettäminen (kuvat, videot, audio) 1 päiväksi (tai ikuisesti, käyttämällä avainsanaa \"forever\").\n\n/add_ignore - Älä kysy huomiotta jätetyltä käyttäjältä captchaa.\n\n/remove_ignore - Lopeta käyttäjän huomiotta jättäminen.\n\n/ignore_list - lista huomioitta jätettyjen käyttäjien ID:istä.\n\n/remove_solve_kick_msg - Määritä poistetaanko potkimis/bannaus viestit automaattisesti hetken kuluttua.\n\n/remove_welcome_msg - Määritä poistetaanko tervetuloviesti hetken kuluttua.\n\n/url_disable - Kiellä ryhmän jäseniä lähettämästä viestejä, jotka sisältävät linkkejä verkkosivuille (URL-osoitteita).\n\n/url_enable - Salli ryhmän jäsenten lähettää viestejä, jotka sisältävät linkkejä verkkosivuille (URL-osoitteita).\n\n/remove_all_msg_kick_off - Aseta botti olemaan poistamatta viestejä käyttäjiltä, jotka eivät ratkaisseet captchaa.\n\n/remove_all_msg_kick_on - Aseta botti poistamaan kaikki viestit käyttäjiltä, jotka eivät ratkaisseet captchaa.\n\n/allowgroup - Salli ryhmän käyttää Bottia (jos botti on Yksityinen).\n\n/enable - Ota käyttöön ryhmän captcha-suojaus.\n\n/disable - Poista käytöstä ryhmän captcha-suojaus.\n\n/checkcfg - Hae ryhmän nykyiset captcha-asetukset.\n\n/chatid - Näytä nykyisen ryhmän ChatID.\n\n/connect - Yhdistä ryhmään hallitaksesi sitä yksityisviestillä.\n\n/disconnect - Katkaise yhteys ryhmään, jota hallitaan botin kanssa käytävästä yksityiskeskustelusta.\n\n/version - Näytä Botin versio.\n\n/about - Näytä tietoa botista.",
 
     "CMD_NOT_ALLOW":
-        "Only an Admin can use this command.",
+        "Vain Ylläpitäjä voi käyttää tätä komentoa.",
 
     "LANG_CHANGE":
-        "Language successfully changed.",
+        "Kieli vaihdettu onnistuneesti.",
 
     "LANG_SAME":
-        "I'm already in that language.\n\nSupported languages:\n{}",
+        "Olen jo valmiiksi tuonkielinen.\n\nTuetut kielet:\n{}",
 
     "LANG_BAD_LANG":
-        "Invalid language provided.\n\nSupported languages:\n{}",
+        "Epäkelvollinen kieli määritetty.\n\nTuetut kielet:\n{}",
 
     "LANG_NOT_ARG":
-        "The command needs a language to set.\n\nExamples:\n{}",
+        "Komento vaatii asetettavan kielen.\n\nEsimerkkejä:\n{}",
 
     "TIME_CHANGE":
-        "Time to solve the captcha successfully changed to {}.",
+        "Captchan aikarajaksi asetettu onnistuneesti {}.",
 
     "TIME_OUT_RANGE":
-        "Invalid captcha time, it needs to be in range 10 sec to {} min.",
+        "Epäkelvollinen captchan aika. Sen tulee olla välillä 10 sec - {} min.",
 
     "TIME_NOT_NUM":
-        "The provided time is not an integer number.",
+        "Määritetty aika ei ole kokonaisluku.",
 
     "TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/time 30 sec\n/time 5 min\n/time 1 min",
+        "Komento vaatii asetettavan aika-arvon.\n\nEsimerkkejä:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "DIFFICULTY_CHANGE":
-        "Captcha difficulty successfully changed to level {}.",
+        "Captchan vaikeustasoksi asetettu onnistuneesti {}.",
 
     "DIFFICULTY_NOT_NUM":
-        "The provided captcha difficulty is not a number.",
+        "Annettu captchan vaikeustaso ei ole numero.",
 
     "DIFFICULTY_NOT_ARG":
-        "The command needs a difficulty level to set (from 1 to 5). Has no effect in \"button\" mode.\n\nExamples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "Komento vaatii asetettavan vaikeustason (numero 1:stä 5:teen). Tämä ei vaikuta \"button\" -tilaan.\n\nEsimerkkejä:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
-        "Captcha mode successfully changed to \"{}\".",
+        "Captcha-tilaksi onnistuneesti asetettu \"{}\".",
 
     "CAPTCHA_MODE_INVALID":
-        "Invalid captcha mode. Supported modes are: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\nExample:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+        "Epäkelvollinen captcha-tila. Tuetut tilat ovat: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" ja \"random\".\n\nEsimerkki:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
         "The command needs a mode to set. Available modes are:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
