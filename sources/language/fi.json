@@ -55,52 +55,52 @@
         "Epäkelvollinen captcha-tila. Tuetut tilat ovat: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" ja \"random\".\n\nEsimerkki:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CAPTCHA_MODE_NOT_ARG":
-        "The command needs a mode to set. Available modes are:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\nExamples:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+        "Komento vaatii asetettavan tilan. Saatavilla olevat tilat ovat:\n\n- Numeeriset Captchat (\"nums\").\n- Heksadesimaaliset Captchat, numerot ja kirjaimet A-F (\"hex\").\n- Numerot ja kirjaimet A-Z Captchoissa (\"ascii\").\n- Matemaattisen yhtälön ratkaisucaptchat (\"math\").\n- Vain-näpistä painamisen haasteet (\"button\").\n- Mukautetut kyselyhaasteet (\"poll\").\n- Sattumanvarainen haaste (\"random\").\n\nEsimerkit:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "WELCOME_MSG_SET":
-        "Welcome message successfully configured.",
+        "Tervetuloviesti määritetty onnistuneesti.",
 
     "WELCOME_MSG_UNSET":
-        "Welcome message disabled.",
+        "Tervetuloviesti poistettu käytöstä.",
 
     "WELCOME_MSG_SET_NOT_ARG":
-        "Place the welcome message after the command.\n\nExample:\n/welcome_msg Hi $user, welcome to the group and remember to be respectful with other users.\n\nDisable the message:\n/welcome_msg disable",
+        "Aseta tervetuloviesti komennon jälkeen.\n\nEsimerkki:\n/welcome_msg Hei $user, Tervetuloa ryhmään, muistathan olla kunnioittava muita käyttäjiä kohtaan.\n\nPoista viesti käytöstä:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Restriction to send non-text messages for new users enabled. I'm gonna remove recently joined user messages that are not text messages.",
+        "Rajoitus uusien käyttäjien ei-teksti-sisällöille asetettu. Tulen poistamaan vastikään liittyneiden käyttäjien viestit, mikäli ne eivät ole vain tekstiä.",
 
     "RESTRICT_NON_TEXT_MSG_DISABLED":
-        "Restriction to send non-text messages for new users disabled.",
+        "Rajoitus uusien käyttäjien ei-teksti-sisältöä kohtaan on poistettu.",
 
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Set if you want to enable or disable recently joined user restrictions to send non-text messages (Don't allow a user to send media or other messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExamples:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+        "Ota tai poista käytöstä vastikään liittyneiden käyttäjien teksti-sisällön rajoitukset (älä salli käyttäjän lähettää mediaa tai muuta kuin tekstiä Ylläpitäjät voivat manuaalisesti antaa yksittäisille käyttäjille oikeuden tehdä niin tulevaisuudessa).\n\nEsimerkit:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
 
     "IGNORE_LIST_ADD_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter",
+        "Asetathan käyttäjän ID:n tai aliaksen komennon jälkeen.\n\nEsimerkki:\n/add_ignore 1234567890\n/add_ignore @peter",
 
     "IGNORE_LIST_ADD_DUPLICATED":
-        "This ID/alias is already in ignore list.",
+        "Tuo ID/alias on jo huomiottajättämislistalla.",
 
     "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
-        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.",
+        "Valitettavasti olet saavuttanut huomiottajättämislistan enimmäispituuden. Poista joku lisätäksesi lisää.",
 
     "IGNORE_LIST_ADD_INVALID":
-        "This ID/alias is invalid.",
+        "Tämä ID/alias on epäkelvollinen.",
 
     "IGNORE_LIST_ADD_SUCCESS":
-        "The ID/alias has been added successfully!",
+        "ID/alias lisätty onnistuneesti!",
 
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+        "Asetathan käyttäjän ID:n tai aliaksen komennon jälkeen.\n\nEsimerkki:\n/remove_ignore 1234567890\n/remove_ignore @peter",
 
     "IGNORE_LIST_REMOVE_SUCCESS":
-        "The ID/alias has been removed successfully!",
+        "ID/alias poistettu onnistuneesti!",
 
     "IGNORE_LIST_REMOVE_NOT_IN_LIST":
-        "The ID/alias is not in ignore list, nothing was done.",
+        "ID/alias ei ole huomioittajättämislistalla, mitään ei tehty.",
 
     "IGNORE_LIST_EMPTY":
-        "Ignore list of the chat is empty.",
+        "Keskustelun huomiottajättämislista on tyhjä.",
 
     "NEW_USER_IMG_CAPTION":
         "Hello {}, welcome to {}. Please write a message with the numbers and/or letters that appear in this image to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
