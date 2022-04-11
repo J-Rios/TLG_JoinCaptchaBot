@@ -103,46 +103,46 @@
         "Keskustelun huomiottajättämislista on tyhjä.",
 
     "NEW_USER_IMG_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the numbers and/or letters that appear in this image to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
+        "Hei {}, tervetuloa ryhmään {}. Kirjoitathan tässä kuvassa olevat numerot ja/tai kirjaimet vahvistaaksesi ihmisyytesi. Jollet ratkaise tätä captchaa {}, tulet automaattisesti poistetuksi ryhmästä.",
 
     "NEW_USER_MATH_CAPTION":
-        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
+        "Hei {}, tervetuloa ryhmään {}. Kirjoitathan tässä kuvassa olevan matemaattisen yhtälön ratkaisun vahvistaaksesi ihmisyytesi. Jollet ratkaise tätä captchaa {}, tulet automaattisesti poistetuksi ryhmästä.",
 
     "NEW_USER_BUTTON_MODE":
-        "Hello {}, welcome to {}. Please press the button below to verify that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+        "Hei {}, tervetuloa ryhmään {}. Painathan alla olevaa painiketta vahvistaaksesi ihmisyytesi. Jollet tee tätä ajassa {}, tulet automaattisesti poistetuksi ryhmästä..",
 
     "CAPTCHA_SOLVED":
-        "Captcha solved, user verified.\nWelcome to the group, {}",
+        "Captcha ratkaistu, käyttäjä vahvistettu.\nTervetuloa ryhmään, {}",
 
     "CAPTCHA_INCORRECT_0":
-        "That is not the correct code. Try again...",
+        "Tuo ei ole oikea koodi. Yritä uudelleen...",
 
     "CAPTCHA_INCORRECT_1":
-        "That is not the correct number. Check closely, the captcha has 4 numbers...",
+        "Tuo ei ole oikea koodi. Katso tarkemmin, captchassa on neljä numeroa...",
 
     "CAPTCHA_INCORRECT_MATH":
-        "That is not the correct number. Check closely, you need to solve the math equation...",
+        "Tuo ei ollut oikea numero. Katso tarkemmin, sinun tulee ratkaista matemaattinen yhtälö...",
 
     "NEW_USER_KICK":
-        "{} has not completed the captcha in time. \"User\" was kicked out.",
+        "{} ei ratkaissut captchaa ajoissa. \"Käyttäjä\" poistettiin ryhmästä.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
-        "I tried to kick out \"User\" {}, but I don't have administration rights to kick out users from the group.",
+        "Yritin poistaa \"käyttäjän\" {} ryhmästä, mutta minulla ei ole ylläpito-oikeutta käyttäjien poistamiseksi.",
 
     "NEW_USER_KICK_NOT_IN_CHAT":
-        "I tried to kick out \"User\" {}, but is not in the group any more (has left the group or has been kicked out by an Admin).",
+        "Yritin poistaa \"käyttäjän\" {}, mutta se ei ole enää huoneessa (on poistunut tai Ylläpitäjä on poistanut sen).",
 
     "BOT_CANT_KICK":
-        "I tried to kick out \"User\" {}, but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Yritin poistaa \"Käyttäjän\" {}, mutta odottamattomasta ongelmasta johtuen (ehkäpä verkkoyhteyteen/palvelimeen liittyen), en voi tehdä sitä.",
 
     "CANT_DEL_MSG":
-        "I tried to delete this message, but I don't have the administration rights to remove messages that have not been sent by me.",
+        "Yritin poistaa tämän viestin, mutta minulla ei ole ylläpito-oikeutta poistaakseni muiden, kuin itseni, lähettämiä viestejä.",
 
     "NEW_USER_BAN":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\".",
+        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. \"Käyttäjälle\" annettiin porttikielto. Jotta hän pääsee takaisin, ylläpitäjän tulee käsin poistaa tämän \"käyttäjän\" rajoitukset.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tride to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta käyttäjä ei enää ole ryhmässä (poistunut ryhmästä tai tullut Ylläpitäjän poistamaksi/porttikieltämäksi).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
         "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
