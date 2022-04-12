@@ -261,6 +261,7 @@ CONST = {
         "\nDutch / Nederlands\n/language nl\n" \
         "\nEnglish / English\n/language en\n" \
         "\nEsperanto\n/language eo\n" \
+        "\nFinnish / Suomi\n/language fi\n" \
         "\nFrench / Francais\n/language fr\n" \
         "\nGalician / Galego\n/language gl\n" \
         "\nGerman / Deutsch\n/language de\n" \
@@ -304,6 +305,7 @@ TEXT = {
     "ES": {}, # Spanish
     "EU": {}, # Basque
     "FA": {}, # Persian
+    "FI": {}, # Finnish
     "FR": {}, # French
     "GL": {}, # Galician
     "HE": {}, # Hebrew
