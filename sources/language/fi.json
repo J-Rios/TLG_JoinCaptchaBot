@@ -232,53 +232,53 @@
         "Määritä Captcha-kyselyn Kysymys ja vastausvaihtoehdot\n————————————————\nKysymys ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehto ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehtojen enimmäismäärä on {}.\n————————————————\nAseta Kyselyn kysymys:\n/captcha_poll question Haluatko varmasti liittyä tähän ryhmään?\n\nAseta vastausvaihtoehto 1:\n/captcha_poll option 1 Ei, en halua liittyä ryhmään.\n\nAseta vastausvaihtoehto 2:\n/captcha_poll option 2 Toki, olen ihminen ja haluan liittyä ryhmään.\n\nAseta vastausvaihtoehto 3:\n/captcha_poll option 3 Kuka olen ja mitä teen?\n\nPoista vastausvaihtoehto 2:\n/captcha_poll option 2 remove\n\nAseta oikeaksi vastausvaihtoehdoksi 2:\n/captcha_poll correct_option 2\n\nAseta Captcha-tilaksi kysely:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
-        "Captcha Poll Question successfully configured.",
+        "Captcha-Kyselyn Kysymys määritetty onnistuneesti.",
 
     "POLL_OPTION_CONFIGURED":
-        "Captcha Poll Option {} successfully configured.",
+        "Captcha-Kyselyn Vastausvaihtoehto {} määritetty onnistuneesti.",
 
     "POLL_CORRECT_OPTION_CONFIGURED":
-        "Captcha Poll Correct Option successfully configured to option number {}.",
+        "Captcha-Kyselyn Oikeaksi Vastausvaihtoehdoksi onnistuneesti määritetty vaihtoehto {}.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Kyselyn vastausvaihtoehtoa numero {} ei ole olemassa, määritäthän vastausvaihtoehdon ensin.\n\nEsimerkki:\n/captcha_poll question Onko 1+2 yhtäsuuri kuin 5?\n\n/captcha_poll option 1 Kyllä\n\n/captcha_poll option 2 Ei\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Uusi käyttäjä on saapunut, mutta Captcha-kyselyä ei ole määritetty kokonaan.\n\nKyselyn kysymys, oikea vastaus ja vähintään kaksi vastausvaihtoehtoa täytyy määrittää. Määritä se komennolla /captcha_poll.\n\nEsimerkki:\n/captcha_poll question Onko 1+2 yhtäsuuri kuin 5?\n\n/captcha_poll option 1 Kyllä\n\n/captcha_poll option 2 Ei\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "Määritettävän ryhmäkeskustelun ID tulee syöttää (käytä /chatid -komentoa haluamasi ryhmän sisällä saadaksesi tietää sen).\n\nEsimerkki:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "Vain tuon ryhmän Ylläpitäjä voi määrittää sen.",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "Yhdistetty ryhmään {}. Voit nyt määrittää sen asetukset yksityisviestillä.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "Et ole muodostanut yhteyttä.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "Yhteys ryhmään {} katkaistu.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "Virheellinen ryhmäkeskustelun ID.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "Ryhmän asetukset:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat.",
+        "Tätä komentoa ei voi käyttää yksityisviestillä.",
 
     "CMD_NEEDS_CONNECTION":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "Tätä komentoa ei voi käyttää yksityisviestillä, ellet ensin muodosta yhteyttä ryhmään (/connect -komennolla).",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat).",
+        "Tätä komentoa ei voida käyttää ryhmässä (käytä sitä yksityiskeskustelussa Botin kanssa).",
 
     "RM_ALL_MSGS_AFTER_KICK_ON":
-        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+        "Asetusta muutettu, kaikki viestit captchaa-ratkaisemattomilta käyttäjiltä poistetaan.",
 
     "RM_ALL_MSGS_AFTER_KICK_OFF":
-        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed."
+        "Asetusta muutettu, viestejä captchaa-ratkaisemattomilta käyttäjiltä ei tulla poistamaan."
 }
