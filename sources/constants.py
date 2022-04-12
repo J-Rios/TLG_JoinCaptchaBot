@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/02/2022
+    12/04/2022
 Version:
-    1.25.2
+    1.25.3
 '''
 
 ###############################################################################
@@ -265,6 +265,7 @@ CONST = {
         "\nGalician / Galego\n/language gl\n" \
         "\nGerman / Deutsch\n/language de\n" \
         "\nGreek / Ελληνικά\n/language el\n" \
+        "\nHebrew / Hebrew\n/language he\n" \
         "\nIndonesian / Indonesia\n/language id\n" \
         "\nItalian / Italiano\n/language it\n" \
         "\nKannada / Kannada\n/language kn\n" \
@@ -288,9 +289,8 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.25.2 (07/02/2022)"
+    "VERSION": "1.25.3 (12/04/2022)"
 }
-
 
 # Supported languages list
 TEXT = {
@@ -306,6 +306,7 @@ TEXT = {
     "FA": {}, # Persian
     "FR": {}, # French
     "GL": {}, # Galician
+    "HE": {}, # Hebrew
     "ID": {}, # Indonesian
     "IT": {}, # Italian
     "KN": {}, # Kannada
