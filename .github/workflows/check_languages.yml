@@ -1,0 +1,22 @@
+name: Check Languages
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check_languages:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install python3
+    - name: Build
+      run: |
+        cd sources
+        python3 langcheck.py
