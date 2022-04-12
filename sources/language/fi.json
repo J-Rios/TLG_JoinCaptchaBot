@@ -145,91 +145,91 @@
         "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta käyttäjä ei enää ole ryhmässä (poistunut ryhmästä tai tullut Ylläpitäjän poistamaksi/porttikieltämäksi).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta minulla ei ole ylläpito-oikeutta antaa käyttäjille porttikieltoja ryhmään.",
 
     "BOT_CANT_BAN":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta odottamattomasta ongelmasta johtuen (ehkäpä verkkoyhteyteen/palvelimeen liittyen), en voi tehdä sitä",
 
     "SPAM_DETECTED_RM":
-        "Detected a message with an URL (or alias) from {}, who has not solved the captcha yet. The message has been removed for the sake of keeping Telegram free of Spam :)",
+        "Havaittiin URLin (tai aliaksen) sisältävä viesti \"käyttäjältä\" {}, joka ei ole vielä ratkaissut captchaa. Viesti poistettiin Telegrammin spämmivapaana vyöhykkeenä pitämisen vuoksi :)",
 
     "SPAM_DETECTED_NOT_RM":
-        "Message with an URL (or an alias) detected from {}, who has not solved the captcha yet. I tried to remove the Spam message, but I don't have administration rights to remove messages that have not been sent by me.",
+        "Havaittiin URLin (tai aliaksen) sisältävä viesti \"käyttäjältä\" {}, joka ei ole vielä ratkaissut captchaa. Yritin poistaa spämmiviestin, mutta minulla ei ole ylläpito-oikeutta poistaa muiden käyttäjien lähettämiä viestejä.",
 
     "NOT_TEXT_MSG_ALLOWED":
-        "Removed a non-text message (image, audio, file...) from {}, for the sake of keeping Telegram free of Spam.\n\nYou can send non-text messages after you have solved the captcha.",
+        "Poistettiin mediaviesti (kuva, audio, tiedosto...) \"käyttäjältä\" {}, Telegrammin spämmivapaana vyöhykkeenä pitämisen vuoksi.\n\nVoit lähettää mediaviestejä captchan ratkaisemisen jälkeen.",
 
     "RM_SOLVE_KICK_MSG":
-        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+        "Määritä poistetaanko potkimis-/porttikieltoviestit automaattisesti hetken kuluttua.\n\nEsimerkit:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
 
     "RM_SOLVE_KICK_MSG_YES":
-        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+        "Asetusmuutos, ratkaisu-, potkimis/porttikieltoviestit poistetaan automaattisesti hetken kuluttua.",
 
     "RM_SOLVE_KICK_MSG_NO":
-        "Configuration change, solve and kick/ban messages won't be removed.",
+        "Asetusmuutos, ratkaisu-, potkimis/porttikieltoviestejä ei poisteta.",
 
     "RM_WELCOME_MSG":
-        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+        "Määritä poistetaanko tervetuloviestit automaattisesti hetken kuluttua.\n\nEsimerkit:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
 
     "RM_WELCOME_MSG_YES":
-        "Configuration change, welcome messages will be automatically removed after a while.",
+        "Asetusmuutos, tervetuloviestit poistetaan hetken kuluttua",
 
     "RM_WELCOME_MSG_NO":
-        "Configuration change, welcome messages won't be removed.",
+        "Asetusmuutos, tervetuloaviestejä ei poisteta",
 
     "OTHER_CAPTCHA_BTN_TEXT":
-        "Other Captcha",
+        "Muu Captcha",
 
     "PASS_BTN_TEXT":
-        "I'm not a Bot",
+        "En ole Botti",
 
     "URL_MSG_NOT_ALLOWED_DETECTED":
-        "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+        "Havaittiin ja poistettiin URLin/linkin sisältävä viesti \"käyttäjältä\" {}.\n\nTämä ryhmä ei salli URLeja viesteissä (Ylläpitäjän täytyy määrittää botti viesteissä olevien URLlien sallimiseksi).",
 
     "URL_ENABLE":
-        "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
+        "Ok, käyttäjät voivat nyt lähettää URLeja ja linkkejä tähän ryhmään. Kiellä URLien lähettäminen uudelleen komennolla /url_disable.",
 
     "URL_DISABLE":
-        "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
+        "Ok, käyttäjät eivät enää saa lähettää URLeja ja linkkejä tähän ryhmään. Salli URLien lähettäminen uudelleen komennolla /url_enable.",
 
     "CONFIG_ALREADY_SET":
-        "This configuration is already set/enabled.",
+        "Määritys on jo asetettu/käyttöönotettu.",
 
     "CONFIG_ALREADY_UNSET":
-        "This configuration is already unset/disabled.",
+        "Määritys on jo asettamaton/poiskäytöstä.",
 
     "ENABLE":
-        "Captcha protection enabled. Disable it with /disable command.",
+        "Captcha-suojaus otettu käyttöön. Poista se käytöstä komennolla /disable.",
 
     "DISABLE":
-        "Captcha protection disabled. Enable it with /enable command.",
+        "Captcha-suojaus poistettu käytöstä. Ota se uudelleen käyttöön komennolla /enable.",
 
     "ALREADY_ENABLE":
-        "The captcha protection is already enabled.",
+        "Captcha-suojaus on jo käytössä.",
 
     "ALREADY_DISABLE":
-        "The captcha protection is already disabled.",
+        "Captcha-suojaus on jo poissa käytöstä.",
 
     "CAN_NOT_GET_ADMINS":
-        "Can't use this command in the current chat.",
+        "Tätä komentoa ei voi käyttää nykyisessä keskustelussa.",
 
     "VERSION":
-        "Current Bot version:\n{}",
+        "Botin tämänhetkinen versio:\n{}",
 
     "ABOUT_MSG":
-        "This Bot is free software and open-sourced under the GNU-GPL license.\n\nBot Developed by {}.\n\nYou can check the code here:\n{}\n\nDo you like my work? Buy me a coffee:\n{}",
+        "Tämä botti on GNU-GPL -lisenssin alainen vapaan ja avoimen lähdekoodin sovellus.\n\nBotin on kehittänyt {}.\n\nVoit lukea lähdekoodin täältä:\n{}\n\nPidätkö työstäni? Osta minulle kahvikupponen:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+        "Hei {}, tervetuloa ryhmään {}. Ratkaisethan allaolevan kyselyn varmistaaksesi, ettet ole botti. Ellet tee tätä ajassa {}, tulet automaattisesti poistetuksi ryhmästä.",
 
     "CAPTCHA_POLL_FAIL_0":
-        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+        "Captcha-kysely meni pieleen, {} valitsi väärän vastauksen. Sinut poistetaan 10 sekuntissa, yritäthän liittyä ryhmään uudelleen...",
 
     "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
+        "Captcha-kysely meni pieleen, {} valitsi väärän vastauksen. \"Käyttäjä\" poistettiin.",
 
     "CAPTCHA_POLL_USAGE":
-        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+        "Määritä Captcha-kyselyn Kysymys ja vastausvaihtoehdot\n————————————————\nKysymys ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehto ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehtojen enimmäismäärä on {}.\n————————————————\nAseta Kyselyn kysymys:\n/captcha_poll question Haluatko varmasti liittyä tähän ryhmään?\n\nAseta vastausvaihtoehto 1:\n/captcha_poll option 1 Ei, en halua liittyä ryhmään.\n\nAseta vastausvaihtoehto 2:\n/captcha_poll option 2 Toki, olen ihminen ja haluan liittyä ryhmään.\n\nAseta vastausvaihtoehto 3:\n/captcha_poll option 3 Kuka olen ja mitä teen?\n\nPoista vastausvaihtoehto 2:\n/captcha_poll option 2 remove\n\nAseta oikeaksi vastausvaihtoehdoksi 2:\n/captcha_poll correct_option 2\n\nAseta Captcha-tilaksi kysely:\n/captcha_mode poll",
 
     "POLL_QUESTION_CONFIGURED":
         "Captcha Poll Question successfully configured.",
