@@ -138,7 +138,7 @@
         "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\".",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tride to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
         "Warning: This is the fifth time that {} has tried to join the group and failed to solve the captcha. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
