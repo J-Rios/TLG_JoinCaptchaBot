@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/02/2022
+    08/05/2022
 Version:
-    1.25.2
+    1.26.0
 '''
 
 ###############################################################################
@@ -179,6 +179,7 @@ def get_default_config_data():
         ("Poll_A", []),
         ("Poll_C_A", 0),
         ("Welcome_Msg", "-"),
+        ("Welcome_Time", CONST["T_DEL_WELCOME_MSG"]),
         ("Ignore_List", [])
     ])
     # Feed Captcha Poll Options with empty answers for expected max num
@@ -1163,8 +1164,9 @@ def msg_nocmd(update: Update, context: CallbackContext):
             # Send the message as Markdown
             rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
             if rm_welcome_msg:
+                welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
                 sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
-                        CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+                        welcome_msg_time, parse_mode="MARKDOWN")
             else:
                 sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
@@ -1271,8 +1273,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
         # Check for custom welcome message and send it
         if welcome_msg != "-":
             if rm_welcome_msg:
+                welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
                 sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
-                        CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+                        welcome_msg_time, parse_mode="MARKDOWN")
             else:
                 sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
@@ -1474,8 +1477,9 @@ def button_request_pass(bot, query):
         # Send the message as Markdown
         rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
         if rm_welcome_msg:
+            welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
             sent_result = tlg_send_selfdestruct_msg_in(bot, chat_id, welcome_msg,
-                    CONST["T_DEL_WELCOME_MSG"], parse_mode="MARKDOWN")
+                    welcome_msg_time, parse_mode="MARKDOWN")
         else:
             sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
         if sent_result is None:
@@ -1965,6 +1969,80 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
         bot_msg = TEXT[lang]["WELCOME_MSG_SET"]
     save_config_property(group_id, "Welcome_Msg", welcome_msg)
     tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg)
+
+
+def cmd_welcome_msg_time(update: Update, context: CallbackContext):
+    '''Command /welcome_msg_time message handler'''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        if user_id not in connections:
+            tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = connections[user_id]["group_id"]
+    else:
+        # Ignore if not requested by a group Admin
+        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        if (is_admin is None) or (is_admin == False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+        # Set user command message to be deleted by Bot in default time
+        tlg_msg_to_selfdestruct(update_msg)
+    # Check if no argument was provided with the command
+    if len(args) == 0:
+        tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                TEXT[lang]["WELCOME_TIME_NOT_ARG"])
+        return
+    # Check if provided time argument is not a number
+    if not is_int(args[0]):
+        tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                TEXT[lang]["TIME_NOT_NUM"])
+        return
+    # Get time arguments
+    new_time = int(args[0])
+    min_sec = "min"
+    if len(args) > 1:
+        min_sec = args[1].lower()
+    # Check if time format is not minutes or seconds
+    # Convert time value to seconds if min format
+    if min_sec in ["m", "min", "mins", "minutes"]:
+        min_sec = "min"
+        new_time_str = "{} min".format(new_time)
+        new_time = new_time * CONST["T_SECONDS_IN_MIN"]
+    elif min_sec in ["s", "sec", "secs", "seconds"]:
+        min_sec = "sec"
+        new_time_str = "{} sec".format(new_time)
+    else:
+        tlg_send_msg_type_chat(bot, chat_type, chat_id,
+                TEXT[lang]["WELCOME_TIME_NOT_ARG"])
+        return
+    # Check if time value is out of limits
+    if new_time < 10: # Lees than 10s
+        msg_text = TEXT[lang]["TIME_OUT_RANGE"].format( \
+                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+        tlg_send_msg_type_chat(bot, chat_type, chat_id, msg_text)
+        return
+    if new_time > CONST["MAX_CONFIG_CAPTCHA_TIME"] * CONST["T_SECONDS_IN_MIN"]:
+        msg_text = TEXT[lang]["TIME_OUT_RANGE"].format( \
+                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+        tlg_send_msg_type_chat(bot, chat_type, chat_id, msg_text)
+        return
+    # Set the new captcha time
+    save_config_property(group_id, "Welcome_Time", new_time)
+    msg_text = TEXT[lang]["WELCOME_TIME_CHANGE"].format(new_time_str)
+    tlg_send_msg_type_chat(bot, chat_type, chat_id, msg_text)
 
 
 def cmd_captcha_poll(update: Update, context: CallbackContext):
@@ -3058,6 +3136,7 @@ def main():
     dp.add_handler(CommandHandler("difficulty", cmd_difficulty, pass_args=True))
     dp.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
     dp.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
+    dp.add_handler(CommandHandler("welcome_msg_time", cmd_welcome_msg_time, pass_args=True))
     dp.add_handler(CommandHandler("captcha_poll", cmd_captcha_poll, pass_args=True))
     dp.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text, pass_args=True))
     dp.add_handler(CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
