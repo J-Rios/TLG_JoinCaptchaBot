@@ -42,7 +42,7 @@ def is_valid(langname, lang, englang):
 def main():
     with open(os.path.join(CONST["LANG_DIR"], "en.json")) as enfile:
         en = json.load(enfile)
-    errs = False
+    errs = ""
     for lang in os.listdir(CONST["LANG_DIR"]):
         if not lang.endswith('.json'):
             continue
@@ -51,12 +51,12 @@ def main():
         with open(os.path.join(CONST["LANG_DIR"], lang)) as langfile:
             try:
                 if not is_valid(lang.split('.')[0], json.load(langfile), en):
-                    errs = True
+                    errs = "Not valid"
             except json.decoder.JSONDecodeError:
-                errs = True
+                errs = "JSON Decoding error"
                 print("{} is not valid json".format(lang))
-    if errs:
-        exit(1)
+    if errs != "":
+        sys.exit(errs)
     exit(0)
 
 
