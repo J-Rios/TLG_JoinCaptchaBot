@@ -27,14 +27,12 @@ def is_valid(langname, lang, englang):
     if len(l_missing_keys) == 0:
         if len(l_brackets_missmatch_keys) == 0:
             print("{} - OK".format(langname))
-            return True
+            return "Success"
         else:
-            print("{} - FAIL - Brackets Missmatch in Keys: {}".format(langname,
-                    l_brackets_missmatch_keys))
-            return False
+            return ""{} - FAIL - Brackets Missmatch in Keys: {}".format(langname,
+                    l_brackets_missmatch_keys)"
     else:
-        print("{} - FAIL - Missing Keys: {}".format(langname, l_missing_keys))
-        return False
+        return "{} - FAIL - Missing Keys: {}".format(langname, l_missing_keys)
 
 ###############################################################################
 ### Main Function
@@ -50,8 +48,9 @@ def main():
             continue
         with open(os.path.join(CONST["LANG_DIR"], lang)) as langfile:
             try:
-                if not is_valid(lang.split('.')[0], json.load(langfile), en):
-                    errs = "Not valid"
+                valid_or_not = is_valid(lang.split('.')[0], json.load(langfile), en)
+                if valid_or_not != "Success":
+                    errs = valid_or_not
             except json.decoder.JSONDecodeError:
                 errs = "JSON Decoding error"
                 print("{} is not valid json".format(lang))
