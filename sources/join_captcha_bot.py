@@ -611,6 +611,7 @@ def allowed_in_this_group(bot, chat, member_added_by):
                 chat.id, max_usr_group, num_members))
         msg_text = CONST["FREE_LIMIT_REACH"].format(chat.id, max_usr_group+1)
         tlg_send_msg(bot, chat.id, msg_text)
+        sleep(1)
         return False
     return True
 
