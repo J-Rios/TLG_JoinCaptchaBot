@@ -1134,14 +1134,14 @@ def msg_nocmd(update: Update, context: CallbackContext):
         else:
             printts("Message can't be deleted.")
         return
-    # End here if no image captcha mode
-    if captcha_mode not in { "nums", "hex", "ascii", "math" }:
-        return
-    printts("[{}] Received captcha reply from {}: {}".format(chat_id, user_name, msg_text))
     # Check group config regarding if all messages of user must be removed when kick
     rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
     if rm_all_msg:
         new_users[chat_id][user_id]["msg_to_rm_on_kick"].append(msg_id)
+    # End here if no image captcha mode
+    if captcha_mode not in { "nums", "hex", "ascii", "math" }:
+        return
+    printts("[{}] Received captcha reply from {}: {}".format(chat_id, user_name, msg_text))
     # Check if the expected captcha solve number is in the message
     solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
     if solve_num.lower() in msg_text.lower():
@@ -1339,11 +1339,13 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                     tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                 else:
                     tlg_send_msg(bot, chat_id, msg_text)
-        # Remove user from captcha process
-        del new_users[chat_id][user_id]
-        # Remove fail message
+        # Remove fail messages
         if sent_msg_id is not None:
             tlg_delete_msg(bot, chat_id, sent_msg_id)
+        for msg in new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
+            tlg_delete_msg(bot, chat_id, msg)
+        # Remove user from captcha process
+        del new_users[chat_id][user_id]
     printts("[{}] Poll captcha process complete.".format(chat_id))
     printts(" ")
 
@@ -1464,7 +1466,8 @@ def button_request_pass(bot, query):
     # Remove previous join messages
     for msg in new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
-    new_users[chat_id][user_id]["msg_to_rm"].clear()
+    # Remove user from captcha process
+    del new_users[chat_id][user_id]
     # Send message solve message
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
@@ -1472,7 +1475,6 @@ def button_request_pass(bot, query):
         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
     else:
         tlg_send_msg(bot, chat_id, bot_msg)
-    del new_users[chat_id][user_id]
     # Check for custom welcome message and send it
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
     if welcome_msg != "-":
