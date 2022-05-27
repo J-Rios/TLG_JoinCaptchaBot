@@ -1,2 +1,2 @@
-python_telegram_bot==13.5
+python_telegram_bot==13.12
 multicolorcaptcha==1.2.0

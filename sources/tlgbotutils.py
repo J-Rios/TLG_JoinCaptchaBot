@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    21/08/2021
+    27/05/2022
 Version:
-    1.1.1
+    1.1.2
 '''
 
 ###############################################################################
@@ -222,9 +222,9 @@ def tlg_ban_user(bot, chat_id, user_id, timeout=None, until_date=None):
     if member_info_result["member"]["status"] == "kicked":
         ban_result["error"] = "The user was already kicked"
         return ban_result
-    # Kick the user
+    # Ban User
     try:
-        bot.kick_chat_member(chat_id=chat_id, user_id=user_id,
+        bot.ban_chat_member(chat_id=chat_id, user_id=user_id,
             timeout=timeout, until_date=until_date)
     except Exception as e:
         ban_result["error"] = str(e)
@@ -236,19 +236,24 @@ def tlg_kick_user(bot, chat_id, user_id, timeout=None):
     '''Telegram Kick a user of an specified chat'''
     kick_result = dict()
     kick_result["error"] = ""
-    # Ban the user (telegram doesn't have a kick method, so we need first
-    # to ban and then remove ban restrictions of the user)
-    kick_result = tlg_ban_user(bot, chat_id, user_id)
-    # If user was already kicked by another Admin, keep restrictions
-    if (kick_result["error"] == "The user has left the group"):
+    # Get chat member info
+    # Do nothing if user left the group or has been kick/ban by an Admin
+    member_info_result = tlg_get_chat_member(bot, chat_id, user_id)
+    if member_info_result["member"] is None:
+        kick_result["error"] = member_info_result["error"]
         return kick_result
-    if (kick_result["error"] == "The user was already kicked"):
+    if member_info_result["member"]["status"] == "left":
+        kick_result["error"] = "The user has left the group"
         return kick_result
-    # Remove restrictions
+    if member_info_result["member"]["status"] == "kicked":
+        kick_result["error"] = "The user was already kicked"
+        return kick_result
+    # Kick User (remove restrictions with only_if_banned=False make it kick)
     try:
         bot.unban_chat_member(chat_id=chat_id, user_id=user_id,
-            timeout=timeout)
+            timeout=timeout, only_if_banned=False)
     except Exception as e:
+        kick_result["error"] = str(e)
         printts("[{}] {}".format(chat_id, str(e)))
     return kick_result
 
