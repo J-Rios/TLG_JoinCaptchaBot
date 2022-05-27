@@ -12,7 +12,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    08/05/2022
+    27/05/2022
 Version:
     1.26.0
 '''
@@ -643,9 +643,6 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
     elif chat.type in [Chat.GROUP, Chat.SUPERGROUP]:
         # Bot added to group
         if not was_member and is_member:
-            # Check if Group is not allowed to be used by the Bot
-            if not allowed_in_this_group(bot, chat, caused_by_user):
-                tlg_leave_chat(bot, chat.id)
             # Get the language of the Telegram client software the Admin
             # that has added the Bot has, to assume this is the chat language
             # and configure Bot language of this chat
@@ -662,6 +659,10 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
             if chat.username:
                 chat_link = "@{}".format(chat.username)
                 save_config_property(chat.id, "Link", chat_link)
+            # Check if Group is not allowed to be used by the Bot
+            if not allowed_in_this_group(bot, chat, caused_by_user):
+                tlg_leave_chat(bot, chat.id)
+                return
             # Send bot join message
             tlg_send_msg(bot, chat.id, TEXT[admin_language]["START"])
             return
@@ -713,9 +714,6 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     member_added_by = update.chat_member.from_user
     join_user = update.chat_member.new_chat_member.user
     chat_id = chat.id
-    # Check if Group is not allowed to be used by the Bot
-    if not allowed_in_this_group(bot, chat, member_added_by):
-        tlg_leave_chat(bot, chat.id)
     # Get User ID
     join_user_id = join_user.id
     # Get user name
@@ -743,6 +741,10 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if chat_link:
         chat_link = "@{}".format(chat_link)
         save_config_property(chat_id, "Link", chat_link)
+    # Check if Group is not allowed to be used by the Bot
+    if not allowed_in_this_group(bot, chat, member_added_by):
+        tlg_leave_chat(bot, chat.id)
+        return
     # Ignore Admins
     if tlg_user_is_admin(bot, join_user_id, chat_id):
         printts("[{}] User is an administrator.".format(chat_id))
