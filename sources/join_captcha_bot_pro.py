@@ -594,6 +594,7 @@ def allowed_in_this_group(bot, chat, member_added_by):
                 chat_link))
         msg_text = CONST["NOT_ALLOW_GROUP"].format(chat.id)
         tlg_send_msg(bot, chat.id, msg_text)
+        sleep(1)
         return False
     if is_group_in_banned_list(chat.id):
         printts("[{}] Warning: Bot added to banned group".format(chat.id))
