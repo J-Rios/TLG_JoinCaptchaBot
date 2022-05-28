@@ -2886,7 +2886,7 @@ def th_selfdestruct_messages(bot):
     global to_delete_in_time_messages_list
     while not force_exit:
         # Thread sleep for each iteration
-        sleep(0.1)
+        sleep(0.01)
         # Check each Bot sent message
         i = 0
         while i < len(to_delete_in_time_messages_list):
@@ -2896,7 +2896,7 @@ def th_selfdestruct_messages(bot):
             sent_msg = to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
-            if i > 100:
+            if i > 1000:
                 i = 0
                 sleep(0.01)
             # Check if delete time has arrive for this message
@@ -2924,7 +2924,7 @@ def th_time_to_kick_not_verify_users(bot):
     global new_users
     while not force_exit:
         # Thread sleep for each iteration
-        sleep(0.1)
+        sleep(0.01)
         # Get all id from users in captcha process (shallow copy to list)
         users_id = []
         chats_id_list = list(new_users.keys()).copy()
@@ -2937,9 +2937,9 @@ def th_time_to_kick_not_verify_users(bot):
         i = 0
         for user_id in users_id:
             for chat_id in chats_id_list:
-                # Sleep each 100 iterations
+                # Sleep each 1000 iterations
                 i = i + 1
-                if i > 100:
+                if i > 1000:
                     i = 0
                     sleep(0.01)
                 # Check for end thread when iterating if script must exit
