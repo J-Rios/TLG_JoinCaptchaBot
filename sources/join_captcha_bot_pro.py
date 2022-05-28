@@ -313,7 +313,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     sent_msg_data["User_id"] = user_id
     sent_msg_data["Msg_id"] = msg_id
     sent_msg_data["time"] = t0
-    sent_msg_data["delete_time"] = t0 + time_delete_sec
+    sent_msg_data["delete_time"] = time_delete_sec
     to_delete_in_time_messages_list.append(sent_msg_data)
     return True
 
@@ -322,26 +322,6 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
 
 def save_session():
     '''Backup current execution data'''
-    # Update time to kick users
-    for chat_id in new_users:
-        for user_id in new_users[chat_id]:
-            t = time()
-            t_diff = t - new_users[chat_id][user_id]["join_data"]["join_time"]
-            new_timeout = new_users[chat_id][user_id]["join_data"][
-                    "captcha_timeout"] - t_diff
-            new_users[chat_id][user_id]["join_data"]["join_time"] = t
-            new_users[chat_id][user_id]["join_data"]["captcha_timeout"] = \
-                    new_timeout
-    # Update messages delete time before save
-    i = 0
-    while i < len(to_delete_in_time_messages_list):
-        msg = to_delete_in_time_messages_list[i]
-        t = time()
-        t_diff = t - msg["time"]
-        msg["delete_time"] = (msg["delete_time"] - msg["time"]) - t_diff + t
-        to_delete_in_time_messages_list[i]["delete_time"] = msg["delete_time"]
-        to_delete_in_time_messages_list[i]["time"] = t
-        i = i + 1
     # Let's backup to file
     data = {
         "to_delete_in_time_messages_list": to_delete_in_time_messages_list,
@@ -376,15 +356,14 @@ def restore_session():
     # Renew time to kick users
     for chat_id in new_users:
         for user_id in new_users[chat_id]:
-            t0 = time()
+            # Some rand to avoid all requests sent at same time
+            t0 = time() + randint(0, 10)
             new_users[chat_id][user_id]["join_data"]["join_time"] = t0
     # Renew time to remove messages
     i = 0
     while i < len(to_delete_in_time_messages_list):
-        msg = to_delete_in_time_messages_list[i]
-        t0 = time()
-        msg["delete_time"] = (msg["delete_time"] - msg["time"]) + t0
-        to_delete_in_time_messages_list[i]["delete_time"] = msg["delete_time"]
+        # Some rand to avoid all requests sent at same time
+        t0 = time() + randint(0, 10)
         to_delete_in_time_messages_list[i]["time"] = t0
         i = i + 1
     printts("Last session data restored")
@@ -2907,7 +2886,7 @@ def th_selfdestruct_messages(bot):
     global to_delete_in_time_messages_list
     while not force_exit:
         # Thread sleep for each iteration
-        sleep(0.1)
+        sleep(0.01)
         # Check each Bot sent message
         i = 0
         while i < len(to_delete_in_time_messages_list):
@@ -2917,23 +2896,25 @@ def th_selfdestruct_messages(bot):
             sent_msg = to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
-            if i > 100:
+            if i > 1000:
                 i = 0
                 sleep(0.01)
-            # If actual time is equal or more than the expected sent msg delete time
-            if time() >= sent_msg["delete_time"]:
-                printts("[{}] Scheduled deletion time for message: {}".format(
-                        sent_msg["Chat_id"], sent_msg["Msg_id"]))
-                delete_result = tlg_delete_msg(bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
-                # The bot has no privileges to delete messages
-                if delete_result["error"] == "Message can't be deleted":
-                    lang = get_chat_config(sent_msg["Chat_id"], "Language")
-                    sent_result = tlg_send_msg(bot, sent_msg["Chat_id"],
-                            TEXT[lang]["CANT_DEL_MSG"], reply_to_message_id=sent_msg["Msg_id"])
-                    if sent_result["msg"] is not None:
-                        tlg_msg_to_selfdestruct(sent_result["msg"])
-                list_remove_element(to_delete_in_time_messages_list, sent_msg)
-                sleep(0.01)
+            # Check if delete time has arrive for this message
+            if time() - sent_msg["time"] < sent_msg["delete_time"]:
+                continue
+            # Delete message
+            printts("[{}] Scheduled deletion time for message: {}".format(
+                    sent_msg["Chat_id"], sent_msg["Msg_id"]))
+            delete_result = tlg_delete_msg(bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
+            # The bot has no privileges to delete messages
+            if delete_result["error"] == "Message can't be deleted":
+                lang = get_chat_config(sent_msg["Chat_id"], "Language")
+                sent_result = tlg_send_msg(bot, sent_msg["Chat_id"],
+                        TEXT[lang]["CANT_DEL_MSG"], reply_to_message_id=sent_msg["Msg_id"])
+                if sent_result["msg"] is not None:
+                    tlg_msg_to_selfdestruct(sent_result["msg"])
+            list_remove_element(to_delete_in_time_messages_list, sent_msg)
+            sleep(0.01)
 
 ###############################################################################
 ### Handle time to kick users thread
@@ -2943,7 +2924,7 @@ def th_time_to_kick_not_verify_users(bot):
     global new_users
     while not force_exit:
         # Thread sleep for each iteration
-        sleep(0.1)
+        sleep(0.01)
         # Get all id from users in captcha process (shallow copy to list)
         users_id = []
         chats_id_list = list(new_users.keys()).copy()
@@ -2956,9 +2937,9 @@ def th_time_to_kick_not_verify_users(bot):
         i = 0
         for user_id in users_id:
             for chat_id in chats_id_list:
-                # Sleep each 100 iterations
+                # Sleep each 1000 iterations
                 i = i + 1
-                if i > 100:
+                if i > 1000:
                     i = 0
                     sleep(0.01)
                 # Check for end thread when iterating if script must exit
@@ -2972,7 +2953,7 @@ def th_time_to_kick_not_verify_users(bot):
                     captcha_timeout = new_users[chat_id][user_id]["join_data"]["captcha_timeout"]
                     if new_users[chat_id][user_id]["join_data"]["kicked_ban"]:
                         # Remove from new users list the remaining kicked users that have not solve
-                        # the captcha in 1 hour (user ban just happen if a user try to join the group
+                        # the captcha in 10 mins (user ban just happen if a user try to join the group
                         # and fail to solve the captcha 5 times in the past 10 mins)
                         if time() - user_join_time < captcha_timeout + 600:
                             continue
