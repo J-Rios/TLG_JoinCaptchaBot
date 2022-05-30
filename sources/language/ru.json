@@ -27,7 +27,7 @@
         "Время, для решения капчи успешно изменено на {}.",
 
     "WELCOME_TIME_CHANGE":
-        "Time to delete welcome message successfully changed to {}.",
+        "Время удаления приветственного сообщения успешно изменено на {}.",
 
     "TIME_OUT_RANGE":
         "Недопустимое время ввода. Оно должно быть в диапазоне от 10 секунд до {} мин.",
@@ -39,7 +39,7 @@
         "Команде необходимо установить значение времени.\n\nПримеры:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "Команде необходимо установить значение времени для удаления приветственного сообщения.\n\nПримеры:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Сложность капчи успешно изменена на уровень {}.",
