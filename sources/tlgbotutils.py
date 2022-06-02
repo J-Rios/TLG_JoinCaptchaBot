@@ -71,7 +71,7 @@ def tlg_get_chat_members_count(bot, chat_id, timeout=None):
     result["num_members"] = None
     result["error"] = ""
     try:
-        result["num_members"] = bot.get_chat_members_count(chat_id=chat_id,
+        result["num_members"] = bot.get_chat_member_count(chat_id=chat_id,
             timeout=timeout)
     except Exception as e:
         result["error"] = str(e)

@@ -592,6 +592,19 @@ def get_update_user_lang(update_user_data):
         lang = "EN"
     return lang
 
+
+def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
+    '''Check if number send by user solves a num/hex/ascii/math captcha.
+    - For "math", the message must be the exact math equation result number.
+    - For other mode, the message must contains the numbers.'''
+    if captcha_mode == "math":
+        if msg_text == solve_num:
+            return True
+    else:
+        if solve_num.lower() in msg_text.lower():
+            return True
+    return False
+
 ###############################################################################
 ### Received Telegram not-command messages handlers
 
@@ -1123,7 +1136,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
     printts("[{}] Received captcha reply from {}: {}".format(chat_id, user_name, msg_text))
     # Check if the expected captcha solve number is in the message
     solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
-    if solve_num.lower() in msg_text.lower():
+    if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
         # Remove join messages
         printts("[{}] Captcha solved by {}".format(chat_id, user_name))
         for msg in new_users[chat_id][user_id]["msg_to_rm"]:

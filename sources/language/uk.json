@@ -27,7 +27,7 @@
         "Час вирішення капчі успішно змінено до {}.",
 
     "WELCOME_TIME_CHANGE":
-        "Time to delete welcome message successfully changed to {}.",
+        "Час видалення вітального повідомлення успішно змінено на {}.",
 
     "TIME_OUT_RANGE":
         "недійсний час має бути від 10 секунд до {} хв.",
@@ -39,7 +39,7 @@
         "Команді потрібно встановити значення часу.\n\nПриклади:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "Команді потрібно встановити значення часу для видалення вітального повідомлення.\n\nПриклади:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
         "Складність капчі успішно змінено на рівень {}.",
