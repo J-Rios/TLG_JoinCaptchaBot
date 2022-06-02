@@ -123,7 +123,7 @@
         "Das ist nicht die richtige Nummer. Überprüfe genau, das Captcha hat 4 Zahlen ...",
 
     "CAPTCHA_INCORRECT_MATH":
-        "That is not the correct number. Check closely, you need to solve the math equation...",
+        "Das ist nicht die richtige Zahl. Schauen Sie genau hin, Sie müssen die mathematische Gleichung lösen...",
 
     "NEW_USER_KICK":
         "{} hat das Captcha nicht rechtzeitig abgeschlossen. \"User\" wurde gekickt.",
@@ -252,25 +252,25 @@
         "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "Nur ein Administrator dieser Gruppe kann es konfigurieren.",
 
     "CONNECT_OK":
         "Connected to group {}. Now you can configure group captcha settings from private.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "Sie sind nicht verbunden.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "Von der Gruppe getrennt {}.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "Ungültige Gruppe chat ID.",
 
     "CHECK_CFG":
         "Group Configuration:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat.",
+        "Dieser Befehl kann nicht im privaten Chat verwendet werden.",
 
     "CMD_NEEDS_CONNECTION":
         "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
