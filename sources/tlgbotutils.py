@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    27/05/2022
+    06/06/2022
 Version:
-    1.1.2
+    1.1.3
 '''
 
 ###############################################################################
@@ -363,28 +363,24 @@ def tlg_extract_members_status_change(
     "old_chat_member" was a member of the chat and whether the
     "new_chat_member" is a member of the chat. Returns None, if the status
     didn't change.'''
-    members_diff = chat_member_update.difference()
-    status_change = members_diff.get("status")
+    status_change = chat_member_update.difference().get("status")
+    old_is_member, new_is_member = chat_member_update.difference().get( \
+            "is_member", (None, None))
     if status_change is None:
-        return None
+        if (old_is_member is None) or (new_is_member is None):
+            return None
+        was_member = old_is_member
+        is_member = new_is_member
+        return was_member, is_member
     old_status, new_status = status_change
-    old_is_member, new_is_member = members_diff.get("is_member", (None, None))
-    was_member = (
-        old_status
-        in [
-            ChatMember.MEMBER,
-            ChatMember.CREATOR,
-            ChatMember.ADMINISTRATOR,
-        ]
-        or (old_status == ChatMember.RESTRICTED and old_is_member is True)
-    )
-    is_member = (
-        new_status
-        in [
-            ChatMember.MEMBER,
-            ChatMember.CREATOR,
-            ChatMember.ADMINISTRATOR,
-        ]
-        or (new_status == ChatMember.RESTRICTED and new_is_member is True)
-    )
+    was_member = old_status in [
+        ChatMember.MEMBER,
+        ChatMember.CREATOR,
+        ChatMember.ADMINISTRATOR,
+    ] or (old_status == ChatMember.RESTRICTED and old_is_member is True)
+    is_member = new_status in [
+        ChatMember.MEMBER,
+        ChatMember.CREATOR,
+        ChatMember.ADMINISTRATOR,
+    ] or (new_status == ChatMember.RESTRICTED and new_is_member is True)
     return was_member, is_member
