@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    06/06/2022
+    07/06/2022
 Version:
-    1.26.2
+    1.26.3
 '''
 
 ###############################################################################
@@ -1153,7 +1153,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         else:
             tlg_send_msg(bot, chat_id, bot_msg)
         # Check for custom welcome message and send it
-        welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
+        welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name, 2))
         if welcome_msg != "-":
             # Send the message as Markdown
             rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
@@ -1247,7 +1247,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
-    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
+    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name, 2))
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Wait 3s to let poll animation be shown
     sleep(3)
@@ -1468,7 +1468,7 @@ def button_request_pass(bot, query):
     else:
         tlg_send_msg(bot, chat_id, bot_msg)
     # Check for custom welcome message and send it
-    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name))
+    welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(escape_markdown(user_name, 2))
     if welcome_msg != "-":
         # Send the message as Markdown
         rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
@@ -1693,7 +1693,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     group_cfg = get_all_chat_config(group_id)
     group_cfg = json_dumps(group_cfg, indent=4, sort_keys=True)
     tlg_send_msg_type_chat(bot, chat_type, chat_id,
-            TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg)),
+            TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg, 2)),
             parse_mode="MARKDOWN")
 
 
