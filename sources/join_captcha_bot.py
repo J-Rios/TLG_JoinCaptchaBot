@@ -2918,8 +2918,7 @@ def th_selfdestruct_messages(bot):
             sent_msg = to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
-            if i > 1000:
-                i = 0
+            if (i > 1) and ((i % 1000) == 0):
                 sleep(0.01)
             # Check if delete time has arrive for this message
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
