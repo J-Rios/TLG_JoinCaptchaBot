@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    06/06/2022
+    13/06/2022
 Version:
-    1.1.3
+    1.1.4
 '''
 
 ###############################################################################
@@ -305,6 +305,13 @@ def tlg_user_is_admin(bot, user_id, chat_id, timeout=None):
         if user_id == admin.user.id:
             return True
     return False
+
+
+def tlg_is_a_channel_msg_on_discussion_group(msg):
+    '''Check if a Telegram message is a channel publish send to linked
+    discussion group of that group.'''
+    is_automatic_forward = getattr(msg, "is_automatic_forward", None)
+    return is_automatic_forward
 
 
 def tlg_get_chat_type(bot, chat_id_or_alias, timeout=None):

@@ -71,7 +71,8 @@ from tlgbotutils import (
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
-    tlg_alias_in_string, tlg_extract_members_status_change
+    tlg_alias_in_string, tlg_extract_members_status_change,
+    tlg_is_a_channel_msg_on_discussion_group
 )
 
 from constants import (
@@ -985,6 +986,10 @@ def msg_notext(update: Update, context: CallbackContext):
     # Ignore if message comes from a channel
     if chat.type == "channel":
         return
+    # Ignore if message is a channel post automatically forwarded to the
+    # connected discussion group
+    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
+        return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
@@ -1040,6 +1045,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
         return
     # Ignore if message comes from a channel
     if chat.type == "channel":
+        return
+    # Ignore if message is a channel post automatically forwarded to the
+    # connected discussion group
+    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
         return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
