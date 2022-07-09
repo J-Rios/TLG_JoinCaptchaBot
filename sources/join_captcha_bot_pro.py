@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/06/2022
+    30/06/2022
 Version:
-    1.26.3
+    1.26.4
 '''
 
 ###############################################################################
@@ -71,7 +71,8 @@ from tlgbotutils import (
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
-    tlg_alias_in_string, tlg_extract_members_status_change
+    tlg_alias_in_string, tlg_extract_members_status_change,
+    tlg_is_a_channel_msg_on_discussion_group
 )
 
 from constants import (
@@ -985,6 +986,10 @@ def msg_notext(update: Update, context: CallbackContext):
     # Ignore if message comes from a channel
     if chat.type == "channel":
         return
+    # Ignore if message is a channel post automatically forwarded to the
+    # connected discussion group
+    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
+        return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
@@ -1040,6 +1045,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
         return
     # Ignore if message comes from a channel
     if chat.type == "channel":
+        return
+    # Ignore if message is a channel post automatically forwarded to the
+    # connected discussion group
+    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
         return
     # Ignore if captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -1108,6 +1117,20 @@ def msg_nocmd(update: Update, context: CallbackContext):
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
+    # Check for forwarded messages and delete it
+    forward_from = getattr(update_msg, "forward_from", None)
+    forward_from_chat = getattr(update_msg, "forward_from_chat", None)
+    if (forward_from is not None) or (forward_from_chat is not None):
+        printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
+        printts("[{}] Removing forwarded msg: {}.".format(chat_id, msg_text))
+        delete_result = tlg_delete_msg(bot, chat_id, msg_id)
+        if delete_result["error"] == "":
+            printts("Message removed.")
+        elif delete_result["error"] == "Message can't be deleted":
+            printts("No rights to remove msg.")
+        else:
+            printts("Message can't be deleted.")
+        return
     # Check for Spam (check if the message contains any URL or alias)
     has_url = re.findall(CONST["REGEX_URLS"], msg_text)
     has_alias = tlg_alias_in_string(msg_text)
@@ -2909,8 +2932,7 @@ def th_selfdestruct_messages(bot):
             sent_msg = to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
-            if i > 1000:
-                i = 0
+            if (i > 1) and ((i % 1000) == 0):
                 sleep(0.01)
             # Check if delete time has arrive for this message
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
