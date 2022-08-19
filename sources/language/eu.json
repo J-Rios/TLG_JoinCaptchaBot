@@ -105,7 +105,7 @@
         "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
 
     "NEW_USER_IMG_CAPTION":
-        "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudiak agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
+        "Kaixo {}, ongi etorri {} taldera, mesedez bidali mezu bat irudian agertzen den zenbakiarekin gizakia zarela baieztatzeko. Captcha ez baduzu {} asmatzen taldetik automatikoki kanporatua (kick) izango zara.",
 
     "NEW_USER_MATH_CAPTION":
         "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
