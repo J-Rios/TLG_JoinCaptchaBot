@@ -33,13 +33,13 @@
         "Tempo inválido, ele precisa estar no intervalo de 10 sec a {} min.",
 
     "TIME_NOT_NUM":
-        "O tempo fornecido não é um número integral.",
+        "O tempo fornecido não é um número inteiro.",
 
     "TIME_NOT_ARG":
         "O comando exige um valor para o tempo.\n\nExemplos:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "O comando exige um valor para o tempo.\n\nExemplos:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
         "O nível de dificuldade do captcha mudou para {}.",
