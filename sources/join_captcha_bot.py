@@ -290,7 +290,7 @@ def tlg_msg_to_selfdestruct(message):
 def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     '''Add a telegram message to be auto-delete in specified time'''
     global to_delete_in_time_messages_list
-    # Check if provided message has all necessary attributtes
+    # Check if provided message has all necessary attributes
     if message is None:
         return False
     if not hasattr(message, "chat_id"):
@@ -455,7 +455,7 @@ def load_texts_languages():
         json_lang_texts = json_lang_file.read()
         if (json_lang_texts is None) or (json_lang_texts == {}):
             printts("Error loading language \"{}\" from {}. Language file not found or bad JSON "
-                    "sintax.".format(lang_iso_code, lang_file))
+                    "syntax.".format(lang_iso_code, lang_file))
             printts("Exit.\n")
             exit(0)
         for text in json_lang_texts:
@@ -611,7 +611,7 @@ def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
 
 def chat_bot_status_change(update: Update, context: CallbackContext):
     '''Get Bot chats status changes (Bot added to group/channel,
-    started/stoped conversation in private chat, etc.) event handler.'''
+    started/stopped conversation in private chat, etc.) event handler.'''
     # Check Bot changes
     result = tlg_extract_members_status_change(update.my_chat_member)
     if result is None:
@@ -868,7 +868,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format( \
                     user_name_lrm, chat_title, timeout_str)
-        # Prepare inline keyboard button to let user request another catcha
+        # Prepare inline keyboard button to let user request another captcha
         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
                 callback_data="image_captcha {}".format(join_user_id))]]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -1054,7 +1054,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
         return
-    # If message doesnt has text, check for caption fields (for no text msgs and resended ones)
+    # If message doesn't has text, check for caption fields (for no text msgs
+    # and forward ones)
     msg_text = getattr(update_msg, "text", None)
     if msg_text is None:
         msg_text = getattr(update_msg, "caption_html", None)
@@ -1411,7 +1412,7 @@ def button_request_captcha(bot, query):
     # Get chat language
     lang = get_chat_config(chat_id, "Language")
     printts("[{}] User {} requested a new captcha.".format(chat_id, user_name))
-    # Prepare inline keyboard button to let user request another catcha
+    # Prepare inline keyboard button to let user request another captcha
     keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
             callback_data="image_captcha {}".format(str(query.from_user.id)))]]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -2755,7 +2756,7 @@ def cmd_about(update: Update, context: CallbackContext):
 
 
 def cmd_captcha(update: Update, context: CallbackContext):
-    '''Command /captcha message handler. Usefull to test.
+    '''Command /captcha message handler. Useful to test.
     Just Bot Owner can use it.'''
     bot = context.bot
     # Ignore command if it was a edited message
@@ -3045,7 +3046,7 @@ def th_time_to_kick_not_verify_users(bot):
                                         tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
                                     else:
                                         tlg_send_msg(bot, chat_id, msg_text)
-                        # The user has join this chat 5 times and never succes to solve the captcha (ban)
+                        # The user has join this chat 5 times and never success to solve the captcha (ban)
                         else:
                             printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id,
                                     user_name, user_id))
