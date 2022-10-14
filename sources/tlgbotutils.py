@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    13/06/2022
+    14/10/2022
 Version:
-    1.1.4
+    1.1.5
 '''
 
 ###############################################################################
@@ -27,7 +27,7 @@ from telegram import (
 
 from telegram.utils.helpers import DEFAULT_NONE
 
-from commons import printts
+from commons import printts, add_lrm
 
 ###############################################################################
 ### Specific Telegram constants
@@ -391,3 +391,50 @@ def tlg_extract_members_status_change(
         ChatMember.ADMINISTRATOR,
     ] or (new_status == ChatMember.RESTRICTED and new_is_member is True)
     return was_member, is_member
+
+
+def tlg_get_user_name(user, truncate_name_len=0):
+    '''Get and return a Telegram member username. It allows to truncate the
+    name if argument for that ar provided. It applies a LRM mark to ensure and
+    fix any possible representation error due Right-To-Left language texts."'''
+    user_name = ""
+    if user is None:
+        return "None"
+    if user.name is not None:
+        user_name = user.name
+    else:
+        user_name = user.full_name
+    # If the user name is too long, truncate it to specified num of characters
+    if truncate_name_len > 0:
+        if len(user_name) > truncate_name_len:
+            user_name = user_name[0:truncate_name_len]
+    # Add an unicode Left to Right Mark (LRM) to user name (names fix for
+    # arabic, hebrew, etc.)
+    user_name = add_lrm(user_name)
+    return user_name
+
+
+def tlg_has_new_member_join_group(chat_member):
+    '''Check chat members status changes and detect if the provided member has
+    join the current group.'''
+    # Check members changes
+    result = tlg_extract_members_status_change(chat_member)
+    if result is None:
+        return False
+    was_member, is_member = result
+    # Check if it is a new member join
+    if was_member:
+        return False
+    if not is_member:
+        return False
+    return True
+
+
+def tlg_get_msg(update):
+    '''Get Telegram message data from the Update element.'''
+    msg = getattr(update, "message", None)
+    if msg is None:
+        msg = getattr(update, "edited_message", None)
+    if msg is None:
+        msg = getattr(update, "channel_post", None)
+    return msg
