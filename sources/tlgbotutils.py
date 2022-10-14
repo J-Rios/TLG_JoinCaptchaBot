@@ -287,6 +287,20 @@ def tlg_restrict_user(bot, chat_id, user_id, until_date=None, timeout=None,
     return result
 
 
+def tlg_unrestrict_user(bot, chat_id, user_id):
+    '''Telegram Bot try to remove all user restrictions in a group.'''
+    result = False
+    try:
+        permissions = ChatPermissions(True, True, True, True, True, True,
+            True, True)
+        result = bot.restrict_chat_member(chat_id=chat_id, user_id=user_id,
+            permissions=permissions, until_date=None, timeout=None)
+    except Exception as e:
+        printts("[{}] {}".format(chat_id, str(e)))
+        result = False
+    return result
+
+
 def tlg_user_is_admin(bot, user_id, chat_id, timeout=None):
     '''Check if the specified user is an Administrator of a group given
     by IDs'''

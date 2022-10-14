@@ -71,9 +71,9 @@ from tlgbotutils import (
     tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
-    tlg_restrict_user, tlg_is_valid_user_id_or_alias, tlg_is_valid_group,
-    tlg_alias_in_string, tlg_extract_members_status_change, tlg_get_msg,
-    tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
+    tlg_restrict_user, tlg_unrestrict_user, tlg_is_valid_user_id_or_alias,
+    tlg_is_valid_group, tlg_alias_in_string, tlg_extract_members_status_change,
+    tlg_get_msg, tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
     tlg_has_new_member_join_group
 )
 
@@ -918,6 +918,19 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             new_users[chat_id][join_user_id]["msg_to_rm"].append(sent_result["msg"].message_id)
         if (captcha_mode == "poll") and (solve_poll_request_msg_id is not None):
             new_users[chat_id][join_user_id]["msg_to_rm"].append(solve_poll_request_msg_id)
+        # Restrict user to deny send any kind of message until captcha is solve
+        # Allow send text messages for image based captchas (nums and maths)
+        if (captcha_mode == "nums") or (captcha_mode == "math"):
+            # Restrict user to only allow send text messages
+            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=True,
+                send_media=False, send_stickers_gifs=False, insert_links=False,
+                send_polls=False, invite_members=False, pin_messages=False,
+                change_group_info=False)
+        else:
+            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=False,
+                send_media=False, send_stickers_gifs=False, insert_links=False,
+                send_polls=False, invite_members=False, pin_messages=False,
+                change_group_info=False)
         printts("[{}] Captcha send process complete.".format(chat_id))
         printts(" ")
 
@@ -1138,8 +1151,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # Check if the expected captcha solve number is in the message
     solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
     if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
-        # Remove join messages
         printts("[{}] Captcha solved by {}".format(chat_id, user_name))
+        # Remove all restrictions on the user
+        tlg_unrestrict_user(bot, chat_id, user_id)
+        # Remove join messages
         for msg in new_users[chat_id][user_id]["msg_to_rm"]:
             tlg_delete_msg(bot, chat_id, msg)
         new_users[chat_id][user_id]["msg_to_rm"].clear()
@@ -1147,8 +1162,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
         del new_users[chat_id][user_id]
         # Remove user captcha numbers message
         tlg_delete_msg(bot, chat_id, msg_id)
-        bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         # Send message solve message
+        bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if rm_result_msg:
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
@@ -1259,6 +1274,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
         printts("[{}] User {} solved a poll challenge.".format(chat_id, user_name))
+        # Remove all restrictions on the user
+        tlg_unrestrict_user(bot, chat_id, user_id)
+        # Send captcha solved message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if rm_result_msg:
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
@@ -1463,6 +1481,9 @@ def button_request_pass(bot, query):
     del new_users[chat_id][user_id]
     # Send message solve message
     printts("[{}] User {} solved a button-only challenge.".format(chat_id, user_name))
+    # Remove all restrictions on the user
+    tlg_unrestrict_user(bot, chat_id, user_id)
+    # Send captcha solved message
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
     if rm_result_msg:
         tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
