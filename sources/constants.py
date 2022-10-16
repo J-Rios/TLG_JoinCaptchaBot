@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/10/2022
+    15/10/2022
 Version:
     1.27.0
 '''
@@ -182,6 +182,18 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
             SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
 
+    # Maximum number of times a user joins a group and don't solve the captcha
+    # If a user don't solve the captcha after this, it will be ban instead kick
+    "MAX_FAIL_BAN": \
+        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN", \
+            SETTINGS["CAPTCHABOT_MAX_FAIL_BAN"])),
+
+    # Maximum number of times a user fail to solve a Poll captcha
+    # If a user don't solve the captcha after this, it will be ban instead kick
+    "MAX_FAIL_BAN_POLL": \
+        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN_POLL", \
+            SETTINGS["CAPTCHABOT_MAX_FAIL_BAN_POLL"])),
+
     # Last session restorable RAM data backup file path
     "F_SESSION": SCRIPT_PATH + "/session.pkl",
 
@@ -290,7 +302,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.27.0 (14/10/2022)"
+    "VERSION": "1.27.0 (15/10/2022)"
 }
 
 # Supported languages list

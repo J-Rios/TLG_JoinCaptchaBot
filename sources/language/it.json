@@ -126,7 +126,7 @@
         "Questo non è il numero corretto. Controlla attentamente, devi risolvere l'operazione matematica...",
 
     "NEW_USER_KICK":
-        "{} non ha completato il captcha in tempo. \"L'utente\"è stato espulso.",
+        "{} non è riuscito a risolvere il captcha. \"L'utente\"è stato espulso.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Ho provato a espellere \"Utente\" {}, ma non ho i diritti di amministrazione per espellere gli utenti dal gruppo.",
@@ -141,16 +141,16 @@
         "Ho provato a eliminare questo messaggio, ma non ho i diritti amministrativi per rimuovere i messaggi che non sono stati inviati da me.",
 
     "NEW_USER_BAN":
-        "Avviso: questa è la quinta volta che {} ha tentato di unirsi al gruppo e non è riuscito a risolvere il captcha. \"Utente\" è stato espulso. Per consentirgli di entrare di nuovo, un amministratore deve rimuovere manualmente le restrizioni di questo \"Utente\".",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Avvertenza: questa è la quinta volta che {} ha tentato di unirsi al gruppo e non è riuscito a risolvere il captcha. Ho deciso di espellere \"Utente\". Tuttavia l'utente non è attualmente nel gruppo (ha lasciato il gruppo o ha stato espulso/escluso da un amministratore).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Avviso: questa è la quinta volta che {} ha tentato di unirsi al gruppo e non è riuscito a risolvere il captcha. Ho provato ad espellere \"Utente\", ma non ho i diritti amministrativi per espellere gli utenti nel gruppo.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Avviso: questa è la quinta volta che {} ha tentato di unirsi al gruppo e non è riuscito a risolvere il captcha. Ho provato a espellere \"Utente\", ma a causa di un problema imprevisto (forse relativo alla rete o al server), non posso farlo.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Rilevato un messaggio con un URL (o alias) da {}, che non ha ancora risolto il captcha. Il messaggio è stato rimosso per mantenere Telegram libero dallo spam.",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Ciao {}, benvenuto in {}. Rispondi alla domanda per provare che non sei un robot. Se non risponderai entro {}, verrai automaticamente espulso dal gruppo.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Errore. {} ha selezionato la risposta sbagliata. verrai espulso in 10s. Prova a rifare la richiesta...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Errore. {} ha selezionato la risposta sbagliata. \"User\" è stato espulso.",
 
     "CAPTCHA_POLL_USAGE":
         "Configura il captcha con una domanda personalizzata e le sue risposte\n————————————————\nIl testo della domanda non può essere maggiore di {} caratteri.\n\nIl testo della risposta non può superare {} caratteri.\n\nIl numero massimo di risposte è {}.\n————————————————\nImposta la domanda:\n/captcha_poll question Sei sicuro di voler entrare in questo gruppo?\n\nImposta risposta 1:\n/captcha_poll option 1 No, non voglio entrare nel gruppo.\n\nImposta risposta 2:\n/captcha_poll option 2 Certo, sono un umano e voglio entrare nel gruppo.\n\nImposta risposta 3:\n/captcha_poll option 3 Chi sono e cosa sto facendo?\n\nRimuovi risposta 2:\n/captcha_poll option 2 remove\n\nImposta risposta corretta 2:\n/captcha_poll correct_option 2\n\nCambia Captcha in Domanda Personalizzata:\n/captcha_mode poll",

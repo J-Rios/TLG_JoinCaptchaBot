@@ -126,7 +126,7 @@
         "זה לא המספר הנכון. בדוק מקרוב, אתה צריך לפתור את המשוואה המתמטית...",
 
     "NEW_USER_KICK":
-        "{} לא השלים את הקפטצ'ה בזמן. \"User\" סולק.",
+        "{} לא הצליח לפתור את ה-captcha. \"User\" סולק.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "ניסיתי לבעוט החוצה \"User\" {}, אבל אין לי זכויות ניהול לבעוט החוצה משתמשים מהקבוצה.",
@@ -141,16 +141,16 @@
         "ניסיתי למחוק הודעה זו, אך אין לי את זכויות הניהול להסיר הודעות שלא נשלחו על-ידי.",
 
     "NEW_USER_BAN":
-        "אזהרה: זו הפעם החמישית ש-{} מנסה להצטרף לקבוצה ולא מצליח לפתור את ה-captcha. \"User\" נאסר. כדי לאפשר לו להיכנס שוב, מנהל מערכת צריך להסיר באופן ידני את ההגבלות של \"user\".",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "אזהרה: זו הפעם החמישית ש-{} מנסה להצטרף לקבוצה ולא מצליח לפתור את ה-captcha. אני מנסה לאסור את \"User\", אבל המשתמש כבר לא בקבוצה (עזב את הקבוצה או סולק/נאסר על ידי מנהל).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "אזהרה: זו הפעם החמישית ש-{} מנסה להצטרף לקבוצה ולא מצליח לפתור את ה-captcha. ניסיתי לאסור את \"User\", אבל אין לי זכויות ניהול לאסור משתמשים בקבוצה.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "אזהרה: זו הפעם החמישית ש-{} מנסה להצטרף לקבוצה ולא מצליח לפתור את ה-captcha. ניסיתי לאסור את \"User\", אך עקב בעיה בלתי צפויה (אולי קשורה לרשת/שרת), אין באפשרותי לעשות זאת.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "זהה הודעה עם כתובת URL (או כינוי) מ- {}, שעדיין לא פתרה את captcha. ההודעה הוסרה למען שמירה על טלגרם ללא ספאם :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "שלום {}, ברוכים הבאים אל {}. אנא פתור את הסקר שלהלן כדי להוכיח שאתה לא רובוט. אם לא תעשה זאת ב- {}, יזרקו אותך באופן אוטומטי מהקבוצה.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "תשאול Captcha נכשל, {} בחר תשובה שגויה. אתה תהיה בעט בשנות ה -10, אנא נסה להצטרף לקבוצה שוב...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "תשאול Captcha נכשל, {} בחר תשובה שגויה. \"User\" סולק.",
 
     "CAPTCHA_POLL_USAGE":
         "קבע תצורה של שאלת תשאול Captcha ואפשרויות\n————————————————\nטקסטQuestion אינו יכול להיות גדול יותר מ- {} תווים.\n\nטקסט אפשרות לא יכול להיות גדול מ-{} תווים.\n\nמספר האפשרויות הוא {}.\n————————————————\nהגדר שאלת סקר:\n/captcha_poll שאלה האם אתה בטוח שברצונך להזין לקבוצה זו?\n\nאפשרות סקר 1:\n/captcha_poll אפשרות 1 לא, אין ברצוני להיכנס לקבוצה.\n\nאפשרות תשאול 2:\n/captcha_poll אפשרות 2 בטוח, אני אנושי וברצוני להיכנס לקבוצה.\n\nאפשרות תשאול 3:\n/captcha_poll אפשרות 3 מי אני ומה אני עושה?\n\nאפשרות תשאול 2:\n/captcha_poll אפשרות 2 הסר\n\nהק אפשרות תשאול נכונה 2:\n/captcha_poll correct_option 2\n\n\nשינוי Captcha למצב סקר:\n/ סקר captcha_mode",

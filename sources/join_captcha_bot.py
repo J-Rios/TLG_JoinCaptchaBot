@@ -12,7 +12,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/10/2022
+    15/10/2022
 Version:
     1.27.0
 '''
@@ -648,6 +648,105 @@ def should_manage_captcha(update, bot):
         return False
     return True
 
+
+def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
+    '''Kick/Ban a new member that has fail to solve the captcha.'''
+    global new_users
+    # Get parameters
+    lang = get_chat_config(chat_id, "Language")
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    user_name = new_users[chat_id][user_id]["join_data"]["user_name"]
+    join_retries = new_users[chat_id][user_id]["join_data"]["join_retries"]
+    # Kick if user has fail to solve the captcha less than "max_join_retries"
+    if join_retries < max_join_retries:
+        printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
+                user_name, user_id))
+        # Try to kick the user
+        kick_result = tlg_kick_user(bot, chat_id, user_id)
+        if kick_result["error"] == "":
+            # Kick success
+            msg_text = TEXT[lang]["NEW_USER_KICK"].format(user_name)
+            # Increase join retries
+            join_retries = join_retries + 1
+            printts("[{}] Increased join_retries to {}".format(chat_id, join_retries))
+            # Send kicked message
+            if rm_result_msg:
+                tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+            else:
+                tlg_send_msg(bot, chat_id, msg_text)
+        else:
+            # Kick fail
+            printts("[{}] Unable to kick".format(chat_id))
+            if (kick_result["error"] == "The user has left the group") or \
+                    (kick_result["error"] == "The user was already kicked"):
+                # The user is not in the chat
+                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
+                if rm_result_msg:
+                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+                else:
+                    tlg_send_msg(bot, chat_id, msg_text)
+            elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
+                # Bot has no privileges to kick
+                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(user_name)
+                # Send no rights for kick message without auto-remove
+                tlg_send_msg(bot, chat_id, msg_text)
+            else:
+                # For other reason, the Bot can't ban
+                msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
+                if rm_result_msg:
+                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+                else:
+                    tlg_send_msg(bot, chat_id, msg_text)
+    # Ban if user has join "max_join_retries" times without solving the captcha
+    else:
+        printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id,
+                user_name, user_id))
+        # Try to ban the user and notify Admins
+        ban_result = tlg_ban_user(bot, chat_id, user_id)
+        if ban_result["error"] == "":
+            # Ban success
+            msg_text = TEXT[lang]["NEW_USER_BAN"].format(
+                    user_name, max_join_retries)
+        else:
+            # Ban fail
+            if ban_result["error"] == "User not found":
+                # The user is not in the chat
+                msg_text = TEXT[lang]["NEW_USER_BAN_NOT_IN_CHAT"].format(
+                        user_name, max_join_retries)
+            elif ban_result["error"] == "Not enough rights to restrict/unrestrict chat member":
+                # Bot has no privileges to ban
+                msg_text = TEXT[lang]["NEW_USER_BAN_NOT_RIGHTS"].format(
+                        user_name, max_join_retries)
+            else:
+                # For other reason, the Bot can't ban
+                msg_text = TEXT[lang]["BOT_CANT_BAN"].format(
+                        user_name, max_join_retries)
+        # Send ban notify message
+        printts("[{}] {}".format(chat_id, msg_text))
+        if rm_result_msg:
+            tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
+        else:
+            tlg_send_msg(bot, chat_id, msg_text)
+    # Update user info (join_retries & kick_ban)
+    new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
+    new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
+    # Remove join messages
+    printts("[{}] Removing messages from user {}...".format(chat_id, user_name))
+    join_msg = new_users[chat_id][user_id]["join_msg"]
+    if join_msg is not None:
+        tlg_delete_msg(bot, chat_id, join_msg)
+    for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+        tlg_delete_msg(bot, chat_id, msg)
+    new_users[chat_id][user_id]["msg_to_rm"].clear()
+    for msg in new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
+        tlg_delete_msg(bot, chat_id, msg)
+    new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
+    # Delete user join info if was ban
+    if join_retries >= 5:
+        del new_users[chat_id][user_id]
+    printts("[{}] Kick/Ban process completed".format(chat_id))
+    printts(" ")
+
 ###############################################################################
 ### Received Telegram not-command messages handlers
 
@@ -931,7 +1030,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                 send_media=False, send_stickers_gifs=False, insert_links=False,
                 send_polls=False, invite_members=False, pin_messages=False,
                 change_group_info=False)
-        printts("[{}] Captcha send process complete.".format(chat_id))
+        printts("[{}] Captcha send process completed.".format(chat_id))
         printts(" ")
 
 
@@ -1227,7 +1326,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                         TEXT[lang]["CAPTCHA_INCORRECT_1"], CONST["T_FAST_DEL_MSG"])
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
-    printts("[{}] Captcha reply process complete.".format(chat_id))
+    printts("[{}] Captcha reply process completed.".format(chat_id))
     printts(" ")
 
 
@@ -1307,7 +1406,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     else:
         # Notify captcha fail
         printts("[{}] User {} fail a poll challenge.".format(chat_id, user_name))
-        bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL_0"].format(user_name)
+        bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
         sent_msg_id = None
         if rm_result_msg:
             sent_result = tlg_send_msg(bot, chat_id, bot_msg)
@@ -1318,46 +1417,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
         # Wait 10s
         sleep(10)
         # Try to kick the user
-        kick_result = tlg_kick_user(bot, chat_id, user_id)
-        if kick_result["error"] == "":
-            # Kick success
-            msg_text = TEXT[lang]["CAPTCHA_POLL_FAIL_1"].format(user_name)
-            # Send kicked message
-            if rm_result_msg:
-                tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-            else:
-                tlg_send_msg(bot, chat_id, msg_text)
-        else:
-            # Kick fail
-            printts("[{}] Unable to kick".format(chat_id))
-            if (kick_result["error"] == "The user has left the group") or \
-                    (kick_result["error"] == "The user was already kicked"):
-                # The user is not in the chat
-                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
-                if rm_result_msg:
-                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    tlg_send_msg(bot, chat_id, msg_text)
-            elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
-                # Bot has no privileges to kick
-                msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(user_name)
-                # Send no rights for kick message without auto-remove
-                tlg_send_msg(bot, chat_id, msg_text)
-            else:
-                # For other reason, the Bot can't ban
-                msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                if rm_result_msg:
-                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    tlg_send_msg(bot, chat_id, msg_text)
-        # Remove fail messages
-        if sent_msg_id is not None:
-            tlg_delete_msg(bot, chat_id, sent_msg_id)
-        for msg in new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
-            tlg_delete_msg(bot, chat_id, msg)
-        # Remove user from captcha process
-        del new_users[chat_id][user_id]
-    printts("[{}] Poll captcha process complete.".format(chat_id))
+        captcha_fail_kick_ban_member(bot, chat_id, user_id,
+                CONST["MAX_FAIL_BAN_POLL"])
+    printts("[{}] Poll captcha process completed.".format(chat_id))
     printts(" ")
 
 
@@ -1449,7 +1511,7 @@ def button_request_captcha(bot, query):
         # Remove sent captcha image file from file system
         if path.exists(captcha["image"]):
             remove(captcha["image"])
-    printts("[{}] New captcha request process complete.".format(chat_id))
+    printts("[{}] New captcha request process completed.".format(chat_id))
     printts(" ")
 
 
@@ -1516,7 +1578,7 @@ def button_request_pass(bot, query):
         tlg_restrict_user(bot, chat_id, user_id, send_msg=True, send_media=False,
             send_stickers_gifs=False, insert_links=False, send_polls=False,
             invite_members=False, pin_messages=False, change_group_info=False)
-    printts("[{}] Button-only challenge pass request process complete.".format(chat_id))
+    printts("[{}] Button-only challenge pass request process completed.".format(chat_id))
     printts(" ")
 
 ###############################################################################
@@ -2995,9 +3057,9 @@ def th_time_to_kick_not_verify_users(bot):
                     captcha_timeout = new_users[chat_id][user_id]["join_data"]["captcha_timeout"]
                     if new_users[chat_id][user_id]["join_data"]["kicked_ban"]:
                         # Remove from new users list the remaining kicked users that have not solve
-                        # the captcha in 10 mins (user ban just happen if a user try to join the group
-                        # and fail to solve the captcha 5 times in the past 10 mins)
-                        if time() - user_join_time < captcha_timeout + 600:
+                        # the captcha in 30 mins (user ban just happen if a user try to join the group
+                        # and fail to solve the captcha 5 times in the past 30 mins)
+                        if time() - user_join_time < captcha_timeout + 1800:
                             continue
                         printts("Removing kicked user {} after 10 mins".format(user_id))
                         del new_users[chat_id][user_id]
@@ -3005,98 +3067,10 @@ def th_time_to_kick_not_verify_users(bot):
                         # If time for kick/ban has not arrived yet
                         if time() - user_join_time < captcha_timeout:
                             continue
-                        # The time has come for this user
-                        lang = get_chat_config(chat_id, "Language")
                         user_name = new_users[chat_id][user_id]["join_data"]["user_name"]
-                        join_retries = new_users[chat_id][user_id]["join_data"]["join_retries"]
                         printts("[{}] Captcha reply timed out for user {}.".format(chat_id, user_name))
-                        # Get current group remove kick/ban messages config
-                        rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-                        # Check if this "user" has not join this chat more than 5 times (just kick)
-                        if join_retries < 5:
-                            printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
-                                    user_name, user_id))
-                            # Try to kick the user
-                            kick_result = tlg_kick_user(bot, chat_id, user_id)
-                            if kick_result["error"] == "":
-                                # Kick success
-                                msg_text = TEXT[lang]["NEW_USER_KICK"].format(user_name)
-                                # Increase join retries
-                                join_retries = join_retries + 1
-                                printts("[{}] Increased join_retries to {}".format(chat_id, join_retries))
-                                # Send kicked message
-                                if rm_result_msg:
-                                    tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                                else:
-                                    tlg_send_msg(bot, chat_id, msg_text)
-                            else:
-                                # Kick fail
-                                printts("[{}] Unable to kick".format(chat_id))
-                                if (kick_result["error"] == "The user has left the group") or \
-                                        (kick_result["error"] == "The user was already kicked"):
-                                    # The user is not in the chat
-                                    msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(user_name)
-                                    if rm_result_msg:
-                                        tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                                    else:
-                                        tlg_send_msg(bot, chat_id, msg_text)
-                                elif kick_result["error"] == "Not enough rights to restrict/unrestrict chat member":
-                                    # Bot has no privileges to kick
-                                    msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(user_name)
-                                    # Send no rights for kick message without auto-remove
-                                    tlg_send_msg(bot, chat_id, msg_text)
-                                else:
-                                    # For other reason, the Bot can't ban
-                                    msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                                    if rm_result_msg:
-                                        tlg_send_selfdestruct_msg_in(bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                                    else:
-                                        tlg_send_msg(bot, chat_id, msg_text)
-                        # The user has join this chat 5 times and never success to solve the captcha (ban)
-                        else:
-                            printts("[{}] Captcha not solved, banning {} ({})...".format(chat_id,
-                                    user_name, user_id))
-                            # Try to ban the user and notify Admins
-                            ban_result = tlg_ban_user(bot, chat_id, user_id)
-                            if ban_result["error"] == "":
-                                # Ban success
-                                msg_text = TEXT[lang]["NEW_USER_BAN"].format(user_name)
-                            else:
-                                # Ban fail
-                                if ban_result["error"] == "User not found":
-                                    # The user is not in the chat
-                                    msg_text = TEXT[lang]["NEW_USER_BAN_NOT_IN_CHAT"].format(user_name)
-                                elif ban_result["error"] == "Not enough rights to restrict/unrestrict chat member":
-                                    # Bot has no privileges to ban
-                                    msg_text = TEXT[lang]["NEW_USER_BAN_NOT_RIGHTS"].format(user_name)
-                                else:
-                                    # For other reason, the Bot can't ban
-                                    msg_text = TEXT[lang]["BOT_CANT_BAN"].format(user_name)
-                            # Send ban notify message
-                            printts("[{}] {}".format(chat_id, msg_text))
-                            if rm_result_msg:
-                                tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
-                            else:
-                                tlg_send_msg(bot, chat_id, msg_text)
-                        # Update user info (join_retries & kick_ban)
-                        new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
-                        new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
-                        # Remove join messages
-                        printts("[{}] Removing messages from user {}...".format(chat_id, user_name))
-                        join_msg = new_users[chat_id][user_id]["join_msg"]
-                        if join_msg is not None:
-                            tlg_delete_msg(bot, chat_id, join_msg)
-                        for msg in new_users[chat_id][user_id]["msg_to_rm"]:
-                            tlg_delete_msg(bot, chat_id, msg)
-                        new_users[chat_id][user_id]["msg_to_rm"].clear()
-                        for msg in new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
-                            tlg_delete_msg(bot, chat_id, msg)
-                        new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
-                        # Delete user join info if was ban
-                        if join_retries >= 5:
-                            del new_users[chat_id][user_id]
-                        printts("[{}] Kick/Ban process complete".format(chat_id))
-                        printts(" ")
+                        captcha_fail_kick_ban_member(bot, chat_id, user_id,
+                                CONST["MAX_FAIL_BAN"])
                         sleep(0.01)
                 except Exception as e:
                     printts("Error handling kick/ban:\n{}".format(str(e)))
