@@ -126,7 +126,7 @@
         "Esse não é o número correto. Olhe com atenção, você precisa resolver a equação matemática...",
 
     "NEW_USER_KICK":
-        "{} não enviou o captcha em tempo útil. O \"usuário\" foi expulso.",
+        "{} não conseguiu resolver o captcha. O \"usuário\" foi expulso.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Eu tentei expulsar o \"usuário\" {}, mas eu não tenho poderes administrativos para expulsar usuários do grupo.",
@@ -141,16 +141,16 @@
         "Eu tentei apagar essa mensagem, mas eu não tenho poderes administrativos para remover mensagens que não foram enviadas por mim",
 
     "NEW_USER_BAN":
-        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo e falha ao enviar o captcha. O \"usuário\" foi banido. Para deixá-lo entrar de novo, um administrador tem que remover as restrições, manualmente..",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo e falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas ele não está mais no grupo (ele saiu ou foi expulso por um Admin).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo e falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas eu não tenho poderes administrativos para banir usuários do grupo.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Alerta: Esta é a quinta vez que {} tenta entrar no grupo e falha ao enviar o captcha. Eu tentei banir o \"usuário\", mas algo deu errado (talvez algo relacionado à rede ou servidor). Não pude fazê-lo.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Detectada uma mensagem com um URL (ou alias) de {}, que ainda não resolveu o captcha. A mensagem foi removida em prol de um Telegram livre de spam:)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Olá {}, seja bem-vindo ao grupo {}. Por favor, resolva a enquete abaixo para provar que você é humano. Se você não fizer isso em {}, você será automaticamente expulso do grupo.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Falha no captcha enquete, {} selecionou uma resposta errada. Você será expulso em 10 segundos, por favor, tente entrar no grupo novamente...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Falha no captcha enquete, {} selecionou uma resposta errada. O \"usuário\" foi expulso.",
 
     "CAPTCHA_POLL_USAGE":
         "Configura uma pergunta e as opções de captcha enquete\n————————————————\nO texto da pergunta não pode ser maior que {} caracteres.\n\nO texto das opções não pode ser maior que {} caracteres.\n\nO número máximo de opções é {}.\n————————————————\nDefinir pergunta da enquete:\n/captcha_poll question Tem certeza que você deseja entrar neste grupo?\n\nDefinir opção 1 da enquete:\n/captcha_poll option 1 Nah, não quero entrar no grupo.\n\nDefinir opção 2 da enquete:\n/captcha_poll option 2 Claro, eu sou humano e quero entrar no grupo.\n\nDefinir opção 3 da enquete:\n/captcha_poll option 3 Quem sou eu e o que estou fazendo?\n\nRemover a opção 2 da enquete:\n/captcha_poll option 2 remove\n\nDefinir a opção 2 como correta:\n/captcha_poll correct_option 2\n\nAlterar o captcha para o modo enquete:\n/captcha_mode poll",

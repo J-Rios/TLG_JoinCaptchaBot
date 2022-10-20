@@ -126,7 +126,7 @@
         "Tuo ei ollut oikea numero. Katso tarkemmin, sinun tulee ratkaista matemaattinen yhtälö...",
 
     "NEW_USER_KICK":
-        "{} ei ratkaissut captchaa ajoissa. \"Käyttäjä\" poistettiin ryhmästä.",
+        "{} captcha ei onnistunut ratkaisemaan. \"Käyttäjä\" poistettiin ryhmästä.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Yritin poistaa \"käyttäjän\" {} ryhmästä, mutta minulla ei ole ylläpito-oikeutta käyttäjien poistamiseksi.",
@@ -141,16 +141,16 @@
         "Yritin poistaa tämän viestin, mutta minulla ei ole ylläpito-oikeutta poistaakseni muiden, kuin itseni, lähettämiä viestejä.",
 
     "NEW_USER_BAN":
-        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. \"Käyttäjälle\" annettiin porttikielto. Jotta hän pääsee takaisin, ylläpitäjän tulee käsin poistaa tämän \"käyttäjän\" rajoitukset.",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta käyttäjä ei enää ole ryhmässä (poistunut ryhmästä tai tullut Ylläpitäjän poistamaksi/porttikieltämäksi).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta minulla ei ole ylläpito-oikeutta antaa käyttäjille porttikieltoja ryhmään.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Varoitus: Tämä on viides kerta kun {} on yrittänyt liittyä ryhmään ja epäonnistunut captchan ratkaisussa. Yritin antaa \"Käyttäjälle\" porttikiellon, mutta odottamattomasta ongelmasta johtuen (ehkäpä verkkoyhteyteen/palvelimeen liittyen), en voi tehdä sitä",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Havaittiin URLin (tai aliaksen) sisältävä viesti \"käyttäjältä\" {}, joka ei ole vielä ratkaissut captchaa. Viesti poistettiin Telegrammin spämmivapaana vyöhykkeenä pitämisen vuoksi :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Hei {}, tervetuloa ryhmään {}. Ratkaisethan allaolevan kyselyn varmistaaksesi, ettet ole botti. Ellet tee tätä ajassa {}, tulet automaattisesti poistetuksi ryhmästä.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha-kysely meni pieleen, {} valitsi väärän vastauksen. Sinut poistetaan 10 sekuntissa, yritäthän liittyä ryhmään uudelleen...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha-kysely meni pieleen, {} valitsi väärän vastauksen. \"Käyttäjä\" poistettiin.",
 
     "CAPTCHA_POLL_USAGE":
         "Määritä Captcha-kyselyn Kysymys ja vastausvaihtoehdot\n————————————————\nKysymys ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehto ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehtojen enimmäismäärä on {}.\n————————————————\nAseta Kyselyn kysymys:\n/captcha_poll question Haluatko varmasti liittyä tähän ryhmään?\n\nAseta vastausvaihtoehto 1:\n/captcha_poll option 1 Ei, en halua liittyä ryhmään.\n\nAseta vastausvaihtoehto 2:\n/captcha_poll option 2 Toki, olen ihminen ja haluan liittyä ryhmään.\n\nAseta vastausvaihtoehto 3:\n/captcha_poll option 3 Kuka olen ja mitä teen?\n\nPoista vastausvaihtoehto 2:\n/captcha_poll option 2 remove\n\nAseta oikeaksi vastausvaihtoehdoksi 2:\n/captcha_poll correct_option 2\n\nAseta Captcha-tilaksi kysely:\n/captcha_mode poll",

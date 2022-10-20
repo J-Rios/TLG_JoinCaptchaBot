@@ -126,7 +126,7 @@
         "هذا ليس الحل الصحيح. تحقق أكثر، عليك حل المعادلة الرياضية...",
 
     "NEW_USER_KICK":
-        "{} لم ينجز التحقق في مدته. \"المستخدم\" طُرد.",
+        "{} لم يكتمل التحقق بنجاح. تم حظر \"المستخدم\".",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "{} لم ينجز التحقق في مدته. حاولت طرد المستخدم \"User\"، لكني لا أملك صلاحيات إدارية لطرد مستخدمين.",
@@ -141,16 +141,16 @@
         "حاولت حذف هذه الرسالة، لكني لا أملك صلاحية إدارية لحذف الرسائل المرسلة من قبل الآخرين.",
 
     "NEW_USER_BAN":
-        "تحذير: هذه محاولة {} الخامسة للإنضمام للقناة بعد عجزه عن إنجاز التحقق. \"المستخدم\" حُظر. للسماح له بالدخول مجدد، على مدير أن يلغي حظر هذا \"المستخدم\" يدوياً.",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "تحذير: هذه محاولة {} الخامسة للإنضمام للقناة بعد عجزه عن إنجاز التحقق. حاولت حظر \"المستخدم\"، لكنه لم يعد متواجدا في المجموعة (غادرها أو طرد/حظر منها).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "تحذير: هذه محاولة {} الخامسة للإنضمام للقناة بعد عجزه عن إنجاز التحقق. حاولت حظر \"المستخدم\"، لكني لا أملك صلاحيات إدارية في هذه المجموعة.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "تحذير: هذه المرة الخامس التي حاول فيها {} دخول المجموعة وفشل في إنجاز التحقق. حاولت حظر \"المستخدم\"، لكن بسبب مشكلة غير متوقعة (ربما مشكلة اتصال أو خادم) لم أتمكن من ذلك.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "وجدت رسالة مع رابط (أو معرّف) من {}، وهو لم ينجز التحقق. حُذفت الرسالة للحفاظ على تلغرام نظيفا من الغثاء :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "مرحبا {}، أهلا بك في {}. رجاء أجب على الاستفتاء أسفله للتحقق من أنك إنسان. إن لم تفعل ذلك في {}، ستخرج آليا من المجموعة.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "فشل تحقق الاستفتاء، {} اختار جوابا خاطئا. ستخرج خلال 10 ثوان، حاول الانضام مجددا...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "فشل تحقق الاستفتاء، {} اختار جوابا خاطئا. \"المستخدم\" طرد.",
 
     "CAPTCHA_POLL_USAGE":
         "ضبط أحجية السؤال والخيارات\n————————————————\nلا يمكن لنص السؤال أن يكون أكبر من {} حرفا.\n\nنص الخيار لا يمكن أن يكون أكبر من  {} حرفا.\n\nالحد الأقصى لعدد الخيارات هو {}.\n————————————————\nضبط السؤال:\n/captcha_poll question أمتأكد من رغبتك بالانضمام لهذه المجموعة؟\n\nضبط الخيار 1:\n/captcha_poll option 1 لا، لا أريد الانضمام للمجموعة.\n\nضبط الخيار  2:\n/captcha_poll option 2 نعم، أنا إنسان وأرغب بالانضمام للمجموعة.\n\nضبط الخيار  3:\n/captcha_poll option 3 من أنا ومالذي أفعله؟\n\nحذف الخيار 2:\n/captcha_poll option 2 remove\n\nضبط الخيار 2 كصحيح:\n/captcha_poll correct_option 2\n\nغير الأحجية لنمط السؤال:\n/captcha_mode poll",

@@ -126,7 +126,7 @@
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
     "NEW_USER_KICK":
-        "{} 님은 시간 안에 캡차 코드를 입력하지 못했습니다. \"User\" 님은 추방되었습니다.",
+        "{} 보안 문자를 해결하지 못했습니다. \"User\" 님은 추방되었습니다.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "봇에 관리자 권한이 부여되지 않아 \"User\" {} 님을 추방하지 못했습니다.",
@@ -141,16 +141,16 @@
         "이 메시지를 삭제하고 했으나 봇에 관리자 권한이 부여되지 않아 메시지를 삭제하지 못했습니다.",
 
     "NEW_USER_BAN":
-        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치가 내려졌습니다. 이 사용자가 다시 가입하려면 관리자가 수동으로 이 \"user\" 에 대한 제한을 해제해야 합니다.",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 사용자가 더 이상 채팅방에 존재하지 않습니다. (채팅방을 나갔거나 관리자에 의해 이미 추방/제한된 것 같습니다).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 봇에 관리자 권한이 부여되지 않아서 성공하지 못했습니다.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "주의: {} 님이 그룹 가입을 5 번째 요청하고 있으며 캡차를 풀지 못해 \"User\" 님에 대한 제한 조치를 시도했으나 예상하지 못한 문제(네트워크 또는 서버 문제)가 발생하여 성공하지 못했습니다.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "캡차를 아직 풀지 않는 {} 로부터 URL (또는 alias)이 포함된 메시지가 감지되었습니다. 깔끔한 채팅방 유지를 위해 메시지는 삭제되었습니다.:)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "안녕하세요 {} 님, {} 방문을 환영합니다. 봇 계정이 아니라면 아래에 있는 객관식 문제를 풀어주세요. {} 안에 객관식 문제를 풀지 못하면 채팅방에서 자동 추방되니 주의바랍니다.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "객관식 문제 풀기 실패. {} 님은 오답을 선택하셨습니다. 10 초 안에 추방될 것입니다. 채팅방에 다시 입장해주시길 바랍니다...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "객관식 문제 풀기 실패. {} 님은 오답을 선택하셨습니다. \"User\" 님은 추방되셨습니다.",
 
     "CAPTCHA_POLL_USAGE":
         "객관식 문제 풀기 캡차 모드에 사용될 질문과 답안 설정\n————————————————\n질문은 {} 자 미만으로 작성해주세요.\n\n객관식 답안은 {} 자 미만으로 작성해주세요.\n\n답안 갯수는 최대 {} 개까지 만들 수 있습니다.\n————————————————\n객관식 질문 설정:\n/captcha_poll question 이 채팅방에 가입하시겠습니까?\n\n객관식 1번 답안  설정:\n/captcha_poll option 1 아니요, 가입하고 싶지 않습니다.\n\n객관식 2번 답안 설정:\n/captcha_poll option 2 네. 채팅방에 가입하고 싶습니다.\n\n객관식 3번 답안 설정:\n/captcha_poll option 3 난 누구인가, 여긴 어디인가\n\n객관식 2번 답안 삭제:\n/captcha_poll option 2 remove\n\n2번 답안을 정답으로 설정하기:\n/captcha_poll correct_option 2\n\n캡차 모드를 객관식 문제 풀기 모드로 변경하기:\n/captcha_mode poll",
