@@ -126,7 +126,7 @@
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
     "NEW_USER_KICK":
-        "{} ne solvis la CAPTCHA-teston laŭtempe. \"Uzanto\" estis forigita.",
+        "{} ne sukcesis solvi la captcha-testo. \"Uzanto\" estis forigita.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Mi provis forigi la \"uzanton\" {}, sed mi ne havas administran rajton por forigi uzantojn",
@@ -141,16 +141,16 @@
         "Mi provis forviŝi ĉi tiun mesaĝon, sed mi ne estas administranto en la grupo, do mi rajtas forviŝi nur miajn proprajn mesaĝojn.",
 
     "NEW_USER_BAN":
-       "Atentu: Estas la kvina fojo ke {} provas eniri en la grupon sen solvi la . \"Uzanto\" estis blokita. Por permesi la uzanton eniri denove, administranto devas permane forigi la limigon al tiu ĉi \"uzanto\".",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Atentu: Estas la kvina fojo ke {} provas eniri en la grupon sen solvi la CAPTCHA-teston. Mi provis bloki la \"uzanton\", sed la uzanto ne plu estas en la grupo (la uzanto mem forlasis la grupon aŭ estis forigita de administranto).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Atentu: Estas la kvina fojo ke {} provas eniri en la grupon sen solvi la CAPTCHA-teston. Mi provis bloki la \"uzanton\", sed mi ne estas administranto en la grupo, do mi ne rajtas forigi uzantojn el la grupo.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Atentu: Estas la kvina fojo ke {} provas eniri en la grupon sen solvi la CAPTCHA-teston. Mi provis bloki la \"uzanton\", sed pro neatendata problemo (eble eraro en la reto aŭ en la servilo), mi ne povas fari ĝin.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Mi trovis mesaĝon kun URL (aŭ \"alias\") de {}, kiu ankoraŭ ne solvis la CAPTCHA-teston. La mesaĝo estis forviŝita por teni la grupon sen spamo.",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
 
     "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",

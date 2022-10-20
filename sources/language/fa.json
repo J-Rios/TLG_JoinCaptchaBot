@@ -126,7 +126,7 @@
         "عدد درست نیست. با دقت چک کنید, شما باید مساله ریاضی را حل کنید...",
 
     "NEW_USER_KICK":
-        "{} کپچا رو تو زمان خودش حل نکرد. \"کاربر\" کیک شد.",
+        "{} نتوانست کپچا را حل کند. \"کاربر\" کیک شد.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "من سعی کردم \"کاربر\" {} رو کیک کنم, ولی من دسترسی کیک کردن کاربران رو از گروه ندارم.",
@@ -141,16 +141,16 @@
         "من سعی کردم این پیام رو پاک کنم, ولی من دسترسی پاک کردن پیام رو ندارم.",
 
     "NEW_USER_BAN":
-        "هشدار: این پنجمین بار است که {} سعی کرده که تو گروه جوین بده و نتونسته کپچا رو جواب بده. \"کاربر\" بن شد. برای اجازه دادن برای ورود مجدد, یک ادمین باید به صورت دستی این \"کاربر\" را آنبن کند.",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "هشدار: این پنجمین بار است که {} سعی کرده که تو گروه جوین بده و نتونسته کپچا رو جواب بده. من سعی کردم که \"کاربر\" رو بن کنم, ولی دیگر در گروه نیست (از گروه لفت داده یا توسط یکی از ادمین ها کیک شده است).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "هشدار: این پنجمین بار است که {} سعی کرده که تو گروه جوین بده و نتونسته کپچا رو جواب بده. من سعی کردم که \"کاربر\" رو بن کنم, ولی من قابلیت کیک کردن کاربران گروه رو ندارم.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "هشدار: این پنجمین بار است که {} سعی کرده که تو گروه جوین بده و نتونسته کپچا رو جواب بده. من سعی کردم که \"کاربر\" رو بن کنم, ولی به دلیل یک مشکل ناشناخته (شاید بخاطر شبکه یا سرور), نتونستم.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "یک پیام با لینک از {} ارسال شد, و هنوز کپچا رو حل نکرده. پیام پاک شد :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "سلام {}, خوش اومدی به {}. لطفا نظرسنجی زیر رو حل کنید که ثابت بشه ربات نیستید. اگه نتونید توی {} انجامش بدید, به صورت اتوماتیک از گروه کیک میشید.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "شکست خورد, {} جواب اشتباه رو انتخاب کرد. شما در 10 ثانیه کیک خواهید شد, لطفا دوباره در گروه جوین بدید...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "شکست خورد, {} جواب اشتباه رو انتخاب کرد. \"کاربر\" کیک شد.",
 
     "CAPTCHA_POLL_USAGE":
         "تنظیمات نظرسنجی کپچا\n————————————————\nمتن سوال نمیتونه بیشتر از {} حرف باشه.\n\nمتن جواب ها نمیتونه بیشتر از {} حرف باشه.\n\nحداکثر تعداد جواب ها {} تاست.\n————————————————\nتنظیم سوال نظرسنجی:\n/captcha_poll question مطمئنید میخواید تو این گروه جوین بدید؟\n\nتنظیم جواب اول:\n/captcha_poll option 1 خیر, نمیخواهم جوین بدهم.\n\nتنظیم جواب دوم:\n/captcha_poll option 2 بله, من یک انسان هستم و میخواهم جوین بدهم.\n\nتنظیم جواب سوم:\n/captcha_poll option 3 من کیم و چیکار دارم میکنم؟\n\nحذف جواب دوم:\n/captcha_poll option 2 remove\n\nتنظیم جواب دوم به عنوان جواب صحیح:\n/captcha_poll correct_option 2\n\nتغییر حالت کپچا:\n/captcha_mode poll",

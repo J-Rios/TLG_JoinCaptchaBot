@@ -126,7 +126,7 @@
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
     "NEW_USER_KICK":
-        "{} ಕ್ಯಾಪ್ಚಾವನ್ನು ಸಮಯಕ್ಕೆ ಪೂರ್ಣಗೊಳಿಸಿಲ್ಲ.  \"\" ಅನ್ನು ಹೊರಹಾಕಲಾಯಿತು.",
+        "{} ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸಲು ವಿಫಲವಾಗಿದೆ. ಅನ್ನು ಹೊರಹಾಕಲಾಯಿತು.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "ನಾನು User \"User\" {} ಅನ್ನು ಹೊರಹಾಕಲು ಪ್ರಯತ್ನಿಸಿದೆ, ಆದರೆ ಗುಂಪಿನಿಂದ ಬಳಕೆದಾರರನ್ನು ಹೊರಹಾಕಲು ನನಗೆ ಆಡಳಿತ ಹಕ್ಕುಗಳಿಲ್ಲ.",
@@ -141,16 +141,16 @@
         "ನಾನು ಈ ಸಂದೇಶವನ್ನು ಅಳಿಸಲು ಪ್ರಯತ್ನಿಸಿದೆ, ಆದರೆ ನನ್ನಿಂದ ಕಳುಹಿಸದ ಸಂದೇಶಗಳನ್ನು ತೆಗೆದುಹಾಕಲು ನನಗೆ ಆಡಳಿತ ಹಕ್ಕುಗಳಿಲ್ಲ.",
 
     "NEW_USER_BAN":
-        "ಎಚ್ಚರಿಕೆ: {} ಐದನೇ ಬಾರಿಗೆ ಗುಂಪಿನಲ್ಲಿ ಸೇರಲು ಪ್ರಯತ್ನಿಸಿದೆ ಮತ್ತು ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸಲು ವಿಫಲವಾಗಿದೆ.  \"User\" ಅನ್ನು ನಿಷೇಧಿಸಲಾಗಿದೆ. ಅವನ / ಅವಳನ್ನು ಮತ್ತೆ ಪ್ರವೇಶಿಸಲು, ನಿರ್ವಾಹಕನು ಈ  \"User\" ನ ನಿರ್ಬಂಧಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ತೆಗೆದುಹಾಕಬೇಕಾಗುತ್ತದೆ",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "ಎಚ್ಚರಿಕೆ: {} ಐದನೇ ಬಾರಿಗೆ ಗುಂಪಿನಲ್ಲಿ ಸೇರಲು ಪ್ರಯತ್ನಿಸಿದೆ ಮತ್ತು ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸಲು ವಿಫಲವಾಗಿದೆ.  \"User\" ಅನ್ನು ನಿಷೇಧಿಸಲು ನಾನು ಪ್ರಯತ್ನಿಸುತ್ತೇನೆ, ಆದರೆ ಬಳಕೆದಾರನು ಇನ್ನು ಮುಂದೆ ಗುಂಪಿನಲ್ಲಿಲ್ಲ (ಗುಂಪನ್ನು ತೊರೆದಿದ್ದಾನೆ ಅಥವಾ ನಿರ್ವಾಹಕರಿಂದ ಹೊರಹಾಕಲ್ಪಟ್ಟಿದ್ದಾನೆ / ನಿಷೇಧಿಸಲ್ಪಟ್ಟಿದ್ದಾನೆ).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "ಎಚ್ಚರಿಕೆ: {} ಐದನೇ ಬಾರಿಗೆ ಗುಂಪಿನಲ್ಲಿ ಸೇರಲು ಪ್ರಯತ್ನಿಸಿದೆ ಮತ್ತು ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸಲು ವಿಫಲವಾಗಿದೆ. ನಾನು \"User\" ಅನ್ನು ನಿಷೇಧಿಸಲು ಪ್ರಯತ್ನಿಸಿದೆ, ಆದರೆ ಗುಂಪಿನಲ್ಲಿ ಬಳಕೆದಾರರನ್ನು ನಿಷೇಧಿಸಲು ನನಗೆ ಆಡಳಿತ ಹಕ್ಕುಗಳಿಲ್ಲ.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "ಎಚ್ಚರಿಕೆ: {} ಐದನೇ ಬಾರಿಗೆ ಗುಂಪಿನಲ್ಲಿ ಸೇರಲು ಪ್ರಯತ್ನಿಸಿದೆ ಮತ್ತು ಕ್ಯಾಪ್ಚಾವನ್ನು ಪರಿಹರಿಸಲು ವಿಫಲವಾಗಿದೆ. ನಾನು \"User\" ಅನ್ನು ನಿಷೇಧಿಸಲು ಪ್ರಯತ್ನಿಸಿದೆ, ಆದರೆ ಅನಿರೀಕ್ಷಿತ ಸಮಸ್ಯೆಯಿಂದಾಗಿ (ಬಹುಶಃ ನೆಟ್‌ವರ್ಕ್ / ಸರ್ವರ್ ಸಂಬಂಧಿತ), ನಾನು ಅದನ್ನು ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "ಕ್ಯಾಪ್ಚಾವನ್ನು ಇನ್ನೂ ಪರಿಹರಿಸದ {} ನಿಂದ URL (ಅಥವಾ ಅಲಿಯಾಸ್) ನೊಂದಿಗೆ ಸಂದೇಶವನ್ನು ಪತ್ತೆ ಮಾಡಲಾಗಿದೆ. ಟೆಲಿಗ್ರಾಮ್ ಅನ್ನು ಸ್ಪ್ಯಾಮ್‌ನಿಂದ ಮುಕ್ತವಾಗಿರಿಸುವುದಕ್ಕಾಗಿ ಸಂದೇಶವನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
 
     "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",

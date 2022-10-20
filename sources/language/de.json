@@ -126,7 +126,7 @@
         "Das ist nicht die richtige Zahl. Schauen Sie genau hin, Sie müssen die mathematische Gleichung lösen...",
 
     "NEW_USER_KICK":
-        "{} hat das Captcha nicht rechtzeitig abgeschlossen. \"User\" wurde gekickt.",
+        "{} hat das Captcha nicht lösen. \"User\" wurde gekickt.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Ich habe versucht, den Benutzer {} zu kicken, aber ich habe keine Administratorrechte, um Benutzer in der Gruppe zu kicken.",
@@ -141,16 +141,16 @@
         "Ich habe versucht, diese Nachricht zu löschen, habe jedoch keine Administratorrechte zum entfernen von Nachrichten, die nicht von mir gesendet wurden.",
 
     "NEW_USER_BAN":
-        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Benutzer wurde gesperrt. Um ihn erneut beitreten zu lassen, muss ein Administrator die Einschränkungen dieses Benutzers manuell entfernen.",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den Benutzer zu sperren, aber der Benutzer ist nicht in der Gruppe (hat die Gruppe verlassen oder wurde von einem Administrator gekickt / gesperrt).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den Benutzer zu sperren, aber ich habe keine Administratorrechte, um Benutzer in der Gruppe zu sperren.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warnung: Dies ist das fünfte Mal, dass {} versucht hat, der Gruppe beizutreten, und das Captcha nicht gelöst werden konnte. Ich habe versucht, den Benutzer zu sperren, aber aufgrund eines unerwarteten Problems (möglicherweise im Zusammenhang mit dem Netzwerk/Server) kann ich das nicht tun.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Es wurde eine Nachricht mit einer URL (oder einem Alias) von {} gefunden, die das Captcha noch nicht gelöst hat. Die Nachricht wurde entfernt, um Telegram frei von Spam zu halten:)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Hallo {}, willkommen bei {}, bitte beantworte die Frage im Captcha, um zu bestätigen, dass du ein Mensch bist. Wenn du das Captcha in {} nicht löst, wirst du automatisch aus der Gruppe gekickt.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha Frage fehlgeschlagen, {} hat eine falsche Antwort ausgewählt. Du wirst in 10 Sekunden gekickt, versuche nochmal beizutreten",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha Frage fehlgeschlagen, {} hat eine falsche Antwort ausgewählt. Benutzer wurde gekickt",
 
     "CAPTCHA_POLL_USAGE":
         "Stellen Sie die Captcha Frage und Antworten ein\n————————————————\nFrage kann nicht lönger als {} Zeichen sein.\n\nAntworten können nicht länger als {} Zeichen sein.\n\nMaximale Anzahl der Antworten ist {}.\n————————————————\nFrage einstellen:\n/captcha_poll question Bist du sicher, dieser Gruppe beitreten zu wollen?\n\nAntwort 1 einstellen:\n/captcha_poll option 1 Nein, ich möchte nicht beitreten.\n\nAntwort 2 einstellen:\n/captcha_poll option 2 Sicher, ich bin ein Mensch und möchte beitreten.\n\nAntwort 3 einstellen:\n/captcha_poll option 3 Wer bin ich und was mach ich hier?\n\nEntfernen Sie Antwort 2:\n/captcha_poll option 2 remove\n\nAntwort 2 auf richtige Antwort stellen:\n/captcha_poll correct_option 2\n\nCaptcha in den Frage Modus wechseln:\n/captcha_mode poll",
