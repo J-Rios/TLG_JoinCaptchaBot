@@ -251,7 +251,7 @@ CONST = {
          "\n" \
         "If you want to use this captcha Bot without restriction in large " \
         "groups, follow next instructions:\n" \
-        "https://www.buymeacoffee.com/joincaptchabot/joincaptchabot-large-groups\n" \
+        "https://ko-fi.com/Post/JoinCaptchaBot-for-large-groups-V7V3ANADF\n" \
         "\n" \
         "Best Regards.",
 
