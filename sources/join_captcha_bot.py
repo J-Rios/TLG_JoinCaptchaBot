@@ -20,7 +20,6 @@ Version:
 ###############################################################################
 ### Imported modules
 
-from operator import is_
 from platform import system as os_system
 
 from signal import signal, SIGTERM, SIGINT
