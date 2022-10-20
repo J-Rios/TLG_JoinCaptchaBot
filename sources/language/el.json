@@ -126,7 +126,7 @@
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
     "NEW_USER_KICK":
-        "Ο/Η {} δεν συμπλήρωσε τον γρίφο (captcha) μέσα στον δοσμένο χρόνο. Ο/Η \"User\" απομακρύνθηκε από το γκρουπ.",
+        "Ο/Η {} αποτυγχάνουν να λύσουν το captcha. Ο/Η \"User\" απομακρύνθηκε από το γκρουπ.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Προσπάθησα να διώξω το χρήστη \"User\" {}, αλλά δεν έχω δικαιώματα διαχείρισης για να διώχνω χρήστες από την ομάδα.",
@@ -141,16 +141,16 @@
         "Προσπάθησα να διαγράψω αυτό το μήνυμα, αλλά δεν έχω τα δικαιώματα διαχείρισης για την κατάργηση μηνυμάτων που δεν έχουν σταλεί από εμένα.",
 
     "NEW_USER_BAN":
-        "Προειδοποίση: Αυτή είναι η 5η φορά που ο {} προσπάθησε να μπει στο group και απέτυχε να λύσει το γρίφο captcha. \"User\" αφαιρέθηκε. Για να τον/την αφήσεις να μπει ξανά, ένας Διαχειριστής θα πρέπει να το αφαιρέσει χειροκίνητα τους περιορισμούς του/της \"user\".",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Προειδοποίση: Αυτή είναι η 5η φορά που ο {} προσπάθησε να μπει στο group και απέτυχε να λύσει το γρίφο captcha. Προσπάθησα να αφαιρέσω τον/την \"User\", αλλά ο/η χρήστης/τρια δεν είναι πια στο group (έφυγε από το group ή τον έδιωξε κάποιος Διαχειριστής).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Προειδοποίση: Αυτή είναι η 5η φορά που ο {} προσπάθησε να μπει στο group και απέτυχε να λύσει το γρίφο captcha. Προσπάθησα να αφαιρέσω τον/την \"User\", αλλά δεν έχω δικαιώματα Διαχειριστή για να απομακρύνω χρήστες από αυτό το group.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Προειδοποίση: Αυτή είναι η 5η φορά που ο {} προσπάθησε να μπει στο group και απέτυχε να λύσει το γρίφο captcha. Προσπάθησα να αφαιρέσω τον/την \"User\", αλλά αλλά εξαιτίας ενός απροσδόκητου προβλήματος (ίσως πρόβλημα στο δίκτυο/διακομιστή), δεν μπορώ να το κάνω αυτό.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Εντοπίστηκε ένα μήνυμα με URL (ή alias) από {}, που δεν έχει λύσει το γρίφο captcha ακόμα. Το μήνυμα διαγράφηκε για να διατηρήσουμε το Telegram καθαρό από Spam :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Γειά σου {}, καλώς ήρθες στην ομάδα {}. Παρακαλώ απάντησε στην παρακάτω ερώτηση προς απόδειξη ότι δεν είσαι robot. Εάν δεν απαντήσεις μέσα σε {}, θα διωχθείς αυτόματα απο την ομάδα.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha poll fail, {} απάντησες λάθος. Θα απομακρυνθείς σε 10δ, παρακαλώ προσπάθησε να μπεις στο group ξανά...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} απάντησες λάθος. \"User\" αφαιρέθηκε.",
 
     "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\n Το κείμενο της ερώτησης δεν μπορεί να έχει περισσότερους από {} χαρακτήρες.\n\n Option text δεν μπορεί να έχει περισσότερους από {} χαρακτήρες \n\n Maximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Είσαι σίγουρος ότι θες να μπεις σε αυτό το group?\n\n Set Poll Option 1:\n/captcha_poll option 1 Μπα, δε θέλω να μπω σε αυτό το group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Σίγουρα, είμαι άνθρωπος και θέλω να μπω σε αυτό το group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Ποιος είμαι και τι κάνω?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",

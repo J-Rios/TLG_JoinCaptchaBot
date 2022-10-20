@@ -126,7 +126,7 @@
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
     "NEW_USER_KICK":
-        "{} heeft de captcha niet op tijd voltooid. \"User\" werd eruit getrapt.",
+        "{} kon de captcha niet oplossen. \"User\" werd eruit getrapt.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Ik probeerde \"User\" {} eruit te trappen, maar ik heb geen adminrechten om gebruikers uit de groep te verwijderen.",
@@ -141,16 +141,16 @@
         "Ik heb geprobeerd dit bericht te verwijderen, maar ik heb niet de adminrechten om berichten te verwijderen die niet door mij zijn verzonden.",
 
     "NEW_USER_BAN":
-        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. \"User\" is gebanned. Om hem/haar weer binnen te laten, moet een Admin deze ban handmatig opheffen \"user\".",
+        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar de gebruiker zit niet meer in de groep (heeft de groep verlaten of is eruit gegooid door een Admin).",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar heb hiervoor niet de adminrechten om gebruikers uit de groep te verwijderen.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Waarschuwing: dit is de vijfde keer dat {} heeft geprobeerd lid te worden van de groep en de captcha niet heeft opgelost. Ik probeerde \"User\" te bannen, maar vanwege een onverwacht probleem (misschien gerelateerd aan netwerk/server?), lukt dat niet.",
+        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Bericht gevonden met een URL (of alias) van {}, die de captcha nog niet heeft opgelost. Het bericht is verwijderd om Telegram spamvrij te houden :)",
@@ -224,11 +224,8 @@
     "POLL_NEW_USER":
         "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
 
-    "CAPTCHA_POLL_FAIL_0":
+    "CAPTCHA_POLL_FAIL":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
-
-    "CAPTCHA_POLL_FAIL_1":
-        "Captcha poll fail, {} select a wrong answer. \"User\" was kicked out.",
 
     "CAPTCHA_POLL_USAGE":
         "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",

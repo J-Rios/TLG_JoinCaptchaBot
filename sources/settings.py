@@ -114,5 +114,13 @@ SETTINGS = {
     "CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG": 0,
 
     # Custom Welcome message max length
-    "CAPTCHABOT_MAX_WELCOME_MSG_LENGTH": 3968
+    "CAPTCHABOT_MAX_WELCOME_MSG_LENGTH": 3968,
+
+    # Maximum number of times a user joins a group and don't solve the captcha
+    # If a user don't solve the captcha after this, it will be ban instead kick
+    "CAPTCHABOT_MAX_FAIL_BAN": 5,
+
+    # Maximum number of times a user fail to solve a Poll captcha
+    # If a user don't solve the captcha after this, it will be ban instead kick
+    "CAPTCHABOT_MAX_FAIL_BAN_POLL": 3
 }

@@ -11,14 +11,15 @@ The Bot sends an image captcha for each new user, and kicks any of them that can
 
 Do you like this Bot? Buy me a coffee :)
 
-Paypal:  
+Paypal:
+
 [https://www.paypal.me/josrios](https://www.paypal.me/josrios)
 
 ## Installation
 
 Note: Use Python 3.6 or above to install and run the Bot, previous version are unsupported.
 
-To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), wich uses Pillow to generate the images.
+To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), which uses Pillow to generate the images.
 
 1. Install Pillow prerequisites:
 
@@ -30,7 +31,7 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 
     ```bash
     git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
-    pip install -r TLG_JoinCaptchaBot/requirements.txt
+    python3 -m pip install -r TLG_JoinCaptchaBot/requirements.txt
     ```
 
 3. Go to project sources and give execution permission to usage scripts:
@@ -50,14 +51,23 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 
 To ease usage a `run`, `status`, and `kill` scripts have been provided.
 
-- Launch the Bot:  
-`./run`
+- Launch the Bot:
 
-- Check if the script is running:  
-`./status`
+    ```bash
+    ./run
+    ```
 
-- Stop the Bot:  
-`./kill`
+- Check if the script is running:
+
+    ```bash
+    ./status
+    ```
+
+- Stop the Bot:
+
+    ```bash
+    ./kill
+    ```
 
 ## Systemd service
 
@@ -127,7 +137,7 @@ You can set Bot to be Private in "settings.py" file:
 
 **Note:** If you have a Public Bot and set it to Private, it will leave any group where is not allowed to be used when a new user joins.
 
-**Note:** Telegram Private Groups could changes their chat ID when it become a public supergroup, so the Bot will leave the group and the owner has to set the new group chat ID with /allow_group.
+**Note:** Telegram Private Groups could changes their chat ID when it become a public super-group, so the Bot will leave the group and the owner has to set the new group chat ID with /allow_group.
 
 ## Scalability (Polling or Webhook)
 
@@ -156,7 +166,7 @@ To use Polling instead Webhook, just set host value back to none:
 
 ## Environment Variables Setup
 
-You can setup some Bot properties manually changing their values in settings.py file, but also you can use enviroment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Enviroments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
+You can setup some Bot properties manually changing their values in settings.py file, but also you can use environment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
 
 ## Adding a New Language
 
