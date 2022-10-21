@@ -12,9 +12,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    20/10/2022
+    21/10/2022
 Version:
-    1.27.0
+    1.27.1
 '''
 
 ###############################################################################
@@ -1020,15 +1020,15 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         if (captcha_mode == "poll") and (solve_poll_request_msg_id is not None):
             new_users[chat_id][join_user_id]["msg_to_rm"].append(solve_poll_request_msg_id)
         # Restrict user to deny send any kind of message until captcha is solve
-        # Allow send text messages for image based captchas (nums and maths)
-        if (captcha_mode == "nums") or (captcha_mode == "math"):
-            # Restrict user to only allow send text messages
-            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=True,
+        # Allow send text messages for image based captchas that requires it
+        if (captcha_mode == "poll") or (captcha_mode == "button"):
+            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=False,
                 send_media=False, send_stickers_gifs=False, insert_links=False,
                 send_polls=False, invite_members=False, pin_messages=False,
                 change_group_info=False)
         else:
-            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=False,
+            # Restrict user to only allow send text messages
+            tlg_restrict_user(bot, chat_id, join_user_id, send_msg=True,
                 send_media=False, send_stickers_gifs=False, insert_links=False,
                 send_polls=False, invite_members=False, pin_messages=False,
                 change_group_info=False)
