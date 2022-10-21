@@ -73,12 +73,12 @@ SETTINGS = {
     "CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME": 10,
 
     # Initial captcha difficult level
-    "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 2,
+    "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 3,
 
     # Initial captcha characters mode (ascii, hex, nums, math, poll, or button)
     "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
 
-    # Initial remove result messages cgroup onfiguration
+    # Initial remove result messages group configuration
     "CAPTCHABOT_INIT_RM_RESULT_MSG": True,
 
     # Initial remove welcome message group configuration
