@@ -126,7 +126,7 @@
         "Das ist nicht die richtige Zahl. Schauen Sie genau hin, Sie müssen die mathematische Gleichung lösen...",
 
     "NEW_USER_KICK":
-        "{} hat das Captcha nicht lösen. \"User\" wurde gekickt.",
+        "{} hat das Captcha nicht gelöst. \"User\" wurde gekickt.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
         "Ich habe versucht, den Benutzer {} zu kicken, aber ich habe keine Administratorrechte, um Benutzer in der Gruppe zu kicken.",
