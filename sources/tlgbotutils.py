@@ -79,9 +79,17 @@ def tlg_get_chat_members_count(bot, chat_id, timeout=None):
     return result
 
 
+def tlg_get_msg_topic(msg):
+    '''Check and get Topic ID from a received message.'''
+    if not msg.is_topic_message:
+        return None
+    return msg.message_thread_id
+
+
 def tlg_send_msg(bot, chat_id, text, parse_mode=None,
     disable_web_page_preview=None, disable_notification=True,
-    reply_to_message_id=None, reply_markup=None, timeout=None):
+    reply_to_message_id=None, reply_markup=None, topic_id=None,
+    timeout=None, **kwargs):
     '''Bot try to send a text message'''
     sent_result = dict()
     sent_result["msg"] = None
@@ -95,7 +103,8 @@ def tlg_send_msg(bot, chat_id, text, parse_mode=None,
             parse_mode=parse_mode, reply_markup=reply_markup,
             disable_web_page_preview=disable_web_page_preview,
             disable_notification=disable_notification,
-            reply_to_message_id=reply_to_message_id, timeout=timeout)
+            reply_to_message_id=reply_to_message_id,
+            message_thread_id=topic_id, timeout=timeout, **kwargs)
     except TelegramError as e:
         sent_result["error"] = str(e)
         printts("[{}] {}".format(chat_id, sent_result["error"]))
@@ -104,7 +113,7 @@ def tlg_send_msg(bot, chat_id, text, parse_mode=None,
 
 def tlg_send_image(bot, chat_id, photo, caption=None,
     disable_notification=True, reply_to_message_id=None,
-    reply_markup=None, timeout=40, parse_mode=None):
+    reply_markup=None, parse_mode=None, topic_id=None, timeout=40, **kwargs):
     '''Bot try to send an image message'''
     sent_result = dict()
     sent_result["msg"] = None
@@ -113,7 +122,8 @@ def tlg_send_image(bot, chat_id, photo, caption=None,
         sent_result["msg"] = bot.send_photo(chat_id=chat_id, photo=photo,
             caption=caption, disable_notification=disable_notification,
             reply_to_message_id=reply_to_message_id, reply_markup=reply_markup,
-            timeout=timeout, parse_mode=parse_mode)
+            parse_mode=parse_mode, message_thread_id=topic_id, timeout=timeout,
+            **kwargs)
     except TelegramError as e:
         sent_result["error"] = str(e)
         printts("[{}] {}".format(chat_id, sent_result["error"]))
@@ -126,7 +136,7 @@ def tlg_send_poll(bot, chat_id, question, options, correct_option_id=None,
                   is_closed=None, disable_notification=True,
                   reply_to_message_id=None, reply_markup=None,
                   explanation_parse_mode=DEFAULT_NONE, close_date=None,
-                  timeout=40, **kwargs):
+                  topic_id=None, timeout=40, **kwargs):
     '''Bot try to send a Poll message'''
     sent_result = dict()
     sent_result["msg"] = None
@@ -138,7 +148,8 @@ def tlg_send_poll(bot, chat_id, question, options, correct_option_id=None,
             correct_option_id=correct_option_id, is_closed=is_closed,
             disable_notification=disable_notification,
             reply_to_message_id=reply_to_message_id, reply_markup=reply_markup,
-            timeout=timeout, explanation=explanation,
+            message_thread_id=topic_id, timeout=timeout,
+            explanation=explanation,
             explanation_parse_mode=explanation_parse_mode,
             open_period=open_period, close_date=close_date, **kwargs)
     except TelegramError as e:
