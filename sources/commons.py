@@ -53,10 +53,10 @@ def get_unix_epoch():
     return epoch
 
 
-def is_int(s):
+def is_int(element):
     '''Check if the string is an integer number'''
     try:
-        int(s)
+        int(element)
         return True
     except ValueError:
         return False
@@ -65,11 +65,11 @@ def is_int(s):
 def add_lrm(str_to_modify):
     '''Add a Left to Right Mark (LRM) at provided string start'''
     try:
-        barray = bytearray(b"\xe2\x80\x8e")
+        byte_array = bytearray(b"\xe2\x80\x8e")
         str_to_modify = str_to_modify.encode("utf-8")
-        for b in str_to_modify:
-            barray.append(b)
-        str_to_modify = barray.decode("utf-8")
+        for char in str_to_modify:
+            byte_array.append(char)
+        str_to_modify = byte_array.decode("utf-8")
     except Exception:
         logger.error(format_exc())
     return str_to_modify
@@ -88,9 +88,9 @@ def rm_lrm(str_to_modify):
 def create_parents_dirs(file_path):
     '''Create all parents directories from provided file path (mkdir -p $file_path).'''
     try:
-        parentdirpath = path.dirname(file_path)
-        if not path.exists(parentdirpath):
-            makedirs(parentdirpath, 0o775)
+        parent_dir_path = path.dirname(file_path)
+        if not path.exists(parent_dir_path):
+            makedirs(parent_dir_path, 0o775)
     except Exception:
         logger.error(format_exc())
         logger.error("Can't create parents directories of {%s}.", file_path)
@@ -113,12 +113,12 @@ def file_write(file_path, text="", mode="a"):
         logger.info("File {%s} not found, creating it...", file_path)
     # Try to Open and write to the file
     try:
-        with open(file_path, mode, encoding="utf-8") as f:
-            if type(text) is str:
-                f.write(text)
-            elif type(text) is list:
+        with open(file_path, mode, encoding="utf-8") as file:
+            if isinstance(text, str):
+                file.write(text)
+            elif isinstance(text, list):
                 for line in text:
-                    f.write(f"{line}\n")
+                    file.write(f"{line}\n")
     except Exception:
         logger.error(format_exc())
         logger.error("Can't write to file {%s}", file_path)
@@ -128,11 +128,11 @@ def file_read(file_path):
     '''Read content of a plain text file and return a list of each text line.'''
     list_read_lines = []
     try:
-        with open(file_path, 'r') as f:
-            for line in f:
+        with open(file_path, "r", encoding="utf8") as file:
+            for line in file:
                 if line is None:
                     continue
-                if (line == "") or (line == "\r\n") or (line == "\r") or (line == "\n"):
+                if line in ["", "\r\n", "\r", "\n"]:
                     continue
                 line = line.replace("\r", "")
                 line = line.replace("\n", "")
@@ -148,7 +148,7 @@ def list_remove_element(the_list, the_element):
     try:
         i = the_list.index(the_element)
         del the_list[i]
-    except Exception as e:
+    except Exception:
         # The element could not be in the list
         logger.error(format_exc())
         logger.error("Can't remove element from a list")
@@ -159,8 +159,8 @@ def list_remove_element(the_list, the_element):
 def pickle_save(pickle_file_path, data):
     '''Save data to pickle file'''
     try:
-        with open(pickle_file_path, "wb") as f:
-            pickle_dump(data, f)
+        with open(pickle_file_path, "wb") as file:
+            pickle_dump(data, file)
     except Exception:
         logger.error(format_exc())
         return False
@@ -170,8 +170,8 @@ def pickle_save(pickle_file_path, data):
 def pickle_restore(pickle_file_path):
     '''Load data from pickle file'''
     try:
-        with open(pickle_file_path, "rb") as f:
-            last_session_data = pickle_load(f)
+        with open(pickle_file_path, "rb") as file:
+            last_session_data = pickle_load(file)
     except Exception:
         logger.error(format_exc())
         return None
