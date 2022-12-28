@@ -19,47 +19,47 @@ Version:
 '''
 
 ###############################################################################
-### Imported modules
+### Standard Libraries
 
 # Logging Library
 import logging
 
+# System Signals Library
+import signal
+
+# Collections Data Types Library
+from collections import OrderedDict
+
+# JSON Library
+from json import dumps as json_dumps
+
+# Operating System Library
+from os import kill, getpid, path, remove, makedirs, listdir
+
+# Random Library
+from random import choice, randint
+
 # Regular Expressions Library
 import re
+
+# High Level Files Utils Library
+from shutil import rmtree
 
 # System Library
 from sys import argv as sys_argv
 from sys import exit as sys_exit
 
-# Operating System Library
-from os import kill, getpid, path, remove, makedirs, listdir
-
-# High Level Files Utils Library
-from shutil import rmtree
+# Threads Library
+from threading import Thread
 
 # Time Library
 from time import time, sleep
 
-# Threads Library
-from threading import Thread
-
-# Collections Data Types Library
-from collections import OrderedDict
-
-# Random Library
-from random import choice, randint
-
-# JSON Library
-from json import dumps as json_dumps
-
-# Device Platform Detection Library
-from platform import system as os_system
-
-# SYstem Signals Library
-from signal import signal, SIGTERM, SIGINT
-
 # Error Traceback Library
 from traceback import format_exc
+
+###############################################################################
+### Third-Party Libraries
 
 # Image Captcha Generator Library
 from multicolorcaptcha import CaptchaGenerator
@@ -88,7 +88,10 @@ from telegram.error import (
     TimedOut, NetworkError
 )
 
-# Local Telegram Bot Ease Library
+###############################################################################
+### Local Libraries
+
+# Telegram Bot Ease Library
 from tlgbotutils import (
     tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
@@ -99,23 +102,19 @@ from tlgbotutils import (
     tlg_has_new_member_join_group, tlg_get_msg_topic
 )
 
-# Local Commons Library
+# Commons Library
 from commons import (
     is_int, add_lrm, file_exists, file_write, file_read,
     list_remove_element, get_unix_epoch, pickle_save, pickle_restore
 )
 
-# Local Constants Library
+# Constants Library
 from constants import (
     SCRIPT_PATH, CONST, TEXT
 )
 
-# Local Thread-Safe JSON Library
+# Thread-Safe JSON Library
 from tsjson import TSjson
-
-# Add SIGUSR1 Signal on Windows OS
-if os_system() != "Windows":
-    from signal import SIGUSR1
 
 ###############################################################################
 ### Logger Setup
@@ -305,9 +304,8 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
         return False
     if not hasattr(message, "from_user"):
         return False
-    else:
-        if not hasattr(message.from_user, "id"):
-            return False
+    if not hasattr(message.from_user, "id"):
+        return False
     # Get sent message ID and calculate delete time
     chat_id = message.chat_id
     user_id = message.from_user.id
@@ -428,12 +426,11 @@ def load_urls_regex(file_path):
     tlds_str = ""
     list_file_lines = []
     try:
-        with open(file_path, "r") as file:
+        with open(file_path, "r", encoding="utf-8") as file:
             for line in file:
                 if line is None:
                     continue
-                if (line == "") or (line == "\r\n") \
-                or (line == "\r") or (line == "\n"):
+                if line in ["", "\r\n", "\r", "\n"]:
                     continue
                 # Ignore lines that start with # (first header line of
                 # IANA TLD list file)
@@ -466,10 +463,10 @@ def load_texts_languages():
                 CONST["INIT_LANG"].lower(), lang_file)
         logger.info("Exit.\n")
         sys_exit(0)
-    for lang_iso_code in TEXT:
+    for lang_iso_code, _ in TEXT.items():
         TEXT[lang_iso_code] = json_init_lang_texts.copy()
     # Load supported languages texts
-    for lang_iso_code in TEXT:
+    for lang_iso_code, _ in TEXT.items():
         lang_file = f'{CONST["LANG_DIR"]}/{lang_iso_code.lower()}.json'
         json_lang_file = TSjson(lang_file)
         json_lang_texts = json_lang_file.read()
@@ -480,8 +477,7 @@ def load_texts_languages():
                     lang_iso_code, lang_file)
             logger.info("Exit.\n")
             sys_exit(0)
-        for text in json_lang_texts:
-            TEXT[lang_iso_code][text] = json_lang_texts[text]
+        TEXT[lang_iso_code] = json_lang_texts
     # Check if there is some missing text in any language
     for lang_iso_code in TEXT:
         lang_iso_code = lang_iso_code.lower()
@@ -835,7 +831,7 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
         #else:
         #    return
     # Groups
-    elif chat.type in [Chat.GROUP, Chat.SUPERGROUP]:
+    if chat.type in [Chat.GROUP, Chat.SUPERGROUP]:
         # Bot added to group
         if not was_member and is_member:
             # Get the language of the Telegram client software the Admin
@@ -860,7 +856,6 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
                 return
             # Send bot join message
             tlg_send_msg(bot, chat.id, TEXT[admin_language]["START"])
-            return
         # Bot leave/removed from group
         elif was_member and not is_member:
             # Bot leave the group
@@ -872,21 +867,16 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
                 logger.info(
                         "[{%s}] Bot removed from group by {%s}",
                         chat.id, caused_by_user.username)
-            return
-        else:
-            return
-    # Channels
-    else:
-        # Bot added to channel
-        if not was_member and is_member:
-            # Leave it (Bot don't allowed to be used in Channels)
-            logger.info("Bot try to be added to a channel")
-            tlg_send_msg(bot, chat.id, CONST["BOT_LEAVE_CHANNEL"])
-            tlg_leave_chat(bot, chat.id)
-            return
-        # Bot leave/removed channel
-        else:
-            return
+        return
+    # Bot added to channel
+    if not was_member and is_member:
+        # Leave it (Bot don't allowed to be used in Channels)
+        logger.info("Bot try to be added to a channel")
+        tlg_send_msg(bot, chat.id, CONST["BOT_LEAVE_CHANNEL"])
+        tlg_leave_chat(bot, chat.id)
+        return
+    # Bot leave/removed channel
+    return
 
 
 def chat_member_status_change(update: Update, context: CallbackContext):
@@ -1043,9 +1033,17 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                 callback_data=f"image_captcha {join_user_id}")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         # Send the image
-        sent_result = tlg_send_image(
-                bot, chat_id, open(captcha["image"],"rb"), img_caption,
-                reply_markup=reply_markup)
+        sent_result = {}
+        sent_result["msg"] = None
+        try:
+            with open(captcha["image"], "rb") as file_image:
+                sent_result = tlg_send_image(
+                        bot, chat_id, file_image, img_caption,
+                        reply_markup=reply_markup)
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to send image to Telegram")
+            send_problem = True
         if sent_result["msg"] is None:
             send_problem = True
         # Remove sent captcha image file from file system
@@ -1099,7 +1097,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         # Restrict user to deny send any kind of message until captcha
         # is solve. Allow send text messages for image based captchas
         # that requires it
-        if (captcha_mode == "poll") or (captcha_mode == "button"):
+        if captcha_mode in ["poll", "button"]:
             tlg_restrict_user(
                     bot, chat_id, join_user_id, send_msg=False,
                     send_media=False, send_stickers_gifs=False,
@@ -1640,11 +1638,18 @@ def button_request_captcha(bot, query):
                 chat_id, captcha_num)
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
                 user_name, chat_title, timeout_str)
-    input_media = InputMediaPhoto(media=open(captcha["image"], "rb"),
-            caption=img_caption)
-    edit_result = tlg_edit_msg_media(
-            bot, chat_id, msg_id, media=input_media, reply_markup=reply_markup,
-            timeout=20)
+    # Read and send image
+    edit_result = {}
+    try:
+        with open(captcha["image"], "rb") as file_img:
+            input_media = InputMediaPhoto(media=file_img, caption=img_caption)
+            edit_result = tlg_edit_msg_media(
+                    bot, chat_id, msg_id, media=input_media,
+                    reply_markup=reply_markup, timeout=20)
+    except Exception:
+        logger.error(format_exc())
+        logger.error("Fail to update image for Telegram")
+        edit_result["error"] == "Fail to update image for Telegram"
     if edit_result["error"] == "":
         # Set and modified to new expected captcha number
         new_users[chat_id][user_id]["join_data"]["captcha_num"] = captcha_num
@@ -2156,10 +2161,8 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     # Get and configure chat to provided captcha difficulty
     if is_int(args[0]):
         new_difficulty = int(args[0])
-        if new_difficulty < 1:
-            new_difficulty = 1
-        if new_difficulty > 5:
-            new_difficulty = 5
+        new_difficulty = max(new_difficulty, 1)
+        new_difficulty = min(new_difficulty, 5)
         save_config_property(
                 group_id, "Captcha_Difficulty_Level", new_difficulty)
         bot_msg = TEXT[lang]["DIFFICULTY_CHANGE"].format(new_difficulty)
@@ -2546,8 +2549,7 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
         return
     # Check for valid expected argument values
     restrict_non_text_msgs = args[0]
-    if (restrict_non_text_msgs != "enable") \
-    and (restrict_non_text_msgs != "disable"):
+    if restrict_non_text_msgs not in ["enable", "disable"]:
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
@@ -3199,9 +3201,17 @@ def cmd_captcha(update: Update, context: CallbackContext):
             f"Captcha Level: {difficulty}\n" \
             f"Captcha Mode: {captcha_mode}\n" \
             f"Captcha Code: {captcha_code}"
-    tlg_send_image(
-            bot, chat_id, open(captcha["image"],"rb"), img_caption,
-            topic_id=tlg_get_msg_topic(update_msg))
+    # Send the image
+    sent_result = {}
+    sent_result["msg"] = None
+    try:
+        with open(captcha["image"], "rb") as file_image:
+            tlg_send_image(
+                bot, chat_id, file_image, img_caption,
+                topic_id=tlg_get_msg_topic(update_msg))
+    except Exception:
+        logger.error(format_exc())
+        logger.error("Fail to send image to Telegram")
     # Remove sent captcha image file from file system
     if path.exists(captcha["image"]):
         remove(captcha["image"])
@@ -3243,56 +3253,58 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
         tlg_send_msg(
                 bot, chat_id, CONST["ALLOWUSERLIST_USAGE"], topic_id=topic_id)
         return
-    else:
-        if len(args) <= 1:
+    # Just one argument provided
+    if len(args) == 1:
+        tlg_send_msg(
+                bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+                topic_id=topic_id)
+        return
+    # Invalid argument provided
+    if args[0] not in ["add", "rm"]:
+        tlg_send_msg(
+                bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+                topic_id=topic_id)
+        return
+    # Expected argument provided
+    add_rm = args[0]
+    user = args[1]
+    l_white_users = file_read(CONST["F_ALLOWED_USERS"])
+    if add_rm == "add":
+        if not tlg_is_valid_user_id_or_alias(user):
             tlg_send_msg(
-                    bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+                    bot, chat_id,
+                    "Invalid User ID/Alias.",
                     topic_id=topic_id)
             return
-        if (args[0] != "add") and (args[0] != "rm"):
+        if user not in l_white_users:
+            file_write(CONST["F_ALLOWED_USERS"], f"{user}\n")
             tlg_send_msg(
-                    bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+                    bot, chat_id,
+                    "User added to Global allowed list.",
+                    topic_id=topic_id)
+        else:
+            tlg_send_msg(
+                    bot, chat_id,
+                    "The User is already in Global allowed list.",
+                    topic_id=topic_id)
+        return
+    if add_rm == "rm":
+        if not tlg_is_valid_user_id_or_alias(user):
+            tlg_send_msg(
+                    bot, chat_id, "Invalid User ID/Alias.",
                     topic_id=topic_id)
             return
-        add_rm = args[0]
-        user = args[1]
-        l_white_users = file_read(CONST["F_ALLOWED_USERS"])
-        if add_rm == "add":
-            if not tlg_is_valid_user_id_or_alias(user):
-                tlg_send_msg(
-                        bot, chat_id,
-                        "Invalid User ID/Alias.",
-                        topic_id=topic_id)
-                return
-            if user not in l_white_users:
-                file_write(CONST["F_ALLOWED_USERS"], f"{user}\n")
-                tlg_send_msg(
-                        bot, chat_id,
-                        "User added to Global allowed list.",
-                        topic_id=topic_id)
-            else:
-                tlg_send_msg(
-                        bot, chat_id,
-                        "The User is already in Global allowed list.",
-                        topic_id=topic_id)
-            return
-        if add_rm == "rm":
-            if not tlg_is_valid_user_id_or_alias(user):
-                tlg_send_msg(
-                        bot, chat_id, "Invalid User ID/Alias.",
-                        topic_id=topic_id)
-                return
-            if list_remove_element(l_white_users, user):
-                file_write(CONST["F_ALLOWED_USERS"], l_white_users, "w")
-                tlg_send_msg(
-                        bot, chat_id,
-                        "User removed from Global allowed list.",
-                        topic_id=topic_id)
-            else:
-                tlg_send_msg(
-                        bot, chat_id,
-                        "The User is not in Global allowed list.",
-                        topic_id=topic_id)
+        if list_remove_element(l_white_users, user):
+            file_write(CONST["F_ALLOWED_USERS"], l_white_users, "w")
+            tlg_send_msg(
+                    bot, chat_id,
+                    "User removed from Global allowed list.",
+                    topic_id=topic_id)
+        else:
+            tlg_send_msg(
+                    bot, chat_id,
+                    "The User is not in Global allowed list.",
+                    topic_id=topic_id)
 
 
 def cmd_allowgroup(update: Update, context: CallbackContext):
@@ -3330,49 +3342,51 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
         tlg_send_msg(
                 bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
         return
-    else:
-        if len(args) <= 1:
+    # Just one arguments provided
+    if len(args) == 1:
+        tlg_send_msg(
+                bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+        return
+    # Invalid argument provided
+    if args[0] not in ["add", "rm"]:
+        tlg_send_msg(
+                bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+        return
+    # Expected argument provided
+    add_rm = args[0]
+    group = args[1]
+    l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
+    if add_rm == "add":
+        if not tlg_is_valid_group(group):
             tlg_send_msg(
-                    bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+                    bot, chat_id, "Invalid Group ID.", topic_id=topic_id)
             return
-        if (args[0] != "add") and (args[0] != "rm"):
+        if group not in l_allowed_groups:
+            file_write(CONST["F_ALLOWED_GROUPS"], f"{group}\n")
             tlg_send_msg(
-                    bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+                    bot, chat_id, "Group added to allowed list.",
+                    topic_id=topic_id)
+        else:
+            tlg_send_msg(
+                    bot, chat_id,
+                    "The group is already in the allowed list.",
+                    topic_id=topic_id)
+        return
+    if add_rm == "rm":
+        if not tlg_is_valid_group(group):
+            tlg_send_msg(
+                    bot, chat_id, "Invalid Group ID.",
+                    topic_id=topic_id)
             return
-        add_rm = args[0]
-        group = args[1]
-        l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
-        if add_rm == "add":
-            if not tlg_is_valid_group(group):
-                tlg_send_msg(
-                        bot, chat_id, "Invalid Group ID.", topic_id=topic_id)
-                return
-            if group not in l_allowed_groups:
-                file_write(CONST["F_ALLOWED_GROUPS"], f"{group}\n")
-                tlg_send_msg(
-                        bot, chat_id, "Group added to allowed list.",
-                        topic_id=topic_id)
-            else:
-                tlg_send_msg(
-                        bot, chat_id,
-                        "The group is already in the allowed list.",
-                        topic_id=topic_id)
-            return
-        if add_rm == "rm":
-            if not tlg_is_valid_group(group):
-                tlg_send_msg(
-                        bot, chat_id, "Invalid Group ID.",
-                        topic_id=topic_id)
-                return
-            if list_remove_element(l_allowed_groups, group):
-                file_write(CONST["F_ALLOWED_GROUPS"], l_allowed_groups, "w")
-                tlg_send_msg(
-                        bot, chat_id, "Group removed from allowed list.",
-                        topic_id=topic_id)
-            else:
-                tlg_send_msg(
-                        bot, chat_id, "The group is not in allowed list.",
-                        topic_id=topic_id)
+        if list_remove_element(l_allowed_groups, group):
+            file_write(CONST["F_ALLOWED_GROUPS"], l_allowed_groups, "w")
+            tlg_send_msg(
+                    bot, chat_id, "Group removed from allowed list.",
+                    topic_id=topic_id)
+        else:
+            tlg_send_msg(
+                    bot, chat_id, "The group is not in allowed list.",
+                    topic_id=topic_id)
 
 ###############################################################################
 ### Bot automatic remove sent messages thread
@@ -3652,10 +3666,10 @@ def main(argc, argv):
     # Using Bot idle() catch external signals instead our signal handler
     updater.idle()
     logger.info("Bot Threads end")
-    if os_system() == "Windows":
-        kill(getpid(), SIGTERM)
+    if hasattr(signal, "SIGUSR1"):
+        kill(getpid(), signal.SIGUSR1)
     else:
-        kill(getpid(), SIGUSR1)
+        kill(getpid(), signal.SIGTERM)
     sleep(1)
     return 0
 
@@ -3722,12 +3736,12 @@ def system_termination_signal_setup():
     function handler.
     '''
     # SIGTERM (kill pid) to signal_handler
-    signal(SIGTERM, system_termination_signal_handler)
+    signal.signal(signal.SIGTERM, system_termination_signal_handler)
     # SIGINT (Ctrl+C) to signal_handler
-    signal(SIGINT, system_termination_signal_handler)
+    signal.signal(signal.SIGINT, system_termination_signal_handler)
     # SIGUSR1 (self-send) to signal_handler
-    if os_system() != "Windows":
-        signal(SIGUSR1, system_termination_signal_handler)
+    if hasattr(signal, "SIGUSR1"):
+        signal.signal(signal.SIGUSR1, system_termination_signal_handler)
 
 ###############################################################################
 ### Runnable Main Script Detection
