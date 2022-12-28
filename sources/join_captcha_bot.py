@@ -220,7 +220,6 @@ def get_chat_config_file(chat_id):
     Determine chat config file from the list by ID. Get the file if
     exists or create it if not.
     '''
-    global files_config_list
     file = OrderedDict([("ID", chat_id), ("File", None)])
     found = False
     if files_config_list:
@@ -292,7 +291,6 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     '''
     Add a telegram message to be auto-delete in specified time.
     '''
-    global to_delete_in_time_messages_list
     # Check if provided message has all necessary attributes
     if message is None:
         return False
@@ -384,7 +382,6 @@ def initialize_resources():
     Initialize resources by populating files list with chats found
     files.
     '''
-    global files_config_list
     # Remove old captcha directory and create it again
     if path.exists(CONST["CAPTCHAS_DIR"]):
         rmtree(CONST["CAPTCHAS_DIR"])
@@ -692,7 +689,6 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     '''
     Kick/Ban a new member that has fail to solve the captcha.
     '''
-    global new_users
     kicked = False
     banned = False
     # Get parameters
@@ -888,7 +884,6 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     to/from group/channel) event handler. Note: if Bot is not an Admin,
     "chat_member" update won't be received.
     '''
-    global new_users
     bot = context.bot
     # Ignore if it is not a new member join
     if not tlg_has_new_member_join_group(update.chat_member):
@@ -1111,7 +1106,6 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
     '''
     New member join the group event handler.
     '''
-    global new_users
     # Get message data
     chat_id = None
     update_msg = tlg_get_msg(update)
@@ -1197,7 +1191,6 @@ def msg_nocmd(update: Update, context: CallbackContext):
     '''
     Non-command text messages handler.
     '''
-    global new_users
     bot = context.bot
     # Get message data
     chat = None
@@ -1438,7 +1431,6 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     '''
     User poll vote received.
     '''
-    global new_users
     bot = context.bot
     active_polls = context.bot_data
     poll_id = update.poll_answer.poll_id
@@ -1573,7 +1565,6 @@ def button_request_captcha(bot, query):
     '''
     Button "Another captcha" pressed handler.
     '''
-    global new_users
     # Get query data
     chat_id = query.message.chat_id
     user_id = query.from_user.id
@@ -1648,7 +1639,6 @@ def button_request_pass(bot, query):
     '''
     Button "I'm not a bot" pressed handler.
     '''
-    global new_users
     # Get query data
     chat_id = query.message.chat_id
     user_id = query.from_user.id
@@ -1815,7 +1805,6 @@ def cmd_connect(update: Update, context: CallbackContext):
     '''
     Command /connect message handler.
     '''
-    global connections
     bot = context.bot
     args = context.args
     # Ignore command if it was a edited message
@@ -1879,7 +1868,6 @@ def cmd_disconnect(update: Update, context: CallbackContext):
     '''
     Command /disconnect message handler.
     '''
-    global connections
     bot = context.bot
     # Ignore command if it was a edited message
     update_msg = getattr(update, "message", None)
@@ -3373,7 +3361,6 @@ def th_selfdestruct_messages(bot):
     Handle remove messages sent by the Bot with the timed self-delete
     function.
     '''
-    global to_delete_in_time_messages_list
     while not force_exit:
         # Thread sleep for each iteration
         sleep(0.01)
@@ -3415,7 +3402,6 @@ def th_time_to_kick_not_verify_users(bot):
     Check if the time for ban new users that has not completed the
     captcha has arrived.
     '''
-    global new_users
     while not force_exit:
         # Thread sleep for each iteration
         sleep(0.01)
@@ -3651,9 +3637,6 @@ def main(argc, argv):
 def system_termination_signal_handler(signal,  frame):
     '''Termination signals detection handler to stop application execution.'''
     global force_exit
-    global updater
-    global th_0
-    global th_1
     force_exit = True
     printts("Termination signal received. Releasing resources...")
     # Close the Bot instance (it wait for updater, dispatcher and other
