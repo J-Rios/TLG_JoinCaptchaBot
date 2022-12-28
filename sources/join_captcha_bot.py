@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/12/2022
+    28/12/2022
 Version:
     1.28.0
 '''
@@ -21,43 +21,71 @@ Version:
 ###############################################################################
 ### Imported modules
 
+# Logging Library
 import logging
+
+# Regular Expressions Library
 import re
 
+# System Library
+from sys import argv as sys_argv
 from sys import exit as sys_exit
+
+# Operating System Library
 from os import kill, getpid, path, remove, makedirs, listdir
+
+# High Level Files Utils Library
 from shutil import rmtree
+
+# Time Library
 from time import time, sleep
+
+# Threads Library
 from threading import Thread
+
+# Collections Data Types Library
 from collections import OrderedDict
+
+# Random Library
 from random import choice, randint
+
+# JSON Library
 from json import dumps as json_dumps
 
+# Device Platform Detection Library
 from platform import system as os_system
+
+# SYstem Signals Library
 from signal import signal, SIGTERM, SIGINT
 
+# Image Captcha Generator Library
 from multicolorcaptcha import CaptchaGenerator
 
+# Python-Telegram_Bot Core Library
 from telegram import (
     Update, Chat, InputMediaPhoto, InlineKeyboardButton,
     InlineKeyboardMarkup, Poll
 )
 
+# Python-Telegram_Bot Extension Library
 from telegram.ext import (
     CallbackContext, Updater, CommandHandler,
     ChatMemberHandler, MessageHandler, Filters,
     CallbackQueryHandler, PollAnswerHandler, Defaults
 )
 
+# Python-Telegram_Bot Utility Library
 from telegram.utils.helpers import (
     escape_markdown
 )
 
+# Python-Telegram_Bot Error Library
 from telegram.error import (
     TelegramError, Unauthorized, BadRequest,
     TimedOut, NetworkError
 )
 
+# Local Telegram Bot Ease Library
 from tlgbotutils import (
     tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
@@ -68,17 +96,21 @@ from tlgbotutils import (
     tlg_has_new_member_join_group, tlg_get_msg_topic
 )
 
+# Local Commons Library
 from commons import (
     printts, is_int, add_lrm, file_exists, file_write, file_read,
     list_remove_element, get_unix_epoch, pickle_save, pickle_restore
 )
 
+# Local Constants Library
 from constants import (
     SCRIPT_PATH, CONST, TEXT
 )
 
+# Local Thread-Safe JSON Library
 from tsjson import TSjson
 
+# Add SIGUSR1 Signal on Windows OS
 if os_system() != "Windows":
     from signal import SIGUSR1
 
@@ -104,76 +136,6 @@ logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         level=logging.INFO
 )
-
-###############################################################################
-### Termination Signals Handler For Program Process
-
-def signal_handler(signal,  frame):
-    '''
-    Termination signals detection handler. It stops APP execution.
-    '''
-    global force_exit
-    global updater
-    global th_0
-    global th_1
-    force_exit = True
-    printts("Termination signal received. Releasing resources...")
-    # Close the Bot instance (it wait for updater, dispatcher and other
-    # internals threads to end)
-    if updater is not None:
-        printts("Closing Bot...")
-        updater.stop()
-    # Launch threads to acquire all messages and users files mutex to
-    # ensure that them are closed (make sure to close the script when no
-    # read/write operation on files)
-    if files_config_list:
-        printts("Closing resource files...")
-        th_list = []
-        for chat_config_file in files_config_list:
-            thread = Thread(
-                    target=th_close_resource_file,
-                    args=(chat_config_file["File"],))
-            th_list.append(thread)
-            thread.start()
-        # Wait for all threads to end
-        for _th in th_list:
-            if _th.is_alive():
-                _th.join()
-    # Wait to end threads
-    printts("Waiting th_0 end...")
-    if th_0 is not None:
-        if th_0.is_alive():
-            th_0.join()
-    printts("Waiting th_1 end...")
-    if th_1 is not None:
-        if th_1.is_alive():
-            th_1.join()
-    # Save current session data
-    save_session()
-    # Close the program
-    printts("All resources released.")
-    printts("Exit 0")
-    sys_exit(0)
-
-
-def th_close_resource_file(file_to_close):
-    '''
-    Threaded function to close resource files in parallel when closing
-    Bot Script.
-    '''
-    file_to_close.lock.acquire()
-
-
-### Signals attachment
-
-# SIGTERM (kill pid) to signal_handler
-signal(SIGTERM, signal_handler)
-  # SIGINT (Ctrl+C) to signal_handler
-signal(SIGINT, signal_handler)
-
-# SIGUSR1 (self-send) to signal_handler
-if os_system() != "Windows":
-    signal(SIGUSR1, signal_handler)
 
 ###############################################################################
 ### JSON Chat Config File Functions
@@ -3531,7 +3493,7 @@ def tlg_error_callback(update, context):
 ###############################################################################
 ### Main Function
 
-def main():
+def main(argc, argv):
     '''
     Main Function.
     '''
@@ -3543,13 +3505,13 @@ def main():
         printts("Error: Bot Token has not been set.")
         printts("Please add your Bot Token to settings.py file.")
         printts("Exit.\n")
-        sys_exit(0)
+        return 1
     # Check if Bot owner has been set in Private Bot mode
     if (CONST["BOT_OWNER"] == "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         printts("Error: Bot Owner has not been set for Private Bot.")
         printts("Please add the Bot Owner to settings.py file.")
         printts("Exit.\n")
-        sys_exit(0)
+        return 1
     printts("Bot started.")
     # Initialize resources by populating files list and configs with
     # chats found files
@@ -3681,8 +3643,82 @@ def main():
         kill(getpid(), SIGUSR1)
     sleep(1)
     printts("Exit 1")
-    sys_exit(1)
+    return 0
 
+###############################################################################
+### System Termination Signals Management
+
+def system_termination_signal_handler(signal,  frame):
+    '''Termination signals detection handler to stop application execution.'''
+    global force_exit
+    global updater
+    global th_0
+    global th_1
+    force_exit = True
+    printts("Termination signal received. Releasing resources...")
+    # Close the Bot instance (it wait for updater, dispatcher and other
+    # internals threads to end)
+    if updater is not None:
+        printts("Closing Bot...")
+        updater.stop()
+    # Launch threads to acquire all messages and users files mutex to
+    # ensure that them are closed (make sure to close the script when no
+    # read/write operation on files)
+    if files_config_list:
+        printts("Closing resource files...")
+        th_list = []
+        for chat_config_file in files_config_list:
+            thread = Thread(
+                    target=th_close_resource_file,
+                    args=(chat_config_file["File"],))
+            th_list.append(thread)
+            thread.start()
+        # Wait for all threads to end
+        for _th in th_list:
+            if _th.is_alive():
+                _th.join()
+    # Wait to end threads
+    printts("Waiting th_0 end...")
+    if th_0 is not None:
+        if th_0.is_alive():
+            th_0.join()
+    printts("Waiting th_1 end...")
+    if th_1 is not None:
+        if th_1.is_alive():
+            th_1.join()
+    # Save current session data
+    save_session()
+    # Close the program
+    printts("All resources released.")
+    printts("Exit 0")
+    sys_exit(0)
+
+
+def th_close_resource_file(file_to_close):
+    '''
+    Threaded function to close resource files in parallel when closing
+    Application through a termination signal.
+    '''
+    file_to_close.lock.acquire()
+
+
+def system_termination_signal_setup():
+    '''
+    Attachment of System termination signals (SIGINT, SIGTERM, SIGUSR1) to
+    function handler.
+    '''
+    # SIGTERM (kill pid) to signal_handler
+    signal(SIGTERM, system_termination_signal_handler)
+    # SIGINT (Ctrl+C) to signal_handler
+    signal(SIGINT, system_termination_signal_handler)
+    # SIGUSR1 (self-send) to signal_handler
+    if os_system() != "Windows":
+        signal(SIGUSR1, system_termination_signal_handler)
+
+###############################################################################
+### Runnable Main Script Detection
 
 if __name__ == "__main__":
-    main()
+    system_termination_signal_setup()
+    return_code = main(len(sys_argv) - 1, sys_argv[1:])
+    sys_exit(return_code)
