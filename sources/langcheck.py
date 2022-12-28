@@ -29,8 +29,8 @@ def is_valid(langname, lang, englang):
             print("{} - OK".format(langname))
             return True
         else:
-            print("{} - FAIL - Brackets Missmatch in Keys: {}".format(langname,
-                    l_brackets_missmatch_keys))
+            print("{} - FAIL - Brackets Missmatch in Keys: {}".format(
+                    langname, l_brackets_missmatch_keys))
             return False
     else:
         print("{} - FAIL - Missing Keys: {}".format(langname, l_missing_keys))
