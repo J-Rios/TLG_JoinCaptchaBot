@@ -697,7 +697,6 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     '''
     Kick/Ban a new member that has fail to solve the captcha.
     '''
-    kicked = False
     banned = False
     # Get parameters
     lang = get_chat_config(chat_id, "Language")
@@ -716,9 +715,7 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
         kick_result = tlg_kick_user(bot, chat_id, user_id)
         if kick_result["error"] == "":
             # Kick success
-            kicked = True
             join_retries = join_retries + 1
-            # Send kicked message
             msg_text = TEXT[lang]["NEW_USER_KICK"].format(user_name)
             if rm_result_msg:
                 tlg_send_selfdestruct_msg_in(
@@ -1123,6 +1120,8 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
     '''
     New member join the group event handler.
     '''
+    # Disable unused arguments
+    del context
     # Get message data
     chat_id = None
     update_msg = tlg_get_msg(update)
@@ -1537,11 +1536,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
         # Notify captcha fail
         logger.info("[{%s}] User {%s} fail poll.", chat_id, user_name)
         bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
-        sent_msg_id = None
         if rm_result_msg:
-            sent_result = tlg_send_msg(bot, chat_id, bot_msg)
-            if sent_result["msg"] is not None:
-                sent_msg_id = sent_result["msg"].message_id
+            tlg_send_selfdestruct_msg_in(
+                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
             tlg_send_msg(bot, chat_id, bot_msg)
         # Wait 10s
@@ -3228,7 +3225,6 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
     user_alias = ""
     if user.username is not None:
         user_alias = f"@{user.username}"
-    lang = get_update_user_lang(update_msg.from_user)
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
     if (str(user_id) != CONST["BOT_OWNER"]) \
@@ -3317,7 +3313,6 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     user_alias = ""
     if user.username is not None:
         user_alias = f"@{user.username}"
-    lang = get_update_user_lang(update_msg.from_user)
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
     if (str(user_id) != CONST["BOT_OWNER"]) \
@@ -3493,6 +3488,9 @@ def tlg_error_callback(update, context):
     '''
     Telegram errors handler.
     '''
+    # Disable unused arguments
+    del update
+    # Handle error
     try:
         raise context.error
     except Unauthorized:
@@ -3516,6 +3514,9 @@ def main(argc, argv):
     global updater
     global th_0
     global th_1
+    # Disable unused arguments
+    del argc
+    del argv
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
         logger.error("Bot Token has not been set.")
@@ -3664,6 +3665,10 @@ def main(argc, argv):
 def system_termination_signal_handler(signal,  frame):
     '''Termination signals detection handler to stop application execution.'''
     global force_exit
+    # Disable unused arguments
+    del signal
+    del frame
+    # Exit Request
     force_exit = True
     logger.info("Termination signal received. Releasing resources...")
     # Close the Bot instance (it wait for updater, dispatcher and other
