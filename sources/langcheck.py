@@ -23,17 +23,18 @@ def is_valid(langname, lang, englang):
         if num_brackets != num_expected_brackets:
             l_brackets_missmatch_keys.append(key)
     if len(langname) == 2:
-        langname = "{}   ".format(langname)
+        langname = f"{langname}   "
     if len(l_missing_keys) == 0:
         if len(l_brackets_missmatch_keys) == 0:
-            print("{} - OK".format(langname))
+            print(f"{langname} - OK")
             return True
         else:
-            print("{} - FAIL - Brackets Missmatch in Keys: {}".format(
-                    langname, l_brackets_missmatch_keys))
+            print(
+                    f"{langname} - FAIL - Brackets Missmatch in Keys: " \
+                    f"{l_brackets_missmatch_keys}")
             return False
     else:
-        print("{} - FAIL - Missing Keys: {}".format(langname, l_missing_keys))
+        print(f"{langname} - FAIL - Missing Keys: {l_missing_keys}")
         return False
 
 ###############################################################################
@@ -54,7 +55,7 @@ def main():
                     errs = True
             except json.decoder.JSONDecodeError:
                 errs = True
-                print("{} is not valid json".format(lang))
+                print(f"{lang} is not valid json")
     if errs:
         exit(1)
     exit(0)

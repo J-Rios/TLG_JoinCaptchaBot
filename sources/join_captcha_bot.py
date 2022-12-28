@@ -58,6 +58,9 @@ from platform import system as os_system
 # SYstem Signals Library
 from signal import signal, SIGTERM, SIGINT
 
+# Error Traceback Library
+from traceback import format_exc
+
 # Image Captcha Generator Library
 from multicolorcaptcha import CaptchaGenerator
 
@@ -98,7 +101,7 @@ from tlgbotutils import (
 
 # Local Commons Library
 from commons import (
-    printts, is_int, add_lrm, file_exists, file_write, file_read,
+    is_int, add_lrm, file_exists, file_write, file_read,
     list_remove_element, get_unix_epoch, pickle_save, pickle_restore
 )
 
@@ -115,6 +118,16 @@ if os_system() != "Windows":
     from signal import SIGUSR1
 
 ###############################################################################
+### Logger Setup
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+logger = logging.getLogger(__name__)
+
+###############################################################################
 ### Globals
 
 updater = None
@@ -128,14 +141,6 @@ force_exit = False
 
 # Create Captcha Generator object of specified size (2 -> 640x360)
 CaptchaGen = CaptchaGenerator(2)
-
-###############################################################################
-### Setup Bot Logger
-
-logging.basicConfig(
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        level=logging.INFO
-)
 
 ###############################################################################
 ### JSON Chat Config File Functions
@@ -229,14 +234,14 @@ def get_chat_config_file(chat_id):
                 found = True
                 break
         if not found:
-            chat_config_file_name = "{}/{}/{}".format(
-                    CONST["CHATS_DIR"], chat_id, CONST["F_CONF"])
+            chat_config_file_name = \
+                    f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
             file["ID"] = chat_id
             file["File"] = TSjson(chat_config_file_name)
             files_config_list.append(file)
     else:
-        chat_config_file_name = "{}/{}/{}".format(
-                CONST["CHATS_DIR"], chat_id, CONST["F_CONF"])
+        chat_config_file_name = \
+                f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
         file["ID"] = chat_id
         file["File"] = TSjson(chat_config_file_name)
         files_config_list.append(file)
@@ -334,9 +339,9 @@ def save_session():
         "connections": connections
     }
     if not pickle_save(CONST["F_SESSION"], data):
-        printts("Fail to save current session data")
+        logger.error("Fail to save current session data")
         return False
-    printts("Current session data saved")
+    logger.info("Current session data saved")
     return True
 
 
@@ -353,7 +358,7 @@ def restore_session():
     # Get data from session file
     last_session_data = pickle_restore(CONST["F_SESSION"])
     if last_session_data is None:
-        printts("Fail to restore last session data")
+        logger.error("Fail to restore last session data")
         return False
     # Load last session data to current RAM
     connections = last_session_data["connections"]
@@ -373,7 +378,7 @@ def restore_session():
         _t0 = time() + randint(0, 10)
         to_delete_in_time_messages_list[i]["time"] = _t0
         i = i + 1
-    printts("Last session data restored")
+    logger.info("Last session data restored")
     return True
 
 
@@ -404,8 +409,7 @@ def initialize_resources():
         files = listdir(CONST["CHATS_DIR"])
         for f_chat_id in files:
             # Populate config files list
-            file_path = "{}/{}/{}".format(
-                    CONST["CHATS_DIR"], f_chat_id, CONST["F_CONF"])
+            file_path = f'{CONST["CHATS_DIR"]}/{f_chat_id}/{CONST["F_CONF"]}'
             files_config_list.append(OrderedDict([("ID", f_chat_id),
                 ("File", TSjson(file_path))]))
             # Create default configuration file if it does not exists
@@ -414,7 +418,7 @@ def initialize_resources():
                 for key, value in default_conf.items():
                     save_config_property(f_chat_id, key, value)
     # Load and generate URL detector regex from TLD list file
-    load_urls_regex("{}/{}".format(SCRIPT_PATH, CONST["F_TLDS"]))
+    load_urls_regex(f'{SCRIPT_PATH}/{CONST["F_TLDS"]}')
     # Load all languages texts
     load_texts_languages()
 
@@ -439,8 +443,9 @@ def load_urls_regex(file_path):
                 line = line.replace("\r", "")
                 line = line.replace("\n", "|")
                 list_file_lines.append(line)
-    except Exception as error:
-        printts("Error opening file \"{}\". {}".format(file_path, str(error)))
+    except Exception:
+        logger.error(format_exc())
+        logger.error("Fail to open file \"{%s}\"", file_path)
     if len(list_file_lines) > 0:
         tlds_str = "".join(list_file_lines)
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
@@ -452,41 +457,43 @@ def load_texts_languages():
     '''
     # Initialize all languages to english texts by default, so if
     # some language file miss some field, the english text is used
-    lang_file = "{}/{}.json".format(
-            CONST["LANG_DIR"], CONST["INIT_LANG"].lower())
+    lang_file = f'{CONST["LANG_DIR"]}/{CONST["INIT_LANG"].lower()}.json'
     json_init_lang_texts = TSjson(lang_file).read()
     if (json_init_lang_texts is None) or (json_init_lang_texts == {}):
-        printts("Error loading language \"{}\" from {}. Language " \
-                "file not found or bad JSON syntax.".format(
-                        CONST["INIT_LANG"].lower(), lang_file))
-        printts("Exit.\n")
+        logger.error(
+                "Loading language \"{%s}\" from {%s}. Language file not " \
+                "found or bad JSON syntax.",
+                CONST["INIT_LANG"].lower(), lang_file)
+        logger.info("Exit.\n")
         sys_exit(0)
     for lang_iso_code in TEXT:
         TEXT[lang_iso_code] = json_init_lang_texts.copy()
     # Load supported languages texts
     for lang_iso_code in TEXT:
-        lang_file = "{}/{}.json".format(
-                CONST["LANG_DIR"], lang_iso_code.lower())
+        lang_file = f'{CONST["LANG_DIR"]}/{lang_iso_code.lower()}.json'
         json_lang_file = TSjson(lang_file)
         json_lang_texts = json_lang_file.read()
         if (json_lang_texts is None) or (json_lang_texts == {}):
-            printts("Error loading language \"{}\" from {}. " \
-                    "Language file not found or bad JSON syntax.".format(
-                            lang_iso_code, lang_file))
-            printts("Exit.\n")
+            logger.error(
+                    "Loading language \"{%s}\" from {%s}. " \
+                    "Language file not found or bad JSON syntax.",
+                    lang_iso_code, lang_file)
+            logger.info("Exit.\n")
             sys_exit(0)
         for text in json_lang_texts:
             TEXT[lang_iso_code][text] = json_lang_texts[text]
     # Check if there is some missing text in any language
     for lang_iso_code in TEXT:
         lang_iso_code = lang_iso_code.lower()
-        lang_file = "{}/{}.json".format(CONST["LANG_DIR"], lang_iso_code)
+        lang_file = f'{CONST["LANG_DIR"]}/{lang_iso_code}.json'
         json_lang_file = TSjson(lang_file)
         json_lang_texts = json_lang_file.read()
         for text in json_init_lang_texts:
             if text not in json_lang_texts:
-                printts("Warning: text \"{}\" missing from language " \
-                        "file \"{}\".json".format(text, lang_iso_code))
+                logger.warning(
+                        "Text \"{%s}\" missing from language file " \
+                        "\"{%s}\".json",
+                        text, lang_iso_code)
 
 
 def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
@@ -494,8 +501,8 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
     Generate an image captcha from pseudo numbers.
     '''
     # If it doesn't exists, create captchas folder to store generated captchas
-    img_dir_path = "{}/{}".format(CONST["CAPTCHAS_DIR"], chat_id)
-    img_file_path = "{}/{}.png".format(img_dir_path, file_name)
+    img_dir_path = f'{CONST["CAPTCHAS_DIR"]}/{chat_id}'
+    img_file_path = f'{img_dir_path}/{file_name}.png'
     if not path.exists(CONST["CAPTCHAS_DIR"]):
         makedirs(CONST["CAPTCHAS_DIR"])
     else:
@@ -544,7 +551,7 @@ def is_user_in_ignored_list(chat_id, user):
     if user.id in ignored_users:
         return True
     if user.username is not None:
-        user_alias = "@{}".format(user.username)
+        user_alias = f"@{user.username}"
         if user_alias in ignored_users:
             return True
     return False
@@ -558,7 +565,7 @@ def is_user_in_allowed_list(user):
     if user.id in l_white_users:
         return True
     if user.username is not None:
-        user_alias = "@{}".format(user.username)
+        user_alias = f"@{user.username}"
         if user_alias in l_white_users:
             return True
     return False
@@ -592,7 +599,7 @@ def allowed_in_this_group(bot, chat, member_added_by):
     Check if Bot is allowed to be used in a Chat.
     '''
     if not is_group_in_allowed_list(chat.id):
-        printts("Warning: Bot added to not allowed group.")
+        logger.warning("Bot added to not allowed group.")
         from_user_name = ""
         if member_added_by.name is not None:
             from_user_name = member_added_by.name
@@ -600,15 +607,16 @@ def allowed_in_this_group(bot, chat, member_added_by):
             from_user_name = member_added_by.full_name
         chat_link = ""
         if chat.username:
-            chat_link = "@{}".format(chat.username)
-        printts("{}, {}, {}, {}".format(
-                chat.id, from_user_name, chat.title, chat_link))
+            chat_link = f"@{chat.username}"
+        logger.info(
+                "{%s}, {%s}, {%s}, {%s}",
+                chat.id, from_user_name, chat.title, chat_link)
         msg_text = CONST["NOT_ALLOW_GROUP"].format(
                 CONST["BOT_OWNER"], chat.id, CONST["REPOSITORY"])
         tlg_send_msg(bot, chat.id, msg_text)
         return False
     if is_group_in_banned_list(chat.id):
-        printts("[{}] Warning: Bot added to banned group".format(chat.id))
+        logger.warning("[{%s}] Bot added to banned group", chat.id)
         return False
     return True
 
@@ -660,27 +668,27 @@ def should_manage_captcha(update, bot):
         return False
     # Ignore Admins
     if tlg_user_is_admin(bot, join_user.id, chat.id):
-        printts("[{}] User is an admin.".format(chat.id))
-        printts("Skipping the captcha process.")
+        logger.info("[{%s}] User is an admin.", chat.id)
+        logger.info("Skipping the captcha process.")
         return False
     # Ignore Members added by an Admin
     if tlg_user_is_admin(bot, member_added_by.id, chat.id):
-        printts("[{}] User has been added by an admin.".format(chat.id))
-        printts("Skipping the captcha process.")
+        logger.info("[{%s}] User has been added by an admin.", chat.id)
+        logger.info("Skipping the captcha process.")
         return False
     # Ignore if the member that has been join the group is a Bot
     if join_user.is_bot:
-        printts("[{}] User is a Bot.".format(chat.id))
-        printts("Skipping the captcha process.")
+        logger.info("[{%s}] User is a Bot.", chat.id)
+        logger.info("Skipping the captcha process.")
         return False
     # Ignore if the member that has joined is in chat ignore list
     if is_user_in_ignored_list(chat.id, join_user):
-        printts("[{}] User is in ignore list.".format(chat.id))
-        printts("Skipping the captcha process.")
+        logger.info("[{%s}] User is in ignore list.", chat.id)
+        logger.info("Skipping the captcha process.")
         return False
     if is_user_in_allowed_list(join_user):
-        printts("[{}] User is in global allowed list.".format(chat.id))
-        printts("Skipping the captcha process.")
+        logger.info("[{%s}] User is in global allowed list.", chat.id)
+        logger.info("Skipping the captcha process.")
         return False
     return True
 
@@ -696,11 +704,14 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     user_name = new_users[chat_id][user_id]["join_data"]["user_name"]
     join_retries = new_users[chat_id][user_id]["join_data"]["join_retries"]
-    printts("[{}] {} join_retries: {}".format(chat_id, user_id, join_retries))
+    logger.info(
+            "[{%s}] {%s} join_retries: {%d}",
+            chat_id, user_id, join_retries)
     # Kick if user has fail to solve the captcha less than "max_join_retries"
     if join_retries < max_join_retries:
-        printts("[{}] Captcha not solved, kicking {} ({})...".format(chat_id,
-                user_name, user_id))
+        logger.info(
+                "[{%s}] Captcha not solved, kicking {%s} ({%s})...",
+                chat_id, user_name, user_id)
         # Try to kick the user
         kick_result = tlg_kick_user(bot, chat_id, user_id)
         if kick_result["error"] == "":
@@ -716,7 +727,7 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
                 tlg_send_msg(bot, chat_id, msg_text)
         else:
             # Kick fail
-            printts("[{}] Unable to kick".format(chat_id))
+            logger.info("[{%s}] Unable to kick", chat_id)
             if (kick_result["error"] == "The user has left the group") \
             or (kick_result["error"] == "The user was already kicked"):
                 # The user is not in the chat
@@ -745,8 +756,9 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     # Ban if user has join "max_join_retries" times without solving
     # the captcha
     else:
-        printts("[{}] Captcha not solved, banning {} ({})...".format(
-                chat_id, user_name, user_id))
+        logger.info(
+                "[{%s}] Captcha not solved, banning {%s} ({%s})...",
+                chat_id, user_name, user_id)
         # Try to ban the user and notify Admins
         ban_result = tlg_ban_user(bot, chat_id, user_id)
         if ban_result["error"] == "":
@@ -761,7 +773,7 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
                 msg_text = TEXT[lang]["NEW_USER_BAN_NOT_IN_CHAT"].format(
                         user_name, max_join_retries)
             elif ban_result["error"] \
-                    == "Not enough rights to restrict/unrestrict chat member":
+                    == "Not enough rights to restrict/un-restrict chat member":
                 # Bot has no privileges to ban
                 msg_text = TEXT[lang]["NEW_USER_BAN_NOT_RIGHTS"].format(
                         user_name, max_join_retries)
@@ -770,7 +782,7 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
                 msg_text = TEXT[lang]["BOT_CANT_BAN"].format(
                         user_name, max_join_retries)
         # Send ban notify message
-        printts("[{}] {}".format(chat_id, msg_text))
+        logger.info("[{%s}] {%s}", chat_id, msg_text)
         if rm_result_msg:
             tlg_send_selfdestruct_msg(bot, chat_id, msg_text)
         else:
@@ -779,8 +791,9 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
     new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
     # Remove join messages
-    printts("[{}] Removing messages from user {}...".format(
-            chat_id, user_name))
+    logger.info(
+            "[{%s}] Removing messages from user {%s}...",
+            chat_id, user_name)
     join_msg = new_users[chat_id][user_id]["join_msg"]
     if join_msg is not None:
         tlg_delete_msg(bot, chat_id, join_msg)
@@ -793,8 +806,8 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     # Delete user join info if ban was success
     if banned:
         del new_users[chat_id][user_id]
-    printts("[{}] Kick/Ban process completed".format(chat_id))
-    printts(" ")
+    logger.info("[{%s}] Kick/Ban process completed", chat_id)
+    logger.info("")
 
 ###############################################################################
 ### Received Telegram not-command messages handlers
@@ -842,7 +855,7 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
             if chat.title:
                 save_config_property(chat.id, "Title", chat.title)
             if chat.username:
-                chat_link = "@{}".format(chat.username)
+                chat_link = f"@{chat.username}"
                 save_config_property(chat.id, "Link", chat_link)
             # Check if Group is not allowed to be used by the Bot
             if not allowed_in_this_group(bot, chat, caused_by_user):
@@ -856,11 +869,12 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
             # Bot leave the group
             if caused_by_user.id == bot.id:
                 # Bot left the group by itself
-                print("[{}] Bot leave the group".format(chat.id))
+                logger.info("[{%s}] Bot leave the group", chat.id)
             # Bot removed from group
             else:
-                print("[{}] Bot removed from group by {}".format(
-                        chat.id, caused_by_user.username))
+                logger.info(
+                        "[{%s}] Bot removed from group by {%s}",
+                        chat.id, caused_by_user.username)
             return
         else:
             return
@@ -869,7 +883,7 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
         # Bot added to channel
         if not was_member and is_member:
             # Leave it (Bot don't allowed to be used in Channels)
-            printts("Bot try to be added to a channel")
+            logger.info("Bot try to be added to a channel")
             tlg_send_msg(bot, chat.id, CONST["BOT_LEAVE_CHANNEL"])
             tlg_leave_chat(bot, chat.id)
             return
@@ -895,8 +909,9 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     # Get User ID and Name
     join_user_id = join_user.id
     join_user_name = tlg_get_user_name(join_user, 35)
-    printts("[{}] New join detected: {} ({})".format(
-            chat_id, join_user_name, join_user_id))
+    logger.info(
+            "[{%s}] New join detected: {%s} (%s})",
+            chat_id, join_user_name, join_user_id)
     # Get and update chat data
     chat_title = chat.title
     if chat_title:
@@ -906,7 +921,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     chat_title = add_lrm(chat_title)
     chat_link = chat.username
     if chat_link:
-        chat_link = "@{}".format(chat_link)
+        chat_link = f"@{chat_link}"
         save_config_property(chat_id, "Link", chat_link)
     # Check if the Bot should manage a Captcha process to this Group
     # and Member
@@ -922,7 +937,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     # Ignore if the captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
-        printts("[{}] Captcha is not enabled in this chat".format(chat_id))
+        logger.info("[{%s}] Captcha is not enabled in this chat", chat_id)
         return
     # Determine configured language and captcha settings
     lang = get_chat_config(chat_id, "Language")
@@ -930,10 +945,9 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
     if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
-        timeout_str = "{} sec".format(captcha_timeout)
+        timeout_str = f"{captcha_timeout} sec"
     else:
-        timeout_str = "{} min".format(
-                int(captcha_timeout / CONST["T_SECONDS_IN_MIN"]))
+        timeout_str = f'{int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])} min'
     send_problem = False
     captcha_num = ""
     if captcha_mode == "random":
@@ -953,10 +967,11 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                 join_user_name, chat_title, timeout_str)
         # Prepare inline keyboard button to let user pass
         keyboard = [[InlineKeyboardButton(TEXT[lang]["PASS_BTN_TEXT"],
-                callback_data="button_captcha {}".format(join_user_id))]]
+                callback_data=f"button_captcha {join_user_id}")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        printts("[{}] Sending captcha message to {}: [button]".format(
-                chat_id, join_user_name))
+        logger.info(
+                "[{%s}] Sending captcha message to {%s}: [button]",
+                chat_id, join_user_name)
         sent_result = tlg_send_msg(bot, chat_id, challenge_text,
                 reply_markup=reply_markup, timeout=40)
         if sent_result["msg"] is None:
@@ -1010,23 +1025,25 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                 chat_id, join_user_id, captcha_level, captcha_mode)
         if captcha_mode == "math":
             captcha_num = captcha["equation_result"]
-            printts("[{}] Sending captcha message to {}: {}={}...".format(
+            logger.info(
+                    "[{%s}] Sending captcha message to {%s}: {%s}={%s}...",
                     chat_id, join_user_name, captcha["equation_str"],
-                    captcha["equation_result"]))
+                    captcha["equation_result"])
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
                     join_user_name, chat_title, timeout_str)
         else:
             captcha_num = captcha["characters"]
-            printts("[{}] Sending captcha message to {}: {}...".format(
-                    chat_id, join_user_name, captcha_num))
+            logger.info(
+                    "[{%s}] Sending captcha message to {%s}: {%s}...",
+                    chat_id, join_user_name, captcha_num)
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
                     join_user_name, chat_title, timeout_str)
         # Prepare inline keyboard button to let user request another
         # captcha
         keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                callback_data="image_captcha {}".format(join_user_id))]]
+                callback_data=f"image_captcha {join_user_id}")]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         # Send the image
         sent_result = tlg_send_image(
@@ -1098,8 +1115,8 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
                 change_group_info=False)
-        printts("[{}] Captcha send process completed.".format(chat_id))
-        printts(" ")
+        logger.info("[{%s}] Captcha send process completed.", chat_id)
+        logger.info("")
 
 
 def msg_user_joined_group(update: Update, context: CallbackContext):
@@ -1112,8 +1129,8 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
     if update_msg is not None:
         chat_id = getattr(update_msg, "chat_id", None)
     if (update_msg is None) or (chat_id is None):
-        print("Warning: Received an unexpected update.")
-        print(update)
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
         return
     msg_id = getattr(update_msg, "message_id", None)
     if msg_id is None:
@@ -1148,8 +1165,8 @@ def msg_notext(update: Update, context: CallbackContext):
         chat = getattr(update_msg, "chat", None)
         chat_id = getattr(update_msg, "chat_id", None)
     if (update_msg is None) or (chat is None) or (chat_id is None):
-        print("Warning: Received an unexpected update.")
-        print(update)
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
         return
     # Ignore if message comes from a private chat
     if chat.type == "private":
@@ -1174,12 +1191,13 @@ def msg_notext(update: Update, context: CallbackContext):
     # Get username, if has an alias, just use the alias
     user_name = update_msg.from_user.full_name
     if update_msg.from_user.username is not None:
-        user_name = "@{}".format(update_msg.from_user.username)
+        user_name = f"@{update_msg.from_user.username}"
     # Remove send message and notify that not text messages are not
     # allowed until solve captcha
     msg_id = update_msg.message_id
-    printts("[{}] Removing non-text message sent by {}".format(
-            chat_id, user_name))
+    logger.info(
+            "[{%s}] Removing non-text message sent by {%s}",
+            chat_id, user_name)
     tlg_delete_msg(bot, chat_id, msg_id)
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
@@ -1201,8 +1219,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
         chat = getattr(update_msg, "chat", None)
         chat_id = getattr(update_msg, "chat_id", None)
     if (update_msg is None) or (chat is None) or (chat_id is None):
-        print("Warning: Received an unexpected update.")
-        print(update)
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
         return
     topic_id = tlg_get_msg_topic(update_msg)
     # Ignore if message comes from a private chat
@@ -1237,7 +1255,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 if msg_text is None:
                     msg_text = url
                 else:
-                    msg_text = "{} [{}]".format(msg_text, url)
+                    msg_text = f"{msg_text} [{url}]"
                 break
     # Get others message data
     user_id = update_msg.from_user.id
@@ -1248,12 +1266,12 @@ def msg_nocmd(update: Update, context: CallbackContext):
         save_config_property(chat_id, "Title", chat_title)
     chat_link = chat.username
     if chat_link:
-        chat_link = "@{}".format(chat_link)
+        chat_link = f"@{chat_link}"
         save_config_property(chat_id, "Link", chat_link)
     user_name = update_msg.from_user.full_name
     # If has an alias, just use the alias
     if update_msg.from_user.username is not None:
-        user_name = "@{}".format(update_msg.from_user.username)
+        user_name = f"@{update_msg.from_user.username}"
     # Set default text message if not received
     if msg_text is None:
         msg_text = "[Not a text message]"
@@ -1292,22 +1310,22 @@ def msg_nocmd(update: Update, context: CallbackContext):
     forward_from = getattr(update_msg, "forward_from", None)
     forward_from_chat = getattr(update_msg, "forward_from_chat", None)
     if (forward_from is not None) or (forward_from_chat is not None):
-        printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
-        printts("[{}] Removing forwarded msg: {}.".format(chat_id, msg_text))
+        logger.info("[{%s}] Spammer detected: {%s}.", chat_id, user_name)
+        logger.info("[{%s}] Removing forwarded msg: {%s}.", chat_id, msg_text)
         delete_result = tlg_delete_msg(bot, chat_id, msg_id)
         if delete_result["error"] == "":
-            printts("Message removed.")
+            logger.info("Message removed.")
         elif delete_result["error"] == "Message can't be deleted":
-            printts("No rights to remove msg.")
+            logger.info("No rights to remove msg.")
         else:
-            printts("Message can't be deleted.")
+            logger.info("Message can't be deleted.")
         return
     # Check for Spam (check if the message contains any URL or alias)
     has_url = re.findall(CONST["REGEX_URLS"], msg_text)
     has_alias = tlg_alias_in_string(msg_text)
     if has_url or has_alias:
-        printts("[{}] Spammer detected: {}.".format(chat_id, user_name))
-        printts("[{}] Removing spam message: {}.".format(chat_id, msg_text))
+        logger.info("[{%s}] Spammer detected: {%s}.", chat_id, user_name)
+        logger.info("[{%s}] Removing spam message: {%s}.", chat_id, msg_text)
         # Try to remove the message and notify detection
         delete_result = tlg_delete_msg(bot, chat_id, msg_id)
         if delete_result["error"] == "":
@@ -1321,7 +1339,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg,
                     CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
         else:
-            printts("Message can't be deleted.")
+            logger.info("Message can't be deleted.")
         return
     # Check group config regarding if all messages of user must be
     # removed when kick
@@ -1331,12 +1349,13 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # End here if no image captcha mode
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         return
-    printts("[{}] Received captcha reply from {}: {}".format(
-            chat_id, user_name, msg_text))
+    logger.info(
+            "[{%s}] Received captcha reply from {%s}: {%s}",
+            chat_id, user_name, msg_text)
     # Check if the expected captcha solve number is in the message
     solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
     if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
-        printts("[{}] Captcha solved by {}".format(chat_id, user_name))
+        logger.info("[{%s}] Captcha solved by {%s}", chat_id, user_name)
         # Remove all restrictions on the user
         tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
@@ -1368,8 +1387,9 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 sent_result = tlg_send_msg(
                         bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
-                printts("[{}] Error: Can't send the welcome message.".format(
-                        chat_id))
+                logger.info(
+                        "[{%s}] Error: Can't send the welcome message.",
+                        chat_id)
         # Check for send just text message option and apply user
         # restrictions
         restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
@@ -1423,8 +1443,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
                 new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
-    printts("[{}] Captcha reply process completed.".format(chat_id))
-    printts(" ")
+    logger.info("[{%s}] Captcha reply process completed.", chat_id)
+    logger.info("")
 
 
 def receive_poll_answer(update: Update, context: CallbackContext):
@@ -1436,9 +1456,8 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     poll_id = update.poll_answer.poll_id
     from_user = update.poll_answer.user
     option_answer = update.poll_answer.option_ids[0] + 1
-    msg_text = "User {} select poll option {}".format(
-            from_user.username, option_answer)
-    print(msg_text)
+    msg_text = f"User {from_user.username} select poll option {option_answer}"
+    logger.info(msg_text)
     # Ignore any Poll vote that comes from unexpected poll
     if poll_id not in active_polls:
         return
@@ -1457,7 +1476,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     # Get user name (if has an alias, just use the alias)
     user_name = from_user.full_name
     if from_user.username is not None:
-        user_name = "@{}".format(from_user.username)
+        user_name = f"@{from_user.username}"
     # Get chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
@@ -1473,8 +1492,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     new_users[chat_id][user_id]["msg_to_rm"].clear()
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
-        printts("[{}] User {} solved a poll challenge.".format(
-                chat_id, user_name))
+        logger.info(
+                "[{%s}] User {%s} solved a poll challenge.",
+                chat_id, user_name)
         # Remove all restrictions on the user
         tlg_unrestrict_user(bot, chat_id, user_id)
         # Send captcha solved message
@@ -1496,8 +1516,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                 sent_result = tlg_send_msg(
                         bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
-                printts("[{}] Error: Can't send the welcome message.".format(
-                        chat_id))
+                logger.info(
+                        "[{%s}] Error: Can't send the welcome message.",
+                        chat_id)
         # Check for send just text message option and apply user restrictions
         if restrict_non_text_msgs == 1: # Restrict for 1 day
             tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
@@ -1514,8 +1535,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                     change_group_info=False)
     else:
         # Notify captcha fail
-        printts("[{}] User {} fail a poll challenge.".format(
-                chat_id, user_name))
+        logger.info("[{%s}] User {%s} fail poll.", chat_id, user_name)
         bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
         sent_msg_id = None
         if rm_result_msg:
@@ -1529,8 +1549,8 @@ def receive_poll_answer(update: Update, context: CallbackContext):
         # Try to kick the user
         captcha_fail_kick_ban_member(
                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN_POLL"])
-    printts("[{}] Poll captcha process completed.".format(chat_id))
-    printts(" ")
+    logger.info("[{%s}] Poll captcha process completed.", chat_id)
+    logger.info("")
 
 
 def key_inline_keyboard(update: Update, context: CallbackContext):
@@ -1572,7 +1592,7 @@ def button_request_captcha(bot, query):
     user_name = query.from_user.full_name
     # If has an alias, just use the alias
     if query.from_user.username is not None:
-        user_name = "@{}".format(query.from_user.username)
+        user_name = f"@{query.from_user.username}"
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title
     # (fix for arabic, hebrew, etc.)
@@ -1585,19 +1605,20 @@ def button_request_captcha(bot, query):
         return
     # Get chat language
     lang = get_chat_config(chat_id, "Language")
-    printts("[{}] User {} requested a new captcha.".format(
-            chat_id, user_name))
+    logger.info(
+            "[{%s}] User {%s} requested a new captcha.",
+            chat_id, user_name)
     # Prepare inline keyboard button to let user request another captcha
     keyboard = [[InlineKeyboardButton(TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-            callback_data="image_captcha {}".format(str(query.from_user.id)))]]
+            callback_data=f"image_captcha {str(query.from_user.id)}")]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     # Get captcha timeout
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
     if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
-        timeout_str = "{} sec".format(captcha_timeout)
+        timeout_str = f"{captcha_timeout} sec"
     else:
         timeout_min = int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])
-        timeout_str = "{} min".format(timeout_min)
+        timeout_str = f"{timeout_min} min"
     # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
     captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
@@ -1610,14 +1631,16 @@ def button_request_captcha(bot, query):
             captcha_mode)
     if captcha_mode == "math":
         captcha_num = captcha["equation_result"]
-        printts("[{}] Sending new captcha msg: {} = {}...".format(
-                chat_id, captcha["equation_str"], captcha_num))
+        logger.info(
+                "[{%s}] Sending new captcha msg: {%s} = {%s}...",
+                chat_id, captcha["equation_str"], captcha_num)
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
                 user_name, chat_title, timeout_str)
     else:
         captcha_num = captcha["characters"]
-        printts("[{}] Sending new captcha msg: {}...".format(
-                chat_id, captcha_num))
+        logger.info(
+                "[{%s}] Sending new captcha msg: {%s}...",
+                chat_id, captcha_num)
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
                 user_name, chat_title, timeout_str)
     input_media = InputMediaPhoto(media=open(captcha["image"], "rb"),
@@ -1631,8 +1654,8 @@ def button_request_captcha(bot, query):
         # Remove sent captcha image file from file system
         if path.exists(captcha["image"]):
             remove(captcha["image"])
-    printts("[{}] New captcha request process completed.".format(chat_id))
-    printts(" ")
+    logger.info("[{%s}] New captcha request process completed.", chat_id)
+    logger.info("")
 
 
 def button_request_pass(bot, query):
@@ -1645,7 +1668,7 @@ def button_request_pass(bot, query):
     user_name = query.from_user.full_name
     # If has an alias, just use the alias
     if query.from_user.username is not None:
-        user_name = "@{}".format(query.from_user.username)
+        user_name = f"@{query.from_user.username}"
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for
     # arabic, hebrew, etc.)
@@ -1664,8 +1687,9 @@ def button_request_pass(bot, query):
     # Remove user from captcha process
     del new_users[chat_id][user_id]
     # Send message solve message
-    printts("[{}] User {} solved a button-only challenge.".format(
-            chat_id, user_name))
+    logger.info(
+            "[{%s}] User {%s} solved a button-only challenge.",
+            chat_id, user_name)
     # Remove all restrictions on the user
     tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
@@ -1689,8 +1713,9 @@ def button_request_pass(bot, query):
         else:
             sent_result = tlg_send_msg(bot, chat_id, welcome_msg, "MARKDOWN")
         if sent_result is None:
-            printts("[{}] Error: Can't send the welcome message.".format(
-                    chat_id))
+            logger.info(
+                    "[{%s}] Error: Can't send the welcome message.",
+                    chat_id)
     # Check to send just text message option and apply user restrictions
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Restrict for 1 day
@@ -1708,8 +1733,8 @@ def button_request_pass(bot, query):
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
                 change_group_info=False)
-    printts("[{}] Button-only challenge process completed.".format(chat_id))
-    printts(" ")
+    logger.info("[{%s}] Button-only challenge process completed.", chat_id)
+    logger.info("")
 
 ###############################################################################
 ### Received Telegram command messages handlers
@@ -1816,7 +1841,7 @@ def cmd_connect(update: Update, context: CallbackContext):
     user_id = update_msg.from_user.id
     user_alias = update_msg.from_user.username
     if user_alias is not None:
-        user_alias = "@{}".format(user_alias)
+        user_alias = f"@{user_alias}"
     lang = get_update_user_lang(update_msg.from_user)
     # Ignore if command is not in private chat
     if chat_type != "private":
@@ -1841,7 +1866,7 @@ def cmd_connect(update: Update, context: CallbackContext):
     group_id = args[0]
     # Add "-" if not present
     if group_id[0] != "-":
-        group_id = "-{}".format(group_id)
+        group_id = f"-{group_id}"
     if not tlg_is_valid_group(group_id):
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["INVALID_GROUP_ID"],
@@ -2060,11 +2085,11 @@ def cmd_time(update: Update, context: CallbackContext):
     # Convert time value to seconds if min format
     if min_sec in ["m", "min", "mins", "minutes"]:
         min_sec = "min"
-        new_time_str = "{} min".format(new_time)
+        new_time_str = f"{new_time} min"
         new_time = new_time * CONST["T_SECONDS_IN_MIN"]
     elif min_sec in ["s", "sec", "secs", "seconds"]:
         min_sec = "sec"
-        new_time_str = "{} sec".format(new_time)
+        new_time_str = f"{new_time} sec"
     else:
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
@@ -2308,11 +2333,11 @@ def cmd_welcome_msg_time(update: Update, context: CallbackContext):
     # Convert time value to seconds if min format
     if min_sec in ["m", "min", "mins", "minutes"]:
         min_sec = "min"
-        new_time_str = "{} min".format(new_time)
+        new_time_str = f"{new_time} min"
         new_time = new_time * CONST["T_SECONDS_IN_MIN"]
     elif min_sec in ["s", "sec", "secs", "seconds"]:
         min_sec = "sec"
-        new_time_str = "{} sec".format(new_time)
+        new_time_str = f"{new_time} sec"
     else:
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
@@ -2386,7 +2411,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
         return
     # Get poll message command
     poll_cmd = args[0]
-    print("poll_cmd: {}".format(poll_cmd))
+    logger.info("poll_cmd: {%s}", poll_cmd)
     if poll_cmd not in ["question", "option", "correct_option"]:
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, text_cmd_usage,
@@ -2395,7 +2420,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
     if poll_cmd == "question":
         # get Poll Question
         poll_question = " ".join(args[1:])
-        print("poll_question: {}".format(poll_question))
+        logger.info("poll_question: {%s}", poll_question)
         if len(poll_question) > CONST["MAX_POLL_QUESTION_LENGTH"]:
             poll_question = poll_question[:CONST["MAX_POLL_QUESTION_LENGTH"]]
         # Save Poll Question
@@ -2440,7 +2465,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
                     topic_id=tlg_get_msg_topic(update_msg))
             return
         option_num = args[1]
-        print("option_num: {}".format(option_num))
+        logger.info("option_num: {%s}", option_num)
         if not is_int(option_num):
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id, text_cmd_usage,
@@ -2466,7 +2491,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
                 break
         # Parse provided Poll option text to configure and limit length
         poll_option = " ".join(args[2:])
-        print("poll_option: {}".format(poll_option))
+        logger.info("poll_option: {%s}", poll_option)
         if len(poll_option) > CONST["MAX_POLL_OPTION_LENGTH"]:
             poll_option = poll_option[:CONST["MAX_POLL_OPTION_LENGTH"]]
         # Check if requested an option remove and remove it
@@ -3074,10 +3099,10 @@ def cmd_chatid(update: Update, context: CallbackContext):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     if chat_type == "private":
-        msg_text = "Your Chat ID:\n—————————\n{}".format(chat_id)
+        msg_text = f"Your Chat ID:\n—————————\n{chat_id}"
         tlg_send_msg(bot, chat_id, msg_text)
     else:
-        msg_text = "Group Chat ID:\n—————————\n{}".format(chat_id)
+        msg_text = f"Group Chat ID:\n—————————\n{chat_id}"
         tlg_msg_to_selfdestruct(update_msg)
         tlg_send_selfdestruct_msg(
                 bot, chat_id, msg_text,
@@ -3152,7 +3177,7 @@ def cmd_captcha(update: Update, context: CallbackContext):
     user_id = user.id
     user_alias = ""
     if user.username is not None:
-        user_alias = "@{}".format(user.username)
+        user_alias = f"@{user.username}"
     # Remove command message automatically after a while
     tlg_msg_to_selfdestruct(update_msg)
     # Check if command was execute by Bot owner
@@ -3167,14 +3192,16 @@ def cmd_captcha(update: Update, context: CallbackContext):
     captcha_mode = choice(["nums", "hex", "ascii", "math"])
     captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
     if captcha_mode == "math":
-        captcha_code = "{} = {}".format(
-                captcha["equation_str"], captcha["equation_result"])
+        captcha_code = \
+                f'{captcha["equation_str"]} = {captcha["equation_result"]}'
     else:
         captcha_code = captcha["characters"]
-    printts("[{}] Sending captcha msg: {}".format(chat_id, captcha_code))
+    logger.info("[{%s}] Sending captcha msg: {%s}", chat_id, captcha_code)
     # Note: Img caption must be <= 1024 chars
-    img_caption = "Captcha Level: {}\nCaptcha Mode: {}\n" \
-            "Captcha Code: {}".format(difficulty, captcha_mode, captcha_code)
+    img_caption = \
+            f"Captcha Level: {difficulty}\n" \
+            f"Captcha Mode: {captcha_mode}\n" \
+            f"Captcha Code: {captcha_code}"
     tlg_send_image(
             bot, chat_id, open(captcha["image"],"rb"), img_caption,
             topic_id=tlg_get_msg_topic(update_msg))
@@ -3200,7 +3227,7 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
     user_id = user.id
     user_alias = ""
     if user.username is not None:
-        user_alias = "@{}".format(user.username)
+        user_alias = f"@{user.username}"
     lang = get_update_user_lang(update_msg.from_user)
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
@@ -3214,8 +3241,7 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
         # Show Actual Global allowed list Users
         l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         bot_msg = "\n".join([str(user) for user in l_white_users])
-        bot_msg = "Global Allowed Users List:\n------------------\n{}".format(
-                bot_msg)
+        bot_msg = f"Global Allowed Users List:\n------------------\n{bot_msg}"
         tlg_send_msg(
                 bot, chat_id, bot_msg, topic_id=topic_id)
         tlg_send_msg(
@@ -3243,7 +3269,7 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
                         topic_id=topic_id)
                 return
             if user not in l_white_users:
-                file_write(CONST["F_ALLOWED_USERS"], "{}\n".format(user))
+                file_write(CONST["F_ALLOWED_USERS"], f"{user}\n")
                 tlg_send_msg(
                         bot, chat_id,
                         "User added to Global allowed list.",
@@ -3290,7 +3316,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
     user_id = user.id
     user_alias = ""
     if user.username is not None:
-        user_alias = "@{}".format(user.username)
+        user_alias = f"@{user.username}"
     lang = get_update_user_lang(update_msg.from_user)
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
@@ -3304,7 +3330,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
         # Show Actual Allowed Groups
         l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
         bot_msg = "\n".join([str(group) for group in l_allowed_groups])
-        bot_msg = "Allowed Groups:\n--------------------\n{}".format(bot_msg)
+        bot_msg = f"Allowed Groups:\n--------------------\n{bot_msg}"
         tlg_send_msg(bot, chat_id, bot_msg, topic_id=topic_id)
         tlg_send_msg(
                 bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
@@ -3327,7 +3353,7 @@ def cmd_allowgroup(update: Update, context: CallbackContext):
                         bot, chat_id, "Invalid Group ID.", topic_id=topic_id)
                 return
             if group not in l_allowed_groups:
-                file_write(CONST["F_ALLOWED_GROUPS"], "{}\n".format(group))
+                file_write(CONST["F_ALLOWED_GROUPS"], f"{group}\n")
                 tlg_send_msg(
                         bot, chat_id, "Group added to allowed list.",
                         topic_id=topic_id)
@@ -3379,8 +3405,9 @@ def th_selfdestruct_messages(bot):
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
                 continue
             # Delete message
-            printts("[{}] Delete message: {}".format(
-                    sent_msg["Chat_id"], sent_msg["Msg_id"]))
+            logger.info(
+                    "[{%s}] Delete message: {%s}",
+                    sent_msg["Chat_id"], sent_msg["Msg_id"])
             delete_result = tlg_delete_msg(
                     bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
             # The bot has no privileges to delete messages
@@ -3440,21 +3467,24 @@ def th_time_to_kick_not_verify_users(bot):
                         # captcha 5 times in the past 30 mins)
                         if time() - user_join_time < captcha_timeout + 1800:
                             continue
-                        printts("Removing kicked user {} after 30 mins".format(
-                                user_id))
+                        logger.info(
+                                "Removing kicked user {%s} after 30 mins",
+                                user_id)
                         del new_users[chat_id][user_id]
                     else:
                         # If time for kick/ban has not arrived yet
                         if time() - user_join_time < captcha_timeout:
                             continue
                         user_name = user_join_data["user_name"]
-                        printts("[{}] Captcha reply timed out for user {}." \
-                                .format(chat_id, user_name))
+                        logger.info(
+                                "[{%s}] Captcha reply timeout for user {%s}.",
+                                chat_id, user_name)
                         captcha_fail_kick_ban_member(
                                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN"])
                         sleep(0.01)
-                except Exception as error:
-                    printts("Error handling kick/ban:\n{}".format(str(error)))
+                except Exception:
+                    logger.error(format_exc())
+                    logger.error("Fail to kick/ban an user")
 
 ###############################################################################
 ### Telegram Errors Callback
@@ -3466,15 +3496,15 @@ def tlg_error_callback(update, context):
     try:
         raise context.error
     except Unauthorized:
-        printts("TLG Error: Unauthorized")
+        logger.error("TLG Error: Unauthorized")
     except BadRequest:
-        printts("TLG Error: Bad Request")
+        logger.error("TLG Error: Bad Request")
     except TimedOut:
-        printts("TLG Error: Timeout (slow connection issue)")
+        logger.error("TLG Error: Timeout (slow connection issue)")
     except NetworkError:
-        printts("TLG Error: network problem")
-    except TelegramError as error:
-        printts("TLG Error: {}".format(str(error)))
+        logger.error("TLG Error: network problem")
+    except TelegramError:
+        logger.error("TLG Error: {%s}", format_exc())
 
 ###############################################################################
 ### Main Function
@@ -3488,21 +3518,19 @@ def main(argc, argv):
     global th_1
     # Check if Bot Token has been set or has default value
     if CONST["TOKEN"] == "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX":
-        printts("Error: Bot Token has not been set.")
-        printts("Please add your Bot Token to settings.py file.")
-        printts("Exit.\n")
+        logger.error("Bot Token has not been set.")
+        logger.info("Please add your Bot Token to settings.py file.")
         return 1
     # Check if Bot owner has been set in Private Bot mode
     if (CONST["BOT_OWNER"] == "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
-        printts("Error: Bot Owner has not been set for Private Bot.")
-        printts("Please add the Bot Owner to settings.py file.")
-        printts("Exit.\n")
+        logger.error("Bot Owner has not been set for Private Bot.")
+        logger.info("Please add the Bot Owner to settings.py file.")
         return 1
-    printts("Bot started.")
+    logger.info("Bot started.")
     # Initialize resources by populating files list and configs with
     # chats found files
     initialize_resources()
-    printts("Resources initialized.")
+    logger.info("Resources initialized.")
     restore_session()
     # Set messages to be sent silently by default
     msgs_defaults = Defaults(disable_notification=True)
@@ -3595,22 +3623,22 @@ def main(argc, argv):
     # Launch the Bot ignoring pending messages (clean=True) and get all
     # updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
-        printts("Setup Bot for Polling.")
+        logger.info("Setup Bot for Polling.")
         updater.start_polling(
             drop_pending_updates=True,
             allowed_updates=Update.ALL_TYPES
         )
     else:
-        printts("Setup Bot for Webhook.")
+        logger.info("Setup Bot for Webhook.")
         updater.start_webhook(
             drop_pending_updates=True, listen="0.0.0.0",
             port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
-            webhook_url="https://{}:{}/{}".format(CONST["WEBHOOK_HOST"],
-            CONST["WEBHOOK_PORT"], CONST["TOKEN"]),
+            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:' \
+                    f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
             allowed_updates=Update.ALL_TYPES
         )
-    printts("Bot setup completed. Bot is now running.")
+    logger.info("Bot setup completed. Bot is now running.")
     # Launch delete messages and kick users threads
     th_0 = Thread(target=th_selfdestruct_messages, args=(updater.bot,))
     th_1 = Thread(target=th_time_to_kick_not_verify_users, args=(updater.bot,))
@@ -3622,13 +3650,12 @@ def main(argc, argv):
     # Set main thread to idle
     # Using Bot idle() catch external signals instead our signal handler
     updater.idle()
-    print("Bot Threads end")
+    logger.info("Bot Threads end")
     if os_system() == "Windows":
         kill(getpid(), SIGTERM)
     else:
         kill(getpid(), SIGUSR1)
     sleep(1)
-    printts("Exit 1")
     return 0
 
 ###############################################################################
@@ -3638,17 +3665,17 @@ def system_termination_signal_handler(signal,  frame):
     '''Termination signals detection handler to stop application execution.'''
     global force_exit
     force_exit = True
-    printts("Termination signal received. Releasing resources...")
+    logger.info("Termination signal received. Releasing resources...")
     # Close the Bot instance (it wait for updater, dispatcher and other
     # internals threads to end)
     if updater is not None:
-        printts("Closing Bot...")
+        logger.info("Closing Bot...")
         updater.stop()
     # Launch threads to acquire all messages and users files mutex to
     # ensure that them are closed (make sure to close the script when no
     # read/write operation on files)
     if files_config_list:
-        printts("Closing resource files...")
+        logger.info("Closing resource files...")
         th_list = []
         for chat_config_file in files_config_list:
             thread = Thread(
@@ -3661,19 +3688,18 @@ def system_termination_signal_handler(signal,  frame):
             if _th.is_alive():
                 _th.join()
     # Wait to end threads
-    printts("Waiting th_0 end...")
+    logger.info("Waiting th_0 end...")
     if th_0 is not None:
         if th_0.is_alive():
             th_0.join()
-    printts("Waiting th_1 end...")
+    logger.info("Waiting th_1 end...")
     if th_1 is not None:
         if th_1.is_alive():
             th_1.join()
     # Save current session data
     save_session()
     # Close the program
-    printts("All resources released.")
-    printts("Exit 0")
+    logger.info("All resources released.")
     sys_exit(0)
 
 
@@ -3702,6 +3728,8 @@ def system_termination_signal_setup():
 ### Runnable Main Script Detection
 
 if __name__ == "__main__":
+    logger.info("Application start")
     system_termination_signal_setup()
     return_code = main(len(sys_argv) - 1, sys_argv[1:])
+    logger.info("Application exit ({%d})", return_code)
     sys_exit(return_code)
