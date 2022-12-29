@@ -93,7 +93,7 @@ def create_parents_dirs(file_path):
             makedirs(parent_dir_path, 0o775)
     except Exception:
         logger.error(format_exc())
-        logger.error("Can't create parents directories of {%s}.", file_path)
+        logger.error("Can't create parents directories of %s.", file_path)
 
 
 def file_exists(file_path):
@@ -110,7 +110,7 @@ def file_write(file_path, text="", mode="a"):
     # Create file path directories and determine if file exists
     create_parents_dirs(file_path)
     if not path.exists(file_path):
-        logger.info("File {%s} not found, creating it...", file_path)
+        logger.info("File %s not found, creating it...", file_path)
     # Try to Open and write to the file
     try:
         with open(file_path, mode, encoding="utf-8") as file:
@@ -121,7 +121,7 @@ def file_write(file_path, text="", mode="a"):
                     file.write(f"{line}\n")
     except Exception:
         logger.error(format_exc())
-        logger.error("Can't write to file {%s}", file_path)
+        logger.error("Can't write to file %s", file_path)
 
 
 def file_read(file_path):
@@ -139,7 +139,7 @@ def file_read(file_path):
                 list_read_lines.append(line)
     except Exception:
         logger.error(format_exc())
-        logger.error("Error when opening file {%s}", file_path)
+        logger.error("Error when opening file %s", file_path)
     return list_read_lines
 
 
