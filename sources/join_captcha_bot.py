@@ -34,7 +34,7 @@ from collections import OrderedDict
 from json import dumps as json_dumps
 
 # Operating System Library
-from os import kill, getpid, path, remove, makedirs, listdir
+from os import path, remove, makedirs, listdir
 
 # Random Library
 from random import choice, randint
@@ -3654,14 +3654,15 @@ def main(argc, argv):
     sleep(0.05)
     th_1.start()
     # Set main thread to idle
-    # Using Bot idle() catch external signals instead our signal handler
+    # The updater.idle() catch external signals, preventing to get catch
+    # by our signal handler, so we need to call the signal handler
+    # directly for a safe close
     updater.idle()
-    logger.info("Bot Threads end")
+    logger.info("Bot Thread end")
     if hasattr(signal, "SIGUSR1"):
-        kill(getpid(), signal.SIGUSR1)
+        system_termination_signal_handler(signal.SIGUSR1, None)
     else:
-        kill(getpid(), signal.SIGTERM)
-    sleep(1)
+        system_termination_signal_handler(signal.SIGTERM, None)
     return 0
 
 ###############################################################################
@@ -3710,7 +3711,6 @@ def system_termination_signal_handler(signal_id,  frame):
     save_session()
     # Close the program
     logger.info("All resources released.")
-    sys_exit(0)
 
 
 def th_close_resource_file(file_to_close):
