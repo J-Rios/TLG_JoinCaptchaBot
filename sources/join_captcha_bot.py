@@ -129,14 +129,22 @@ logger = logging.getLogger(__name__)
 ###############################################################################
 ### Globals
 
-updater = None
-files_config_list = []
-to_delete_in_time_messages_list = []
-new_users = {}
-connections = {}
-th_0 = None
-th_1 = None
-force_exit = False
+class Globals():
+    '''Global Elements Container.'''
+    updater = None
+    files_config_list = []
+    to_delete_in_time_messages_list = []
+    new_users = {}
+    connections = {}
+    th_0 = None
+    th_1 = None
+    force_exit = False
+
+###############################################################################
+### Objects Instantiation
+
+# Global Data Elements
+Global = Globals()
 
 # Create Captcha Generator object of specified size (2 -> 640x360)
 CaptchaGen = CaptchaGenerator(2)
@@ -226,8 +234,8 @@ def get_chat_config_file(chat_id):
     '''
     file = OrderedDict([("ID", chat_id), ("File", None)])
     found = False
-    if files_config_list:
-        for chat_file in files_config_list:
+    if Global.files_config_list:
+        for chat_file in Global.files_config_list:
             if chat_file["ID"] == chat_id:
                 file = chat_file
                 found = True
@@ -237,13 +245,13 @@ def get_chat_config_file(chat_id):
                     f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
             file["ID"] = chat_id
             file["File"] = TSjson(chat_config_file_name)
-            files_config_list.append(file)
+            Global.files_config_list.append(file)
     else:
         chat_config_file_name = \
                 f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
         file["ID"] = chat_id
         file["File"] = TSjson(chat_config_file_name)
-        files_config_list.append(file)
+        Global.files_config_list.append(file)
     return file["File"]
 
 ###############################################################################
@@ -320,7 +328,7 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     sent_msg_data["Msg_id"] = msg_id
     sent_msg_data["time"] = _t0
     sent_msg_data["delete_time"] = time_delete_sec
-    to_delete_in_time_messages_list.append(sent_msg_data)
+    Global.to_delete_in_time_messages_list.append(sent_msg_data)
     return True
 
 ###############################################################################
@@ -332,9 +340,10 @@ def save_session():
     '''
     # Let's backup to file
     data = {
-        "to_delete_in_time_messages_list": to_delete_in_time_messages_list,
-        "new_users": new_users,
-        "connections": connections
+        "to_delete_in_time_messages_list": \
+                Global.to_delete_in_time_messages_list,
+        "new_users": Global.new_users,
+        "connections": Global.connections
     }
     if not pickle_save(CONST["F_SESSION"], data):
         logger.error("Fail to save current session data")
@@ -347,9 +356,6 @@ def restore_session():
     '''
     Load last execution data.
     '''
-    global to_delete_in_time_messages_list
-    global new_users
-    global connections
     # Check if session file exists
     if not file_exists(CONST["F_SESSION"]):
         return False
@@ -359,22 +365,22 @@ def restore_session():
         logger.error("Fail to restore last session data")
         return False
     # Load last session data to current RAM
-    connections = last_session_data["connections"]
-    new_users = last_session_data["new_users"]
-    to_delete_in_time_messages_list = \
+    Global.connections = last_session_data["connections"]
+    Global.new_users = last_session_data["new_users"]
+    Global.to_delete_in_time_messages_list = \
             last_session_data["to_delete_in_time_messages_list"]
     # Renew time to kick users
-    for chat_id in new_users:
-        for user_id in new_users[chat_id]:
+    for chat_id in Global.new_users:
+        for user_id in Global.new_users[chat_id]:
             # Some rand to avoid all requests sent at same time
             _t0 = time() + randint(0, 10)
-            new_users[chat_id][user_id]["join_data"]["join_time"] = _t0
+            Global.new_users[chat_id][user_id]["join_data"]["join_time"] = _t0
     # Renew time to remove messages
     i = 0
-    while i < len(to_delete_in_time_messages_list):
+    while i < len(Global.to_delete_in_time_messages_list):
         # Some rand to avoid all requests sent at same time
         _t0 = time() + randint(0, 10)
-        to_delete_in_time_messages_list[i]["time"] = _t0
+        Global.to_delete_in_time_messages_list[i]["time"] = _t0
         i = i + 1
     logger.info("Last session data restored")
     return True
@@ -408,8 +414,9 @@ def initialize_resources():
         for f_chat_id in files:
             # Populate config files list
             file_path = f'{CONST["CHATS_DIR"]}/{f_chat_id}/{CONST["F_CONF"]}'
-            files_config_list.append(OrderedDict([("ID", f_chat_id),
-                ("File", TSjson(file_path))]))
+            Global.files_config_list.append(
+                    OrderedDict(
+                            [("ID", f_chat_id), ("File", TSjson(file_path))]))
             # Create default configuration file if it does not exists
             if not path.exists(file_path):
                 default_conf = get_default_config_data()
@@ -696,8 +703,9 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     # Get parameters
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    user_name = new_users[chat_id][user_id]["join_data"]["user_name"]
-    join_retries = new_users[chat_id][user_id]["join_data"]["join_retries"]
+    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
+    join_retries = \
+            Global.new_users[chat_id][user_id]["join_data"]["join_retries"]
     logger.info("[%s] %s join_retries: %d", chat_id, user_id, join_retries)
     # Kick if user has fail to solve the captcha less than
     # "max_join_retries"
@@ -779,22 +787,23 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
         else:
             tlg_send_msg(bot, chat_id, msg_text)
     # Update user info (join_retries & kick_ban)
-    new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
-    new_users[chat_id][user_id]["join_data"]["join_retries"] = join_retries
+    Global.new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
+    Global.new_users[chat_id][user_id]["join_data"]["join_retries"] = \
+            join_retries
     # Remove join messages
     logger.info("[%s] Removing messages from user %s...", chat_id, user_name)
-    join_msg = new_users[chat_id][user_id]["join_msg"]
+    join_msg = Global.new_users[chat_id][user_id]["join_msg"]
     if join_msg is not None:
         tlg_delete_msg(bot, chat_id, join_msg)
-    for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+    for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
-    new_users[chat_id][user_id]["msg_to_rm"].clear()
-    for msg in new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
+    Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+    for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
         tlg_delete_msg(bot, chat_id, msg)
-    new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
+    Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
     # Delete user join info if ban was success
     if banned:
-        del new_users[chat_id][user_id]
+        del Global.new_users[chat_id][user_id]
     logger.info("[%s] Kick/Ban process completed", chat_id)
     logger.info("")
 
@@ -911,12 +920,12 @@ def chat_member_status_change(update: Update, context: CallbackContext):
     if not should_manage_captcha(update, bot):
         return
     # Check and remove previous join messages of that user (if any)
-    if chat_id in new_users:
-        if join_user_id in new_users[chat_id]:
-            if "msg_to_rm" in new_users[chat_id][join_user_id]:
-                for msg in new_users[chat_id][join_user_id]["msg_to_rm"]:
+    if chat_id in Global.new_users:
+        if join_user_id in Global.new_users[chat_id]:
+            if "msg_to_rm" in Global.new_users[chat_id][join_user_id]:
+                for msg in Global.new_users[chat_id][join_user_id]["msg_to_rm"]:
                     tlg_delete_msg(bot, chat_id, msg)
-                new_users[chat_id][join_user_id]["msg_to_rm"].clear()
+                Global.new_users[chat_id][join_user_id]["msg_to_rm"].clear()
     # Ignore if the captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
@@ -1061,34 +1070,35 @@ def chat_member_status_change(update: Update, context: CallbackContext):
             "kicked_ban": False
         }
         # Create dict keys for new user
-        if chat_id not in new_users:
-            new_users[chat_id] = {}
-        if join_user_id not in new_users[chat_id]:
-            new_users[chat_id][join_user_id] = {}
-        if "join_data" not in new_users[chat_id][join_user_id]:
-            new_users[chat_id][join_user_id]["join_data"] = {}
-        if "join_msg" not in new_users[chat_id][join_user_id]:
-            new_users[chat_id][join_user_id]["join_msg"] = None
-        if "msg_to_rm" not in new_users[chat_id][join_user_id]:
-            new_users[chat_id][join_user_id]["msg_to_rm"] = []
-        if "msg_to_rm_on_kick" not in new_users[chat_id][join_user_id]:
-            new_users[chat_id][join_user_id]["msg_to_rm_on_kick"] = []
+        if chat_id not in Global.new_users:
+            Global.new_users[chat_id] = {}
+        if join_user_id not in Global.new_users[chat_id]:
+            Global.new_users[chat_id][join_user_id] = {}
+        if "join_data" not in Global.new_users[chat_id][join_user_id]:
+            Global.new_users[chat_id][join_user_id]["join_data"] = {}
+        if "join_msg" not in Global.new_users[chat_id][join_user_id]:
+            Global.new_users[chat_id][join_user_id]["join_msg"] = None
+        if "msg_to_rm" not in Global.new_users[chat_id][join_user_id]:
+            Global.new_users[chat_id][join_user_id]["msg_to_rm"] = []
+        if "msg_to_rm_on_kick" not in Global.new_users[chat_id][join_user_id]:
+            Global.new_users[chat_id][join_user_id]["msg_to_rm_on_kick"] = []
         # Check if this user was before in the chat without solve the
         # captcha and restore previous join_retries
-        if len(new_users[chat_id][join_user_id]["join_data"]) != 0:
-            user_join_data = new_users[chat_id][join_user_id]["join_data"]
+        if len(Global.new_users[chat_id][join_user_id]["join_data"]) != 0:
+            user_join_data = \
+                    Global.new_users[chat_id][join_user_id]["join_data"]
             join_data["join_retries"] = user_join_data["join_retries"]
         # Add new user join data and messages to be removed
-        new_users[chat_id][join_user_id]["join_data"] = join_data
+        Global.new_users[chat_id][join_user_id]["join_data"] = join_data
         if update.message:
-            new_users[chat_id][join_user_id]["join_msg"] = \
+            Global.new_users[chat_id][join_user_id]["join_msg"] = \
                     update.message.message_id
         if sent_result["msg"]:
-            new_users[chat_id][join_user_id]["msg_to_rm"].append(
+            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
                     sent_result["msg"].message_id)
         if (captcha_mode == "poll") \
         and (solve_poll_request_msg_id is not None):
-            new_users[chat_id][join_user_id]["msg_to_rm"].append(
+            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
                     solve_poll_request_msg_id)
         # Restrict user to deny send any kind of message until captcha
         # is solve. Allow send text messages for image based captchas
@@ -1134,14 +1144,14 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
     # For each new user that join or has been added
     for join_user in new_chat_members:
         # Ignore if the chat is not expected
-        if chat_id not in new_users:
+        if chat_id not in Global.new_users:
             continue
         # Ignore if user is not expected
-        if join_user.id not in new_users[chat_id]:
+        if join_user.id not in Global.new_users[chat_id]:
             continue
         # If user has join the group, add the "USER joined the group"
         # message ID to new user data to be removed
-        new_users[chat_id][join_user.id]["join_msg"] = msg_id
+        Global.new_users[chat_id][join_user.id]["join_msg"] = msg_id
 
 
 def msg_notext(update: Update, context: CallbackContext):
@@ -1177,9 +1187,9 @@ def msg_notext(update: Update, context: CallbackContext):
         return
     # Ignore if msg not from a new user that needs to solve the captcha
     user_id = update_msg.from_user.id
-    if chat_id not in new_users:
+    if chat_id not in Global.new_users:
         return
-    if user_id not in new_users[chat_id]:
+    if user_id not in Global.new_users[chat_id]:
         return
     # Get username, if has an alias, just use the alias
     user_name = update_msg.from_user.full_name
@@ -1289,14 +1299,15 @@ def msg_nocmd(update: Update, context: CallbackContext):
                         topic_id=topic_id)
     # Ignore if message is not from a new user that has not completed
     # the captcha yet
-    if chat_id not in new_users:
+    if chat_id not in Global.new_users:
         return
-    if user_id not in new_users[chat_id]:
+    if user_id not in Global.new_users[chat_id]:
         return
     # Get Chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
+    captcha_mode = \
+            Global.new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Check for forwarded messages and delete it
     forward_from = getattr(update_msg, "forward_from", None)
     forward_from_chat = getattr(update_msg, "forward_from_chat", None)
@@ -1336,7 +1347,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
     # removed when kick
     rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
     if rm_all_msg:
-        new_users[chat_id][user_id]["msg_to_rm_on_kick"].append(msg_id)
+        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].append(msg_id)
     # End here if no image captcha mode
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
         return
@@ -1344,17 +1355,17 @@ def msg_nocmd(update: Update, context: CallbackContext):
             "[%s] Received captcha reply from %s: %s",
             chat_id, user_name, msg_text)
     # Check if the expected captcha solve number is in the message
-    solve_num = new_users[chat_id][user_id]["join_data"]["captcha_num"]
+    solve_num = Global.new_users[chat_id][user_id]["join_data"]["captcha_num"]
     if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
         logger.info("[%s] Captcha solved by %s", chat_id, user_name)
         # Remove all restrictions on the user
         tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
-        for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+        for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
             tlg_delete_msg(bot, chat_id, msg)
-        new_users[chat_id][user_id]["msg_to_rm"].clear()
-        new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
-        del new_users[chat_id][user_id]
+        Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
+        del Global.new_users[chat_id][user_id]
         # Remove user captcha numbers message
         tlg_delete_msg(bot, chat_id, msg_id)
         # Send message solve message
@@ -1416,8 +1427,9 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                        sent_msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         # If "nums", "hex" or "ascii" captcha
         else:
             # Check if the message has 4 chars
@@ -1425,15 +1437,17 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                        sent_msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
             # Check if the message was just a 4 numbers msg
             elif is_int(msg_text):
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
-                new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                        sent_msg_id)
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
     logger.info("")
 
@@ -1478,9 +1492,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     # Wait 3s to let poll animation be shown
     sleep(3)
     # Remove previous join messages
-    for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+    for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
-    new_users[chat_id][user_id]["msg_to_rm"].clear()
+    Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
         logger.info("[%s] User %s solve a poll challenge.", chat_id, user_name)
@@ -1493,7 +1507,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                     bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
         else:
             tlg_send_msg(bot, chat_id, bot_msg)
-        del new_users[chat_id][user_id]
+        del Global.new_users[chat_id][user_id]
         # Check for custom welcome message and send it
         if welcome_msg != "-":
             if rm_welcome_msg:
@@ -1587,9 +1601,9 @@ def button_request_captcha(bot, query):
     chat_title = add_lrm(chat_title)
     # Ignore if message is not from a new user that has not
     # completed the captcha yet
-    if chat_id not in new_users:
+    if chat_id not in Global.new_users:
         return
-    if user_id not in new_users[chat_id]:
+    if user_id not in Global.new_users[chat_id]:
         return
     # Get chat language
     lang = get_chat_config(chat_id, "Language")
@@ -1607,7 +1621,8 @@ def button_request_captcha(bot, query):
         timeout_str = f"{timeout_min} min"
     # Get current chat configurations
     captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
-    captcha_mode = new_users[chat_id][user_id]["join_data"]["captcha_mode"]
+    captcha_mode = \
+            Global.new_users[chat_id][user_id]["join_data"]["captcha_mode"]
     # Use nums mode if captcha_mode was changed while captcha was
     # in progress
     if captcha_mode not in { "nums", "hex", "ascii", "math" }:
@@ -1639,7 +1654,7 @@ def button_request_captcha(bot, query):
                     reply_markup=reply_markup, timeout=20)
         if edit_result["error"] == "":
             # Set and modified to new expected captcha number
-            new_users[chat_id][user_id]["join_data"]["captcha_num"] = \
+            Global.new_users[chat_id][user_id]["join_data"]["captcha_num"] = \
                     captcha_num
             # Remove sent captcha image file from file system
             if path.exists(captcha["image"]):
@@ -1667,18 +1682,18 @@ def button_request_pass(bot, query):
     # arabic, hebrew, etc.)
     chat_title = add_lrm(chat_title)
     # Ignore if request doesn't come from a new user in captcha process
-    if chat_id not in new_users:
+    if chat_id not in Global.new_users:
         return
-    if user_id not in new_users[chat_id]:
+    if user_id not in Global.new_users[chat_id]:
         return
     # Get chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     # Remove previous join messages
-    for msg in new_users[chat_id][user_id]["msg_to_rm"]:
+    for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
         tlg_delete_msg(bot, chat_id, msg)
     # Remove user from captcha process
-    del new_users[chat_id][user_id]
+    del Global.new_users[chat_id][user_id]
     # Send message solve message
     logger.info(
             "[%s] User %s solved a button-only challenge.",
@@ -1876,7 +1891,7 @@ def cmd_connect(update: Update, context: CallbackContext):
             return
     # Connection
     group_lang = get_chat_config(group_id, "Language")
-    connections[user_id] = { "group_id": group_id, "lang": group_lang }
+    Global.connections[user_id] = { "group_id": group_id, "lang": group_lang }
     tlg_send_msg_type_chat(
             bot, chat_type, chat_id, TEXT[lang]["CONNECT_OK"].format(group_id),
             topic_id=tlg_get_msg_topic(update_msg))
@@ -1910,16 +1925,16 @@ def cmd_disconnect(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if User is connected to some group
-    if user_id not in connections:
+    if user_id not in Global.connections:
         tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["DISCONNECT_NOT_CONNECTED"],
                 topic_id=tlg_get_msg_topic(update_msg))
         return
     # Disconnection
-    lang = connections[user_id]["lang"]
-    group_id = connections[user_id]["group_id"]
-    del connections[user_id]
+    lang = Global.connections[user_id]["lang"]
+    group_id = Global.connections[user_id]["group_id"]
+    del Global.connections[user_id]
     tlg_send_msg_type_chat(
             bot, chat_type, chat_id,
             TEXT[lang]["DISCONNECT_OK"].format(group_id),
@@ -1940,12 +1955,12 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
     chat_type = update_msg.chat.type
     lang = get_update_user_lang(update_msg.from_user)
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -1981,12 +1996,12 @@ def cmd_language(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2011,8 +2026,8 @@ def cmd_language(update: Update, context: CallbackContext):
         if lang_provided != lang:
             lang = lang_provided
             save_config_property(group_id, "Language", lang)
-            if (chat_type == "private") and (user_id in connections):
-                connections[user_id]["lang"] = lang
+            if (chat_type == "private") and (user_id in Global.connections):
+                Global.connections[user_id]["lang"] = lang
             msg_text = TEXT[lang]["LANG_CHANGE"]
         else:
             msg_text = TEXT[lang]["LANG_SAME"].format(
@@ -2041,12 +2056,12 @@ def cmd_time(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2127,12 +2142,12 @@ def cmd_difficulty(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2180,12 +2195,12 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2231,11 +2246,11 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2286,13 +2301,13 @@ def cmd_welcome_msg_time(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"],
                     topic_id=tlg_get_msg_topic(update_msg))
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2373,12 +2388,12 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2515,12 +2530,12 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2581,12 +2596,12 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2640,12 +2655,12 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2691,12 +2706,12 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2734,13 +2749,13 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"],
                     topic_id=tlg_get_msg_topic(update_msg))
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2788,12 +2803,12 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2840,12 +2855,12 @@ def cmd_remove_all_msg_kick_on(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2884,12 +2899,12 @@ def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2928,12 +2943,12 @@ def cmd_url_enable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -2972,12 +2987,12 @@ def cmd_url_disable(update: Update, context: CallbackContext):
     lang = get_update_user_lang(update_msg.from_user)
     # Check and deny usage in private chat
     if chat_type == "private":
-        if user_id not in connections:
+        if user_id not in Global.connections:
             tlg_send_msg_type_chat(
                     bot, chat_type, chat_id,
                     TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
-        group_id = connections[user_id]["group_id"]
+        group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
@@ -3387,16 +3402,16 @@ def th_selfdestruct_messages(bot):
     Handle remove messages sent by the Bot with the timed self-delete
     function.
     '''
-    while not force_exit:
+    while not Global.force_exit:
         # Thread sleep for each iteration
         sleep(0.01)
         # Check each Bot sent message
         i = 0
-        while i < len(to_delete_in_time_messages_list):
+        while i < len(Global.to_delete_in_time_messages_list):
             # Check for break iterating if script must exit
-            if force_exit:
+            if Global.force_exit:
                 return
-            sent_msg = to_delete_in_time_messages_list[i]
+            sent_msg = Global.to_delete_in_time_messages_list[i]
             # Sleep each 100 iterations
             i = i + 1
             if (i > 1) and ((i % 1000) == 0):
@@ -3418,7 +3433,8 @@ def th_selfdestruct_messages(bot):
                         reply_to_message_id=sent_msg["Msg_id"])
                 if sent_result["msg"] is not None:
                     tlg_msg_to_selfdestruct(sent_result["msg"])
-            list_remove_element(to_delete_in_time_messages_list, sent_msg)
+            list_remove_element(
+                    Global.to_delete_in_time_messages_list, sent_msg)
             sleep(0.01)
 
 ###############################################################################
@@ -3429,14 +3445,14 @@ def th_time_to_kick_not_verify_users(bot):
     Check if the time for ban new users that has not completed the
     captcha has arrived.
     '''
-    while not force_exit:
+    while not Global.force_exit:
         # Thread sleep for each iteration
         sleep(0.01)
         # Get all id from users in captcha process (list shallow copy)
         users_id = []
-        chats_id_list = list(new_users.keys()).copy()
+        chats_id_list = list(Global.new_users.keys()).copy()
         for chat_id in chats_id_list:
-            users_id_list = list(new_users[chat_id].keys()).copy()
+            users_id_list = list(Global.new_users[chat_id].keys()).copy()
             for user_id in users_id_list:
                 if user_id not in users_id:
                     users_id.append(user_id)
@@ -3450,13 +3466,14 @@ def th_time_to_kick_not_verify_users(bot):
                     i = 0
                     sleep(0.01)
                 # Check if script must exit for end thread
-                if force_exit:
+                if Global.force_exit:
                     return
                 # Ignore if user is not in this chat
-                if user_id not in new_users[chat_id]:
+                if user_id not in Global.new_users[chat_id]:
                     continue
                 try:
-                    user_join_data = new_users[chat_id][user_id]["join_data"]
+                    user_join_data = \
+                            Global.new_users[chat_id][user_id]["join_data"]
                     user_join_time = user_join_data["join_time"]
                     captcha_timeout = user_join_data["captcha_timeout"]
                     if user_join_data["kicked_ban"]:
@@ -3470,7 +3487,7 @@ def th_time_to_kick_not_verify_users(bot):
                         logger.info(
                                 "Removing kicked user %s after 30 mins",
                                 user_id)
-                        del new_users[chat_id][user_id]
+                        del Global.new_users[chat_id][user_id]
                     else:
                         # If time for kick/ban has not arrived yet
                         if time() - user_join_time < captcha_timeout:
@@ -3516,9 +3533,6 @@ def main(argc, argv):
     '''
     Main Function.
     '''
-    global updater
-    global th_0
-    global th_1
     # Disable unused arguments
     del argc
     del argv
@@ -3542,8 +3556,8 @@ def main(argc, argv):
     msgs_defaults = Defaults(disable_notification=True)
     # Create an event handler (updater) for a Bot with the given Token
     # and get the dispatcher
-    updater = Updater(CONST["TOKEN"], workers=12, defaults=msgs_defaults)
-    bot_dp = updater.dispatcher
+    Global.updater = Updater(CONST["TOKEN"], workers=12, defaults=msgs_defaults)
+    bot_dp = Global.updater.dispatcher
     # Set Telegram errors handler
     bot_dp.add_error_handler(tlg_error_callback)
     # Set to dispatcher all expected commands messages handler
@@ -3630,13 +3644,13 @@ def main(argc, argv):
     # updates (allowed_uptades=[])
     if CONST["WEBHOOK_HOST"] == "None":
         logger.info("Setup Bot for Polling.")
-        updater.start_polling(
+        Global.updater.start_polling(
             drop_pending_updates=True,
             allowed_updates=Update.ALL_TYPES
         )
     else:
         logger.info("Setup Bot for Webhook.")
-        updater.start_webhook(
+        Global.updater.start_webhook(
             drop_pending_updates=True, listen="0.0.0.0",
             port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
@@ -3646,18 +3660,22 @@ def main(argc, argv):
         )
     logger.info("Bot setup completed. Bot is now running.")
     # Launch delete messages and kick users threads
-    th_0 = Thread(target=th_selfdestruct_messages, args=(updater.bot,))
-    th_1 = Thread(target=th_time_to_kick_not_verify_users, args=(updater.bot,))
-    th_0.name = "th_selfdestruct_messages"
-    th_1.name = "th_time_to_kick_not_verify_users"
-    th_0.start()
+    Global.th_0 = Thread(
+            target=th_selfdestruct_messages,
+            args=(Global.updater.bot,))
+    Global.th_1 = Thread(
+            target=th_time_to_kick_not_verify_users,
+            args=(Global.updater.bot,))
+    Global.th_0.name = "th_selfdestruct_messages"
+    Global.th_1.name = "th_time_to_kick_not_verify_users"
+    Global.th_0.start()
     sleep(0.05)
-    th_1.start()
+    Global.th_1.start()
     # Set main thread to idle
     # The updater.idle() catch external signals, preventing to get catch
     # by our signal handler, so we need to call the signal handler
     # directly for a safe close
-    updater.idle()
+    Global.updater.idle()
     logger.info("Bot Thread end")
     if hasattr(signal, "SIGUSR1"):
         system_termination_signal_handler(signal.SIGUSR1, None)
@@ -3670,25 +3688,24 @@ def main(argc, argv):
 
 def system_termination_signal_handler(signal_id,  frame):
     '''Termination signals detection handler to stop APP execution.'''
-    global force_exit
     # Disable unused arguments
     del signal_id
     del frame
     # Exit Request
-    force_exit = True
+    Global.force_exit = True
     logger.info("Termination signal received. Releasing resources...")
     # Close the Bot instance (it wait for updater, dispatcher and other
     # internals threads to end)
-    if updater is not None:
+    if Global.updater is not None:
         logger.info("Closing Bot...")
-        updater.stop()
+        Global.updater.stop()
     # Launch threads to acquire all messages and users files mutex to
     # ensure that them are closed (make sure to close the script when no
     # read/write operation on files)
-    if files_config_list:
+    if Global.files_config_list:
         logger.info("Closing resource files...")
         th_list = []
-        for chat_config_file in files_config_list:
+        for chat_config_file in Global.files_config_list:
             thread = Thread(
                     target=th_close_resource_file,
                     args=(chat_config_file["File"],))
@@ -3700,13 +3717,13 @@ def system_termination_signal_handler(signal_id,  frame):
                 _th.join()
     # Wait to end threads
     logger.info("Waiting th_0 end...")
-    if th_0 is not None:
-        if th_0.is_alive():
-            th_0.join()
+    if Global.th_0 is not None:
+        if Global.th_0.is_alive():
+            Global.th_0.join()
     logger.info("Waiting th_1 end...")
-    if th_1 is not None:
-        if th_1.is_alive():
-            th_1.join()
+    if Global.th_1 is not None:
+        if Global.th_1.is_alive():
+            Global.th_1.join()
     # Save current session data
     save_session()
     # Close the program
