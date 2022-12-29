@@ -86,8 +86,8 @@ CONST = {
         os_getenv("CAPTCHABOT_F_ALLOWED_GROUPS", \
             SETTINGS["CAPTCHABOT_F_ALLOWED_GROUPS"]),
 
-    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot and
-    # cause overload)
+    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot
+    # and cause overload)
     "F_BAN_GROUPS": \
         os_getenv("CAPTCHABOT_F_BAN_GROUPS", \
             SETTINGS["CAPTCHABOT_F_BAN_GROUPS"]),
@@ -182,14 +182,16 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
             SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
 
-    # Maximum number of times a user joins a group and don't solve the captcha
-    # If a user don't solve the captcha after this, it will be ban instead kick
+    # Maximum number of times a user joins a group and fail to solve the
+    # captcha. If a user don't solve the captcha after this, it will be
+    # ban instead kick
     "MAX_FAIL_BAN": \
         int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN", \
             SETTINGS["CAPTCHABOT_MAX_FAIL_BAN"])),
 
-    # Maximum number of times a user fail to solve a Poll captcha
-    # If a user don't solve the captcha after this, it will be ban instead kick
+    # Maximum number of times a user fail to solve a Poll captcha.
+    # If a user don't solve the captcha after this, it will be ban
+    # instead kick
     "MAX_FAIL_BAN_POLL": \
         int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN_POLL", \
             SETTINGS["CAPTCHABOT_MAX_FAIL_BAN_POLL"])),
@@ -302,7 +304,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.27.1 (21/10/2022)"
+    "VERSION": "1.28.0 (29/12/2022)"
 }
 
 # Supported languages list
