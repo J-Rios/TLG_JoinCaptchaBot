@@ -1,5 +1,22 @@
 # -*- coding: utf-8 -*-
 
+'''
+Script:
+    settings.py
+Description:
+    This script ease to configure join_captcha_bot.
+    Note: If environment variables are used, them have more priority
+    than the ones specified in this file.
+Author:
+    Jose Miguel Rios Rubio
+Creation date:
+    07/11/2020
+Last modified date:
+    29/12/2022
+Version:
+    1.0.0
+'''
+
 ###############################################################################
 
 from os import path as os_path
@@ -50,8 +67,8 @@ SETTINGS = {
     # Allowed groups to use the Bot when it is Private
     "CAPTCHABOT_F_ALLOWED_GROUPS": SCRIPT_PATH + "/data/allowedgroups.txt",
 
-    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot and
-    # cause overload)
+    # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot
+    # and cause overload)
     "CAPTCHABOT_F_BAN_GROUPS": SCRIPT_PATH + "/data/bannedgroups.txt",
 
     # Initial language at Bot start
@@ -75,7 +92,8 @@ SETTINGS = {
     # Initial captcha difficult level
     "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 3,
 
-    # Initial captcha characters mode (ascii, hex, nums, math, poll, or button)
+    # Initial captcha characters mode (ascii, hex, nums, math, poll, or
+    # button)
     "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
 
     # Initial remove result messages group configuration
@@ -104,7 +122,7 @@ SETTINGS = {
     # Auto-remove custom welcome message timeout (in seconds)
     "CAPTCHABOT_T_DEL_WELCOME_MSG": 60,
 
-    # Time to restrict sending no-text messages (in seconds, default 24h)
+    # Time to restrict sending no-text msgs (in seconds, default 24h)
     "CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG": 86400,
 
     # Maximum number of users allowed in each chat ignore list
@@ -116,11 +134,13 @@ SETTINGS = {
     # Custom Welcome message max length
     "CAPTCHABOT_MAX_WELCOME_MSG_LENGTH": 3968,
 
-    # Maximum number of times a user joins a group and don't solve the captcha
-    # If a user don't solve the captcha after this, it will be ban instead kick
+    # Maximum number of times a user joins a group and don't solve the
+    # captcha. If a user don't solve the captcha after this, it will be
+    # ban instead kick
     "CAPTCHABOT_MAX_FAIL_BAN": 5,
 
-    # Maximum number of times a user fail to solve a Poll captcha
-    # If a user don't solve the captcha after this, it will be ban instead kick
+    # Maximum number of times a user fail to solve a Poll captcha.
+    # If a user don't solve the captcha after this, it will be ban
+    # instead kick
     "CAPTCHABOT_MAX_FAIL_BAN_POLL": 3
 }
