@@ -61,6 +61,8 @@ class TSjson():
         self.lock = Lock()
         self.file_name = file_name
 
+    ###########################################################################
+    ### Raw Read-Write-Delete Methods
 
     def read(self):
         '''
@@ -76,14 +78,13 @@ class TSjson():
         try:
             with self.lock:
                 # Check if file exists and is not empty
-                if os_path.exists(self.file_name):
-                    # Check if file is not empty
-                    if os_stat(self.file_name).st_size:
-                        # Read the file and parse to JSON
-                        with open(self.file_name, "r", encoding="utf-8") \
-                        as file:
-                            read = json_load(
-                                    file, object_pairs_hook=OrderedDict)
+                if not os_path.exists(self.file_name):
+                    return {}
+                if not os_stat(self.file_name).st_size:
+                    return {}
+                # Read the file and parse to JSON
+                with open(self.file_name, "r", encoding="utf-8") as file:
+                    read = json_load(file, object_pairs_hook=OrderedDict)
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to read JSON file %s", self.file_name)
@@ -116,6 +117,24 @@ class TSjson():
             logger.error("Fail to write JSON file %s", self.file_name)
         return write_result_ok
 
+
+    def delete(self):
+        '''
+        Remove a JSON file.
+        '''
+        remove_ok = False
+        try:
+            with self.lock:
+                if os_path.exists(self.file_name):
+                    os_remove(self.file_name)
+                remove_ok = True
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to remove JSON file %s", self.file_name)
+        return remove_ok
+
+    ###########################################################################
+    ### Data Content Methods
 
     def read_content(self):
         '''
@@ -232,7 +251,7 @@ class TSjson():
         return found, i
 
 
-    def remove_by_uide(self, element_value, uide):
+    def remove_by_uid(self, element_value, uid):
         '''
         From the JSON file content, search and remove an element that
         has a specified Unique Identifier (UID) key.
@@ -246,7 +265,7 @@ class TSjson():
             return False
         # Search and remove element with UID
         for data in file_content:
-            if data[uide] == element_value:
+            if data[uid] == element_value:
                 found = True
                 file_content.remove(data)
                 break
@@ -257,7 +276,7 @@ class TSjson():
         return found
 
 
-    def search_by_uide(self, element_value, uide):
+    def search_by_uid(self, element_value, uid):
         '''
         From the JSON file content, search and get an element that has
         a specified Unique Identifier (UID) key.
@@ -275,15 +294,16 @@ class TSjson():
             return result
         # Search and get element with UID
         for element in file_data["Content"]:
-            if element:
-                if element_value == element[uide]:
-                    result["found"] = True
-                    result["data"] = element
-                    break
+            if not element:
+                continue
+            if element[uid] == element_value:
+                result["found"] = True
+                result["data"] = element
+                break
         return result
 
 
-    def update(self, data, uide):
+    def update(self, data, uid):
         '''
         From the JSON file content, search and update an element that
         has a specified Unique Identifier (UID) key.
@@ -300,7 +320,7 @@ class TSjson():
             return False
         # Search and get index of element with UID
         for msg in file_data["Content"]:
-            if data[uide] == msg[uide]:
+            if data[uid] == msg[uid]:
                 found = True
                 break
             i = i + 1
@@ -313,7 +333,7 @@ class TSjson():
         return found
 
 
-    def update_twice(self, data, uide1, uide2):
+    def update_twice(self, data, uid1, uid2):
         '''
         From the JSON file content, search and update an element that
         has two specified Unique Identifier (UID) keys.
@@ -330,7 +350,7 @@ class TSjson():
             return False
         # Search and get index of element with both UIDs
         for msg in file_data["Content"]:
-            if (data[uide1] == msg[uide1]) and (data[uide2] == msg[uide2]):
+            if (data[uid1] == msg[uid1]) and (data[uid2] == msg[uid2]):
                 found = True
                 break
             i = i + 1
@@ -345,35 +365,21 @@ class TSjson():
 
     def clear_content(self):
         '''
-        Funcion para limpiar todos los datos de un archivo json.
+        Clear data content of the JSON file.
         It locks the Mutex access to the file, and if the file exists
         and is not empty, the content is cleared to a default skelleton.
         '''
         clear_ok = False
         try:
             with self.lock:
-                if os_path.exists(self.file_name) \
-                and os_stat(self.file_name).st_size:
-                    with open(self.file_name, "w", encoding="utf-8") as file:
-                        file.write("\n{\n    \"Content\": [\n    ]\n}\n")
-                    clear_ok = True
+                if not os_path.exists(self.file_name):
+                    return False
+                if not os_stat(self.file_name).st_size:
+                    return False
+                with open(self.file_name, "w", encoding="utf-8") as file:
+                    file.write("\n{\n    \"Content\": [\n    ]\n}\n")
+                clear_ok = True
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to clear JSON file %s", self.file_name)
         return clear_ok
-
-
-    def delete(self):
-        '''
-        Remove a JSON file.
-        '''
-        remove_ok = False
-        try:
-            with self.lock:
-                if os_path.exists(self.file_name):
-                    os_remove(self.file_name)
-                remove_ok = True
-        except Exception:
-            logger.error(format_exc())
-            logger.error("Fail to remove JSON file %s", self.file_name)
-        return remove_ok
