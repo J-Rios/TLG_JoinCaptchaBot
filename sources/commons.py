@@ -4,7 +4,7 @@
 Script:
     commons.py
 Description:
-    Useful auxiliar commons functions.
+    Useful auxiliary commons functions.
 Author:
     Jose Miguel Rios Rubio
 Creation date:
@@ -43,7 +43,9 @@ logger = logging.getLogger(__name__)
 ### Functions
 
 def get_unix_epoch():
-    '''Get UNIX Epoch time (seconds sins 1970)'''
+    '''
+    Get UNIX Epoch time (seconds sins 1970).
+    '''
     epoch = 0
     try:
         date_epoch = datetime.utcfromtimestamp(0)
@@ -54,7 +56,9 @@ def get_unix_epoch():
 
 
 def is_int(element):
-    '''Check if the string is an integer number'''
+    '''
+    Check if the string is an integer number.
+    '''
     try:
         int(element)
         return True
@@ -63,7 +67,9 @@ def is_int(element):
 
 
 def add_lrm(str_to_modify):
-    '''Add a Left to Right Mark (LRM) at provided string start'''
+    '''
+    Add a Left to Right Mark (LRM) at provided string start.
+    '''
     try:
         byte_array = bytearray(b"\xe2\x80\x8e")
         str_to_modify = str_to_modify.encode("utf-8")
@@ -76,7 +82,9 @@ def add_lrm(str_to_modify):
 
 
 def rm_lrm(str_to_modify):
-    '''Remove Left to Right Mark (LRM) from provided string start'''
+    '''
+    Remove Left to Right Mark (LRM) from provided string start.
+    '''
     try:
         if str_to_modify[0] == "\u200e":
             str_to_modify = str_to_modify[1:]
@@ -86,7 +94,10 @@ def rm_lrm(str_to_modify):
 
 
 def create_parents_dirs(file_path):
-    '''Create all parents directories from provided file path (mkdir -p $file_path).'''
+    '''
+    Create all parents directories from provided file path
+    (mkdir -p $file_path).
+    '''
     try:
         parent_dir_path = path.dirname(file_path)
         if not path.exists(parent_dir_path):
@@ -97,7 +108,9 @@ def create_parents_dirs(file_path):
 
 
 def file_exists(file_path):
-    '''Check if the given file exists'''
+    '''
+    Check if the given file exists.
+    '''
     if file_path is None:
         return False
     if not path.exists(file_path):
@@ -106,7 +119,9 @@ def file_exists(file_path):
 
 
 def file_write(file_path, text="", mode="a"):
-    '''Write a text or a list of text lines to plain text file.'''
+    '''
+    Write a text or a list of text lines to plain text file.
+    '''
     # Create file path directories and determine if file exists
     create_parents_dirs(file_path)
     if not path.exists(file_path):
@@ -125,7 +140,9 @@ def file_write(file_path, text="", mode="a"):
 
 
 def file_read(file_path):
-    '''Read content of a plain text file and return a list of each text line.'''
+    '''
+    Read content of a plain text file and return a list of each text line.
+    '''
     list_read_lines = []
     try:
         with open(file_path, "r", encoding="utf8") as file:
@@ -144,7 +161,9 @@ def file_read(file_path):
 
 
 def list_remove_element(the_list, the_element):
-    '''Safe remove an element from a list.'''
+    '''
+    Safe remove an element from a list.
+    '''
     try:
         i = the_list.index(the_element)
         del the_list[i]
@@ -157,7 +176,9 @@ def list_remove_element(the_list, the_element):
 
 
 def pickle_save(pickle_file_path, data):
-    '''Save data to pickle file'''
+    '''
+    Save data to pickle file.
+    '''
     try:
         with open(pickle_file_path, "wb") as file:
             pickle_dump(data, file)
@@ -168,7 +189,9 @@ def pickle_save(pickle_file_path, data):
 
 
 def pickle_restore(pickle_file_path):
-    '''Load data from pickle file'''
+    '''
+    Load data from pickle file.
+    '''
     try:
         with open(pickle_file_path, "rb") as file:
             last_session_data = pickle_load(file)

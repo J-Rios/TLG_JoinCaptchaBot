@@ -173,9 +173,9 @@ def tlg_send_poll(
                 allows_multiple_answers=allows_multiple_answers,
                 correct_option_id=correct_option_id, is_closed=is_closed,
                 disable_notification=disable_notification,
-                reply_to_message_id=reply_to_message_id, reply_markup=reply_markup,
-                message_thread_id=topic_id, timeout=timeout,
-                explanation=explanation,
+                reply_to_message_id=reply_to_message_id,
+                reply_markup=reply_markup, message_thread_id=topic_id,
+                timeout=timeout, explanation=explanation,
                 explanation_parse_mode=explanation_parse_mode,
                 open_period=open_period, close_date=close_date, **kwargs)
         logger.debug(
@@ -296,7 +296,8 @@ def tlg_kick_user(bot, chat_id, user_id, timeout=None):
     if member_info_result["member"]["status"] == "kicked":
         kick_result["error"] = "The user was already kicked"
         return kick_result
-    # Kick User (remove restrictions with only_if_banned=False make it kick)
+    # Kick User (remove restrictions with only_if_banned=False make
+    # it kick)
     try:
         bot.unban_chat_member(
                 chat_id=chat_id, user_id=user_id, timeout=timeout,
