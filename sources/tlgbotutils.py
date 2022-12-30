@@ -122,6 +122,9 @@ def tlg_send_msg(
                 disable_notification=disable_notification,
                 reply_to_message_id=reply_to_message_id,
                 message_thread_id=topic_id, timeout=timeout, **kwargs)
+        logger.debug(
+                "[%s] TLG text msg %s sent",
+                chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
         logger.error("[%s] %s", chat_id, format_exc())
@@ -143,6 +146,9 @@ def tlg_send_image(
                 reply_to_message_id=reply_to_message_id,
                 reply_markup=reply_markup, parse_mode=parse_mode,
                 message_thread_id=topic_id, timeout=timeout, **kwargs)
+        logger.debug(
+                "[%s] TLG image msg %s sent",
+                chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
         logger.error("[%s] %s", chat_id, format_exc())
@@ -172,6 +178,9 @@ def tlg_send_poll(
                 explanation=explanation,
                 explanation_parse_mode=explanation_parse_mode,
                 open_period=open_period, close_date=close_date, **kwargs)
+        logger.debug(
+                "[%s] TLG poll msg %s sent",
+                chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
         logger.error("[%s] %s", chat_id, format_exc())
@@ -188,6 +197,7 @@ def tlg_stop_poll(
         result["msg"] = bot.stop_poll(
                 chat_id=chat_id, message_id=message_id,
                 reply_markup=reply_markup, timeout=timeout, **kwargs)
+        logger.debug("[%s] TLG poll %s stop", chat_id, message_id)
     except Exception as error:
         result["error"] = str(error)
         logger.error("[%s] %s", chat_id, format_exc())
@@ -199,12 +209,14 @@ def tlg_delete_msg(bot, chat_id, msg_id, timeout=None):
     delete_result = {}
     delete_result["error"] = ""
     if msg_id is not None:
+        logger.debug("[%s] TLG deleting msg %s", chat_id, msg_id)
         try:
             bot.delete_message(
                     chat_id=chat_id, message_id=msg_id, timeout=timeout)
+            logger.debug("[%s] TLG msg %s deleted", chat_id, msg_id)
         except Exception as error:
             delete_result["error"] = str(error)
-            logger.error("[%s] %s", chat_id, format_exc())
+            logger.error("[%s] %s", chat_id, delete_result["error"])
     return delete_result
 
 

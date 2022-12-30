@@ -134,6 +134,7 @@ class Globals():
     updater = None
     files_config_list = []
     to_delete_in_time_messages_list = []
+    deleted_messages = []
     new_users = {}
     connections = {}
     th_0 = None
@@ -329,6 +330,42 @@ def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
     sent_msg_data["time"] = _t0
     sent_msg_data["delete_time"] = time_delete_sec
     Global.to_delete_in_time_messages_list.append(sent_msg_data)
+    return True
+
+
+def delete_tlg_msg(bot, chat_id, msg_id):
+    '''
+    Request to delete a Telegram message from a chat. It checks if the
+    message is setup to be auto-deleted at some time, in that case, the
+    time to be deleted is modify to force the auto-delete thread remove
+    the message right now, otherwise, the message is requested to be
+    deleted.
+    '''
+    # Check if message is setup to be auto-deleted by Bot at some time
+    msg_auto_delete_data = None
+    for idx, msg_data in enumerate(Global.to_delete_in_time_messages_list):
+        if (msg_data["Chat_id"] == chat_id) and (msg_data["Msg_id"] == msg_id):
+            msg_auto_delete_data = Global.to_delete_in_time_messages_list[idx]
+    # Manually delete message if not found in auto-deletion list
+    if msg_auto_delete_data is None:
+        # Ignore if message was already deleted (from another code)
+        if msg_id in Global.deleted_messages:
+            list_remove_element(Global.deleted_messages, msg_id)
+            return True
+        # Delete Message
+        if not tlg_delete_msg(bot, chat_id, msg_id):
+            return False
+        if msg_id not in Global.deleted_messages:
+            Global.deleted_messages.append(msg_id)
+        return True
+    # Modify time to auto-delete message to now
+    # Force message auto-delete thread to delete the message right now
+    remove_result = list_remove_element(
+            Global.to_delete_in_time_messages_list, msg_auto_delete_data)
+    if not remove_result:
+        return False
+    msg_auto_delete_data["delete_time"] = 0
+    Global.to_delete_in_time_messages_list.append(msg_auto_delete_data)
     return True
 
 ###############################################################################
@@ -794,12 +831,12 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
     logger.info("[%s] Removing messages from user %s...", chat_id, user_name)
     join_msg = Global.new_users[chat_id][user_id]["join_msg"]
     if join_msg is not None:
-        tlg_delete_msg(bot, chat_id, join_msg)
+        delete_tlg_msg(bot, chat_id, join_msg)
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        tlg_delete_msg(bot, chat_id, msg)
+        delete_tlg_msg(bot, chat_id, msg)
     Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
-        tlg_delete_msg(bot, chat_id, msg)
+        delete_tlg_msg(bot, chat_id, msg)
     Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
     # Delete user join info if ban was success
     if banned:
@@ -924,7 +961,7 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         if join_user_id in Global.new_users[chat_id]:
             if "msg_to_rm" in Global.new_users[chat_id][join_user_id]:
                 for msg in Global.new_users[chat_id][join_user_id]["msg_to_rm"]:
-                    tlg_delete_msg(bot, chat_id, msg)
+                    delete_tlg_msg(bot, chat_id, msg)
                 Global.new_users[chat_id][join_user_id]["msg_to_rm"].clear()
     # Ignore if the captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -1199,7 +1236,7 @@ def msg_notext(update: Update, context: CallbackContext):
     # allowed until solve captcha
     msg_id = update_msg.message_id
     logger.info("[%s] Removing non-text msg sent by %s", chat_id, user_name)
-    tlg_delete_msg(bot, chat_id, msg_id)
+    delete_tlg_msg(bot, chat_id, msg_id)
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
     tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg,
@@ -1290,11 +1327,11 @@ def msg_nocmd(update: Update, context: CallbackContext):
         has_url = re.findall(CONST["REGEX_URLS"], msg_text)
         if has_url:
             # Try to remove the message and notify detection
-            delete_result = tlg_delete_msg(bot, chat_id, msg_id)
-            if delete_result["error"] == "":
+            if delete_tlg_msg(bot, chat_id, msg_id):
                 bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(
                         user_name)
-                tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg,
+                tlg_send_selfdestruct_msg_in(
+                        bot, chat_id, bot_msg,
                         CONST["T_FAST_DEL_MSG"],
                         topic_id=topic_id)
     # Ignore if message is not from a new user that has not completed
@@ -1314,11 +1351,8 @@ def msg_nocmd(update: Update, context: CallbackContext):
     if (forward_from is not None) or (forward_from_chat is not None):
         logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
         logger.info("[%s] Removing forwarded msg: %s.", chat_id, msg_text)
-        delete_result = tlg_delete_msg(bot, chat_id, msg_id)
-        if delete_result["error"] == "":
+        if delete_tlg_msg(bot, chat_id, msg_id):
             logger.info("Message removed.")
-        elif delete_result["error"] == "Message can't be deleted":
-            logger.info("No rights to remove msg.")
         else:
             logger.info("Message can't be deleted.")
         return
@@ -1329,18 +1363,14 @@ def msg_nocmd(update: Update, context: CallbackContext):
         logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
         logger.info("[%s] Removing spam message: %s.", chat_id, msg_text)
         # Try to remove the message and notify detection
-        delete_result = tlg_delete_msg(bot, chat_id, msg_id)
-        if delete_result["error"] == "":
+        if delete_tlg_msg(bot, chat_id, msg_id):
             bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg,
                     CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-        # Check if message cant be removed due to not delete
-        # message privileges
-        elif delete_result["error"] == "Message can't be deleted":
+        else:
             bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
             tlg_send_selfdestruct_msg_in(bot, chat_id, bot_msg,
                     CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-        else:
             logger.info("Message can't be deleted.")
         return
     # Check group config regarding if all messages of user must be
@@ -1362,12 +1392,12 @@ def msg_nocmd(update: Update, context: CallbackContext):
         tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-            tlg_delete_msg(bot, chat_id, msg)
+            delete_tlg_msg(bot, chat_id, msg)
         Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
         Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
         del Global.new_users[chat_id][user_id]
         # Remove user captcha numbers message
-        tlg_delete_msg(bot, chat_id, msg_id)
+        delete_tlg_msg(bot, chat_id, msg_id)
         # Send message solve message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if rm_result_msg:
@@ -1493,7 +1523,7 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     sleep(3)
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        tlg_delete_msg(bot, chat_id, msg)
+        delete_tlg_msg(bot, chat_id, msg)
     Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
@@ -1691,7 +1721,7 @@ def button_request_pass(bot, query):
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        tlg_delete_msg(bot, chat_id, msg)
+        delete_tlg_msg(bot, chat_id, msg)
     # Remove user from captcha process
     del Global.new_users[chat_id][user_id]
     # Send message solve message
@@ -3419,12 +3449,18 @@ def th_selfdestruct_messages(bot):
             # Check if delete time has arrive for this message
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
                 continue
+            # Ignore if message was already deleted (from another code)
+            if sent_msg["Msg_id"] in Global.deleted_messages:
+                list_remove_element(
+                        Global.deleted_messages, sent_msg["Msg_id"])
+                list_remove_element(
+                        Global.to_delete_in_time_messages_list, sent_msg)
+                continue
             # Delete message
-            logger.info(
-                    "[%s] Delete message: %s",
-                    sent_msg["Chat_id"], sent_msg["Msg_id"])
             delete_result = tlg_delete_msg(
                     bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
+            if delete_result["error"] == "":
+                Global.deleted_messages.append(sent_msg["Msg_id"])
             # The bot has no privileges to delete messages
             if delete_result["error"] == "Message can't be deleted":
                 lang = get_chat_config(sent_msg["Chat_id"], "Language")
@@ -3523,8 +3559,8 @@ def tlg_error_callback(update, context):
         logger.error("TLG Error: Timeout (slow connection issue)")
     except NetworkError:
         logger.error("TLG Error: network problem")
-    except TelegramError:
-        logger.error("TLG Error: %s", format_exc())
+    except TelegramError as error:
+        logger.error("TLG Error: %s", str(error))
 
 ###############################################################################
 ### Main Function
