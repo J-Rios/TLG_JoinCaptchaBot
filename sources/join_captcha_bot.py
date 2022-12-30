@@ -665,8 +665,9 @@ def allowed_in_this_group(bot, chat, member_added_by):
     if chat_members_count["num_members"] is not None:
         num_members = chat_members_count["num_members"]
     if num_members > max_usr_group:
-        printts("Warning: Group {} with more than {} users ({} users). Leaving it...".format(
-                chat.id, max_usr_group, num_members))
+        logger.warning(
+                "Group %s with more than %d users (%d users). Leaving it...",
+                chat.id, max_usr_group, num_members)
         msg_text = CONST["FREE_LIMIT_REACH"].format(chat.id, max_usr_group+1)
         tlg_send_msg(bot, chat.id, msg_text)
         sleep(1)
