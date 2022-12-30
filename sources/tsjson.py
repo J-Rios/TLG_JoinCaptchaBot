@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 ###############################################################################
 ### Thread-Safe JSON Class
 
-class TSjson(object):
+class TSjson():
     '''
     Thread-Safe JSON files read/write class.
     '''
@@ -70,20 +70,20 @@ class TSjson(object):
         read = {}
         # Try to read the file
         try:
-            self.lock.acquire()
-            # Check if file exists and is not empty
-            if os.path.exists(self.file_name):
-                # Check if file is not empty
-                if os.stat(self.file_name).st_size:
-                    # Read the file and parse to JSON
-                    with open(self.file_name, "r", encoding="utf-8") as f:
-                        read = json.load(f, object_pairs_hook=OrderedDict)
+            with self.lock:
+                # Check if file exists and is not empty
+                if os.path.exists(self.file_name):
+                    # Check if file is not empty
+                    if os.stat(self.file_name).st_size:
+                        # Read the file and parse to JSON
+                        with open(self.file_name, "r", encoding="utf-8") \
+                        as file:
+                            read = json.load(
+                                    file, object_pairs_hook=OrderedDict)
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to read JSON file %s", self.file_name)
             read = None
-        finally:
-            self.lock.release()
         return read
 
 
@@ -91,7 +91,7 @@ class TSjson(object):
         '''
         Thread-Safe Write of JSON file.
         It checks and creates all the needed directories to file path if
-        any doesn't exists. Then it locks the Mutex access to the file,
+        any does not exists. Then it locks the Mutex access to the file,
         opens and overwrites the file with the provided JSON data.
         '''
         write_result_ok = False
@@ -103,15 +103,13 @@ class TSjson(object):
             os.makedirs(directory)
         # Try to write the file
         try:
-            self.lock.acquire()
-            with open(self.file_name, 'w', encoding="utf-8") as f:
-                json.dump(data, fp=f, ensure_ascii=False, indent=4)
-            write_result_ok = True
+            with self.lock:
+                with open(self.file_name, "w", encoding="utf-8") as file:
+                    json.dump(data, fp=file, ensure_ascii=False, indent=4)
+                write_result_ok = True
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to write JSON file %s", self.file_name)
-        finally:
-            self.lock.release()
         return write_result_ok
 
 
@@ -127,14 +125,14 @@ class TSjson(object):
             return {}
         if read == {}:
             return {}
-        return read['Content']
+        return read["Content"]
 
 
     def write_content(self, data):
         '''
         Write JSON file content data.
         It checks and creates all the needed directories to file path if
-        any doesn't exists.
+        any does not exists.
         '''
         write_result_ok = False
         if not data:
@@ -145,33 +143,37 @@ class TSjson(object):
             os.makedirs(directory)
         # Try to write the file
         try:
-            self.lock.acquire()
-            # Check if file exists and is not empty
-            if os.path.exists(self.file_name) \
-            and os.stat(self.file_name).st_size:
-                # Read the file, parse to JSON and add read data to
-                # dictionary content key
-                with open(self.file_name, "r", encoding="utf-8") as f:
-                    content = json.load(f, object_pairs_hook=OrderedDict)
-                content['Content'].append(data)
-                # Overwrite the file with the new content data
-                with open(self.file_name, 'w', encoding="utf-8") as f:
-                    json.dump(content, fp=f, ensure_ascii=False, indent=4)
-                write_result_ok = True
-            # If the file doesn't exist or is empty
-            else:
-                # Write the file with an empty content data
-                with open(self.file_name, 'w', encoding="utf-8") as f:
-                    f.write('\n{\n    "Content": []\n}\n')
-                # Read the file, parse to JSON and add read data to
-                # dictionary content key
-                with open(self.file_name, "r", encoding="utf-8") as f:
-                    content = json.load(f)
-                content['Content'].append(data)
-                # Overwrite the file with the new content data
-                with open(self.file_name, 'w', encoding="utf-8") as f:
-                    json.dump(content, fp=f, ensure_ascii=False, indent=4)
-                write_result_ok = True
+            with self.lock:
+                # Check if file exists and is not empty
+                if os.path.exists(self.file_name) \
+                and os.stat(self.file_name).st_size:
+                    # Read the file, parse to JSON and add read data to
+                    # dictionary content key
+                    with open(self.file_name, "r", encoding="utf-8") as file:
+                        content = json.load(
+                                file,
+                                object_pairs_hook=OrderedDict)
+                    content["Content"].append(data)
+                    # Overwrite the file with the new content data
+                    with open(self.file_name, "w", encoding="utf-8") as file:
+                        json.dump(
+                                content, fp=file, ensure_ascii=False, indent=4)
+                    write_result_ok = True
+                # If the file doesn't exist or is empty
+                else:
+                    # Write the file with an empty content data
+                    with open(self.file_name, "w", encoding="utf-8") as file:
+                        file.write("\n{\n    \"Content\": []\n}\n")
+                    # Read the file, parse to JSON and add read data to
+                    # dictionary content key
+                    with open(self.file_name, "r", encoding="utf-8") as file:
+                        content = json.load(file)
+                    content["Content"].append(data)
+                    # Overwrite the file with the new content data
+                    with open(self.file_name, "w", encoding="utf-8") as file:
+                        json.dump(
+                                content, fp=file, ensure_ascii=False, indent=4)
+                    write_result_ok = True
         except IOError as error:
             logger.error(format_exc())
             logger.error("I/O fail (%s): %s", error.errno, error.strerror)
@@ -183,8 +185,6 @@ class TSjson(object):
             logger.error(
                     "Fail to write content of JSON file %s",
                     self.file_name)
-        finally:
-            self.lock.release()
         return write_result_ok
 
 
@@ -200,7 +200,7 @@ class TSjson(object):
         if file_data == {}:
             return False
         # Search element with UID
-        for _data in file_data['Content']:
+        for _data in file_data["Content"]:
             if data == _data:
                 return True
         return False
@@ -220,7 +220,7 @@ class TSjson(object):
         if file_data == {}:
             return False, -1
         # Search and get index of element with UID
-        for _data in file_data['Content']:
+        for _data in file_data["Content"]:
             if data == _data:
                 found = True
                 break
@@ -260,9 +260,9 @@ class TSjson(object):
         Note: If there are elements with same UIDs, only the first one
         detected will be detected.
         '''
-        result = dict()
-        result['found'] = False
-        result['data'] = None
+        result = {}
+        result["found"] = False
+        result["data"] = None
         # Read the file data
         file_data = self.read()
         if file_data is None:
@@ -270,11 +270,11 @@ class TSjson(object):
         if file_data == {}:
             return result
         # Search and get element with UID
-        for element in file_data['Content']:
+        for element in file_data["Content"]:
             if element:
                 if element_value == element[uide]:
-                    result['found'] = True
-                    result['data'] = element
+                    result["found"] = True
+                    result["data"] = element
                     break
         return result
 
@@ -295,7 +295,7 @@ class TSjson(object):
         if file_data == {}:
             return False
         # Search and get index of element with UID
-        for msg in file_data['Content']:
+        for msg in file_data["Content"]:
             if data[uide] == msg[uide]:
                 found = True
                 break
@@ -325,14 +325,14 @@ class TSjson(object):
         if file_data == {}:
             return False
         # Search and get index of element with both UIDs
-        for msg in file_data['Content']:
+        for msg in file_data["Content"]:
             if (data[uide1] == msg[uide1]) and (data[uide2] == msg[uide2]):
                 found = True
                 break
             i = i + 1
         # Update UID element data and overwrite JSON file
         if found:
-            file_data['Content'][i] = data
+            file_data["Content"][i] = data
             self.write(file_data)
         else:
             logger.error("Element with UID no found in JSON file.")
@@ -347,17 +347,15 @@ class TSjson(object):
         '''
         clear_ok = False
         try:
-            self.lock.acquire()
-            if os.path.exists(self.file_name) \
-            and os.stat(self.file_name).st_size:
-                with open(self.file_name, 'w', encoding="utf-8") as f:
-                    f.write('\n{\n    "Content": [\n    ]\n}\n')
-                clear_ok = True
+            with self.lock:
+                if os.path.exists(self.file_name) \
+                and os.stat(self.file_name).st_size:
+                    with open(self.file_name, "w", encoding="utf-8") as file:
+                        file.write("\n{\n    \"Content\": [\n    ]\n}\n")
+                    clear_ok = True
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to clear JSON file %s", self.file_name)
-        finally:
-            self.lock.release()
         return clear_ok
 
 
@@ -365,12 +363,13 @@ class TSjson(object):
         '''
         Remove a JSON file.
         '''
+        remove_ok = False
         try:
-            self.lock.acquire()
-            if os.path.exists(self.file_name):
-                os.remove(self.file_name)
+            with self.lock:
+                if os.path.exists(self.file_name):
+                    os.remove(self.file_name)
+                remove_ok = True
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to remove JSON file %s", self.file_name)
-        finally:
-            self.lock.release()
+        return remove_ok
