@@ -271,7 +271,7 @@ CONST = {
         "If you want to use this captcha Bot without restriction in large " \
         "groups, use the \"pro Bot\" account (@pro_join_captcha_bot) " \
         "for just 5 eurs each month following next instructions:\n" \
-        "https://www.buymeacoffee.com/joincaptchabot/joincaptchabot-large-groups\n" \
+        "https://ko-fi.com/post/JoinCaptchaBot-for-large-groups-V7V3ANADF\n" \
         "\n" \
         "Also, remember that Bot is free software and open-source, so you " \
         "can always deploy, host and maintain your own Bot instance from " \
