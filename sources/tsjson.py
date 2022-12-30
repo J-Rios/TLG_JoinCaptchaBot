@@ -18,6 +18,9 @@ Version:
 ###############################################################################
 ### Standard Libraries
 
+# Logging Library
+import logging
+
 # Operating System Library
 import os
 
@@ -29,6 +32,14 @@ from collections import OrderedDict
 
 # Threads and Multi-tasks Library
 from threading import Lock
+
+# Error Traceback Library
+from traceback import format_exc
+
+###############################################################################
+### Logger Setup
+
+logger = logging.getLogger(__name__)
 
 ###############################################################################
 ### Thread-Safe JSON Class
@@ -67,9 +78,9 @@ class TSjson(object):
                     # Read the file and parse to JSON
                     with open(self.file_name, "r", encoding="utf-8") as f:
                         read = json.load(f, object_pairs_hook=OrderedDict)
-        except Exception as error:
-            print(str(error))
-            print("Error reading JSON file {}".format(self.file_name))
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to read JSON file %s", self.file_name)
             read = None
         finally:
             self.lock.release()
@@ -96,9 +107,9 @@ class TSjson(object):
             with open(self.file_name, 'w', encoding="utf-8") as f:
                 json.dump(data, fp=f, ensure_ascii=False, indent=4)
             write_result_ok = True
-        except Exception as error:
-            print(str(error))
-            print("Error writing JSON file {}".format(self.file_name))
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to write JSON file %s", self.file_name)
         finally:
             self.lock.release()
         return write_result_ok
@@ -162,12 +173,16 @@ class TSjson(object):
                     json.dump(content, fp=f, ensure_ascii=False, indent=4)
                 write_result_ok = True
         except IOError as error:
-            print("I/O error({0}): {1}".format(error.errno, error.strerror))
+            logger.error(format_exc())
+            logger.error("I/O fail (%s): %s", error.errno, error.strerror)
         except ValueError:
-            print("Data conversion error")
-        except Exception as error:
-            print(str(error))
-            print("Error writing content JSON file {}".format(self.file_name))
+            logger.error(format_exc())
+            logger.error("Data conversion fail")
+        except Exception:
+            logger.error(format_exc())
+            logger.error(
+                    "Fail to write content of JSON file %s",
+                    self.file_name)
         finally:
             self.lock.release()
         return write_result_ok
@@ -290,7 +305,7 @@ class TSjson(object):
             file_data['Content'][i] = data
             self.write(file_data)
         else:
-            print("Error: Element with UID no found in JSON file.")
+            logger.error("Element with UID no found in JSON file.")
         return found
 
 
@@ -303,7 +318,6 @@ class TSjson(object):
         '''
         i = 0
         found = False
-        file_data = self.read()
         # Read the file data
         file_data = self.read()
         if file_data is None:
@@ -321,7 +335,7 @@ class TSjson(object):
             file_data['Content'][i] = data
             self.write(file_data)
         else:
-            print("Error: Element with UID no found in JSON file.")
+            logger.error("Element with UID no found in JSON file.")
         return found
 
 
@@ -339,9 +353,9 @@ class TSjson(object):
                 with open(self.file_name, 'w', encoding="utf-8") as f:
                     f.write('\n{\n    "Content": [\n    ]\n}\n')
                 clear_ok = True
-        except Exception as error:
-            print(str(error))
-            print("Fail to clear JSON file {}".format(self.file_name))
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to clear JSON file %s", self.file_name)
         finally:
             self.lock.release()
         return clear_ok
@@ -351,7 +365,12 @@ class TSjson(object):
         '''
         Remove a JSON file.
         '''
-        self.lock.acquire()
-        if os.path.exists(self.file_name):
-            os.remove(self.file_name)
-        self.lock.release()
+        try:
+            self.lock.acquire()
+            if os.path.exists(self.file_name):
+                os.remove(self.file_name)
+        except Exception:
+            logger.error(format_exc())
+            logger.error("Fail to remove JSON file %s", self.file_name)
+        finally:
+            self.lock.release()
