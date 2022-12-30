@@ -22,10 +22,14 @@ Version:
 import logging
 
 # Operating System Library
-import os
+from os import makedirs as os_makedirs
+from os import path as os_path
+from os import remove as os_remove
+from os import stat as os_stat
 
 # JSON Library
-import json
+from json import dump as json_dump
+from json import load as json_load
 
 # Collections Data Types Library
 from collections import OrderedDict
@@ -72,13 +76,13 @@ class TSjson():
         try:
             with self.lock:
                 # Check if file exists and is not empty
-                if os.path.exists(self.file_name):
+                if os_path.exists(self.file_name):
                     # Check if file is not empty
-                    if os.stat(self.file_name).st_size:
+                    if os_stat(self.file_name).st_size:
                         # Read the file and parse to JSON
                         with open(self.file_name, "r", encoding="utf-8") \
                         as file:
-                            read = json.load(
+                            read = json_load(
                                     file, object_pairs_hook=OrderedDict)
         except Exception:
             logger.error(format_exc())
@@ -98,14 +102,14 @@ class TSjson():
         if not data:
             return False
         # Check for directory path and create all needed directories
-        directory = os.path.dirname(self.file_name)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        directory = os_path.dirname(self.file_name)
+        if not os_path.exists(directory):
+            os_makedirs(directory)
         # Try to write the file
         try:
             with self.lock:
                 with open(self.file_name, "w", encoding="utf-8") as file:
-                    json.dump(data, fp=file, ensure_ascii=False, indent=4)
+                    json_dump(data, fp=file, ensure_ascii=False, indent=4)
                 write_result_ok = True
         except Exception:
             logger.error(format_exc())
@@ -138,25 +142,25 @@ class TSjson():
         if not data:
             return False
         # Check for directory path and create all needed directories
-        directory = os.path.dirname(self.file_name)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+        directory = os_path.dirname(self.file_name)
+        if not os_path.exists(directory):
+            os_makedirs(directory)
         # Try to write the file
         try:
             with self.lock:
                 # Check if file exists and is not empty
-                if os.path.exists(self.file_name) \
-                and os.stat(self.file_name).st_size:
+                if os_path.exists(self.file_name) \
+                and os_stat(self.file_name).st_size:
                     # Read the file, parse to JSON and add read data to
                     # dictionary content key
                     with open(self.file_name, "r", encoding="utf-8") as file:
-                        content = json.load(
+                        content = json_load(
                                 file,
                                 object_pairs_hook=OrderedDict)
                     content["Content"].append(data)
                     # Overwrite the file with the new content data
                     with open(self.file_name, "w", encoding="utf-8") as file:
-                        json.dump(
+                        json_dump(
                                 content, fp=file, ensure_ascii=False, indent=4)
                     write_result_ok = True
                 # If the file doesn't exist or is empty
@@ -167,11 +171,11 @@ class TSjson():
                     # Read the file, parse to JSON and add read data to
                     # dictionary content key
                     with open(self.file_name, "r", encoding="utf-8") as file:
-                        content = json.load(file)
+                        content = json_load(file)
                     content["Content"].append(data)
                     # Overwrite the file with the new content data
                     with open(self.file_name, "w", encoding="utf-8") as file:
-                        json.dump(
+                        json_dump(
                                 content, fp=file, ensure_ascii=False, indent=4)
                     write_result_ok = True
         except IOError as error:
@@ -348,8 +352,8 @@ class TSjson():
         clear_ok = False
         try:
             with self.lock:
-                if os.path.exists(self.file_name) \
-                and os.stat(self.file_name).st_size:
+                if os_path.exists(self.file_name) \
+                and os_stat(self.file_name).st_size:
                     with open(self.file_name, "w", encoding="utf-8") as file:
                         file.write("\n{\n    \"Content\": [\n    ]\n}\n")
                     clear_ok = True
@@ -366,8 +370,8 @@ class TSjson():
         remove_ok = False
         try:
             with self.lock:
-                if os.path.exists(self.file_name):
-                    os.remove(self.file_name)
+                if os_path.exists(self.file_name):
+                    os_remove(self.file_name)
                 remove_ok = True
         except Exception:
             logger.error(format_exc())
