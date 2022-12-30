@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/10/2022
+    30/12/2022
 Version:
-    1.27.1
+    1.28.0
 '''
 
 ###############################################################################
@@ -301,10 +301,10 @@ CONST = {
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
 
     # Developer Donation address
-    "DEV_DONATION_ADDR": "https://www.buymeacoffee.com/joincaptchabot",
+    "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.28.0 (29/12/2022)"
+    "VERSION": "1.28.0 (30/12/2022)"
 }
 
 # Supported languages list
