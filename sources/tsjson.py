@@ -4,246 +4,354 @@
 Script:
     tsjson.py
 Description:
-    Thread-Safe json files read/write library
+    Thread-Safe JSON files read/write library.
 Author:
     Jose Miguel Rios Rubio
 Creation date:
     20/07/2017
 Last modified date:
-    25/08/2017
+    30/12/2022
 Version:
-    1.2.0
+    1.2.1
 '''
 
 ###############################################################################
-### Modulos importados
+### Standard Libraries
 
+# Operating System Library
 import os
+
+# JSON Library
 import json
-from threading import Lock
+
+# Collections Data Types Library
 from collections import OrderedDict
 
+# Threads and Multi-tasks Library
+from threading import Lock
+
 ###############################################################################
-### Clase
+### Thread-Safe JSON Class
 
 class TSjson(object):
     '''
-    Thread-Safe json files read/write library
+    Thread-Safe JSON files read/write class.
     '''
 
     def __init__(self, file_name):
-        '''Constructor de la clase'''
-        self.lock = Lock() #Inicializa el Lock
-        self.file_name = file_name # Adquiere el nombre del archivo a controlar
+        '''
+        Class Constructor.
+        It initializes the Mutex Lock element and get the file path.
+        '''
+        self.lock = Lock()
+        self.file_name = file_name
 
 
     def read(self):
-        '''Funcion para leer de un archivo json'''
-        try: # Intentar abrir el archivo
-            self.lock.acquire() # Cerramos (adquirimos) el mutex
-            if not os.path.exists(self.file_name): # Si el archivo no existe
-                read = {} # Devolver un diccionario vacio
-            else: # Si el archivo existe
-                if not os.stat(self.file_name).st_size: # Si el archivo esta vacio
-                    read = {} # Devolver un diccionario vacio
-                else: # El archivo existe y tiene contenido
-                    with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
-                        read = json.load(f, object_pairs_hook=OrderedDict) # Leer todo el archivo y devolver la lectura de los datos json usando un diccionario ordenado
-        except Exception as e: # Error intentando abrir el archivo
-            print("    Error reading json file {}. {}".format(self.file_name, str(e))) # Escribir en consola el error
-            read = None # Devolver None
-        finally: # Para acabar, haya habido excepcion o no
-            self.lock.release() # Abrimos (liberamos) el mutex
-
-        return read # Devolver el resultado de la lectura de la funcion
+        '''
+        Thread-Safe Read of JSON file.
+        It locks the Mutex access to the file, checks if the file exists
+        and is not empty, and then reads it content and try to parse as
+        JSON data and store it in an OrderedDict element. At the end,
+        the lock is released and the read and parsed JSON data is
+        returned. If the process fails, it returns None.
+        '''
+        read = {}
+        # Try to read the file
+        try:
+            self.lock.acquire()
+            # Check if file exists and is not empty
+            if os.path.exists(self.file_name):
+                # Check if file is not empty
+                if os.stat(self.file_name).st_size:
+                    # Read the file and parse to JSON
+                    with open(self.file_name, "r", encoding="utf-8") as f:
+                        read = json.load(f, object_pairs_hook=OrderedDict)
+        except Exception as error:
+            print(str(error))
+            print("Error reading JSON file {}".format(self.file_name))
+            read = None
+        finally:
+            self.lock.release()
+        return read
 
 
     def write(self, data):
-        '''Funcion para escribir en un archivo json'''
-        # Si no existe el directorio que contiene los archivos de datos, lo creamos
-        directory = os.path.dirname(self.file_name) # Obtener el nombre del directorio que contiene al archivo
-        if not os.path.exists(directory): # Si el directorio (ruta) no existe
-            os.makedirs(directory) # Creamos el directorio
-
-        try: # Intentar abrir el archivo
-            self.lock.acquire() # Cerramos (adquirimos) el mutex
-            with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
-                json.dump(data, fp=f, ensure_ascii=False, indent=4) # Escribimos en el archivo los datos json asegurando todos los caracteres ascii, codificacion utf-8 y una "indentacion" de 4 espacios
-        except: # Error intentando abrir el archivo
-            print("    Error cuando se abria para escritura, el archivo {}".format(self.file_name)) # Escribir en consola el error
-        finally: # Para acabar, haya habido excepcion o no
-            self.lock.release() # Abrimos (liberamos) el mutex
+        '''
+        Thread-Safe Write of JSON file.
+        It checks and creates all the needed directories to file path if
+        any doesn't exists. Then it locks the Mutex access to the file,
+        opens and overwrites the file with the provided JSON data.
+        '''
+        write_result_ok = False
+        if not data:
+            return False
+        # Check for directory path and create all needed directories
+        directory = os.path.dirname(self.file_name)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        # Try to write the file
+        try:
+            self.lock.acquire()
+            with open(self.file_name, 'w', encoding="utf-8") as f:
+                json.dump(data, fp=f, ensure_ascii=False, indent=4)
+            write_result_ok = True
+        except Exception as error:
+            print(str(error))
+            print("Error writing JSON file {}".format(self.file_name))
+        finally:
+            self.lock.release()
+        return write_result_ok
 
 
     def read_content(self):
-        '''Funcion para leer el contenido de un archivo json (datos json)'''
-        read = self.read() # Leer todo el archivo json
-
-        if read != {}: # Si la lectura no es vacia
-            return read['Content'] # Devolvemos el contenido de la lectura (datos json)
-        else: # Lectura vacia
-            return read # Devolvemos la lectura vacia
+        '''
+        Read JSON file content data.
+        It call to read() function to get the OrderedDict element of the
+        file JSON data and then return the specific JSON data from the
+        dict ("content" key).
+        '''
+        read = self.read()
+        if read is None:
+            return {}
+        if read == {}:
+            return {}
+        return read['Content']
 
 
     def write_content(self, data):
-        '''Funcion para añadir al contenido de un archivo json, nuevos datos json'''
-        # Si no existe el directorio que contiene los archivos de datos, lo creamos
-        directory = os.path.dirname(self.file_name) # Obtener el nombre del directorio que contiene al archivo
-        if not os.path.exists(directory): # Si el directorio (ruta) no existe
-            os.makedirs(directory) # Creamos el directorio
-
-        try: # Intentar abrir el archivo
-            self.lock.acquire() # Cerramos (adquirimos) el mutex
-
-            if data: # Si el dato no esta vacio
-                if os.path.exists(self.file_name) and os.stat(self.file_name).st_size: # Si el archivo existe y no esta vacio
-                    with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
-                        content = json.load(f, object_pairs_hook=OrderedDict) # Leer todo el archivo y devolver la lectura de los datos json usando un diccionario ordenado
-
-                    content['Content'].append(data) # Añadir los nuevos datos al contenido del json
-
-                    with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
-                        json.dump(content, fp=f, ensure_ascii=False, indent=4)
-                else: # El archivo no existe o esta vacio
-                    with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
-                        f.write('\n{\n    "Content": []\n}\n') # Escribir la estructura de contenido basica
-
-                    with open(self.file_name, "r", encoding="utf-8") as f: # Abrir el archivo en modo lectura
-                        content = json.load(f) # Leer todo el archivo
-
-                    content['Content'].append(data) # Añadir los datos al contenido del json
-
-                    with open(self.file_name, 'w', encoding="utf-8") as f:  # Abrir el archivo en modo escritura (sobre-escribe)
-                        json.dump(content, fp=f, ensure_ascii=False, indent=4)
-        except IOError as e:
-            print("    I/O error({0}): {1}".format(e.errno, e.strerror))
+        '''
+        Write JSON file content data.
+        It checks and creates all the needed directories to file path if
+        any doesn't exists.
+        '''
+        write_result_ok = False
+        if not data:
+            return False
+        # Check for directory path and create all needed directories
+        directory = os.path.dirname(self.file_name)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        # Try to write the file
+        try:
+            self.lock.acquire()
+            # Check if file exists and is not empty
+            if os.path.exists(self.file_name) \
+            and os.stat(self.file_name).st_size:
+                # Read the file, parse to JSON and add read data to
+                # dictionary content key
+                with open(self.file_name, "r", encoding="utf-8") as f:
+                    content = json.load(f, object_pairs_hook=OrderedDict)
+                content['Content'].append(data)
+                # Overwrite the file with the new content data
+                with open(self.file_name, 'w', encoding="utf-8") as f:
+                    json.dump(content, fp=f, ensure_ascii=False, indent=4)
+                write_result_ok = True
+            # If the file doesn't exist or is empty
+            else:
+                # Write the file with an empty content data
+                with open(self.file_name, 'w', encoding="utf-8") as f:
+                    f.write('\n{\n    "Content": []\n}\n')
+                # Read the file, parse to JSON and add read data to
+                # dictionary content key
+                with open(self.file_name, "r", encoding="utf-8") as f:
+                    content = json.load(f)
+                content['Content'].append(data)
+                # Overwrite the file with the new content data
+                with open(self.file_name, 'w', encoding="utf-8") as f:
+                    json.dump(content, fp=f, ensure_ascii=False, indent=4)
+                write_result_ok = True
+        except IOError as error:
+            print("I/O error({0}): {1}".format(error.errno, error.strerror))
         except ValueError:
-            print("    Error en conversion de dato")
-        except: # Error intentando abrir el archivo
-            print("    Error cuando se abria para escritura, el archivo {}".format(self.file_name)) # Escribir en consola el error
-        finally: # Para acabar, haya habido excepcion o no
-            self.lock.release() # Abrimos (liberamos) el mutex
+            print("Data conversion error")
+        except Exception as error:
+            print(str(error))
+            print("Error writing content JSON file {}".format(self.file_name))
+        finally:
+            self.lock.release()
+        return write_result_ok
 
 
     def is_in(self, data):
-        '''Funcion para determinar si el archivo json contiene un dato json concreto'''
-        found = False # Dato inicialmente no encontrado
-        file_data = self.read() # Leer todo el archivo json
-        for _data in file_data['Content']: # Para cada dato en el archivo json
-            if data == _data: # Si el contenido del json tiene dicho dato
-                found = True # Marcar que se ha encontrado la posicion
-                break # Interrumpir y salir del bucle
-        return found
+        '''
+        Check if provided key exists in JSON file data.
+        It reads all the JSON file data and check if the key is present.
+        '''
+        # Read the file data
+        file_data = self.read()
+        if file_data is None:
+            return False
+        if file_data == {}:
+            return False
+        # Search element with UID
+        for _data in file_data['Content']:
+            if data == _data:
+                return True
+        return False
 
 
     def is_in_position(self, data):
-        '''Funcion para determinar si el archivo json contiene un dato json concreto y la posicion de este'''
-        found = False # Dato inicialmente no encontrado
-        i = 0 # Posicion inicial del dato a 0
-        file_data = self.read() # Leer todo el archivo json
-        for _data in file_data['Content']: # Para cada dato en el archivo json
-            if data == _data: # Si el contenido del json tiene dicho dato
-                found = True # Marcar que se ha encontrado la posicion
-                break # Interrumpir y salir del bucle
-            i = i + 1 # Incrementar la posicion del dato
-        return found, i # Devolvemos la tupla (encontrado, posicion)
+        '''
+        Check if provided key exists in JSON file data and get the
+        index from where it is located.
+        '''
+        i = 0
+        found = False
+        # Read the file data
+        file_data = self.read()
+        if file_data is None:
+            return False, -1
+        if file_data == {}:
+            return False, -1
+        # Search and get index of element with UID
+        for _data in file_data['Content']:
+            if data == _data:
+                found = True
+                break
+            i = i + 1
+        return found, i
 
 
     def remove_by_uide(self, element_value, uide):
         '''
-        Funcion para eliminar un dato json concreto dentro del archivo json a partir de un elemento identificador unico (uide)
-        [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la eliminacion se producira en el primer dato con dicho elemento uide que se encuentre]
+        From the JSON file content, search and remove an element that
+        has a specified Unique Identifier (UID) key.
+        Note: If there are elements with same UIDs, only the first one
+        detected will be removed.
         '''
-        file_content = self.read_content() # Leer el contenido del archivo json
-        for data in file_content: # Para cada dato json contenido
-            if data[uide] == element_value: # Si el dato coincide con el buscado
-                file_content.remove(data) # Eliminamos el dato
-                break # Interrumpir y salir del bucle
-        self.clear_content() # Eliminamos el contenido del archivo
-        if file_content: # Si hay algun dato en el contenido modificado
-            self.write_content(file_content[0]) # Write the modified content (without the item)
+        found = False
+        # Read the file data
+        file_content = self.read_content()
+        if file_content == {}:
+            return False
+        # Search and remove element with UID
+        for data in file_content:
+            if data[uide] == element_value:
+                found = True
+                file_content.remove(data)
+                break
+        # Rewrite to file after deletion
+        self.clear_content()
+        if file_content:
+            self.write_content(file_content[0])
+        return found
 
 
     def search_by_uide(self, element_value, uide):
         '''
-        Funcion para buscar un dato json concreto dentro del archivo json a partir de un elemento identificador unico (uide)
-        [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la actualizacion se producira en el primer dato con dicho elemento uide que se encuentre]
+        From the JSON file content, search and get an element that has
+        a specified Unique Identifier (UID) key.
+        Note: If there are elements with same UIDs, only the first one
+        detected will be detected.
         '''
-        result = dict() # Diccionario para el resultado de la busqueda
-        result['found'] = False # Dato inicialmente no encontrado
-        result['data'] = None # Dato encontrado inicialmente con ningun valor
-        file_data = self.read() # Leer todo el archivo json
-        for element in file_data['Content']: # Para cada elemento en el archivo json
-            if element: # Si el contenido no esta vacio
-                if element_value == element[uide]: # Si el dato json tiene el UIDE buscado
-                    result['found'] = True # Marcar que se ha encontrado la posicion
-                    result['data'] = element # Obtenemos el dato encontrado
-                    break # Interrumpir y salir del bucle
-        return result # Devolver si se ha encontrado o no y el dato encontrado
+        result = dict()
+        result['found'] = False
+        result['data'] = None
+        # Read the file data
+        file_data = self.read()
+        if file_data is None:
+            return result
+        if file_data == {}:
+            return result
+        # Search and get element with UID
+        for element in file_data['Content']:
+            if element:
+                if element_value == element[uide]:
+                    result['found'] = True
+                    result['data'] = element
+                    break
+        return result
 
 
     def update(self, data, uide):
         '''
-        Funcion para actualizar datos de un archivo json
-        [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la actualizacion se producira en el primer dato con dicho elemento uide que se encuentre]
+        From the JSON file content, search and update an element that
+        has a specified Unique Identifier (UID) key.
+        Note: If there are elements with same UID, only the first one
+        detected will be updated.
         '''
-        file_data = self.read() # Leer todo el archivo json
-
-        # Buscar la posicion del dato en el contenido json
-        found = 0 # Posicion encontrada a 0
-        i = 0 # Posicion inicial del dato a 0
-        for msg in file_data['Content']: # Para cada dato json en el archivo json
-            if data[uide] == msg[uide]: # Si el dato json tiene el UIDE buscado
-                found = 1 # Marcar que se ha encontrado la posicion
-                break # Interrumpir y salir del bucle
-            i = i + 1 # Incrementar la posicion del dato
-
-        if found: # Si se encontro en el archivo json datos con el UIDE buscado
-            file_data['Content'][i] = data # Actualizamos los datos json que contiene ese UIDE
-            self.write(file_data) # Escribimos el dato actualizado en el archivo json
-        else: # No se encontro ningun dato json con dicho UIDE
-            print("    Error: UIDE no encontrado en el archivo, o el archivo no existe") # Escribir en consola el error
+        i = 0
+        found = False
+        # Read the file data
+        file_data = self.read()
+        if file_data is None:
+            return False
+        if file_data == {}:
+            return False
+        # Search and get index of element with UID
+        for msg in file_data['Content']:
+            if data[uide] == msg[uide]:
+                found = True
+                break
+            i = i + 1
+        # Update UID element data and overwrite JSON file
+        if found:
+            file_data['Content'][i] = data
+            self.write(file_data)
+        else:
+            print("Error: Element with UID no found in JSON file.")
+        return found
 
 
     def update_twice(self, data, uide1, uide2):
         '''
-        Funcion para actualizar datos de un archivo json
-        [Nota: Cada dato json necesita al menos 1 elemento identificador unico (uide), si no es asi, la actualizacion se producira en el primer elemento que se encuentre]
+        From the JSON file content, search and update an element that
+        has two specified Unique Identifier (UID) keys.
+        Note: If there are elements with same UIDs, only the first one
+        detected will be updated.
         '''
-        file_data = self.read() # Leer todo el archivo json
-
-        # Buscar la posicion del dato en el contenido json
-        found = 0 # Posicion encontrada a 0
-        i = 0 # Posicion inicial del dato a 0
-        for msg in file_data['Content']: # Para cada dato json en el archivo json
-            if (data[uide1] == msg[uide1]) and (data[uide2] == msg[uide2]): # Si el dato json tiene el UIDE buscado
-                found = 1 # Marcar que se ha encontrado la posicion
-                break # Interrumpir y salir del bucle
-            i = i + 1 # Incrementar la posicion del dato
-
-        if found: # Si se encontro en el archivo json datos con el UIDE buscado
-            file_data['Content'][i] = data # Actualizamos los datos json que contiene ese UIDE
-            self.write(file_data) # Escribimos el dato actualizado en el archivo json
-        else: # No se encontro ningun dato json con dicho UIDE
-            print("    Error: UIDE no encontrado en el archivo, o el archivo no existe") # Escribir en consola el error
+        i = 0
+        found = False
+        file_data = self.read()
+        # Read the file data
+        file_data = self.read()
+        if file_data is None:
+            return False
+        if file_data == {}:
+            return False
+        # Search and get index of element with both UIDs
+        for msg in file_data['Content']:
+            if (data[uide1] == msg[uide1]) and (data[uide2] == msg[uide2]):
+                found = True
+                break
+            i = i + 1
+        # Update UID element data and overwrite JSON file
+        if found:
+            file_data['Content'][i] = data
+            self.write(file_data)
+        else:
+            print("Error: Element with UID no found in JSON file.")
+        return found
 
 
     def clear_content(self):
-        '''Funcion para limpiar todos los datos de un archivo json'''
-        try: # Intentar abrir el archivo
-            self.lock.acquire() # Cerramos (adquirimos) el mutex
-            if os.path.exists(self.file_name) and os.stat(self.file_name).st_size: # Si el archivo existe y no esta vacio
-                with open(self.file_name, 'w', encoding="utf-8") as f: # Abrir el archivo en modo escritura (sobre-escribe)
-                    f.write('\n{\n    "Content": [\n    ]\n}\n') # Escribir la estructura de contenido basica
-        except: # Error intentando abrir el archivo
-            print("    Error cuando se abria para escritura, el archivo {}".format(self.file_name)) # Escribir en consola el error
-        finally: # Para acabar, haya habido excepcion o no
-            self.lock.release() # Abrimos (liberamos) el mutex
+        '''
+        Funcion para limpiar todos los datos de un archivo json.
+        It locks the Mutex access to the file, and if the file exists
+        and is not empty, the content is cleared to a default skelleton.
+        '''
+        clear_ok = False
+        try:
+            self.lock.acquire()
+            if os.path.exists(self.file_name) \
+            and os.stat(self.file_name).st_size:
+                with open(self.file_name, 'w', encoding="utf-8") as f:
+                    f.write('\n{\n    "Content": [\n    ]\n}\n')
+                clear_ok = True
+        except Exception as error:
+            print(str(error))
+            print("Fail to clear JSON file {}".format(self.file_name))
+        finally:
+            self.lock.release()
+        return clear_ok
 
 
     def delete(self):
-        '''Funcion para eliminar un archivo json'''
-        self.lock.acquire() # Cerramos (adquirimos) el mutex
-        if os.path.exists(self.file_name): # Si el archivo existe
-            os.remove(self.file_name) # Eliminamos el archivo
-        self.lock.release() # Abrimos (liberamos) el mutex
+        '''
+        Remove a JSON file.
+        '''
+        self.lock.acquire()
+        if os.path.exists(self.file_name):
+            os.remove(self.file_name)
+        self.lock.release()
