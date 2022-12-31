@@ -1454,6 +1454,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 clueless_user = True
             # Tell the user that is wrong
             if clueless_user:
+                tlg_msg_to_selfdestruct(update_msg)
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1464,6 +1465,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
         else:
             # Check if the message has 4 chars
             if len(msg_text) == 4:
+                tlg_msg_to_selfdestruct(update_msg)
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1472,6 +1474,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
                 Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
             # Check if the message was just a 4 numbers msg
             elif is_int(msg_text):
+                tlg_msg_to_selfdestruct(update_msg)
                 sent_msg_id = tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
