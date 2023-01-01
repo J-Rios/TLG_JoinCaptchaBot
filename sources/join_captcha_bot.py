@@ -706,12 +706,12 @@ def should_manage_captcha(update, bot):
         tlg_leave_chat(bot, chat.id)
         return False
     # Ignore Admins
-    if tlg_user_is_admin(bot, join_user.id, chat.id):
+    if tlg_user_is_admin(bot, chat.id, join_user.id):
         logger.info("[%s] User is an admin.", chat.id)
         logger.info("Skipping the captcha process.")
         return False
     # Ignore Members added by an Admin
-    if tlg_user_is_admin(bot, member_added_by.id, chat.id):
+    if tlg_user_is_admin(bot, chat.id, member_added_by.id):
         logger.info("[%s] User has been added by an admin.", chat.id)
         logger.info("Skipping the captcha process.")
         return False
@@ -1318,7 +1318,7 @@ def msg_nocmd(update: Update, context: CallbackContext):
     url_enable = get_chat_config(chat_id, "URL_Enabled")
     if not url_enable:
         # Ignore if message comes from an Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if is_admin:
             return
         # Get Chat configured language
@@ -1494,8 +1494,6 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     poll_id = update.poll_answer.poll_id
     from_user = update.poll_answer.user
     option_answer = update.poll_answer.option_ids[0] + 1
-    msg_text = f"User {from_user.username} select poll option {option_answer}"
-    logger.info(msg_text)
     # Ignore any Poll vote that comes from unexpected poll
     if poll_id not in active_polls:
         return
@@ -1510,6 +1508,9 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     poll_msg_id = poll_data["poll_msg_id"]
     poll_correct_option = poll_data["correct_option"]
     # The vote come from expected user, let's stop the Poll
+    logger.info(
+            "[%s] User %s select poll option %d",
+            chat_id, from_user.username, option_answer)
     tlg_stop_poll(bot, chat_id, poll_msg_id)
     # Get user name (if has an alias, just use the alias)
     user_name = from_user.full_name
@@ -1799,7 +1800,7 @@ def cmd_start(update: Update, context: CallbackContext):
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if not is_admin:
             return
         # Send the response message
@@ -1828,7 +1829,7 @@ def cmd_help(update: Update, context: CallbackContext):
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Send the response message
@@ -1857,7 +1858,7 @@ def cmd_commands(update: Update, context: CallbackContext):
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Send the response message
@@ -1889,7 +1890,7 @@ def cmd_connect(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Send just allowed in private chat message
@@ -1916,7 +1917,7 @@ def cmd_connect(update: Update, context: CallbackContext):
     # Check if requested by the Bot owner or an Admin of the group
     if (str(user_id) != CONST["BOT_OWNER"]) \
     and (user_alias != CONST["BOT_OWNER"]):
-        is_admin = tlg_user_is_admin(bot, user_id, group_id)
+        is_admin = tlg_user_is_admin(bot, group_id, user_id)
         if (is_admin is None) or (is_admin is False):
             tlg_send_msg_type_chat(bot, chat_type, chat_id,
                     TEXT[lang]["CONNECT_JUST_ADMIN"],
@@ -1948,7 +1949,7 @@ def cmd_disconnect(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Send just allowed in private chat message
@@ -1998,7 +1999,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2039,7 +2040,7 @@ def cmd_language(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2099,7 +2100,7 @@ def cmd_time(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2185,7 +2186,7 @@ def cmd_difficulty(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2238,7 +2239,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2288,7 +2289,7 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2345,7 +2346,7 @@ def cmd_welcome_msg_time(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2431,7 +2432,7 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2573,7 +2574,7 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2639,7 +2640,7 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2698,7 +2699,7 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2749,7 +2750,7 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2793,7 +2794,7 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2846,7 +2847,7 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2898,7 +2899,7 @@ def cmd_remove_all_msg_kick_on(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2942,7 +2943,7 @@ def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -2986,7 +2987,7 @@ def cmd_url_enable(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -3030,7 +3031,7 @@ def cmd_url_disable(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Get Group Chat ID and configured language
@@ -3069,7 +3070,7 @@ def cmd_enable(update: Update, context: CallbackContext):
     # Remove command message automatically after a while
     tlg_msg_to_selfdestruct(update_msg)
     # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    is_admin = tlg_user_is_admin(bot, chat_id, user_id)
     if (is_admin is None) or (is_admin is False):
         return
     # Get actual chat configured language
@@ -3107,7 +3108,7 @@ def cmd_disable(update: Update, context: CallbackContext):
     # Remove command message automatically after a while
     tlg_msg_to_selfdestruct(update_msg)
     # Ignore if not requested by a group Admin
-    is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+    is_admin = tlg_user_is_admin(bot, chat_id, user_id)
     if (is_admin is None) or (is_admin is False):
         return
     # Get actual chat configured language
@@ -3167,7 +3168,7 @@ def cmd_version(update: Update, context: CallbackContext):
         # Remove command message automatically after a while
         tlg_msg_to_selfdestruct(update_msg)
         # Ignore if not requested by a group Admin
-        is_admin = tlg_user_is_admin(bot, user_id, chat_id)
+        is_admin = tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
             return
         # Send the message

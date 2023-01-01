@@ -28,7 +28,7 @@ from datetime import datetime
 from traceback import format_exc
 
 # Data Types Library
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Union
 
 ###############################################################################
 ### Third-Party Libraries
@@ -474,8 +474,8 @@ def tlg_unrestrict_user(
 
 def tlg_user_is_admin(
         bot: Bot,
-        user_id: Union[str, int],
         chat_id: Union[str, int],
+        user_id: Union[str, int],
         timeout: ODVInput[float] = DEFAULT_NONE
     ):
     '''Check if the specified user is an Administrator of a group given
