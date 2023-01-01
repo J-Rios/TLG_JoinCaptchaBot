@@ -16,7 +16,8 @@ Version:
 '''
 
 ###############################################################################
-### Imported modules
+# Imported modules
+###############################################################################
 
 # Date and Time Library
 from datetime import datetime
@@ -37,13 +38,17 @@ from traceback import format_exc
 # Data Types Hints Library
 from typing import Union
 
+
 ###############################################################################
-### Logger Setup
+# Logger Setup
+###############################################################################
 
 logger = logging.getLogger(__name__)
 
+
 ###############################################################################
-### Functions
+# Functions
+###############################################################################
 
 def get_unix_epoch():
     '''
@@ -69,7 +74,7 @@ def is_int(element):
         return False
 
 
-def add_lrm(str_to_modify : str):
+def add_lrm(str_to_modify: str):
     '''
     Add a Left to Right Mark (LRM) at provided string start.
     '''
@@ -84,7 +89,7 @@ def add_lrm(str_to_modify : str):
     return str_to_modify
 
 
-def rm_lrm(str_to_modify : str):
+def rm_lrm(str_to_modify: str):
     '''
     Remove Left to Right Mark (LRM) from provided string start.
     '''
@@ -96,7 +101,7 @@ def rm_lrm(str_to_modify : str):
     return str_to_modify
 
 
-def create_parents_dirs(file_path : str):
+def create_parents_dirs(file_path: str):
     '''
     Create all parents directories from provided file path
     (mkdir -p $file_path).
@@ -110,7 +115,7 @@ def create_parents_dirs(file_path : str):
         logger.error("Can't create parents directories of %s.", file_path)
 
 
-def file_exists(file_path : str):
+def file_exists(file_path: str):
     '''
     Check if the given file exists.
     '''
@@ -118,9 +123,10 @@ def file_exists(file_path : str):
 
 
 def file_write(
-        file_path : str,
-        text : Union[str, list] = "",
-        mode : str = "a"):
+        file_path: str,
+        text: Union[str, list] = "",
+        mode: str = "a"
+        ):
     '''
     Write a text or a list of text lines to plain text file.
     '''
@@ -146,7 +152,7 @@ def file_write(
     return write_ok
 
 
-def file_read(file_path : str):
+def file_read(file_path: str):
     '''
     Read content of a plain text file and return a list of each text line.
     '''
@@ -167,7 +173,7 @@ def file_read(file_path : str):
     return list_read_lines
 
 
-def list_remove_element(the_list : list, the_element):
+def list_remove_element(the_list: list, the_element):
     '''
     Safe remove an element from a list.
     '''
@@ -182,7 +188,7 @@ def list_remove_element(the_list : list, the_element):
     return True
 
 
-def pickle_save(pickle_file_path : str, data):
+def pickle_save(pickle_file_path: str, data):
     '''
     Save data to pickle file.
     '''
@@ -195,7 +201,7 @@ def pickle_save(pickle_file_path : str, data):
     return True
 
 
-def pickle_restore(pickle_file_path : str):
+def pickle_restore(pickle_file_path: str):
     '''
     Load data from pickle file.
     '''
