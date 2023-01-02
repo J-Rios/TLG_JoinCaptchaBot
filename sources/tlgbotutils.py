@@ -435,8 +435,6 @@ def tlg_restrict_user(
         bot: Bot,
         chat_id: Union[str, int],
         user_id: Union[str, int],
-        until_date: Union[int, datetime],
-        timeout: ODVInput[float],
         send_msg: bool,
         send_media: bool,
         send_polls: bool,
@@ -445,7 +443,9 @@ def tlg_restrict_user(
         change_group_info: bool,
         invite_members: bool,
         pin_messages: bool,
-        manage_topics: bool
+        manage_topics: bool,
+        until_date: Optional[Union[int, datetime]] = None,
+        timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram Bot try to restrict user permissions in a group.'''
     result = False
@@ -467,7 +467,7 @@ def tlg_unrestrict_user(
         bot: Bot,
         chat_id: Union[str, int],
         user_id: Union[str, int],
-        timeout: ODVInput[float]
+        timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram Bot try to remove all user restrictions in a group.'''
     result = False

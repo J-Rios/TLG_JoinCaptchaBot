@@ -140,15 +140,16 @@ logger = logging.getLogger(__name__)
 
 class Globals():
     '''Global Elements Container.'''
-    updater = None
-    files_config_list = []
-    to_delete_in_time_messages_list = []
-    deleted_messages = []
-    new_users = {}
-    connections = {}
-    th_0 = None
-    th_1 = None
-    force_exit = False
+
+    updater: Updater = None
+    files_config_list: list = []
+    to_delete_in_time_messages_list: list = []
+    deleted_messages: list = []
+    new_users: dict = {}
+    connections: dict = {}
+    th_0: Thread = None
+    th_1: Thread = None
+    force_exit: bool = False
 
 
 ###############################################################################
@@ -1052,6 +1053,10 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         if sent_result["msg"] is None:
             send_problem = True
         else:
+            # Set to delete msg
+            if solve_poll_request_msg_id is not None:
+                Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
+                        solve_poll_request_msg_id)
             # Save some info about the poll the bot_data for
             # later use in receive_quiz_answer
             poll_id = sent_result["msg"].poll.id
@@ -1155,10 +1160,6 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         if sent_result["msg"]:
             Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
                     sent_result["msg"].message_id)
-        if ((captcha_mode == "poll") and
-                (solve_poll_request_msg_id is not None)):
-            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                    solve_poll_request_msg_id)
         # Restrict user to deny send any kind of message until captcha
         # is solve. Allow send text messages for image based captchas
         # that requires it
@@ -1167,14 +1168,16 @@ def chat_member_status_change(update: Update, context: CallbackContext):
                     bot, chat_id, join_user_id, send_msg=False,
                     send_media=False, send_stickers_gifs=False,
                     insert_links=False, send_polls=False, invite_members=False,
-                    pin_messages=False, change_group_info=False)
+                    pin_messages=False, change_group_info=False,
+                    manage_topics=None)
         else:
             # Restrict user to only allow send text messages
             tlg_restrict_user(
-                bot, chat_id, join_user_id, send_msg=True, send_media=False,
-                send_stickers_gifs=False, insert_links=False, send_polls=False,
-                invite_members=False, pin_messages=False,
-                change_group_info=False)
+                    bot, chat_id, join_user_id, send_msg=True,
+                    send_media=False, send_stickers_gifs=False,
+                    insert_links=False, send_polls=False, invite_members=False,
+                    pin_messages=False, change_group_info=False,
+                    manage_topics=None)
         logger.info("[%s] Captcha send process completed.", chat_id)
         logger.info("")
 
@@ -1458,14 +1461,15 @@ def msg_nocmd(update: Update, context: CallbackContext):
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, until_date=tomorrow_epoch)
+                    change_group_info=False, manage_topics=None,
+                    until_date=tomorrow_epoch)
         # Restrict forever
         elif restrict_non_text_msgs == 2:
             tlg_restrict_user(
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False)
+                    change_group_info=False, manage_topics=None)
     # The provided message doesn't has the valid captcha number
     else:
         # Check if the message is for a math equation captcha
@@ -1590,13 +1594,14 @@ def receive_poll_answer(update: Update, context: CallbackContext):
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, until_date=tomorrow_epoch)
+                    change_group_info=False,  manage_topics=None,
+                    until_date=tomorrow_epoch)
         elif restrict_non_text_msgs == 2:  # Restrict forever
             tlg_restrict_user(
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False)
+                    change_group_info=False, manage_topics=None)
     else:
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
@@ -1772,6 +1777,7 @@ def button_request_pass(bot, query):
     else:
         tlg_send_msg(bot, chat_id, bot_msg)
     # Check for custom welcome message and send it
+    welcome_msg = ""
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
             escape_markdown(user_name, 2))
     if welcome_msg != "-":
@@ -1797,14 +1803,15 @@ def button_request_pass(bot, query):
                 bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
-                change_group_info=False, until_date=tomorrow_epoch)
+                change_group_info=False, manage_topics=None,
+                until_date=tomorrow_epoch)
     # Restrict forever
     elif restrict_non_text_msgs == 2:
         tlg_restrict_user(
                 bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
-                change_group_info=False)
+                change_group_info=False, manage_topics=None)
     logger.info("[%s] Button-only challenge process completed.", chat_id)
     logger.info("")
 
@@ -3709,11 +3716,14 @@ def main(argc, argv):
     bot_dp.add_handler(MessageHandler(Filters.text, msg_nocmd, run_async=True))
     # Set to dispatcher not text messages handler
     # pylint: disable=E1131
-    msg_filters = Filters(
-            Filters.photo | Filters.audio | Filters.voice | Filters.video
-            | Filters.sticker | Filters.document | Filters.location
-            | Filters.contact)
-    bot_dp.add_handler(MessageHandler(msg_filters, msg_notext))
+    bot_dp.add_handler(
+        MessageHandler(
+            Filters.photo | Filters.audio | Filters.voice | Filters.video |
+            Filters.sticker | Filters.document | Filters.location |
+            Filters.contact,
+            msg_notext
+        )
+    )
     # Set to dispatcher a new member join the group and member left the
     # group events handlers
     bot_dp.add_handler(
@@ -3730,10 +3740,9 @@ def main(argc, argv):
     )
     # Set to dispatcher "USER joined the group" messages event handlers
     bot_dp.add_handler(
-            MessageHandler(
-                    Filters.status_update.new_chat_members,
-                    msg_user_joined_group
-            )
+        MessageHandler(
+            Filters.status_update.new_chat_members, msg_user_joined_group
+        )
     )
     # Set to dispatcher inline keyboard callback handler for new captcha
     # request and button captcha challenge
