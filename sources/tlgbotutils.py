@@ -81,7 +81,7 @@ def tlg_get_chat(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram get chat data.'''
-    chat_result = {}
+    chat_result: dict = {}
     chat_result["chat_data"] = None
     chat_result["error"] = ""
     # Add @ if alias was provided
@@ -105,7 +105,7 @@ def tlg_get_chat_member(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram Get Chat member info.'''
-    result = {}
+    result: dict = {}
     result["member"] = None
     result["error"] = ""
     try:
@@ -123,7 +123,7 @@ def tlg_get_chat_members_count(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''telegram Get number of members in a Chat.'''
-    result = {}
+    result: dict = {}
     result["num_members"] = None
     result["error"] = ""
     try:
@@ -155,7 +155,7 @@ def tlg_send_msg(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Bot try to send a text message.'''
-    sent_result = {}
+    sent_result: dict = {}
     sent_result["msg"] = None
     sent_result["error"] = ""
     if parse_mode == "HTML":
@@ -193,7 +193,7 @@ def tlg_send_image(
         **kwargs
         ):
     '''Bot try to send an image message.'''
-    sent_result = {}
+    sent_result: dict = {}
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
@@ -234,11 +234,11 @@ def tlg_send_poll(
         **kwargs
         ):
     '''Bot try to send a Poll message'''
-    sent_result = {}
+    sent_result: dict = {}
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
-        sent_result["msg"] = bot.send_poll(
+        msg = bot.send_poll(
                 chat_id=chat_id, question=question, options=options,
                 is_anonymous=is_anonymous, type=poll_type,
                 allows_multiple_answers=allows_multiple_answers,
@@ -249,9 +249,8 @@ def tlg_send_poll(
                 timeout=timeout, explanation=explanation,
                 explanation_parse_mode=explanation_parse_mode,
                 open_period=open_period, close_date=close_date, **kwargs)
-        logger.debug(
-                "[%s] TLG poll msg %s sent",
-                chat_id, sent_result["msg"]["message_id"])
+        logger.debug("[%s] TLG poll msg %d sent", chat_id, msg.message_id)
+        sent_result["msg"] = msg
     except TelegramError as error:
         sent_result["error"] = str(error)
         logger.error("[%s] %s", chat_id, str(error))
@@ -267,7 +266,7 @@ def tlg_stop_poll(
         **kwargs
         ):
     '''Bot try to stop a Poll.'''
-    result = {}
+    result: dict = {}
     result["msg"] = None
     result["error"] = ""
     try:
@@ -288,7 +287,7 @@ def tlg_delete_msg(
         timeout: ODVInput[float] = DEFAULT_NONE,
         ):
     '''Try to remove a telegram message'''
-    delete_result = {}
+    delete_result: dict = {}
     delete_result["error"] = ""
     if msg_id is not None:
         logger.debug("[%s] TLG deleting msg %s", chat_id, msg_id)
@@ -312,7 +311,7 @@ def tlg_edit_msg_media(
         timeout: ODVInput[float] = DEFAULT_NONE,
         ):
     '''Try to edit a telegram multimedia message'''
-    edit_result = {}
+    edit_result: dict = {}
     edit_result["error"] = ""
     try:
         bot.edit_message_media(
@@ -335,7 +334,7 @@ def tlg_answer_callback_query(
         timeout: ODVInput[float] = DEFAULT_NONE,
         ):
     '''Try to send a telegram callback query answer'''
-    query_ans_result = {}
+    query_ans_result: dict = {}
     query_ans_result["error"] = ""
     try:
         bot.answer_callback_query(
@@ -355,7 +354,7 @@ def tlg_ban_user(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram Ban a user of an specified chat'''
-    ban_result = {}
+    ban_result: dict = {}
     ban_result["error"] = ""
     # Get chat member info
     member_info_result = tlg_get_chat_member(bot, chat_id, user_id)
@@ -387,7 +386,7 @@ def tlg_kick_user(
         timeout: ODVInput[float] = DEFAULT_NONE
         ):
     '''Telegram Kick a user of an specified chat'''
-    kick_result = {}
+    kick_result: dict = {}
     kick_result["error"] = ""
     # Get chat member info
     # Do nothing if user left the group or has been kick/ban by an Admin
