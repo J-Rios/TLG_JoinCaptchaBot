@@ -308,7 +308,7 @@ CONST = {
 }
 
 # Supported languages list
-TEXT = {
+TEXT: dict = {
     "AR": {}, # Arabic
     "BE": {}, # Belarusian
     "CA": {}, # Catalan
