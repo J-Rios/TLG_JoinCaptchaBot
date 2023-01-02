@@ -25,9 +25,6 @@ import logging
 # Date and Time Library
 from datetime import datetime
 
-# Error Traceback Library
-from traceback import format_exc
-
 # Data Types Library
 from typing import List, Optional, Union
 
@@ -97,7 +94,7 @@ def tlg_get_chat(
             chat_id=chat_id_or_alias, timeout=timeout)
     except Exception as error:
         chat_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id_or_alias, format_exc())
+        logger.error("[%s] %s", chat_id_or_alias, str(error))
     return chat_result
 
 
@@ -116,7 +113,7 @@ def tlg_get_chat_member(
             chat_id=chat_id, user_id=user_id, timeout=timeout)
     except Exception as error:
         result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return result
 
 
@@ -134,7 +131,7 @@ def tlg_get_chat_members_count(
             chat_id=chat_id, timeout=timeout)
     except Exception as error:
         result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return result
 
 
@@ -178,7 +175,7 @@ def tlg_send_msg(
                 chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return sent_result
 
 
@@ -211,7 +208,7 @@ def tlg_send_image(
                 chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return sent_result
 
 
@@ -257,7 +254,7 @@ def tlg_send_poll(
                 chat_id, sent_result["msg"]["message_id"])
     except TelegramError as error:
         sent_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return sent_result
 
 
@@ -280,7 +277,7 @@ def tlg_stop_poll(
         logger.debug("[%s] TLG poll %s stop", chat_id, message_id)
     except Exception as error:
         result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return result
 
 
@@ -324,7 +321,7 @@ def tlg_edit_msg_media(
                 reply_markup=reply_markup, timeout=timeout)
     except Exception as error:
         edit_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return edit_result
 
 
@@ -346,7 +343,7 @@ def tlg_answer_callback_query(
                 url=url, cache_time=cache_time, timeout=timeout)
     except Exception as error:
         query_ans_result["error"] = str(error)
-        logger.error("[%s] %s", query.message.chat_id, format_exc())
+        logger.error("[%s] %s", query.message.chat_id, str(error))
     return query_ans_result
 
 
@@ -379,7 +376,7 @@ def tlg_ban_user(
                 until_date=until_date)
     except Exception as error:
         ban_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return ban_result
 
 
@@ -412,7 +409,7 @@ def tlg_kick_user(
                 only_if_banned=False)
     except Exception as error:
         kick_result["error"] = str(error)
-        logger.error("[%s] %s", chat_id, format_exc())
+        logger.error("[%s] %s", chat_id, str(error))
     return kick_result
 
 
@@ -426,8 +423,8 @@ def tlg_leave_chat(
     try:
         if bot.leave_chat(chat_id=chat_id, timeout=timeout):
             left = True
-    except Exception:
-        logger.error("[%s] %s", chat_id, format_exc())
+    except Exception as error:
+        logger.error("[%s] %s", chat_id, str(error))
     return left
 
 
@@ -457,8 +454,8 @@ def tlg_restrict_user(
         result = bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions,
                 until_date=until_date, timeout=timeout)
-    except Exception:
-        logger.error("[%s] %s", chat_id, format_exc())
+    except Exception as error:
+        logger.error("[%s] %s", chat_id, str(error))
         result = False
     return result
 
@@ -477,8 +474,8 @@ def tlg_unrestrict_user(
         result = bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions,
                 timeout=timeout)
-    except Exception:
-        logger.error("[%s] %s", chat_id, format_exc())
+    except Exception as error:
+        logger.error("[%s] %s", chat_id, str(error))
         result = False
     return result
 
@@ -498,8 +495,8 @@ def tlg_user_is_admin(
     try:
         group_admins = bot.get_chat_administrators(
                 chat_id=chat_id, timeout=timeout)
-    except Exception:
-        logger.error("[%s] %s", chat_id, format_exc())
+    except Exception as error:
+        logger.error("[%s] %s", chat_id, str(error))
         return None
     # Check if the user is one of the group Admins
     for admin in group_admins:
