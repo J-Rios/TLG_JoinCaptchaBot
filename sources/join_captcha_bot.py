@@ -869,7 +869,10 @@ def captcha_fail_kick_ban_member(bot, chat_id, user_id, max_join_retries):
 # Received Telegram not-command messages handlers
 ###############################################################################
 
-def chat_bot_status_change(update: Update, context: CallbackContext):
+async def chat_bot_status_change(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Get Bot chats status changes (Bot added to group/channel,
     started/stopped conversation in private chat, etc.) event handler.
@@ -935,7 +938,10 @@ def chat_bot_status_change(update: Update, context: CallbackContext):
     return
 
 
-def chat_member_status_change(update: Update, context: CallbackContext):
+async def chat_member_status_change(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Get Members chats status changes (user join/leave/added/removed
     to/from group/channel) event handler. Note: if Bot is not an Admin,
@@ -1182,7 +1188,10 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         logger.info("")
 
 
-def msg_user_joined_group(update: Update, context: CallbackContext):
+async def msg_user_joined_group(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     New member join the group event handler.
     '''
@@ -1216,7 +1225,7 @@ def msg_user_joined_group(update: Update, context: CallbackContext):
         Global.new_users[chat_id][join_user.id]["join_msg"] = msg_id
 
 
-def msg_notext(update: Update, context: CallbackContext):
+async def msg_notext(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     All non-text messages handler.
     '''
@@ -1269,7 +1278,7 @@ def msg_notext(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def msg_nocmd(update: Update, context: CallbackContext):
+async def msg_nocmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Non-command text messages handler.
     '''
@@ -1515,7 +1524,10 @@ def msg_nocmd(update: Update, context: CallbackContext):
     logger.info("")
 
 
-def receive_poll_answer(update: Update, context: CallbackContext):
+async def receive_poll_answer(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     User poll vote received.
     '''
@@ -1620,7 +1632,10 @@ def receive_poll_answer(update: Update, context: CallbackContext):
     logger.info("")
 
 
-def key_inline_keyboard(update: Update, context: CallbackContext):
+async def key_inline_keyboard(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Inline Keyboard button pressed handler.
     '''
@@ -1631,7 +1646,7 @@ def key_inline_keyboard(update: Update, context: CallbackContext):
     if query_ans_result["error"] != "":
         return
     # Convert query provided data into list
-    button_data = query.data.split(" ")
+    button_data = await query.data.split(" ")
     # Ignore if the query data is unexpected or it comes from an
     # unexpected user
     if ((len(button_data) < 2) or
@@ -1820,7 +1835,7 @@ def button_request_pass(bot, query):
 # Received Telegram command messages handlers
 ###############################################################################
 
-def cmd_start(update: Update, context: CallbackContext):
+async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /start message handler.
     '''
@@ -1849,7 +1864,7 @@ def cmd_start(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_help(update: Update, context: CallbackContext):
+async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /help message handler.
     '''
@@ -1878,7 +1893,7 @@ def cmd_help(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_commands(update: Update, context: CallbackContext):
+async def cmd_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /commands message handler.
     '''
@@ -1907,7 +1922,7 @@ def cmd_commands(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_connect(update: Update, context: CallbackContext):
+async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /connect message handler.
     '''
@@ -1970,7 +1985,7 @@ def cmd_connect(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_disconnect(update: Update, context: CallbackContext):
+async def cmd_disconnect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /disconnect message handler.
     '''
@@ -2014,7 +2029,7 @@ def cmd_disconnect(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_checkcfg(update: Update, context: CallbackContext):
+async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /checkcfg message handler.
     '''
@@ -2053,7 +2068,7 @@ def cmd_checkcfg(update: Update, context: CallbackContext):
             parse_mode="MARKDOWN", topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_language(update: Update, context: CallbackContext):
+async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /language message handler.
     '''
@@ -2113,7 +2128,7 @@ def cmd_language(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_time(update: Update, context: CallbackContext):
+async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /time message handler.
     '''
@@ -2199,7 +2214,7 @@ def cmd_time(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_difficulty(update: Update, context: CallbackContext):
+async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /difficulty message handler.
     '''
@@ -2252,7 +2267,7 @@ def cmd_difficulty(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_captcha_mode(update: Update, context: CallbackContext):
+async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /captcha_mode message handler.
     '''
@@ -2303,7 +2318,7 @@ def cmd_captcha_mode(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_welcome_msg(update: Update, context: CallbackContext):
+async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /welcome_msg message handler.
     '''
@@ -2359,7 +2374,10 @@ def cmd_welcome_msg(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_welcome_msg_time(update: Update, context: CallbackContext):
+async def cmd_welcome_msg_time(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /welcome_msg_time message handler.
     '''
@@ -2446,7 +2464,7 @@ def cmd_welcome_msg_time(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_captcha_poll(update: Update, context: CallbackContext):
+async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /captcha_poll message handler.
     '''
@@ -2588,7 +2606,10 @@ def cmd_captcha_poll(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_restrict_non_text(update: Update, context: CallbackContext):
+async def cmd_restrict_non_text(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /restrict_non_text message handler.
     '''
@@ -2654,7 +2675,7 @@ def cmd_restrict_non_text(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_add_ignore(update: Update, context: CallbackContext):
+async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /add_ignore message handler.
     '''
@@ -2713,7 +2734,10 @@ def cmd_add_ignore(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_remove_ignore(update: Update, context: CallbackContext):
+async def cmd_remove_ignore(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /remove_ignore message handler.
     '''
@@ -2765,7 +2789,7 @@ def cmd_remove_ignore(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_ignore_list(update: Update, context: CallbackContext):
+async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /ignore_list message handler.
     '''
@@ -2807,7 +2831,10 @@ def cmd_ignore_list(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
+async def cmd_remove_solve_kick_msg(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /remove_solve_kick_msg message handler.
     '''
@@ -2861,7 +2888,10 @@ def cmd_remove_solve_kick_msg(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
+async def cmd_remove_welcome_msg(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /remove_welcome_msg message handler.
     '''
@@ -2914,7 +2944,10 @@ def cmd_remove_welcome_msg(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_remove_all_msg_kick_on(update: Update, context: CallbackContext):
+async def cmd_remove_all_msg_kick_on(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /remove_all_msg_kick_on message handler.
     '''
@@ -2958,7 +2991,10 @@ def cmd_remove_all_msg_kick_on(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
+async def cmd_remove_all_msg_kick_off(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /remove_all_msg_kick_off message handler.
     '''
@@ -3002,7 +3038,7 @@ def cmd_remove_all_msg_kick_off(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_url_enable(update: Update, context: CallbackContext):
+async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /url_enable message handler.
     '''
@@ -3046,7 +3082,7 @@ def cmd_url_enable(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_url_disable(update: Update, context: CallbackContext):
+async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /url_disable message handler.
     '''
@@ -3090,7 +3126,7 @@ def cmd_url_disable(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_enable(update: Update, context: CallbackContext):
+async def cmd_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /enable message handler.
     '''
@@ -3128,7 +3164,7 @@ def cmd_enable(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_disable(update: Update, context: CallbackContext):
+async def cmd_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /disable message handler.
     '''
@@ -3166,7 +3202,7 @@ def cmd_disable(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_chatid(update: Update, context: CallbackContext):
+async def cmd_chatid(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /chatid message handler.
     '''
@@ -3188,7 +3224,7 @@ def cmd_chatid(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_version(update: Update, context: CallbackContext):
+async def cmd_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /version message handler.
     '''
@@ -3219,7 +3255,7 @@ def cmd_version(update: Update, context: CallbackContext):
                 topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_about(update: Update, context: CallbackContext):
+async def cmd_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /about handler.
     '''
@@ -3241,7 +3277,7 @@ def cmd_about(update: Update, context: CallbackContext):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-def cmd_captcha(update: Update, context: CallbackContext):
+async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /captcha message handler. Useful to test.
     Just Bot Owner can use it.
@@ -3296,7 +3332,10 @@ def cmd_captcha(update: Update, context: CallbackContext):
         remove(captcha["image"])
 
 
-def cmd_allowuserlist(update: Update, context: CallbackContext):
+async def cmd_allowuserlist(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+    ):
     '''
     Command /allowuserlist message handler.
     To Global allowed list blind users.
@@ -3386,7 +3425,7 @@ def cmd_allowuserlist(update: Update, context: CallbackContext):
                     topic_id=topic_id)
 
 
-def cmd_allowgroup(update: Update, context: CallbackContext):
+async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /allowgroup message handler. To allow Bot usage in groups
     when Bot is private.
@@ -3591,7 +3630,7 @@ def th_time_to_kick_not_verify_users(bot):
 # Telegram Errors Callback
 ###############################################################################
 
-def tlg_error_callback(update, context):
+async def tlg_error_callback(update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Telegram errors handler.
     '''
@@ -3642,124 +3681,124 @@ def main(argc, argv):
     # Set messages to be sent silently by default
     msgs_defaults = Defaults(disable_notification=True)
     # Create an event handler (updater) for a Bot with the given Token
-    # and get the dispatcher
+    # and get the application
     Global.updater = Updater(
             CONST["TOKEN"],
             workers=12,
             defaults=msgs_defaults
     )
-    bot_dp = Global.updater.dispatcher
+    tlg_app = Global.updater.application
     # Set Telegram errors handler
-    bot_dp.add_error_handler(tlg_error_callback)
-    # Set to dispatcher all expected commands messages handler
-    bot_dp.add_handler(CommandHandler("start", cmd_start))
-    bot_dp.add_handler(CommandHandler("help", cmd_help))
-    bot_dp.add_handler(CommandHandler("commands", cmd_commands))
-    bot_dp.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
-    bot_dp.add_handler(CommandHandler("connect", cmd_connect, pass_args=True))
-    bot_dp.add_handler(CommandHandler("disconnect", cmd_disconnect))
-    bot_dp.add_handler(
+    tlg_app.add_error_handler(tlg_error_callback)
+    # Set to application all expected commands messages handler
+    tlg_app.add_handler(CommandHandler("start", cmd_start))
+    tlg_app.add_handler(CommandHandler("help", cmd_help))
+    tlg_app.add_handler(CommandHandler("commands", cmd_commands))
+    tlg_app.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
+    tlg_app.add_handler(CommandHandler("connect", cmd_connect, pass_args=True))
+    tlg_app.add_handler(CommandHandler("disconnect", cmd_disconnect))
+    tlg_app.add_handler(
             CommandHandler("language", cmd_language, pass_args=True))
-    bot_dp.add_handler(CommandHandler("time", cmd_time, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(CommandHandler("time", cmd_time, pass_args=True))
+    tlg_app.add_handler(
             CommandHandler("difficulty", cmd_difficulty, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler("captcha_mode", cmd_captcha_mode, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler("welcome_msg", cmd_welcome_msg, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "welcome_msg_time", cmd_welcome_msg_time, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler("captcha_poll", cmd_captcha_poll, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "restrict_non_text", cmd_restrict_non_text,
                     pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler("add_ignore", cmd_add_ignore, pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "remove_ignore", cmd_remove_ignore, pass_args=True))
-    bot_dp.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
-    bot_dp.add_handler(
+    tlg_app.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
+    tlg_app.add_handler(
             CommandHandler(
                     "remove_solve_kick_msg", cmd_remove_solve_kick_msg,
                     pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "remove_welcome_msg", cmd_remove_welcome_msg,
                     pass_args=True))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "remove_all_msg_kick_on", cmd_remove_all_msg_kick_on))
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             CommandHandler(
                     "remove_all_msg_kick_off", cmd_remove_all_msg_kick_off))
-    bot_dp.add_handler(CommandHandler("url_enable", cmd_url_enable))
-    bot_dp.add_handler(CommandHandler("url_disable", cmd_url_disable))
-    bot_dp.add_handler(CommandHandler("enable", cmd_enable))
-    bot_dp.add_handler(CommandHandler("disable", cmd_disable))
-    bot_dp.add_handler(CommandHandler("chatid", cmd_chatid))
-    bot_dp.add_handler(CommandHandler("version", cmd_version))
-    bot_dp.add_handler(CommandHandler("about", cmd_about))
+    tlg_app.add_handler(CommandHandler("url_enable", cmd_url_enable))
+    tlg_app.add_handler(CommandHandler("url_disable", cmd_url_disable))
+    tlg_app.add_handler(CommandHandler("enable", cmd_enable))
+    tlg_app.add_handler(CommandHandler("disable", cmd_disable))
+    tlg_app.add_handler(CommandHandler("chatid", cmd_chatid))
+    tlg_app.add_handler(CommandHandler("version", cmd_version))
+    tlg_app.add_handler(CommandHandler("about", cmd_about))
     if CONST["BOT_OWNER"] != "XXXXXXXXX":
-        bot_dp.add_handler(CommandHandler("captcha", cmd_captcha))
-        bot_dp.add_handler(
+        tlg_app.add_handler(CommandHandler("captcha", cmd_captcha))
+        tlg_app.add_handler(
                 CommandHandler(
                         "allowuserlist", cmd_allowuserlist, pass_args=True)
         )
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
-        bot_dp.add_handler(
+        tlg_app.add_handler(
                 CommandHandler("allowgroup", cmd_allowgroup, pass_args=True))
-    # Set to dispatcher a not-command text messages handler
-    bot_dp.add_handler(MessageHandler(Filters.text, msg_nocmd, run_async=True))
-    # Set to dispatcher not text messages handler
+    # Set to application a not-command text messages handler
+    tlg_app.add_handler(MessageHandler(filters.TEXT, msg_nocmd, block=False))
+    # Set to application not text messages handler
     # pylint: disable=E1131
-    bot_dp.add_handler(
+    tlg_app.add_handler(
         MessageHandler(
-            Filters.photo | Filters.audio | Filters.voice | Filters.video |
-            Filters.sticker | Filters.document | Filters.location |
-            Filters.contact,
+            filters.PHOTO | filters.AUDIO | filters.VOICE | filters.VIDEO |
+            filters.STICKER | filters.DOCUMENT | filters.LOCATION |
+            filters.CONTACT,
             msg_notext
         )
     )
-    # Set to dispatcher a new member join the group and member left the
+    # Set to application a new member join the group and member left the
     # group events handlers
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             ChatMemberHandler(
                     chat_bot_status_change,
                     ChatMemberHandler.MY_CHAT_MEMBER
             )
     )
-    bot_dp.add_handler(
+    tlg_app.add_handler(
             ChatMemberHandler(
                     chat_member_status_change,
                     ChatMemberHandler.ANY_CHAT_MEMBER
             )
     )
-    # Set to dispatcher "USER joined the group" messages event handlers
-    bot_dp.add_handler(
+    # Set to application "USER joined the group" messages event handlers
+    tlg_app.add_handler(
         MessageHandler(
-            Filters.status_update.new_chat_members, msg_user_joined_group
+            filters.StatusUpdate.NEW_CHAT_MEMBERS, msg_user_joined_group
         )
     )
-    # Set to dispatcher inline keyboard callback handler for new captcha
+    # Set to application inline keyboard callback handler for new captcha
     # request and button captcha challenge
-    bot_dp.add_handler(CallbackQueryHandler(key_inline_keyboard))
-    # Set to dispatcher users poll vote handler
-    bot_dp.add_handler(PollAnswerHandler(receive_poll_answer, run_async=True))
-    # Launch the Bot ignoring pending messages (clean=True) and get all
-    # updates (allowed_uptades=[])
+    tlg_app.add_handler(CallbackQueryHandler(key_inline_keyboard))
+    # Set to application users poll vote handler
+    tlg_app.add_handler(PollAnswerHandler(receive_poll_answer, block=False))
+    # Launch the Bot ignoring pending messages (drop_pending_updates=True) and
+    # get all updates (allowed_updates=Update.ALL_TYPES)
     if CONST["WEBHOOK_HOST"] == "None":
         logger.info("Setup Bot for Polling.")
-        Global.updater.start_polling(
+        Global.application.run_polling(
             drop_pending_updates=True,
             allowed_updates=Update.ALL_TYPES
         )
     else:
         logger.info("Setup Bot for Webhook.")
-        Global.updater.start_webhook(
+        Global.application.run_webhook(
             drop_pending_updates=True, listen="0.0.0.0",
             port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
@@ -3805,7 +3844,7 @@ def system_termination_signal_handler(signal_id,  frame):
     # Exit Request
     Global.force_exit = True
     logger.info("Termination signal received. Releasing resources...")
-    # Close the Bot instance (it wait for updater, dispatcher and other
+    # Close the Bot instance (it wait for updater, application and other
     # internals threads to end)
     if Global.updater is not None:
         logger.info("Closing Bot...")

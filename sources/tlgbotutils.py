@@ -93,7 +93,7 @@ def tlg_get_chat(
             chat_id_or_alias = f"@{chat_id_or_alias}"
     # Get Chat Data
     try:
-        chat_result["chat_data"] = bot.get_chat(
+        chat_result["chat_data"] = await bot.get_chat(
             chat_id=chat_id_or_alias, timeout=timeout)
     except Exception as error:
         chat_result["error"] = str(error)
@@ -112,7 +112,7 @@ def tlg_get_chat_member(
     result["member"] = None
     result["error"] = ""
     try:
-        result["member"] = bot.get_chat_member(
+        result["member"] = await bot.get_chat_member(
             chat_id=chat_id, user_id=user_id, timeout=timeout)
     except Exception as error:
         result["error"] = str(error)
@@ -120,7 +120,7 @@ def tlg_get_chat_member(
     return result
 
 
-def tlg_get_chat_members_count(
+def tlg_get_chat_member_count(
         bot: Bot,
         chat_id: Union[str, int],
         timeout: ODVInput[float] = DEFAULT_NONE
@@ -130,7 +130,7 @@ def tlg_get_chat_members_count(
     result["num_members"] = None
     result["error"] = ""
     try:
-        result["num_members"] = bot.get_chat_member_count(
+        result["num_members"] = await bot.get_chat_member_count(
             chat_id=chat_id, timeout=timeout)
     except Exception as error:
         result["error"] = str(error)
@@ -166,7 +166,7 @@ def tlg_send_msg(
     elif parse_mode == "MARKDOWN":
         parse_mode = ParseMode.MARKDOWN_V2
     try:
-        sent_result["msg"] = bot.send_message(
+        sent_result["msg"] = await bot.send_message(
                 chat_id=chat_id, text=text, parse_mode=parse_mode,
                 reply_markup=reply_markup,
                 disable_web_page_preview=disable_web_page_preview,
@@ -200,7 +200,7 @@ def tlg_send_image(
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
-        sent_result["msg"] = bot.send_photo(
+        sent_result["msg"] = await bot.send_photo(
                 chat_id=chat_id, photo=photo, caption=caption,
                 disable_notification=disable_notification,
                 reply_to_message_id=reply_to_message_id,
@@ -241,7 +241,7 @@ def tlg_send_poll(
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
-        sent_result["msg"] = bot.send_poll(
+        sent_result["msg"] = await bot.send_poll(
                 chat_id=chat_id, question=question, options=options,
                 is_anonymous=is_anonymous, type=poll_type,
                 allows_multiple_answers=allows_multiple_answers,
@@ -274,7 +274,7 @@ def tlg_stop_poll(
     result["msg"] = None
     result["error"] = ""
     try:
-        result["msg"] = bot.stop_poll(
+        result["msg"] = await bot.stop_poll(
                 chat_id=chat_id, message_id=message_id,
                 reply_markup=reply_markup, timeout=timeout, **kwargs)
         logger.debug("[%s] TLG poll %s stop", chat_id, message_id)
@@ -296,7 +296,7 @@ def tlg_delete_msg(
     if msg_id is not None:
         logger.debug("[%s] TLG deleting msg %s", chat_id, msg_id)
         try:
-            bot.delete_message(
+            await bot.delete_message(
                     chat_id=chat_id, message_id=msg_id, timeout=timeout)
             logger.debug("[%s] TLG msg %s deleted", chat_id, msg_id)
         except Exception as error:
@@ -318,7 +318,7 @@ def tlg_edit_msg_media(
     edit_result = {}
     edit_result["error"] = ""
     try:
-        bot.edit_message_media(
+        await bot.edit_message_media(
                 chat_id=chat_id, message_id=msg_id,
                 inline_message_id=inline_msg_id, media=media,
                 reply_markup=reply_markup, timeout=timeout)
@@ -341,7 +341,7 @@ def tlg_answer_callback_query(
     query_ans_result = {}
     query_ans_result["error"] = ""
     try:
-        bot.answer_callback_query(
+        await bot.answer_callback_query(
                 callback_query_id=query.id, text=text, show_alert=show_alert,
                 url=url, cache_time=cache_time, timeout=timeout)
     except Exception as error:
@@ -374,7 +374,7 @@ def tlg_ban_user(
         return ban_result
     # Ban User
     try:
-        bot.ban_chat_member(
+        await bot.ban_chat_member(
                 chat_id=chat_id, user_id=user_id, timeout=timeout,
                 until_date=until_date)
     except Exception as error:
@@ -407,7 +407,7 @@ def tlg_kick_user(
     # Kick User (remove restrictions with only_if_banned=False make
     # it kick)
     try:
-        bot.unban_chat_member(
+        await bot.unban_chat_member(
                 chat_id=chat_id, user_id=user_id, timeout=timeout,
                 only_if_banned=False)
     except Exception as error:
@@ -424,7 +424,7 @@ def tlg_leave_chat(
     '''Telegram Bot try to leave a chat.'''
     left = False
     try:
-        if bot.leave_chat(chat_id=chat_id, timeout=timeout):
+        if await bot.leave_chat(chat_id=chat_id, timeout=timeout):
             left = True
     except Exception:
         logger.error("[%s] %s", chat_id, format_exc())
@@ -454,7 +454,7 @@ def tlg_restrict_user(
                 send_msg, send_media, send_polls, send_stickers_gifs,
                 insert_links, change_group_info, invite_members, pin_messages,
                 manage_topics)
-        result = bot.restrict_chat_member(
+        result = await bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions,
                 until_date=until_date, timeout=timeout)
     except Exception:
@@ -474,7 +474,7 @@ def tlg_unrestrict_user(
     try:
         permissions = ChatPermissions(
                 True, True, True, True, True, True, True, True)
-        result = bot.restrict_chat_member(
+        result = await bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions,
                 timeout=timeout)
     except Exception:
@@ -496,7 +496,7 @@ def tlg_user_is_admin(
         return True
     # Get group Admins
     try:
-        group_admins = bot.get_chat_administrators(
+        group_admins = await bot.get_chat_administrators(
                 chat_id=chat_id, timeout=timeout)
     except Exception:
         logger.error("[%s] %s", chat_id, format_exc())
