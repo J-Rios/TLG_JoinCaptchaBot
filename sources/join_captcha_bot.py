@@ -28,6 +28,9 @@ import logging
 # System Signals Library
 import signal
 
+# Asynchronous Input-Output Concurrency Library
+from asyncio import run as asyncio_run
+
 # Collections Data Types Library
 from collections import OrderedDict
 
@@ -3811,8 +3814,22 @@ def main(argc, argv):
     # Set to application users poll vote handler
     Global.tlg_app.add_handler(
             PollAnswerHandler(receive_poll_answer, block=False))
+    # Launch delete messages and kick users threads
+    Global.th_0 = Thread(
+            target=asyncio_run,
+            args=(th_selfdestruct_messages(Global.tlg_app.bot),))
+    Global.th_1 = Thread(
+            target=asyncio_run,
+            args=(th_time_to_kick_not_verify_users(Global.tlg_app.bot),))
+    Global.th_0.name = "th_selfdestruct_messages"
+    Global.th_1.name = "th_time_to_kick_not_verify_users"
+    Global.th_0.start()
+    sleep(0.05)
+    Global.th_1.start()
+    logger.info("Auto-delete messages and kick users threads started.")
     # Launch the Bot ignoring pending messages (drop_pending_updates=True) and
     # get all updates (allowed_updates=Update.ALL_TYPES)
+    logger.info("Bot setup completed. Bot is now running.")
     if CONST["WEBHOOK_HOST"] == "None":
         logger.info("Setup Bot for Polling.")
         Global.tlg_app.run_polling(
@@ -3829,25 +3846,11 @@ def main(argc, argv):
                         f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
             allowed_updates=Update.ALL_TYPES
         )
-    logger.info("Bot setup completed. Bot is now running.")
-    # Launch delete messages and kick users threads
-    Global.th_0 = Thread(
-            target=th_selfdestruct_messages,
-            args=(Global.tlg_app.bot,))
-    Global.th_1 = Thread(
-            target=th_time_to_kick_not_verify_users,
-            args=(Global.tlg_app.bot,))
-    Global.th_0.name = "th_selfdestruct_messages"
-    Global.th_1.name = "th_time_to_kick_not_verify_users"
-    Global.th_0.start()
-    sleep(0.05)
-    Global.th_1.start()
-    # Set main thread to idle
-    # The updater.idle() catch external signals, preventing to get catch
-    # by our signal handler, so we need to call the signal handler
-    # directly for a safe close
-    Global.tlg_app.idle()
     logger.info("Bot Thread end")
+    # Bot Application Run functions are blocking and them catch external
+    # signals, preventing to get catch by our system termination signal
+    # handler, so we need to call the signal handler directly for a
+    # safe close
     if hasattr(signal, "SIGUSR1"):
         system_termination_signal_handler(signal.SIGUSR1, None)
     else:
