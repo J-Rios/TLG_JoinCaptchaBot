@@ -1062,10 +1062,6 @@ async def chat_member_status_change(
         if sent_result["msg"] is None:
             send_problem = True
         else:
-            # Set to delete msg
-            if solve_poll_request_msg_id is not None:
-                Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                        solve_poll_request_msg_id)
             # Save some info about the poll the bot_data for
             # later use in receive_quiz_answer
             poll_id = sent_result["msg"].poll.id
@@ -1170,6 +1166,10 @@ async def chat_member_status_change(
         if sent_result["msg"]:
             Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
                     sent_result["msg"].message_id)
+        if ((captcha_mode == "poll") and
+                (solve_poll_request_msg_id is not None)):
+            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
+                    solve_poll_request_msg_id)
         # Restrict user to deny send any kind of message until captcha
         # is solve. Allow send text messages for image based captchas
         # that requires it
