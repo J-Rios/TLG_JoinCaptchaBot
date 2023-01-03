@@ -1061,7 +1061,8 @@ async def chat_member_status_change(
         # Send the Poll
         sent_result = await tlg_send_poll(
                 bot, chat_id, poll_question, poll_options,
-                poll_correct_option-1, captcha_timeout, False, Poll.QUIZ)
+                poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
+                read_timeout=20)
         if sent_result["msg"] is None:
             send_problem = True
         else:
@@ -1117,7 +1118,7 @@ async def chat_member_status_change(
             with open(captcha["image"], "rb") as file_image:
                 sent_result = await tlg_send_image(
                         bot, chat_id, file_image, img_caption,
-                        reply_markup=reply_markup)
+                        reply_markup=reply_markup, read_timeout=20)
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to send image to Telegram")
@@ -3332,7 +3333,7 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
         with open(captcha["image"], "rb") as file_image:
             await tlg_send_image(
                 bot, chat_id, file_image, img_caption,
-                topic_id=tlg_get_msg_topic(update_msg))
+                topic_id=tlg_get_msg_topic(update_msg), read_timeout=20)
     except Exception:
         logger.error(format_exc())
         logger.error("Fail to send image to Telegram")
