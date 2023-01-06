@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    02/01/2023
+    06/01/2023
 Version:
     1.29.0
 '''
@@ -24,9 +24,6 @@ Version:
 
 # Logging Library
 import logging
-
-# System Signals Library
-import signal
 
 # Asynchronous Input-Output Concurrency Library
 from asyncio import sleep as asyncio_sleep
@@ -3673,6 +3670,203 @@ async def tlg_error_callback(update, context: ContextTypes.DEFAULT_TYPE):
 
 
 ###############################################################################
+# Bot Application Setup Function
+###############################################################################
+
+def tlg_app_setup(token: str) -> Application:
+    '''
+    Setup Bot Application.
+    '''
+    logger.info("Setting up Bot Application...")
+    # Initialize Resources and restore last session
+    initialize_resources()
+    restore_session()
+    # Create the Telegram Bot Application Builder
+    # Set Bot Token
+    # Set messages to be sent silently by default
+    # Set to use Arbitrary Callback Data
+    # Set Bot Application callbacks functions for Bot run start and exit
+    app_builder = Application.builder()
+    app_builder.token(token)
+    app_builder.defaults(Defaults(disable_notification=True))
+    app_builder.arbitrary_callback_data(True)
+    app_builder.post_init(tlg_app_start)
+    app_builder.post_shutdown(tlg_app_exit)
+    # Build the Bot Application
+    app = app_builder.build()
+    # Set Telegram errors handler
+    app.add_error_handler(tlg_error_callback)
+    # Set all expected commands messages handler
+    app.add_handler(CommandHandler("start", cmd_start))
+    app.add_handler(CommandHandler("help", cmd_help))
+    app.add_handler(CommandHandler("commands", cmd_commands))
+    app.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
+    app.add_handler(CommandHandler("connect", cmd_connect))
+    app.add_handler(CommandHandler("disconnect", cmd_disconnect))
+    app.add_handler(CommandHandler("language", cmd_language))
+    app.add_handler(CommandHandler("time", cmd_time))
+    app.add_handler(CommandHandler("difficulty", cmd_difficulty))
+    app.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode))
+    app.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg))
+    app.add_handler(CommandHandler("welcome_msg_time", cmd_welcome_msg_time))
+    app.add_handler(CommandHandler("captcha_poll", cmd_captcha_poll))
+    app.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text))
+    app.add_handler(CommandHandler("add_ignore", cmd_add_ignore))
+    app.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore))
+    app.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
+    app.add_handler(
+        CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg)
+    )
+    app.add_handler(
+            CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg))
+    app.add_handler(
+            CommandHandler(
+                    "remove_all_msg_kick_on", cmd_remove_all_msg_kick_on))
+    app.add_handler(
+            CommandHandler(
+                    "remove_all_msg_kick_off", cmd_remove_all_msg_kick_off))
+    app.add_handler(CommandHandler("url_enable", cmd_url_enable))
+    app.add_handler(CommandHandler("url_disable", cmd_url_disable))
+    app.add_handler(CommandHandler("enable", cmd_enable))
+    app.add_handler(CommandHandler("disable", cmd_disable))
+    app.add_handler(CommandHandler("chatid", cmd_chatid))
+    app.add_handler(CommandHandler("version", cmd_version))
+    app.add_handler(CommandHandler("about", cmd_about))
+    if CONST["BOT_OWNER"] != "XXXXXXXXX":
+        app.add_handler(CommandHandler("captcha", cmd_captcha))
+        app.add_handler(CommandHandler("allowuserlist", cmd_allowuserlist))
+    if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
+        app.add_handler(CommandHandler("allowgroup", cmd_allowgroup))
+    # Set to application a not-command text messages handler
+    app.add_handler(MessageHandler(filters.TEXT, msg_nocmd, block=False))
+    # Set to application not text messages handler
+    # pylint: disable=E1131
+    app.add_handler(
+            MessageHandler(
+                    filters.Document.ALL | filters.PHOTO | filters.VIDEO |
+                    filters.AUDIO | filters.VOICE | filters.Sticker.ALL |
+                    filters.LOCATION | filters.CONTACT,
+                    msg_notext
+            )
+    )
+    # Set to application a new member join the group and member left the
+    # group events handlers
+    app.add_handler(
+            ChatMemberHandler(
+                    chat_bot_status_change,
+                    ChatMemberHandler.MY_CHAT_MEMBER
+            )
+    )
+    app.add_handler(
+            ChatMemberHandler(
+                    chat_member_status_change,
+                    ChatMemberHandler.CHAT_MEMBER
+            )
+    )
+    # Set to application "USER joined the group" messages event handlers
+    app.add_handler(
+            MessageHandler(
+                    filters.StatusUpdate.NEW_CHAT_MEMBERS,
+                    msg_user_joined_group
+            )
+    )
+    # Set to application inline keyboard callback handler for new captcha
+    # request and button captcha challenge
+    app.add_handler(CallbackQueryHandler(key_inline_keyboard))
+    # Set to application users poll vote handler
+    app.add_handler(PollAnswerHandler(receive_poll_answer, block=False))
+    logger.info("Bot setup completed.")
+    return app
+
+
+###############################################################################
+# Bot Application Setup Function
+###############################################################################
+
+def tlg_app_run(app: Application) -> None:
+    '''
+    Launch the Telegram Bot Application.
+    The run_polling() and run_webhook() functions blocks main execution
+    until Bot is requested to stop by a system signal. After any of this
+    functions are called, the Application will start to be managed in a
+    asyncio way through coroutines. The tlg_app_start() function will be
+    called at run_polling() or run_webhook() startup, and tlg_app_exit()
+    function will be called at the end.
+    '''
+    logger.info("Bot Application Started")
+    if CONST["WEBHOOK_HOST"] == "None":
+        logger.info("Setup Bot for Polling.")
+        app.run_polling(
+            drop_pending_updates=True,
+            allowed_updates=Update.ALL_TYPES
+        )
+    else:
+        logger.info("Setup Bot for Webhook.")
+        app.run_webhook(
+            drop_pending_updates=True, listen="0.0.0.0",
+            port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
+            key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
+            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:'
+                        f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
+            allowed_updates=Update.ALL_TYPES
+        )
+    logger.info("Bot Application Finished")
+
+
+###############################################################################
+# Bot Application Run Start Function
+###############################################################################
+
+async def tlg_app_start(app: Application) -> None:
+    '''
+    Telegram Bot Application initialized.
+    This function is called at the startup of run_polling() or
+    run_webhook() functions.'''
+    # Launch delete messages and kick users threads
+    Global.th_0 = Thread(
+            target=th_selfdestruct_messages,
+            args=(app.bot,))
+    Global.th_1 = Thread(
+            target=th_time_to_kick_not_verify_users,
+            args=(app.bot,))
+    Global.th_0.name = "th_selfdestruct_messages"
+    Global.th_1.name = "th_time_to_kick_not_verify_users"
+    Global.th_0.start()
+    sleep(0.05)
+    Global.th_1.start()
+    logger.info("Auto-delete messages and captcha timeout threads started.")
+
+
+###############################################################################
+# Bot Application Run Exit Function
+###############################################################################
+
+async def tlg_app_exit(app: Application) -> None:
+    '''
+    Telegram Bot Application finished.
+    This function is called at the exit of run_polling() or
+    run_webhook() functions when the Bot stops it execution.'''
+    # Disable unused arguments
+    del app
+    # Request to exit
+    logger.info("Bot stopped. Releasing resources...")
+    Global.force_exit = True
+    # Wait to end threads
+    logger.info("Waiting th_0 end...")
+    if Global.th_0 is not None:
+        if Global.th_0.is_alive():
+            Global.th_0.join()
+    logger.info("Waiting th_1 end...")
+    if Global.th_1 is not None:
+        if Global.th_1.is_alive():
+            Global.th_1.join()
+    # Save current session data
+    save_session()
+    # Close the program
+    logger.info("All resources released.")
+
+
+###############################################################################
 # Main Function
 ###############################################################################
 
@@ -3693,241 +3887,11 @@ def main(argc, argv):
         logger.error("Bot Owner has not been set for Private Bot.")
         logger.info("Please add the Bot Owner to settings.py file.")
         return 1
-    logger.info("Bot started.")
-    # Initialize resources by populating files list and configs with
-    # chats found files
-    initialize_resources()
-    logger.info("Resources initialized.")
-    restore_session()
-    # Set messages to be sent silently by default
-    msgs_defaults = Defaults(disable_notification=True)
-    # Create the Telegram Bot Application for the provided Token
-    tlg_builder = Application.builder()
-    tlg_builder.token(CONST["TOKEN"])
-    tlg_builder.defaults(msgs_defaults)
-    tlg_builder.arbitrary_callback_data(True)
-    # Build the Bot Application
-    Global.tlg_app = tlg_builder.build()
-    # Set Telegram errors handler
-    Global.tlg_app.add_error_handler(tlg_error_callback)
-    # Set all expected commands messages handler
-    Global.tlg_app.add_handler(
-            CommandHandler("start", cmd_start))
-    Global.tlg_app.add_handler(
-            CommandHandler("help", cmd_help))
-    Global.tlg_app.add_handler(
-            CommandHandler("commands", cmd_commands))
-    Global.tlg_app.add_handler(
-            CommandHandler("checkcfg", cmd_checkcfg))
-    Global.tlg_app.add_handler(
-            CommandHandler("connect", cmd_connect))
-    Global.tlg_app.add_handler(
-            CommandHandler("disconnect", cmd_disconnect))
-    Global.tlg_app.add_handler(
-            CommandHandler("language", cmd_language))
-    Global.tlg_app.add_handler(
-            CommandHandler("time", cmd_time))
-    Global.tlg_app.add_handler(
-            CommandHandler("difficulty", cmd_difficulty))
-    Global.tlg_app.add_handler(
-            CommandHandler("captcha_mode", cmd_captcha_mode))
-    Global.tlg_app.add_handler(
-            CommandHandler("welcome_msg", cmd_welcome_msg))
-    Global.tlg_app.add_handler(
-            CommandHandler("welcome_msg_time", cmd_welcome_msg_time))
-    Global.tlg_app.add_handler(
-            CommandHandler("captcha_poll", cmd_captcha_poll))
-    Global.tlg_app.add_handler(
-            CommandHandler("restrict_non_text", cmd_restrict_non_text))
-    Global.tlg_app.add_handler(
-            CommandHandler("add_ignore", cmd_add_ignore))
-    Global.tlg_app.add_handler(
-            CommandHandler("remove_ignore", cmd_remove_ignore))
-    Global.tlg_app.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
-    Global.tlg_app.add_handler(
-            CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg))
-    Global.tlg_app.add_handler(
-            CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg))
-    Global.tlg_app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_on", cmd_remove_all_msg_kick_on))
-    Global.tlg_app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_off", cmd_remove_all_msg_kick_off))
-    Global.tlg_app.add_handler(
-            CommandHandler("url_enable", cmd_url_enable))
-    Global.tlg_app.add_handler(
-            CommandHandler("url_disable", cmd_url_disable))
-    Global.tlg_app.add_handler(
-            CommandHandler("enable", cmd_enable))
-    Global.tlg_app.add_handler(
-            CommandHandler("disable", cmd_disable))
-    Global.tlg_app.add_handler(
-            CommandHandler("chatid", cmd_chatid))
-    Global.tlg_app.add_handler(
-            CommandHandler("version", cmd_version))
-    Global.tlg_app.add_handler(
-            CommandHandler("about", cmd_about))
-    if CONST["BOT_OWNER"] != "XXXXXXXXX":
-        Global.tlg_app.add_handler(
-                CommandHandler("captcha", cmd_captcha))
-        Global.tlg_app.add_handler(
-                CommandHandler("allowuserlist", cmd_allowuserlist))
-    if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
-        Global.tlg_app.add_handler(
-                CommandHandler("allowgroup", cmd_allowgroup))
-    # Set to application a not-command text messages handler
-    Global.tlg_app.add_handler(
-            MessageHandler(filters.TEXT, msg_nocmd, block=False))
-    # Set to application not text messages handler
-    # pylint: disable=E1131
-    Global.tlg_app.add_handler(
-            MessageHandler(
-                    filters.PHOTO | filters.AUDIO | filters.VOICE |
-                    filters.VIDEO | filters.Sticker.ALL |
-                    filters.Document.ALL | filters.LOCATION | filters.CONTACT,
-                    msg_notext
-            )
-    )
-    # Set to application a new member join the group and member left the
-    # group events handlers
-    Global.tlg_app.add_handler(
-            ChatMemberHandler(
-                    chat_bot_status_change,
-                    ChatMemberHandler.MY_CHAT_MEMBER
-            )
-    )
-    Global.tlg_app.add_handler(
-            ChatMemberHandler(
-                    chat_member_status_change,
-                    ChatMemberHandler.CHAT_MEMBER
-            )
-    )
-    # Set to application "USER joined the group" messages event handlers
-    Global.tlg_app.add_handler(
-        MessageHandler(
-            filters.StatusUpdate.NEW_CHAT_MEMBERS, msg_user_joined_group
-        )
-    )
-    # Set to application inline keyboard callback handler for new captcha
-    # request and button captcha challenge
-    Global.tlg_app.add_handler(
-            CallbackQueryHandler(key_inline_keyboard))
-    # Set to application users poll vote handler
-    Global.tlg_app.add_handler(
-            PollAnswerHandler(receive_poll_answer, block=False))
-    # Launch delete messages and kick users threads
-    Global.th_0 = Thread(
-            target=asyncio_run,
-            args=(th_selfdestruct_messages(Global.tlg_app.bot),))
-    Global.th_1 = Thread(
-            target=asyncio_run,
-            args=(th_time_to_kick_not_verify_users(Global.tlg_app.bot),))
-    Global.th_0.name = "th_selfdestruct_messages"
-    Global.th_1.name = "th_time_to_kick_not_verify_users"
-    Global.th_0.start()
-    sleep(0.05)
-    Global.th_1.start()
-    logger.info("Auto-delete messages and kick users threads started.")
-    # Launch the Bot ignoring pending messages (drop_pending_updates=True) and
-    # get all updates (allowed_updates=Update.ALL_TYPES)
-    logger.info("Bot setup completed. Bot is now running.")
-    if CONST["WEBHOOK_HOST"] == "None":
-        logger.info("Setup Bot for Polling.")
-        Global.tlg_app.run_polling(
-            drop_pending_updates=True,
-            allowed_updates=Update.ALL_TYPES
-        )
-    else:
-        logger.info("Setup Bot for Webhook.")
-        Global.tlg_app.run_webhook(
-            drop_pending_updates=True, listen="0.0.0.0",
-            port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
-            key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
-            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:'
-                        f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
-            allowed_updates=Update.ALL_TYPES
-        )
-    logger.info("Bot Thread end")
-    # Bot Application Run functions are blocking and them catch external
-    # signals, preventing to get catch by our system termination signal
-    # handler, so we need to call the signal handler directly for a
-    # safe close
-    if hasattr(signal, "SIGUSR1"):
-        system_termination_signal_handler(signal.SIGUSR1, None)
-    else:
-        system_termination_signal_handler(signal.SIGTERM, None)
+    # Setup Bot Application
+    tlg_app = tlg_app_setup(CONST["TOKEN"])
+    # Launch Bot Application
+    tlg_app_run(tlg_app)
     return 0
-
-
-###############################################################################
-# System Termination Signals Management
-###############################################################################
-
-def system_termination_signal_handler(signal_id,  frame):
-    '''Termination signals detection handler to stop APP execution.'''
-    # Disable unused arguments
-    del signal_id
-    del frame
-    # Exit Request
-    Global.force_exit = True
-    logger.info("Termination signal received. Releasing resources...")
-    # Close the Bot instance (it wait for updater, application and other
-    # internals threads to end)
-    if Global.tlg_app is not None:
-        logger.info("Closing Bot...")
-        Global.tlg_app.stop()
-    # Launch threads to acquire all messages and users files mutex to
-    # ensure that them are closed (make sure to close the script when no
-    # read/write operation on files)
-    if Global.files_config_list:
-        logger.info("Closing resource files...")
-        th_list = []
-        for chat_config_file in Global.files_config_list:
-            thread = Thread(
-                    target=th_close_resource_file,
-                    args=(chat_config_file["File"],))
-            th_list.append(thread)
-            thread.start()
-        # Wait for all threads to end
-        for _th in th_list:
-            if _th.is_alive():
-                _th.join()
-    # Wait to end threads
-    logger.info("Waiting th_0 end...")
-    if Global.th_0 is not None:
-        if Global.th_0.is_alive():
-            Global.th_0.join()
-    logger.info("Waiting th_1 end...")
-    if Global.th_1 is not None:
-        if Global.th_1.is_alive():
-            Global.th_1.join()
-    # Save current session data
-    save_session()
-    # Close the program
-    logger.info("All resources released.")
-
-
-def th_close_resource_file(file_to_close):
-    '''
-    Threaded function to close resource files in parallel when closing
-    Application through a termination signal.
-    '''
-    file_to_close.lock.acquire()
-
-
-def system_termination_signal_setup():
-    '''
-    Attachment of System termination signals (SIGINT, SIGTERM, SIGUSR1)
-    to function handler.
-    '''
-    # SIGTERM (kill pid) to signal_handler
-    signal.signal(signal.SIGTERM, system_termination_signal_handler)
-    # SIGINT (Ctrl+C) to signal_handler
-    signal.signal(signal.SIGINT, system_termination_signal_handler)
-    # SIGUSR1 (self-send) to signal_handler
-    if hasattr(signal, "SIGUSR1"):
-        signal.signal(signal.SIGUSR1, system_termination_signal_handler)
 
 
 ###############################################################################
@@ -3936,7 +3900,6 @@ def system_termination_signal_setup():
 
 if __name__ == "__main__":
     logger.info("Application start")
-    system_termination_signal_setup()
     return_code = main(len(sys_argv) - 1, sys_argv[1:])
     logger.info("Application exit (%d)", return_code)
     sys_exit(return_code)
