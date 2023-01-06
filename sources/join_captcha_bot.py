@@ -26,8 +26,8 @@ Version:
 import logging
 
 # Asynchronous Input-Output Concurrency Library
+from asyncio import create_task as asyncio_create_task
 from asyncio import sleep as asyncio_sleep
-from asyncio import run as asyncio_run
 
 # Collections Data Types Library
 from collections import OrderedDict
@@ -51,14 +51,14 @@ from shutil import rmtree
 from sys import argv as sys_argv
 from sys import exit as sys_exit
 
-# Threads Library
-from threading import Thread
-
 # Time Library
-from time import time, sleep
+from time import time
 
 # Error Traceback Library
 from traceback import format_exc
+
+# Built-in Data Types Library
+from types import CoroutineType
 
 # Data Types Library
 from typing import Optional
@@ -144,14 +144,13 @@ logger = logging.getLogger(__name__)
 class Globals():
     '''Global Elements Container.'''
 
-    tlg_app: Optional[Application] = None
     files_config_list: list = []
     to_delete_in_time_messages_list: list = []
     deleted_messages: list = []
     new_users: dict = {}
     connections: dict = {}
-    th_0: Optional[Thread] = None
-    th_1: Optional[Thread] = None
+    async_captcha_timeout_kick_user: Optional[CoroutineType] = None
+    async_auto_delete_messages: Optional[CoroutineType] = None
     force_exit: bool = False
 
 
@@ -358,9 +357,9 @@ async def delete_tlg_msg(bot, chat_id, msg_id):
     '''
     Request to delete a Telegram message from a chat. It checks if the
     message is setup to be auto-deleted at some time, in that case, the
-    time to be deleted is modify to force the auto-delete thread remove
-    the message right now, otherwise, the message is requested to be
-    deleted.
+    time to be deleted is modify to force the auto-delete coroutine
+    remove the message right now, otherwise, the message is requested
+    to be deleted.
     '''
     # Check if message is setup to be auto-deleted by Bot at some time
     msg_auto_delete_data = None
@@ -381,7 +380,7 @@ async def delete_tlg_msg(bot, chat_id, msg_id):
             Global.deleted_messages.append(msg_id)
         return True
     # Modify time to auto-delete message to now
-    # Force message auto-delete thread to delete the message right now
+    # Force messages auto-delete coroutine to delete the msg right now
     remove_result = list_remove_element(
             Global.to_delete_in_time_messages_list, msg_auto_delete_data)
     if not remove_result:
@@ -487,6 +486,7 @@ def initialize_resources():
     load_urls_regex(f'{SCRIPT_PATH}/{CONST["F_TLDS"]}')
     # Load all languages texts
     load_texts_languages()
+    logger.info("Resources initialized.")
 
 
 def load_urls_regex(file_path):
@@ -3516,16 +3516,16 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 ###############################################################################
-# Bot automatic remove sent messages thread
+# Bot automatic delete sent messages coroutines
 ###############################################################################
 
-async def th_selfdestruct_messages(bot):
+async def auto_delete_messages(bot):
     '''
     Handle remove messages sent by the Bot with the timed self-delete
     function.
     '''
     while not Global.force_exit:
-        # Thread sleep for each iteration
+        # Release CPU sleeping on each iteration
         await asyncio_sleep(0.01)
         # Check each Bot sent message
         i = 0
@@ -3564,19 +3564,20 @@ async def th_selfdestruct_messages(bot):
             list_remove_element(
                     Global.to_delete_in_time_messages_list, sent_msg)
             await asyncio_sleep(0.01)
+    logger.info("Auto-delete messages coroutine finished")
 
 
 ###############################################################################
-# Handle time to kick users thread
+# Handle captcha process timeout (time to kick/ban users) coroutines
 ###############################################################################
 
-async def th_time_to_kick_not_verify_users(bot):
+async def captcha_timeout_kick_user(bot):
     '''
     Check if the time for ban new users that has not completed the
     captcha has arrived.
     '''
     while not Global.force_exit:
-        # Thread sleep for each iteration
+        # Release CPU sleeping on each iteration
         await asyncio_sleep(0.01)
         # Get all id from users in captcha process (list shallow copy)
         users_id = []
@@ -3595,7 +3596,7 @@ async def th_time_to_kick_not_verify_users(bot):
                 if i > 1000:
                     i = 0
                     await asyncio_sleep(0.01)
-                # Check if script must exit for end thread
+                # Check if script must exit for end coroutine
                 if Global.force_exit:
                     return
                 # Ignore if user is not in this chat
@@ -3632,6 +3633,7 @@ async def th_time_to_kick_not_verify_users(bot):
                 except Exception:
                     logger.error(format_exc())
                     logger.error("Fail to kick/ban an user")
+    logger.info("Captcha timeout coroutine finished")
 
 
 ###############################################################################
@@ -3822,19 +3824,12 @@ async def tlg_app_start(app: Application) -> None:
     Telegram Bot Application initialized.
     This function is called at the startup of run_polling() or
     run_webhook() functions.'''
-    # Launch delete messages and kick users threads
-    Global.th_0 = Thread(
-            target=th_selfdestruct_messages,
-            args=(app.bot,))
-    Global.th_1 = Thread(
-            target=th_time_to_kick_not_verify_users,
-            args=(app.bot,))
-    Global.th_0.name = "th_selfdestruct_messages"
-    Global.th_1.name = "th_time_to_kick_not_verify_users"
-    Global.th_0.start()
-    sleep(0.05)
-    Global.th_1.start()
-    logger.info("Auto-delete messages and captcha timeout threads started.")
+    # Launch delete messages and kick users coroutines
+    Global.async_captcha_timeout_kick_user = \
+            asyncio_create_task(captcha_timeout_kick_user(app.bot))
+    Global.async_auto_delete_messages = \
+            asyncio_create_task(auto_delete_messages(app.bot))
+    logger.info("Auto-delete messages and captcha timeout coroutines started.")
 
 
 ###############################################################################
@@ -3848,18 +3843,15 @@ async def tlg_app_exit(app: Application) -> None:
     run_webhook() functions when the Bot stops it execution.'''
     # Disable unused arguments
     del app
-    # Request to exit
+    # Request to exit and wait to end coroutines
     logger.info("Bot stopped. Releasing resources...")
     Global.force_exit = True
-    # Wait to end threads
-    logger.info("Waiting th_0 end...")
-    if Global.th_0 is not None:
-        if Global.th_0.is_alive():
-            Global.th_0.join()
-    logger.info("Waiting th_1 end...")
-    if Global.th_1 is not None:
-        if Global.th_1.is_alive():
-            Global.th_1.join()
+    if not Global.async_captcha_timeout_kick_user.done():
+        logger.info("Waiting end of coroutine: captcha_timeout_kick_user()...")
+        await Global.async_captcha_timeout_kick_user
+    if not Global.async_auto_delete_messages.done():
+        logger.info("Waiting end of coroutine: async_auto_delete_messages()...")
+        await Global.async_auto_delete_messages
     # Save current session data
     save_session()
     # Close the program
