@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    30/12/2022
+    02/01/2023
 Version:
-    1.28.0
+    1.29.0
 '''
 
 ###############################################################################
@@ -328,11 +328,11 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.28.0 (30/12/2022)"
+    "VERSION": "1.29.0 (02/01/2023)"
 }
 
 # Supported languages list
-TEXT = {
+TEXT: dict = {
     "AR": {}, # Arabic
     "BE": {}, # Belarusian
     "CA": {}, # Catalan
