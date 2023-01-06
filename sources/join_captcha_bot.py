@@ -29,6 +29,7 @@ import logging
 import signal
 
 # Asynchronous Input-Output Concurrency Library
+from asyncio import sleep as asyncio_sleep
 from asyncio import run as asyncio_run
 
 # Collections Data Types Library
@@ -1574,7 +1575,7 @@ async def receive_poll_answer(
             escape_markdown(user_name, 2))
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Wait 3s to let poll animation be shown
-    sleep(3)
+    await asyncio_sleep(3)
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
         await delete_tlg_msg(bot, chat_id, msg)
@@ -1632,7 +1633,7 @@ async def receive_poll_answer(
         else:
             await tlg_send_msg(bot, chat_id, bot_msg)
         # Wait 10s
-        sleep(10)
+        await asyncio_sleep(10)
         # Try to kick the user
         await captcha_fail_kick_ban_member(
                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN_POLL"])
@@ -3528,7 +3529,7 @@ async def th_selfdestruct_messages(bot):
     '''
     while not Global.force_exit:
         # Thread sleep for each iteration
-        sleep(0.01)
+        await asyncio_sleep(0.01)
         # Check each Bot sent message
         i = 0
         while i < len(Global.to_delete_in_time_messages_list):
@@ -3539,7 +3540,7 @@ async def th_selfdestruct_messages(bot):
             # Sleep each 100 iterations
             i = i + 1
             if (i > 1) and ((i % 1000) == 0):
-                sleep(0.01)
+                await asyncio_sleep(0.01)
             # Check if delete time has arrive for this message
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
                 continue
@@ -3565,7 +3566,7 @@ async def th_selfdestruct_messages(bot):
                     tlg_msg_to_selfdestruct(sent_result["msg"])
             list_remove_element(
                     Global.to_delete_in_time_messages_list, sent_msg)
-            sleep(0.01)
+            await asyncio_sleep(0.01)
 
 
 ###############################################################################
@@ -3579,7 +3580,7 @@ async def th_time_to_kick_not_verify_users(bot):
     '''
     while not Global.force_exit:
         # Thread sleep for each iteration
-        sleep(0.01)
+        await asyncio_sleep(0.01)
         # Get all id from users in captcha process (list shallow copy)
         users_id = []
         chats_id_list = list(Global.new_users.keys()).copy()
@@ -3596,7 +3597,7 @@ async def th_time_to_kick_not_verify_users(bot):
                 i = i + 1
                 if i > 1000:
                     i = 0
-                    sleep(0.01)
+                    await asyncio_sleep(0.01)
                 # Check if script must exit for end thread
                 if Global.force_exit:
                     return
@@ -3630,7 +3631,7 @@ async def th_time_to_kick_not_verify_users(bot):
                                 chat_id, user_name)
                         await captcha_fail_kick_ban_member(
                                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN"])
-                        sleep(0.01)
+                        await asyncio_sleep(0.01)
                 except Exception:
                     logger.error(format_exc())
                     logger.error("Fail to kick/ban an user")
