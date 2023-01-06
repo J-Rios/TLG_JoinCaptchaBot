@@ -2745,7 +2745,7 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def cmd_remove_ignore(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
-    ):
+        ):
     '''
     Command /remove_ignore message handler.
     '''
@@ -2842,7 +2842,7 @@ async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def cmd_remove_solve_kick_msg(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
-    ):
+        ):
     '''
     Command /remove_solve_kick_msg message handler.
     '''
@@ -2899,7 +2899,7 @@ async def cmd_remove_solve_kick_msg(
 async def cmd_remove_welcome_msg(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
-    ):
+        ):
     '''
     Command /remove_welcome_msg message handler.
     '''
@@ -2955,7 +2955,7 @@ async def cmd_remove_welcome_msg(
 async def cmd_remove_all_msg_kick_on(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
-    ):
+        ):
     '''
     Command /remove_all_msg_kick_on message handler.
     '''
@@ -3002,7 +3002,7 @@ async def cmd_remove_all_msg_kick_on(
 async def cmd_remove_all_msg_kick_off(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
-    ):
+        ):
     '''
     Command /remove_all_msg_kick_off message handler.
     '''
@@ -3826,9 +3826,9 @@ async def tlg_app_start(app: Application) -> None:
     run_webhook() functions.'''
     # Launch delete messages and kick users coroutines
     Global.async_captcha_timeout_kick_user = \
-            asyncio_create_task(captcha_timeout_kick_user(app.bot))
+        asyncio_create_task(captcha_timeout_kick_user(app.bot))
     Global.async_auto_delete_messages = \
-            asyncio_create_task(auto_delete_messages(app.bot))
+        asyncio_create_task(auto_delete_messages(app.bot))
     logger.info("Auto-delete messages and captcha timeout coroutines started.")
 
 
@@ -3847,10 +3847,10 @@ async def tlg_app_exit(app: Application) -> None:
     logger.info("Bot stopped. Releasing resources...")
     Global.force_exit = True
     if not Global.async_captcha_timeout_kick_user.done():
-        logger.info("Waiting end of coroutine: captcha_timeout_kick_user()...")
+        logger.info("Waiting end of coroutine: captcha_timeout_kick_user()")
         await Global.async_captcha_timeout_kick_user
     if not Global.async_auto_delete_messages.done():
-        logger.info("Waiting end of coroutine: async_auto_delete_messages()...")
+        logger.info("Waiting end of coroutine: async_auto_delete_messages()")
         await Global.async_auto_delete_messages
     # Save current session data
     save_session()
