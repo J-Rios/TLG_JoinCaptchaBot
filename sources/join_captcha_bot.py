@@ -3680,12 +3680,10 @@ def tlg_app_setup(token: str) -> Application:
     # Create the Telegram Bot Application Builder
     # Set Bot Token
     # Set messages to be sent silently by default
-    # Set to use Arbitrary Callback Data
     # Set Bot Application callbacks functions for Bot run start and exit
     app_builder = Application.builder()
     app_builder.token(token)
     app_builder.defaults(Defaults(disable_notification=True))
-    app_builder.arbitrary_callback_data(True)
     app_builder.post_init(tlg_app_start)
     app_builder.post_shutdown(tlg_app_exit)
     # Build the Bot Application
