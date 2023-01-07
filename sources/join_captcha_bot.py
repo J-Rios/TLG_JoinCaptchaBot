@@ -310,14 +310,7 @@ async def tlg_send_selfdestruct_msg_in(
     return sent_result["msg"].message_id
 
 
-def tlg_msg_to_selfdestruct(message):
-    '''
-    tlg_msg_to_selfdestruct_in() with default delete time.
-    '''
-    tlg_msg_to_selfdestruct_in(message, CONST["T_DEL_MSG"])
-
-
-def tlg_msg_to_selfdestruct_in(message, time_delete_sec):
+def tlg_msg_to_selfdestruct_in(message, time_delete_sec=CONST["T_DEL_MSG"]):
     '''
     Add a telegram message to be auto-delete in specified time.
     '''
@@ -1503,7 +1496,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 clueless_user = True
             # Tell the user that is wrong
             if clueless_user:
-                tlg_msg_to_selfdestruct(update_msg)
+                tlg_msg_to_selfdestruct_in(update_msg)
                 sent_msg_id = await tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1514,7 +1507,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             # Check if the message has 4 chars
             if len(msg_text) == 4:
-                tlg_msg_to_selfdestruct(update_msg)
+                tlg_msg_to_selfdestruct_in(update_msg)
                 sent_msg_id = await tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1523,7 +1516,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
             # Check if the message was just a 4 numbers msg
             elif is_int(msg_text):
-                tlg_msg_to_selfdestruct(update_msg)
+                tlg_msg_to_selfdestruct_in(update_msg)
                 sent_msg_id = await tlg_send_selfdestruct_msg_in(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1862,7 +1855,7 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, TEXT[lang]["START"])
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
@@ -1891,7 +1884,7 @@ async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, TEXT[lang]["HELP"])
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
@@ -1920,7 +1913,7 @@ async def cmd_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, TEXT[lang]["COMMANDS"])
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         user_id = update_msg.from_user.id
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
@@ -1953,7 +1946,7 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Ignore if command is not in private chat
     if chat_type != "private":
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2012,7 +2005,7 @@ async def cmd_disconnect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Ignore if command is not in private chat
     if chat_type != "private":
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2062,7 +2055,7 @@ async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2103,7 +2096,7 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2163,7 +2156,7 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2249,7 +2242,7 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2302,7 +2295,7 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2353,7 +2346,7 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2413,7 +2406,7 @@ async def cmd_welcome_msg_time(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2499,7 +2492,7 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2645,7 +2638,7 @@ async def cmd_restrict_non_text(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2711,7 +2704,7 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2773,7 +2766,7 @@ async def cmd_remove_ignore(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2824,7 +2817,7 @@ async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2871,7 +2864,7 @@ async def cmd_remove_solve_kick_msg(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2927,7 +2920,7 @@ async def cmd_remove_welcome_msg(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -2982,7 +2975,7 @@ async def cmd_remove_all_msg_kick_on(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -3029,7 +3022,7 @@ async def cmd_remove_all_msg_kick_off(
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -3073,7 +3066,7 @@ async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -3117,7 +3110,7 @@ async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = Global.connections[user_id]["group_id"]
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -3156,7 +3149,7 @@ async def cmd_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Remove command message automatically after a while
-    tlg_msg_to_selfdestruct(update_msg)
+    tlg_msg_to_selfdestruct_in(update_msg)
     # Ignore if not requested by a group Admin
     is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
     if (is_admin is None) or (is_admin is False):
@@ -3194,7 +3187,7 @@ async def cmd_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, TEXT[lang]["CMD_NOT_ALLOW_PRIVATE"])
         return
     # Remove command message automatically after a while
-    tlg_msg_to_selfdestruct(update_msg)
+    tlg_msg_to_selfdestruct_in(update_msg)
     # Ignore if not requested by a group Admin
     is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
     if (is_admin is None) or (is_admin is False):
@@ -3230,7 +3223,7 @@ async def cmd_chatid(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, msg_text)
     else:
         msg_text = f"Group Chat ID:\n—————————\n{chat_id}"
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         await tlg_send_selfdestruct_msg(
                 bot, chat_id, msg_text,
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -3254,7 +3247,7 @@ async def cmd_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_send_msg(bot, chat_id, msg_text)
     else:
         # Remove command message automatically after a while
-        tlg_msg_to_selfdestruct(update_msg)
+        tlg_msg_to_selfdestruct_in(update_msg)
         # Ignore if not requested by a group Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if (is_admin is None) or (is_admin is False):
@@ -3306,7 +3299,7 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user.username is not None:
         user_alias = f"@{user.username}"
     # Remove command message automatically after a while
-    tlg_msg_to_selfdestruct(update_msg)
+    tlg_msg_to_selfdestruct_in(update_msg)
     # Check if command was execute by Bot owner
     if ((str(user_id) != CONST["BOT_OWNER"]) and
             (user_alias != CONST["BOT_OWNER"])):
@@ -3564,7 +3557,7 @@ async def auto_delete_messages(bot):
                         bot, sent_msg["Chat_id"], TEXT[lang]["CANT_DEL_MSG"],
                         reply_to_message_id=sent_msg["Msg_id"])
                 if sent_result["msg"] is not None:
-                    tlg_msg_to_selfdestruct(sent_result["msg"])
+                    tlg_msg_to_selfdestruct_in(sent_result["msg"])
             list_remove_element(
                     Global.to_delete_in_time_messages_list, sent_msg)
             await asyncio_sleep(0.01)
