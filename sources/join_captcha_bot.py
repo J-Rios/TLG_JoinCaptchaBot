@@ -879,7 +879,7 @@ async def chat_bot_status_change(
         context: ContextTypes.DEFAULT_TYPE
         ):
     '''
-    Get Bot chats status changes (Bot added to group/channel,
+    Get Bot chats status changes (Bot was added to group/channel,
     started/stopped conversation in private chat, etc.) event handler.
     '''
     # Check Bot changes
@@ -1194,12 +1194,14 @@ async def chat_member_status_change(
         logger.info("")
 
 
-async def msg_user_joined_group(
+async def user_joined_group_msg_rx(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
         ):
     '''
     New member join the group event handler.
+    This handler is trigger when a "USER joined the group" message is
+    received in a chat.
     '''
     # Disable unused arguments
     del context
@@ -1231,9 +1233,11 @@ async def msg_user_joined_group(
         Global.new_users[chat_id][join_user.id]["join_msg"] = msg_id
 
 
-async def msg_notext(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
-    All non-text messages handler.
+    All multimedia messages reception handler.
+    Messages that trigger this handler are:
+    Documents, photos, videos, audio, voice, sticker, location, contact.
     '''
     bot = context.bot
     # Get message data
@@ -1284,9 +1288,9 @@ async def msg_notext(update: Update, context: ContextTypes.DEFAULT_TYPE):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-async def msg_nocmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
-    Non-command text messages handler.
+    Text messages reception handler.
     '''
     bot = context.bot
     # Get message data
@@ -1530,7 +1534,7 @@ async def msg_nocmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logger.info("")
 
 
-async def receive_poll_answer(
+async def poll_answer_rx(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
         ):
@@ -1638,12 +1642,12 @@ async def receive_poll_answer(
     logger.info("")
 
 
-async def key_inline_keyboard(
+async def button_press_rx(
         update: Update,
         context: ContextTypes.DEFAULT_TYPE
         ):
     '''
-    Inline Keyboard button pressed handler.
+    Any Telegram Inline Keyboard Button pressed handler.
     '''
     bot = context.bot
     query = update.callback_query
@@ -1661,15 +1665,15 @@ async def key_inline_keyboard(
     # Get type of inline keyboard button pressed and user ID associated
     # to that button
     key_pressed = button_data[0]
-    # Check and handle "request new img captcha" or "button captcha
-    # challenge" buttons
+    # Check and handle "request new img captcha" or
+    # "button captcha challenge" buttons
     if "image_captcha" in key_pressed:
-        await button_request_captcha(bot, query)
+        await button_request_another_captcha_press(bot, query)
     elif "button_captcha" in key_pressed:
-        await button_request_pass(bot, query)
+        await button_im_not_a_bot_press(bot, query)
 
 
-async def button_request_captcha(bot, query):
+async def button_request_another_captcha_press(bot, query):
     '''
     Button "Another captcha" pressed handler.
     '''
@@ -1756,7 +1760,7 @@ async def button_request_captcha(bot, query):
     logger.info("")
 
 
-async def button_request_pass(bot, query):
+async def button_im_not_a_bot_press(bot, query):
     '''
     Button "I'm not a bot" pressed handler.
     '''
@@ -3739,8 +3743,8 @@ def tlg_app_setup(token: str) -> Application:
         app.add_handler(CommandHandler("allowuserlist", cmd_allowuserlist))
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         app.add_handler(CommandHandler("allowgroup", cmd_allowgroup))
-    # Set to application a not-command text messages handler
-    app.add_handler(MessageHandler(filters.TEXT, msg_nocmd, block=False))
+    # Set to application handler for reception of text messages
+    app.add_handler(MessageHandler(filters.TEXT, text_msg_rx, block=False))
     # Set to application not text messages handler
     # pylint: disable=E1131
     app.add_handler(
@@ -3748,7 +3752,7 @@ def tlg_app_setup(token: str) -> Application:
                     filters.Document.ALL | filters.PHOTO | filters.VIDEO |
                     filters.AUDIO | filters.VOICE | filters.Sticker.ALL |
                     filters.LOCATION | filters.CONTACT,
-                    msg_notext
+                    media_msg_rx
             )
     )
     # Set to application a new member join the group and member left the
@@ -3769,14 +3773,14 @@ def tlg_app_setup(token: str) -> Application:
     app.add_handler(
             MessageHandler(
                     filters.StatusUpdate.NEW_CHAT_MEMBERS,
-                    msg_user_joined_group
+                    user_joined_group_msg_rx
             )
     )
     # Set to application inline keyboard callback handler for new captcha
     # request and button captcha challenge
-    app.add_handler(CallbackQueryHandler(key_inline_keyboard))
+    app.add_handler(CallbackQueryHandler(button_press_rx))
     # Set to application users poll vote handler
-    app.add_handler(PollAnswerHandler(receive_poll_answer, block=False))
+    app.add_handler(PollAnswerHandler(poll_answer_rx, block=False))
     logger.info("Bot setup completed.")
     return app
 
