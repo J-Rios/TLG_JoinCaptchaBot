@@ -685,7 +685,7 @@ async def allowed_in_this_group(bot, chat, member_added_by):
     # Check if Free Bot Limit has been reached
     num_members = 0
     max_usr_group = CONST["FREE_LIMIT_MAX_USER_IN_GROUP"]
-    chat_members_count = tlg_get_chat_members_count(bot, chat.id)
+    chat_members_count = await tlg_get_chat_members_count(bot, chat.id)
     if chat_members_count["num_members"] is not None:
         num_members = chat_members_count["num_members"]
     if num_members > max_usr_group:
@@ -693,8 +693,8 @@ async def allowed_in_this_group(bot, chat, member_added_by):
                 "Group %s with more than %d users (%d users). Leaving it...",
                 chat.id, max_usr_group, num_members)
         msg_text = CONST["FREE_LIMIT_REACH"].format(chat.id, max_usr_group+1)
-        tlg_send_msg(bot, chat.id, msg_text)
-        sleep(1)
+        await tlg_send_msg(bot, chat.id, msg_text)
+        await asyncio_sleep(1)
         return False
     return True
 
