@@ -121,7 +121,7 @@ async def tlg_get_chat_member(
     return result
 
 
-async def tlg_get_chat_member_count(
+async def tlg_get_chat_members_count(
         bot: Bot,
         chat_id: Union[str, int]
         ):
