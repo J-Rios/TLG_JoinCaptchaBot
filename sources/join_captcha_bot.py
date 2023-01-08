@@ -854,23 +854,28 @@ async def captcha_fail_kick_ban_member(
         else:
             await tlg_send_msg(bot, chat_id, msg_text)
     # Update user info (join_retries & kick_ban)
-    Global.new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
-    Global.new_users[chat_id][user_id]["join_data"]["join_retries"] = \
-        join_retries
-    # Remove join messages
-    logger.info("[%s] Removing messages from user %s...", chat_id, user_name)
-    join_msg = Global.new_users[chat_id][user_id]["join_msg"]
-    if join_msg is not None:
-        await delete_tlg_msg(bot, chat_id, join_msg)
-    for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        await delete_tlg_msg(bot, chat_id, msg)
-    Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
-    for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
-        await delete_tlg_msg(bot, chat_id, msg)
-    Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
-    # Delete user join info if ban was success
-    if banned:
-        del Global.new_users[chat_id][user_id]
+    try:
+        Global.new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
+        Global.new_users[chat_id][user_id]["join_data"]["join_retries"] = \
+            join_retries
+        # Remove join messages
+        logger.info("[%s] Removing msgs from user %s...", chat_id, user_name)
+        join_msg = Global.new_users[chat_id][user_id]["join_msg"]
+        if join_msg is not None:
+            await delete_tlg_msg(bot, chat_id, join_msg)
+        for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
+            await delete_tlg_msg(bot, chat_id, msg)
+        Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+        for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
+            await delete_tlg_msg(bot, chat_id, msg)
+        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
+        # Delete user join info if ban was success
+        if banned:
+            del Global.new_users[chat_id][user_id]
+    except KeyError:
+        logger.warning(
+                "[%s] %s (%d) not in new_users list (already solve captcha)",
+                chat_id, user_name, user_id)
     logger.info("[%s] Kick/Ban process completed", chat_id)
     logger.info("")
 
@@ -3525,7 +3530,7 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 ###############################################################################
-# Bot automatic delete sent messages coroutines
+# Bot automatic delete sent messages coroutine
 ###############################################################################
 
 async def auto_delete_messages(bot):
@@ -3577,7 +3582,7 @@ async def auto_delete_messages(bot):
 
 
 ###############################################################################
-# Handle captcha process timeout (time to kick/ban users) coroutines
+# Handle captcha process timeout (time to kick/ban users) coroutine
 ###############################################################################
 
 async def captcha_timeout_kick_user(bot):
