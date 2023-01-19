@@ -1024,7 +1024,7 @@ async def chat_member_status_change(
         poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
                 join_user_name, chat_title, timeout_str)
         sent_result = await tlg_send_autodelete_msg(
-                bot, chat_id, poll_request_msg_text)
+                bot, chat_id, poll_request_msg_text, captcha_timeout)
         solve_poll_request_msg_id = None
         if sent_result is not None:
             solve_poll_request_msg_id = sent_result
