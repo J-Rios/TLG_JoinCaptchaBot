@@ -1041,8 +1041,8 @@ def chat_member_status_change(update: Update, context: CallbackContext):
         # Send request to solve the poll text message
         poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
                 join_user_name, chat_title, timeout_str)
-        sent_result = tlg_send_selfdestruct_msg(
-                bot, chat_id, poll_request_msg_text)
+        sent_result = tlg_send_selfdestruct_msg_in(
+                bot, chat_id, poll_request_msg_text, captcha_timeout)
         solve_poll_request_msg_id = None
         if sent_result is not None:
             solve_poll_request_msg_id = sent_result
