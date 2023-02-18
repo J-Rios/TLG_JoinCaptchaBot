@@ -178,6 +178,8 @@ def list_remove_element(the_list: list, the_element):
     Safe remove an element from a list.
     '''
     try:
+        if the_element not in the_list:
+            return False
         i = the_list.index(the_element)
         del the_list[i]
     except Exception:
