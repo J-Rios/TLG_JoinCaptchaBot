@@ -248,7 +248,7 @@ CONST = {
         "Current Group Chat ID:\n" \
         "{}\n" \
          "\n" \
-        "This Bot account is Private and just can be used in allowed " \
+        "This Bot account is Private and can only be used in allowed " \
         "groups by making a donation of 5 eurs each month.\n" \
          "\n" \
         "If you want to use this captcha Bot without restriction in large " \
