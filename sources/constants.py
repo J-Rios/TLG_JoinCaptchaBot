@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/01/2023
+    18/02/2023
 Version:
-    1.29.1
+    1.29.2
 '''
 
 ###############################################################################
@@ -316,7 +316,8 @@ CONST = {
         "\nSlovak / Slovenčine\n/language sk\n" \
         "\nSpanish / Español\n/language es\n" \
         "\nTurkish / Türkçe\n/language tr\n" \
-        "\nUkrainian / Українську\n/language uk\n",
+        "\nUkrainian / Українську\n/language uk\n" \
+        "\nUzbek / o'zbek\n/language uz\n",
 
     # Bot developer
     "DEVELOPER": "@JoseTLG",
@@ -328,7 +329,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.29.1 (14/01/2023)"
+    "VERSION": "1.29.2 (18/02/2023)"
 }
 
 # Supported languages list
@@ -358,5 +359,6 @@ TEXT: dict = {
     "SK": {}, # Slovak
     "TR": {}, # Turkish
     "UK": {}, # Ukrainian
+    "UZ": {}, # Uzbek
     "ZH_CN": {} # Chinese (Mainland)
 }

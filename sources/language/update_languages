@@ -31,6 +31,7 @@ wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/sk.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/tr.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/uk.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/uz.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/sources/language/zh_cn.json
 
 exit 0
