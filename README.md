@@ -202,6 +202,8 @@ To add support for a new language you must follow this steps:
 
 - Esperanto: Pablo Busto & Porrumentzio.
 
+- Finnish: [Aminda Suomalainen (@Mikaela)](https://github.com/Mikaela)
+
 - French: [Mathieu H (@aurnytoraink)](https://github.com/Aurnytoraink)
 
 - Galician: [Fernando Flores (Fer6Flores)](https://github.com/Fer6Flores); Iváns
@@ -225,7 +227,5 @@ To add support for a new language you must follow this steps:
 - Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
 
 - Ukrainian: Vadym Zhushman (@zhushman00), [Roman (@toxi22)](https://github.com/toxi22)
-
-- Finnish: [Aminda Suomalainen (@Mikaela)](https://github.com/Mikaela)
 
 - Uzbek: [@mhwebuz](https://github.com/mhwebuz)
