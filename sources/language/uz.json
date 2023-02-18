@@ -105,13 +105,13 @@
         "Chatning ro'yxati bo'sh.",
     
     "NEW_USER_IMG_CAPTION":
-        "Salom {},  Xush kelibsiz {} ga. Iltimos, siz odam ekanligingizni tekshirish uchun ushbu rasmda paydo bo'lgan raqamlar va  yoki harflar bilan xabar yozing.Agar siz ushbu CAPTCHA-ni hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
-    
+        "Salom {},  Xush kelibsiz {} ga. Iltimos, siz odam ekanligingizni tekshirish uchun ushbu rasmda paydo bo'lgan raqamlar va  yoki harflar bilan xabar yozing. Agar siz ushbu CAPTCHA ni {} hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
+
     "NEW_USER_MATH_CAPTION":
-        "Salom {}, Xush kelibsiz {} ga. Iltimos, siz odam ekanligingizni tekshirish uchun ushbu matematik tenglama natijasi bilan xabar yozing.Agar siz ushbu CAPTCHA-ni hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
+        "Salom {}, Xush kelibsiz {} ga. Iltimos, siz odam ekanligingizni tekshirish uchun ushbu matematik tenglama natijasi bilan xabar yozing. Agar siz ushbu CAPTCHA ni {} hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
     
     "NEW_USER_BUTTON_MODE":
-        "Salom {}, Xush kelibsiz {} ga. Iltimos, robot emasligingizni tekshirish uchun quyidagi tugmani bosing.Agar siz buni qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
+        "Salom {}, Xush kelibsiz {} ga. Iltimos, robot emasligingizni tekshirish uchun quyidagi tugmani bosing. Agar siz ushbu CAPTCHA ni {} hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
     
     "CAPTCHA_SOLVED":
         "CAPTCHA hal qilindi, foydalanuvchi tasdiqlandi.\nGuruhga xush kelibsiz, {}",
@@ -141,25 +141,25 @@
         "Men ushbu xabarni o'chirishga harakat qildim, lekin menda yuborilmagan xabarlarni o'chirish huquqi yo'q.",
     
     "NEW_USER_BAN":
-        "Ogohlantirish: Foydalanuvchi {} CAPTCHA-ni hal qila olmagan.\"User\" taqiqlangan.Unga yana kirishga ruxsat berish uchun admin guruh sozlamalaridan ushbu \"User\" ning cheklovlarini qo'lda olib tashlashi kerak.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User\" taqiqlangan.Unga yana kirishga ruxsat berish uchun admin guruh sozlamalaridan ushbu \"User\" ning cheklovlarini qo'lda olib tashlashi kerak.",
     
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Ogohlantirish: Foydalanuvchi {} CAPTCHA-ni hal qila olmasa.Men \"User \" ni taqiqlashga harakat qildim, lekin foydalanuvchi  guruhda emas (guruhni tark etdi yoki admini taqiqlagan ).",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, lekin foydalanuvchi  guruhda emas (guruhni tark etdi yoki admini taqiqlagan ).",
     
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Ogohlantirish: Foydalanuvchi {} CAPTCHA-ni hal qila olmasa.Men \"User \" ni taqiqlashga harakat qildim, lekin menda guruhda foydalanuvchilarni taqiqlash huquqi yo'q.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, lekin menda guruhda foydalanuvchilarni taqiqlash huquqi yo'q.",
     
     "BOT_CANT_BAN":
-        "Ogohlantirish: Foydalanuvchi {} CAPTCHA-ni hal qila olmasa.Men \"User \" ni taqiqlashga harakat qildim, ammo kutilmagan muammo tufayli (ehtimol tarmoq/server bilan bog'liq) men buni qila olmayman.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, ammo kutilmagan muammo tufayli (ehtimol tarmoq/server bilan bog'liq) men buni qila olmayman.",
     
     "SPAM_DETECTED_RM":
-        "Hali CAPTCHA-ni hal qilmagan URL (yoki taxallus) bilan xabarni aniqladi.Telegram bo'shlig'ini saqlash uchun xabar o'chirildi :)",
+        "{} dan URL (yoki taxallus) bilan xabar aniqlandi.Telegram bo'shlig'ini saqlash uchun xabar o'chirildi :)",
     
     "SPAM_DETECTED_NOT_RM":
         "URL (yoki taxallus) bilan xabar hali CAPTCHA-ni hal qilmagan {} dan aniqlangan.Men spam xabarini olib tashlashga harakat qildim, lekin menda yuborilmagan xabarlarni o'chirish huquqi yo'q.",
     
     "NOT_TEXT_MSG_ALLOWED":
-        "Matnli bo'lmagan xabarni (Image, audio, faylini) olib tashladi, chunki CAPTCHA-ni hal qilganingizdan so'ng, matnsiz xabarlarni yuborishi mumkin. \n \n siz CAPTCHA-ni hal qilganingizdan so'ng.",
+        "{} dan matnli boʻlmagan xabar (rasm, audio, fayl...) olib tashlandi, chunki CAPTCHA-ni hal qilganingizdan so'ng, matnsiz xabarlarni yuborishi mumkin. \n \n siz CAPTCHA-ni hal qilganingizdan so'ng.",
     
     "RM_SOLVE_KICK_MSG":
         "Configure if solve and kick/ban messages should be automatically removed after a while.\n\n Misollar:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
@@ -280,4 +280,4 @@
     
     "RM_ALL_MSGS_AFTER_KICK_OFF":
         "Konfiguratsiya o'zgargan, CAPTCHAni hal qilmagan foydalanuvchilar tomonidan yuborilmaydi."
-}    
+}
