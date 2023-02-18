@@ -1,9 +1,9 @@
 {
     "START":
-        "Salom, men gruppaga qo'shilgan har bir yangi foydalanuvchi uchun captcha rasmini yuboradigan botman va belgilangan vaqt ichida captcha-ni hal qila olmaydiganlarni o'chirib tashlayman.\n \n Agar foydalanuvchi ketma-ket 5 marta gruppaga qo'shilishga harakat qilsa va captchani hal qilmasa, men ushbu \"foydalanuvchi\" bot deb o'ylayman va u block yeydi. Bundan tashqari,tekshirish tugaguniga qadar yangi \"foydalanuvchi\" tomonidan yuborilgan URL manzilini o'z ichiga olgan har qanday xabar spam deb hisoblanadi va o'chiriladi.\n \n Men foydalanuvchilarni blocklash va xabarlarni o'chirish uchun menga administrator huquqlarini berishni unutmang.\n \n Men haqimda qo'shimcha ma'lumot olish uchun /help buyrug'ini kiriting \n \n Men foydali bo'ldimi? /about buyrug'ini kiriting va meni qo'llab-quvvatlash va ixtiyoriy xayriya qilish haqida o'ylang.",
+        "Salom, men gruppaga qo'shilgan har bir yangi foydalanuvchi uchun captcha rasmini yuboradigan botman va belgilangan vaqt ichida captcha-ni hal qila olmaydiganlarni o'chirib tashlayman.\n\nAgar foydalanuvchi ketma-ket 5 marta gruppaga qo'shilishga harakat qilsa va captchani hal qilmasa, men ushbu \"foydalanuvchi\" bot deb o'ylayman va u block yeydi. Bundan tashqari,tekshirish tugaguniga qadar yangi \"foydalanuvchi\" tomonidan yuborilgan URL manzilini o'z ichiga olgan har qanday xabar spam deb hisoblanadi va o'chiriladi.\n\nMen foydalanuvchilarni blocklash va xabarlarni o'chirish uchun menga administrator huquqlarini berishni unutmang.\n\nMen haqimda qo'shimcha ma'lumot olish uchun /help buyrug'ini kiriting.\n\nMen foydali bo'ldimi? /about buyrug'ini kiriting va meni qo'llab-quvvatlash va ixtiyoriy xayriya qilish haqida o'ylang.",
     
     "HELP":
-        "Yordam:\n————————————————\n- Men gruppaga qo'shilgan har bir yangi foydalanuvchi uchun captcha rasmini yuboradigan botman va belgilangan vaqt ichida captcha-ni hal qila olmaydiganlarni o'chirib tashlayman.\n\n Agar foydalanuvchi ketma-ket 5 marta gruppaga qo'shilishga harakat qilsa va captcha-ni hal qilmasa, men ushbu \"foydalanuvchi\" bot deb o'ylayman va u block yeydi.\n\n Bundan tashqari, tekshirish tugaguniga qadar yangi \"foydalanuvchi\" tomonidan yuborilgan URL manzilini o'z ichiga olgan har qanday xabar spam deb hisoblanadi va o'chiriladi.\n \n Men foydalanuvchilarni blocklash va xabarlarni o'chirish uchun menga administrator huquqlarini berishingiz kerak.\n\n Suhbatni toza saqlash uchun captcha hal qilinmaganda va foydalanuvchi o'chirilganda (5 daqiqadan so'ng) men bilan bog'liq barcha xabarlarni avtomatik ravishda o'chirib tashlayman.\n\n Oodatiy bo'lib, odamda bor 5 daqiqa captcha-ni hal qilish uchun, lekin uni /time buyrug'i yordamida sozlash mumkin.\n\n Siz  /enable va /disable buyruqlari yordamida himoyani yoqishingiz va o'chirishingiz mumkin.\n \n Sozlamalar buyruqlaridan faqat adminlar foydalanishi mumkin.\n \n Tilni o'zgartirish uchun /language buyrug'idan foydalaning.\n\n  /difficulty buyrug'i yordamida captchaning qiyinchilik darajasini sozlashingiz mumkin.\n\n Siz captcha-ni faqat raqamlar(standart), yoki raqamlar va harflar, yoki yechiladigan matematik tenglama, yoki individual so'rov, yoki shunchaki tugmacha, /captcha_mode buyrug'i yordamida o'zgartirishingiz mumkin.\n \n - Xush kelibsiz xabarni sozlash uchun /welcome_msg buyrug'ini kiriting.\n\n  /restrict_non_text buyrug'i bilan matnli bo'lmagan xabarlarni yuborish uchun yangi qo'shilgan foydalanuvchilarga cheklovlarni qo'llashga ruxsat berish uchun variantni yoqishingiz mumkin.\n \n  Agar bot shaxsiy bo'lsa, /allowgroup buyrug'i yordamida guruhlarga ruxsat bering.\n\n Siz guruhni /connect buyrug'i orqali botdan shaxsiy suhbatdan sozlashingiz mumkin.\n\n Siz /url_disable buyrug'i yordamida guruhdagi URL /havolani o'z ichiga olgan har qanday xabarni yuborganlarni bloklashingiz mumkin.\n\n  /commands orqali mavjud bo'lgan barcha buyruqlar ro'yxatini qisqacha tavsif bilan olasiz.",
+        "Yordam:\n————————————————\n- Men gruppaga qo'shilgan har bir yangi foydalanuvchi uchun captcha rasmini yuboradigan botman va belgilangan vaqt ichida captcha-ni hal qila olmaydiganlarni o'chirib tashlayman.\n\n Agar foydalanuvchi ketma-ket 5 marta gruppaga qo'shilishga harakat qilsa va captcha-ni hal qilmasa, men ushbu \"foydalanuvchi\" bot deb o'ylayman va u block yeydi.\n\n Bundan tashqari, tekshirish tugaguniga qadar yangi \"foydalanuvchi\" tomonidan yuborilgan URL manzilini o'z ichiga olgan har qanday xabar spam deb hisoblanadi va o'chiriladi.\n\nMen foydalanuvchilarni blocklash va xabarlarni o'chirish uchun menga administrator huquqlarini berishingiz kerak.\n\n Suhbatni toza saqlash uchun captcha hal qilinmaganda va foydalanuvchi o'chirilganda (5 daqiqadan so'ng) men bilan bog'liq barcha xabarlarni avtomatik ravishda o'chirib tashlayman.\n\n Oodatiy bo'lib, odamda bor 5 daqiqa captcha-ni hal qilish uchun, lekin uni /time buyrug'i yordamida sozlash mumkin.\n\n Siz  /enable va /disable buyruqlari yordamida himoyani yoqishingiz va o'chirishingiz mumkin.\n\nSozlamalar buyruqlaridan faqat adminlar foydalanishi mumkin.\n\nTilni o'zgartirish uchun /language buyrug'idan foydalaning.\n\n  /difficulty buyrug'i yordamida captchaning qiyinchilik darajasini sozlashingiz mumkin.\n\n Siz captcha-ni faqat raqamlar(standart), yoki raqamlar va harflar, yoki yechiladigan matematik tenglama, yoki individual so'rov, yoki shunchaki tugmacha, /captcha_mode buyrug'i yordamida o'zgartirishingiz mumkin.\n\n- Xush kelibsiz xabarni sozlash uchun /welcome_msg buyrug'ini kiriting.\n\n  /restrict_non_text buyrug'i bilan matnli bo'lmagan xabarlarni yuborish uchun yangi qo'shilgan foydalanuvchilarga cheklovlarni qo'llashga ruxsat berish uchun variantni yoqishingiz mumkin.\n\nAgar bot shaxsiy bo'lsa, /allowgroup buyrug'i yordamida guruhlarga ruxsat bering.\n\n Siz guruhni /connect buyrug'i orqali botdan shaxsiy suhbatdan sozlashingiz mumkin.\n\n Siz /url_disable buyrug'i yordamida guruhdagi URL /havolani o'z ichiga olgan har qanday xabarni yuborganlarni bloklashingiz mumkin.\n\n  /commands orqali mavjud bo'lgan barcha buyruqlar ro'yxatini qisqacha tavsif bilan olasiz.",
     
     "COMMANDS":
         "Buyruqlar ro'yxati:\n————————————————\n/start - Bot haqidagi dastlabki ma'lumotlarni ko'rsatadi.\n\n/help - Yordam ma'lumotlarini ko'rsatadi.\n\n/buyruqlar - Barcha mavjud buyruqlar va ularning tavsiflari haqidagi ma'lumotlarni ko'rsatadi.\n\n/language - Bot tilini o'zgartiring. \n\n/time - captcha-ni yechish uchun vaqtni o'zgartirish imkonini beradi.\n\n/difficulty - captcha qiyinchilik darajasini (1 dan 5 gacha) o'zgartirish imkonini beradi.\n\n/captcha_mode - Captcha rejimini o‘zgartirishga imkon beradi (nums: oddiy raqamlar, hex: AF raqamlari va belgilar, ascii: A-Z raqamlari va belgilar, math: matematik tenglama, poll: maxsus so‘rov, buttom: shunchaki tugma).\n \n/welcome_msg_time - Xush kelibsiz xabarni avtomatik o'chirish vaqtini sozlash imkonini beradi.\n\n/restrict_non_text - Yangi foydalanuvchi captcha ni hal qilgandan so'ng, ularga matnli bo'lmagan xabarlarni (rasmlar, videolar, audio) 1 kun davomida (yoki abadiy \"forever\" tugmachasi yordamida).\n\n/add_ignore - E'tibor berilmagan foydalanuvchidan captcha so'ramang.\n\n/remove_ignore - Foydalanuvchini e’tiborsiz qoldirishni to‘xtating.\n\n/ignore_list – E’tibor berilmagan foydalanuvchilar ro‘yxati.\n\n/captcha_poll – So‘rov rejimida maxsus so‘rov savoli va captcha parametrlarini sozlang.\n\n/welcome_msg – salomlash xabarini sozlash imkonini beradi. captcha ruxsatidan keyin yuboriladi.\n\n/remove_solve_kick_msg - Bir muncha vaqt o'tgach, captcha va kick/ban xabarlarini avtomatik o'chirishni sozlang.\n\n/remove_welcome_msg - Bir muncha vaqt o'tgach salomlash xabarini avtomatik o'chirishni sozlang.\n\n /url_disable - Guruh a'zolariga veb-saytlarga havolalar (URLlar) bo'lgan xabarlarni yuborishni o'chirib qo'ying.\n\n/url_enable - Guruh foydalanuvchilariga veb-saytlarga havolalar (URLlar) bo'lgan xabarlarni yuborishga ruxsat bering.\n\n/remove_all_msg_kick_off - Botni sozlash, tekshirishni tanlamagan foydalanuvchilar tomonidan yuborilgan matnli xabarlarni oʻchirib tashlamasligi uchun.\n\n/remove_all_msg_kick_on - Botni foydalanuvchilar tomonidan yuborilgan barcha xabarlarni oʻchirib tashlaydigan qilib oʻrnating. bu captchani hal qilmaydi.\n\n/allowgroup - Guruhga botdan foydalanishga ruxsat berish (agar bot shaxsiy bo'lsa).\n\n/enable - Chat spamdan himoyani yoqish.\n\n/disable - Chat spamini o'chirish .\n\n/checkcfg - Guruhning joriy konfiguratsiyasini oling.\n\n/chatid - Joriy chat identifikatorini ko'rsatadi.\n\n/connect - Guruhni shaxsiy chat botidan sozlash uchun guruhga ulanish. \n\n/disconnect - shaxsiy chat botidan sozlangan ulangan guruhdan uzilish.\n\n/version - bot versiyasini ko'rsatadi.\n\n/about - ma'lumotni ko'rsatish.",
@@ -69,13 +69,13 @@
         "Buyruqdan keyin Xush kelibsiz xabarni joylashtiriMisol Example:\n/welcome_msg Salom $user, Guruhga xush kelibsiz va boshqa foydalanuvchilarni hurmat qilishni unutmang.\n\nXabarni o'chiring:\n/welcome_msg disable",
     
     "RESTRICT_NON_TEXT_MSG_ENABLED":
-        "Yangi foydalanuvchilar uchun matnsiz xabarlarni yuborishni cheklash.Yaqinda men matnli xabarlar bo'lmagan foydalanuvchi xabarlariga qo'shildim.",
+        "Yangi foydalanuvchilar uchun matnsiz xabarlarni yuborishni cheklash. Yaqinda men matnli xabarlar bo'lmagan foydalanuvchi xabarlariga qo'shildim.",
     
     "RESTRICT_NON_TEXT_MSG_DISABLED":
         "Yangi foydalanuvchilar uchun matnsiz xabarlarni yuborishni cheklash.",
     
     "RESTRICT_NON_TEXT_MSG_NOT_ARG":
-        "Yaqinda matnsiz xabarlarni yuborish uchun ro'yxatdan o'tmoqchi bo'lsangiz yoki o'chirmoqchi bo'lsangiz, ro'yxatdan o'tmoqchi bo'lsangiz (foydalanuvchiga matnlarga emas, balki boshqa xabarlarni yuborishga imkon bermang. Xabarlar kelajakda foydalanuvchilarga yana ushbu ruxsatlarni qo'lda berishiga imkon bera olmaydi).\n \n Misollar:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+        "Yaqinda matnsiz xabarlarni yuborish uchun ro'yxatdan o'tmoqchi bo'lsangiz yoki o'chirmoqchi bo'lsangiz, ro'yxatdan o'tmoqchi bo'lsangiz (foydalanuvchiga matnlarga emas, balki boshqa xabarlarni yuborishga imkon bermang. Xabarlar kelajakda foydalanuvchilarga yana ushbu ruxsatlarni qo'lda berishiga imkon bera olmaydi).\n\n Misollar:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
     
     "IGNORE_LIST_ADD_NOT_ARG":
         "Iltimos, foydalanuvchining identifikatorini/taxallusini joylashtiring.\n\n Misol:\n/add_ignore 1234567890\n/add_ignore @peter",
@@ -93,7 +93,7 @@
         "ID/taxallus muvaffaqiyatli qo'shildi!",
     
     "IGNORE_LIST_REMOVE_NOT_ARG":
-        "Iltimos, foydalanuvchining identifikatorini/taxallusini joylashtiring.\n\n Misol:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+        "Iltimos, foydalanuvchining identifikatorini/taxallusini joylashtiring.\n\nMisol:\n/remove_ignore 1234567890\n/remove_ignore @peter",
     
     "IGNORE_LIST_REMOVE_SUCCESS":
         "ID/taxallus muvaffaqiyatli olib tashlandi!",
@@ -117,13 +117,13 @@
         "CAPTCHA hal qilindi, foydalanuvchi tasdiqlandi.\nGuruhga xush kelibsiz, {}",
     
     "CAPTCHA_INCORRECT_0":
-        "Bu to'g'ri kod emas.Qayta urinib ko'ring...",
+        "Bu to'g'ri kod emas. Qayta urinib ko'ring...",
     
     "CAPTCHA_INCORRECT_1":
-        "Bu to'g'ri raqam emas.Diqqat bilan tekshiring, CAPTCHA 4 raqamiga ega...",
+        "Bu to'g'ri raqam emas. Diqqat bilan tekshiring, CAPTCHA 4 raqamiga ega...",
     
     "CAPTCHA_INCORRECT_MATH":
-        "Bu to'g'ri raqam emas.Diqqat bilan tekshiring, siz matematik tenglamani hal qilishingiz kerak...",
+        "Bu to'g'ri raqam emas. Diqqat bilan tekshiring, siz matematik tenglamani hal qilishingiz kerak...",
     
     "NEW_USER_KICK":
         "{} CAPTCHAni hal qilmaslik. \"User\" boshlandi.",
@@ -141,25 +141,25 @@
         "Men ushbu xabarni o'chirishga harakat qildim, lekin menda yuborilmagan xabarlarni o'chirish huquqi yo'q.",
     
     "NEW_USER_BAN":
-        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User\" taqiqlangan.Unga yana kirishga ruxsat berish uchun admin guruh sozlamalaridan ushbu \"User\" ning cheklovlarini qo'lda olib tashlashi kerak.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi. Men \"User\" taqiqlangan.Unga yana kirishga ruxsat berish uchun admin guruh sozlamalaridan ushbu \"User\" ning cheklovlarini qo'lda olib tashlashi kerak.",
     
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, lekin foydalanuvchi  guruhda emas (guruhni tark etdi yoki admini taqiqlagan ).",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi. Men \"User\" ni taqiqlashga harakat qildim, lekin foydalanuvchi  guruhda emas (guruhni tark etdi yoki admini taqiqlagan ).",
     
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, lekin menda guruhda foydalanuvchilarni taqiqlash huquqi yo'q.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi. Men \"User\" ni taqiqlashga harakat qildim, lekin menda guruhda foydalanuvchilarni taqiqlash huquqi yo'q.",
     
     "BOT_CANT_BAN":
-        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi.Men \"User \" ni taqiqlashga harakat qildim, ammo kutilmagan muammo tufayli (ehtimol tarmoq/server bilan bog'liq) men buni qila olmayman.",
+        "Ogohlantirish: Foydalanuvchi {} {} marta captcha ni hal qila olmadi. Men \"User\" ni taqiqlashga harakat qildim, ammo kutilmagan muammo tufayli (ehtimol tarmoq/server bilan bog'liq) men buni qila olmayman.",
     
     "SPAM_DETECTED_RM":
-        "{} dan URL (yoki taxallus) bilan xabar aniqlandi.Telegram bo'shlig'ini saqlash uchun xabar o'chirildi :)",
+        "{} dan URL (yoki taxallus) bilan xabar aniqlandi. Telegram bo'shlig'ini saqlash uchun xabar o'chirildi :)",
     
     "SPAM_DETECTED_NOT_RM":
-        "URL (yoki taxallus) bilan xabar hali CAPTCHA-ni hal qilmagan {} dan aniqlangan.Men spam xabarini olib tashlashga harakat qildim, lekin menda yuborilmagan xabarlarni o'chirish huquqi yo'q.",
+        "URL (yoki taxallus) bilan xabar hali CAPTCHA-ni hal qilmagan {} dan aniqlangan. Men spam xabarini olib tashlashga harakat qildim, lekin menda yuborilmagan xabarlarni o'chirish huquqi yo'q.",
     
     "NOT_TEXT_MSG_ALLOWED":
-        "{} dan matnli boʻlmagan xabar (rasm, audio, fayl...) olib tashlandi, chunki CAPTCHA-ni hal qilganingizdan so'ng, matnsiz xabarlarni yuborishi mumkin. \n \n siz CAPTCHA-ni hal qilganingizdan so'ng.",
+        "{} dan matnli boʻlmagan xabar (rasm, audio, fayl...) olib tashlandi, chunki CAPTCHA-ni hal qilganingizdan so'ng, matnsiz xabarlarni yuborishi mumkin.\n\nsiz CAPTCHA-ni hal qilganingizdan so'ng.",
     
     "RM_SOLVE_KICK_MSG":
         "Configure if solve and kick/ban messages should be automatically removed after a while.\n\n Misollar:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
@@ -171,7 +171,7 @@
         "Konfiguratsiya o'zgarishi, hal qilish va boshdan kechirish / taqiqlarni olib tashlamaydi.",
     
     "RM_WELCOME_MSG":
-        "Agar muborak xabarlar bir muncha vaqt o'tgach avtomatik ravishda o'chirilishi kerak bo'lsa sozlang.\n\n Misollar:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+        "Agar muborak xabarlar bir muncha vaqt o'tgach avtomatik ravishda o'chirilishi kerak bo'lsa sozlang.\n\nMisollar:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
     
     "RM_WELCOME_MSG_YES":
         "Konfiguratsiya o'zgarishi, bir muncha vaqt o'tgach, Welcome xabarlari avtomatik ravishda o'chiriladi.",
@@ -186,13 +186,13 @@
         "Men bot emasman",
     
     "URL_MSG_NOT_ALLOWED_DETECTED":
-        "{} Manzilini o'z ichiga olgan xabarni aniqlaydi va o'chirib tashlaydi. {\n \n  Guruh xabarlarda URL manzillariga ruxsat bermaydi (admin Bot-ni xabarlarga yuborish uchun Botni konfiguratsiya qilish kerak).",
+        "{} Manzilini o'z ichiga olgan xabarni aniqlaydi va o'chirib tashlaydi.\n\n  Guruh xabarlarda URL manzillariga ruxsat bermaydi (admin Bot-ni xabarlarga yuborish uchun Botni konfiguratsiya qilish kerak).",
     
     "URL_ENABLE":
-        "Ok, endi foydalanuvchilar ushbu guruhda havolalarni yuborishlari mumkin.URL manzillarini yana yuborishlarini rad eting /url_disable .",
+        "Ok, endi foydalanuvchilar ushbu guruhda havolalarni yuborishlari mumkin. URL manzillarini yana yuborishlarini rad eting /url_disable .",
     
     "URL_DISABLE":
-        "Ok, endi foydalanuvchilar ushbu guruhda havolalarni yuborishlari mumkin emas.URL-ni yana yuborishlariga ruxsat bering /url_enable.",
+        "Ok, endi foydalanuvchilar ushbu guruhda havolalarni yuborishlari mumkin emas. URL-ni yana yuborishlariga ruxsat bering /url_enable.",
     
     "CONFIG_ALREADY_SET":
         "Ushbu konfiguratsiya allaqachon set/enabled.",
@@ -201,10 +201,10 @@
         "Ushbu konfiguratsiya allaqachon unset/disabled.",
     
     "ENABLE":
-        "CAPTCHA himoyasi yoqilgan.Bu buyruq bilan uni o'chiring /disable.",
+        "CAPTCHA himoyasi yoqilgan. Bu buyruq bilan uni o'chiring /disable.",
     
     "DISABLE":
-        "CAPTCHA himoyasi o'chirilgan.Bu buyruq bilan uni yoqing /enable.",
+        "CAPTCHA himoyasi o'chirilgan. Bu buyruq bilan uni yoqing /enable.",
     
     "ALREADY_ENABLE":
         "CAPTCHA himoyasi allaqachon yoqilgan.",
@@ -222,10 +222,10 @@
         "Ushbu bot bepul dasturiy ta'minot va GNU-GPL litsenziyasi ostida ochiq.\nBot  ishlab chiqilgan: {} tomonidan.\n\nSiz bu yerda kodni tekshirishingiz mumkin:\n{}\n\nMening ishim sizga yoqadimi?Menga qahva sotib oling:\n{}",
     
     "POLL_NEW_USER":
-        "Salom {}, Xush kelibsiz {} ga. Iltimos, robot emasligingizni isbotlash uchun quyidagi so'rovnomani hal qiling.Agar buni qilmasangiz {}, Siz avtomatik ravishda guruhdan chiqarib yuborilasiz.",
+        "Salom {}, Xush kelibsiz {} ga. Iltimos, robot emasligingizni isbotlash uchun quyidagi so'rovnomani hal qiling. Agar buni qilmasangiz {}, Siz avtomatik ravishda guruhdan chiqarib yuborilasiz.",
     
     "CAPTCHA_POLL_FAIL":
-        "CAPTCHA so'rovi muvaffaqiyatsiz, {} noto'g'ri javobni tanladiz.Iltimos, guruhga yana qo'shilishga harakat qiling...",
+        "CAPTCHA so'rovi muvaffaqiyatsiz, {} noto'g'ri javobni tanladiz. Iltimos, guruhga yana qo'shilishga harakat qiling...",
     
     "CAPTCHA_POLL_USAGE":
         "CAPTCHA so'rovi va variantlarini sozlash\n————————————————\nSavol matni {} belgilardan kattaroq bo'lolmaydi.\n\nVariantlar matni {} belgilardan kattaroq bo'lishi mumkin emas.\n\nMaksimal variantlar soni {}.\n————————————————\nOvoz berish savolini o'rnating:\n/captcha_poll question Ushbu guruhga kirishni xohlaganingizga ishonchingiz komilmi??\n\nOvoz variantini o'rnating 1:\n/captcha_poll option 1 Yo'q, men guruhga kirishni xohlamayman.\n\nOvoz variantini o'rnating 2:\n/captcha_poll option 2 Albatta, men insonman va guruhga kirishni xohlayman.\n\nOvoz variantini o'rnating 3:\n/captcha_poll option 3 Men kimman va nima qilyapman?\n\nOvoz berish opsiyasini olib tashlang 2:\n/captcha_poll option 2 remove\n\nOgohlantirish variantini o'rnating 2:\n/captcha_poll correct_option 2\n\nCAPTCHA-ni so'rov rejimiga o'zgartiring:\n/captcha_mode poll",
@@ -243,7 +243,7 @@
         "Ovoz berish opsiyasi raqami {} mavjud emas, avval variantni sozlang.\n\n Misol:\n/captcha_poll question  1+2  teng 5 ga?\n\n/captcha_poll option 1 Ha\n\n/captcha_poll option 2 Yo'q\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
     
     "POLL_NEW_USER_NOT_CONFIG":
-        "Yangi foydalanuvchi keldi, ammo CAPTCHA so'rovi mutlaqo sozlanmagan.\n\nSo'rovnomaning savollari, so'rovni to'g'ri javob va minimal 2 javob variantlari sozlanishi kerak.Iltimos, sozlang /captcha_poll .\n\n Misol:\n/captcha_poll question 1 + 2 ga teng?\n\n/captcha_poll option 1 Ha\n\n/captcha_poll option 2 Yo'q\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "Yangi foydalanuvchi keldi, ammo CAPTCHA so'rovi mutlaqo sozlanmagan.\n\nSo'rovnomaning savollari, so'rovni to'g'ri javob va minimal 2 javob variantlari sozlanishi kerak. Iltimos, sozlang /captcha_poll .\n\n Misol:\n/captcha_poll question 1 + 2 ga teng?\n\n/captcha_poll option 1 Ha\n\n/captcha_poll option 2 Yo'q\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
     
     "CONNECT_USAGE":
         "Siz sozlamoqchi bo'lgan guruh chat identifikatorini belgilashingiz kerak (guruh ichidagi /chatid buyrug'idan foydalaning).\n\n Na'muna:\n/connect -1234567890",
@@ -252,7 +252,7 @@
         "Shunchaki ushbu guruhning boshqarilishi mumkin.",
     
     "CONNECT_OK":
-        "Guruhga ulangan {}.Endi siz shaxsiy CAPTCHA sozlamalarini shaxsiy sozlashingiz mumkin.",
+        "Guruhga ulangan {}. Endi siz shaxsiy CAPTCHA sozlamalarini shaxsiy sozlashingiz mumkin.",
     
     "DISCONNECT_NOT_CONNECTED":
         "Siz ulanmagansiz.",
