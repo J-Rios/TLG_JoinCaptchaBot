@@ -3758,11 +3758,13 @@ def tlg_app_run(app: Application) -> None:
     else:
         logger.info("Setup Bot for Webhook.")
         app.run_webhook(
-            drop_pending_updates=True, listen="0.0.0.0",
-            port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
-            key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
-            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:'
-                        f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
+            webhook_url=CONST["WEBHOOK_HOST"],
+            port=CONST["WEBHOOK_PORT"],
+            key=CONST["WEBHOOK_CERT_PRIV_KEY"],
+            cert=CONST["WEBHOOK_CERT"],
+            secret_token=CONST["WEBHOOK_SECRET_TOKEN"],
+            listen="0.0.0.0",
+            drop_pending_updates=True,
             allowed_updates=Update.ALL_TYPES
         )
     logger.info("Bot Application Finished")

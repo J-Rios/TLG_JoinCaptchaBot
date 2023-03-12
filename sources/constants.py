@@ -67,6 +67,12 @@ CONST = {
         os_getenv("CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY", \
             SETTINGS["CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY"]),
 
+    # Bot Webhook Secret Token to verify request from Telegram Server
+    # (don't use the Bot Token, for security reason it must be other)
+    "WEBHOOK_SECRET_TOKEN": \
+        os_getenv("CAPTCHABOT_WEBHOOK_SECRET_TOKEN", \
+            SETTINGS["CAPTCHABOT_WEBHOOK_SECRET_TOKEN"]),
+
     # Chats directory path
     "CHATS_DIR": \
         os_getenv("CAPTCHABOT_CHATS_DIR", SETTINGS["CAPTCHABOT_CHATS_DIR"]),
