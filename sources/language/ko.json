@@ -18,37 +18,37 @@
         "이미 그 언어를 쓰고 있습니다.\n\n지원되는 언어:\n{}",
 
     "LANG_BAD_LANG":
-        "지원되지 않는 언어입니다.\n\n지원되는 언어 목록:\n{}",
+        "지원하지 않는 언어입니다.\n\n지원되는 언어:\n{}",
 
     "LANG_NOT_ARG":
-        "설정할 언어를 입력해주세요.\n\n예시:\n{}",
+        "설정할 언어를 입력해주세요.\n\n보기:\n{}",
 
     "TIME_CHANGE":
-        "캡차 입력 가능 시간이 {} 변경되었습니다.",
+        "{} 동안 캡차를 입력할 수 있도록 바뀌었습니다.",
 
     "WELCOME_TIME_CHANGE":
-        "Time to delete welcome message successfully changed to {}.",
+        "{} 뒤 환영 쪽지를 지우도록 바뀌었습니다.",
 
     "TIME_OUT_RANGE":
-        "Invalid time, it needs to be in range 10 sec to {} min.",
+        "10초에서 {}분 사이의 시간을 넣어야 합니다.",
 
     "TIME_NOT_NUM":
-        "시간은 숫자로만 입력해주세요.",
+        "시간은 숫자로만 넣어 주십시오.",
 
     "TIME_NOT_ARG":
-        "시간 입력.\n\n예시:\n/time 30 sec\n/time 5 min\n/time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
-        "캡차 난이도가 {}으로 변경되었습니다.",
+        "캡차 난이도가 {}(으)로 바뀌었습니다.",
 
     "DIFFICULTY_NOT_NUM":
-        "캡차 난이도는 숫자로 설정하셔야 합니다.",
+        "캡차 난이도는 숫자로 넣어야 합니다.",
 
     "DIFFICULTY_NOT_ARG":
-        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "난이도는 1부터 5 사이 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n보기:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "캡차 모드가 \"{}\"로 변경되었습니다.",
@@ -63,10 +63,10 @@
         "환영 메시지가 설정되었습니다.",
 
     "WELCOME_MSG_UNSET":
-        "환영 메시지가 비활성화되었습니다.",
+        "환영 메시지가 해제되었습니다.",
 
     "WELCOME_MSG_SET_NOT_ARG":
-        "명령어 뒤에 환영 메시지를 입력해주세요.\n\nExample:\n/welcome_msg $user 님 안녕하세요. 채널 방문을 환영합니다. 상대방을 배려하는 채팅 매너는 필수입니다.\n\n환영 메시지 비활성화:\n/welcome_msg disable",
+        "명령어 뒤에 환영 메시지를 입력해주세요.\n\n보기:\n/welcome_msg $user 님 안녕하세요. 그룹에 오신 것을 환영하며 다른 사용자를 배려하고 존중해 주십시오.\n\n환영 메시지 비활성화:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
         "신규 사용자는 텍스트 메시지 이외는 입력할 수 없게 설정되었습니다. 최근에 가입한 사용자가 텍스트 이외의 메시지를 입력하면 삭제할 것입니다.",
