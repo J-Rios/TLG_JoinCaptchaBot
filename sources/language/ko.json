@@ -36,19 +36,19 @@
         "시간은 숫자로만 입력해주세요.",
 
     "TIME_NOT_ARG":
-        "시간 입력.\n\n예시:\n/time 30 sec\n/time 5 min\n/time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
-        "캡차 난이도가 {}으로 변경되었습니다.",
+        "캡차 난이도가 {}(으)로 바뀌었습니다.",
 
     "DIFFICULTY_NOT_NUM":
         "캡차 난이도는 숫자로 설정하셔야 합니다.",
 
     "DIFFICULTY_NOT_ARG":
-        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드는 제외.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "캡차 모드가 \"{}\"로 변경되었습니다.",
