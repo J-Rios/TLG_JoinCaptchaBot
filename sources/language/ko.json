@@ -48,7 +48,7 @@
         "캡차 난이도는 숫자로 넣어야 합니다.",
 
     "DIFFICULTY_NOT_ARG":
-        "난이도는 1부터 5 사이 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n보기:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드는 제외.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "캡차 모드가 \"{}\"로 변경되었습니다.",
