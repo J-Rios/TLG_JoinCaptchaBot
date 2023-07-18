@@ -240,44 +240,44 @@
         "객관식 문제 풀기 캡차의 정답은 보기 {} 번으로 설정되었습니다.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "정답으로 설정한 {} 번 항목은 존재하지 않습니다. 객관식 답안을 먼저 설정해주세요.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "설정한 보기 답안에는 {}번 항목이 없습니다. 먼저 객관식 답안을 구성하십시오.\n\n보기:\n/captcha_poll question 1+2는 5입니까?\n\n/captcha_poll option 1 예\n\n/captcha_poll option 2 아니오\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "신규 사용자가 입장했는데 객관식 문제 풀기 캡차가 제대로 설정되지 않아 캡차가 정상적으로 동작하지 않고 있습니다. \n\n객관식 질문과 함께 보기 문항은 최소 2개 이상으로 구성해주시고 정답을 설정해주시길 바랍니다. /captcha_poll 명령어로 설정하실 수 있습니다.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "새 사용자가 들어왔지만 객관식 캡차가 알맞게 구성되지 않아 제대로 작동하지 않았습니다.\n\n객관식 질문과 함께 보기 문항은 정답을 포함 적어도 2개 이상으로 구성해야 합니다. /captcha_poll 명령어로 설정하세요.\n\n보기:\n/captcha_poll question 1+2는 5입니까?\n\n/captcha_poll option 1 예\n\n/captcha_poll option 2 아니오\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "구성하려는 그룹 채팅 ID를 지정해야 합니다(그룹 안에서 /chatid 명령어로 알 수 있음).\n\보기:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "해당 그룹의 관리자만 구성할 수 있습니다.",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "{} 그룹에 연결되었습니다. 이제 비공개에서 그룹 캡차 설정을 구성할 수 있습니다.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "연결되지 않았습니다.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "{} 그룹으로부터 끊어졌습니다.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "그룹 채팅 ID가 잘못되었습니다.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "그룹 구성:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat.",
+        "이 명령은 비공개 채팅에서는 사용할 수 없습니다.",
 
     "CMD_NEEDS_CONNECTION":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "이 명령은 일부 그룹을 구성하기 위해 연결(/connect)하지 않는 한 비공개 채팅에서 사용할 수 없습니다.",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat).",
+        "이 명령은 그룹 내부에서는 사용할 수 없습니다(비공개 봇 채팅에서 사용).",
 
     "RM_ALL_MSGS_AFTER_KICK_ON":
-        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+        "구성을 바꾸면 캡차를 풀지 않은 사용자가 보낸 모든 메시지를 지웁니다.",
 
     "RM_ALL_MSGS_AFTER_KICK_OFF":
-        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed."
+        "구성이 바꾸어도 캡차를 풀지 않은 사용자가 보낸 메시지는 지우지 않습니다."
 }
