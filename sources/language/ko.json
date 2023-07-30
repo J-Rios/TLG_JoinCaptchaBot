@@ -246,7 +246,7 @@
         "새 사용자가 들어왔지만 객관식 캡차가 알맞게 구성되지 않아 제대로 작동하지 않았습니다.\n\n객관식 질문과 함께 보기 문항은 정답을 포함 적어도 2개 이상으로 구성해야 합니다. /captcha_poll 명령어로 설정하세요.\n\n보기:\n/captcha_poll question 1+2는 5입니까?\n\n/captcha_poll option 1 예\n\n/captcha_poll option 2 아니오\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "구성하려는 그룹 채팅 ID를 지정해야 합니다(그룹 안에서 /chatid 명령어로 알 수 있음).\n\보기:\n/connect -1234567890",
+        "구성하려는 그룹 채팅 ID를 지정해야 합니다(그룹 안에서 /chatid 명령어로 알 수 있음).\n\n보기:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
         "해당 그룹의 관리자만 구성할 수 있습니다.",
