@@ -276,8 +276,8 @@
         "This command can't be used inside a group (use it in private Bot chat).",
 
     "RM_ALL_MSGS_AFTER_KICK_ON":
-        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+        "구성을 바꾸면 캡차를 풀지 않은 사용자가 보낸 모든 메시지를 지웁니다.",
 
     "RM_ALL_MSGS_AFTER_KICK_OFF":
-        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed."
+        "구성이 바꾸어도 캡차를 풀지 않은 사용자가 보낸 메시지는 지우지 않습니다."
 }
