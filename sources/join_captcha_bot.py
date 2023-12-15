@@ -1327,16 +1327,24 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
         has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+        # Time check in x.xx or xx.xx or x.x format
+        excluded_values = [f"{hour:02d}.{minute:02d}" for hour in range(24) for minute in range(60)]
+        excluded_values += [f"{hour:02d}.{minute:02d}" for hour in range(7, 24) for minute in range(0, 60, 30)]
+        excluded_values += [f"{hour:02d}.{minute:02d}" for hour in range(7, 24) for minute in range(0, 60, 30)]
+        excluded_values += [f"{hour:01d}.{minute:02d}" for hour in range(24) for minute in range(60)]
+        excluded_values += [f"{hour:01d}.{minute:02d}" for hour in range(7, 24) for minute in range(0, 60, 30)]
+        excluded_values += [f"{hour:01d}.{minute:01d}" for hour in range(24) for minute in range(60)]
+        excluded_values += [f"{hour:01d}.{minute:01d}" for hour in range(7, 24) for minute in range(0, 60, 30)]
+        excluded_values_set = set(excluded_values)
         if has_url:
             # Try to remove the message and notify detection
-            delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
-            if delete_result["error"] == "":
-                bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(
-                        user_name)
-                await tlg_send_autodelete_msg(
-                        bot, chat_id, bot_msg,
-                        CONST["T_FAST_DEL_MSG"],
-                        topic_id=topic_id)
+            has_excluded_values = any(excluded_value in msg_text for excluded_value in excluded_values_set)
+            if not has_excluded_values:
+                # Try to remove the message and notify detection
+                delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
+                if delete_result["error"] == "":
+                    bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(user_name)                
+                    await tlg_send_autodelete_msg(bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
     # Ignore if message is not from a new user that has not completed
     # the captcha yet
     if chat_id not in Global.new_users:
