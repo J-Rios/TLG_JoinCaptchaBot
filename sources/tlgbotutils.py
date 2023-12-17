@@ -616,20 +616,34 @@ def tlg_get_user_name(user: User, truncate_name_len: int = 0):
     return user_name
 
 
-def tlg_has_new_member_join_group(chat_member: ChatMemberUpdated):
+def tlg_member_has_join_group(chat_member: ChatMemberUpdated):
     '''
     Check chat members status changes and detect if the provided member
     has join the current group.
     '''
-    # Check members changes
     result = tlg_extract_members_status_change(chat_member)
     if result is None:
         return False
     was_member, is_member = result
-    # Check if it is a new member join
     if was_member:
         return False
     if not is_member:
+        return False
+    return True
+
+
+def tlg_member_has_left_group(chat_member: ChatMemberUpdated):
+    '''
+    Check chat members status changes and detect if the provided member
+    has join the current group.
+    '''
+    result = tlg_extract_members_status_change(chat_member)
+    if result is None:
+        return False
+    was_member, is_member = result
+    if not was_member:
+        return False
+    if is_member:
         return False
     return True
 

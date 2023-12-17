@@ -107,7 +107,7 @@ from tlgbotutils import (
     tlg_restrict_user, tlg_unrestrict_user, tlg_is_valid_user_id_or_alias,
     tlg_is_valid_group, tlg_alias_in_string, tlg_extract_members_status_change,
     tlg_get_msg, tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
-    tlg_has_new_member_join_group, tlg_get_msg_topic
+    tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic
 )
 
 # Commons Library
@@ -873,11 +873,16 @@ async def chat_bot_status_change(
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat.id, "Language", admin_language)
             # Get and save chat data
+            chat_link = "Unknown"
             if chat.title:
                 save_config_property(chat.id, "Title", chat.title)
+                chat_link = chat.title
             if chat.username:
                 chat_link = f"@{chat.username}"
                 save_config_property(chat.id, "Link", chat_link)
+            logger.info(
+                "[%s] Bot added to group %s by %s (%s)",
+                chat.id, chat_link, caused_by_user.username, caused_by_user.id)
             # Check if Group is not allowed to be used by the Bot
             if not await allowed_in_this_group(bot, chat, caused_by_user):
                 await tlg_leave_chat(bot, chat.id)
@@ -899,7 +904,7 @@ async def chat_bot_status_change(
     # Bot added to channel
     if not was_member and is_member:
         # Leave it (Bot don't allowed to be used in Channels)
-        logger.info("Bot try to be added to a channel")
+        logger.info("Bot added to channel, leaving")
         await tlg_send_msg(bot, chat.id, CONST["BOT_LEAVE_CHANNEL"])
         await tlg_leave_chat(bot, chat.id)
         return
@@ -917,9 +922,6 @@ async def chat_member_status_change(
     "chat_member" update won't be received.
     '''
     bot = context.bot
-    # Ignore if it is not a new member join
-    if not tlg_has_new_member_join_group(update.chat_member):
-        return
     # Get Chat data
     chat = update.chat_member.chat
     join_user = update.chat_member.new_chat_member.user
@@ -927,6 +929,14 @@ async def chat_member_status_change(
     # Get User ID and Name
     join_user_id = join_user.id
     join_user_name = tlg_get_user_name(join_user, 35)
+    # Ignore if it is not a new member join
+    if not tlg_member_has_join_group(update.chat_member):
+        # Remove "TheJoinCaptchaBot removed USER" message
+        if tlg_member_has_left_group(update.chat_member):
+            logger.info(
+                "[%s] User %s (%s) left the group",
+                chat.id, join_user_name, join_user_id)
+        return
     logger.info(
             "[%s] New join detected: %s (%s)",
             chat_id, join_user_name, join_user_id)
@@ -1195,6 +1205,36 @@ async def user_joined_group_msg_rx(
         # If user has join the group, add the "USER joined the group"
         # message ID to new user data to be removed
         Global.new_users[chat_id][join_user.id]["join_msg"] = msg_id
+
+
+async def user_left_group(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+        ):
+    '''
+    Member left a group or was removed event handler.
+    This handler is trigger when a "USER left group" or
+    "BOT removed USER" message is received in a chat.
+    '''
+    bot = context.bot
+    # Get message data
+    chat_id = None
+    update_msg = tlg_get_msg(update)
+    if update_msg is not None:
+        chat_id = getattr(update_msg, "chat_id", None)
+    if (update_msg is None) or (chat_id is None):
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
+        return
+    msg_id = getattr(update_msg, "message_id", None)
+    if msg_id is None:
+        return
+    if update_msg.from_user.id == bot.id:
+        logger.info(
+            "[%s] Delete \"%s removed %s\" msg",
+            chat_id, update_msg.from_user.username,
+            update_msg.left_chat_member.username)
+        await tlg_delete_msg(bot, chat_id, msg_id)
 
 
 async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3730,6 +3770,14 @@ def tlg_app_setup(token: str) -> Application:
             MessageHandler(
                     filters.StatusUpdate.NEW_CHAT_MEMBERS,
                     user_joined_group_msg_rx
+            )
+    )
+    # Set to application "USER left the group" or "BOT removed USER"
+    # messages event handlers
+    app.add_handler(
+            MessageHandler(
+                    filters.StatusUpdate.LEFT_CHAT_MEMBER,
+                    user_left_group
             )
     )
     # Set to application inline keyboard callback handler for new captcha
