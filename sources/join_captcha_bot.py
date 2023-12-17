@@ -464,6 +464,13 @@ def load_urls_regex(file_path):
         logger.error(format_exc())
         logger.error("Fail to open file \"%s\"", file_path)
     if len(list_file_lines) > 0:
+        # Remove last '|' from TLDs list item
+        num_tlds = len(list_file_lines)
+        last_tld = list_file_lines[num_tlds-1]
+        if last_tld[-1] == '|':
+            last_tld = last_tld[:-1]
+            list_file_lines[num_tlds-1] = last_tld
+        # Add all TLDs substring to the URL Regex
         tlds_str = "".join(list_file_lines)
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
 
