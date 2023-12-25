@@ -728,6 +728,38 @@ async def should_manage_captcha(update, bot):
     return True
 
 
+async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
+    '''Restrict an user in order to deny it send any kind of message.'''
+    restrict_success = await tlg_restrict_user(bot, chat_id, user_id,
+        send_msg=False,
+        send_media=False,
+        send_polls=False,
+        send_stickers_gifs=False,
+        insert_links=False,
+        change_group_info=False,
+        invite_members=False,
+        pin_messages=False,
+        manage_topics=False,
+        until_date=until_date)
+    return restrict_success
+
+
+async def restrict_user_media(bot, chat_id, user_id, until_date=None):
+    '''Restrict an user in order to deny it send media messages.'''
+    restrict_success = await tlg_restrict_user(bot, chat_id, user_id,
+        send_msg=True,
+        send_media=False,
+        send_polls=False,
+        send_stickers_gifs=False,
+        insert_links=False,
+        change_group_info=False,
+        invite_members=False,
+        pin_messages=False,
+        manage_topics=False,
+        until_date=until_date)
+    return restrict_success
+
+
 async def captcha_fail_member(bot, chat_id, user_id, max_join_retries):
     '''
     Kick/Ban a new member that has fail to solve the captcha.
@@ -1150,20 +1182,9 @@ async def chat_member_status_change(
         # is solve. Allow send text messages for image based captchas
         # that requires it
         if captcha_mode in ["poll", "button"]:
-            await tlg_restrict_user(
-                    bot, chat_id, join_user_id, send_msg=False,
-                    send_media=False, send_stickers_gifs=False,
-                    insert_links=False, send_polls=False, invite_members=False,
-                    pin_messages=False, change_group_info=False,
-                    manage_topics=False)
-        else:
-            # Restrict user to only allow send text messages
-            await tlg_restrict_user(
-                    bot, chat_id, join_user_id, send_msg=True,
-                    send_media=False, send_stickers_gifs=False,
-                    insert_links=False, send_polls=False, invite_members=False,
-                    pin_messages=False, change_group_info=False,
-                    manage_topics=False)
+            await restrict_user_mute(bot, chat_id, join_user_id)
+        else: # Restrict user to only allow send text messages
+            await restrict_user_media(bot, chat_id, join_user_id)
         logger.info("[%s] Captcha send process completed.", chat_id)
         logger.info("")
 
@@ -1479,19 +1500,10 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Restrict for 1 day
         if restrict_non_text_msgs == 1:
             tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=False,
-                    until_date=tomorrow_epoch)
+            await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
         # Restrict forever
         elif restrict_non_text_msgs == 2:
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=False)
+            await restrict_user_media(bot, chat_id, user_id)
     # The provided message doesn't has the valid captcha number
     else:
         # Check if the message is for a math equation captcha
@@ -1611,18 +1623,9 @@ async def poll_answer_rx(
         # restrictions
         if restrict_non_text_msgs == 1:  # Restrict for 1 day
             tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False,  manage_topics=False,
-                    until_date=tomorrow_epoch)
+            await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
         elif restrict_non_text_msgs == 2:  # Restrict forever
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=False)
+            await restrict_user_media(bot, chat_id, user_id)
     else:
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
@@ -1816,19 +1819,10 @@ async def button_im_not_a_bot_press(bot, query):
     # Restrict for 1 day
     if restrict_non_text_msgs == 1:
         tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-        await tlg_restrict_user(
-                bot, chat_id, user_id, send_msg=True, send_media=False,
-                send_stickers_gifs=False, insert_links=False, send_polls=False,
-                invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=False,
-                until_date=tomorrow_epoch)
+        await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
     # Restrict forever
     elif restrict_non_text_msgs == 2:
-        await tlg_restrict_user(
-                bot, chat_id, user_id, send_msg=True, send_media=False,
-                send_stickers_gifs=False, insert_links=False, send_polls=False,
-                invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=False)
+        await restrict_user_media(bot, chat_id, user_id)
     logger.info("[%s] Button-only challenge process completed.", chat_id)
     logger.info("")
 
