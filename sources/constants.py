@@ -387,5 +387,16 @@ CMD = {
         "KEY": "captcha_mode",
         "ARGV": [ "poll", "button", "nums", "hex", "ascii", "math",
                  "random" ]
+    },
+
+    "RESTRICTION": {
+        "KEY": "restriction",
+        "ARGV": ["kick", "ban", "mute", "media", "mute24h", "media24h"],
+        "KICK": "kick",
+        "BAN": "ban",
+        "MUTE": "mute",
+        "MUTE24H": "mute24h",
+        "MEDIA": "media",
+        "MEDIA24H": "media24h"
     }
 }

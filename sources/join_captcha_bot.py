@@ -182,6 +182,7 @@ def get_default_config_data():
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
+        ("Fail_Restriction", CMD["RESTRICTION"]["KICK"]),
         ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
         ("Rm_Result_Msg", CONST["INIT_RM_RESULT_MSG"]),
         ("Rm_Welcome_Msg", CONST["INIT_RM_WELCOME_MSG"]),
@@ -1955,7 +1956,7 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check for group chat ID
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["CONNECT_USAGE"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2102,7 +2103,7 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         msg_text = TEXT[lang]["LANG_NOT_ARG"].format(
                 CONST["SUPPORTED_LANGS_CMDS"])
         await tlg_send_msg_type_chat(
@@ -2162,7 +2163,7 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2248,7 +2249,7 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["DIFFICULTY_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2301,7 +2302,7 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2314,6 +2315,66 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
         bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
+    await tlg_send_msg_type_chat(
+            bot, chat_type, chat_id, bot_msg,
+            topic_id=tlg_get_msg_topic(update_msg))
+
+
+async def cmd_restriction(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+        ):
+    '''
+    Command /restriction message handler.
+    To configure type of restriction to apply on users that fails the
+    captcha in a group.
+    '''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        if user_id not in Global.connections:
+            await tlg_send_msg_type_chat(
+                    bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = Global.connections[user_id]["group_id"]
+    else:
+        # Remove command message automatically after a while
+        tlg_autodelete_msg(update_msg)
+        # Ignore if not requested by a group Admin
+        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
+        if (is_admin is None) or (is_admin is False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+    # Check if no argument was provided with the command
+    if (args is None) or (len(args) == 0):
+        msg_text = "{}\n\n{}".format(
+            TEXT[lang]["CMD_RESTRICTION_NOT_ARG"],
+            TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
+        await tlg_send_msg_type_chat(
+                bot, chat_type, chat_id, msg_text,
+                topic_id=tlg_get_msg_topic(update_msg))
+        return
+    # Get and configure chat to provided restriction
+    restriction_type = args[0].lower()
+    if (restriction_type in CMD["RESTRICTION"]["ARGV"]):
+        save_config_property(group_id, "Fail_Restriction", restriction_type)
+        bot_msg = TEXT[lang]["CMD_RESTRICTION_CHANGE"].format(restriction_type)
+    else:
+        bot_msg = "{}\n\n{}".format(
+            TEXT[lang]["CMD_INVALID_PARAMETER"],
+            TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
     await tlg_send_msg_type_chat(
             bot, chat_type, chat_id, bot_msg,
             topic_id=tlg_get_msg_topic(update_msg))
@@ -2352,7 +2413,7 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2412,7 +2473,7 @@ async def cmd_welcome_msg_time(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2644,7 +2705,7 @@ async def cmd_restrict_non_text(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
@@ -2710,7 +2771,7 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2772,7 +2833,7 @@ async def cmd_remove_ignore(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"],
@@ -2870,7 +2931,7 @@ async def cmd_remove_solve_kick_msg(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["RM_SOLVE_KICK_MSG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2926,7 +2987,7 @@ async def cmd_remove_welcome_msg(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["RM_WELCOME_MSG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -3363,7 +3424,7 @@ async def cmd_allowuserlist(
                 bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         # Show Actual Global allowed list Users
         l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         bot_msg = "\n".join([str(user) for user in l_white_users])
@@ -3453,7 +3514,7 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         # Show Actual Allowed Groups
         l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
         bot_msg = "\n".join([str(group) for group in l_allowed_groups])
@@ -3692,6 +3753,7 @@ def tlg_app_setup(token: str) -> Application:
     tlg_add_cmd(app, CMD["TIME"]["KEY"], cmd_time)
     tlg_add_cmd(app, CMD["DIFFICULTY"]["KEY"], cmd_difficulty)
     tlg_add_cmd(app, CMD["CAPTCHA_MODE"]["KEY"], cmd_captcha_mode)
+    tlg_add_cmd(app, CMD["RESTRICTION"]["KEY"], cmd_restriction)
     tlg_add_cmd(app, CMD["WELCOME_MSG"]["KEY"], cmd_welcome_msg)
     tlg_add_cmd(app, CMD["WELCOME_MSG_TIME"]["KEY"], cmd_welcome_msg_time)
     tlg_add_cmd(app, CMD["CAPTCHA_POLL"]["KEY"], cmd_captcha_poll)
