@@ -342,6 +342,18 @@ def tlg_autodelete_msg(message, time_delete_sec=CONST["T_DEL_MSG"]):
     return True
 
 
+async def bot_send_msg(bot, chat_id, msg_text, rm_result_msg):
+    '''
+    Send a normal or an auto-delete Telegram message depending of
+    rm_result_msg argument.
+    '''
+    if rm_result_msg:
+        await tlg_send_autodelete_msg(
+                bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+    else:
+        await tlg_send_msg(bot, chat_id, msg_text)
+
+
 ###############################################################################
 # General Functions
 ###############################################################################
@@ -715,8 +727,7 @@ async def should_manage_captcha(update, bot):
     return True
 
 
-async def captcha_fail_kick_ban_member(
-        bot, chat_id, user_id, max_join_retries):
+async def captcha_fail_member(bot, chat_id, user_id, max_join_retries):
     '''
     Kick/Ban a new member that has fail to solve the captcha.
     '''
@@ -740,11 +751,7 @@ async def captcha_fail_kick_ban_member(
             # Kick success
             join_retries = join_retries + 1
             msg_text = TEXT[lang]["NEW_USER_KICK"].format(user_name)
-            if rm_result_msg:
-                await tlg_send_autodelete_msg(
-                        bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-            else:
-                await tlg_send_msg(bot, chat_id, msg_text)
+            await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
         else:
             # Kick fail
             logger.info("[%s] Unable to kick", chat_id)
@@ -753,26 +760,18 @@ async def captcha_fail_kick_ban_member(
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(
                         user_name)
-                if rm_result_msg:
-                    await tlg_send_autodelete_msg(
-                            bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
             elif kick_result["error"] == \
                     "Not enough rights to restrict/unrestrict chat member":
                 # Bot has no privileges to kick
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(
                         user_name)
                 # Send no rights for kick message without auto-remove
-                await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, False)
             else:
                 # For other reason, the Bot can't ban
                 msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                if rm_result_msg:
-                    await tlg_send_autodelete_msg(
-                            bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
     # Ban if user has join "max_join_retries" times without solving
     # the captcha
     else:
@@ -1454,11 +1453,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_delete_msg(bot, chat_id, msg_id)
         # Send message solve message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
+        bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
                 escape_markdown(user_name, 2))
@@ -1595,11 +1590,7 @@ async def poll_answer_rx(
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Send captcha solved message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
+        bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         del Global.new_users[chat_id][user_id]
         # Check for custom welcome message and send it
         if welcome_msg != "-":
@@ -1635,15 +1626,11 @@ async def poll_answer_rx(
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
         bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
+        bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Wait 10s
         await asyncio_sleep(10)
-        # Try to kick the user
-        await captcha_fail_kick_ban_member(
+        # Try to punish the user
+        await captcha_fail_member(
                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN_POLL"])
     logger.info("[%s] Poll captcha process completed.", chat_id)
     logger.info("")
@@ -1803,11 +1790,7 @@ async def button_im_not_a_bot_press(bot, query):
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-    if rm_result_msg:
-        await tlg_send_autodelete_msg(
-                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-    else:
-        await tlg_send_msg(bot, chat_id, bot_msg)
+    bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
     # Check for custom welcome message and send it
     welcome_msg = ""
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
@@ -3629,7 +3612,7 @@ async def captcha_timeout_kick_user(bot):
                         logger.info(
                                 "[%s] Captcha reply timeout for user %s.",
                                 chat_id, user_name)
-                        await captcha_fail_kick_ban_member(
+                        await captcha_fail_member(
                                 bot, chat_id, user_id, CONST["MAX_FAIL_BAN"])
                         await asyncio_sleep(0.01)
                 except Exception:
