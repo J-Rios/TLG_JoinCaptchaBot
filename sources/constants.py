@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/02/2023
+    25/12/2023
 Version:
-    1.29.2
+    1.30.0
 '''
 
 ###############################################################################
@@ -311,7 +311,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.29.2 (18/02/2023)"
+    "VERSION": "1.30.0 (25/12/2023)"
 }
 
 # Supported languages list
@@ -343,4 +343,49 @@ TEXT: dict = {
     "UK": {}, # Ukrainian
     "UZ": {}, # Uzbek
     "ZH_CN": {} # Chinese (Mainland)
+}
+
+# Bot Commands
+CMD = {
+    "START": { "KEY": "start" },
+    "HELP": { "KEY": "help" },
+    "COMMANDS": { "KEY": "commands" },
+    "CHECKCFG": { "KEY": "checkcfg" },
+    "CONNECT": { "KEY": "connect" },
+    "DISCONNECT": { "KEY": "disconnect" },
+    "LANGUAGE": { "KEY": "language" },
+    "DIFFICULTY": { "KEY": "difficulty" },
+    "WELCOME_MSG": { "KEY": "welcome_msg" },
+    "WELCOME_MSG_TIME": { "KEY": "welcome_msg_time" },
+    "CAPTCHA_POLL": { "KEY": "captcha_poll" },
+    "RESTRICT_NON_TEXT": { "KEY": "restrict_non_text" },
+    "ADD_IGNORE": { "KEY": "add_ignore" },
+    "REMOVE_IGNORE": { "KEY": "remove_ignore" },
+    "IGNORE_LIST": { "KEY": "ignore_list" },
+    "REMOVE_SOLVE_KICK_MSG": { "KEY": "remove_solve_kick_msg" },
+    "REMOVE_WELCOME_MSG": { "KEY": "remove_welcome_msg" },
+    "REMOVE_ALL_MSG_KICK_ON": { "KEY": "remove_all_msg_kick_on" },
+    "REMOVE_ALL_MSG_KICK_OFF": { "KEY": "remove_all_msg_kick_off" },
+    "URL_ENABLE": { "KEY": "url_enable" },
+    "URL_DISABLE": { "KEY": "url_disable" },
+    "ENABLE": { "KEY": "enable" },
+    "DISABLE": { "KEY": "disable" },
+    "CHATID": { "KEY": "chatid" },
+    "VERSION": { "KEY": "version" },
+    "ABOUT": { "KEY": "about" },
+    "CAPTCHA": { "KEY": "captcha" },
+    "ALLOWUSERLIST": { "KEY": "allowuserlist" },
+    "ALLOWGROUP": { "KEY": "allowgroup" },
+
+    "TIME": {
+        "KEY": "time",
+        "ARGV": [ "m", "min", "mins", "minutes", "s", "sec", "secs",
+                 "seconds" ]
+    },
+
+    "CAPTCHA_MODE": {
+        "KEY": "captcha_mode",
+        "ARGV": [ "poll", "button", "nums", "hex", "ascii", "math",
+                 "random" ]
+    }
 }

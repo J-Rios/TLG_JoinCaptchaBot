@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/01/2023
+    25/12/2023
 Version:
-    1.29.2
+    1.30.0
 '''
 
 ###############################################################################
@@ -79,8 +79,8 @@ from telegram import (
 
 # Python-Telegram_Bot Extension Library
 from telegram.ext import (
-    Application, CallbackQueryHandler, ChatMemberHandler, CommandHandler,
-    ContextTypes, Defaults, filters, MessageHandler, PollAnswerHandler,
+    Application, CallbackQueryHandler, ChatMemberHandler, ContextTypes,
+    Defaults, filters, MessageHandler, PollAnswerHandler,
 )
 
 # Python-Telegram_Bot Helpers Library
@@ -101,7 +101,7 @@ from telegram.error import (
 
 # Telegram Bot Ease Library
 from tlgbotutils import (
-    tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
+    tlg_add_cmd, tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_unrestrict_user, tlg_is_valid_user_id_or_alias,
@@ -118,7 +118,7 @@ from commons import (
 
 # Constants Library
 from constants import (
-    SCRIPT_PATH, CONST, TEXT
+    SCRIPT_PATH, CONST, TEXT, CMD
 )
 
 # Thread-Safe JSON Library
@@ -3699,46 +3699,42 @@ def tlg_app_setup(token: str) -> Application:
     # Set Telegram errors handler
     app.add_error_handler(tlg_error_callback)
     # Set all expected commands messages handler
-    app.add_handler(CommandHandler("start", cmd_start))
-    app.add_handler(CommandHandler("help", cmd_help))
-    app.add_handler(CommandHandler("commands", cmd_commands))
-    app.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
-    app.add_handler(CommandHandler("connect", cmd_connect))
-    app.add_handler(CommandHandler("disconnect", cmd_disconnect))
-    app.add_handler(CommandHandler("language", cmd_language))
-    app.add_handler(CommandHandler("time", cmd_time))
-    app.add_handler(CommandHandler("difficulty", cmd_difficulty))
-    app.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode))
-    app.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg))
-    app.add_handler(CommandHandler("welcome_msg_time", cmd_welcome_msg_time))
-    app.add_handler(CommandHandler("captcha_poll", cmd_captcha_poll))
-    app.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text))
-    app.add_handler(CommandHandler("add_ignore", cmd_add_ignore))
-    app.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore))
-    app.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
-    app.add_handler(
-        CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg)
-    )
-    app.add_handler(
-            CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg))
-    app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_on", cmd_remove_all_msg_kick_on))
-    app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_off", cmd_remove_all_msg_kick_off))
-    app.add_handler(CommandHandler("url_enable", cmd_url_enable))
-    app.add_handler(CommandHandler("url_disable", cmd_url_disable))
-    app.add_handler(CommandHandler("enable", cmd_enable))
-    app.add_handler(CommandHandler("disable", cmd_disable))
-    app.add_handler(CommandHandler("chatid", cmd_chatid))
-    app.add_handler(CommandHandler("version", cmd_version))
-    app.add_handler(CommandHandler("about", cmd_about))
+    tlg_add_cmd(app, CMD["START"]["KEY"], cmd_start)
+    tlg_add_cmd(app, CMD["HELP"]["KEY"], cmd_help)
+    tlg_add_cmd(app, CMD["COMMANDS"]["KEY"], cmd_commands)
+    tlg_add_cmd(app, CMD["CHECKCFG"]["KEY"], cmd_checkcfg)
+    tlg_add_cmd(app, CMD["CONNECT"]["KEY"], cmd_connect)
+    tlg_add_cmd(app, CMD["DISCONNECT"]["KEY"], cmd_disconnect)
+    tlg_add_cmd(app, CMD["LANGUAGE"]["KEY"], cmd_language)
+    tlg_add_cmd(app, CMD["TIME"]["KEY"], cmd_time)
+    tlg_add_cmd(app, CMD["DIFFICULTY"]["KEY"], cmd_difficulty)
+    tlg_add_cmd(app, CMD["CAPTCHA_MODE"]["KEY"], cmd_captcha_mode)
+    tlg_add_cmd(app, CMD["WELCOME_MSG"]["KEY"], cmd_welcome_msg)
+    tlg_add_cmd(app, CMD["WELCOME_MSG_TIME"]["KEY"], cmd_welcome_msg_time)
+    tlg_add_cmd(app, CMD["CAPTCHA_POLL"]["KEY"], cmd_captcha_poll)
+    tlg_add_cmd(app, CMD["RESTRICT_NON_TEXT"]["KEY"], cmd_restrict_non_text)
+    tlg_add_cmd(app, CMD["ADD_IGNORE"]["KEY"], cmd_add_ignore)
+    tlg_add_cmd(app, CMD["REMOVE_IGNORE"]["KEY"], cmd_remove_ignore)
+    tlg_add_cmd(app, CMD["IGNORE_LIST"]["KEY"], cmd_ignore_list)
+    tlg_add_cmd(app, CMD["REMOVE_WELCOME_MSG"]["KEY"], cmd_remove_welcome_msg)
+    tlg_add_cmd(app, CMD["REMOVE_SOLVE_KICK_MSG"]["KEY"],
+                cmd_remove_solve_kick_msg)
+    tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_ON"]["KEY"],
+                cmd_remove_all_msg_kick_on)
+    tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_OFF"]["KEY"],
+                cmd_remove_all_msg_kick_off)
+    tlg_add_cmd(CMD["URL_ENABLE"]["KEY"], cmd_url_enable)
+    tlg_add_cmd(CMD["URL_DISABLE"]["KEY"], cmd_url_disable)
+    tlg_add_cmd(CMD["ENABLE"]["KEY"], cmd_enable)
+    tlg_add_cmd(CMD["DISABLE"]["KEY"], cmd_disable)
+    tlg_add_cmd(CMD["CHATID"]["KEY"], cmd_chatid)
+    tlg_add_cmd(CMD["VERSION"]["KEY"], cmd_version)
+    tlg_add_cmd(CMD["ABOUT"]["KEY"], cmd_about)
     if CONST["BOT_OWNER"] != "XXXXXXXXX":
-        app.add_handler(CommandHandler("captcha", cmd_captcha))
-        app.add_handler(CommandHandler("allowuserlist", cmd_allowuserlist))
+        tlg_add_cmd(CMD["CAPTCHA"]["KEY"], cmd_captcha)
+        tlg_add_cmd(CMD["ALLOWUSERLIST"]["KEY"], cmd_allowuserlist)
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
-        app.add_handler(CommandHandler("allowgroup", cmd_allowgroup))
+        tlg_add_cmd(CMD["ALLOWGROUP"]["KEY"], cmd_allowgroup)
     # Set to application handler for reception of text messages
     app.add_handler(MessageHandler(filters.TEXT, text_msg_rx, block=False))
     # Set to application not text messages handler

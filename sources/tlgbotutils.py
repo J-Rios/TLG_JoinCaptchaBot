@@ -40,6 +40,11 @@ from telegram import (
     Update, User
 )
 
+# Python-Telegram_Bot Extension Library
+from telegram.ext import (
+    CommandHandler
+)
+
 # Python-Telegram_Bot Errors Library
 from telegram.error import TelegramError
 
@@ -80,6 +85,11 @@ ANONYMOUS_ADMIN_ID = 1087968824
 ###############################################################################
 # Functions
 ###############################################################################
+
+def tlg_add_cmd(app, key, callback):
+    '''Setup a Bot command and bind it to the specified callback.'''
+    app.add_handler(CommandHandler(key, callback))
+
 
 async def tlg_get_chat(
         bot: Bot,
