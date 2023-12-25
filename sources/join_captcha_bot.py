@@ -1155,7 +1155,7 @@ async def chat_member_status_change(
                     send_media=False, send_stickers_gifs=False,
                     insert_links=False, send_polls=False, invite_members=False,
                     pin_messages=False, change_group_info=False,
-                    manage_topics=None)
+                    manage_topics=False)
         else:
             # Restrict user to only allow send text messages
             await tlg_restrict_user(
@@ -1163,7 +1163,7 @@ async def chat_member_status_change(
                     send_media=False, send_stickers_gifs=False,
                     insert_links=False, send_polls=False, invite_members=False,
                     pin_messages=False, change_group_info=False,
-                    manage_topics=None)
+                    manage_topics=False)
         logger.info("[%s] Captcha send process completed.", chat_id)
         logger.info("")
 
@@ -1483,7 +1483,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None,
+                    change_group_info=False, manage_topics=False,
                     until_date=tomorrow_epoch)
         # Restrict forever
         elif restrict_non_text_msgs == 2:
@@ -1491,7 +1491,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None)
+                    change_group_info=False, manage_topics=False)
     # The provided message doesn't has the valid captcha number
     else:
         # Check if the message is for a math equation captcha
@@ -1615,14 +1615,14 @@ async def poll_answer_rx(
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False,  manage_topics=None,
+                    change_group_info=False,  manage_topics=False,
                     until_date=tomorrow_epoch)
         elif restrict_non_text_msgs == 2:  # Restrict forever
             await tlg_restrict_user(
                     bot, chat_id, user_id, send_msg=True, send_media=False,
                     send_stickers_gifs=False, insert_links=False,
                     send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None)
+                    change_group_info=False, manage_topics=False)
     else:
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
@@ -1820,7 +1820,7 @@ async def button_im_not_a_bot_press(bot, query):
                 bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=None,
+                change_group_info=False, manage_topics=False,
                 until_date=tomorrow_epoch)
     # Restrict forever
     elif restrict_non_text_msgs == 2:
@@ -1828,7 +1828,7 @@ async def button_im_not_a_bot_press(bot, query):
                 bot, chat_id, user_id, send_msg=True, send_media=False,
                 send_stickers_gifs=False, insert_links=False, send_polls=False,
                 invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=None)
+                change_group_info=False, manage_topics=False)
     logger.info("[%s] Button-only challenge process completed.", chat_id)
     logger.info("")
 
