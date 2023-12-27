@@ -20,7 +20,7 @@ Version:
 ###############################################################################
 
 from os import path as os_path
-from os import environ as os_environ
+# from os import environ as os_environ
 
 # Actual settings.py full path directory name
 SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
@@ -51,15 +51,15 @@ SETTINGS = {
 
     # Bot Webhook Certificate file path (this is not used if
     # WEBHOOK_HOST is None)
-    "CAPTCHABOT_WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
+    "CAPTCHABOT_WEBHOOK_CERT": SCRIPT_PATH + "/cert.pem",
 
     # Bot Webhook Certificate private key file path (this is not used
     # if WEBHOOK_HOST is None)
-    "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
+    "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY": SCRIPT_PATH + "/private.key",
 
     # Bot Webhook Secret Token to verify request from Telegram Server
     # (don't use the Bot Token, for security reason it must be other)
-    "CAPTCHABOT_WEBHOOK_SECRET_TOKEN" : None,
+    "CAPTCHABOT_WEBHOOK_SECRET_TOKEN": None,
 
     # Chats directory path
     "CAPTCHABOT_CHATS_DIR": SCRIPT_PATH + "/data/chats",

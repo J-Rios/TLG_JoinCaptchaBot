@@ -735,7 +735,8 @@ async def should_manage_captcha(update, bot):
 
 async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
     '''Restrict an user in order to deny it send any kind of message.'''
-    restrict_success = await tlg_restrict_user(bot, chat_id, user_id,
+    restrict_success = await tlg_restrict_user(
+        bot, chat_id, user_id,
         send_msg=False,
         send_media=False,
         send_polls=False,
@@ -751,7 +752,8 @@ async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
 
 async def restrict_user_media(bot, chat_id, user_id, until_date=None):
     '''Restrict an user in order to deny it send media messages.'''
-    restrict_success = await tlg_restrict_user(bot, chat_id, user_id,
+    restrict_success = await tlg_restrict_user(
+        bot, chat_id, user_id,
         send_msg=True,
         send_media=False,
         send_polls=False,
@@ -817,7 +819,7 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
     # "max_join_retries"
     if join_retries < max_join_retries:
         logger.info("[%s] Captcha Fail - Kick - %s (%s)",
-                chat_id, user_name, user_id)
+                    chat_id, user_name, user_id)
         # Try to kick the user
         kick_result = await tlg_kick_user(bot, chat_id, user_id)
         if kick_result["error"] == "":
@@ -849,7 +851,7 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
     # the captcha
     else:
         logger.info("[%s] Captcha Fail - Ban - %s (%s)",
-                chat_id, user_name, user_id)
+                    chat_id, user_name, user_id)
         # Try to ban the user and notify Admins
         ban_result = await tlg_ban_user(bot, chat_id, user_id)
         if ban_result["error"] == "":
@@ -903,7 +905,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
         await captcha_fail_member_mute(bot, chat_id, user_id, user_name)
     elif restriction == CMD["RESTRICTION"]["MEDIA"]:
         await captcha_fail_member_no_media(bot, chat_id, user_id, user_name)
-    else: # restriction == CMD["RESTRICTION"]["KICK"]
+    else:  # restriction == CMD["RESTRICTION"]["KICK"]
         await captcha_fail_member_kick(bot, chat_id, user_id, user_name)
     # Remove join messages
     try:
@@ -1244,7 +1246,7 @@ async def chat_member_status_change(
         # that requires it
         if captcha_mode in ["poll", "button"]:
             await restrict_user_mute(bot, chat_id, join_user_id)
-        else: # Restrict user to only allow send text messages
+        else:  # Restrict user to only allow send text messages
             await restrict_user_media(bot, chat_id, join_user_id)
         logger.info("[%s] Captcha send process completed.", chat_id)
 
@@ -3948,11 +3950,11 @@ async def tlg_app_exit(app: Application) -> None:
     Global.force_exit = True
     if Global.async_captcha_timeout is not None:
         if not Global.async_captcha_timeout.done():
-            logger.info("Waiting end of coroutine: captcha_timeout()")
+            logger.info("Waiting coroutine end: captcha_timeout()")
             await Global.async_captcha_timeout
     if Global.async_auto_delete_messages is not None:
         if not Global.async_auto_delete_messages.done():
-            logger.info("Waiting end of coroutine: async_auto_delete_messages()")
+            logger.info("Waiting coroutine end: async_auto_delete_messages()")
             await Global.async_auto_delete_messages
     # Save current session data
     save_session()

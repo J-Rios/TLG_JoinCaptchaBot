@@ -19,7 +19,8 @@ Version:
 '''
 
 ###############################################################################
-### Imported modules
+# Imported modules
+###############################################################################
 
 # JSON Library
 import json
@@ -33,8 +34,10 @@ from sys import exit as sys_exit
 # Local Constants Library
 from constants import CONST
 
+
 ###############################################################################
-### Auxiliary Functions
+# Auxiliary Functions
+###############################################################################
 
 def is_valid(lang_name, lang_to_check, reference_lang):
     '''
@@ -62,8 +65,10 @@ def is_valid(lang_name, lang_to_check, reference_lang):
     print(f"{lang_name} - OK")
     return True
 
+
 ###############################################################################
-### Main Function
+# Main Function
+###############################################################################
 
 def main():
     '''Main Function.'''
@@ -92,7 +97,8 @@ def main():
 
 
 ###############################################################################
-### Runnable Main Script Detection
+# Runnable Main Script Detection
+###############################################################################
 
 if __name__ == "__main__":
     sys_exit(main())
