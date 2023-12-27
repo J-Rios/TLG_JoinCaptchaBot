@@ -1,2 +1,2 @@
-python-telegram-bot[all]==20.0
-multicolorcaptcha==1.2.0
+multicolorcaptcha == 1.2.0
+python-telegram-bot[all] == 20.0

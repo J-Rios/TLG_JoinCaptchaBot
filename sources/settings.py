@@ -20,6 +20,7 @@ Version:
 ###############################################################################
 
 from os import path as os_path
+# from os import environ as os_environ
 
 # Actual settings.py full path directory name
 SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
@@ -40,20 +41,25 @@ SETTINGS = {
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
     "CAPTCHABOT_OWNER": "XXXXXXXXX",
 
-    # Bot Webhook Host addres (keep in None for Polling or set to a
+    # Bot Webhook Host address (keep in "None" for Polling or set to a
     # valid address for Webhook)
     "CAPTCHABOT_WEBHOOK_HOST": "None",
 
     # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
+    # For Heroku, use the following: os_environ.get("PORT", "80")
     "CAPTCHABOT_WEBHOOK_PORT": 8443,
 
     # Bot Webhook Certificate file path (this is not used if
     # WEBHOOK_HOST is None)
-    "CAPTCHABOT_WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
+    "CAPTCHABOT_WEBHOOK_CERT": SCRIPT_PATH + "/cert.pem",
 
     # Bot Webhook Certificate private key file path (this is not used
     # if WEBHOOK_HOST is None)
-    "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
+    "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY": SCRIPT_PATH + "/private.key",
+
+    # Bot Webhook Secret Token to verify request from Telegram Server
+    # (don't use the Bot Token, for security reason it must be other)
+    "CAPTCHABOT_WEBHOOK_SECRET_TOKEN": None,
 
     # Chats directory path
     "CAPTCHABOT_CHATS_DIR": SCRIPT_PATH + "/data/chats",

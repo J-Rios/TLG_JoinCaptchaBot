@@ -3,13 +3,16 @@
         "Вітаю! Я бот, які адпраўляе выяву з капчай кожнаму новаму карыстальніку, які далучаецца да суполкі, і выдаляю таго, хто не можа ўвесці звесткі з выявы на працягу пазначанага часу.\n\nКалі нехта далучаецца 5 разоў і ніводнага разу не ўводзіць патрэбнае значэнне, то я лічу, што гэта бот і блакую яго. Таксама любое паведамленне з URL-адрасам, якое адправіць новы карыстальнік да таго, як пройдзе праверку, будзе лічыцца спамам і будзе выдаляцца.\n\nМне патрэбныя правы адміністратара, каб блакаваць карыстальнікаў і выдаляць паведамленні.\n\nКаб больш падрабязна паглядзець мае функцыі, увядзіце загад /help.\n\nЯ быў карысны? Увядзіце загад \" /about\", каб даведацца, як можна дапамагчы мне развівацца.",
 
     "HELP":
-        "Даведка:\n————————————————\n- Я бот, які адпраўляе выяву з капчай кожнаму новаму карыстальніку, які далучаецца да суполкі, і выдаляю таго, хто не можа ўвесці звесткі з выявы на працягу пазначанага часу.\n\n- Калі нехта далучаецца 5 разоў і ніводнага разу не ўводзіць патрэбнае значэнне, то я лічу, што гэта бот і блакую яго.\n\n- Любое паведамленне з URL-адрасам, якое адправіць новы карыстальнік да таго, як пройдзе праверку, будзе лічыцца спамам і будзе выдаляцца.\n\n- Мне патрэбныя правы адміністратара, каб блакаваць карыстальнікаў і выдаляць паведамленні.\n\n- Каб не засмечваць суполку, я выдаляю ўсе звязаныя са мною паведамленні, якія выводзяцца, калі карыстальнік не можа ўвесці звесткі або выдаляецца (праз 5 хвілін).\n\n- Карыстальніку даецца 5 хвілін, каб увесці звесткі. Гэты час можна змяніць з дапамогай загада /time.\n\n- Вы можаце ўключаць і адключаць абарону загадамі /enable і /disable.\n\n- Загадамі могуць карыстацца толькі адміністратары.\n\n- Вы можаце змяніць мову з дапамогай загада /language.\n\n- Вы можаце змяніць узровень складанасці капчы з дапамогай загада /difficulty.\n\n- Вы можаце змяніць рэжым капчы з дапамогай загада /captcha_mode. Гэта могуць быць толькі лічбы, толькі літары, лічбы і літары, матэматычныя раўнанні або проста кнопкі.\n\n- Вы можаце наладзіць вітальнае паведамленне з дапамогай загада /welcome_msg.\n\n- Вы можаце ўключыць параметр, які дазволіць мне абмяжоўваць новым карыстальнікам магчымасць адпраўляць нетэкставыя паведамленні. Гэта можна зрабіць з дапамогай загада /restrict_non_text.\n\n- Калі бот прыватны, дазвольце суполкі з дапамогай загада /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- З дапамогай загада /commands можна вывесці спіс усіх даступных загадаў са сціслым апісаннем.",
+        "Даведка:\n————————————————\n- Я бот, які адпраўляе выяву з капчай кожнаму новаму карыстальніку, які далучаецца да суполкі, і выдаляю таго, хто не можа ўвесці звесткі з выявы на працягу пазначанага часу.\n\n- Калі нехта далучаецца 5 разоў і ніводнага разу не ўводзіць патрэбнае значэнне, то я лічу, што гэта бот і блакую яго.\n\n- Любое паведамленне з URL-адрасам, якое адправіць новы карыстальнік да таго, як пройдзе праверку, будзе лічыцца спамам і будзе выдаляцца.\n\n- Мне патрэбныя правы адміністратара, каб блакаваць карыстальнікаў і выдаляць паведамленні.\n\n- Каб не засмечваць суполку, я выдаляю ўсе звязаныя са мною паведамленні, якія выводзяцца, калі карыстальнік не можа ўвесці звесткі або выдаляецца (праз 5 хвілін).\n\n- Карыстальніку даецца 5 хвілін, каб увесці звесткі. Гэты час можна змяніць з дапамогай загада /time.\n\n- Вы можаце ўключаць і адключаць абарону загадамі /enable і /disable.\n\n- Загадамі могуць карыстацца толькі адміністратары.\n\n- Вы можаце змяніць мову з дапамогай загада /language.\n\n- Вы можаце змяніць узровень складанасці капчы з дапамогай загада /difficulty.\n\n- Вы можаце змяніць рэжым капчы з дапамогай загада /captcha_mode. Гэта могуць быць толькі лічбы, толькі літары, лічбы і літары, матэматычныя раўнанні або проста кнопкі.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- Вы можаце наладзіць вітальнае паведамленне з дапамогай загада /welcome_msg.\n\n- Вы можаце ўключыць параметр, які дазволіць мне абмяжоўваць новым карыстальнікам магчымасць адпраўляць нетэкставыя паведамленні. Гэта можна зрабіць з дапамогай загада /restrict_non_text.\n\n- Калі бот прыватны, дазвольце суполкі з дапамогай загада /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- З дапамогай загада /commands можна вывесці спіс усіх даступных загадаў са сціслым апісаннем.",
 
     "COMMANDS":
-        "Спіс загадаў:\n————————————————\n/start - паказвае агульныя звесткі пра бота.\n\n/help - паказвае даведку.\n\n/commands - паказвае гэтае паведамленне пра ўсе даступныя загады.\n\n/language - дазваляе змяніць мову паведамленняў бота.\n\n/time - дазваляе змяніць час на ўвод звестак з выявы.\n\n/difficulty - дазваляе змяніць узровень складанасці (ад 1 да 5).\n\n/captcha_mode - дазваляе змяніць рэжым капчы (nums: лічбы, hex: лічбы і літары A-F, ascii: лічбы і літары A-Z, math: раўнанне, poll: наладжвальнае апытанне, button: кнопка).\n\n/captcha_poll - дазваляе наладзіць пытанне для апытання і параметры апытання.\n\n/welcome_msg - дазваляе наладзіць вітальнае паведамленне пасля ўводу звестак з выявы.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - пасля таго, як новы карыстальнік уводзіць звесткі, абмяжоўвае яму магчымасць адпраўляць нетэкставыя паведамленні на працягу аднаго дня (або назаўсёды з ключом \"forever\").\n\n/add_ignore - не выводзіць капчу карыстальніку.\n\n/remove_ignore - перастаць ігнараваць карыстальніка.\n\n/ignore_list - спіс карыстальнікаў, якія ігнаруюцца.\n\n/remove_solve_kick_msg - дазваляе наладзіць аўтаматычнае выдаленне службовых паведамленняў.\n\n/remove_welcome_msg - дазваляе наладзіць аўтаматычнае выдаленне вітальнага паведамлення.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - дазваляе суполцы выкарыстоўваць бота (калі бот прыватны).\n\n/enable - уключыць абарону ў суполцы.\n\n/disable - адключыць абарону ў суполцы.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - паказвае ідэнтыфікатар чата.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - паказвае версію бота.\n\n/about - паказвае звесткі пра бота.",
+        "Спіс загадаў:\n————————————————\n/start - паказвае агульныя звесткі пра бота.\n\n/help - паказвае даведку.\n\n/commands - паказвае гэтае паведамленне пра ўсе даступныя загады.\n\n/language - дазваляе змяніць мову паведамленняў бота.\n\n/time - дазваляе змяніць час на ўвод звестак з выявы.\n\n/difficulty - дазваляе змяніць узровень складанасці (ад 1 да 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - дазваляе змяніць рэжым капчы (nums: лічбы, hex: лічбы і літары A-F, ascii: лічбы і літары A-Z, math: раўнанне, poll: наладжвальнае апытанне, button: кнопка).\n\n/captcha_poll - дазваляе наладзіць пытанне для апытання і параметры апытання.\n\n/welcome_msg - дазваляе наладзіць вітальнае паведамленне пасля ўводу звестак з выявы.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - пасля таго, як новы карыстальнік уводзіць звесткі, абмяжоўвае яму магчымасць адпраўляць нетэкставыя паведамленні на працягу аднаго дня (або назаўсёды з ключом \"forever\").\n\n/add_ignore - не выводзіць капчу карыстальніку.\n\n/remove_ignore - перастаць ігнараваць карыстальніка.\n\n/ignore_list - спіс карыстальнікаў, якія ігнаруюцца.\n\n/remove_solve_kick_msg - дазваляе наладзіць аўтаматычнае выдаленне службовых паведамленняў.\n\n/remove_welcome_msg - дазваляе наладзіць аўтаматычнае выдаленне вітальнага паведамлення.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - дазваляе суполцы выкарыстоўваць бота (калі бот прыватны).\n\n/enable - уключыць абарону ў суполцы.\n\n/disable - адключыць абарону ў суполцы.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - паказвае ідэнтыфікатар чата.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - паказвае версію бота.\n\n/about - паказвае звесткі пра бота.",
 
     "CMD_NOT_ALLOW":
         "Толькі адміністратары могуць выкарыстоўваць гэты загад.",
+
+    "CMD_INVALID_PARAMETER":
+        "Invalid command parameter.",
 
     "LANG_CHANGE":
         "Мова паспяхова змененая.",
@@ -58,6 +61,15 @@
 
     "CAPTCHA_MODE_NOT_ARG":
         "Патрэбна ўвесці рэжым. Даступныя рэжымы:\n\n- Лічбы (\"nums\").\n- Лічбы і літары A-F (\"hex\").\n- Лічбы і літары A-Z (\"ascii\").\n- Раўнанне (\"math\").\n- Кнопка (\"button\").\n- Апытанне (\"poll\").\n- Random challenge (\"random\").\n\nПрыклады:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CMD_RESTRICTION_CHANGE":
+        "Restriction to apply when user fail the captcha changed to \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "The command requires a type of restriction to set.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
 
     "WELCOME_MSG_SET":
         "Вітальнае паведамленне паспяхова наладжана.",
@@ -113,6 +125,15 @@
     "NEW_USER_BUTTON_MODE":
         "Вітаю {}, дзякуй, што далучыліся да суполкі {}. Калі ласка, націсніце на кнопку ніжэй, каб пацвердзіць, што вы чалавек. Калі вы не зробіце гэтага на працягу {}, я выдалю вас з суполкі.",
 
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
     "CAPTCHA_SOLVED":
         "Вы пацвердзілі, што вы чалавек.\nПрыемна бачыць вас у суполцы, {}",
 
@@ -125,7 +146,7 @@
     "CAPTCHA_INCORRECT_MATH":
         "Гэта няправільны код. Вам патрэбна рашыць раўнанне...",
 
-    "NEW_USER_KICK":
+    "CAPTCHA_FAIL_KICK":
         "{} не ўдаецца вырашыць капчу. \"Карыстальнік\" быў выгнаны.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
@@ -140,17 +161,17 @@
     "CANT_DEL_MSG":
         "Я паспрабаваў выдаліць гэтае паведамленне, але ў мяне няма правоў на выдаленне паведамленняў.",
 
-    "NEW_USER_BAN":
-        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Выяўлена паведамленне з URL (або псеўданімам) ад карыстальніка {}, які яшчэ не ўвёў звесткі з выявы. Паведамленне выдалена.",

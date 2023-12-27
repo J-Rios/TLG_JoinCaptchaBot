@@ -1,54 +1,57 @@
 {
     "START":
-        "안녕하세요. 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다. 또한, 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n캡차 봇이 사용자 추방, 제한, 메시지 삭제를 하려면 관리자 권한이 필요합니다.\n\n/help 명령어를 통해 자세한 캡차 봇 사용법을 확인하실 수 있습니다.\n\n유용한 봇이라고 생각하신다면 /about 명령어를 입력해서 저에게 기부할 수 있는 방법을 확인해보세요.",
+        "안녕하세요. 캡차 봇은 그룹에 방문한 새 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n특정 사용자가 그룹에 다섯 차례 방문하면서 잇달아 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 여기고 제한 조치를 취할 것입니다. 또한, 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 지울 것입니다.\n\n캡차 봇이 사용자 추방, 제한, 메시지 삭제를 하려면 관리자 권한이 필요합니다.\n\n/help 명령어를 통해 자세한 캡차 봇 사용법을 확인하실 수 있습니다.\n\n유용한 봇이라고 생각하신다면 /about 명령어를 입력해서 저에게 기부할 수 있는 방법을 확인해 보세요.",
 
     "HELP":
-        "봇 도움말:\n————————————————\n- 캡차 봇은 그룹에 방문한 신규 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n- 특정 사용자가 5번 연속으로 그룹에 방문하고 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다.\n\n- 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 삭제할 것입니다.\n\n- 사용자 추방, 메시지 삭제를 하려면 관리자 그룹에 캡차 봇을 추가해야 합니다.\n\n- 캡차를 풀지 못한 사용자가 추방되면 채팅방을 깔끔하게 유지하기 위해 봇과 관련된 모든 메시지는 5분 뒤에 자동으로 삭제됩니다. \n\n- 신규 사용자가 캡차를 입력해야 하는 시간은 5분으로 기본 설정되어 있으며, /time 명령어를 이용해 시간은 조정할 수 있습니다.\n\n- 캡차 기능은 /enable 과 /disable 명령어로 활성화/비활성화 여부를 설정할 수 있습니다.\n\n- 설정과 관련된 명령어는 관리자 그룹만 이용할 수 있습니다.\n\n- 봇에서 제공하는 언어는 /language 명령어를 이용해 다른 언어로 변경할 수 있습니다.\n\n- 캡차 난이도는 /difficulty 명령어로 조정할 수 있습니다.\n\n- 캡차는 기본적으로 숫자로만 제공되며 숫자와 문자 A-Z가 결합된 형태 또는 숫자와 문자 A-F, or a math equation to be solved, 객관식 문제 풀기, 버튼 등의 형태로 제공할 수 있으며 /captcha_mode 명령어로 모드를 변경하실 수 있습니다.\n\n- /welcome_msg 명령어로 환영 메시지를 변경할 수 있습니다.\n\n- /restrict_non_text 명령어는 신규 사용자가 텍스트 이외의 메시지는 입력하지 못하게 제한하는 명령어 입니다.\n\n- 비공개 버전 봇이라면 /allowgroup 명령어를 이용해 그룹을 허용해줄 수 있습니다.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- /commands 명령어를 입력하면 이용 가능한 명령어 목록을 짧은 설명과 함께 확인하실 수 있습니다.",
+        "봇 도움말:\n————————————————\n- 캡차 봇은 그룹에 방문한 새 사용자에게 캡차 이미지를 보여주고, 정해진 시간 안에 캡차 답안을 제출하지 않은 사용자를 추방하는 기능을 제공합니다.\n\n- 특정 사용자가 그룹에 다섯 차례 방문하면서 캡차를 풀지 못한 경우, 이 \"user\"를 봇이라고 가정하고 제한 조치를 취할 것입니다.\n\n- 신규 \"user\"가 캡차를 풀기 전에 URL이 포함된 메시지를 입력한 경우 스팸 메시지로 간주하고 이 메시지를 자동으로 지울 것입니다.\n\n- 사용자 추방, 메시지 삭제를 하려면 관리자 그룹에 캡차 봇을 추가해야 합니다.\n\n- 캡차를 풀지 못한 사용자가 쫓겨나면 채팅방을 깔끔하게 하기 위해 봇과 관련된 모든 메시지는 5분 뒤에 자동으로 지울 것입니다. \n\n- 새 사용자가 캡차를 입력해야 하는 시간은 5분으로 기본 설정되어 있으며, /time 명령어로 시간은 조정할 수 있습니다.\n\n- 캡차 기능은 /enable 과 /disable 명령어로 활성화/비활성화 여부를 설정할 수 있습니다.\n\n- 설정과 관련된 명령어는 관리자들만 쓸 수 있습니다.\n\n- 봇에서 제공하는 언어는 /language 명령어를 이용해 다른 언어로 바꿀 수 있습니다.\n\n- 캡차 난이도는 /difficulty 명령어로 조정할 수 있습니다.\n\n- 캡차는 기본적으로 숫자로만 제공되며 숫자와 문자 A-Z가 결합된 형태 또는 숫자와 문자 A-F, or a math equation to be solved, 객관식 문제 풀기, 버튼 등의 형태로 제공할 수 있으며 /captcha_mode 명령어로 모드를 변경하실 수 있습니다.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- /welcome_msg 명령어로 환영 메시지를 바꿀 수 있습니다.\n\n- /restrict_non_text 명령어는 새 사용자가 텍스트가 아닌 메시지는 입력하지 못하게 제한하는 명령어 입니다.\n\n- 봇이 비공개라면 /allowgroup 명령어로 그룹을 허용할 수 있습니다.\n\n- /connect 명령으로 비공개 봇 채팅에서 그룹을 구성할 수 있습니다.\n\n- URL/링크가 포함된 메시지를 그룹에서 보내지 못하도록 차단하는 명령어는 /url_disable 입니다.\n\n- /commands 명령어를 입력하면 이용 가능한 명령어 목록을 짧은 설명과 함께 확인하실 수 있습니다.",
 
     "COMMANDS":
-        "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 변경할 수 있습니다.\n\n/time - 캡차 입력 제한 시간을 변경할 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 변경할 수 있습니다.\n\n/captcha_mode - 캡차 모드를 변경할 수 있습니다. (nums: 숫자, hex: 숫자와 문자 A-F, ascii: 숫자와 문자 A-Z, math: math equation, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 문제 풀기 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - 신규 사용자가 캡차를 푼 이후에 텍스트 이외의 메시지(이미지, 비디오, 오디오 등)를 하루 동안(또는 \"forever\" 키워드를 통해 영원히 입력 못하게 제한 가능) 입력하지 못하게 제한할 수 있습니다.\n\n/add_ignore - 예외 목록에 등록된 사용자는 캡차를 입력하지 않아도 됩니다.\n\n/remove_ignore - 사용자에 대한 예외 처리 중단.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 일정 시간이 지난 후 캡차 입력 완료, 추방, 제한 메시지를 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/remove_welcome_msg - 일정 시간이 지난 후 환영 메시지가 자동으로 삭제될 수 있게 설정할 수 있습니다.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - 비공개 버전의 봇을 그룹에서 이용할 수 있게 설정할 수 있습니다.\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
+        "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 바꿀 수 있습니다.\n\n/time - 캡차 입력 제한 시간을 바꿀 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 바꿀 수 있습니다.\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - 캡차 모드를 바꿀 수 있습니다. (nums: 숫자, hex: 숫자와 A~F까지 문자, ascii: 숫자와 A~Z까지 문자, math: 수학 등식, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 모드에서 질물과 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/welcome_msg_time - 환영 메시지가 자동으로 제거되는 시간을 구성할 수 있습니다.\n\n/restrict_non_text - 새 사용자가 캡차를 둔 뒤 하루 동안(또는 \"forever\" 키워드로 영원히) 텍스트가 아닌 메시지(이미지, 비디오, 오디오 등)를 보낼 수 없도록 제한할 수 있습니다.\n\n/add_ignore - 캡차 예외 사용자를 추가합니다.\n\n/remove_ignore - 사용자 예외를 중단합니다.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 캡차 완료, 추방, 제한 메시지를 자동으로 삭제할 수 있도록 구성합니다.\n\n/remove_welcome_msg - 일정 시간이 지난 뒤 환영 메시지를 자동으로 삭제할 수 있도록 구성합니다.\n\n/url_disable - 그룹 구성원이 웹사이트 링크(URL)가 포함된 메시지를 보내지 못하도록 합니다.\n\n/url_enable - 그룹 구성원이 웹사이트 링크(URL)가 포함된 메시지를 보낼 수 있도록 허용합니다.\n\n/remove_all_msg_kick_off - 캡차를 풀지 않은 사용자가 보낸 문자 메시지를 지우지 않도록 구성합니다.\n\n/remove_all_msg_kick_on - 캡차를 풀지 않은 사용자가 보낸 문자 메시지를 지우도록 구성합니다.\n\n/allowgroup - 그룹에서 봇을 쓸 수 있도록 허용합니다.(봇이 비공개인 경우)\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/checkcfg - 그룹의 현재 캡차 구성을 보여줍니다.\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/connect - 그룹에 연결하여 비공개 봇 채팅에서 그룹을 구성할 수 있습니다.\n\n/disconnect - 비공개 봇 채팅에서 구성한 연결된 그룹을 끊습니다.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
 
     "CMD_NOT_ALLOW":
-        "이 명령어는 관리자만 사용할 수 있습니다.",
+        "이 명령어는 관리자만 쓸 수 있습니다.",
+
+    "CMD_INVALID_PARAMETER":
+        "Invalid command parameter.",
 
     "LANG_CHANGE":
-        "언어가 성공적으로 변경되었습니다.",
+        "언어가 제대로 바뀌었습니다.",
 
     "LANG_SAME":
-        "나는 이미 그 언어로.\n\n지원되는 언어 목록:\n{}",
+        "이미 그 언어를 쓰고 있습니다.\n\n지원되는 언어:\n{}",
 
     "LANG_BAD_LANG":
-        "지원되지 않는 언어입니다.\n\n지원되는 언어 목록:\n{}",
+        "지원하지 않는 언어입니다.\n\n지원되는 언어:\n{}",
 
     "LANG_NOT_ARG":
-        "설정할 언어를 입력해주세요.\n\n예시:\n{}",
+        "설정할 언어를 입력해주세요.\n\n보기:\n{}",
 
     "TIME_CHANGE":
-        "캡차 입력 가능 시간이 {} 변경되었습니다.",
+        "{} 동안 캡차를 입력할 수 있도록 바뀌었습니다.",
 
     "WELCOME_TIME_CHANGE":
-        "Time to delete welcome message successfully changed to {}.",
+        "{} 뒤 환영 쪽지를 지우도록 바뀌었습니다.",
 
     "TIME_OUT_RANGE":
-        "Invalid time, it needs to be in range 10 sec to {} min.",
+        "10초에서 {}분 사이의 시간을 넣어야 합니다.",
 
     "TIME_NOT_NUM":
-        "시간은 숫자로만 입력해주세요.",
+        "시간은 숫자로만 넣어 주십시오.",
 
     "TIME_NOT_ARG":
-        "시간 입력.\n\n예시:\n/time 30 sec\n/time 5 min\n/time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/time 30 sec\n/time 5 min\n/time 1 min",
 
     "WELCOME_TIME_NOT_ARG":
-        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+        "설정할 시간 입력.\n\n보기:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
 
     "DIFFICULTY_CHANGE":
-        "캡차 난이도가 {}으로 변경되었습니다.",
+        "캡차 난이도가 {}(으)로 바뀌었습니다.",
 
     "DIFFICULTY_NOT_NUM":
-        "캡차 난이도는 숫자로 설정하셔야 합니다.",
+        "캡차 난이도는 숫자로 넣어야 합니다.",
 
     "DIFFICULTY_NOT_ARG":
-        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드에는 적용되지 않습니다.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "난이도는 1부터 5까지의 숫자로 설정하실 수 있습니다. \"button\" 모드는 제외.\n\n예시:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "캡차 모드가 \"{}\"로 변경되었습니다.",
@@ -59,14 +62,23 @@
     "CAPTCHA_MODE_NOT_ARG":
         "모드를 입력하셔야 합니다. 설정 가능한 모드는 다음과 같습니다:\n\n- 숫자 캡차 (\"nums\").\n- Hexadecimal 캡차, 숫자와 문자 A-F로 구성됨 (\"hex\").\n- 숫자와 문자 A-Z로 구성된 캡차 (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- 버튼 클릭 (\"button\").\n- 객관식 문제 풀기 (\"poll\").\n- Random challenge (\"random\").\n\n예시:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
+    "CMD_RESTRICTION_CHANGE":
+        "Restriction to apply when user fail the captcha changed to \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "The command requires a type of restriction to set.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+
     "WELCOME_MSG_SET":
         "환영 메시지가 설정되었습니다.",
 
     "WELCOME_MSG_UNSET":
-        "환영 메시지가 비활성화되었습니다.",
+        "환영 메시지가 해제되었습니다.",
 
     "WELCOME_MSG_SET_NOT_ARG":
-        "명령어 뒤에 환영 메시지를 입력해주세요.\n\nExample:\n/welcome_msg $user 님 안녕하세요. 채널 방문을 환영합니다. 상대방을 배려하는 채팅 매너는 필수입니다.\n\n환영 메시지 비활성화:\n/welcome_msg disable",
+        "명령어 뒤에 환영 메시지를 입력해주세요.\n\n보기:\n/welcome_msg $user 님 안녕하세요. 그룹에 오신 것을 환영하며 다른 사용자를 배려하고 존중해 주십시오.\n\n환영 메시지 비활성화:\n/welcome_msg disable",
 
     "RESTRICT_NON_TEXT_MSG_ENABLED":
         "신규 사용자는 텍스트 메시지 이외는 입력할 수 없게 설정되었습니다. 최근에 가입한 사용자가 텍스트 이외의 메시지를 입력하면 삭제할 것입니다.",
@@ -113,6 +125,15 @@
     "NEW_USER_BUTTON_MODE":
         "{} 님 안녕하세요. {} 방문을 환영합니다. 원활한 채널 운영을 위해 방문 계정이 봇인지 사람인지 확인하고 있습니다. 사람이라면 아래 버튼을 클릭해주세요. {} 안에 캡차봇이 보여주는 문구를 제대로 입력하지 않으면 그룹에서 자동으로 추방될 것입니다.",
 
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
     "CAPTCHA_SOLVED":
         "캡차 답안 제출이 완료되어 사용자가 인증되었습니다.\n{} 방문을 환영합니다",
 
@@ -125,7 +146,7 @@
     "CAPTCHA_INCORRECT_MATH":
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
-    "NEW_USER_KICK":
+    "CAPTCHA_FAIL_KICK":
         "{} 보안 문자를 해결하지 못했습니다. \"User\" 님은 추방되었습니다.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
@@ -140,17 +161,17 @@
     "CANT_DEL_MSG":
         "이 메시지를 삭제하고 했으나 봇에 관리자 권한이 부여되지 않아 메시지를 삭제하지 못했습니다.",
 
-    "NEW_USER_BAN":
-        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "캡차를 아직 풀지 않는 {} 로부터 URL (또는 alias)이 포함된 메시지가 감지되었습니다. 깔끔한 채팅방 유지를 위해 메시지는 삭제되었습니다.:)",
@@ -240,44 +261,44 @@
         "객관식 문제 풀기 캡차의 정답은 보기 {} 번으로 설정되었습니다.",
 
     "POLL_CORRECT_OPTION_NOT_CONFIGURED":
-        "정답으로 설정한 {} 번 항목은 존재하지 않습니다. 객관식 답안을 먼저 설정해주세요.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "설정한 보기 답안에는 {}번 항목이 없습니다. 먼저 객관식 답안을 구성하십시오.\n\n보기:\n/captcha_poll question 1+2는 5입니까?\n\n/captcha_poll option 1 예\n\n/captcha_poll option 2 아니오\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "POLL_NEW_USER_NOT_CONFIG":
-        "신규 사용자가 입장했는데 객관식 문제 풀기 캡차가 제대로 설정되지 않아 캡차가 정상적으로 동작하지 않고 있습니다. \n\n객관식 질문과 함께 보기 문항은 최소 2개 이상으로 구성해주시고 정답을 설정해주시길 바랍니다. /captcha_poll 명령어로 설정하실 수 있습니다.\n\n예시:\n/captcha_poll question 1+2는 5인가요?\n\n/captcha_poll option 1 네\n\n/captcha_poll option 2 아니요\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+        "새 사용자가 들어왔지만 객관식 캡차가 알맞게 구성되지 않아 제대로 작동하지 않았습니다.\n\n객관식 질문과 함께 보기 문항은 정답을 포함 적어도 2개 이상으로 구성해야 합니다. /captcha_poll 명령어로 설정하세요.\n\n보기:\n/captcha_poll question 1+2는 5입니까?\n\n/captcha_poll option 1 예\n\n/captcha_poll option 2 아니오\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
 
     "CONNECT_USAGE":
-        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+        "구성하려는 그룹 채팅 ID를 지정해야 합니다(그룹 안에서 /chatid 명령어로 알 수 있음).\n\n보기:\n/connect -1234567890",
 
     "CONNECT_JUST_ADMIN":
-        "Just an Admin of that group can configure it.",
+        "해당 그룹의 관리자만 구성할 수 있습니다.",
 
     "CONNECT_OK":
-        "Connected to group {}. Now you can configure group captcha settings from private.",
+        "{} 그룹에 연결되었습니다. 이제 비공개에서 그룹 캡차 설정을 구성할 수 있습니다.",
 
     "DISCONNECT_NOT_CONNECTED":
-        "You are not connected.",
+        "연결되지 않았습니다.",
 
     "DISCONNECT_OK":
-        "Disconnected from group {}.",
+        "{} 그룹으로부터 끊어졌습니다.",
 
     "INVALID_GROUP_ID":
-        "Invalid group chat ID.",
+        "그룹 채팅 ID가 잘못되었습니다.",
 
     "CHECK_CFG":
-        "Group Configuration:\n————————————————\n```\n{}\n```",
+        "그룹 구성:\n————————————————\n```\n{}\n```",
 
     "CMD_NOT_ALLOW_PRIVATE":
-        "This command cannot be used in private chat.",
+        "이 명령은 비공개 채팅에서는 사용할 수 없습니다.",
 
     "CMD_NEEDS_CONNECTION":
-        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+        "이 명령은 일부 그룹을 구성하기 위해 연결(/connect)하지 않는 한 비공개 채팅에서 사용할 수 없습니다.",
 
     "CMD_JUST_IN_PRIVATE":
-        "This command can't be used inside a group (use it in private Bot chat).",
+        "이 명령은 그룹 내부에서는 사용할 수 없습니다(비공개 봇 채팅에서 사용).",
 
     "RM_ALL_MSGS_AFTER_KICK_ON":
-        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+        "구성을 바꾸면 캡차를 풀지 않은 사용자가 보낸 모든 메시지를 지웁니다.",
 
     "RM_ALL_MSGS_AFTER_KICK_OFF":
-        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed."
+        "구성이 바꾸어도 캡차를 풀지 않은 사용자가 보낸 메시지는 지우지 않습니다."
 }
