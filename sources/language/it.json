@@ -6,7 +6,7 @@
         "Aiuto bot:\n————————————————\n- Sono un Bot che invia un captcha per ogni nuovo utente che si unisce a un gruppo ed espelle quelli che non possono risolvere il captcha entro un tempo specificato.\n\n- Se un utente tenta di unirsi al gruppo per 5 volte di seguito e non risolve il captcha, supporrò che \"utente\" sia un bot e verrà espulso.\n\n- Qualsiasi messaggio che contiene un URL che è stato inviato da un nuovo \"utente\", prima del completamento del captcha, verrà considerato spam e verrà eliminato.\n\n- Devi concedermi i privilegi di amministratore per poter espellere gli utenti e cancellare i relativi messaggi.\n\n- Per preservare un gruppo pulito, rimuovo automaticamente tutti i messaggi che mi riguardano quando un captcha non viene risolto e l'utente viene espulso (dopo 5 minuti).\n\n- Il tempo necessario ai nuovi utenti per risolvere captcha è di 5 minuti per impostazione predefinita, ma può essere configurato utilizzando il comando /time.\n\n- È possibile attivare e disattivare la protezione captcha utilizzando i comandi /enable e /disable.\n\n- I comandi di configurazione possono essere utilizzati solo da amministratori.\n\n- Puoi cambiare la lingua che parlo, usando il comando /language.\n\n- Puoi configurare il livello di difficoltà captcha usando il comando /difficulty.\n\n- Puoi impostare captcha da usare con solo numeri (impostazione predefinita), numeri e lettere completi, operazione matematica da risolvere, domanda personalizzata o anche solo un pulsante, usando il comando /captcha_mode.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- Puoi configurare un messaggio di benvenuto personalizzato con il comando /welcome_msg.\n\n- Puoi abilitare l'opzione di lasciarmi applicare restrizioni a nuovi utenti nell'invio di messaggi non testuali usando il comando /restrict_non_text.\n\n- Se il Bot è privato, puoi abilitare gruppi con il comando /allowgroup.\n\n- Puoi configurare un gruppo da una chat privata del Bot tramite il comando /connect.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- Controlla con /commands per ottenere l'elenco e una breve descrizione di tutti i comandi disponibili. ",
 
     "COMMANDS":
-        "Elenco dei comandi:\n————————————————\n/start - Mostra le informazioni iniziali sul Bot.\n\n/help - Mostra le informazioni di aiuto.\n\n/commands - Mostra questo messaggio. Informazioni su tutti i comandi disponibili e la loro descrizione.\n\n/language - Permette di cambiare la lingua dei messaggi del Bot.\n\n/time - Consente di modificare il tempo disponibile per risolvere un captcha.\n\n/difficulty - Consente di modificare il livello di difficoltà captcha (da 1 a 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, ban, mute, etc.).\n\n/captcha_mode - Consente di modificare la modalità carattere captcha (num:solo numeri, esadecimale:numeri e caratteri A-F, ascii:numeri e caratteri A-Z, math: operazione matematica, poll: domanda personalizzata, button: solo un pulsante).\n\n/captcha_poll - Configura una domanda personalizzata e le opzioni di risposta per il captcha.\n\n/welcome_msg - Consente di configurare un messaggio di benvenuto che viene inviato dopo aver risolto il captcha.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - Dopo che un nuovo utente ha risolto il captche, applica una restrizione e non consente l'invio di messaggi non testuali (immagini, video, audio) per un giorno (o per sempre, usando \"forever\").\n\n/add_ignore - Ignora un utente.\n\n/remove_ignore - Rimuove l'ignora utente.\n\n/ignore_list - Mostra una lista degli utenti ignorati'.\n\n/remove_solve_kick_msg - Configura se i messaggi del captcha debbano essere rimossi dopo un tempo prestabilito.\n\n/remove_welcome_msg - Configura se i messaggi di benvenuto debbano essere rimossi dopo un tempo prestabilito.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Permette ad un gruppo di usare questo Bot (se il Bot è privato).\n\n/enable - Abilita la protezione captcha del gruppo.\n\n/disable - Disabilita la protezione captcha del gruppo.\n\n/checkcfg - Mostra la configurazione corrente del captcha nel gruppo.\n\n/chatid - Mostra l'ID della chat corrente.\n\n/connect - Connette una chat privata del Bot per configurare un gruppo.\n\n/disconnect - Disconnette una chat privata del Bot usata per configurare un gruppo.\n\n/version - Mostra la versione del Bot.\n\n/about - Mostra informazioni.",
+        "Elenco dei comandi:\n————————————————\n/start - Mostra le informazioni iniziali sul Bot.\n\n/help - Mostra le informazioni di aiuto.\n\n/commands - Mostra questo messaggio. Informazioni su tutti i comandi disponibili e la loro descrizione.\n\n/language - Permette di cambiare la lingua dei messaggi del Bot.\n\n/time - Consente di modificare il tempo disponibile per risolvere un captcha.\n\n/difficulty - Consente di modificare il livello di difficoltà captcha (da 1 a 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - Consente di modificare la modalità carattere captcha (num:solo numeri, esadecimale:numeri e caratteri A-F, ascii:numeri e caratteri A-Z, math: operazione matematica, poll: domanda personalizzata, button: solo un pulsante).\n\n/captcha_poll - Configura una domanda personalizzata e le opzioni di risposta per il captcha.\n\n/welcome_msg - Consente di configurare un messaggio di benvenuto che viene inviato dopo aver risolto il captcha.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - Dopo che un nuovo utente ha risolto il captche, applica una restrizione e non consente l'invio di messaggi non testuali (immagini, video, audio) per un giorno (o per sempre, usando \"forever\").\n\n/add_ignore - Ignora un utente.\n\n/remove_ignore - Rimuove l'ignora utente.\n\n/ignore_list - Mostra una lista degli utenti ignorati'.\n\n/remove_solve_kick_msg - Configura se i messaggi del captcha debbano essere rimossi dopo un tempo prestabilito.\n\n/remove_welcome_msg - Configura se i messaggi di benvenuto debbano essere rimossi dopo un tempo prestabilito.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Permette ad un gruppo di usare questo Bot (se il Bot è privato).\n\n/enable - Abilita la protezione captcha del gruppo.\n\n/disable - Disabilita la protezione captcha del gruppo.\n\n/checkcfg - Mostra la configurazione corrente del captcha nel gruppo.\n\n/chatid - Mostra l'ID della chat corrente.\n\n/connect - Connette una chat privata del Bot per configurare un gruppo.\n\n/disconnect - Disconnette una chat privata del Bot usata per configurare un gruppo.\n\n/version - Mostra la versione del Bot.\n\n/about - Mostra informazioni.",
 
     "CMD_NOT_ALLOW":
         "Solo un amministratore può utilizzare questo comando.",
@@ -69,7 +69,7 @@
         "The command requires a type of restriction to set.",
 
     "CMD_RESTRICTION_AVAILABLE_ARGS":
-        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior).\n\n/restriction ban - Ban the user from the group (the user won't be able to join again).\n\n/restriction mute - Don't allow the user to write messages in the group.\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group.\n\n/restriction mute24h - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media24h - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
 
     "WELCOME_MSG_SET":
         "Messaggio di benvenuto configurato correttamente.",
@@ -125,6 +125,15 @@
     "NEW_USER_BUTTON_MODE":
         "Ciao {}, benvenuto in {}. Premi il pulsante in basso per verificare che sei un essere umano. Se non procedi entro {}, verrai automaticamente espulso dal gruppo",
 
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
     "CAPTCHA_SOLVED":
         "Captcha risolto, verificato dall'utente.\nBenvenuto nel gruppo {}",
 
@@ -137,7 +146,7 @@
     "CAPTCHA_INCORRECT_MATH":
         "Questo non è il numero corretto. Controlla attentamente, devi risolvere l'operazione matematica...",
 
-    "NEW_USER_KICK":
+    "CAPTCHA_FAIL_KICK":
         "{} non è riuscito a risolvere il captcha. \"L'utente\"è stato espulso.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
@@ -152,17 +161,17 @@
     "CANT_DEL_MSG":
         "Ho provato a eliminare questo messaggio, ma non ho i diritti amministrativi per rimuovere i messaggi che non sono stati inviati da me.",
 
-    "NEW_USER_BAN":
-        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "Rilevato un messaggio con un URL (o alias) da {}, che non ha ancora risolto il captcha. Il messaggio è stato rimosso per mantenere Telegram libero dallo spam.",
