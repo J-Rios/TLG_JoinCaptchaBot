@@ -20,6 +20,7 @@ Version:
 
 from os import path as os_path
 from os import getenv as os_getenv
+from typing import Any
 from settings import SETTINGS
 
 ###############################################################################
@@ -346,7 +347,7 @@ TEXT: dict = {
 }
 
 # Bot Commands
-CMD = {
+CMD : dict[str, Any] = {
     "START": { "KEY": "start" },
     "HELP": { "KEY": "help" },
     "COMMANDS": { "KEY": "commands" },

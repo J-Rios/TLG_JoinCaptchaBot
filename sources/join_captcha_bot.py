@@ -946,6 +946,8 @@ async def chat_bot_status_change(
     bot = context.bot
     chat = update.effective_chat
     caused_by_user = update.effective_user
+    if chat is None:
+        return
     # Private Chat
     if chat.type == Chat.PRIVATE:
         return
@@ -2612,7 +2614,7 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
             CONST["MAX_POLL_OPTION_LENGTH"],
             CONST["MAX_POLL_OPTIONS"])
     # Check if no argument was provided with the command
-    if len(args) < 2:
+    if (args is None) or (len(args) < 2):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, text_cmd_usage,
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -3944,12 +3946,14 @@ async def tlg_app_exit(app: Application) -> None:
     # Request to exit and wait to end coroutines
     logger.info("Bot stopped. Releasing resources...")
     Global.force_exit = True
-    if not Global.async_captcha_timeout.done():
-        logger.info("Waiting end of coroutine: captcha_timeout()")
-        await Global.async_captcha_timeout
-    if not Global.async_auto_delete_messages.done():
-        logger.info("Waiting end of coroutine: async_auto_delete_messages()")
-        await Global.async_auto_delete_messages
+    if Global.async_captcha_timeout is not None:
+        if not Global.async_captcha_timeout.done():
+            logger.info("Waiting end of coroutine: captcha_timeout()")
+            await Global.async_captcha_timeout
+    if Global.async_auto_delete_messages is not None:
+        if not Global.async_auto_delete_messages.done():
+            logger.info("Waiting end of coroutine: async_auto_delete_messages()")
+            await Global.async_auto_delete_messages
     # Save current session data
     save_session()
     # Close the program
