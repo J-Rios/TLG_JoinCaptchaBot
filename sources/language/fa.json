@@ -6,7 +6,7 @@
         "راهنمای ربات:\n————————————————\n- من یه رباتم که یه کپچا میفرستم برای هر کسی که تو گروه جوین بده, و هرکی نتونه تو یه زمان خاصی جوابش بده رو از گروه کیک میکنم.\n\n- اگه یکی 5 بار بیاد تو گروه و نتونه حلش کنه, من \"کاربر\" رو ربات تشخیص میدم, و بنش میکنم.\n\n- هر پیامی که توش لینک باشه و از یه \"کاربر\" جدید قبل از حل کردن کپچا ببینم رو پاک میکنم.\n\n- شما باید منو ادمین کنید و قابلیت های کیک و بن کردن کاربرا و حذف پیام ها رو بهم بدید.\n\n- برای اینکه گروه رو شلوغ نکنم, من پیام کپچاهایی که حل نمیشن رو پاک میکنم.\n\n- زمانی که یک فرد مجازه کپچا رو جواب بده به صورت پیشفرض روی 5 دقیقست, ولی با دستور /time قابل عوض شدنه.\n\n- شما میتونید قابلیت کپچا رو با دستور /enable و /disable روشن و خاموش کنید.\n\n- دستورات تنظیمات فقط مخصوص ادمیناست.\n\n- شما میتونید زبانی که دارم صحبت میکنم باهاش رو, با دستور /language عوض کنید.\n\n- همچنین میتونید درجه سختی کپچا رو با دستور /difficulty عوض کنید.\n\n- شما میتونید تنظیم کنید که از همه اعداد و حروف A–Z استفاده کنه, یا اعداد و حروف A–F, یا فقط اعداد (پیشفرض), یا سوالات ریاضی که باید حل بشن, یا یه نظرسنجی شخصی سازی شده, یا یه دکمه که باید بزننش, با دستور /captcha_mode.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- و میتونید با دستور /welcome_msg یه پیام مخصوص برای خوش آمد گویی تنظیم کنید.\n\n- شما میتونید با دستور /restrict_non_text تنظیم کنید که اگه کاربر جدیدی اومد من نزارم بجز پیام های متنی چیز دیگه ای بفرسته.\n\n- اگه ربات شخصیه, میتونید با دستور /allowgroup اجازه گروه رو صادر کنید.\n\n- شما میتونید با دستور /connect تنظیمات یک گروه رو از پیوی ربات عوض کنید.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- دستور /commands رو برای دیدن همه دستورات, و یه توضیح کوچیک در مورد همشون چک کنید.",
 
     "COMMANDS":
-        "لیست همه دستورات:\n————————————————\n/start - مشاهده یک سری اطلاعات در مورد ربات.\n\n/help - مشاهده راهنمای ربات.\n\n/commands - مشاهده این پیام. توضیحات در مورد همه دستورات ربات.\n\n/language - برای تغییر زبان ربات.\n\n/time - برای عوض کردن زمان حل کردن کپچا.\n\n/difficulty - برای عوض کردن درجه سختی کپچا (از 1 تا 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, ban, mute, etc.).\n\n/captcha_mode - برای عوض کردن نوع کپچا (nums: اعداد, hex: اعداد و حروف A-F, ascii: اعداد و حروف A-Z, math: مساله ریاضی, poll: نظرسنجی شخصی سازی شده و شخصی سازی آن, button: فقط یه دکمه).\n\n/captcha_poll - تنظیمات نظرسنجی شخصی سازی شده.\n\n/welcome_msg - برای تنظیم پیام خوش آمدگویی بعد از حل کپچا.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - بعد از اینکه کسی وارد گروه بشه بجز پیام های متنی چیزی نمیتونه بفرسته (عکس, ویدیو, آهنگ) برای یک روز (یا برای همیشه, با نوشتن \"forever\").\n\n/add_ignore - از کاربر کپچا نمیخواد.\n\n/remove_ignore - از کاربر کپچت میخواد.\n\n/ignore_list - ایدی' لیست کاربرانی که ازشون کپچا نمیخواد.\n\n/remove_solve_kick_msg - تنظیم کنید که پیام کپچا و کیک و بن بعد از حل نشدن پاک بشه یا نه.\n\n/remove_welcome_msg - تنظیم کنید که پیام خوش آمد گویی بعد از مدتی پاک بشه.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - اجازه بدید که یه گروه از ربات استفاده کنه (اگه ربات شخصیه).\n\n/enable - روشن کردن کپچا در گروه.\n\n/disable - خاموش کردن کپچا در گروه.\n\n/checkcfg - دیدن تنظیمات کپچا.\n\n/chatid - دیدن چت ایدی چت فعلی.\n\n/connect - وصل شدن به یک گروه برای تنظیمش تو پیوی.\n\n/disconnect - قطع کردن گروهی که تو پیوی درحال تنظیم هستید chat.\n\n/version - دیدن ورژن ربات.\n\n/about - درباره ربات.",
+        "لیست همه دستورات:\n————————————————\n/start - مشاهده یک سری اطلاعات در مورد ربات.\n\n/help - مشاهده راهنمای ربات.\n\n/commands - مشاهده این پیام. توضیحات در مورد همه دستورات ربات.\n\n/language - برای تغییر زبان ربات.\n\n/time - برای عوض کردن زمان حل کردن کپچا.\n\n/difficulty - برای عوض کردن درجه سختی کپچا (از 1 تا 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - برای عوض کردن نوع کپچا (nums: اعداد, hex: اعداد و حروف A-F, ascii: اعداد و حروف A-Z, math: مساله ریاضی, poll: نظرسنجی شخصی سازی شده و شخصی سازی آن, button: فقط یه دکمه).\n\n/captcha_poll - تنظیمات نظرسنجی شخصی سازی شده.\n\n/welcome_msg - برای تنظیم پیام خوش آمدگویی بعد از حل کپچا.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - بعد از اینکه کسی وارد گروه بشه بجز پیام های متنی چیزی نمیتونه بفرسته (عکس, ویدیو, آهنگ) برای یک روز (یا برای همیشه, با نوشتن \"forever\").\n\n/add_ignore - از کاربر کپچا نمیخواد.\n\n/remove_ignore - از کاربر کپچت میخواد.\n\n/ignore_list - ایدی' لیست کاربرانی که ازشون کپچا نمیخواد.\n\n/remove_solve_kick_msg - تنظیم کنید که پیام کپچا و کیک و بن بعد از حل نشدن پاک بشه یا نه.\n\n/remove_welcome_msg - تنظیم کنید که پیام خوش آمد گویی بعد از مدتی پاک بشه.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - اجازه بدید که یه گروه از ربات استفاده کنه (اگه ربات شخصیه).\n\n/enable - روشن کردن کپچا در گروه.\n\n/disable - خاموش کردن کپچا در گروه.\n\n/checkcfg - دیدن تنظیمات کپچا.\n\n/chatid - دیدن چت ایدی چت فعلی.\n\n/connect - وصل شدن به یک گروه برای تنظیمش تو پیوی.\n\n/disconnect - قطع کردن گروهی که تو پیوی درحال تنظیم هستید chat.\n\n/version - دیدن ورژن ربات.\n\n/about - درباره ربات.",
 
     "CMD_NOT_ALLOW":
         "فقط یک ادمین میتونه از این استفاده کنه.",
@@ -69,7 +69,7 @@
         "The command requires a type of restriction to set.",
 
     "CMD_RESTRICTION_AVAILABLE_ARGS":
-        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior).\n\n/restriction ban - Ban the user from the group (the user won't be able to join again).\n\n/restriction mute - Don't allow the user to write messages in the group.\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group.\n\n/restriction mute24h - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media24h - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
 
     "WELCOME_MSG_SET":
         "پیام خوش آمدگویی تنظیم شد.",
@@ -125,6 +125,15 @@
     "NEW_USER_BUTTON_MODE":
         "سلام {}, خوش اومدی به {}. لطفا دکمه زیر رو بزن که تایید بشه که ربات نیستی. اگه نتونی توی {} این کپچا رو حل کنی, به صورت اتوماتیک از گروه کیک میشی.",
 
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
     "CAPTCHA_SOLVED":
         "کپچا حل شد, کاربر تایید شد.\nبه گروه خوش آمدید, {}",
 
@@ -137,7 +146,7 @@
     "CAPTCHA_INCORRECT_MATH":
         "عدد درست نیست. با دقت چک کنید, شما باید مساله ریاضی را حل کنید...",
 
-    "NEW_USER_KICK":
+    "CAPTCHA_FAIL_KICK":
         "{} نتوانست کپچا را حل کند. \"کاربر\" کیک شد.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
@@ -152,17 +161,17 @@
     "CANT_DEL_MSG":
         "من سعی کردم این پیام رو پاک کنم, ولی من دسترسی پاک کردن پیام رو ندارم.",
 
-    "NEW_USER_BAN":
-        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "یک پیام با لینک از {} ارسال شد, و هنوز کپچا رو حل نکرده. پیام پاک شد :)",

@@ -6,7 +6,7 @@
         "Botari buruzko laguntza:\n————————————————\n- Bot bat naiz eta captcha irudi bat bidaltzen diot taldera elkartzen den erabiltzaile berri bakoitzari, baina denbora jakin batean captcha asmatzen ez dutenak kanporatzen (kick) ditut ere.\n\nErabiltzaileren bat 5 aldiz ahalegintzen bada taldera batzen eta ez badu captcha asmatzea lortzen, \"erabiltzaile\" hori Bot bat dela suposatuko dut eta kanporatu ostean blokeatu (ban) egingo dut ezin dezan berriz taldera batu. Gainera, captcha asmatu aurretik \"erabiltzaile\" berri batek URL-rik duen mezurik bidaliko balu, hau Spam bezala tratatuko da eta beraz ezabatua izango da.\n\nGogoratu era egoki batean funtzionatzeko administrazio baimenak eman behar dizkidazula, erabiltzaileak eten eta mezuak taldetik ezabatzeko.\n\n- Taldea garbi mantentzeko nirekin zer ikusia duten mezuak ezabatzen ditut, captcha ez denean asmatu eta erabiltzailea kanporatua izan denean (5 minutu pasa ostean).\n\n- Erabiltzaileek 5 minutu dituzte captcha asmatzeko baina denbora tarte hori /timer komandoaz alda daiteke.\n\n- Captcha bidezko babesa /enable eta /disable komandoen bidez aktibatu eta desaktibatu dezakezu.\n\n- Konfigurazio komandoak taldeko administratzaileek soilik erabili ditzakete.\n\n- Erabiltzen dudan hizkuntza /language komandoaren bitartez alda dezakezu.\n\n- Captcha-ren zailtasun maila /difficulty komandoaren bidez aldatu dezakezu.\n\n- Captcha-ek zenbakiak soilik (defektuz) edo zenbaki eta letrak, or a math equation to be solved, or a custom poll, or just a button, izatea konfiguratu dezakezu /captcha_mode komandoaren bidez.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- Ongietorri mezu pertsonalizatua konfigura dezakezu komandoarekin /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- Erabili /commands komandoa erabilgarri dauden komandoen zerrenda eta hauen deskribatpen txiki bat ikusteko.",
 
     "COMMANDS":
-        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, ban, mute, etc.).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak, math: math equation, poll: custom and configurable poll, button: just a button).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Aukera ematen du captcha ebatzi ondoren bidaltzen den harrera mezu bat konfiguratzeko.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - After a new user solves the captcha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du.",
+        "Komando zerrenda:\n————————————————\n/start - Botaren hasierako informazioa erakusten du.\n\n/help - Laguntza informazioa erakusten du.\n\n/commands - Mezu hau erakusten du. Erabilgarri dauden komando guztien informazioa eta deskribapena .\n\n/language - Boak hitz egingo duen hizkuntza aldatzen uzten du.\n\n/time - Captcha asmatzeko uzten den denbora aldatzen uzten du.\n\n/difficulty - Captcharen zailtasun maila aldatzen uzten du (1etik 5era).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - Captchen karaktere-modua aldatzen uzten du (nums: zenbakiak soilik, hex: zenbakiak eta A-F tarteko letrak, ascii: zenbakiak eta A-Z tarteko letrak, math: math equation, poll: custom and configurable poll, button: just a button).\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - Aukera ematen du captcha ebatzi ondoren bidaltzen den harrera mezu bat konfiguratzeko.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - After a new user solves the captcha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - Captcha babesa aktibatzen du taldean.\n\n/disable - Captcha babesa desaktibatzen du taldean.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - Botaren bertsioa kontsultatu.\n\n/about - Botaren \"Honi buruz...\" informazioa erakusten du.",
 
     "CMD_NOT_ALLOW":
         "Admin batek soilik erabili dezake komando hau.",
@@ -69,7 +69,7 @@
         "The command requires a type of restriction to set.",
 
     "CMD_RESTRICTION_AVAILABLE_ARGS":
-        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior).\n\n/restriction ban - Ban the user from the group (the user won't be able to join again).\n\n/restriction mute - Don't allow the user to write messages in the group.\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group.\n\n/restriction mute24h - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media24h - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
 
     "WELCOME_MSG_SET":
         "Ongi etorri mezua ongi konfiguratuta.",
@@ -125,6 +125,15 @@
     "NEW_USER_BUTTON_MODE":
         "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.\n\n[This text needs translate to actual configured language]",
 
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
     "CAPTCHA_SOLVED":
         "Captcha asmatuta, erabiltzailea egiaztatua.\nOngi etorri {} taldera",
 
@@ -137,7 +146,7 @@
     "CAPTCHA_INCORRECT_MATH":
         "That is not the correct number. Check closely, you need to solve the math equation...",
 
-    "NEW_USER_KICK":
+    "CAPTCHA_FAIL_KICK":
         "{}-k ez du captcha konpondu. \"Erabiltzailea\" kanporatua (kick) izan da.",
 
     "NEW_USER_KICK_NOT_RIGHTS":
@@ -152,17 +161,17 @@
     "CANT_DEL_MSG":
         "Mezu hau ezabatzen saiatu naiz baina ez zaizkit eman beharrezko administrazio baimenak nireak ez diren mezuak ezabatu ahal izateko.",
 
-    "NEW_USER_BAN":
-        "Warning: User {} fail to solve the captcha {} times. \"User\" was banned. To let him/her enter again, an Admin has to manually remove the restrictions of this \"user\" from group settings.",
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
 
     "NEW_USER_BAN_NOT_IN_CHAT":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
 
     "NEW_USER_BAN_NOT_RIGHTS":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but I don't have administration rights to ban users in the group.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
 
     "BOT_CANT_BAN":
-        "Warning: User {} fail to solve the captcha {} times. I tried to ban the \"User\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
 
     "SPAM_DETECTED_RM":
         "{}-k bidalitako URL (edo alias) bat duen mezua detektatu da eta oraindik ez du captcha asmatu. Mezua ezabatua izan da Spam gabeko Telegram baten alde:)",
