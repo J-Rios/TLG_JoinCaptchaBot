@@ -3904,7 +3904,9 @@ def tlg_app_run(app: Application) -> None:
     else:
         logger.info("Setup Bot for Webhook.")
         app.run_webhook(
-            webhook_url=CONST["WEBHOOK_HOST"],
+            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:'
+                        f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
+            url_path=CONST["TOKEN"],
             port=CONST["WEBHOOK_PORT"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"],
             cert=CONST["WEBHOOK_CERT"],

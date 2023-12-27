@@ -351,7 +351,7 @@ TEXT: dict = {
 }
 
 # Bot Commands
-CMD: dict[str, Any] = {
+CMD = {
     "START": {"KEY": "start"},
     "HELP": {"KEY": "help"},
     "COMMANDS": {"KEY": "commands"},
