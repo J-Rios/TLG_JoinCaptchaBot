@@ -40,6 +40,11 @@ from telegram import (
     Update, User
 )
 
+# Python-Telegram_Bot Extension Library
+from telegram.ext import (
+    CommandHandler
+)
+
 # Python-Telegram_Bot Errors Library
 from telegram.error import TelegramError
 
@@ -80,6 +85,11 @@ ANONYMOUS_ADMIN_ID = 1087968824
 ###############################################################################
 # Functions
 ###############################################################################
+
+def tlg_add_cmd(app, key, callback):
+    '''Setup a Bot command and bind it to the specified callback.'''
+    app.add_handler(CommandHandler(key, callback))
+
 
 async def tlg_get_chat(
         bot: Bot,
@@ -616,20 +626,34 @@ def tlg_get_user_name(user: User, truncate_name_len: int = 0):
     return user_name
 
 
-def tlg_has_new_member_join_group(chat_member: ChatMemberUpdated):
+def tlg_member_has_join_group(chat_member: ChatMemberUpdated):
     '''
     Check chat members status changes and detect if the provided member
     has join the current group.
     '''
-    # Check members changes
     result = tlg_extract_members_status_change(chat_member)
     if result is None:
         return False
     was_member, is_member = result
-    # Check if it is a new member join
     if was_member:
         return False
     if not is_member:
+        return False
+    return True
+
+
+def tlg_member_has_left_group(chat_member: ChatMemberUpdated):
+    '''
+    Check chat members status changes and detect if the provided member
+    has join the current group.
+    '''
+    result = tlg_extract_members_status_change(chat_member)
+    if result is None:
+        return False
+    was_member, is_member = result
+    if not was_member:
+        return False
+    if is_member:
         return False
     return True
 

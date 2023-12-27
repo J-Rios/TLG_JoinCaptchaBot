@@ -10,20 +10,24 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    18/02/2023
+    25/12/2023
 Version:
-    1.29.2
+    1.30.0
 '''
 
 ###############################################################################
-### Imported modules ###
+# Imported modules
+###############################################################################
 
 from os import path as os_path
 from os import getenv as os_getenv
+from typing import Any
 from settings import SETTINGS
 
+
 ###############################################################################
-### Constants ###
+# Constants
+###############################################################################
 
 # Actual constants.py full path directory name
 SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
@@ -32,169 +36,175 @@ SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
 CONST = {
 
     # Bot Public or Private
-    "BOT_PRIVATE": \
-        bool(int(os_getenv("CAPTCHABOT_PRIVATE", \
-            SETTINGS["CAPTCHABOT_PRIVATE"]))),
+    "BOT_PRIVATE":
+        bool(int(os_getenv("CAPTCHABOT_PRIVATE",
+                           SETTINGS["CAPTCHABOT_PRIVATE"]))),
 
     # Bot Token (get it from @BotFather)
-    "TOKEN": \
+    "TOKEN":
         os_getenv("CAPTCHABOT_TOKEN", SETTINGS["CAPTCHABOT_TOKEN"]),
 
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
-    "BOT_OWNER": \
+    "BOT_OWNER":
         os_getenv("CAPTCHABOT_OWNER", SETTINGS["CAPTCHABOT_OWNER"]),
 
     # Bot Webhook Host addres (keep in None for Polling or set to a
     # valid address for Webhook)
-    "WEBHOOK_HOST": \
-        os_getenv("CAPTCHABOT_WEBHOOK_HOST", \
-            SETTINGS["CAPTCHABOT_WEBHOOK_HOST"]),
+    "WEBHOOK_HOST":
+        os_getenv("CAPTCHABOT_WEBHOOK_HOST",
+                  SETTINGS["CAPTCHABOT_WEBHOOK_HOST"]),
 
     # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
-    "WEBHOOK_PORT": \
-        int(os_getenv("CAPTCHABOT_WEBHOOK_PORT", \
-            SETTINGS["CAPTCHABOT_WEBHOOK_PORT"])),
+    "WEBHOOK_PORT":
+        int(os_getenv("CAPTCHABOT_WEBHOOK_PORT",
+                      SETTINGS["CAPTCHABOT_WEBHOOK_PORT"])),
 
     # Bot Webhook Certificate file path (this is not used if
     # WEBHOOK_HOST is None)
-    "WEBHOOK_CERT": \
-        os_getenv("CAPTCHABOT_WEBHOOK_CERT", \
-            SETTINGS["CAPTCHABOT_WEBHOOK_CERT"]),
+    "WEBHOOK_CERT":
+        os_getenv("CAPTCHABOT_WEBHOOK_CERT",
+                  SETTINGS["CAPTCHABOT_WEBHOOK_CERT"]),
 
     # Bot Webhook Certificate private key file path (this is not used
     # if WEBHOOK_HOST is None)
-    "WEBHOOK_CERT_PRIV_KEY": \
-        os_getenv("CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY", \
-            SETTINGS["CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY"]),
+    "WEBHOOK_CERT_PRIV_KEY":
+        os_getenv("CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY",
+                  SETTINGS["CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY"]),
+
+    # Bot Webhook Secret Token to verify request from Telegram Server
+    # (don't use the Bot Token, for security reason it must be other)
+    "WEBHOOK_SECRET_TOKEN":
+        os_getenv("CAPTCHABOT_WEBHOOK_SECRET_TOKEN",
+                  SETTINGS["CAPTCHABOT_WEBHOOK_SECRET_TOKEN"]),
 
     # Chats directory path
-    "CHATS_DIR": \
+    "CHATS_DIR":
         os_getenv("CAPTCHABOT_CHATS_DIR", SETTINGS["CAPTCHABOT_CHATS_DIR"]),
 
     # Directory where create/generate temporary captchas
-    "CAPTCHAS_DIR": \
-        os_getenv("CAPTCHABOT_CAPTCHAS_DIR", \
-            SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"]),
+    "CAPTCHAS_DIR":
+        os_getenv("CAPTCHABOT_CAPTCHAS_DIR",
+                  SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"]),
 
     # Global allowed users file path (i.e. to allow blind users)
-    "F_ALLOWED_USERS": \
-        os_getenv("CAPTCHABOT_F_ALLOWED_USERS", \
-            SETTINGS["CAPTCHABOT_F_ALLOWED_USERS"]),
+    "F_ALLOWED_USERS":
+        os_getenv("CAPTCHABOT_F_ALLOWED_USERS",
+                  SETTINGS["CAPTCHABOT_F_ALLOWED_USERS"]),
 
     # Allowed groups to use the Bot when it is Private
-    "F_ALLOWED_GROUPS": \
-        os_getenv("CAPTCHABOT_F_ALLOWED_GROUPS", \
-            SETTINGS["CAPTCHABOT_F_ALLOWED_GROUPS"]),
+    "F_ALLOWED_GROUPS":
+        os_getenv("CAPTCHABOT_F_ALLOWED_GROUPS",
+                  SETTINGS["CAPTCHABOT_F_ALLOWED_GROUPS"]),
 
     # Blocked groups to deny Bot usage (i.e. bad groups that misuse Bot
     # and cause overload)
-    "F_BAN_GROUPS": \
-        os_getenv("CAPTCHABOT_F_BAN_GROUPS", \
-            SETTINGS["CAPTCHABOT_F_BAN_GROUPS"]),
+    "F_BAN_GROUPS":
+        os_getenv("CAPTCHABOT_F_BAN_GROUPS",
+                  SETTINGS["CAPTCHABOT_F_BAN_GROUPS"]),
 
     # Initial enable/disable status at Bot start
-    "INIT_ENABLE": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE", \
-            SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
+    "INIT_ENABLE":
+        bool(int(os_getenv("CAPTCHABOT_INIT_ENABLE",
+                           SETTINGS["CAPTCHABOT_INIT_ENABLE"]))),
 
     # Initial users send URLs enable/disable at Bot start
-    "INIT_URL_ENABLE": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE", \
-            SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
+    "INIT_URL_ENABLE":
+        bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE",
+                           SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
 
     # Initial config regarding remove all messages sent by a user kicked
-    "INIT_RM_ALL_MSG": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_RM_ALL_MSG", \
-            SETTINGS["CAPTCHABOT_INIT_RM_ALL_MSG"]))),
+    "INIT_RM_ALL_MSG":
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_ALL_MSG",
+                           SETTINGS["CAPTCHABOT_INIT_RM_ALL_MSG"]))),
 
     # Initial captcha solve time
-    "INIT_CAPTCHA_TIME": \
-        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN", \
-            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_TIME_MIN"])) * 60,
+    "INIT_CAPTCHA_TIME":
+        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_TIME_MIN",
+                      SETTINGS["CAPTCHABOT_INIT_CAPTCHA_TIME_MIN"])) * 60,
 
     # Initial captcha difficult level
-    "INIT_CAPTCHA_DIFFICULTY_LEVEL": \
-        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL", \
-            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL"])),
+    "INIT_CAPTCHA_DIFFICULTY_LEVEL":
+        int(os_getenv("CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL",
+                      SETTINGS["CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL"])),
 
     # Initial captcha characters mode (ascii, hex, nums, math or button)
-    "INIT_CAPTCHA_CHARS_MODE": \
-        os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE", \
-            SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
+    "INIT_CAPTCHA_CHARS_MODE":
+        os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE",
+                  SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
 
     # Maximum configurable captcha time
-    "MAX_CONFIG_CAPTCHA_TIME": \
-        int(os_getenv("CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME", \
-            SETTINGS["CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME"])),
+    "MAX_CONFIG_CAPTCHA_TIME":
+        int(os_getenv("CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME",
+                      SETTINGS["CAPTCHABOT_MAX_CONFIG_CAPTCHA_TIME"])),
 
     # Standard auto-remove messages sent by Bot timeout (in seconds)
-    "T_DEL_MSG": \
-        int(os_getenv("CAPTCHABOT_T_DEL_MSG", \
-            SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
+    "T_DEL_MSG":
+        int(os_getenv("CAPTCHABOT_T_DEL_MSG",
+                      SETTINGS["CAPTCHABOT_T_DEL_MSG"])),
 
     # Fast auto-remove messages sent by Bot timeout (in seconds)
-    "T_FAST_DEL_MSG": \
-        int(os_getenv("CAPTCHABOT_T_FAST_DEL_MSG", \
-            SETTINGS["CAPTCHABOT_T_FAST_DEL_MSG"])),
+    "T_FAST_DEL_MSG":
+        int(os_getenv("CAPTCHABOT_T_FAST_DEL_MSG",
+                      SETTINGS["CAPTCHABOT_T_FAST_DEL_MSG"])),
 
     # Auto-remove custom welcome message timeout (in seconds)
-    "T_DEL_WELCOME_MSG": \
-        int(os_getenv("CAPTCHABOT_T_DEL_WELCOME_MSG", \
-            SETTINGS["CAPTCHABOT_T_DEL_WELCOME_MSG"])),
+    "T_DEL_WELCOME_MSG":
+        int(os_getenv("CAPTCHABOT_T_DEL_WELCOME_MSG",
+                      SETTINGS["CAPTCHABOT_T_DEL_WELCOME_MSG"])),
 
     # Maximum number of users allowed in each chat ignore list
-    "IGNORE_LIST_MAX": \
-        int(os_getenv("CAPTCHABOT_IGNORE_LIST_MAX", \
-            SETTINGS["CAPTCHABOT_IGNORE_LIST_MAX"])),
+    "IGNORE_LIST_MAX":
+        int(os_getenv("CAPTCHABOT_IGNORE_LIST_MAX",
+                      SETTINGS["CAPTCHABOT_IGNORE_LIST_MAX"])),
 
     # Initial new users just allow to send text messages
-    "INIT_RESTRICT_NON_TEXT_MSG": \
-        int(os_getenv("CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG", \
-            SETTINGS["CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG"])),
+    "INIT_RESTRICT_NON_TEXT_MSG":
+        int(os_getenv("CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG",
+                      SETTINGS["CAPTCHABOT_INIT_RESTRICT_NON_TEXT_MSG"])),
 
     # Custom Welcome message max length
-    "MAX_WELCOME_MSG_LENGTH": \
-        int(os_getenv("CAPTCHABOT_MAX_WELCOME_MSG_LENGTH", \
-            SETTINGS["CAPTCHABOT_MAX_WELCOME_MSG_LENGTH"])),
+    "MAX_WELCOME_MSG_LENGTH":
+        int(os_getenv("CAPTCHABOT_MAX_WELCOME_MSG_LENGTH",
+                      SETTINGS["CAPTCHABOT_MAX_WELCOME_MSG_LENGTH"])),
 
     # Initial remove result messages cgroup onfiguration
-    "INIT_RM_RESULT_MSG": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_RM_RESULT_MSG", \
-            SETTINGS["CAPTCHABOT_INIT_RM_RESULT_MSG"]))),
+    "INIT_RM_RESULT_MSG":
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_RESULT_MSG",
+                           SETTINGS["CAPTCHABOT_INIT_RM_RESULT_MSG"]))),
 
     # Initial remove welcome message group configuration
-    "INIT_RM_WELCOME_MSG": \
-        bool(int(os_getenv("CAPTCHABOT_INIT_RM_WELCOME_MSG", \
-            SETTINGS["CAPTCHABOT_INIT_RM_WELCOME_MSG"]))),
+    "INIT_RM_WELCOME_MSG":
+        bool(int(os_getenv("CAPTCHABOT_INIT_RM_WELCOME_MSG",
+                           SETTINGS["CAPTCHABOT_INIT_RM_WELCOME_MSG"]))),
 
     # Maximum number of allowed captcha Poll options
-    "MAX_POLL_OPTIONS": \
-        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTIONS", \
-            SETTINGS["CAPTCHABOT_MAX_POLL_OPTIONS"])),
+    "MAX_POLL_OPTIONS":
+        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTIONS",
+                      SETTINGS["CAPTCHABOT_MAX_POLL_OPTIONS"])),
 
     # Poll captcha question max length
-    "MAX_POLL_QUESTION_LENGTH": \
-        int(os_getenv("CAPTCHABOT_MAX_POLL_QUESTION_LENGTH", \
-            SETTINGS["CAPTCHABOT_MAX_POLL_QUESTION_LENGTH"])),
+    "MAX_POLL_QUESTION_LENGTH":
+        int(os_getenv("CAPTCHABOT_MAX_POLL_QUESTION_LENGTH",
+                      SETTINGS["CAPTCHABOT_MAX_POLL_QUESTION_LENGTH"])),
 
     # Poll captcha question max length
-    "MAX_POLL_OPTION_LENGTH": \
-        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH", \
-            SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
+    "MAX_POLL_OPTION_LENGTH":
+        int(os_getenv("CAPTCHABOT_MAX_POLL_OPTION_LENGTH",
+                      SETTINGS["CAPTCHABOT_MAX_POLL_OPTION_LENGTH"])),
 
     # Maximum number of times a user joins a group and fail to solve the
     # captcha. If a user don't solve the captcha after this, it will be
     # ban instead kick
-    "MAX_FAIL_BAN": \
-        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN", \
-            SETTINGS["CAPTCHABOT_MAX_FAIL_BAN"])),
+    "MAX_FAIL_BAN":
+        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN",
+                      SETTINGS["CAPTCHABOT_MAX_FAIL_BAN"])),
 
     # Maximum number of times a user fail to solve a Poll captcha.
     # If a user don't solve the captcha after this, it will be ban
     # instead kick
-    "MAX_FAIL_BAN_POLL": \
-        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN_POLL", \
-            SETTINGS["CAPTCHABOT_MAX_FAIL_BAN_POLL"])),
+    "MAX_FAIL_BAN_POLL":
+        int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN_POLL",
+                      SETTINGS["CAPTCHABOT_MAX_FAIL_BAN_POLL"])),
 
     # Last session restorable RAM data backup file path
     "F_SESSION": SCRIPT_PATH + "/session.pkl",
@@ -212,14 +222,13 @@ CONST = {
     "INIT_LINK": "Unknown",
 
     # Initial language at Bot start
-    "INIT_LANG": \
-        os_getenv("CAPTCHABOT_INIT_LANG", \
-            SETTINGS["CAPTCHABOT_INIT_LANG"]),
+    "INIT_LANG":
+        os_getenv("CAPTCHABOT_INIT_LANG", SETTINGS["CAPTCHABOT_INIT_LANG"]),
 
     # Time to restrict sending no-text messages
-    "T_RESTRICT_NO_TEXT_MSG": \
-        int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG", \
-            SETTINGS["CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG"])),
+    "T_RESTRICT_NO_TEXT_MSG":
+        int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG",
+                      SETTINGS["CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG"])),
 
     # Number of seconds in a minute
     "T_SECONDS_IN_MIN": 60,
@@ -307,36 +316,89 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.29.2 (18/02/2023)"
+    "VERSION": "1.30.0 (25/12/2023)"
 }
 
 # Supported languages list
 TEXT: dict = {
-    "AR": {}, # Arabic
-    "BE": {}, # Belarusian
-    "CA": {}, # Catalan
-    "DE": {}, # German
-    "EL": {}, # Greek
-    "EN": {}, # English
-    "EO": {}, # Esperanto
-    "ES": {}, # Spanish
-    "EU": {}, # Basque
-    "FA": {}, # Persian
-    "FI": {}, # Finnish
-    "FR": {}, # French
-    "GL": {}, # Galician
-    "HE": {}, # Hebrew
-    "ID": {}, # Indonesian
-    "IT": {}, # Italian
-    "KN": {}, # Kannada
-    "KO": {}, # Korean
-    "NL": {}, # Dutch
-    "PL": {}, # Polish
-    "PT_BR": {}, # Portuguese (Brasil)
-    "RU": {}, # Rusian
-    "SK": {}, # Slovak
-    "TR": {}, # Turkish
-    "UK": {}, # Ukrainian
-    "UZ": {}, # Uzbek
-    "ZH_CN": {} # Chinese (Mainland)
+    "AR": {},  # Arabic
+    "BE": {},  # Belarusian
+    "CA": {},  # Catalan
+    "DE": {},  # German
+    "EL": {},  # Greek
+    "EN": {},  # English
+    "EO": {},  # Esperanto
+    "ES": {},  # Spanish
+    "EU": {},  # Basque
+    "FA": {},  # Persian
+    "FI": {},  # Finnish
+    "FR": {},  # French
+    "GL": {},  # Galician
+    "HE": {},  # Hebrew
+    "ID": {},  # Indonesian
+    "IT": {},  # Italian
+    "KN": {},  # Kannada
+    "KO": {},  # Korean
+    "NL": {},  # Dutch
+    "PL": {},  # Polish
+    "PT_BR": {},  # Portuguese (Brasil)
+    "RU": {},  # Rusian
+    "SK": {},  # Slovak
+    "TR": {},  # Turkish
+    "UK": {},  # Ukrainian
+    "UZ": {},  # Uzbek
+    "ZH_CN": {}  # Chinese (Mainland)
+}
+
+# Bot Commands
+CMD: dict[str, Any] = {
+    "START": {"KEY": "start"},
+    "HELP": {"KEY": "help"},
+    "COMMANDS": {"KEY": "commands"},
+    "CHECKCFG": {"KEY": "checkcfg"},
+    "CONNECT": {"KEY": "connect"},
+    "DISCONNECT": {"KEY": "disconnect"},
+    "LANGUAGE": {"KEY": "language"},
+    "DIFFICULTY": {"KEY": "difficulty"},
+    "WELCOME_MSG": {"KEY": "welcome_msg"},
+    "WELCOME_MSG_TIME": {"KEY": "welcome_msg_time"},
+    "CAPTCHA_POLL": {"KEY": "captcha_poll"},
+    "RESTRICT_NON_TEXT": {"KEY": "restrict_non_text"},
+    "ADD_IGNORE": {"KEY": "add_ignore"},
+    "REMOVE_IGNORE": {"KEY": "remove_ignore"},
+    "IGNORE_LIST": {"KEY": "ignore_list"},
+    "REMOVE_SOLVE_KICK_MSG": {"KEY": "remove_solve_kick_msg"},
+    "REMOVE_WELCOME_MSG": {"KEY": "remove_welcome_msg"},
+    "REMOVE_ALL_MSG_KICK_ON": {"KEY": "remove_all_msg_kick_on"},
+    "REMOVE_ALL_MSG_KICK_OFF": {"KEY": "remove_all_msg_kick_off"},
+    "URL_ENABLE": {"KEY": "url_enable"},
+    "URL_DISABLE": {"KEY": "url_disable"},
+    "ENABLE": {"KEY": "enable"},
+    "DISABLE": {"KEY": "disable"},
+    "CHATID": {"KEY": "chatid"},
+    "VERSION": {"KEY": "version"},
+    "ABOUT": {"KEY": "about"},
+    "CAPTCHA": {"KEY": "captcha"},
+    "ALLOWUSERLIST": {"KEY": "allowuserlist"},
+    "ALLOWGROUP": {"KEY": "allowgroup"},
+
+    "TIME": {
+        "KEY": "time",
+        "ARGV": ["m", "min", "mins", "minutes", "s", "sec", "secs",
+                 "seconds"]
+    },
+
+    "CAPTCHA_MODE": {
+        "KEY": "captcha_mode",
+        "ARGV": ["poll", "button", "nums", "hex", "ascii", "math",
+                 "random"]
+    },
+
+    "RESTRICTION": {
+        "KEY": "restriction",
+        "ARGV": ["kick", "mute", "media"],
+        "KICK": "kick",
+        "MUTE": "mute",
+        "MEDIA": "media",
+    }
 }

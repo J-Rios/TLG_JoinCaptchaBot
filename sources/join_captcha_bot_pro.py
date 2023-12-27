@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    14/01/2023
+    27/12/2023
 Version:
-    1.29.2
+    1.30.0
 '''
 
 ###############################################################################
@@ -79,8 +79,8 @@ from telegram import (
 
 # Python-Telegram_Bot Extension Library
 from telegram.ext import (
-    Application, CallbackQueryHandler, ChatMemberHandler, CommandHandler,
-    ContextTypes, Defaults, filters, MessageHandler, PollAnswerHandler,
+    Application, CallbackQueryHandler, ChatMemberHandler, ContextTypes,
+    Defaults, filters, MessageHandler, PollAnswerHandler,
 )
 
 # Python-Telegram_Bot Helpers Library
@@ -101,13 +101,13 @@ from telegram.error import (
 
 # Telegram Bot Ease Library
 from tlgbotutils import (
-    tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
+    tlg_add_cmd, tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
     tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
     tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
     tlg_restrict_user, tlg_unrestrict_user, tlg_is_valid_user_id_or_alias,
     tlg_is_valid_group, tlg_alias_in_string, tlg_extract_members_status_change,
     tlg_get_msg, tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
-    tlg_has_new_member_join_group, tlg_get_msg_topic
+    tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic
 )
 
 # Commons Library
@@ -118,7 +118,7 @@ from commons import (
 
 # Constants Library
 from constants import (
-    SCRIPT_PATH, CONST, TEXT
+    SCRIPT_PATH, CONST, TEXT, CMD
 )
 
 # Thread-Safe JSON Library
@@ -148,7 +148,7 @@ class Globals():
     to_delete_in_time_messages_list: list = []
     new_users: dict = {}
     connections: dict = {}
-    async_captcha_timeout_kick_user: Optional[CoroutineType] = None
+    async_captcha_timeout: Optional[CoroutineType] = None
     async_auto_delete_messages: Optional[CoroutineType] = None
     force_exit: bool = False
 
@@ -182,6 +182,7 @@ def get_default_config_data():
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
+        ("Fail_Restriction", CMD["RESTRICTION"]["KICK"]),
         ("Restrict_Non_Text", CONST["INIT_RESTRICT_NON_TEXT_MSG"]),
         ("Rm_Result_Msg", CONST["INIT_RM_RESULT_MSG"]),
         ("Rm_Welcome_Msg", CONST["INIT_RM_WELCOME_MSG"]),
@@ -342,6 +343,18 @@ def tlg_autodelete_msg(message, time_delete_sec=CONST["T_DEL_MSG"]):
     return True
 
 
+async def bot_send_msg(bot, chat_id, msg_text, rm_result_msg):
+    '''
+    Send a normal or an auto-delete Telegram message depending of
+    rm_result_msg argument.
+    '''
+    if rm_result_msg:
+        await tlg_send_autodelete_msg(
+                bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+    else:
+        await tlg_send_msg(bot, chat_id, msg_text)
+
+
 ###############################################################################
 # General Functions
 ###############################################################################
@@ -464,6 +477,13 @@ def load_urls_regex(file_path):
         logger.error(format_exc())
         logger.error("Fail to open file \"%s\"", file_path)
     if len(list_file_lines) > 0:
+        # Remove last '|' from TLDs list item
+        num_tlds = len(list_file_lines)
+        last_tld = list_file_lines[num_tlds-1]
+        if last_tld[-1] == '|':
+            last_tld = last_tld[:-1]
+            list_file_lines[num_tlds-1] = last_tld
+        # Add all TLDs substring to the URL Regex
         tlds_str = "".join(list_file_lines)
     CONST["REGEX_URLS"] = CONST["REGEX_URLS"].format(tlds_str)
 
@@ -662,6 +682,11 @@ def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
     else:
         if solve_num.lower() in msg_text.lower():
             return True
+        # Check if the message is the valid number but with spaces
+        if len(msg_text) == len("1 2 3 4"):
+            solve_num_with_spaces = " ".join(solve_num)
+            if solve_num_with_spaces.lower() == msg_text.lower():
+                return True
     return False
 
 
@@ -707,36 +732,100 @@ async def should_manage_captcha(update, bot):
     return True
 
 
-async def captcha_fail_kick_ban_member(
-        bot, chat_id, user_id, max_join_retries):
+async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
+    '''Restrict an user in order to deny it send any kind of message.'''
+    restrict_success = await tlg_restrict_user(
+        bot, chat_id, user_id,
+        send_msg=False,
+        send_media=False,
+        send_polls=False,
+        send_stickers_gifs=False,
+        insert_links=False,
+        change_group_info=False,
+        invite_members=False,
+        pin_messages=False,
+        manage_topics=False,
+        until_date=until_date)
+    return restrict_success
+
+
+async def restrict_user_media(bot, chat_id, user_id, until_date=None):
+    '''Restrict an user in order to deny it send media messages.'''
+    restrict_success = await tlg_restrict_user(
+        bot, chat_id, user_id,
+        send_msg=True,
+        send_media=False,
+        send_polls=False,
+        send_stickers_gifs=False,
+        insert_links=False,
+        change_group_info=False,
+        invite_members=False,
+        pin_messages=False,
+        manage_topics=False,
+        until_date=until_date)
+    return restrict_success
+
+
+async def captcha_fail_member_mute(bot, chat_id, user_id, user_name):
     '''
-    Kick/Ban a new member that has fail to solve the captcha.
+    Restrict the user to deny send any kind of message for 24h.
+    '''
+    lang = get_chat_config(chat_id, "Language")
+    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
+    mute_until_24h = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+    logger.info("[%s] Captcha Fail - Mute - %s (%s)",
+                chat_id, user_name, user_id)
+    success = await restrict_user_mute(bot, chat_id, user_id, mute_until_24h)
+    if success:
+        msg_text = TEXT[lang]["CAPTCHA_FAIL_MUTE"].format(user_name)
+    else:
+        msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+
+
+async def captcha_fail_member_no_media(bot, chat_id, user_id, user_name):
+    '''
+    Restrict the user to deny send media messages (images, video, audio,
+    etc.) for 24h.
+    '''
+    lang = get_chat_config(chat_id, "Language")
+    mute_until_24h = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
+    logger.info("[%s] Captcha Fail - Media - %s (%s)",
+                chat_id, user_name, user_id)
+    success = await restrict_user_media(bot, chat_id, user_id, mute_until_24h)
+    if success:
+        msg_text = TEXT[lang]["CAPTCHA_FAIL_NO_MEDIA"].format(user_name)
+    else:
+        msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
+    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+
+
+async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
+    '''
+    Kick or Ban the user from the group.
     '''
     banned = False
+    max_join_retries = CONST["MAX_FAIL_BAN_POLL"]
     # Get parameters
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
     join_retries = \
         Global.new_users[chat_id][user_id]["join_data"]["join_retries"]
     logger.info("[%s] %s join_retries: %d", chat_id, user_id, join_retries)
     # Kick if user has fail to solve the captcha less than
     # "max_join_retries"
     if join_retries < max_join_retries:
-        logger.info(
-                "[%s] Captcha not solved, kicking %s (%s)...",
-                chat_id, user_name, user_id)
+        logger.info("[%s] Captcha Fail - Kick - %s (%s)",
+                    chat_id, user_name, user_id)
         # Try to kick the user
         kick_result = await tlg_kick_user(bot, chat_id, user_id)
         if kick_result["error"] == "":
             # Kick success
             join_retries = join_retries + 1
-            msg_text = TEXT[lang]["NEW_USER_KICK"].format(user_name)
-            if rm_result_msg:
-                await tlg_send_autodelete_msg(
-                        bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-            else:
-                await tlg_send_msg(bot, chat_id, msg_text)
+            msg_text = TEXT[lang]["CAPTCHA_FAIL_KICK"].format(user_name)
+            await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
         else:
             # Kick fail
             logger.info("[%s] Unable to kick", chat_id)
@@ -745,38 +834,29 @@ async def captcha_fail_kick_ban_member(
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(
                         user_name)
-                if rm_result_msg:
-                    await tlg_send_autodelete_msg(
-                            bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
             elif kick_result["error"] == \
                     "Not enough rights to restrict/unrestrict chat member":
                 # Bot has no privileges to kick
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(
                         user_name)
                 # Send no rights for kick message without auto-remove
-                await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, False)
             else:
                 # For other reason, the Bot can't ban
                 msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                if rm_result_msg:
-                    await tlg_send_autodelete_msg(
-                            bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
-                else:
-                    await tlg_send_msg(bot, chat_id, msg_text)
+                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
     # Ban if user has join "max_join_retries" times without solving
     # the captcha
     else:
-        logger.info(
-                "[%s] Captcha not solved, banning %s (%s)...",
-                chat_id, user_name, user_id)
+        logger.info("[%s] Captcha Fail - Ban - %s (%s)",
+                    chat_id, user_name, user_id)
         # Try to ban the user and notify Admins
         ban_result = await tlg_ban_user(bot, chat_id, user_id)
         if ban_result["error"] == "":
             # Ban success
             banned = True
-            msg_text = TEXT[lang]["NEW_USER_BAN"].format(
+            msg_text = TEXT[lang]["CAPTCHA_FAIL_BAN"].format(
                     user_name, max_join_retries)
         else:
             # Ban fail
@@ -804,7 +884,30 @@ async def captcha_fail_kick_ban_member(
         Global.new_users[chat_id][user_id]["join_data"]["kicked_ban"] = True
         Global.new_users[chat_id][user_id]["join_data"]["join_retries"] = \
             join_retries
-        # Remove join messages
+        # Delete user join info if ban was success
+        if banned:
+            del Global.new_users[chat_id][user_id]
+    except KeyError:
+        logger.warning(
+                "[%s] %s (%d) not in new_users list (already solve captcha)",
+                chat_id, user_name, user_id)
+
+
+async def captcha_fail_member(bot, chat_id, user_id):
+    '''
+    Restrict (Kick, Ban, mute, etc) a new member that has fail to solve
+    the captcha.
+    '''
+    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
+    restriction = get_chat_config(chat_id, "Fail_Restriction")
+    if restriction == CMD["RESTRICTION"]["MUTE"]:
+        await captcha_fail_member_mute(bot, chat_id, user_id, user_name)
+    elif restriction == CMD["RESTRICTION"]["MEDIA"]:
+        await captcha_fail_member_no_media(bot, chat_id, user_id, user_name)
+    else:  # restriction == CMD["RESTRICTION"]["KICK"]
+        await captcha_fail_member_kick(bot, chat_id, user_id, user_name)
+    # Remove join messages
+    try:
         logger.info("[%s] Removing msgs from user %s...", chat_id, user_name)
         join_msg = Global.new_users[chat_id][user_id]["join_msg"]
         if join_msg is not None:
@@ -815,15 +918,12 @@ async def captcha_fail_kick_ban_member(
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
             await tlg_delete_msg(bot, chat_id, msg)
         Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
-        # Delete user join info if ban was success
-        if banned:
+        if restriction != CMD["RESTRICTION"]["KICK"]:
             del Global.new_users[chat_id][user_id]
     except KeyError:
         logger.warning(
                 "[%s] %s (%d) not in new_users list (already solve captcha)",
                 chat_id, user_name, user_id)
-    logger.info("[%s] Kick/Ban process completed", chat_id)
-    logger.info("")
 
 
 ###############################################################################
@@ -847,6 +947,8 @@ async def chat_bot_status_change(
     bot = context.bot
     chat = update.effective_chat
     caused_by_user = update.effective_user
+    if chat is None:
+        return
     # Private Chat
     if chat.type == Chat.PRIVATE:
         return
@@ -865,11 +967,16 @@ async def chat_bot_status_change(
                 admin_language = CONST["INIT_LANG"]
             save_config_property(chat.id, "Language", admin_language)
             # Get and save chat data
+            chat_link = "Unknown"
             if chat.title:
                 save_config_property(chat.id, "Title", chat.title)
+                chat_link = chat.title
             if chat.username:
                 chat_link = f"@{chat.username}"
                 save_config_property(chat.id, "Link", chat_link)
+            logger.info(
+                "[%s] Bot added to group %s by %s (%s)",
+                chat.id, chat_link, caused_by_user.username, caused_by_user.id)
             # Check if Group is not allowed to be used by the Bot
             if not await allowed_in_this_group(bot, chat, caused_by_user):
                 await tlg_leave_chat(bot, chat.id)
@@ -891,7 +998,7 @@ async def chat_bot_status_change(
     # Bot added to channel
     if not was_member and is_member:
         # Leave it (Bot don't allowed to be used in Channels)
-        logger.info("Bot try to be added to a channel")
+        logger.info("Bot added to channel, leaving")
         await tlg_send_msg(bot, chat.id, CONST["BOT_LEAVE_CHANNEL"])
         await tlg_leave_chat(bot, chat.id)
         return
@@ -909,9 +1016,6 @@ async def chat_member_status_change(
     "chat_member" update won't be received.
     '''
     bot = context.bot
-    # Ignore if it is not a new member join
-    if not tlg_has_new_member_join_group(update.chat_member):
-        return
     # Get Chat data
     chat = update.chat_member.chat
     join_user = update.chat_member.new_chat_member.user
@@ -919,6 +1023,14 @@ async def chat_member_status_change(
     # Get User ID and Name
     join_user_id = join_user.id
     join_user_name = tlg_get_user_name(join_user, 35)
+    # Ignore if it is not a new member join
+    if not tlg_member_has_join_group(update.chat_member):
+        # Remove "TheJoinCaptchaBot removed USER" message
+        if tlg_member_has_left_group(update.chat_member):
+            logger.info(
+                "[%s] User %s (%s) left the group",
+                chat.id, join_user_name, join_user_id)
+        return
     logger.info(
             "[%s] New join detected: %s (%s)",
             chat_id, join_user_name, join_user_id)
@@ -1132,22 +1244,10 @@ async def chat_member_status_change(
         # is solve. Allow send text messages for image based captchas
         # that requires it
         if captcha_mode in ["poll", "button"]:
-            await tlg_restrict_user(
-                    bot, chat_id, join_user_id, send_msg=False,
-                    send_media=False, send_stickers_gifs=False,
-                    insert_links=False, send_polls=False, invite_members=False,
-                    pin_messages=False, change_group_info=False,
-                    manage_topics=None)
-        else:
-            # Restrict user to only allow send text messages
-            await tlg_restrict_user(
-                    bot, chat_id, join_user_id, send_msg=True,
-                    send_media=False, send_stickers_gifs=False,
-                    insert_links=False, send_polls=False, invite_members=False,
-                    pin_messages=False, change_group_info=False,
-                    manage_topics=None)
+            await restrict_user_mute(bot, chat_id, join_user_id)
+        else:  # Restrict user to only allow send text messages
+            await restrict_user_media(bot, chat_id, join_user_id)
         logger.info("[%s] Captcha send process completed.", chat_id)
-        logger.info("")
 
 
 async def user_joined_group_msg_rx(
@@ -1187,6 +1287,36 @@ async def user_joined_group_msg_rx(
         # If user has join the group, add the "USER joined the group"
         # message ID to new user data to be removed
         Global.new_users[chat_id][join_user.id]["join_msg"] = msg_id
+
+
+async def user_left_group(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+        ):
+    '''
+    Member left a group or was removed event handler.
+    This handler is trigger when a "USER left group" or
+    "BOT removed USER" message is received in a chat.
+    '''
+    bot = context.bot
+    # Get message data
+    chat_id = None
+    update_msg = tlg_get_msg(update)
+    if update_msg is not None:
+        chat_id = getattr(update_msg, "chat_id", None)
+    if (update_msg is None) or (chat_id is None):
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
+        return
+    msg_id = getattr(update_msg, "message_id", None)
+    if msg_id is None:
+        return
+    if update_msg.from_user.id == bot.id:
+        logger.info(
+            "[%s] Delete \"%s removed %s\" msg",
+            chat_id, update_msg.from_user.username,
+            update_msg.left_chat_member.username)
+        await tlg_delete_msg(bot, chat_id, msg_id)
 
 
 async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1406,11 +1536,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_delete_msg(bot, chat_id, msg_id)
         # Send message solve message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
+        await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
                 escape_markdown(user_name, 2))
@@ -1435,19 +1561,10 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Restrict for 1 day
         if restrict_non_text_msgs == 1:
             tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None,
-                    until_date=tomorrow_epoch)
+            await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
         # Restrict forever
         elif restrict_non_text_msgs == 2:
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None)
+            await restrict_user_media(bot, chat_id, user_id)
     # The provided message doesn't has the valid captcha number
     else:
         # Check if the message is for a math equation captcha
@@ -1490,7 +1607,6 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         sent_msg_id)
                 Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
-    logger.info("")
 
 
 async def poll_answer_rx(
@@ -1547,11 +1663,7 @@ async def poll_answer_rx(
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Send captcha solved message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
+        await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         del Global.new_users[chat_id][user_id]
         # Check for custom welcome message and send it
         if welcome_msg != "-":
@@ -1571,34 +1683,20 @@ async def poll_answer_rx(
         # restrictions
         if restrict_non_text_msgs == 1:  # Restrict for 1 day
             tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False,  manage_topics=None,
-                    until_date=tomorrow_epoch)
+            await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
         elif restrict_non_text_msgs == 2:  # Restrict forever
-            await tlg_restrict_user(
-                    bot, chat_id, user_id, send_msg=True, send_media=False,
-                    send_stickers_gifs=False, insert_links=False,
-                    send_polls=False, invite_members=False, pin_messages=False,
-                    change_group_info=False, manage_topics=None)
+            await restrict_user_media(bot, chat_id, user_id)
     else:
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
-        bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
-        if rm_result_msg:
-            await tlg_send_autodelete_msg(
-                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-        else:
-            await tlg_send_msg(bot, chat_id, bot_msg)
-        # Wait 10s
-        await asyncio_sleep(10)
-        # Try to kick the user
-        await captcha_fail_kick_ban_member(
-                bot, chat_id, user_id, CONST["MAX_FAIL_BAN_POLL"])
+        restriction = get_chat_config(chat_id, "Fail_Restriction")
+        if restriction == CMD["RESTRICTION"]["KICK"]:
+            bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
+            await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+            await asyncio_sleep(10)
+        # Try to punish the user
+        await captcha_fail_member(bot, chat_id, user_id)
     logger.info("[%s] Poll captcha process completed.", chat_id)
-    logger.info("")
 
 
 async def button_press_rx(
@@ -1716,7 +1814,6 @@ async def button_request_another_captcha_press(bot, query):
         logger.error(format_exc())
         logger.error("Fail to update image for Telegram")
     logger.info("[%s] New captcha request process completed.", chat_id)
-    logger.info("")
 
 
 async def button_im_not_a_bot_press(bot, query):
@@ -1755,11 +1852,7 @@ async def button_im_not_a_bot_press(bot, query):
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
-    if rm_result_msg:
-        await tlg_send_autodelete_msg(
-                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"])
-    else:
-        await tlg_send_msg(bot, chat_id, bot_msg)
+    await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
     # Check for custom welcome message and send it
     welcome_msg = ""
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
@@ -1784,21 +1877,11 @@ async def button_im_not_a_bot_press(bot, query):
     # Restrict for 1 day
     if restrict_non_text_msgs == 1:
         tomorrow_epoch = get_unix_epoch() + CONST["T_RESTRICT_NO_TEXT_MSG"]
-        await tlg_restrict_user(
-                bot, chat_id, user_id, send_msg=True, send_media=False,
-                send_stickers_gifs=False, insert_links=False, send_polls=False,
-                invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=None,
-                until_date=tomorrow_epoch)
+        await restrict_user_media(bot, chat_id, user_id, tomorrow_epoch)
     # Restrict forever
     elif restrict_non_text_msgs == 2:
-        await tlg_restrict_user(
-                bot, chat_id, user_id, send_msg=True, send_media=False,
-                send_stickers_gifs=False, insert_links=False, send_polls=False,
-                invite_members=False, pin_messages=False,
-                change_group_info=False, manage_topics=None)
+        await restrict_user_media(bot, chat_id, user_id)
     logger.info("[%s] Button-only challenge process completed.", chat_id)
-    logger.info("")
 
 
 ###############################################################################
@@ -1924,7 +2007,7 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check for group chat ID
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["CONNECT_USAGE"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2071,7 +2154,7 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         msg_text = TEXT[lang]["LANG_NOT_ARG"].format(
                 CONST["SUPPORTED_LANGS_CMDS"])
         await tlg_send_msg_type_chat(
@@ -2131,7 +2214,7 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2217,7 +2300,7 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["DIFFICULTY_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2270,7 +2353,7 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2283,6 +2366,66 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:
         bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
+    await tlg_send_msg_type_chat(
+            bot, chat_type, chat_id, bot_msg,
+            topic_id=tlg_get_msg_topic(update_msg))
+
+
+async def cmd_restriction(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE
+        ):
+    '''
+    Command /restriction message handler.
+    To configure type of restriction to apply on users that fails the
+    captcha in a group.
+    '''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        if user_id not in Global.connections:
+            await tlg_send_msg_type_chat(
+                    bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = Global.connections[user_id]["group_id"]
+    else:
+        # Remove command message automatically after a while
+        tlg_autodelete_msg(update_msg)
+        # Ignore if not requested by a group Admin
+        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
+        if (is_admin is None) or (is_admin is False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+    # Check if no argument was provided with the command
+    if (args is None) or (len(args) == 0):
+        msg_text = "{}\n\n{}".format(
+            TEXT[lang]["CMD_RESTRICTION_NOT_ARG"],
+            TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
+        await tlg_send_msg_type_chat(
+                bot, chat_type, chat_id, msg_text,
+                topic_id=tlg_get_msg_topic(update_msg))
+        return
+    # Get and configure chat to provided restriction
+    restriction_type = args[0].lower()
+    if (restriction_type in CMD["RESTRICTION"]["ARGV"]):
+        save_config_property(group_id, "Fail_Restriction", restriction_type)
+        bot_msg = TEXT[lang]["CMD_RESTRICTION_CHANGE"].format(restriction_type)
+    else:
+        bot_msg = "{}\n\n{}".format(
+            TEXT[lang]["CMD_INVALID_PARAMETER"],
+            TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
     await tlg_send_msg_type_chat(
             bot, chat_type, chat_id, bot_msg,
             topic_id=tlg_get_msg_topic(update_msg))
@@ -2321,7 +2464,7 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2381,7 +2524,7 @@ async def cmd_welcome_msg_time(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2472,7 +2615,7 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
             CONST["MAX_POLL_OPTION_LENGTH"],
             CONST["MAX_POLL_OPTIONS"])
     # Check if no argument was provided with the command
-    if len(args) < 2:
+    if (args is None) or (len(args) < 2):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, text_cmd_usage,
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2613,7 +2756,7 @@ async def cmd_restrict_non_text(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
@@ -2679,7 +2822,7 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2741,7 +2884,7 @@ async def cmd_remove_ignore(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id,
                 TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"],
@@ -2839,7 +2982,7 @@ async def cmd_remove_solve_kick_msg(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["RM_SOLVE_KICK_MSG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -2895,7 +3038,7 @@ async def cmd_remove_welcome_msg(
         group_id = chat_id
         lang = get_chat_config(group_id, "Language")
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
                 bot, chat_type, chat_id, TEXT[lang]["RM_WELCOME_MSG"],
                 topic_id=tlg_get_msg_topic(update_msg))
@@ -3332,7 +3475,7 @@ async def cmd_allowuserlist(
                 bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         # Show Actual Global allowed list Users
         l_white_users = file_read(CONST["F_ALLOWED_USERS"])
         bot_msg = "\n".join([str(user) for user in l_white_users])
@@ -3422,7 +3565,7 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
-    if len(args) == 0:
+    if (args is None) or (len(args) == 0):
         # Show Actual Allowed Groups
         l_allowed_groups = file_read(CONST["F_ALLOWED_GROUPS"])
         bot_msg = "\n".join([str(group) for group in l_allowed_groups])
@@ -3525,7 +3668,7 @@ async def auto_delete_messages(bot):
 # Handle captcha process timeout (time to kick/ban users) coroutine
 ###############################################################################
 
-async def captcha_timeout_kick_user(bot):
+async def captcha_timeout(bot):
     '''
     Check if the time for ban new users that has not completed the
     captcha has arrived.
@@ -3581,8 +3724,7 @@ async def captcha_timeout_kick_user(bot):
                         logger.info(
                                 "[%s] Captcha reply timeout for user %s.",
                                 chat_id, user_name)
-                        await captcha_fail_kick_ban_member(
-                                bot, chat_id, user_id, CONST["MAX_FAIL_BAN"])
+                        await captcha_fail_member(bot, chat_id, user_id)
                         await asyncio_sleep(0.01)
                 except Exception:
                     logger.error(format_exc())
@@ -3651,46 +3793,43 @@ def tlg_app_setup(token: str) -> Application:
     # Set Telegram errors handler
     app.add_error_handler(tlg_error_callback)
     # Set all expected commands messages handler
-    app.add_handler(CommandHandler("start", cmd_start))
-    app.add_handler(CommandHandler("help", cmd_help))
-    app.add_handler(CommandHandler("commands", cmd_commands))
-    app.add_handler(CommandHandler("checkcfg", cmd_checkcfg))
-    app.add_handler(CommandHandler("connect", cmd_connect))
-    app.add_handler(CommandHandler("disconnect", cmd_disconnect))
-    app.add_handler(CommandHandler("language", cmd_language))
-    app.add_handler(CommandHandler("time", cmd_time))
-    app.add_handler(CommandHandler("difficulty", cmd_difficulty))
-    app.add_handler(CommandHandler("captcha_mode", cmd_captcha_mode))
-    app.add_handler(CommandHandler("welcome_msg", cmd_welcome_msg))
-    app.add_handler(CommandHandler("welcome_msg_time", cmd_welcome_msg_time))
-    app.add_handler(CommandHandler("captcha_poll", cmd_captcha_poll))
-    app.add_handler(CommandHandler("restrict_non_text", cmd_restrict_non_text))
-    app.add_handler(CommandHandler("add_ignore", cmd_add_ignore))
-    app.add_handler(CommandHandler("remove_ignore", cmd_remove_ignore))
-    app.add_handler(CommandHandler("ignore_list", cmd_ignore_list))
-    app.add_handler(
-        CommandHandler("remove_solve_kick_msg", cmd_remove_solve_kick_msg)
-    )
-    app.add_handler(
-            CommandHandler("remove_welcome_msg", cmd_remove_welcome_msg))
-    app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_on", cmd_remove_all_msg_kick_on))
-    app.add_handler(
-            CommandHandler(
-                    "remove_all_msg_kick_off", cmd_remove_all_msg_kick_off))
-    app.add_handler(CommandHandler("url_enable", cmd_url_enable))
-    app.add_handler(CommandHandler("url_disable", cmd_url_disable))
-    app.add_handler(CommandHandler("enable", cmd_enable))
-    app.add_handler(CommandHandler("disable", cmd_disable))
-    app.add_handler(CommandHandler("chatid", cmd_chatid))
-    app.add_handler(CommandHandler("version", cmd_version))
-    app.add_handler(CommandHandler("about", cmd_about))
+    tlg_add_cmd(app, CMD["START"]["KEY"], cmd_start)
+    tlg_add_cmd(app, CMD["HELP"]["KEY"], cmd_help)
+    tlg_add_cmd(app, CMD["COMMANDS"]["KEY"], cmd_commands)
+    tlg_add_cmd(app, CMD["CHECKCFG"]["KEY"], cmd_checkcfg)
+    tlg_add_cmd(app, CMD["CONNECT"]["KEY"], cmd_connect)
+    tlg_add_cmd(app, CMD["DISCONNECT"]["KEY"], cmd_disconnect)
+    tlg_add_cmd(app, CMD["LANGUAGE"]["KEY"], cmd_language)
+    tlg_add_cmd(app, CMD["TIME"]["KEY"], cmd_time)
+    tlg_add_cmd(app, CMD["DIFFICULTY"]["KEY"], cmd_difficulty)
+    tlg_add_cmd(app, CMD["CAPTCHA_MODE"]["KEY"], cmd_captcha_mode)
+    tlg_add_cmd(app, CMD["RESTRICTION"]["KEY"], cmd_restriction)
+    tlg_add_cmd(app, CMD["WELCOME_MSG"]["KEY"], cmd_welcome_msg)
+    tlg_add_cmd(app, CMD["WELCOME_MSG_TIME"]["KEY"], cmd_welcome_msg_time)
+    tlg_add_cmd(app, CMD["CAPTCHA_POLL"]["KEY"], cmd_captcha_poll)
+    tlg_add_cmd(app, CMD["RESTRICT_NON_TEXT"]["KEY"], cmd_restrict_non_text)
+    tlg_add_cmd(app, CMD["ADD_IGNORE"]["KEY"], cmd_add_ignore)
+    tlg_add_cmd(app, CMD["REMOVE_IGNORE"]["KEY"], cmd_remove_ignore)
+    tlg_add_cmd(app, CMD["IGNORE_LIST"]["KEY"], cmd_ignore_list)
+    tlg_add_cmd(app, CMD["REMOVE_WELCOME_MSG"]["KEY"], cmd_remove_welcome_msg)
+    tlg_add_cmd(app, CMD["REMOVE_SOLVE_KICK_MSG"]["KEY"],
+                cmd_remove_solve_kick_msg)
+    tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_ON"]["KEY"],
+                cmd_remove_all_msg_kick_on)
+    tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_OFF"]["KEY"],
+                cmd_remove_all_msg_kick_off)
+    tlg_add_cmd(app, CMD["URL_ENABLE"]["KEY"], cmd_url_enable)
+    tlg_add_cmd(app, CMD["URL_DISABLE"]["KEY"], cmd_url_disable)
+    tlg_add_cmd(app, CMD["ENABLE"]["KEY"], cmd_enable)
+    tlg_add_cmd(app, CMD["DISABLE"]["KEY"], cmd_disable)
+    tlg_add_cmd(app, CMD["CHATID"]["KEY"], cmd_chatid)
+    tlg_add_cmd(app, CMD["VERSION"]["KEY"], cmd_version)
+    tlg_add_cmd(app, CMD["ABOUT"]["KEY"], cmd_about)
     if CONST["BOT_OWNER"] != "XXXXXXXXX":
-        app.add_handler(CommandHandler("captcha", cmd_captcha))
-        app.add_handler(CommandHandler("allowuserlist", cmd_allowuserlist))
+        tlg_add_cmd(app, CMD["CAPTCHA"]["KEY"], cmd_captcha)
+        tlg_add_cmd(app, CMD["ALLOWUSERLIST"]["KEY"], cmd_allowuserlist)
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
-        app.add_handler(CommandHandler("allowgroup", cmd_allowgroup))
+        tlg_add_cmd(app, CMD["ALLOWGROUP"]["KEY"], cmd_allowgroup)
     # Set to application handler for reception of text messages
     app.add_handler(MessageHandler(filters.TEXT, text_msg_rx, block=False))
     # Set to application not text messages handler
@@ -3722,6 +3861,14 @@ def tlg_app_setup(token: str) -> Application:
             MessageHandler(
                     filters.StatusUpdate.NEW_CHAT_MEMBERS,
                     user_joined_group_msg_rx
+            )
+    )
+    # Set to application "USER left the group" or "BOT removed USER"
+    # messages event handlers
+    app.add_handler(
+            MessageHandler(
+                    filters.StatusUpdate.LEFT_CHAT_MEMBER,
+                    user_left_group
             )
     )
     # Set to application inline keyboard callback handler for new captcha
@@ -3757,11 +3904,13 @@ def tlg_app_run(app: Application) -> None:
     else:
         logger.info("Setup Bot for Webhook.")
         app.run_webhook(
-            drop_pending_updates=True, listen="0.0.0.0",
-            port=CONST["WEBHOOK_PORT"], url_path=CONST["TOKEN"],
-            key=CONST["WEBHOOK_CERT_PRIV_KEY"], cert=CONST["WEBHOOK_CERT"],
-            webhook_url=f'https://{CONST["WEBHOOK_HOST"]}:'
-                        f'{CONST["WEBHOOK_PORT"]}/{CONST["TOKEN"]}',
+            webhook_url=CONST["WEBHOOK_HOST"],
+            port=CONST["WEBHOOK_PORT"],
+            key=CONST["WEBHOOK_CERT_PRIV_KEY"],
+            cert=CONST["WEBHOOK_CERT"],
+            secret_token=CONST["WEBHOOK_SECRET_TOKEN"],
+            listen="0.0.0.0",
+            drop_pending_updates=True,
             allowed_updates=Update.ALL_TYPES
         )
     logger.info("Bot Application Finished")
@@ -3777,8 +3926,8 @@ async def tlg_app_start(app: Application) -> None:
     This function is called at the startup of run_polling() or
     run_webhook() functions.'''
     # Launch delete messages and kick users coroutines
-    Global.async_captcha_timeout_kick_user = \
-        asyncio_create_task(captcha_timeout_kick_user(app.bot))
+    Global.async_captcha_timeout = \
+        asyncio_create_task(captcha_timeout(app.bot))
     Global.async_auto_delete_messages = \
         asyncio_create_task(auto_delete_messages(app.bot))
     logger.info("Auto-delete messages and captcha timeout coroutines started.")
@@ -3798,12 +3947,14 @@ async def tlg_app_exit(app: Application) -> None:
     # Request to exit and wait to end coroutines
     logger.info("Bot stopped. Releasing resources...")
     Global.force_exit = True
-    if not Global.async_captcha_timeout_kick_user.done():
-        logger.info("Waiting end of coroutine: captcha_timeout_kick_user()")
-        await Global.async_captcha_timeout_kick_user
-    if not Global.async_auto_delete_messages.done():
-        logger.info("Waiting end of coroutine: async_auto_delete_messages()")
-        await Global.async_auto_delete_messages
+    if Global.async_captcha_timeout is not None:
+        if not Global.async_captcha_timeout.done():
+            logger.info("Waiting coroutine end: captcha_timeout()")
+            await Global.async_captcha_timeout
+    if Global.async_auto_delete_messages is not None:
+        if not Global.async_auto_delete_messages.done():
+            logger.info("Waiting coroutine end: async_auto_delete_messages()")
+            await Global.async_auto_delete_messages
     # Save current session data
     save_session()
     # Close the program
