@@ -1245,7 +1245,6 @@ async def chat_member_status_change(
         else: # Restrict user to only allow send text messages
             await restrict_user_media(bot, chat_id, join_user_id)
         logger.info("[%s] Captcha send process completed.", chat_id)
-        logger.info("")
 
 
 async def user_joined_group_msg_rx(
@@ -1605,7 +1604,6 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         sent_msg_id)
                 Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
-    logger.info("")
 
 
 async def poll_answer_rx(
@@ -1688,14 +1686,14 @@ async def poll_answer_rx(
     else:
         # Notify captcha fail
         logger.info("[%s] User %s fail poll.", chat_id, user_name)
-        bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
-        await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
-        # Wait 10s
-        await asyncio_sleep(10)
+        restriction = get_chat_config(chat_id, "Fail_Restriction")
+        if restriction == CMD["RESTRICTION"]["KICK"]:
+            bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
+            await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+            await asyncio_sleep(10)
         # Try to punish the user
         await captcha_fail_member(bot, chat_id, user_id)
     logger.info("[%s] Poll captcha process completed.", chat_id)
-    logger.info("")
 
 
 async def button_press_rx(
@@ -1813,7 +1811,6 @@ async def button_request_another_captcha_press(bot, query):
         logger.error(format_exc())
         logger.error("Fail to update image for Telegram")
     logger.info("[%s] New captcha request process completed.", chat_id)
-    logger.info("")
 
 
 async def button_im_not_a_bot_press(bot, query):
@@ -1882,7 +1879,6 @@ async def button_im_not_a_bot_press(bot, query):
     elif restrict_non_text_msgs == 2:
         await restrict_user_media(bot, chat_id, user_id)
     logger.info("[%s] Button-only challenge process completed.", chat_id)
-    logger.info("")
 
 
 ###############################################################################
