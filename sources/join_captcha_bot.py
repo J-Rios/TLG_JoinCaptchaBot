@@ -683,6 +683,11 @@ def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
     else:
         if solve_num.lower() in msg_text.lower():
             return True
+        # Check if the message is the valid number but with spaces
+        if len(msg_text) == len("1 2 3 4"):
+            solve_num_with_spaces = " ".join(solve_num)
+            if solve_num_with_spaces.lower() == msg_text.lower():
+                return True
     return False
 
 
