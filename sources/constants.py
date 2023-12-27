@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    25/12/2023
+    27/12/2023
 Version:
     1.30.0
 '''
@@ -314,7 +314,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.30.0 (25/12/2023)"
+    "VERSION": "1.30.0 (27/12/2023)"
 }
 
 # Supported languages list
