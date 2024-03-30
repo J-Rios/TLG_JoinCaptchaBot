@@ -41,20 +41,23 @@ SETTINGS = {
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
     "CAPTCHABOT_OWNER": "XXXXXXXXX",
 
-    # Bot Webhook Host address (keep in "None" for Polling or set to a
+    # Bot Webhook URL (keep in "None" for Polling or set to a
     # valid address for Webhook)
-    "CAPTCHABOT_WEBHOOK_HOST": "None",
+    "CAPTCHABOT_WEBHOOK_URL": "None",
 
-    # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
+    # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
     # For Heroku, use the following: os_environ.get("PORT", "80")
     "CAPTCHABOT_WEBHOOK_PORT": 8443,
 
+    # Bot Webhook Path (this is not used if WEBHOOK_URL is None)
+    "CAPTCHABOT_WEBHOOK_PATH": "/TLG_JoinCaptchaBot",
+
     # Bot Webhook Certificate file path (this is not used if
-    # WEBHOOK_HOST is None)
+    # WEBHOOK_URL is None)
     "CAPTCHABOT_WEBHOOK_CERT": SCRIPT_PATH + "/cert.pem",
 
     # Bot Webhook Certificate private key file path (this is not used
-    # if WEBHOOK_HOST is None)
+    # if WEBHOOK_URL is None)
     "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY": SCRIPT_PATH + "/private.key",
 
     # Bot Webhook Secret Token to verify request from Telegram Server
