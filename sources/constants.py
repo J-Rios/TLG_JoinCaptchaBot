@@ -48,25 +48,35 @@ CONST = {
     "BOT_OWNER":
         os_getenv("CAPTCHABOT_OWNER", SETTINGS["CAPTCHABOT_OWNER"]),
 
-    # Bot Webhook Host addres (keep in None for Polling or set to a
+    # Bot Webhook URL (keep in None for Polling or set to a
     # valid address for Webhook)
-    "WEBHOOK_HOST":
-        os_getenv("CAPTCHABOT_WEBHOOK_HOST",
-                  SETTINGS["CAPTCHABOT_WEBHOOK_HOST"]),
+    "WEBHOOK_URL":
+        os_getenv("CAPTCHABOT_WEBHOOK_URL",
+                  SETTINGS["CAPTCHABOT_WEBHOOK_URL"]),
 
-    # Bot Webhook Host Port (this is not used if WEBHOOK_HOST is None)
+    # Bot Webhook Listen Address (this is not used if WEBHOOK_URL is None)
+    "WEBHOOK_IP":
+        os_getenv("CAPTCHABOT_WEBHOOK_IP",
+                      SETTINGS["CAPTCHABOT_WEBHOOK_IP"]),
+
+    # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
     "WEBHOOK_PORT":
         int(os_getenv("CAPTCHABOT_WEBHOOK_PORT",
                       SETTINGS["CAPTCHABOT_WEBHOOK_PORT"])),
 
+    # Bot Webhook path (this is not used if WEBHOOK_URL is None)
+    "WEBHOOK_PATH":
+        os_getenv("CAPTCHABOT_WEBHOOK_PATH",
+                      SETTINGS["CAPTCHABOT_WEBHOOK_PATH"]),
+
     # Bot Webhook Certificate file path (this is not used if
-    # WEBHOOK_HOST is None)
+    # WEBHOOK_URL is None)
     "WEBHOOK_CERT":
         os_getenv("CAPTCHABOT_WEBHOOK_CERT",
                   SETTINGS["CAPTCHABOT_WEBHOOK_CERT"]),
 
     # Bot Webhook Certificate private key file path (this is not used
-    # if WEBHOOK_HOST is None)
+    # if WEBHOOK_URL is None)
     "WEBHOOK_CERT_PRIV_KEY":
         os_getenv("CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY",
                   SETTINGS["CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY"]),
