@@ -149,11 +149,13 @@ To use Webhook instead Polling, you need a signed certificate file in the system
 openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
 ```
 
-Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected Webhook Host address, port and certificate file:
+Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected Webhook URL, Host address, port, path and certificate file:
 
 ```python
-"WEBHOOK_HOST": "Current system IP/DNS here",
+"WEBHOOK_URL": "https://example.com:8443/TLG_JoinCaptchaBot"
+"WEBHOOK_IP": "0.0.0.0",
 "WEBHOOK_PORT": 8443,
+"WEBHOOK_PATH": "/TLG_JoinCaptchaBot"
 "WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
 "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
 ```
@@ -161,7 +163,7 @@ Once you have the key and cert files, setup the next lines in "settings.py" file
 To use Polling instead Webhook, just set host value back to none:
 
 ```python
-"WEBHOOK_HOST": "None",
+"WEBHOOK_URL": "None",
 ```
 
 ## Environment Variables Setup

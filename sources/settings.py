@@ -43,7 +43,14 @@ SETTINGS = {
 
     # Bot Webhook URL (keep in "None" for Polling or set to a
     # valid address for Webhook)
+    # This is the address that the Telegram server should call.
+    # If you are not using a reverse proxy, then the WEBHOOK_URL
+    # should look something like this:
+    # https://example.com:{WEBHOOK_PORT}/{WEBHOOK_PATH}
     "CAPTCHABOT_WEBHOOK_URL": "None",
+
+    # Bot Webhook Listen address (this is not used if WEBHOOK_URL is None)
+    "CAPTCHABOT_WEBHOOK_IP": "0.0.0.0",
 
     # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
     # For Heroku, use the following: os_environ.get("PORT", "80")

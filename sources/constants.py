@@ -54,7 +54,12 @@ CONST = {
         os_getenv("CAPTCHABOT_WEBHOOK_URL",
                   SETTINGS["CAPTCHABOT_WEBHOOK_URL"]),
 
-    # Bot Webhook Host Port (this is not used if WEBHOOK_URL is None)
+    # Bot Webhook Listen Address (this is not used if WEBHOOK_URL is None)
+    "WEBHOOK_IP":
+        os_getenv("CAPTCHABOT_WEBHOOK_IP",
+                      SETTINGS["CAPTCHABOT_WEBHOOK_IP"]),
+
+    # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
     "WEBHOOK_PORT":
         int(os_getenv("CAPTCHABOT_WEBHOOK_PORT",
                       SETTINGS["CAPTCHABOT_WEBHOOK_PORT"])),
