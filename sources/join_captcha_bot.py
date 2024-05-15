@@ -3896,7 +3896,7 @@ def tlg_app_run(app: Application) -> None:
     function will be called at the end.
     '''
     logger.info("Bot Application Started")
-    if CONST["WEBHOOK_URL"] == "None":
+    if CONST["WEBHOOK_IP"] == "None":
         logger.info("Setup Bot for Polling.")
         app.run_polling(
             drop_pending_updates=True,
@@ -3905,10 +3905,10 @@ def tlg_app_run(app: Application) -> None:
     else:
         logger.info("Setup Bot for Webhook.")
         app.run_webhook(
-            webhook_url=CONST["WEBHOOK_URL"],
             listen=CONST["WEBHOOK_IP"],
             port=CONST["WEBHOOK_PORT"],
             url_path=CONST["WEBHOOK_PATH"],
+            webhook_url=CONST["WEBHOOK_URL"],
             cert=CONST["WEBHOOK_CERT"],
             key=CONST["WEBHOOK_CERT_PRIV_KEY"],
             secret_token=CONST["WEBHOOK_SECRET_TOKEN"],

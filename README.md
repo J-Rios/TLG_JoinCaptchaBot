@@ -141,7 +141,7 @@ You can set Bot to be Private in "settings.py" file:
 
 ## Scalability (Polling or Webhook)
 
-By default, Bot checks and receives updates from Telegram Servers by **Polling** (requests and get if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use a **Webhook** instead if you expect to handle a large number of users/groups.
+By default, Bot checks and receives updates from Telegram Servers by **Polling** (it requests and gets if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use a **Webhook** instead if you expect to handle a large number of users/groups.
 
 To use Webhook instead Polling, you need a signed certificate file in the system, you can create the key file and self-sign the cert through openssl tool:
 
@@ -149,10 +149,9 @@ To use Webhook instead Polling, you need a signed certificate file in the system
 openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
 ```
 
-Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected Webhook URL, Host address, port, path and certificate file:
+Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected host system address, port, path and certificate files:
 
 ```python
-"WEBHOOK_URL": "https://example.com:8443/TLG_JoinCaptchaBot"
 "WEBHOOK_IP": "0.0.0.0",
 "WEBHOOK_PORT": 8443,
 "WEBHOOK_PATH": "/TLG_JoinCaptchaBot"
@@ -160,10 +159,16 @@ Once you have the key and cert files, setup the next lines in "settings.py" file
 "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
 ```
 
-To use Polling instead Webhook, just set host value back to none:
+In case you want to use a reverse proxy between Telegram Server and the system that runs the Bot, you need to setup the Proxy Webhook URL setting:
 
 ```python
-"WEBHOOK_URL": "None",
+"WEBHOOK_URL": "https://example.com:8443/TLG_JoinCaptchaBot"
+```
+
+To go back and use Polling instead Webhook, just set host address back to none:
+
+```python
+"WEBHOOK_IP": "None",
 ```
 
 ## Environment Variables Setup

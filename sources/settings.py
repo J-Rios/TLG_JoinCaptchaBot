@@ -41,20 +41,19 @@ SETTINGS = {
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
     "CAPTCHABOT_OWNER": "XXXXXXXXX",
 
-    # Bot Webhook URL (keep in "None" for Polling or set to a
+    # Bot Webhook Listen address (keep in "None" for Polling or set to a
     # valid address for Webhook)
-    # This is the address that the Telegram server should call.
-    # If you are not using a reverse proxy, then the WEBHOOK_URL
-    # should look something like this:
-    # https://example.com:{WEBHOOK_PORT}/{WEBHOOK_PATH}
-    "CAPTCHABOT_WEBHOOK_URL": "None",
-
-    # Bot Webhook Listen address (this is not used if WEBHOOK_URL is None)
     "CAPTCHABOT_WEBHOOK_IP": "0.0.0.0",
 
     # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
     # For Heroku, use the following: os_environ.get("PORT", "80")
     "CAPTCHABOT_WEBHOOK_PORT": 8443,
+
+    # Bot Webhook URL
+    # This is the address that the Telegram server should use in case a
+    # reverse proxy is used between Telegram and the Bot.
+    # If you are using a reverse proxy, set this configuration.
+    "CAPTCHABOT_WEBHOOK_URL": "None",
 
     # Bot Webhook Path (this is not used if WEBHOOK_URL is None)
     "CAPTCHABOT_WEBHOOK_PATH": "/TLG_JoinCaptchaBot",
