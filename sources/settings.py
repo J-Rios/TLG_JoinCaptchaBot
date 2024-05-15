@@ -152,7 +152,7 @@ SETTINGS = {
     # Maximum number of times a user joins a group and don't solve the
     # captcha. If a user don't solve the captcha after this, it will be
     # ban instead kick
-    "CAPTCHABOT_MAX_FAIL_BAN": 5,
+    "CAPTCHABOT_MAX_FAIL_BAN": 10,
 
     # Maximum number of times a user fail to solve a Poll captcha.
     # If a user don't solve the captcha after this, it will be ban
