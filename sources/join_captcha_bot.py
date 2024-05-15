@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/12/2023
+    15/05/2024
 Version:
-    1.30.0
+    1.31.0
 '''
 
 ###############################################################################
@@ -808,10 +808,14 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
     Kick or Ban the user from the group.
     '''
     banned = False
-    max_join_retries = CONST["MAX_FAIL_BAN_POLL"]
     # Get parameters
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
+    # Set Max user captcha consecutive retries before Ban
+    max_join_retries = CONST["MAX_FAIL_BAN"]
+    if captcha_mode == "poll":
+        max_join_retries = CONST["MAX_FAIL_BAN_POLL"]
     join_retries = \
         Global.new_users[chat_id][user_id]["join_data"]["join_retries"]
     logger.info("[%s] %s join_retries: %d", chat_id, user_id, join_retries)
