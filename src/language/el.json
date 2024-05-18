@@ -1,0 +1,313 @@
+{
+    "START":
+        "Γεια σου! Είμαι ένα bot που θα στείλει μια εικόνα γρίφο-captcha για κάθε νέο χρήστη που μπαίνει σε ένα group, και απομακρύνει οποιονδήποτε δεν μπορεί να λύσει τον γρίφο captcha στο συγκεκριμένο χρονικό διάστημα.\n\nΑν κάποιος χρήστης προσπαθήσει να μπει στο γκρουπ 5 συνεχόμενες φορές και δεν καταφέρει να λύσει τον γρίφο-captcha, θα υποθέσω ότι αυτός ο \"user\" είναι bot κι αυτός ο χρήστης θα απομακρυνθεί. Επίσης, οποιοδήποτε μήνυμα περιέχει κάποιο url και έχει σταλεί από νέο \"user\" πριν λύσει τον γρίφο-captcha θα θεωρηθεί spam και θα διαγραφεί.\n\nΘυμήσου να μου δώσεις δικαιώματα διαχειριστή για να διώξω κάποιον χρήστη και να να διαγράψω μηνύματα.\n\nΤσέκαρε την εντολή /help για περισσότερες πληροφορίες για την χρήση μου.\n\nΕίμαι χρήσιμο; Τσέκαρε την εντολή /about και αναλογίσου μήπως θες να μου κάνεις κάποια δωρεά για να με κρατήσεις ενεργό.",
+
+    "HELP":
+        "Bot help:\n————————————————\n- Είμαι ένα bot που θα στείλει μια εικόνα γρίφο-captcha για κάθε νέο χρήστη που μπαίνει σε ένα group, και απομακρύνει οποιονδήποτε δεν μπορεί να λύσει τον γρίφο captcha στο συγκεκριμένο χρονικό διάστημα.\n\n- Αν κάποιος χρήστης προσπαθήσει να μπει στο γκρουπ 5 συνεχόμενες φορές και δεν καταφέρει να λύσει τον γρίφο-captcha, θα υποθέσω ότι αυτός ο \"user\" είναι bot και αυτός ο χρήστης θα απομακρυνθεί.\n\n- οποιοδήποτε μήνυμα περιέχει κάποιο url και έχει σταλεί από νέο \"user\" πριν λύσει τον γρίφο-captcha θα θεωρηθεί spam και θα διαγραφεί.\n\n- Πρέπει να μου δώσεις δικαιώματα διαχειριστή ώστε να μπορώ να διώχνω χρήστες και να διαγράφω μηνύματα.\n\n- Για να κρατήσω ένα group καθαρό, διαγράφω αυτόματα όλα τα μηνύματα που σχετίζονται με εμένα όταν ένας γρίφος- captcha δεν λύνεται και ο χρήστης έχει απομακρυνθεί (ύστερα από 5 λεπτά). \n\n- O χρόνος που έχουν οι νέοι χρήστες να λύσουν τον γρίφο-captcha είναι 5 λεπτά από προεπιλογή αλλά μπορεί να αλλάξει χρησιμοποιώντας την εντολή /time.\n\n- Μπορείς να απενεργοποιήσεις την προστασία του γρίφου captcha χρησιμοποιώντας τις εντολές /enable και /disable.\n\n- Εντολές παραμετροποίησης μπορούν μόνο να χρησιμοποιηθούν από τους διαχειριστές ενός group.\n\n- Μπορείς να αλλάξεις την γλώσσα που επικοινωνώ, χρησιμοποιώντας την εντολή /language.\n\n- Μπορείς να παραμετροποιήσεις την δυσκολία του γρίφου captcha χρησιμοποιώντας την εντολή /difficulty.\n\n- Μπορείς να σετάρεις τον γρίφο captcha ώστε να χρησιμοποιεί ολόκληρους αριθμούς και γράμματα A-Z ή αριθμούς και γράμματα Α-F ή απλά αριθμούς (προεπιλογή), or a math equation to be solved, ή κάποια προσαρμοσμένη ψηφοφορία ή κάποιο κουμπί, χρησιμοποιώντας την εντολή /captcha_mode.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- Μπορείτε να διαμορφώσετε ένα προσαρμοσμένο μήνυμα καλωσορίσματος με την εντολή /welcome_msg.\n\n- Μπορείτε να ενεργοποιήσετε μια επιλογή για να μου επιτρέψετε να εφαρμόσω περιορισμούς σε νέους συνδεδεμένους χρήστες για την αποστολή μηνυμάτων κειμένου χρησιμοποιώντας την εντολή /restrict_non_text.\n\n- Εάν το Bot είναι ιδιωτικό, επιτρέψτε ομάδες με την εντολή /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- Ελέγξτε την εντολή /commands για να λάβετε μια λίστα με όλες τις διαθέσιμες εντολές και μια σύντομη περιγραφή όλων αυτών.",
+
+    "COMMANDS":
+        "List of commands:\n————————————————\n/start - Εμφανίζει τις αρχικές πληροφορίες σχετικά με το bot.\n\n/help - Εμφανίζει τις πληροφορίες της βοήθειας.\n\n/commands - Εμφανίζει αυτό το μήνυμα. Πληροφορίες σχετικά με όλες τις διαθέσιμες εντολές και την περιγραφή τους.\n\n/language - Επιτρέπει την αλλαγή της γλώσσας των μηνυμάτων του bot.\n\n/bilanguage - Captcha message text in two languages (english + configured language).\n\n/time - Επιτρέπει την αλλαγή του διαθέσιμου χρόνου για την επίλυση ενός captcha.\n\n/difficulty - Επιτρέπει την αλλαγή του επιπέδου δυσκολίας captcha (από 1 έως 5).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - Επιτρέπει την αλλαγή της λειτουργίας captcha (nums: αριθμοί, hex: αριθμοί και χαρακτήρες A-F, ascii: αριθμοί και χαρακτήρες A-F, math: math equation, poll: προσαρμοσμένη και διαμορφώσιμη δημοσκόπηση, button: απλώς ένα κουμπί).\n\n/captcha_poll - Διαμόρφωση προσαρμοσμένης ερώτησης δημοσκόπησης και επιλογές για captcha σε λειτουργία δημοσκόπησης.\n\n/welcome_msg - Επιτρέπει τη διαμόρφωση ενός μηνύματος καλωσορίσματος που αποστέλλεται μετά την επίλυση του captcha.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - Αφού ο νέος χρήστης επιλύσει το captha, εφαρμόστε έναν περιορισμό για να μην τους αφήσετε να στέλνουν μηνύματα εκτός κειμένου (εικόνες, βίντεο, ήχους) για 1 ημέρα (ή για πάντα, χρησιμοποιώντας \"forever\" τη λέξη-κλειδί).\n\n/add_ignore - Μην ρωτάτε για επίλυση του captcha σε έναν αγνοημένο χρήστη.\n\n/remove_ignore - Σταματήστε να αγνοείτε έναν χρήστη. \n\n/ignore_list - Λίστα με χρήστες που έχουν αγνοηθεί.\n\n/remove_solve_kick_msg - Διαμορφώστε εάν τα μηνύματα επίλυσης του captcha και απομάκρυνσης/ban θα πρέπει να διαγραφούν αυτόματα μετά από λίγο.\n\n/remove_welcome_msg - Επιλέξτε εάν το μήνυμα καλωσορίσματος θα πρέπει να διαγραφεί αυτόματα μετά από λίγο.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Να επιτρέπεται σε μια ομάδα να χρησιμοποιεί το Bot (αν το Bot είναι ιδιωτικό). \n\n/enable - Ενεργοποιήστε την προστασία με χρήση captcha της ομάδας.\n\n/disable - Απενεργοποιήστε την προστασία με χρήση captcha της ομάδας.\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Εμφανίζει το Chat ID του συγκεκριμένου chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - Εμφανίζει την έκδοση του Bot.\n\n/about - Εμφανίζει τις πληροφορίες του about",
+
+    "CMD_NOT_ALLOW":
+        "Μόνο ένας διαχειριστής μπορεί να χρησιμοποιήσει αυτή την εντολή.",
+
+    "CMD_INVALID_PARAMETER":
+        "Invalid command parameter.",
+
+    "LANG_CHANGE":
+        "Η γλώσσα αλλάχθηκε στα Ελληνικά.",
+
+    "LANG_SAME":
+        "Η γλώσσα είναι ήδη στα Ελληνικά.\n\nΥποστηριζόμενες γλώσσες:\n{}",
+
+    "LANG_BAD_LANG":
+        "Η γλώσσα που επιλέχθηκε δεν υποστηρίζεται.\n\nΥποστηριζόμενες γλώσσες:\n{}",
+
+    "LANG_NOT_ARG":
+        "Δεν επιλέχθηκε γλώσσα κατά την εκτέλεση εντολής αλλαγής γλώσσας.\n\nΠαραδείγματα:\n{}",
+
+    "TIME_CHANGE":
+        "O χρόνος επίλυσης των captcha αλλάχθηκε επιτυχώς στα {}.",
+
+    "WELCOME_TIME_CHANGE":
+        "Time to delete welcome message successfully changed to {}.",
+
+    "TIME_OUT_RANGE":
+        "Invalid time, it needs to be in range 10 sec to {} min.",
+
+    "TIME_NOT_NUM":
+        "Η ώρα που έβαλες δεν είναι ακέραιος αριθμός.",
+
+    "TIME_NOT_ARG":
+        "Η εντολή πρέπει να συνοδεύεται από μια τιμή.\n\nΠαραδείγματα:\n/time 30 sec\n/time 5 min\n/time 1 min",
+
+    "WELCOME_TIME_NOT_ARG":
+        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+
+    "DIFFICULTY_CHANGE":
+        "Το επίπεδο δυσκολίας captcha ορίστηκε επιτυχώς στο επίπεδο {}.",
+
+    "DIFFICULTY_NOT_NUM":
+        "Το επίπεδο δυσκολίας captcha που δόθηκε δεν είναι αριθμός.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Η εντολή ρυθμίζει ένα επίπεδο δυσκολίας (από 1 έως 5). Δεν έχει καμία επίδραση στη λειτουργία \"button\".\n\n Παραδείγματα:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Επιτυχής αλλαγή captcha σε \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Μη έγκυρη λειτουργία captcha. Υποστηριζόμενες λειτουργίες: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\n Παράδειγμα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "Η εντολή χρειάζεται να ρυθμίζει μια λειτουργία. Οι παρεχόμενες λειτουργίες είναι:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, numbers and characters A-F (\"hex\").\n- Numbers and characters A-Z Captchas (\"ascii\").\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\n Παραδείγματα:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CMD_RESTRICTION_CHANGE":
+        "Restriction to apply when user fail the captcha changed to \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "The command requires a type of restriction to set.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+
+    "WELCOME_MSG_SET":
+        "Το μήνυμα καλωσορίσματος άλλαξε επιτυχώς.",
+
+    "WELCOME_MSG_UNSET":
+        "Το μήνυμα καλωσορίσματος απενεργοποιήθηκε.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Παραθέστε το μήνυμα καλωσορίσματος μετά την εντολή.\n\nΠαράδειγμα:\n/welcome_msg Χαίρετε $user, καλώς ήρθατε στην ομάδα και θυμηθείτε να σέβεστε τα άλλα μέλη.\n\nΑπενεργοποίηση μηνύματος:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Ο περιορισμός για την αποστολή μόνο μηνυμάτων κειμένου για τους νέους χρήστες είναι ενεργοποιημένος. Θα καταργήσω τα μηνύματα των νέων χρηστών που δεν είναι μηνύματα κειμένου.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Ο περιορισμός για την αποστολή μόνο μηνυμάτων κειμένου για τους νέους χρήστες απενεργοποιήθηκε.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Επιλέξτε εάν θέλετε οι νέοι χρήστες να μπορούν αν στέλνουν και μηνύματα εκτός κειμένου (Μην επιτρέπετε σε έναν χρήστη να στέλνει μηνύματα πολυμέσων ή άλλα μηνύματα αντί για μηνύματα κειμένου. Οι διαχειριστές μπορούν να εκχωρήσουν μη αυτόματα αυτά τα δικαιώματα στους χρήστες στο μέλλον).\n\n Παραδείγματα:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Παρακαλώ, βάλτε το ID/alias του χρήστη μετά την εντολή.\n\n Παράδειγμα:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Αυτό το ID/alias είναι ήδη στη λίστα των ανεπιθύμητων.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Δυστυχώς, έχετε φτάσει το μέγιστο όριο των χρηστών που έχουν προστεθεί στην ανεπιθύμητη λίστα, καταργήστε κάποιον για να προσθέσετε περισσότερους.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "Αυτό το ID/alias είναι μη έγκυρο.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "Το ID/alias προστέθηκε επιτυχώς!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Παρακαλώ, τοποθετήστε το ID/alias του χρήστη μετά την εντολή.\n\n Παράδειγμα:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "Το ID/alias αφαιρέθηκε επιτυχώς!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "Το ID/alias δεν είναι στη λίστα των ανεπιθύμητων, τίποτα δεν έγινε.",
+
+    "IGNORE_LIST_EMPTY":
+        "Η λίστα ανεπιθύμητων του chat είνα άδεια.",
+
+    "NEW_USER_IMG_CAPTION":
+        "Γεια σου {}, καλωσήρθες στο κανάλι {}. Σε παρακαλώ γράψε το μήνυμα με τους αριθμούς και/ή τα γράμματα που εμφανίζονται σε αυτή την εικόνα για να επαληθεύσεις ότι είσαι όντως άνθρωπος και όχι κάποιο bot. Αν δε λύσεις αυτόν τον γρίφο (captcha) μέσα σε {}, θα απομακρυνθείς από το γκρουπ. Στις 5 αποτυχημένες προσπάθειες θα θεωρηθείς κακόβουλο bot και θα μπαναριστείς.",
+
+    "NEW_USER_MATH_CAPTION":
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Γεια σου {}, καλωσήρθες στο κανάλι {}. Σε παρακαλώ πάτα το παρακάτω κουμπί για να επαληθεύσεις ότι είσαι όντως άνθρωπος και όχι κάποιο bot. Αν δεν το κάνεις αυτό μέσα σε {}, θα απομακρυνθείς από το γκρουπ. Στις 5 αποτυχημένες προσπάθειες θα θεωρηθείς κακόβουλο bot και θα μπαναριστείς.",
+
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
+    "CAPTCHA_SOLVED":
+        "Ο γρίφος (Captcha) λύθηκε και ο χρήστης επαληθεύθηκε.\nΚαλώς ήρθες, {}!",
+
+    "CAPTCHA_INCORRECT_0":
+        "Αυτός δεν είναι ο σωστός κωδικός. Ξαναπροσπάθησε...",
+
+    "CAPTCHA_INCORRECT_1":
+        "Αυτός δεν είναι ο σωστός αριθμός. Κοίτα πιο προσεκτικά, ο γρίφος (captcha) έχει 4 αριθμούς...",
+
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
+    "CAPTCHA_FAIL_KICK":
+        "Ο/Η {} αποτυγχάνουν να λύσουν το captcha. Ο/Η \"User\" απομακρύνθηκε από το γκρουπ.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "Προσπάθησα να διώξω το χρήστη \"User\" {}, αλλά δεν έχω δικαιώματα διαχείρισης για να διώχνω χρήστες από την ομάδα.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "Προσπάθησα να διώξω το χρήστη \"User\" {}, αλλά δεν είναι στο group (έφυγε από το group ή τον έδιωξε ο Διαχειριστής).",
+
+    "BOT_CANT_KICK":
+        "Προσπάθησα να διώξω το χρήστ \"User\" {}, αλλά εξαιτίας ενός απροσδόκητου προβλήματος (ίσως πρόβλημα στο δίκτυο/διακομιστή), δεν μπορώ να κάνω κάτι.",
+
+    "CANT_DEL_MSG":
+        "Προσπάθησα να διαγράψω αυτό το μήνυμα, αλλά δεν έχω τα δικαιώματα διαχείρισης για την κατάργηση μηνυμάτων που δεν έχουν σταλεί από εμένα.",
+
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
+
+    "BOT_CANT_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+
+    "SPAM_DETECTED_RM":
+        "Εντοπίστηκε ένα μήνυμα με URL (ή alias) από {}, που δεν έχει λύσει το γρίφο captcha ακόμα. Το μήνυμα διαγράφηκε για να διατηρήσουμε το Telegram καθαρό από Spam :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Μήνυμα με URL (or an alias) εντοπίστηκε από {}, που δεν έχει λύσει τον γρίφο captcha μέχρι στιγμής. Προσπάθησα να διαγράψω το ανεπιθύμητο μήνυμα αλλά δεν έχω δικαιώματα διαχειριστή για να διαγράφω μηνύματα που δεν έχουν σταλθεί από εμένα.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Διέγραψε μήνυμα εκτός κειμένου (φωτογραφία, ηχητικό μήνυμα, αρχείο...) από {}, ώστε να παραμείνει το Telegram ελεύθερο απο ενεπιθύμητα μηνύματα.\n\nΜπορείς να στείλεις μηνύματα πέρα από κείμενο αφού λύσεις τον γρίφο captcha.",
+
+    "RM_SOLVE_KICK_MSG":
+        "Διαμορφώστε εάν τα μηνύματα kick/ban θα πρέπει να αφαιρούνται αυτόματα μετά από λίγο.\n\n Παραδείγματα:\n/remove_solve_kick_msg ναι\n/remove_solve_kick_msg όχι",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Αλλαγή ρυθμίσεων, λύσεις και μηνύματα kick/ban θα διαγράφονται αυτόματα ύστερα από λίγο.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Αλλαγή ρυθμίσεων, λύσεις και μηνύματα kick/ban δεν θα διαγράφονται.",
+
+    "RM_WELCOME_MSG":
+        "Ρυθμίστε εάν τα μηνύματα καλωσορίσματος θα πρέπει να αφαιρούνται αυτόματα μετά από λίγο.\n\n Παραδείγματα: \n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Αλλαγή ρυθμίσεων, τα μηνύματα καλωσορίσματος θα σβήνονται αυτόματα μετά απο λίγη ώρα.",
+
+    "RM_WELCOME_MSG_NO":
+        "Αλλαγή ρυθμίσεων, τα μηνύματα καλωσορίσματος δε θα σβήνονται.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Άλλο Captcha",
+
+    "PASS_BTN_TEXT":
+        "Δεν είμαι bot",
+
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+
+    "URL_ENABLE":
+        "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
+
+    "URL_DISABLE":
+        "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
+
+    "CONFIG_ALREADY_SET":
+        "This configuration is already set/enabled.",
+
+    "CONFIG_ALREADY_UNSET":
+        "This configuration is already unset/disabled.",
+
+    "ENABLE":
+        "Η προστασία captcha ενεργοποιήθηκε. Μπορεί να απενεργοποιηθεί με την εντολή /disable .",
+
+    "DISABLE":
+        "Η προστασία captcha απενεργοποιήθηκε. Μπορεί να ενεργοποιηθεί με την εντολή /enable .",
+
+    "ALREADY_ENABLE":
+        "Η προστασία catpcha έχει ήδη ενεργοποιηθεί.",
+
+    "ALREADY_DISABLE":
+        "Η προστασία captcha έχει ήδη απενεργοποιηθεί.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Αυτή η εντολή δεν υφίσταται στο παρόν chat.",
+
+    "VERSION":
+        "Τρέχουσα έκδοση λογισμικού του Bot:\n{}",
+
+    "ABOUT_MSG":
+        "Το παρόν bot αποτελεί ελεύθερο λογισμικό ανοιχτού κώδικα και διατίθεται σύμφωνα με την άδεια GNU-GPL.\n\nTo bot έχει δημηιουργήθηκε από τον/την {}.\n\nΗ κώδικάς μπορεί να βρεθεί έδω:\n{}\n\nΣου αρέσει η δουλειά μου; Κέρασε με ένα καφέ;:\n{}",
+
+    "POLL_NEW_USER":
+        "Γειά σου {}, καλώς ήρθες στην ομάδα {}. Παρακαλώ απάντησε στην παρακάτω ερώτηση προς απόδειξη ότι δεν είσαι robot. Εάν δεν απαντήσεις μέσα σε {}, θα διωχθείς αυτόματα απο την ομάδα.",
+
+    "CAPTCHA_POLL_FAIL":
+        "Captcha poll fail, {} απάντησες λάθος. Θα απομακρυνθείς σε 10δ, παρακαλώ προσπάθησε να μπεις στο group ξανά...",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\n Το κείμενο της ερώτησης δεν μπορεί να έχει περισσότερους από {} χαρακτήρες.\n\n Option text δεν μπορεί να έχει περισσότερους από {} χαρακτήρες \n\n Maximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Είσαι σίγουρος ότι θες να μπεις σε αυτό το group?\n\n Set Poll Option 1:\n/captcha_poll option 1 Μπα, δε θέλω να μπω σε αυτό το group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Σίγουρα, είμαι άνθρωπος και θέλω να μπω σε αυτό το group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Ποιος είμαι και τι κάνω?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question ρυθμίστηκε επιτυχώς.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} ρυθμίστηκε επιτυχώς.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option ρυθμίστηκε επιτυχώς στην επιλογή του αριθμού {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} δεν υπάρχει, παρακαλώ ρύθμισε πρώτα την επιλογή.\n\n Παράδειγμα:\n/captcha_poll question 1+2 μας κάνει: 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "Υπάρχει νέος χρήστης, ωστόσο το Captcha Poll δεν έχει ρυθμιστεί πλήρως.\n\nΠρέπει να ρυθμιστούν τουλάχιστον τα εξής: Poll question, Poll correct answer and minimum 2 answer options needs to be configured. Παρακαλώ, ρύθμισέ τα με /captcha_poll command.\n\n Παράδειγμα:\n/captcha_poll question 1+2 μας κάνει 5?\n\n/captcha_poll option 1 Ναι\n\n/captcha_poll option 2 Όχι\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "CONNECT_USAGE":
+        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+
+    "CONNECT_JUST_ADMIN":
+        "Just an Admin of that group can configure it.",
+
+    "CONNECT_OK":
+        "Connected to group {}. Now you can configure group captcha settings from private.",
+
+    "DISCONNECT_NOT_CONNECTED":
+        "You are not connected.",
+
+    "DISCONNECT_OK":
+        "Disconnected from group {}.",
+
+    "INVALID_GROUP_ID":
+        "Invalid group chat ID.",
+
+    "CHECK_CFG":
+        "Group Configuration:\n————————————————\n```\n{}\n```",
+
+    "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
+        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+
+    "CMD_JUST_IN_PRIVATE":
+        "This command can't be used inside a group (use it in private Bot chat).",
+
+    "RM_ALL_MSGS_AFTER_KICK_ON":
+        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+
+    "RM_ALL_MSGS_AFTER_KICK_OFF":
+        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed.",
+
+    "BILANG_MSG":
+        "Configure if text of captcha messages must be shown in both, english and configured language.\n\nExamples:\n/bilanguage yes\n/bilanguage no",
+
+    "BILANG_MSG_NO":
+        "Configuration changed. Captcha messages text will be shown in a single language.",
+
+    "BILANG_MSG_YES":
+        "Configuration changed. Captcha messages text will be shown in two languages."
+}

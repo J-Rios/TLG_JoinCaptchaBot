@@ -54,7 +54,7 @@ USER ${BOT_USER}
 WORKDIR ${BOT_HOME_DIR}
 RUN git clone ${GITHUB_URL} ${APP_DIR} && \
     python3 -m pip install --user --requirement ${APP_DIR}/requirements.txt && \
-    cd ${APP_DIR}/sources && \
+    cd ${APP_DIR}/src && \
     chown -cR ${BOT_USER}:${BOT_GROUP} ${BOT_HOME_DIR} && \
     rm -rf ${BOT_HOME_DIR}/.cache && \
     find ${APP_DIR} -iname '.git*' -print0 | xargs -0 -r -t rm -rf
@@ -75,5 +75,5 @@ RUN chown -R "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 
 # Set up to run as an unprivileged user
 USER ${BOT_USER}
-WORKDIR ${APP_DIR}/sources
-CMD ["./entrypoint.sh"]
+WORKDIR ${APP_DIR}
+CMD ["./tools/entrypoint.sh"]

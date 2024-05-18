@@ -1,0 +1,313 @@
+{
+    "START":
+        "Hei, olen Botti, joka lähettää kuvallisen captchan jokaiselle ryhmään liittyvälle uudelle käyttäjälle ja potkin kaikki, ketkä eivät ratkaise captchaa määritetyssä ajassa.\n\nJos käyttäjä yrittää liittyä ryhmään viidesti peräkkäin ratkaisematta captchaa koskaan, oletan tämän \"käyttäjän\" olevan botti ja annan sille porttikiellon. Lisäksi pidän kaikkia uusien \"käyttäjien\" ennen captchan ratkaisua lähettämiä linkkejä spämminä ja poistan ne.\n\nMuista antaa minulle ylläpito-oikeudet käyttäjien poistamiseksi-bannaamiseksi ja viestien poistamiseksi.\n\nSaat lisätietoja miten minua käytetään /help-komennolla.\n\nOlenko hyödyllinen? Vilkaise /about -komentoa ja harkitse lahjoituksen tekemistä pitääksesi minut aktiivisena.",
+
+    "HELP":
+        "Botin ohje:\n————————————————\n- Olen Botti, joka lähettää kuvallisen captchan jokaiselle ryhmään liittyvälle uudelle käyttäjälle ja potkin kaikki, ketkä eivät ratkaise captchaa määritetyssä ajassa.\n\nJos käyttäjä yrittää liittyä ryhmään viidesti peräkkäin ratkaisematta captchaa koskaan, oletan tämän \"käyttäjän\" olevan botti ja annan sille porttikiellon. Lisäksi pidän kaikkia uusien \"käyttäjien\" ennen captchan ratkaisua lähettämiä linkkejä spämminä ja poistan ne.\n\n- Tarvitsen ylläpito-oikeudet potkiakseni käyttäjiä ja poistaakseni viestejä.\n\n- Pitääkseni ryhmän puhtaana, poistan automaattisesti kaikki minuun liittyvät viestit captchan ollessa ratkaisematon ja potkiessani käyttäjän.\n\n- Uusilla käyttäjillä on oletuksena viisi minuuttia aikaa ratkaista captcha, mutta se voidaan määrittää komennolla /time.\n\n- Captcha-suojauksen saa päälle komennoilla /enable ja /disable.\n\n- Vain ryhmän ylläpitäjät voivat antaa asetuskomentoja.\n\n- Puhumani kielen voi vaihtaa kommennolla /language.\n\n- Captchani vaikeustason voi määrittää komennolla /difficulty.\n\n- Voit asettaa captchan käyttämään kaikkia numeroita ja kirjaimia A–Z, tai numeroita ja kirjaimia A–F, tai vain numeroita (oletus), tai matemaattisen yhtälön ratkaisua, tai mukautettua kyselyä, tai näppäintä painettavaksi komennolla /captcha_mode.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- Mukautetun tervetuloviestin voi asettaa komennolla /welcome_msg.\n\n- Minut voi asettaa sisällyttämään rajoitukset uusien käyttäjien ei-teksti-sisältöihin komennolla /restrict_non_text.\n\n- Jos Botti on Yksiotyinen, ryhmät voi sallia komennolla /allowgroup.\n\n- Ryhmän asetuksia voi määrittää yksityisviestillä käyttämällä ryhmässä komentoa /connect .\n\n- Käyttäjiä voi estää lähettämästä URLeja/linkkejä komennolla /url_disable command.\n\n- Vilkaise /commands saadaksesi listan kaikista komennoista lyhyine kuvauksineen.",
+
+    "COMMANDS":
+        "Lista komennoista:\n————————————————\n/start - Näyttää alustavat tiedot botista.\n\n/help - Näyttää ohjeen.\n\n/commands - Näyttää tämän viestin. Kertoo komennoista ja niiden käytöstä.\n\n/language - Botin kielen vaihtaminen.\n\n/bilanguage - Captcha message text in two languages (english + configured language).\n\n/time - Määrittää captchan ratkaisun aikarajan.\n\n/difficulty - Määrittää captchan vaikeustason (1:stä 5:teen).\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - Vaihtaa captcha-tilan (nums: numerot, hex: numerot ja kirjaimet A-F, ascii: numerot ja kirjaimet A-Z, math: matemaattinen yhtälö, poll: mukautettu ja määritettävä kysely, button: vain painike).\n\n/captcha_poll - Määrittää mukautetun kyselyn kysymyksen ja vastausvaihtoehdot poll-tilan captchaan.\n\n/welcome_msg - Määrittää captchan ratkaisun jälkeisen mukautetun tervetuloviestin.\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/restrict_non_text - Käyttäjän ratkaistessa captchan, toimeenpane rajoitus estääksesi muun-kuin-tekstin lähettäminen (kuvat, videot, audio) 1 päiväksi (tai ikuisesti, käyttämällä avainsanaa \"forever\").\n\n/add_ignore - Älä kysy huomiotta jätetyltä käyttäjältä captchaa.\n\n/remove_ignore - Lopeta käyttäjän huomiotta jättäminen.\n\n/ignore_list - lista huomioitta jätettyjen käyttäjien ID:istä.\n\n/remove_solve_kick_msg - Määritä poistetaanko potkimis/bannaus viestit automaattisesti hetken kuluttua.\n\n/remove_welcome_msg - Määritä poistetaanko tervetuloviesti hetken kuluttua.\n\n/url_disable - Kiellä ryhmän jäseniä lähettämästä viestejä, jotka sisältävät linkkejä verkkosivuille (URL-osoitteita).\n\n/url_enable - Salli ryhmän jäsenten lähettää viestejä, jotka sisältävät linkkejä verkkosivuille (URL-osoitteita).\n\n/remove_all_msg_kick_off - Aseta botti olemaan poistamatta viestejä käyttäjiltä, jotka eivät ratkaisseet captchaa.\n\n/remove_all_msg_kick_on - Aseta botti poistamaan kaikki viestit käyttäjiltä, jotka eivät ratkaisseet captchaa.\n\n/allowgroup - Salli ryhmän käyttää Bottia (jos botti on Yksityinen).\n\n/enable - Ota käyttöön ryhmän captcha-suojaus.\n\n/disable - Poista käytöstä ryhmän captcha-suojaus.\n\n/checkcfg - Hae ryhmän nykyiset captcha-asetukset.\n\n/chatid - Näytä nykyisen ryhmän ChatID.\n\n/connect - Yhdistä ryhmään hallitaksesi sitä yksityisviestillä.\n\n/disconnect - Katkaise yhteys ryhmään, jota hallitaan botin kanssa käytävästä yksityiskeskustelusta.\n\n/version - Näytä Botin versio.\n\n/about - Näytä tietoa botista.",
+
+    "CMD_NOT_ALLOW":
+        "Vain Ylläpitäjä voi käyttää tätä komentoa.",
+
+    "CMD_INVALID_PARAMETER":
+        "Invalid command parameter.",
+
+    "LANG_CHANGE":
+        "Kieli vaihdettu onnistuneesti.",
+
+    "LANG_SAME":
+        "Olen jo valmiiksi tuonkielinen.\n\nTuetut kielet:\n{}",
+
+    "LANG_BAD_LANG":
+        "Epäkelvollinen kieli määritetty.\n\nTuetut kielet:\n{}",
+
+    "LANG_NOT_ARG":
+        "Komento vaatii asetettavan kielen.\n\nEsimerkkejä:\n{}",
+
+    "TIME_CHANGE":
+        "Captchan aikarajaksi asetettu onnistuneesti {}.",
+
+    "WELCOME_TIME_CHANGE":
+        "Time to delete welcome message successfully changed to {}.",
+
+    "TIME_OUT_RANGE":
+        "Epäkelvollinen aika. Sen tulee olla välillä 10 sec - {} min.",
+
+    "TIME_NOT_NUM":
+        "Määritetty aika ei ole kokonaisluku.",
+
+    "TIME_NOT_ARG":
+        "Komento vaatii asetettavan aika-arvon.\n\nEsimerkkejä:\n/time 30 sec\n/time 5 min\n/time 1 min",
+
+    "WELCOME_TIME_NOT_ARG":
+        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+
+    "DIFFICULTY_CHANGE":
+        "Captchan vaikeustasoksi asetettu onnistuneesti {}.",
+
+    "DIFFICULTY_NOT_NUM":
+        "Annettu captchan vaikeustaso ei ole numero.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Komento vaatii asetettavan vaikeustason (numero 1:stä 5:teen). Tämä ei vaikuta \"button\" -tilaan.\n\nEsimerkkejä:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Captcha-tilaksi onnistuneesti asetettu \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Epäkelvollinen captcha-tila. Tuetut tilat ovat: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" ja \"random\".\n\nEsimerkki:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "Komento vaatii asetettavan tilan. Saatavilla olevat tilat ovat:\n\n- Numeeriset Captchat (\"nums\").\n- Heksadesimaaliset Captchat, numerot ja kirjaimet A-F (\"hex\").\n- Numerot ja kirjaimet A-Z Captchoissa (\"ascii\").\n- Matemaattisen yhtälön ratkaisucaptchat (\"math\").\n- Vain-näpistä painamisen haasteet (\"button\").\n- Mukautetut kyselyhaasteet (\"poll\").\n- Sattumanvarainen haaste (\"random\").\n\nEsimerkit:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CMD_RESTRICTION_CHANGE":
+        "Restriction to apply when user fail the captcha changed to \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "The command requires a type of restriction to set.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+
+    "WELCOME_MSG_SET":
+        "Tervetuloviesti määritetty onnistuneesti.",
+
+    "WELCOME_MSG_UNSET":
+        "Tervetuloviesti poistettu käytöstä.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Aseta tervetuloviesti komennon jälkeen.\n\nEsimerkki:\n/welcome_msg Hei $user, Tervetuloa ryhmään, muistathan olla kunnioittava muita käyttäjiä kohtaan.\n\nPoista viesti käytöstä:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Rajoitus uusien käyttäjien ei-teksti-sisällöille asetettu. Tulen poistamaan vastikään liittyneiden käyttäjien viestit, mikäli ne eivät ole vain tekstiä.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Rajoitus uusien käyttäjien ei-teksti-sisältöä kohtaan on poistettu.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Ota tai poista käytöstä vastikään liittyneiden käyttäjien teksti-sisällön rajoitukset (älä salli käyttäjän lähettää mediaa tai muuta kuin tekstiä Ylläpitäjät voivat manuaalisesti antaa yksittäisille käyttäjille oikeuden tehdä niin tulevaisuudessa).\n\nEsimerkit:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Asetathan käyttäjän ID:n tai aliaksen komennon jälkeen.\n\nEsimerkki:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Tuo ID/alias on jo huomiottajättämislistalla.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Valitettavasti olet saavuttanut huomiottajättämislistan enimmäispituuden. Poista joku lisätäksesi lisää.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "Tämä ID/alias on epäkelvollinen.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "ID/alias lisätty onnistuneesti!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Asetathan käyttäjän ID:n tai aliaksen komennon jälkeen.\n\nEsimerkki:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "ID/alias poistettu onnistuneesti!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "ID/alias ei ole huomioittajättämislistalla, mitään ei tehty.",
+
+    "IGNORE_LIST_EMPTY":
+        "Keskustelun huomiottajättämislista on tyhjä.",
+
+    "NEW_USER_IMG_CAPTION":
+        "Hei {}, tervetuloa ryhmään {}. Kirjoitathan tässä kuvassa olevat numerot ja/tai kirjaimet vahvistaaksesi ihmisyytesi. Jollet ratkaise tätä captchaa {}, tulet automaattisesti poistetuksi ryhmästä.",
+
+    "NEW_USER_MATH_CAPTION":
+        "Hei {}, tervetuloa ryhmään {}. Kirjoitathan tässä kuvassa olevan matemaattisen yhtälön ratkaisun vahvistaaksesi ihmisyytesi. Jollet ratkaise tätä captchaa {}, tulet automaattisesti poistetuksi ryhmästä.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Hei {}, tervetuloa ryhmään {}. Painathan alla olevaa painiketta vahvistaaksesi ihmisyytesi. Jollet tee tätä ajassa {}, tulet automaattisesti poistetuksi ryhmästä..",
+
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
+    "CAPTCHA_SOLVED":
+        "Captcha ratkaistu, käyttäjä vahvistettu.\nTervetuloa ryhmään, {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "Tuo ei ole oikea koodi. Yritä uudelleen...",
+
+    "CAPTCHA_INCORRECT_1":
+        "Tuo ei ole oikea koodi. Katso tarkemmin, captchassa on neljä numeroa...",
+
+    "CAPTCHA_INCORRECT_MATH":
+        "Tuo ei ollut oikea numero. Katso tarkemmin, sinun tulee ratkaista matemaattinen yhtälö...",
+
+    "CAPTCHA_FAIL_KICK":
+        "{} captcha ei onnistunut ratkaisemaan. \"Käyttäjä\" poistettiin ryhmästä.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "Yritin poistaa \"käyttäjän\" {} ryhmästä, mutta minulla ei ole ylläpito-oikeutta käyttäjien poistamiseksi.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "Yritin poistaa \"käyttäjän\" {}, mutta se ei ole enää huoneessa (on poistunut tai Ylläpitäjä on poistanut sen).",
+
+    "BOT_CANT_KICK":
+        "Yritin poistaa \"Käyttäjän\" {}, mutta odottamattomasta ongelmasta johtuen (ehkäpä verkkoyhteyteen/palvelimeen liittyen), en voi tehdä sitä.",
+
+    "CANT_DEL_MSG":
+        "Yritin poistaa tämän viestin, mutta minulla ei ole ylläpito-oikeutta poistaakseni muiden, kuin itseni, lähettämiä viestejä.",
+
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
+
+    "BOT_CANT_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+
+    "SPAM_DETECTED_RM":
+        "Havaittiin URLin (tai aliaksen) sisältävä viesti \"käyttäjältä\" {}, joka ei ole vielä ratkaissut captchaa. Viesti poistettiin Telegrammin spämmivapaana vyöhykkeenä pitämisen vuoksi :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Havaittiin URLin (tai aliaksen) sisältävä viesti \"käyttäjältä\" {}, joka ei ole vielä ratkaissut captchaa. Yritin poistaa spämmiviestin, mutta minulla ei ole ylläpito-oikeutta poistaa muiden käyttäjien lähettämiä viestejä.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Poistettiin mediaviesti (kuva, audio, tiedosto...) \"käyttäjältä\" {}, Telegrammin spämmivapaana vyöhykkeenä pitämisen vuoksi.\n\nVoit lähettää mediaviestejä captchan ratkaisemisen jälkeen.",
+
+    "RM_SOLVE_KICK_MSG":
+        "Määritä poistetaanko potkimis-/porttikieltoviestit automaattisesti hetken kuluttua.\n\nEsimerkit:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Asetusmuutos, ratkaisu-, potkimis/porttikieltoviestit poistetaan automaattisesti hetken kuluttua.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Asetusmuutos, ratkaisu-, potkimis/porttikieltoviestejä ei poisteta.",
+
+    "RM_WELCOME_MSG":
+        "Määritä poistetaanko tervetuloviestit automaattisesti hetken kuluttua.\n\nEsimerkit:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Asetusmuutos, tervetuloviestit poistetaan hetken kuluttua",
+
+    "RM_WELCOME_MSG_NO":
+        "Asetusmuutos, tervetuloaviestejä ei poisteta",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Muu Captcha",
+
+    "PASS_BTN_TEXT":
+        "En ole Botti",
+
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Havaittiin ja poistettiin URLin/linkin sisältävä viesti \"käyttäjältä\" {}.\n\nTämä ryhmä ei salli URLeja viesteissä (Ylläpitäjän täytyy määrittää botti viesteissä olevien URLlien sallimiseksi).",
+
+    "URL_ENABLE":
+        "Ok, käyttäjät voivat nyt lähettää URLeja ja linkkejä tähän ryhmään. Kiellä URLien lähettäminen uudelleen komennolla /url_disable.",
+
+    "URL_DISABLE":
+        "Ok, käyttäjät eivät enää saa lähettää URLeja ja linkkejä tähän ryhmään. Salli URLien lähettäminen uudelleen komennolla /url_enable.",
+
+    "CONFIG_ALREADY_SET":
+        "Määritys on jo asetettu/käyttöönotettu.",
+
+    "CONFIG_ALREADY_UNSET":
+        "Määritys on jo asettamaton/poiskäytöstä.",
+
+    "ENABLE":
+        "Captcha-suojaus otettu käyttöön. Poista se käytöstä komennolla /disable.",
+
+    "DISABLE":
+        "Captcha-suojaus poistettu käytöstä. Ota se uudelleen käyttöön komennolla /enable.",
+
+    "ALREADY_ENABLE":
+        "Captcha-suojaus on jo käytössä.",
+
+    "ALREADY_DISABLE":
+        "Captcha-suojaus on jo poissa käytöstä.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Tätä komentoa ei voi käyttää nykyisessä keskustelussa.",
+
+    "VERSION":
+        "Botin tämänhetkinen versio:\n{}",
+
+    "ABOUT_MSG":
+        "Tämä botti on GNU-GPL -lisenssin alainen vapaan ja avoimen lähdekoodin sovellus.\n\nBotin on kehittänyt {}.\n\nVoit lukea lähdekoodin täältä:\n{}\n\nPidätkö työstäni? Osta minulle kahvikupponen:\n{}",
+
+    "POLL_NEW_USER":
+        "Hei {}, tervetuloa ryhmään {}. Ratkaisethan allaolevan kyselyn varmistaaksesi, ettet ole botti. Ellet tee tätä ajassa {}, tulet automaattisesti poistetuksi ryhmästä.",
+
+    "CAPTCHA_POLL_FAIL":
+        "Captcha-kysely meni pieleen, {} valitsi väärän vastauksen. Sinut poistetaan 10 sekuntissa, yritäthän liittyä ryhmään uudelleen...",
+
+    "CAPTCHA_POLL_USAGE":
+        "Määritä Captcha-kyselyn Kysymys ja vastausvaihtoehdot\n————————————————\nKysymys ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehto ei voi olla pidempi kuin {} merkkiä.\n\nVastausvaihtoehtojen enimmäismäärä on {}.\n————————————————\nAseta Kyselyn kysymys:\n/captcha_poll question Haluatko varmasti liittyä tähän ryhmään?\n\nAseta vastausvaihtoehto 1:\n/captcha_poll option 1 Ei, en halua liittyä ryhmään.\n\nAseta vastausvaihtoehto 2:\n/captcha_poll option 2 Toki, olen ihminen ja haluan liittyä ryhmään.\n\nAseta vastausvaihtoehto 3:\n/captcha_poll option 3 Kuka olen ja mitä teen?\n\nPoista vastausvaihtoehto 2:\n/captcha_poll option 2 remove\n\nAseta oikeaksi vastausvaihtoehdoksi 2:\n/captcha_poll correct_option 2\n\nAseta Captcha-tilaksi kysely:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha-Kyselyn Kysymys määritetty onnistuneesti.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha-Kyselyn Vastausvaihtoehto {} määritetty onnistuneesti.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha-Kyselyn Oikeaksi Vastausvaihtoehdoksi onnistuneesti määritetty vaihtoehto {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Kyselyn vastausvaihtoehtoa numero {} ei ole olemassa, määritäthän vastausvaihtoehdon ensin.\n\nEsimerkki:\n/captcha_poll question Onko 1+2 yhtäsuuri kuin 5?\n\n/captcha_poll option 1 Kyllä\n\n/captcha_poll option 2 Ei\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "Uusi käyttäjä on saapunut, mutta Captcha-kyselyä ei ole määritetty kokonaan.\n\nKyselyn kysymys, oikea vastaus ja vähintään kaksi vastausvaihtoehtoa täytyy määrittää. Määritä se komennolla /captcha_poll.\n\nEsimerkki:\n/captcha_poll question Onko 1+2 yhtäsuuri kuin 5?\n\n/captcha_poll option 1 Kyllä\n\n/captcha_poll option 2 Ei\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "CONNECT_USAGE":
+        "Määritettävän ryhmäkeskustelun ID tulee syöttää (käytä /chatid -komentoa haluamasi ryhmän sisällä saadaksesi tietää sen).\n\nEsimerkki:\n/connect -1234567890",
+
+    "CONNECT_JUST_ADMIN":
+        "Vain tuon ryhmän Ylläpitäjä voi määrittää sen.",
+
+    "CONNECT_OK":
+        "Yhdistetty ryhmään {}. Voit nyt määrittää sen asetukset yksityisviestillä.",
+
+    "DISCONNECT_NOT_CONNECTED":
+        "Et ole muodostanut yhteyttä.",
+
+    "DISCONNECT_OK":
+        "Yhteys ryhmään {} katkaistu.",
+
+    "INVALID_GROUP_ID":
+        "Virheellinen ryhmäkeskustelun ID.",
+
+    "CHECK_CFG":
+        "Ryhmän asetukset:\n————————————————\n```\n{}\n```",
+
+    "CMD_NOT_ALLOW_PRIVATE":
+        "Tätä komentoa ei voi käyttää yksityisviestillä.",
+
+    "CMD_NEEDS_CONNECTION":
+        "Tätä komentoa ei voi käyttää yksityisviestillä, ellet ensin muodosta yhteyttä ryhmään (/connect -komennolla).",
+
+    "CMD_JUST_IN_PRIVATE":
+        "Tätä komentoa ei voida käyttää ryhmässä (käytä sitä yksityiskeskustelussa Botin kanssa).",
+
+    "RM_ALL_MSGS_AFTER_KICK_ON":
+        "Asetusta muutettu, kaikki viestit captchaa-ratkaisemattomilta käyttäjiltä poistetaan.",
+
+    "RM_ALL_MSGS_AFTER_KICK_OFF":
+        "Asetusta muutettu, viestejä captchaa-ratkaisemattomilta käyttäjiltä ei tulla poistamaan.",
+
+    "BILANG_MSG":
+        "Configure if text of captcha messages must be shown in both, english and configured language.\n\nExamples:\n/bilanguage yes\n/bilanguage no",
+
+    "BILANG_MSG_NO":
+        "Configuration changed. Captcha messages text will be shown in a single language.",
+
+    "BILANG_MSG_YES":
+        "Configuration changed. Captcha messages text will be shown in two languages."
+}

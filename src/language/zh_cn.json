@@ -1,0 +1,313 @@
+{
+    "START":
+        "你好，我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，并踢出任何在时限内无法输入验证码的人。\n\n如果有人尝试加入群5次且没有输入验证码，我将会认为这个用户是机器人，并且将他他拉黑。同样，任何包含链接的消息在他输入验证码之前被发送，将会被认为是垃圾信息并被删除。\n\n记得给我管理员权限以踢人和删除消息。\n\n检查 /help 命令以获取更多关于我的使用方法。\n\n我有用吗？检查 /about 命令并确认捐款给我使我保持运行。",
+
+    "HELP":
+        "机器人帮助:\n————————————————\n- 我是一个机器人通过发送图像验证码给刚加入群组中的每个新用户，并踢出任何在时限内无法输入验证码的人。\n\n- 如果有人尝试加入群5次且没有输入验证码，我将会认为这个用户是机器人，并且将他他拉黑。\n\n- 任何包含链接的消息在他输入验证码之前被发送，将会被认为是垃圾信息并被删除。\n\n- 你需要给我管理员权限以踢人和删除消息。\n\n- 为了保持群组清洁, 我会删除与我有关的所有信息当验证码没有输入和用户被踢出时（5分钟后）。\n\n- 用户在默认情况下必须在5分钟内输入验证码，但它能通过 /time 命令被设置。\n\n- 你可以通关 /enable 和 /disable 命令设置验证码的开启和关闭。\n\n- 设置类命令只能被群组管理员使用。\n\n- 你可以用 /language 命令设置我的语言。\n\n- 你可以通过 /difficulty 命令设置验证码难度。\n\n- 您可以将验证码设置为仅使用数字（默认）或完整数字和字母, or a math equation to be solved，or a custom poll， or just a button，通过命令 /captcha_mode.\n\n- You can configure different types of restrictions to punish the users that fails the captcha through the command /restriction, from kicking (default), ban, mute, etc.\n\n- 您可以使用命令配置自定义欢迎消息 /welcome_msg.\n\n- You can enable an option to let me apply restriction to new joined users to send non-text messages using command /restrict_non_text.\n\n- If the Bot is Private, allow groups with command /allowgroup.\n\n- You can configure a group from private Bot chat through /connect command.\n\n- You can block users to send any message that contains an URL/link in a group by /url_disable command.\n\n- 检查 /commands 以获取可用命令列表，以及它们的描述。",
+
+    "COMMANDS":
+        "命令列表：\n————————————————\n/start - 显示有关机器人的初始信息。\n\n/help - 显示帮助信息。\n\n/commands - 显示此消息。有关所有可用命令的信息和描述。\n\n/language - 更改机器人消息的语言。\n\n/bilanguage - Captcha message text in two languages (english + configured language).\n\n/time - 更改可用于输入验证码的时间。\n\n/difficulty - 更改验证码难度级别（从1到5）。\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - 更改验证码字符模式（nums：数字，hex：十六进制可表示数值，ascii：数字、英文组合, math: math equation, poll: custom and configurable poll, button: just a button。）\n\n/restrict_non_text - After a new user solves the captcha, apply a restriction to don't let them send non-text messages (images, videos, audios) for 1 day (or forever, using \"forever\" keyword).\n\n/add_ignore - Do not ask an ignored user the captcha.\n\n/remove_ignore - Stop ignoring an user.\n\n/ignore_list - list of ignored users' IDs.\n\n/captcha_poll - Configure custom poll question and options for captcha in poll mode.\n\n/welcome_msg - 允许配置解析验证码后发送的欢迎消息。\n\n/welcome_msg_time - Allows to configure the time of automatic removal of the welcome message.\n\n/remove_solve_kick_msg - Configure if captcha solve and kick/ban messages should be automatically deleted after a while.\n\n/remove_welcome_msg - Configure if welcome message should be automatically deleted after a while.\n\n/url_disable - Deny members of the group to send messages that contains links to websites (URLs).\n\n/url_enable - Allows members of the group to send messages that contains links to websites (URLs).\n\n/remove_all_msg_kick_off - Configure the Bot to don't remove text messages sent by users that didn't solve the captcha.\n\n/remove_all_msg_kick_on - Configure the Bot to remove all messages sent by users that didn't solve the captcha.\n\n/allowgroup - Allow a group to use the Bot (if Bot is Private).\n\n/enable - 启用本群组验证码保护。\n\n/disable - 禁用本群组验证码保护。\n\n/checkcfg - Get current group captcha configurations.\n\n/chatid - Shows Chat ID of current chat.\n\n/connect - Connect to a group to configure it from private Bot chat.\n\n/disconnect - Disconnect from connected group that is being configured from private Bot chat.\n\n/version - 显示机器人版本号。\n\n/about - 显示“关于”信息。",
+
+    "CMD_NOT_ALLOW":
+        "该命令只有管理员可以使用。",
+
+    "CMD_INVALID_PARAMETER":
+        "Invalid command parameter.",
+
+    "LANG_CHANGE":
+        "语言已设置为中文。",
+
+    "LANG_SAME":
+        "我已经被设置为中文。\n\n支持的语言:\n{}",
+
+    "LANG_BAD_LANG":
+        "无此语言。\n\n支持的语言:\n{}",
+
+    "LANG_NOT_ARG":
+        "这个命令需要一个语言参数。\n\n如:\n{}",
+
+    "TIME_CHANGE":
+        "输入验证码的时间成功设置为 {}。",
+
+    "WELCOME_TIME_CHANGE":
+        "Time to delete welcome message successfully changed to {}.",
+
+    "TIME_OUT_RANGE":
+        "Invalid time, it needs to be in range 10 sec to {} min.",
+
+    "TIME_NOT_NUM":
+        "提供的时间不是整数。",
+
+    "TIME_NOT_ARG":
+        "该命令需要设置时间值。\n\n如:\n/time 30 sec\n/time 5 min\n/time 1 min",
+
+    "WELCOME_TIME_NOT_ARG":
+        "The command needs a time value to set.\n\nExamples:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+
+    "DIFFICULTY_CHANGE":
+        "验证码难度成功更改为级别 {}。",
+
+    "DIFFICULTY_NOT_NUM":
+        "提供的验证码难度不是数字。",
+
+    "DIFFICULTY_NOT_ARG":
+        "该命令需要设置难度级别（从1到5）。\n\n如:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "验证码字符模式已成功更改为\"{}\"。",
+
+    "CAPTCHA_MODE_INVALID":
+        "验证码字符模式无效。 支持的模式有：\"nums\"，\"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\"。\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "该命令需要设置字符模式。 可用的模式有：\n- \"nums\" - 数字。\n- \"hex\" - 十六进制可表示数值。\n- \"ascii\" - 数字、英文组合。\n- Math equation to be solved Captchas (\"math\").\n- Button-only challenge (\"button\").\n- Custom Poll challenge (\"poll\").\n- Random challenge (\"random\").\n\n如:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CMD_RESTRICTION_CHANGE":
+        "Restriction to apply when user fail the captcha changed to \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "The command requires a type of restriction to set.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+
+    "WELCOME_MSG_SET":
+        "欢迎消息已成功配置。",
+
+    "WELCOME_MSG_UNSET":
+        "欢迎消息被禁用。",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "在命令后写下欢迎消息。\n\n如:\n/welcome_msg 你好 $user，欢迎来到这个团体，并记住要尊重其他用户.\n\n禁用该消息:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Restriction to send non-text messages for new users enabled. I'm gonna remove new joined users permissions except text messages send.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Restriction to send non-text messages for new users disabled.\n\n[This text needs translate to actual configured language]",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Set if you want to enable or disable new join users restriction to send non-text messages (Don't allow user send media or others messages rather than text ones. Admins can manually give that permissions to users again in the future).\n\nExamples:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/add_ignore 1234567890\n/add_ignore @peter\n\n[This text needs translate to actual configured language].",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "This ID/alias is already in ignore list.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Unfortunately, you have reach the maximum limit of users added in the ignore list, remove someone to add more.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "This ID/alias is invalid.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "The ID/alias has been added successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Please, place the user's ID/alias after the command.\n\nExample:\n/remove_ignore 1234567890\n/remove_ignore @peter\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "The ID/alias has been removed successfully!\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "This ID/alias is not in ignore list, nothing was done.\n\n[This text needs translate to actual configured language]",
+
+    "IGNORE_LIST_EMPTY":
+        "Ignore list of the chat is empty.\n\n[This text needs translate to actual configured language]",
+
+    "NEW_USER_IMG_CAPTION":
+        "你好 {}, 欢迎来到 {}, 请发送一条消息，其中包含此验证码以验证你是人类。如果你没有在 {} 内输入验证码，你将会被自动踢出群组。",
+
+    "NEW_USER_MATH_CAPTION":
+        "Hello {}, welcome to {}. Please write a message with the result of this math equation to verify that you are a human. If you don't solve this captcha in {}, you will be automatically kicked out of the group.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Hello {}, welcome to {}. Please press the button below to verify that you are a human. If you don't do this in {}, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+
+    "CAPTCHA_SOLVED":
+        "验证码已输入，用户已验证。欢迎加入群组 {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "这不是正确的数字。请再试一次。",
+
+    "CAPTCHA_INCORRECT_1":
+        "这不是正确的数字。请仔细检查，验证码有4个数字。",
+
+    "CAPTCHA_INCORRECT_MATH":
+        "That is not the correct number. Check closely, you need to solve the math equation...",
+
+    "CAPTCHA_FAIL_KICK":
+        "{} 未能解决验证码。“用户”已被踢出。",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "我试图踢出“用户”{}，但我没有管理权限来踢出该群组中的用户。",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "我试图踢出“用户”{}，但是用户不在组中（已离开组或已被管理员踢出）。",
+
+    "BOT_CANT_KICK":
+        "我试图踢出“用户”{}，但因为未知原因（可能与网络/服务器有关），我无法完成请求。",
+
+    "CANT_DEL_MSG":
+        "我试图删除此消息，但我没有管理权限以删除我尚未发送的消息。",
+
+    "CAPTCHA_FAIL_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. The \"user\" was considered a Bot and banned. To let this \"user\" enter again, an Admin has to manually remove it restrictions from the group settings.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but the user is not in the group any more (has left the group or has been kicked out/banned by an Admin).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but I don't have administration rights to ban users in the group.",
+
+    "BOT_CANT_BAN":
+        "Warning: The user {} tried and failed to resolve the captcha {} times. I tried to ban the \"user\", but due to an unexpected problem (maybe network/server related), I can't do it.",
+
+    "SPAM_DETECTED_RM":
+        "检测到来自 {} 的URL（或别名）的消息，该用户尚未输入验证码。为了保持Telegram不被垃圾消息困扰，该消息已被删除:)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "检测到来自 {} 的URL（或别名）的消息，该用户尚未输入验证码。我试图删除消息，但我没有管理权限以删除消息",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "为了保持Telegram不被垃圾消息困扰，从 {} 中删除了非文本消息（图像，音频，文件...）没有电子邮件的电报。\n\n输入验证码后，您可以发送非文本消息。",
+
+    "RM_SOLVE_KICK_MSG":
+        "Configure if solve and kick/ban messages should be automatically removed after a while.\n\nExamples:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Configuration change, solve and kick/ban messages will be automatically removed after a while.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Configuration change, solve and kick/ban messages won't be removed.",
+
+    "RM_WELCOME_MSG":
+        "Configure if welcome messages should be automatically removed after a while.\n\nExamples:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Configuration change, welcome messages will be automatically removed after a while.",
+
+    "RM_WELCOME_MSG_NO":
+        "Configuration change, welcome messages won't be removed.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "其他验证码",
+
+    "PASS_BTN_TEXT":
+        "I'm not a Bot",
+
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Detected and removed a message that contains an URL/link send by {}.\n\nThis group doesn't allows URLs in messages (An Admin needs to config Bot to allow URLs in messages).",
+
+    "URL_ENABLE":
+        "Ok, now users can send URLs and links in this group. Deny them to send URLs again with /url_disable command.",
+
+    "URL_DISABLE":
+        "Ok, now users are not allowed to send URLs and links in this group. Allow them to send URLs again with /url_enable command.",
+
+    "CONFIG_ALREADY_SET":
+        "This configuration is already set/enabled.",
+
+    "CONFIG_ALREADY_UNSET":
+        "This configuration is already unset/disabled.",
+
+    "ENABLE":
+        "启用了验证码保护。 使用 /disable 命令禁用它。",
+
+    "DISABLE":
+        "禁用了验证码保护。 使用 /enable 命令启用它。",
+
+    "ALREADY_ENABLE":
+        "验证码保护已经启用。",
+
+    "ALREADY_DISABLE":
+        "验证码保护已经禁用。",
+
+    "CAN_NOT_GET_ADMINS":
+        "在当前聊天中无法使用此命令。",
+
+    "VERSION":
+        "当前机器人版本号：\n{}",
+
+    "ABOUT_MSG":
+        "这个机器人是免费软件，在GNU-GPL许可下开源。开发者是 {}.\n\n你可以在这里查看源码：\n{}\n\n你喜欢我的作品吗？请我杯咖啡吧：\n{}",
+
+    "POLL_NEW_USER":
+        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+
+    "CAPTCHA_POLL_FAIL":
+        "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
+
+    "CAPTCHA_POLL_USAGE":
+        "Configure Captcha Poll Question and options\n————————————————\nQuestion text can't be larger than {} characters.\n\nOption text can't be larger than {} characters.\n\nMaximum number of options are {}.\n————————————————\nSet Poll Question:\n/captcha_poll question Are you sure that you want to enter to this group?\n\nSet Poll Option 1:\n/captcha_poll option 1 Nope, I don't want to enter the group.\n\nSet Poll Option 2:\n/captcha_poll option 2 Sure, I'm a human and want to enter the group.\n\nSet Poll Option 3:\n/captcha_poll option 3 Who I am and what am I doing?\n\nRemove Poll Option 2:\n/captcha_poll option 2 remove\n\nSet Correct Poll Option 2:\n/captcha_poll correct_option 2\n\nChange Captcha to Poll Mode:\n/captcha_mode poll",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha Poll Question successfully configured.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Captcha Poll Option {} successfully configured.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Captcha Poll Correct Option successfully configured to option number {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Poll option number {} doesn't exists, please configure the option first.\n\nExample:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "A new user has come, but Captcha Poll is not totally configured.\n\nPoll question, Poll correct answer and minimum 2 answer options needs to be configured. Please, configure it with /captcha_poll command.\n\nExample:\n/captcha_poll question Is 1+2 equal to 5?\n\n/captcha_poll option 1 Yes\n\n/captcha_poll option 2 No\n\n/captcha_poll correct_option 2\n\n/captcha_mode poll",
+
+    "CONNECT_USAGE":
+        "You need to specify the group chat ID that you want to configure (use /chatid command inside the group to know it).\n\nExample:\n/connect -1234567890",
+
+    "CONNECT_JUST_ADMIN":
+        "Just an Admin of that group can configure it.",
+
+    "CONNECT_OK":
+        "Connected to group {}. Now you can configure group captcha settings from private.",
+
+    "DISCONNECT_NOT_CONNECTED":
+        "You are not connected.",
+
+    "DISCONNECT_OK":
+        "Disconnected from group {}.",
+
+    "INVALID_GROUP_ID":
+        "Invalid group chat ID.",
+
+    "CHECK_CFG":
+        "Group Configuration:\n————————————————\n```\n{}\n```",
+
+    "CMD_NOT_ALLOW_PRIVATE":
+        "This command cannot be used in private chat.",
+
+    "CMD_NEEDS_CONNECTION":
+        "This command cannot be used in private chat unless you make a connection (/connect) to configure some group.",
+
+    "CMD_JUST_IN_PRIVATE":
+        "This command can't be used inside a group (use it in private Bot chat).",
+
+    "RM_ALL_MSGS_AFTER_KICK_ON":
+        "Configuration changed, all messages sent by users that didn't solve the captcha will be removed.",
+
+    "RM_ALL_MSGS_AFTER_KICK_OFF":
+        "Configuration changed, messages sent by users that didn't solve the captcha won't be removed.",
+
+    "BILANG_MSG":
+        "Configure if text of captcha messages must be shown in both, english and configured language.\n\nExamples:\n/bilanguage yes\n/bilanguage no",
+
+    "BILANG_MSG_NO":
+        "Configuration changed. Captcha messages text will be shown in a single language.",
+
+    "BILANG_MSG_YES":
+        "Configuration changed. Captcha messages text will be shown in two languages."
+}
