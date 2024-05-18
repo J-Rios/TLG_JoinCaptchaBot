@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+# Process ID
+PID=$(ps -aux | grep -e "[j]oin_captcha_bot_pro.py" | awk 'FNR == 1 {print $2}')
+
+# Check if process is running
+if [ ! -z "$PID" ]; then
+    echo "Already running."
+    exit 1
+fi
+
+# Clean old/previous residual captcha images
+rm -rf $DIR/../src/data/captchas/*
+
+# Launch the Bot
+echo "Starting Script..."
+nohup python3 -u $DIR/../src/join_captcha_bot_pro.py >> $DIR/../output.log 2>&1 &
+sleep 1
+$DIR/status
+
+exit 0

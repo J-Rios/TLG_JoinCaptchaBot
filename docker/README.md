@@ -51,7 +51,7 @@ the container is up and running, and `docker logs captcha-bot` to
 investigate the logs.
 
 You can also run with other environment variable. For list available
-environment variables, please check `sources/settings.py`.
+environment variables, please check `src/settings.py`.
 
 **Note on Token security**: A little bit of paranoia never hurts! Once your
 container has been built, remove the lines from your bash history containing

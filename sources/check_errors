@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-cat -n output.log | grep -e "Traceback" -A 15 -B 5
-
-exit 0

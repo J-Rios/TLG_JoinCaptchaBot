@@ -37,7 +37,7 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 3. Go to project sources and give execution permission to usage scripts:
 
     ```bash
-    cd TLG_JoinCaptchaBot/sources
+    cd TLG_JoinCaptchaBot/src
     chmod +x run status kill
     ```
 
@@ -89,9 +89,9 @@ After=network-online.target
 
 [Service]
 Type=forking
-WorkingDirectory=/path/to/dir/sources/
-ExecStart=/path/to/dir/sources/run
-ExecReload=/path/to/dir/sources/kill
+WorkingDirectory=/path/to/dir/src/
+ExecStart=/path/to/dir/src/run
+ExecReload=/path/to/dir/src/kill
 
 [Install]
 WantedBy=multi-user.target
@@ -141,7 +141,7 @@ You can set Bot to be Private in "settings.py" file:
 
 ## Scalability (Polling or Webhook)
 
-By default, Bot checks and receives updates from Telegram Servers by **Polling** (requests and get if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use a **Webhook** instead if you expect to handle a large number of users/groups.
+By default, Bot checks and receives updates from Telegram Servers by **Polling** (it periodically requests and gets from Telegram Server if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use **Webhook** instead if you expect to handle a large number of users/groups (with webhook, the Telegram Server is the one that will connect to you machine and send updates to the Bot when there is any new update).
 
 To use Webhook instead Polling, you need a signed certificate file in the system, you can create the key file and self-sign the cert through openssl tool:
 
@@ -149,19 +149,32 @@ To use Webhook instead Polling, you need a signed certificate file in the system
 openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650 -out cert.pem
 ```
 
-Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected Webhook Host address, port and certificate file:
+Once you have the key and cert files, setup the next lines in "settings.py" file to point to expected host system address, port, path and certificate files:
 
 ```python
-"WEBHOOK_HOST": "Current system IP/DNS here",
+"WEBHOOK_IP": "0.0.0.0",
 "WEBHOOK_PORT": 8443,
+"WEBHOOK_PATH": "/TLG_JoinCaptchaBot"
 "WEBHOOK_CERT" : SCRIPT_PATH + "/cert.pem",
 "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
 ```
 
-To use Polling instead Webhook, just set host value back to none:
+(Optional) In case you want to use a reverse proxy between Telegram Server and the system that runs the Bot, you need to setup the Proxy Webhook URL setting:
 
 ```python
-"WEBHOOK_HOST": "None",
+"WEBHOOK_URL": "https://example.com:8443/TLG_JoinCaptchaBot"
+```
+
+Then, you need to change Bot connection mode from polling to webhook by setting to True the next configuration:
+
+```python
+"CAPTCHABOT_USE_WEBHOOK": True,
+```
+
+To go back and use Polling instead Webhook, just set the config back to False:
+
+```python
+"CAPTCHABOT_USE_WEBHOOK": False,
 ```
 
 ## Environment Variables Setup
@@ -176,7 +189,7 @@ To add support for a new language you must follow this steps:
 
 1. Fork the project repository, clone it and create a new branch to work on it (i.e. named language-support-en).
 
-2. Copy from one of the existing language JSON files from [here](https://github.com/J-Rios/TLG_JoinCaptchaBot/tree/master/sources/language) to a new one.
+2. Copy from one of the existing language JSON files from [here](https://github.com/J-Rios/TLG_JoinCaptchaBot/tree/master/src/language) to a new one.
 
 3. Change the name of that file for the language ISO Code of the language that you want.
 

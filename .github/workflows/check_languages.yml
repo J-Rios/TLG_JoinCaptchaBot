@@ -18,5 +18,5 @@ jobs:
         sudo apt-get -y install python3
     - name: Build
       run: |
-        cd sources
+        cd src
         python3 langcheck.py
