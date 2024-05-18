@@ -3,6 +3,7 @@
 # Actual script directory path
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-tail -n1000 -f $DIR/output.log | grep -e "New join detected:" -e "Captcha not solved, kicking" -e "Captcha solved by"
+# Check and shows errors
+cat -n $DIR/../output.log | grep -e "Traceback" -A 15 -B 5
 
 exit 0

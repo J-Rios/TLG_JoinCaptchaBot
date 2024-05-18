@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PID=`ps -aux | grep -e "[j]oin_captcha_bot.py" | awk 'FNR == 1 {print $2}'`
-
+# Check if process is running
+PID=$(ps -aux | grep -e "[j]oin_captcha_bot.py" | awk 'FNR == 1 {print $2}')
 if [ -z "$PID" ]; then
     echo "Not running."
 else

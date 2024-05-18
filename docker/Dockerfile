@@ -75,5 +75,5 @@ RUN chown -R "${BOT_USER}:${BOT_GROUP}" ${BOT_HOME_DIR} && \
 
 # Set up to run as an unprivileged user
 USER ${BOT_USER}
-WORKDIR ${APP_DIR}/src
-CMD ["./entrypoint.sh"]
+WORKDIR ${APP_DIR}
+CMD ["./tools/entrypoint.sh"]

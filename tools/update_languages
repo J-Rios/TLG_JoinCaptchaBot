@@ -3,9 +3,11 @@
 # Actual script directory path
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-cd $DIR
-rm -f $DIR/*.json
+# Go to language text files directory and remove them
+cd $DIR/../src/language
+rm -f ./*.json
 
+# Download latests language text files from Github
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ar.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/be.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ca.json
