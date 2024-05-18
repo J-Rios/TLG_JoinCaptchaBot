@@ -141,7 +141,7 @@ You can set Bot to be Private in "settings.py" file:
 
 ## Scalability (Polling or Webhook)
 
-By default, Bot checks and receives updates from Telegram Servers by **Polling** (it requests and gets if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use a **Webhook** instead if you expect to handle a large number of users/groups.
+By default, Bot checks and receives updates from Telegram Servers by **Polling** (it periodically requests and gets from Telegram Server if there is any new updates in the Bot account corresponding to that Bot Token), this is really simple and can be used for low to median scale Bots. However, you can configure the Bot to use **Webhook** instead if you expect to handle a large number of users/groups (with webhook, the Telegram Server is the one that will connect to you machine and send updates to the Bot when there is any new update).
 
 To use Webhook instead Polling, you need a signed certificate file in the system, you can create the key file and self-sign the cert through openssl tool:
 
@@ -159,16 +159,22 @@ Once you have the key and cert files, setup the next lines in "settings.py" file
 "WEBHOOK_CERT_PRIV_KEY" : SCRIPT_PATH + "/private.key",
 ```
 
-In case you want to use a reverse proxy between Telegram Server and the system that runs the Bot, you need to setup the Proxy Webhook URL setting:
+(Optional) In case you want to use a reverse proxy between Telegram Server and the system that runs the Bot, you need to setup the Proxy Webhook URL setting:
 
 ```python
 "WEBHOOK_URL": "https://example.com:8443/TLG_JoinCaptchaBot"
 ```
 
-To go back and use Polling instead Webhook, just set host address back to none:
+Then, you need to change Bot connection mode from polling to webhook by setting to True the next configuration:
 
 ```python
-"WEBHOOK_IP": "None",
+"CAPTCHABOT_USE_WEBHOOK": True,
+```
+
+To go back and use Polling instead Webhook, just set the config back to False:
+
+```python
+"CAPTCHABOT_USE_WEBHOOK": False,
 ```
 
 ## Environment Variables Setup

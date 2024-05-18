@@ -3900,7 +3900,7 @@ def tlg_app_run(app: Application) -> None:
     function will be called at the end.
     '''
     logger.info("Bot Application Started")
-    if CONST["WEBHOOK_IP"] == "None":
+    if not CONST["USE_WEBHOOK"]:
         logger.info("Setup Bot for Polling.")
         app.run_polling(
             drop_pending_updates=True,

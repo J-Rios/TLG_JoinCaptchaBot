@@ -48,6 +48,11 @@ CONST = {
     "BOT_OWNER":
         os_getenv("CAPTCHABOT_OWNER", SETTINGS["CAPTCHABOT_OWNER"]),
 
+    # Bot connection mode (webhook or polling)
+    "USE_WEBHOOK":
+        bool(int(os_getenv("CAPTCHABOT_USE_WEBHOOK",
+                           SETTINGS["CAPTCHABOT_USE_WEBHOOK"]))),
+
     # Bot Webhook Listen Address
     "WEBHOOK_IP":
         os_getenv("CAPTCHABOT_WEBHOOK_IP",

@@ -41,33 +41,41 @@ SETTINGS = {
     # Bot Owner (i.e. "@JoseTLG" or "123456789")
     "CAPTCHABOT_OWNER": "XXXXXXXXX",
 
-    # Bot Webhook Listen address (keep in "None" for Polling or set to a
-    # valid address for Webhook)
+    # Enable Bot Webhook connection (False - Polling; True - Webhook)
+    # Set to True, to configure Bot for webhook connection mode
+    "CAPTCHABOT_USE_WEBHOOK": False,
+
+    # Bot Webhook Listen address
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_IP": "0.0.0.0",
 
-    # Bot Webhook Listen Port (this is not used if WEBHOOK_URL is None)
+    # Bot Webhook Listen Port
     # For Heroku, use the following: os_environ.get("PORT", "80")
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_PORT": 8443,
 
     # Bot Webhook URL
     # This is the address that the Telegram server should use in case a
     # reverse proxy is used between Telegram and the Bot.
     # If you are using a reverse proxy, set this configuration.
-    "CAPTCHABOT_WEBHOOK_URL": "None",
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
+    "CAPTCHABOT_WEBHOOK_URL": None,
 
-    # Bot Webhook Path (this is not used if WEBHOOK_URL is None)
+    # Bot Webhook Path
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_PATH": "/TLG_JoinCaptchaBot",
 
-    # Bot Webhook Certificate file path (this is not used if
-    # WEBHOOK_URL is None)
+    # Bot Webhook Certificate file path
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_CERT": SCRIPT_PATH + "/cert.pem",
 
-    # Bot Webhook Certificate private key file path (this is not used
-    # if WEBHOOK_URL is None)
+    # Bot Webhook Certificate private key file path
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_CERT_PRIV_KEY": SCRIPT_PATH + "/private.key",
 
     # Bot Webhook Secret Token to verify request from Telegram Server
     # (don't use the Bot Token, for security reason it must be other)
+    # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_SECRET_TOKEN": None,
 
     # Chats directory path
