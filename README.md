@@ -37,7 +37,7 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 3. Go to project sources and give execution permission to usage scripts:
 
     ```bash
-    cd TLG_JoinCaptchaBot/sources
+    cd TLG_JoinCaptchaBot/src
     chmod +x run status kill
     ```
 
@@ -89,9 +89,9 @@ After=network-online.target
 
 [Service]
 Type=forking
-WorkingDirectory=/path/to/dir/sources/
-ExecStart=/path/to/dir/sources/run
-ExecReload=/path/to/dir/sources/kill
+WorkingDirectory=/path/to/dir/src/
+ExecStart=/path/to/dir/src/run
+ExecReload=/path/to/dir/src/kill
 
 [Install]
 WantedBy=multi-user.target
@@ -189,7 +189,7 @@ To add support for a new language you must follow this steps:
 
 1. Fork the project repository, clone it and create a new branch to work on it (i.e. named language-support-en).
 
-2. Copy from one of the existing language JSON files from [here](https://github.com/J-Rios/TLG_JoinCaptchaBot/tree/master/sources/language) to a new one.
+2. Copy from one of the existing language JSON files from [here](https://github.com/J-Rios/TLG_JoinCaptchaBot/tree/master/src/language) to a new one.
 
 3. Change the name of that file for the language ISO Code of the language that you want.
 

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+cd $DIR
+rm -f $DIR/*.json
+
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ar.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/be.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ca.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/de.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/el.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/en.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/eo.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/es.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/eu.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/fa.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/fi.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/fr.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/gl.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/he.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/id.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/it.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/kn.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ko.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/nl.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/pl.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/pt_br.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ru.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/sk.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/tr.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/uk.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/uz.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/zh_cn.json
+
+exit 0
