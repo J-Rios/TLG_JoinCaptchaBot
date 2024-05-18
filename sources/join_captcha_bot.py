@@ -2169,15 +2169,15 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Get and configure chat to provided language
     lang_provided = args[0].upper()
     if lang_provided in TEXT:
-        if lang_provided != lang:
+        if (chat_type != "private") and (lang_provided == lang):
+            msg_text = TEXT[lang]["LANG_SAME"].format(
+                    CONST["SUPPORTED_LANGS_CMDS"])
+        else:
             lang = lang_provided
             save_config_property(group_id, "Language", lang)
             if (chat_type == "private") and (user_id in Global.connections):
                 Global.connections[user_id]["lang"] = lang
             msg_text = TEXT[lang]["LANG_CHANGE"]
-        else:
-            msg_text = TEXT[lang]["LANG_SAME"].format(
-                    CONST["SUPPORTED_LANGS_CMDS"])
     else:
         msg_text = TEXT[lang]["LANG_BAD_LANG"].format(
                 CONST["SUPPORTED_LANGS_CMDS"])
