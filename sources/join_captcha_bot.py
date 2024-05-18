@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/05/2024
+    19/05/2024
 Version:
     1.31.0
 '''
@@ -176,6 +176,7 @@ def get_default_config_data():
         ("Title", CONST["INIT_TITLE"]),
         ("Link", CONST["INIT_LINK"]),
         ("Language", CONST["INIT_LANG"]),
+        ("BiLang", CONST["INIT_BILANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
@@ -779,6 +780,11 @@ async def captcha_fail_member_mute(bot, chat_id, user_id, user_name):
     success = await restrict_user_mute(bot, chat_id, user_id, mute_until_24h)
     if success:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_MUTE"].format(user_name)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["CAPTCHA_FAIL_MUTE"].format(user_name)
+                msg_text = f"{msg_text}\n\n{en_text}"
     else:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
@@ -797,6 +803,11 @@ async def captcha_fail_member_no_media(bot, chat_id, user_id, user_name):
     success = await restrict_user_media(bot, chat_id, user_id, mute_until_24h)
     if success:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_NO_MEDIA"].format(user_name)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["CAPTCHA_FAIL_NO_MEDIA"].format(user_name)
+                msg_text = f"{msg_text}\n\n{en_text}"
     else:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
@@ -830,6 +841,11 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
             # Kick success
             join_retries = join_retries + 1
             msg_text = TEXT[lang]["CAPTCHA_FAIL_KICK"].format(user_name)
+            if lang != "EN":
+                bilang = get_chat_config(chat_id, "BiLang")
+                if bilang:
+                    en_text = TEXT["EN"]["CAPTCHA_FAIL_KICK"].format(user_name)
+                    msg_text = f"{msg_text}\n\n{en_text}"
             await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
         else:
             # Kick fail
@@ -863,6 +879,12 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
             banned = True
             msg_text = TEXT[lang]["CAPTCHA_FAIL_BAN"].format(
                     user_name, max_join_retries)
+            if lang != "EN":
+                bilang = get_chat_config(chat_id, "BiLang")
+                if bilang:
+                    en_text = TEXT["EN"]["CAPTCHA_FAIL_BAN"].format(
+                        user_name, max_join_retries)
+                    msg_text = f"{msg_text}\n\n{en_text}"
         else:
             # Ban fail
             if ban_result["error"] == "User not found":
@@ -1093,6 +1115,12 @@ async def chat_member_status_change(
         # Send a button-only challenge
         challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(
                 join_user_name, chat_title, timeout_str)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["NEW_USER_BUTTON_MODE"].format(
+                    join_user_name, chat_title, timeout_str)
+                challenge_text = f"{challenge_text}\n\n{en_text}"
         # Prepare inline keyboard button to let user pass
         keyboard = [[
                 InlineKeyboardButton(
@@ -1124,6 +1152,12 @@ async def chat_member_status_change(
         # Send request to solve the poll text message
         poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
                 join_user_name, chat_title, timeout_str)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["POLL_NEW_USER"].format(
+                    join_user_name, chat_title, timeout_str)
+                poll_request_msg_text = f"{poll_request_msg_text}\n\n{en_text}"
         sent_result = await tlg_send_autodelete_msg(
                 bot, chat_id, poll_request_msg_text, captcha_timeout)
         solve_poll_request_msg_id = None
@@ -1165,6 +1199,13 @@ async def chat_member_status_change(
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
                     join_user_name, chat_title, timeout_str)
+            if lang != "EN":
+                bilang = get_chat_config(chat_id, "BiLang")
+                if bilang:
+                    en_text = TEXT["EN"]["NEW_USER_MATH_CAPTION"].format(
+                        join_user_name, chat_title, timeout_str)
+                    img_caption = f"{img_caption}\n\n{en_text}"
+            img_caption = img_caption[:1024]
         else:
             captcha_num = captcha["characters"]
             logger.info(
@@ -1173,6 +1214,13 @@ async def chat_member_status_change(
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
                     join_user_name, chat_title, timeout_str)
+            if lang != "EN":
+                bilang = get_chat_config(chat_id, "BiLang")
+                if bilang:
+                    en_text = TEXT["EN"]["NEW_USER_IMG_CAPTION"].format(
+                        join_user_name, chat_title, timeout_str)
+                    img_caption = f"{img_caption}\n\n{en_text}"
+            img_caption = img_caption[:1024]
         # Prepare inline keyboard button to let user request another
         # captcha
         keyboard = [[
@@ -1541,6 +1589,11 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await tlg_delete_msg(bot, chat_id, msg_id)
         # Send message solve message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
+                bot_msg = f"{bot_msg}\n\n{en_text}"
         await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
@@ -1668,6 +1721,11 @@ async def poll_answer_rx(
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Send captcha solved message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
+                bot_msg = f"{bot_msg}\n\n{en_text}"
         await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         del Global.new_users[chat_id][user_id]
         # Check for custom welcome message and send it
@@ -1697,6 +1755,11 @@ async def poll_answer_rx(
         restriction = get_chat_config(chat_id, "Fail_Restriction")
         if restriction == CMD["RESTRICTION"]["KICK"]:
             bot_msg = TEXT[lang]["CAPTCHA_POLL_FAIL"].format(user_name)
+            if lang != "EN":
+                bilang = get_chat_config(chat_id, "BiLang")
+                if bilang:
+                    en_text = TEXT["EN"]["CAPTCHA_POLL_FAIL"].format(user_name)
+                    bot_msg = f"{bot_msg}\n\n{en_text}"
             await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
             await asyncio_sleep(10)
         # Try to punish the user
@@ -1793,6 +1856,12 @@ async def button_request_another_captcha_press(bot, query):
                 chat_id, captcha["equation_str"], captcha_num)
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
                 user_name, chat_title, timeout_str)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["NEW_USER_MATH_CAPTION"].format(
+                    user_name, chat_title, timeout_str)
+                img_caption = f"{img_caption}\n\n{en_text}"
     else:
         captcha_num = captcha["characters"]
         logger.info(
@@ -1800,6 +1869,12 @@ async def button_request_another_captcha_press(bot, query):
                 chat_id, captcha_num)
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
                 user_name, chat_title, timeout_str)
+        if lang != "EN":
+            bilang = get_chat_config(chat_id, "BiLang")
+            if bilang:
+                en_text = TEXT["EN"]["NEW_USER_IMG_CAPTION"].format(
+                    user_name, chat_title, timeout_str)
+                img_caption = f"{img_caption}\n\n{en_text}"
     # Read and send image
     edit_result = {}
     try:
@@ -1857,6 +1932,11 @@ async def button_im_not_a_bot_press(bot, query):
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
+    if lang != "EN":
+        bilang = get_chat_config(chat_id, "BiLang")
+        if bilang:
+            en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
+            bot_msg = f"{bot_msg}\n\n{en_text}"
     await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
     # Check for custom welcome message and send it
     welcome_msg = ""
@@ -2124,6 +2204,59 @@ async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
             bot, chat_type, chat_id,
             TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg, 2)),
             parse_mode="MARKDOWN", topic_id=tlg_get_msg_topic(update_msg))
+
+
+async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''
+    Command /bilanguage message handler.
+    '''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check usage in private chat
+    if chat_type == "private":
+        if user_id not in Global.connections:
+            await tlg_send_msg_type_chat(
+                    bot, chat_type, chat_id,
+                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = Global.connections[user_id]["group_id"]
+    else:
+        # Remove command message automatically after a while
+        tlg_autodelete_msg(update_msg)
+        # Ignore if not requested by a group Admin
+        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
+        if (is_admin is None) or (is_admin is False):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+    # Check if no argument was provided with the command
+    if (args is None) or (len(args) == 0):
+        await tlg_send_msg_type_chat(
+                bot, chat_type, chat_id, TEXT[lang]["BILANG_MSG"],
+                topic_id=tlg_get_msg_topic(update_msg))
+        return
+    # Get remove welcome messages config to set
+    yes_or_no = args[0].lower()
+    if yes_or_no == "yes":
+        save_config_property(group_id, "BiLang", True)
+        bot_msg = TEXT[lang]["BILANG_MSG_YES"]
+    elif yes_or_no == "no":
+        save_config_property(group_id, "BiLang", False)
+        bot_msg = TEXT[lang]["BILANG_MSG_NO"]
+    else:
+        bot_msg = TEXT[lang]["BILANG_MSG"]
+    await tlg_send_msg_type_chat(
+            bot, chat_type, chat_id, bot_msg,
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3805,6 +3938,7 @@ def tlg_app_setup(token: str) -> Application:
     tlg_add_cmd(app, CMD["CONNECT"]["KEY"], cmd_connect)
     tlg_add_cmd(app, CMD["DISCONNECT"]["KEY"], cmd_disconnect)
     tlg_add_cmd(app, CMD["LANGUAGE"]["KEY"], cmd_language)
+    tlg_add_cmd(app, CMD["BILANGUAGE"]["KEY"], cmd_bilanguage)
     tlg_add_cmd(app, CMD["TIME"]["KEY"], cmd_time)
     tlg_add_cmd(app, CMD["DIFFICULTY"]["KEY"], cmd_difficulty)
     tlg_add_cmd(app, CMD["CAPTCHA_MODE"]["KEY"], cmd_captcha_mode)

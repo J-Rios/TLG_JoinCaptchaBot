@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    15/05/2024
+    19/05/2024
 Version:
     1.31.0
 '''
@@ -239,6 +239,11 @@ CONST = {
     "INIT_LANG":
         os_getenv("CAPTCHABOT_INIT_LANG", SETTINGS["CAPTCHABOT_INIT_LANG"]),
 
+    # Initial Bilanguage config value at Bot start
+    "INIT_BILANG":
+        bool(int(os_getenv("CAPTCHABOT_INIT_BILANG",
+                           SETTINGS["CAPTCHABOT_INIT_BILANG"]))),
+
     # Time to restrict sending no-text messages
     "T_RESTRICT_NO_TEXT_MSG":
         int(os_getenv("CAPTCHABOT_T_RESTRICT_NO_TEXT_MSG",
@@ -328,7 +333,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.31.0 (15/05/2024)"
+    "VERSION": "1.31.0 (19/05/2024)"
 }
 
 # Supported languages list
@@ -371,6 +376,7 @@ CMD = {
     "CONNECT": {"KEY": "connect"},
     "DISCONNECT": {"KEY": "disconnect"},
     "LANGUAGE": {"KEY": "language"},
+    "BILANGUAGE": {"KEY": "bilanguage"},
     "DIFFICULTY": {"KEY": "difficulty"},
     "WELCOME_MSG": {"KEY": "welcome_msg"},
     "WELCOME_MSG_TIME": {"KEY": "welcome_msg_time"},

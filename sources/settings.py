@@ -97,6 +97,9 @@ SETTINGS = {
     # Initial language at Bot start
     "CAPTCHABOT_INIT_LANG": "EN",
 
+    # Initial Bilanguage config value at Bot start
+    "CAPTCHABOT_INIT_BILANG": False,
+
     # Initial enable/disable status at Bot start
     "CAPTCHABOT_INIT_ENABLE": True,
 
