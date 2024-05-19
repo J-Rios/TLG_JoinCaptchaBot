@@ -33,3 +33,11 @@ monitor:
 errors:
 	@ chmod +x $(TOOLS)/check_errors
 	@ $(TOOLS)/check_errors
+
+catcfgchat:
+	@ chmod +x $(TOOLS)/catcfgchat
+	@ $(TOOLS)/catcfgchat
+
+stats:
+	@ chmod +x $(TOOLS)/stats
+	@ $(TOOLS)/stats
