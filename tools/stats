@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+LOGFILE="${DIR}/../output.log"
+
+num_joins=-1
+num_kicks=-1
+num_bans=-1
+num_solves=-1
+num_spams=-1
+
+# Usage: stats date
+stats_get()
+{
+    num_joins=$(cat $LOGFILE | grep -e "${1}" | grep -e "New join detected: " | wc -l)
+    num_kicks=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha not solved, kicking" | wc -l)
+    num_bans=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha not solved, banning" | wc -l)
+    num_solves=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha solved by " | wc -l)
+    num_spams=$(cat $LOGFILE | grep -e "${1}" | grep -e "Removing spam" | wc -l)
+}
+
+# Usage: show_data date num_joins num_kicks num_solves
+show_data()
+{
+    echo "{"
+    echo "    \"date\" : \"${1}\","
+    echo "    \"num_joins\" : ${2},"
+    echo "    \"num_kicks\" : ${3},"
+    echo "    \"num_ban\" : ${4},"
+    echo "    \"num_solves\" : ${5},"
+    echo "    \"num_spams\" : ${6}"
+    echo "}"
+    echo ""
+}
+
+# Main functionality
+if [ $# -gt 0 ]; then
+    date=$1
+    stats_get $date
+    show_data $date $num_joins $num_kicks $num_bans $num_solves $num_spams
+else
+    date_y_m=$(date '+%Y-%m')
+    for day in {1..31}
+    do
+        if [ $day -lt 10 ]; then
+            date="${date_y_m}-0${day}"
+        else
+            date="${date_y_m}-${day}"
+        fi
+        stats_get $date
+        show_data $date $num_joins $num_kicks $num_bans $num_solves $num_spams
+    done
+fi
+
+exit 0
