@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+DATE=$1
+
+if [ "$DATE" = "" ]; then
+    YEAR=$(date +%Y)
+    MONTH=$(date +%m)
+    LAST_MONTH=$(expr $MONTH - 1)
+    DATE=$(echo $YEAR-$MONTH)
+fi
+
+CHATS=$(cat $DIR/../output.log | grep -e "${DATE}" | grep -e "New join detected" | grep -o -P '(?<= \[-).*(?=] )' | sort -u)
+
+NUM_ACTIVE_GROUPS=$(echo "$CHATS" | sort -u | wc -l)
+
+echo ""
+echo "Active Groups:"
+echo "$CHATS"
+echo ""
+echo "Active Groups in last and current months: $NUM_ACTIVE_GROUPS"
+echo ""
+
+exit 0

@@ -15,16 +15,29 @@ help:
 	@ echo ""
 
 run:
+	@ chmod +x $(TOOLS)/run
 	@ $(TOOLS)/run
 
 kill:
+	@ chmod +x $(TOOLS)/kill
 	@ $(TOOLS)/kill
 
 status:
+	@ chmod +x $(TOOLS)/status
 	@ $(TOOLS)/status
 
 monitor:
+	@ chmod +x $(TOOLS)/monitor
 	@ $(TOOLS)/monitor
 
 errors:
+	@ chmod +x $(TOOLS)/check_errors
 	@ $(TOOLS)/check_errors
+
+catcfgchat:
+	@ chmod +x $(TOOLS)/catcfgchat
+	@ $(TOOLS)/catcfgchat
+
+stats:
+	@ chmod +x $(TOOLS)/stats
+	@ $(TOOLS)/stats

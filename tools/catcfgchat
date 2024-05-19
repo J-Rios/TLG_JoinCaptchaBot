@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+echo ""
+cat $DIR/../src/data/chats/$1/configs.json
+echo ""
+
+exit 0

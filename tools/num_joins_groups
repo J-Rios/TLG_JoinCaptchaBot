@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+DATE=$1
+
+if [ "$DATE" = "" ]; then
+    DATE=$(date +%Y-%m-%d)
+fi
+
+cat $DIR/../output.log | grep -e "${DATE}" | grep -e "New join detected: " | awk '{print $8}' | sort | uniq -c | sort -u
+
+exit 0
