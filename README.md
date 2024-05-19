@@ -4,8 +4,8 @@
     <img width="100%" height="100%" src="https://gist.githubusercontent.com/J-Rios/05d7a8fc04166fa19f31a9608033d10b/raw/32dee32a530c0a0994736fe2d02a1747478bd0e3/captchas.png">
 </p>
 
-Bot to verify if a new user, who joins a group, is a human.
-The Bot sends an image captcha for each new user, and kicks any of them that can't solve the captcha in a specified amount of time. Also, any message that contains an URL sent by a new "user" before captcha completion will be considered Spam and will be deleted.
+Telegram Bot to verify if a new member joining a group is a human.
+Upon a new user join a group, the Bot send an image-based [captcha challenge](https://en.wikipedia.org/wiki/CAPTCHA) that must be solved to allow the user stay in the group. If the new user fails to solve the captcha within a set time limit, they are removed from the group. Additionally, any message from a new user that includes a URL prior to the completion of the captcha will be considered Spam and will be deleted.
 
 ## Donate
 
@@ -17,13 +17,14 @@ Paypal:
 
 ## Installation
 
-Note: Use Python 3.6 or above to install and run the Bot, previous version are unsupported.
+Note: Use Python 3.6 or above to install and run the Bot, previous python version are unsupported.
 
 To generate Captchas, the Bot uses [multicolor_captcha_generator library](https://github.com/J-Rios/multicolor_captcha_generator), which uses Pillow to generate the images.
 
 1. Install Pillow prerequisites:
 
     ```bash
+    sudo apt update
     sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
     ```
 
@@ -31,42 +32,49 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 
     ```bash
     git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
-    python3 -m pip install -r TLG_JoinCaptchaBot/requirements.txt
+    cd TLG_JoinCaptchaBot
+    python3 -m pip install -r requirements.txt
     ```
 
-3. Go to project sources and give execution permission to usage scripts:
-
-    ```bash
-    cd TLG_JoinCaptchaBot/src
-    chmod +x run status kill
-    ```
-
-4. Specify Telegram Bot account Token (get it from @BotFather) in "settings.py" file:
+3. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:
 
     ```python
     'TOKEN' : 'XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     ```
 
+## Configuration
+
+All Bot configurations can be done easily by modifying them in the **"src/settings.json"** file.
+
+For more experienced users, you can use environment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
+
+
 ## Usage
 
-To ease usage a `run`, `status`, and `kill` scripts have been provided.
+To ease it usage in Linux, a **Makefile** is provided.
+
+- Check usage help information:
+
+    ```bash
+    make
+    ```
 
 - Launch the Bot:
 
     ```bash
-    ./run
+    make run
     ```
 
-- Check if the script is running:
+- Check if the Bot is running:
 
     ```bash
-    ./status
+    make status
     ```
 
 - Stop the Bot:
 
     ```bash
-    ./kill
+    make kill
     ```
 
 ## Systemd service
@@ -76,22 +84,22 @@ For systemd based systems, you can setup the Bot as daemon service.
 To do that, you need to create a new service description file for the Bot as follow:
 
 ```bash
-[vim or nano] /etc/systemd/system/bot.service
+[vim or nano] /etc/systemd/system/tlg_joincaptcha_bot.service
 ```
 
 File content:
 
 ```bash
 [Unit]
-Description=Bot Telegram Daemon
+Description=Telegram Join Captcha Bot Daemon
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=forking
-WorkingDirectory=/path/to/dir/src/
-ExecStart=/path/to/dir/src/run
-ExecReload=/path/to/dir/src/kill
+WorkingDirectory=/path/to/TLG_JoinCaptchaBot/src/
+ExecStart=/path/to/TLG_JoinCaptchaBot/tools/run
+ExecReload=/path/to/TLG_JoinCaptchaBot/tools/kill
 
 [Install]
 WantedBy=multi-user.target
@@ -100,26 +108,36 @@ WantedBy=multi-user.target
 Then, to add the new service into systemd, you should enable it:
 
 ```bash
-systemctl enable --now bot.service
+systemctl enable --now tlg_joincaptcha_bot.service
+```
+
+Now, you can start the service (Bot) by:
+
+```bash
+systemctl start tlg_joincaptcha_bot.service
+```
+
+You can check if the service (Bot) is running by:
+
+```bash
+systemctl status tlg_joincaptcha_bot.service
 ```
 
 Remember that, if you wan't to disable it, you should execute:
 
 ```bash
-systemctl disable bot.service
+systemctl disable tlg_joincaptcha_bot.service
 ```
 
 ## Docker
 
-You can also run the bot on [Docker](https://docs.docker.com/get-started/). This allows easy
-server migration and automates the download of all dependencies. Look at the
-[docker specific documentation](docker/README.md) for more details about how to create a Docker Container for Captcha Bot.
+You can also run the bot on [Docker](https://docs.docker.com/get-started/). This allows easy server migration and automates the installation and setup. Look at the [docker specific documentation](docker/README.md) for more details about how to create a Docker Container for Captcha Bot.
 
 ## Bot Owner
 
-The **Bot Owner** can run special commands that no one else can use, like /allowgroup (if the Bot is private, this allow groups where the Bot can be used) or /allowuserlist (to make Bot don't ask for captcha to some users, useful for blind users).
+The **Bot Owner** can run special commands that no one else can use, like /allowgroup (if the Bot is private, this set allowed groups where the Bot can be used) or /allowuserlist (to make Bot don't ask for captcha to some users, useful for example for blind users).
 
-You can setup a Bot Owner by specifying the Telegram User ID or Alias in "settings.py" file:
+You can setup a Bot Owner by specifying the Telegram User ID or Alias in "settings.py" file. For example:
 
 ```python
 "BOT_OWNER": "@JoseTLG",
@@ -176,10 +194,6 @@ To go back and use Polling instead Webhook, just set the config back to False:
 ```python
 "CAPTCHABOT_USE_WEBHOOK": False,
 ```
-
-## Environment Variables Setup
-
-You can setup some Bot properties manually changing their values in settings.py file, but also you can use environment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
 
 ## Adding a New Language
 
