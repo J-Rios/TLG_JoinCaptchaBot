@@ -1,0 +1,313 @@
+{
+    "START":
+        "Zdravo, ja sam bot koji šalje sliku captcha za svakog novog korisnika koji se pridruži grupi i izbacuje svakoga ko ne može rešiti captcha unutar određenog vremena.\n\nAko se korisnik pokuša pridružiti grupi 5 puta za redom i ni jednom ne reši captcha, pretpostaviću da je ovaj \"user\" bot, i biće uklonjen. Takođe, svaka poruka koja sadrži URL koji je poslao novi \"user\" pre nego što se captcha završi smatraće se neželjenom objavom i  biće izbrisana.\n\nNe zaboravite da mi date administrativne privilegije da izbacujem korisnike i uklanjam poruke.\n\nPokrenite naredbu /help za više informacija o mojim mogućnostima.\n\nJesam li koristan? Pokrenite /about komandu i razmislite o davanju donacije da ostanem aktivan.",
+
+    "HELP":
+        "Pomoć za botove:\n————————————————\n- Ja sam bot koji šalje captcha (sliku sa porukom, koju treba upisati da bi potvrdili da ste čovek ili stisnuti dugme) za svakog novog korisnika koji se pridruži grupi i izbaci svakog od njih koji ne može da reši captcha unutar određenog vremena.\n\n- Ako se korisnik pokuša priključiti grupi 5 puta zaredom a ne reši captcha, pretpostaviću da je \"user\" bot, i biće uklonjen.\n\n- Svaka poruka koja sadrži URL koju je poslao novi \"user\" pre nego što je captcha završen smatraće se neželjenom porukom i biće izbrisana.\n\n- Morate mi dodeliti prava administratora tako da mogu izbaciti korisnike i ukloniti poruke.\n\n- Da sačuvam čistu grupu, automatski uklanjam sve poruke koje se odnose na mene kada captcha nije rešen i korisnik je izbačen.\n\n- Vreme za koje novi korisnici moraju rešiti captcha je standardno 5 minuta, ali se može drugačije konfigursati pomoću naredbe /time.\n\n- Možete uključiti/isključiti captcha zaštitu pomoću naredbi /enable i /disable.\n\n- Komande za konfiguraciju mogu koristiti samo administratori grupe.\n\n- Možete promeniti jezik kojim govorim koristeći komandu /language.\n\n- Možete konfigurisati captcha nivo težine koristeći komandu /difficulty.\n\n- Možete postaviti različite tipove captcha načina rada koristeći /captcha_mode, od slika sa brojevima (podrazumevano), slova, matematičke jednačine koju treba rešiti, prilagođene ankete, dugmeta koja treba pritisnuti, itd.\n\n- Možete konfigurisati različite vrste ograničenja za sankcionisanje korisnika koji ne uspeju rešiti captcha pomoću naredbe /restriction, od izbacivanja (podrazumevano), zabrane, isključivanja zvuka, itd.\n\n- Možete konfigurisati prilagođenu poruku dobrodošlice sa naredbom /welcome_msg.\n\n- Možete omogućiti opciju da mi dozvolite da primenjujem ograničenje na nove pridošle korisnike za slanje ne-tekstualnih poruka koristeći komandu /restrict_non_text.\n\n- Možete konfigurisati grupu iz privatnog bot chata putem /connect komande.\n\n- Možete blokirati korisnike da pošalju bilo koju poruku koja sadrži URL/link u grupi pomoću naredbe /url_disable.\n\n- Pokrenite /commands da dobijete listu svih dostupnih komandi i kratak opis svih njih.",
+
+    "COMMANDS":
+        "Lista naredbi:\n————————————————\n/start - Prikazuje početne informacije o botu.\n\n/help - Prikazuje informacije pomoći.\n\n/commands - Prikazuje ovu poruku. Informacije o svim dostupnim komandama i njihovom opisu.\n\n/language - Omogućava promenu jezika botovih poruka.\n\n/bilanguage - Captcha tekst poruke na dva jezika (engleski + konfigurisani jezik).\n\n/time - Omogućava promenu raspoloživog vremena za rešavanje captcha.\n\n/difficulty - Omogućava promenu nivoa težine captcha (od 1 do 5).\n\n/restriction - Postavite vrstu sankcije koja će se primeniti na korisnika koji ne uspeva rešiti captcha (izbacivanje, isključivanje zvuka, itd.).\n\n/captcha_mode - Omogućuje promenu captcha načina prikazivanja i rešavanja (nums: brojevi, hex: brojevi i A-F znakovi, ascii: brojevi i A-Z znakovi, math: matematička jednačina, poll: prilagođena i podesiva anketa, button: samo dugme).\n\n/captcha_poll - Konfigurišite prilagođeno pitanje ankete i opcije za captcha u načinu ankete.\n\n/welcome_msg - Omogućava konfigurisanje poruke dobrodošlice koja se šalje nakon rešavanja captcha .\n\n/welcome_msg_time - Omogućava da se konfiguriše vreme automatskog uklanjanja poruke dobrodošlice.\n\n/restrict_non_text - Nakon što novi korisnik reši captcha primenite ograničenje da mu ne dozvolite slanje ne-tekstualnih poruka (slike, video zapisi, audio zapisi) 1 dan (ili zauvek, koristeći ključnu reč \"forever\").\n\n/add_ignore - Ne pitajte zanemarenog korisnika za captcha.\n\n/remove_ignore - Prestanite ignorisati korisnika .\n\n/ignore_list - lista zanemarenih korisničkih ID-ova.\n\n/remove_solve_kick_msg - Konfigurišite da li se poruke za rešavanje captcha i kick/ban poruke trebaju automatski izbrisati nakon nekog vremena.\n\n/remove_welcome_msg - Konfigurišite ako poruka dobrodošlice treba biti automatski obrisana nakon nekog vremena.\n\n/url_disable - Zabrani članovima grupe da šalju poruke koje sadrže linkove do web stranica (URL-ove).\n\n/url_enable - Dozvoljava članovima grupe da šalju poruke koje sadrže linkove na web stranice (URL-ove).\n\n/remove_all_msg_kick_off - Konfigurišite bota da ne uklanja tekstualne poruke koje su poslali korisnici koji nisu rešili captcha.\n\n/remove_all_msg_kick_on - Konfigurišite bota da ukloni sve poruke koje šalju korisnici koji nisu rešili captcha.\n\n/allowgroup - Dozvoli grupi da koristi bot (ako je bot privatan).\n\n/enable - Omogući captcha zaštitu grupe.\n\n/disable - Onemogući captcha zaštitu grupe.\n\n/checkcfg - Prikaži trenutnu konfiguraciju captcha grupe.\n\n/chatid - Prikaži ID trenutnog chata.\n\n/connect - Poveži se na grupu da konfigurišeš bot-a iz privatnog bot chata.\n\n/disconnect - Prekini vezu sa povezanom grupom koja se konfigurše sa privatnog bot chata.\n\n/verzija - Prikaži verziju bota.\n\n/about - Prikaži informacije .",
+
+    "CMD_NOT_ALLOW":
+        "Samo administrator može koristiti ovu naredbu.",
+
+    "CMD_INVALID_PARAMETER":
+        "Nevažeći parametar komande.",
+
+    "LANG_CHANGE":
+        "Jezik je uspešno promenjen.",
+
+    "LANG_SAME":
+        "Već sam na tom jeziku.\n\nPodržani jezici:\n{}",
+
+    "LANG_BAD_LANG":
+        "Naveden je nevažeći jezik.\n\nPodržani jezici:\n{}",
+
+    "LANG_NOT_ARG":
+        "Naredbi je potreban jezik za postavljanje.\n\nPrimeri:\n{}",
+
+    "TIME_CHANGE":
+        "Vreme za rešavanje captcha je uspešno promenjeno u {}.",
+
+    "WELCOME_TIME_CHANGE":
+        "Vreme za brisanje poruke dobrodošlice je uspešno promenjeno u {}.",
+
+    "TIME_OUT_RANGE":
+        "Nevažeće vreme, mora biti u rasponu od 10 sekundi do {} min.",
+
+    "TIME_NOT_NUM":
+        "Navedeno vreme nije ceo broj.",
+
+    "TIME_NOT_ARG":
+        "Naredbi je potrebna vrednost vremena za postavljanje.\n\nPrimeri:\n/time 30 sekundi\n/time 5 min\n/time 1 min",
+
+    "WELCOME_TIME_NOT_ARG":
+        "Za naredbu je potrebna vremenska vrednost za postavljanje.\n\nPrimeri:\n/welcome_msg_time 30 sec\n/welcome_msg_time 5 min\n/welcome_msg_time 1 min",
+
+    "DIFFICULTY_CHANGE":
+        "Captcha poteškoća je uspešno promenjena na nivo {}.",
+
+    "DIFFICULTY_NOT_NUM":
+        "Navedena poteškoća captcha nije broj.",
+
+    "DIFFICULTY_NOT_ARG":
+        "Naredbi je potreban nivo težine za postavljanje (od 1 do 5). Nema efekta u \"button\" modu.\n\nPrimeri:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+
+    "CAPTCHA_MODE_CHANGE":
+        "Captcha način rada je uspešno promenjen u \"{}\".",
+
+    "CAPTCHA_MODE_INVALID":
+        "Nevažeći način rada captcha. Podržani načini su: \"nums\", \"hex\", \"ascii\", \"math\", \"button\", \"poll\" and \"random\".\n\nPrimeri:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CAPTCHA_MODE_NOT_ARG":
+        "Naredbi je potreban način za postavljanje. Dostupni modovi su:\n\n- Numeričke Captchas (\"nums\").\n- Heksadecimalni Captcha, brojevi i znakovi A-F (\"hex\").\n- Brojevi i znakovi A-Z Captcha (\"ascii\") .\n- Matematička jednačina za rešavanje Captchas (\"math\").\n- Samo pritisak na dugme (\"button\").\n- Prilagođeno popunjvanje ankete (\"pool\").\n- Slučajni izbor (\"random\").\n\nPrimjeri:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
+
+    "CMD_RESTRICTION_CHANGE":
+        "Ograničenje koje se primenjuje kada korisnik ne uspe da captcha promeni u \"{}\".",
+
+    "CMD_RESTRICTION_NOT_ARG":
+        "Naredba zahteva vrstu ograničenja za postavljanje.",
+
+    "CMD_RESTRICTION_AVAILABLE_ARGS":
+        "Dostupna ograničenja za sankcionisanje korisnika koji nije ispunio captcha:\n\n/restriction kick - Izbacite korisnika iz grupe (zadano ponašanje; nakon višestrukih neuspeha korisnik će biti banovan).\n\n/restriction mute - Ne dozvoliti korisniku da piše poruke u grupi 24h (nakon ovog vremena, ograničenje će automatski biti uklonjeno).\n\n/restriction media - Ne dozvoli korisniku da piše medijske poruke (slika, video, audio itd.) u grupi 24h (nakon ovog vremena, ograničenje će se automatski ukloniti).",
+
+    "WELCOME_MSG_SET":
+        "Poruka dobrodošlice je uspešno konfigurisana.",
+
+    "WELCOME_MSG_UNSET":
+        "Poruka dobrodošlice onemogućena.",
+
+    "WELCOME_MSG_SET_NOT_ARG":
+        "Postavite poruku dobrodošlice nakon naredbe.\n\nPrimer:\n/welcome_msg Zdravo $user, dobrodošao u grupu i ne zaboravite da poštujete druge korisnike.\n\nOnemogućite poruku:\n/welcome_msg disable",
+
+    "RESTRICT_NON_TEXT_MSG_ENABLED":
+        "Omogućeno je ograničenje slanja poruka koje nisu tekstualne za nove korisnike. Ukloniću nedavno pridružene korisničke poruke koje nisu tekstualne poruke.",
+
+    "RESTRICT_NON_TEXT_MSG_DISABLED":
+        "Ograničenje slanja poruka koje nisu tekstualne za nove korisnike je onemogućeno.",
+
+    "RESTRICT_NON_TEXT_MSG_NOT_ARG":
+        "Postavite ako želite da omogućite ili onemogućite ograničenja korisnika koji su se nedavno pridružili za slanje poruka koje nisu tekstualne (Nemojte dopustiti korisniku da šalje medijske ili druge poruke umesto tekstualnih. Administratori mogu ponovo ručno dati ta dopuštenja korisnicima u budućnosti). \n\nPrimeri:\n/restrict_non_text enable\n/restrict_non_text enable forever\n/restrict_non_text disable",
+
+    "IGNORE_LIST_ADD_NOT_ARG":
+        "Molimo, postavite ID korisnika/pseudonim koji ce biti ignorisani nakon dodavanja u listu, nakon komande.\n\nPrimer:\n/add_ignore 1234567890\n/add_ignore @peter",
+
+    "IGNORE_LIST_ADD_DUPLICATED":
+        "Ovaj ID/pseudonim je već na listi zanemarivanja.",
+
+    "IGNORE_LIST_ADD_LIMIT_EXCEEDED":
+        "Nažalost, dostigli ste maksimalno ograničenje korisnika dodatih na listu ignorisanja, uklonite nekoga da dodate drugog.",
+
+    "IGNORE_LIST_ADD_INVALID":
+        "Ovaj ID/pseudonim je nevažeći.",
+
+    "IGNORE_LIST_ADD_SUCCESS":
+        "ID/pseudonim je uspešno dodat!",
+
+    "IGNORE_LIST_REMOVE_NOT_ARG":
+        "Molimo, postavite ID korisnika/pseudonim koji ce biti izbrisan iz liste, nakon komande.\n\nPrimer:\n/remove_ignore 1234567890\n/remove_ignore @peter",
+
+    "IGNORE_LIST_REMOVE_SUCCESS":
+        "ID/pseudonim je uspešno uklonjen!",
+
+    "IGNORE_LIST_REMOVE_NOT_IN_LIST":
+        "ID/pseudonim nije na listi ignorisanja, ništa nije urađeno.",
+
+    "IGNORE_LIST_EMPTY":
+        "Lista ignorisanja chata je prazna.",
+
+    "NEW_USER_IMG_CAPTION":
+        "Zdravo {}, dobrodošli u {}. Molimo napišite poruku sa brojevima i/ili slovima koji se pojavljuju na ovoj slici kako biste potvrdili da ste čovek. Ako ne rešite ovaj captcha u {}, bićete automatski izbačeni iz grupe.",
+
+    "NEW_USER_MATH_CAPTION":
+        "Zdravo {}, dobrodošli u {}. Molimo napišite poruku s rezultatom ove matematičke jednačine kako biste potvrdili da ste čovek. Ako ne rešite ovu captcha jednacinu u {}, bićete automatski izbačeni iz grupe.",
+
+    "NEW_USER_BUTTON_MODE":
+        "Zdravo {}, dobrodošli u {}. Pritisnite dugme ispod da potvrdite da niste robot. Ako ovo ne uradite u {}, bićete automatski izbačeni iz grupe.",
+
+    "CAPTCHA_FAIL_CANT_RESTRICT":
+        "Upozorenje: Korisnik {} nije uspeo rešiti captcha, ali nisam mogao ograničiti/ukloniti korisnika.",
+
+    "CAPTCHA_FAIL_MUTE":
+        "Korisnik {} nije uspeo rešiti captcha. \"user\" je isključen i neće moći slati poruke 24h.",
+
+    "CAPTCHA_FAIL_NO_MEDIA":
+        "Korisnik {} nije uspeo rešiti captcha. \"user\" je ograničen i neće moći slati medijske poruke (slike, audio, video, itd.) 24h.",
+
+    "CAPTCHA_SOLVED":
+        "Captcha uspešno rešen, korisnik je verifikovan.\nDobro došli u grupu, {}",
+
+    "CAPTCHA_INCORRECT_0":
+        "To nije tačan kod. Pokušaj ponovo...",
+
+    "CAPTCHA_INCORRECT_1":
+        "To nije tačan broj. Pažljivo proverite, captcha ima 4 broja...",
+
+    "CAPTCHA_INCORRECT_MATH":
+        "To nije tačan broj. Pažljivo proverite, morate rešiti matematičku jednačinu...",
+
+    "CAPTCHA_FAIL_KICK":
+        "Korisnik {} nije uspeo rešiti captcha. \"user\" je izbačen.",
+
+    "NEW_USER_KICK_NOT_RIGHTS":
+        "Pokušao sam izbaciti \"user\" {}, ali nemam administratorska prava da izbacim korisnike iz grupe.",
+
+    "NEW_USER_KICK_NOT_IN_CHAT":
+        "Pokušao sam izbaciti \"user\" {}, ali nije više u grupi (napustio je grupu ili ga je izbacio administrator).",
+
+    "BOT_CANT_KICK":
+        "Pokušao sam izbaciti \"user\" {}, ali zbog neočekivanog problema (možda u vezi s mrežom/serverom), ne mogu to učiniti.",
+
+    "CANT_DEL_MSG":
+        "Pokušao sam da obrišem ovu poruku, ali nemam administratorska prava da uklonim poruke koje nisam poslao.",
+
+    "CAPTCHA_FAIL_BAN":
+        "Upozorenje: Korisnik {} je pokušao i nije uspeo rešiti captcha {} puta. \"user\" je smatran Botom i zabranjen je. Da bi dozvolio ovom \"user\" da ponovo uđe, administrator mora ručno ukloniti njegova ograničenja iz postavki grupe.",
+
+    "NEW_USER_BAN_NOT_IN_CHAT":
+        "Upozorenje: Korisnik {} je pokušao i nije uspeo rešiti captcha {} puta. Pokušao sam zabraniti \"user\", ali korisnik više nije u grupi (napustio je grupu ili je izbačen/ban od strane administratora).",
+
+    "NEW_USER_BAN_NOT_RIGHTS":
+        "Upozorenje: Korisnik {} je pokušao i nije uspeo rešiti captcha {} puta. Pokušao sam zabraniti \"user\", ali nemam administratorska prava da zabranim korisnike u grupi.",
+
+    "BOT_CANT_BAN":
+        "Upozorenje: Korisnik {} je pokušao i nije uspeo rešiti captcha {} puta. Pokušao sam zabraniti \"user\", ali zbog neočekivanog problema (možda vezanog za mrežu/server), ne mogu to učiniti.",
+
+    "SPAM_DETECTED_RM":
+        "Otkrivena je poruka sa URL-om (ili aliasom) od {}, koji još nije rešio captcha. Poruka je uklonjena kako bi Telegram bio bez neželjenih objava :)",
+
+    "SPAM_DETECTED_NOT_RM":
+        "Poruka sa URL-om (ili pseudonimom) otkrivenom od {}, koji još nije rešio captcha. Pokušao sam ukloniti neželjenu poruku, ali nemam administratorska prava da uklonim poruke koje nisam poslao.",
+
+    "NOT_TEXT_MSG_ALLOWED":
+        "Uklonjena je poruka koja nije tekstualna (slika, audio, fajl...) sa {}, radi zaštite Telegrama od neželjenih objava.\n\nMožete slati poruke koje nisu tekstualne nakon što rešite captcha.",
+
+    "RM_SOLVE_KICK_MSG":
+        "Konfigurišite da li da se poruke za rešavanje i izbacivanje/zabranu automatski uklanjaju nakon nekog vremena.\n\nPrimeri:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
+
+    "RM_SOLVE_KICK_MSG_YES":
+        "Poruke promene konfiguracije, rešavanje i izbacivanje/zabrana poruka će se automatski ukloniti nakon nekog vremena.",
+
+    "RM_SOLVE_KICK_MSG_NO":
+        "Poruke promene konfiguracije, rešavanje i izbacivanje/zabrana neće biti uklonjene.",
+
+    "RM_WELCOME_MSG":
+        "Konfigurišite da li se poruke dobrodošlice automatski uklanjaju nakon definisanog vremena.\n\nPrimeri:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
+
+    "RM_WELCOME_MSG_YES":
+        "Promena konfiguracije, poruke dobrodošlice će se automatski ukloniti nakon definisanog vremena.",
+
+    "RM_WELCOME_MSG_NO":
+        "Promena konfiguracije, poruke dobrodošlice neće biti uklonjene.",
+
+    "OTHER_CAPTCHA_BTN_TEXT":
+        "Drugi Captcha",
+
+    "PASS_BTN_TEXT":
+        "Ja nisam bot",
+
+    "URL_MSG_NOT_ALLOWED_DETECTED":
+        "Otkrivena je i uklonjena poruka koja sadrži URL/link koji je poslao {}.\n\nOva grupa ne dozvoljava URL-ove u porukama (Admin treba da konfiguriše Bota da dozvoli URL-ove u porukama).",
+
+    "URL_ENABLE":
+        "Ok, sada korisnici mogu slati URL-ove i linkove u ovoj grupi. Zabranite im ponovno slanje URL-ova /url_disable komandom.",
+
+    "URL_DISABLE":
+        "Ok, sada korisnicima nije dozvoljeno slanje URL-ova i linkova u ovoj grupi. Dozvolite im da ponovo pošalju URL-ove sa /url_enable komandom.",
+
+    "CONFIG_ALREADY_SET":
+        "Ova konfiguracija je već postavljena/enabled.",
+
+    "CONFIG_ALREADY_UNSET":
+        "Ova konfiguracija je već iskljucena/disabled.",
+
+    "ENABLE":
+        "Captcha zaštita je omogućena. Onemogućite ga komandom /disable.",
+
+    "DISABLE":
+        "Captcha zaštita je onemogućena. Omogućite ga komandom /enable.",
+
+    "ALREADY_ENABLE":
+        "Captcha zaštita je već omogućena.",
+
+    "ALREADY_DISABLE":
+        "Captcha zaštita je već onemogućena.",
+
+    "CAN_NOT_GET_ADMINS":
+        "Ne mogu koristiti ovu naredbu u trenutnom chatu.",
+
+    "VERSION":
+        "Trenutna verzija bota:\n{}",
+
+    "ABOUT_MSG":
+        "Ovaj bot je besplatan softver i otvorenog koda pod GNU-GPL licencom.\n\nBot je razvio {}.\n\nKod možete proveriti ovde:\n{}\n\nDa li vam se sviđa moj rad? Kupite mi kafu:\n{}",
+
+    "POLL_NEW_USER":
+        "Zdravo {}, dobrodošli u {}. Molimo da rešite anketu ispod da dokažete da niste robot. Ako ovo ne uradite u {}, bićete automatski izbačeni iz grupe.",
+
+    "CAPTCHA_POLL_FAIL":
+        "Captcha anketa nije uspela, {} odabrali ste pogrešan odgovor. Bićete izbačeni za 10 sekundi, pokušajte ponovo da se pridružite grupi...",
+
+    "CAPTCHA_POLL_USAGE":
+        "Konfigurišite Captcha anketno pitanje i opcije\n————————————————\nTekst pitanja ne može biti veći od {} znakova.\n\nTekst opcije ne može biti veći od {} znakova.\n\nMaksimalni broj opcija je {}.\n————————————————\nPostavi pitanje za anketu:\n/captcha_poll pitanje Jeste li sigurni da želite ući u ovu grupu?\n\nPostavite opciju ankete 1:\n/captcha_poll opciju 1 Ne, ne želim ući u grupu.\n\nPostavite opciju ankete 2:\n/captcha_poll opciju 2 Naravno, ja sam čovek i želim da uđem u grupu.\n\nPostavite opciju ankete 3:\n/captcha_poll opciju 3 Ko sam ja i šta radim?\n\nUkloni opciju ankete 2:\n/captcha_poll opciju 2 ukloni\n\nPostavi ispravno Opcija ankete 2:\n/captcha_poll correct_option 2\n\nPromenite Captcha u način glasanja:\n/captcha_mode anketa",
+
+    "POLL_QUESTION_CONFIGURED":
+        "Captcha anketno pitanje je uspešno konfigurisano.",
+
+    "POLL_OPTION_CONFIGURED":
+        "Opcija Captcha ankete {} je uspešno konfigurisana.",
+
+    "POLL_CORRECT_OPTION_CONFIGURED":
+        "Opcija ispravne ankete Captcha uspešno je konfigurisana na opciju broj {}.",
+
+    "POLL_CORRECT_OPTION_NOT_CONFIGURED":
+        "Opcija ankete broj {} ne postoji, molimo prvo konfigurišite opciju.\n\nPrimer:\n/captcha_poll pitanje Je li 1+2 jednako 5?\n\n/captcha_poll opcija 1 Da\n\n/captcha_poll opcija 2 Ne\n\n/captcha_poll correct_option 2\n\n/captcha_mode anketa",
+
+    "POLL_NEW_USER_NOT_CONFIG":
+        "Došao je novi korisnik, ali Captcha anketa nije u potpunosti konfigurisana.\n\nPotrebno je konfigurisati pitanje u anketi, tačan odgovor u anketi i najmanje 2 opcije odgovora. Molimo, konfigurisite ga sa /captcha_poll komandom.\n\nPrimer:\n/captcha_poll pitanje Da li je 1+2 jednako 5?\n\n/captcha_poll opcija 1 Da\n\n/captcha_poll opcija 2 Ne\n\n/ captcha_poll correct_option 2\n\n/captcha_mode anketa",
+
+    "CONNECT_USAGE":
+        "Morate navesti ID grupnog razgovora koji želite konfigurisati (koristite /chatid komandu unutar grupe da biste to saznali).\n\nPrimer:\n/connect -1234567890",
+
+    "CONNECT_JUST_ADMIN":
+        "Samo administrator te grupe to može konfigurisati.",
+
+    "CONNECT_OK":
+        "Povezani ste sa grupom {}. Sada možete konfigurisati grupne captcha postavke iz privatnog.",
+
+    "DISCONNECT_NOT_CONNECTED":
+        "Niste povezani.",
+
+    "DISCONNECT_OK":
+        "Prekinuta je veza sa grupom {}.",
+
+    "INVALID_GROUP_ID":
+        "Nevažeći ID grupnog razgovora.",
+
+    "CHECK_CFG":
+        "Grupna konfiguracija:\n————————————————\n```\n{}\n```",
+
+    "CMD_NOT_ALLOW_PRIVATE":
+        "Ova komanda se ne može koristiti u privatnom chatu.",
+
+    "CMD_NEEDS_CONNECTION":
+        "Ova komanda se ne može koristiti u privatnom ćaskanju osim ako se ne povežete (/connect) za konfiguraciju neke grupe.",
+
+    "CMD_JUST_IN_PRIVATE":
+        "Ova komanda se ne može koristiti unutar grupe (koristite je u privatnom bot chatu).",
+
+    "RM_ALL_MSGS_AFTER_KICK_ON":
+        "Konfiguracija je promenjena, sve poruke poslate od korisnika koje nisu rešili captcha bit će uklonjene.",
+
+    "RM_ALL_MSGS_AFTER_KICK_OFF":
+        "Konfiguracija je promenjena, poruke koje su poslali korisnici koji nisu rešili captcha neće biti uklonjene.",
+
+    "BILANG_MSG":
+        "Konfigurišite da li tekst captcha poruka mora biti prikazan i na engleskom i na konfigurisanom jeziku.\n\nPrimeri:\n/bilanguage yes\n/bilanguage no",
+
+    "BILANG_MSG_NO":
+        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na jednom jeziku.",
+
+    "BILANG_MSG_YES":
+        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika."
+}

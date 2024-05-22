@@ -251,6 +251,8 @@ To add support for a new language you must follow this steps:
 
 - Russian: Unattributed (anonymous), [@stezkoy](https://github.com/Stezkoy), [Roman (@toxi22)](https://github.com/toxi22)
 
+- Serbo-Croatian: [@IlijaDj](https://github.com/IlijaDj)
+
 - Slovak: [@dumontiskooo](https://t.me/dumontiskooo)
 
 - Ukrainian: Vadym Zhushman (@zhushman00), [Roman (@toxi22)](https://github.com/toxi22)
