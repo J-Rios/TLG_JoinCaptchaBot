@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    19/05/2024
+    22/05/2024
 Version:
-    1.31.0
+    1.31.1
 '''
 
 ###############################################################################
@@ -319,6 +319,7 @@ CONST = {
         "\nPolish / Polskie\n/language pl\n" \
         "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
         "\nRussian / Pусский\n/language ru\n" \
+        "\nSerbo-Croatian / EX-YU\n/language sr\n" \
         "\nSlovak / Slovenčine\n/language sk\n" \
         "\nSpanish / Español\n/language es\n" \
         "\nTurkish / Türkçe\n/language tr\n" \
@@ -335,37 +336,38 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.31.0 (19/05/2024)"
+    "VERSION": "1.31.1 (22/05/2024)"
 }
 
 # Supported languages list
 TEXT: dict = {
-    "AR": {},  # Arabic
-    "BE": {},  # Belarusian
-    "CA": {},  # Catalan
-    "DE": {},  # German
-    "EL": {},  # Greek
-    "EN": {},  # English
-    "EO": {},  # Esperanto
-    "ES": {},  # Spanish
-    "EU": {},  # Basque
-    "FA": {},  # Persian
-    "FI": {},  # Finnish
-    "FR": {},  # French
-    "GL": {},  # Galician
-    "HE": {},  # Hebrew
-    "ID": {},  # Indonesian
-    "IT": {},  # Italian
-    "KN": {},  # Kannada
-    "KO": {},  # Korean
-    "NL": {},  # Dutch
-    "PL": {},  # Polish
-    "PT_BR": {},  # Portuguese (Brasil)
-    "RU": {},  # Rusian
-    "SK": {},  # Slovak
-    "TR": {},  # Turkish
-    "UK": {},  # Ukrainian
-    "UZ": {},  # Uzbek
+    "AR": {},    # Arabic
+    "BE": {},    # Belarusian
+    "CA": {},    # Catalan
+    "DE": {},    # German
+    "EL": {},    # Greek
+    "EN": {},    # English
+    "EO": {},    # Esperanto
+    "ES": {},    # Spanish
+    "EU": {},    # Basque
+    "FA": {},    # Persian
+    "FI": {},    # Finnish
+    "FR": {},    # French
+    "GL": {},    # Galician
+    "HE": {},    # Hebrew
+    "ID": {},    # Indonesian
+    "IT": {},    # Italian
+    "KN": {},    # Kannada
+    "KO": {},    # Korean
+    "NL": {},    # Dutch
+    "PL": {},    # Polish
+    "PT_BR": {}, # Portuguese (Brasil)
+    "RU": {},    # Russian
+    "SK": {},    # Slovak
+    "SR": {},    # Serbo-Croatian (Ex-Yugoslavia Countries)
+    "TR": {},    # Turkish
+    "UK": {},    # Ukrainian
+    "UZ": {},    # Uzbek
     "ZH_CN": {}  # Chinese (Mainland)
 }
 
