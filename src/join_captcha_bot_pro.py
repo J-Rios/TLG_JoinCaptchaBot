@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    19/05/2024
+    06/07/2024
 Version:
-    1.31.0
+    1.31.2
 '''
 
 ###############################################################################
@@ -3528,6 +3528,17 @@ async def cmd_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
+async def cmd_privacy(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''
+    Command /privacy handler.
+    '''
+    msg = getattr(update, "message", None)
+    if msg is None:
+        return
+    await tlg_send_msg(context.bot, msg.chat_id, CONST["PRIVACY"],
+                       topic_id=tlg_get_msg_topic(msg))
+
+
 async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /captcha message handler. Useful to test.
@@ -3963,6 +3974,7 @@ def tlg_app_setup(token: str) -> Application:
     tlg_add_cmd(app, CMD["CHATID"]["KEY"], cmd_chatid)
     tlg_add_cmd(app, CMD["VERSION"]["KEY"], cmd_version)
     tlg_add_cmd(app, CMD["ABOUT"]["KEY"], cmd_about)
+    tlg_add_cmd(app, CMD["PRIVACY"]["KEY"], cmd_privacy)
     if CONST["BOT_OWNER"] != "XXXXXXXXX":
         tlg_add_cmd(app, CMD["CAPTCHA"]["KEY"], cmd_captcha)
         tlg_add_cmd(app, CMD["ALLOWUSERLIST"]["KEY"], cmd_allowuserlist)
