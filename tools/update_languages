@@ -30,6 +30,7 @@ wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/lang
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/pl.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/pt_br.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/ru.json
+wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/sr.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/sk.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/tr.json
 wget https://raw.githubusercontent.com/J-Rios/TLG_JoinCaptchaBot/master/src/language/uk.json
