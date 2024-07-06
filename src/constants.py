@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/05/2024
+    06/07/2024
 Version:
-    1.31.1
+    1.31.2
 '''
 
 ###############################################################################
@@ -324,6 +324,20 @@ CONST = {
         "\nUkrainian / Українську\n/language uk\n" \
         "\nUzbek / o'zbek\n/language uz\n",
 
+    # Privacy information
+    "PRIVACY": \
+        "Privacy Information:\n" \
+        "————————————————\n" \
+        "This Bot doesn't store any data from users, but it stores some " \
+        "group information (the group ID and Title).\n"
+        "\n" \
+        "In order to work and check for user captcha solve responses, " \
+        "the Bot needs to receive any message published in the group. The " \
+        "content of the messages are only used to check if it contains the " \
+        "captcha resolution. Once check is done, the message is discarded. " \
+        "Messages from users that are not involved into a captcha process " \
+        "are directly ignored and discarded.\n",
+
     # Bot developer
     "DEVELOPER": "@JoseTLG",
 
@@ -334,7 +348,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.31.1 (22/05/2024)"
+    "VERSION": "1.31.2 (06/07/2024)"
 }
 
 # Supported languages list
@@ -398,6 +412,7 @@ CMD = {
     "CHATID": {"KEY": "chatid"},
     "VERSION": {"KEY": "version"},
     "ABOUT": {"KEY": "about"},
+    "PRIVACY": {"KEY": "privacy"},
     "CAPTCHA": {"KEY": "captcha"},
     "ALLOWUSERLIST": {"KEY": "allowuserlist"},
     "ALLOWGROUP": {"KEY": "allowgroup"},
