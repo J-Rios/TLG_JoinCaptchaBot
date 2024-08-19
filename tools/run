@@ -17,7 +17,9 @@ rm -rf $DIR/../src/data/captchas/*
 
 # Launch the Bot
 echo "Starting Script..."
+source $DIR/../.venv/bin/activate
 nohup python3 -u $DIR/../src/join_captcha_bot.py >> $DIR/../output.log 2>&1 &
+deactivate
 sleep 1
 $DIR/status
 

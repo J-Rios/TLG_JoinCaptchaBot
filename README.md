@@ -25,15 +25,15 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 
     ```bash
     sudo apt update
-    sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+    sudo apt install -y make libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
     ```
 
-2. Get the project and install JoinCaptchaBot requirements:
+2. Get and setup the project:
 
     ```bash
     git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
     cd TLG_JoinCaptchaBot
-    python3 -m pip install -r requirements.txt
+    make setup
     ```
 
 3. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:

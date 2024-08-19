@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Actual script directory path
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+# Create Virtual Envorionment
+cd $DIR/.. || exit 1
+echo "Creating Virtual Environment..."
+python3 -m venv .venv
+
+# Activate Virtual Environment
+echo "Accesing Virtual Environment..."
+source .venv/bin/activate
+
+# Install Project Requirements into environment
+echo "Installing Requirements..."
+echo ""
+pip install -r requirements.txt
+echo ""
+echo "List of Modules Installed:"
+echo ""
+pip list
+echo ""
+
+# Exit Virtual Environment
+deactivate
+echo "Project setup completed"
+echo ""
+
+exit 0
