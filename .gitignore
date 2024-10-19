@@ -1,6 +1,7 @@
 **/.vscode/
 **/__pycache__/
 **/data/
+**/.idea/
 
 **/*.pyc
 **/*.pkl
