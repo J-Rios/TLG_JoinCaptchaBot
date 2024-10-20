@@ -2,6 +2,7 @@
 **/__pycache__/
 **/.venv/
 **/data/
+**/.idea/
 
 **/*.pyc
 **/*.pkl

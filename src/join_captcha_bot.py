@@ -32,6 +32,9 @@ from asyncio import sleep as asyncio_sleep
 # Collections Data Types Library
 from collections import OrderedDict
 
+# Date and Time Library
+from datetime import datetime, timedelta, timezone
+
 # JSON Library
 from json import dumps as json_dumps
 
@@ -873,7 +876,11 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
         logger.info("[%s] Captcha Fail - Ban - %s (%s)",
                     chat_id, user_name, user_id)
         # Try to ban the user and notify Admins
-        ban_result = await tlg_ban_user(bot, chat_id, user_id)
+        if CONST["BAN_DURATION"] >= 0:
+            ban_until_date = datetime.now(timezone.utc) + timedelta(seconds=CONST["BAN_DURATION"])
+        else:
+            ban_until_date = None
+        ban_result = await tlg_ban_user(bot, chat_id, user_id, until_date=ban_until_date)
         if ban_result["error"] == "":
             # Ban success
             banned = True
