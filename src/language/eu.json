@@ -243,7 +243,7 @@
         "Bot hau GNU-GPL lizentziapeko open-source software librea da, {}-k garatua.\n\nIturburu-kodea hemen kontsultatu dezakezu:\n{}\n\nGustatzen al zaizu egiten dudana? Kafe batera gonbidatu nazazu:\n{}",
 
     "POLL_NEW_USER":
-        "Hello {}, welcome to {}. Please solve the poll below to prove that you are not a robot. If you don't do this in {}, you will be automatically kicked out of the group.",
+        "Kaixo {}, ongi etorri {} taldera. Mesedez, ebatzi beheko inkesta robot bat ez zarela frogatzeko. {} denboran egin ezean, automatikoki izango zara taldetik kaleratua.",
 
     "CAPTCHA_POLL_FAIL":
         "Captcha poll fail, {} select a wrong answer. You will be kicked in 10s, please try to join the group again...",
