@@ -48,7 +48,6 @@ All Bot configurations can be done easily by modifying them in the **"src/settin
 
 For more experienced users, you can use environment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
 
-
 ## Usage
 
 To ease it usage in Linux, a **Makefile** is provided.
@@ -74,7 +73,7 @@ To ease it usage in Linux, a **Makefile** is provided.
 - Stop the Bot:
 
     ```bash
-    make kill
+    make stop
     ```
 
 ## Systemd service

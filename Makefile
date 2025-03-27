@@ -9,7 +9,7 @@ help:
 	@ echo "Usage:"
 	@ echo "  setup: Setup Project"
 	@ echo "  run: Launch the Bot"
-	@ echo "  kill: Stop the Bot"
+	@ echo "  stop: Stop the Bot"
 	@ echo "  status: Check if Bot is running"
 	@ echo "  monitor: Check users captcha process"
 	@ echo "  error: Check for errors in the Bot"
@@ -23,9 +23,9 @@ run:
 	@ chmod +x $(TOOLS)/run
 	@ $(TOOLS)/run
 
-kill:
-	@ chmod +x $(TOOLS)/kill
-	@ $(TOOLS)/kill
+stop:
+	@ chmod +x $(TOOLS)/stop
+	@ $(TOOLS)/stop
 
 status:
 	@ chmod +x $(TOOLS)/status
