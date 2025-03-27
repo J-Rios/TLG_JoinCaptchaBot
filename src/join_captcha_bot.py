@@ -677,7 +677,7 @@ def get_update_user_lang(update_user_data):
 def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
     '''
     Check if number send by user solves a num/hex/ascii/math captcha.
-    - For "math", the message must be the exact math equation result
+    - For "math", the message must be the exact math operation result
     number.
     - For other mode, the message must contains the numbers.
     '''
@@ -1632,7 +1632,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await restrict_user_media(bot, chat_id, user_id)
     # The provided message doesn't has the valid captcha number
     else:
-        # Check if the message is for a math equation captcha
+        # Check if the message is for a math operation captcha
         if captcha_mode == "math":
             clueless_user = False
             # Check if message is just 4 numbers
