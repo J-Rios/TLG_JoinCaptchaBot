@@ -3,9 +3,16 @@
 # Actual script directory path
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
+# Show Header
+echo ""
+echo "----------------------------------------"
+echo "-- Project Setup                      --"
+echo "----------------------------------------"
+echo ""
+
 # Create Virtual Envorionment
 cd $DIR/.. || exit 1
-echo "Creating Virtual Environment..."
+echo "Creating Virtual Environment, please wait..."
 python3 -m venv .venv
 
 # Activate Virtual Environment
