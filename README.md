@@ -28,7 +28,13 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
     sudo apt install -y make libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
     ```
 
-2. Get and setup the project:
+2. Install Python3 and their tools:
+
+    ```bash
+    sudo apt-get install python3 python3-pip python3-venv
+    ```
+
+3. Get and setup the project:
 
     ```bash
     git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
@@ -36,7 +42,7 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
     make setup
     ```
 
-3. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:
+4. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:
 
     ```python
     'TOKEN' : 'XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
@@ -61,7 +67,7 @@ To ease it usage in Linux, a **Makefile** is provided.
 - Launch the Bot:
 
     ```bash
-    make run
+    make start
     ```
 
 - Check if the Bot is running:
@@ -97,7 +103,7 @@ After=network-online.target
 [Service]
 Type=forking
 WorkingDirectory=/path/to/TLG_JoinCaptchaBot/src/
-ExecStart=/path/to/TLG_JoinCaptchaBot/tools/run
+ExecStart=/path/to/TLG_JoinCaptchaBot/tools/start
 ExecReload=/path/to/TLG_JoinCaptchaBot/tools/kill
 
 [Install]
