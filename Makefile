@@ -2,25 +2,30 @@
 SHELL = /bin/bash
 TOOLS="./tools"
 
-.PHONY: help run kill status monitor errors
+.PHONY: help start kill status monitor errors
 
 help:
 	@ echo ""
 	@ echo "Usage:"
-	@ echo "  run: Launch the Bot"
-	@ echo "  kill: Stop the Bot"
+	@ echo "  setup: Setup Project"
+	@ echo "  start: Launch the Bot"
+	@ echo "  stop: Stop the Bot"
 	@ echo "  status: Check if Bot is running"
 	@ echo "  monitor: Check users captcha process"
 	@ echo "  error: Check for errors in the Bot"
 	@ echo ""
 
-run:
-	@ chmod +x $(TOOLS)/run
-	@ $(TOOLS)/run
+setup:
+	@ chmod +x $(TOOLS)/setup
+	@ $(TOOLS)/setup
 
-kill:
-	@ chmod +x $(TOOLS)/kill
-	@ $(TOOLS)/kill
+start:
+	@ chmod +x $(TOOLS)/start
+	@ $(TOOLS)/start
+
+stop:
+	@ chmod +x $(TOOLS)/stop
+	@ $(TOOLS)/stop
 
 status:
 	@ chmod +x $(TOOLS)/status

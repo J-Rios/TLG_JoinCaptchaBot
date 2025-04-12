@@ -25,18 +25,24 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 
     ```bash
     sudo apt update
-    sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+    sudo apt install -y make libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
     ```
 
-2. Get the project and install JoinCaptchaBot requirements:
+2. Install Python3 and their tools:
+
+    ```bash
+    sudo apt-get install python3 python3-pip python3-venv
+    ```
+
+3. Get and setup the project:
 
     ```bash
     git clone https://github.com/J-Rios/TLG_JoinCaptchaBot
     cd TLG_JoinCaptchaBot
-    python3 -m pip install -r requirements.txt
+    make setup
     ```
 
-3. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:
+4. Set Telegram Bot account Token (get it from @BotFather) in "src/settings.py" file:
 
     ```python
     'TOKEN' : 'XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
@@ -47,7 +53,6 @@ To generate Captchas, the Bot uses [multicolor_captcha_generator library](https:
 All Bot configurations can be done easily by modifying them in the **"src/settings.json"** file.
 
 For more experienced users, you can use environment variables to setup all that properties (this is really useful for advance deployment when using [Virtual Environments](https://docs.python.org/3/tutorial/venv.html) and/or [Docker](https://docs.docker.com/get-started/) to isolate the Bot process execution).
-
 
 ## Usage
 
@@ -62,7 +67,7 @@ To ease it usage in Linux, a **Makefile** is provided.
 - Launch the Bot:
 
     ```bash
-    make run
+    make start
     ```
 
 - Check if the Bot is running:
@@ -74,7 +79,7 @@ To ease it usage in Linux, a **Makefile** is provided.
 - Stop the Bot:
 
     ```bash
-    make kill
+    make stop
     ```
 
 ## Systemd service
@@ -98,7 +103,7 @@ After=network-online.target
 [Service]
 Type=forking
 WorkingDirectory=/path/to/TLG_JoinCaptchaBot/src/
-ExecStart=/path/to/TLG_JoinCaptchaBot/tools/run
+ExecStart=/path/to/TLG_JoinCaptchaBot/tools/start
 ExecReload=/path/to/TLG_JoinCaptchaBot/tools/kill
 
 [Install]

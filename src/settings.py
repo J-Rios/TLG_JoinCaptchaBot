@@ -168,5 +168,9 @@ SETTINGS = {
     # Maximum number of times a user fail to solve a Poll captcha.
     # If a user don't solve the captcha after this, it will be ban
     # instead kick
-    "CAPTCHABOT_MAX_FAIL_BAN_POLL": 3
+    "CAPTCHABOT_MAX_FAIL_BAN_POLL": 3,
+
+    # Duration of ban (in seconds, negative values mean indefinite ban).
+    # Useful if you want to ban someone temporarily.
+    "CAPTCHABOT_BAN_DURATION": -1,
 }

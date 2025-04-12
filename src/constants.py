@@ -220,6 +220,12 @@ CONST = {
         int(os_getenv("CAPTCHABOT_MAX_FAIL_BAN_POLL",
                       SETTINGS["CAPTCHABOT_MAX_FAIL_BAN_POLL"])),
 
+    # Duration of ban (in seconds, negative values mean indefinite ban).
+    # Useful if you want to ban someone temporarily.
+    "BAN_DURATION":
+        int(os_getenv("CAPTCHABOT_BAN_DURATION",
+                      SETTINGS["CAPTCHABOT_BAN_DURATION"])),
+
     # Last session restorable RAM data backup file path
     "F_SESSION": SCRIPT_PATH + "/session.pkl",
 
