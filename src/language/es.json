@@ -309,5 +309,7 @@
         "Configuración cambiada. Los Mensajes de Captcha se enviarán en un solo idioma.",
 
     "BILANG_MSG_YES":
-        "Configuración cambiada. Los Mensajes de Captcha se enviarán en dos idiomas."
+        "Configuración cambiada. Los Mensajes de Captcha se enviarán en dos idiomas.",
+    "TIME_UNIT_REQUIRED":
+     "⚠️ Please specify unit.\nUsage:\nSeconds:\n/time <value> sec\nor /time <value> secs\nor /time <value> seconds\nor /time <value> s\nMinutes:\n/time <value> min\nor /time <value> mins\nor /time <value> minutes\nor /time <value> m"
 }

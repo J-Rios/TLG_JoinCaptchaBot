@@ -2374,18 +2374,7 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(args) < 2:
         await tlg_send_msg_type_chat(
                bot, chat_type, chat_id,
-               """⚠️ Please specify unit.
-        Usage:
-        Seconds:
-        /time <value> sec
-        or /time <value> secs
-        or /time <value> seconds
-        or /time <value> s
-        Minutes:
-        /time <value> min
-        or /time <value> mins
-        or /time <value> minutes
-        or /time <value> m""",
+               TEXT[lang]["TIME_UNIT_REQUIRED"],
                topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get time value and unit

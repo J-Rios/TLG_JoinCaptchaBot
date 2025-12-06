@@ -309,5 +309,7 @@
         "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na jednom jeziku.",
 
     "BILANG_MSG_YES":
-        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika."
+        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika.",
+    "TIME_UNIT_REQUIRED":
+     "⚠️ Please specify unit.\nUsage:\nSeconds:\n/time <value> sec\nor /time <value> secs\nor /time <value> seconds\nor /time <value> s\nMinutes:\n/time <value> min\nor /time <value> mins\nor /time <value> minutes\nor /time <value> m"
 }
