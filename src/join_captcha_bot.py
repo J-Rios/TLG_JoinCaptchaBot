@@ -1090,10 +1090,12 @@ async def chat_member_status_change(
     # Get and update chat data
     chat_title = chat.title
     if chat_title:
+        # Add an unicode Left to Right Mark (LRM) to chat title (fix for
+        # arabic, hebrew, etc.)
+        chat_title = add_lrm(chat_title)
         save_config_property(chat_id, "Title", chat_title)
-    # Add an unicode Left to Right Mark (LRM) to chat title (fix for
-    # arabic, hebrew, etc.)
-    chat_title = add_lrm(chat_title)
+    else:
+        chat_title = "group"
     chat_link = chat.username
     if chat_link:
         chat_link = f"@{chat_link}"
