@@ -696,6 +696,12 @@ async def delete_msg(bot, chat_id, msg_id):
     return delete_result
 
 
+def is_unverified_user(chat_id, user_id):
+    '''Check if a user shall complete the captcha process.'''
+    return (chat_id in Global.new_users) and \
+           (user_id in Global.new_users[chat_id])
+
+
 def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
     '''
     Check if number send by user solves a num/hex/ascii/math captcha.
@@ -1449,78 +1455,17 @@ async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
             topic_id=tlg_get_msg_topic(update_msg))
 
 
-async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    '''
-    Text messages reception handler.
-    '''
-    bot = context.bot
-    # Get message data
-    chat = None
-    chat_id = None
-    update_msg = None
-    update_msg = tlg_get_msg(update)
-    if update_msg is not None:
-        chat = getattr(update_msg, "chat", None)
-        chat_id = getattr(update_msg, "chat_id", None)
-    if (update_msg is None) or (chat is None) or (chat_id is None):
-        logger.info("Warning: Received an unexpected update.")
-        logger.info(update)
-        return
-    topic_id = tlg_get_msg_topic(update_msg)
-    # Ignore if message comes from a private chat
-    if chat.type == "private":
-        return
-    # Ignore if message comes from a channel
-    if chat.type == "channel":
-        return
-    # Ignore if message is a channel post automatically forwarded to the
-    # connected discussion group
-    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
-        return
-    # Ignore if captcha protection is not enable in this chat
-    captcha_enable = get_chat_config(chat_id, "Enabled")
-    if not captcha_enable:
-        return
-    # If message doesn't has text, check for caption fields (for no text
-    # msgs and forward ones)
-    msg_text = getattr(update_msg, "text", None)
-    if msg_text is None:
-        msg_text = getattr(update_msg, "caption_html", None)
-    if msg_text is None:
-        msg_text = getattr(update_msg, "caption", None)
-    # Check if message has a text link (embedded url in text) and get it
-    msg_entities = getattr(update_msg, "entities", None)
-    if msg_entities is None:
-        msg_entities = []
-    for entity in msg_entities:
-        url = getattr(entity, "url", None)
-        if url is not None:
-            if url != "":
-                if msg_text is None:
-                    msg_text = url
-                else:
-                    msg_text = f"{msg_text} [{url}]"
-                break
-    # Get others message data
-    user_id = update_msg.from_user.id
-    msg_id = update_msg.message_id
-    # Get and update chat data
-    chat_title = chat.title
-    if chat_title:
-        save_config_property(chat_id, "Title", chat_title)
-    chat_link = chat.username
-    if chat_link:
-        chat_link = f"@{chat_link}"
-        save_config_property(chat_id, "Link", chat_link)
-    user_name = update_msg.from_user.full_name
-    # If has an alias, just use the alias
-    if update_msg.from_user.username is not None:
-        user_name = f"@{update_msg.from_user.username}"
-    # Set default text message if not received
-    if msg_text is None:
-        msg_text = "[Not a text message]"
-    # Check if group is configured to deny users send URLs, and
-    # remove URLs msg
+async def text_msg_rx_verified_user(bot, msg, msg_text):
+    '''Handle received text message from verified users in the group.'''
+    chat = msg.chat
+    chat_id = msg.chat_id
+    msg_id = msg.message_id
+    user_id = msg.from_user.id
+    topic_id = tlg_get_msg_topic(msg)
+    user_name = msg.from_user.full_name
+    if msg.from_user.username:
+        user_name = f"@{msg.from_user.username}"
+    # Check and handle deny msgs with URLs from any user
     url_enable = get_chat_config(chat_id, "URL_Enabled")
     if not url_enable:
         # Allow message if it comes from an Admin
@@ -1531,69 +1476,70 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
         has_url = re.search(CONST["REGEX_URLS"], msg_text)
-        if has_url:
-            # Try to remove the message and notify detection
-            delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
-            if delete_result["error"] == "":
-                bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(
-                        user_name)
-                await tlg_send_autodelete_msg(
-                        bot, chat_id, bot_msg,
-                        CONST["T_FAST_DEL_MSG"],
-                        topic_id=topic_id)
-    # Ignore if message is not from a new user that has not completed
-    # the captcha yet
-    if chat_id not in Global.new_users:
-        return
-    if user_id not in Global.new_users[chat_id]:
-        return
-    # Get Chat settings
+        if not has_url:
+            return
+        # Try to remove the message and notify detection
+        delete_result = await delete_msg(bot, chat_id, msg_id)
+        if delete_result["error"] == "":
+            bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(
+                    user_name)
+            await tlg_send_autodelete_msg(
+                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
+                    topic_id=topic_id)
+    # ...
+
+
+async def handle_spam(bot, msg, msg_text):
+    '''
+    Check and remove messages with URL, alias or forwarded messages.
+    Note: lower to higher cpu effort checks (avoid extra checks if spam
+    is detected).
+    '''
+    chat_id = msg.chat_id
+    topic_id = tlg_get_msg_topic(msg)
+    user_name = msg.from_user.full_name
+    if msg.from_user.username:
+        user_name = f"@{msg.from_user.username}"
+    # Check for Spam
+    spam_msg = tlg_is_msg_forwarded(msg)
+    if not spam_msg and tlg_alias_in_string(msg_text):
+        spam_msg = True
+    if not spam_msg and re.search(CONST["REGEX_URLS"], msg_text):
+        spam_msg = True
+    # Handle Spam
+    if not spam_msg:
+        return False
+    logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
+    logger.info("[%s] Removing spam message: %s.", chat_id, msg_text)
     lang = get_chat_config(chat_id, "Language")
-    rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+    delete_result = await delete_msg(bot, chat_id, msg.message_id)
+    if delete_result["error"] == "":
+        bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
+    else:
+        bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
+    await tlg_send_autodelete_msg(bot, chat_id, bot_msg,
+            CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
+    return True
+
+
+async def handle_captcha_text_answer(bot, msg, msg_text):
+    '''Handle captcha verification answer messages.'''
+    chat = msg.chat
+    chat_id = msg.chat_id
+    msg_id = msg.message_id
+    user_id = msg.from_user.id
+    topic_id = tlg_get_msg_topic(msg)
+    user_name = msg.from_user.full_name
+    if msg.from_user.username:
+        user_name = f"@{msg.from_user.username}"
+    # Do nothing if no image captcha mode
     captcha_mode = \
         Global.new_users[chat_id][user_id]["join_data"]["captcha_mode"]
-    # Check for forwarded messages and delete it
-    forward_from = getattr(update_msg, "forward_from", None)
-    forward_from_chat = getattr(update_msg, "forward_from_chat", None)
-    if (forward_from is not None) or (forward_from_chat is not None):
-        logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
-        logger.info("[%s] Removing forwarded msg: %s.", chat_id, msg_text)
-        delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
-        if delete_result["error"] == "":
-            logger.info("Message removed.")
-        else:
-            logger.info("Message can't be deleted.")
+    if captcha_mode not in ["nums", "hex", "ascii", "math"]:
         return
-    # Check for Spam (check if the message contains any URL or alias)
-    has_url = re.search(CONST["REGEX_URLS"], msg_text)
-    has_alias = tlg_alias_in_string(msg_text)
-    if has_url or has_alias:
-        logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
-        logger.info("[%s] Removing spam message: %s.", chat_id, msg_text)
-        # Try to remove the message and notify detection
-        delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
-        if delete_result["error"] == "":
-            bot_msg = TEXT[lang]["SPAM_DETECTED_RM"].format(user_name)
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
-                    topic_id=topic_id)
-        else:
-            bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
-            await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
-                    topic_id=topic_id)
-            logger.info("Message can't be deleted.")
-        return
-    # Check group config regarding if all messages of user must be
-    # removed when kick
-    rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
-    if rm_all_msg:
-        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].append(msg_id)
-    # End here if no image captcha mode
-    if captcha_mode not in {"nums", "hex", "ascii", "math"}:
-        return
-    logger.info(
-            "[%s] Received captcha reply from %s: %s",
+    # Get configured language
+    lang = get_chat_config(chat_id, "Language")
+    logger.info("[%s] Received captcha reply from %s: %s",
             chat_id, user_name, msg_text)
     # Check if the expected captcha solve number is in the message
     solve_num = Global.new_users[chat_id][user_id]["join_data"]["captcha_num"]
@@ -1664,7 +1610,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 clueless_user = True
             # Tell the user that is wrong
             if clueless_user:
-                tlg_autodelete_msg(update_msg)
+                tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
@@ -1692,6 +1638,63 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     Global.new_users[chat_id][user_id]["msg_to_rm"].append(
                             sent_msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
+
+
+async def text_msg_rx_unverified_user(bot, msg, msg_text):
+    '''
+    Handle received text message from unverified users that shall
+    complete the captcha verification process.
+    '''
+    # Remove any message without text
+    if not msg_text:
+        await delete_msg(bot, msg.chat_id, msg)
+        return
+    # Check and handle Spam messages
+    spam_msg = await handle_spam(bot, msg, msg_text)
+    if spam_msg:
+        return
+    # Check and handle captcha process answer
+    await handle_captcha_text_answer(bot, msg, msg_text)
+
+
+async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''
+    Text messages reception handler.
+    '''
+    bot = context.bot
+    # Ensure received API update message content
+    update_msg = tlg_get_msg(update)
+    if not update_msg:
+        logger.info("Warning: Received an unexpected update.")
+        logger.info(update)
+        return
+    chat = getattr(update_msg, "chat", None)
+    chat_id = getattr(update_msg, "chat_id", None)
+    if not chat or not chat_id:
+        logger.info("Warning: Missing chat in received update.")
+        logger.info(update)
+        return
+    # Do nothing if message comes from a private chat or a channel
+    if chat.type in ["private", "channel"]:
+        return
+    # Do nothing if message is a channel post automatically forwarded
+    # to connected channel discussion group
+    if tlg_is_a_channel_msg_on_discussion_group(update_msg):
+        return
+    # Get message text (if message doesn't has text field, check for
+    # caption text fields expected at media and forwarded messages)
+    msg_text = getattr(update_msg, "text", None)
+    if msg_text is None:
+        msg_text = getattr(update_msg, "caption_html", None)
+    if msg_text is None:
+        msg_text = getattr(update_msg, "caption", None)
+    # Handle incoming message from verified or unverified group member
+    captcha_enabled = get_chat_config(chat_id, "Enabled")
+    user_id = update_msg.from_user.id
+    if captcha_enabled and is_unverified_user(chat_id, user_id):
+        await text_msg_rx_unverified_user(bot, update_msg, msg_text)
+    else:
+        await text_msg_rx_verified_user(bot, update_msg, msg_text)
 
 
 async def poll_answer_rx(
