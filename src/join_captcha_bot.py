@@ -42,7 +42,9 @@ from json import dumps as json_dumps
 from os import path, remove, makedirs, listdir
 
 # Random Library
-from random import choice, randint
+from random import choice as random_choice
+from random import randint as random_randint
+from random import sample as random_sample
 
 # Regular Expressions Library
 import re
@@ -278,38 +280,6 @@ def get_chat_config_file(chat_id):
 # Telegram Related Functions
 ###############################################################################
 
-async def tlg_send_msg_type_chat(
-        bot, chat_type, chat_id, text, **kwargs_for_send_message):
-    '''
-    Send a telegram message normal or schedule to auto-delete
-    depending of chat type (private chat - normal;
-    group - selfdestruct).
-    '''
-    if chat_type == "private":
-        await tlg_send_msg(bot, chat_id, text, **kwargs_for_send_message)
-    else:
-        await tlg_send_autodelete_msg(
-                bot, chat_id, text, **kwargs_for_send_message)
-
-
-async def tlg_send_autodelete_msg(
-        bot,
-        chat_id,
-        message,
-        time_delete_sec=CONST["T_DEL_MSG"],
-        **kwargs_for_send_message
-        ):
-    '''
-    Send a telegram message that will be auto-delete in specified time.
-    '''
-    sent_result = await tlg_send_msg(
-            bot, chat_id, message, **kwargs_for_send_message)
-    if sent_result["msg"] is None:
-        return None
-    tlg_autodelete_msg(sent_result["msg"], time_delete_sec)
-    return sent_result["msg"].message_id
-
-
 def tlg_autodelete_msg(message, time_delete_sec=CONST["T_DEL_MSG"]):
     '''
     Add a telegram message to be auto-delete in specified time.
@@ -346,16 +316,59 @@ def tlg_autodelete_msg(message, time_delete_sec=CONST["T_DEL_MSG"]):
     return True
 
 
-async def bot_send_msg(bot, chat_id, msg_text, rm_result_msg):
+async def tlg_send_autodelete_msg(
+        bot,
+        chat_id,
+        message,
+        time_delete_sec=CONST["T_DEL_MSG"],
+        **kwargs_for_send_message
+        ):
+    '''
+    Send a telegram message that will be auto-delete in specified time.
+    '''
+    sent_result = await tlg_send_msg(
+            bot, chat_id, message, **kwargs_for_send_message)
+    if sent_result["msg"] is None:
+        return None
+    tlg_autodelete_msg(sent_result["msg"], time_delete_sec)
+    return sent_result["msg"].message_id
+
+
+async def tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg,
+                           **kwargs_for_send_message):
     '''
     Send a normal or an auto-delete Telegram message depending of
     rm_result_msg argument.
     '''
+    send_fail = False
     if rm_result_msg:
-        await tlg_send_autodelete_msg(
-                bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"])
+        sent_result = await tlg_send_autodelete_msg(
+                bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"],
+                **kwargs_for_send_message)
+        if not sent_result:
+            send_fail = True
     else:
-        await tlg_send_msg(bot, chat_id, msg_text)
+        sent_result = await tlg_send_msg(bot, chat_id, msg_text,
+                                         **kwargs_for_send_message)
+        if sent_result["error"] != "":
+            send_fail = True
+    if send_fail:
+        logger.info("[%d] Fail to send msg: %s", chat_id, msg_text[:20])
+    return sent_result
+
+
+async def tlg_send_msg_type_chat(
+        bot, chat_type, chat_id, msg_text, **kwargs_for_send_message):
+    '''
+    Send a normal or schedule to auto-delete telegram message depending
+    on chat type (private chat - normal; group - selfdestruct).
+    '''
+    if chat_type == "private":
+        auto_delete_msg = True
+    else:
+        auto_delete_msg = False
+    return await tlg_bot_send_msg(bot, chat_id, msg_text, auto_delete_msg,
+            **kwargs_for_send_message)
 
 
 ###############################################################################
@@ -401,13 +414,13 @@ def restore_session():
     for chat_id in Global.new_users:
         for user_id in Global.new_users[chat_id]:
             # Some rand to avoid all requests sent at same time
-            _t0 = time() + randint(0, 10)
+            _t0 = time() + random_randint(0, 10)
             Global.new_users[chat_id][user_id]["join_data"]["join_time"] = _t0
     # Renew time to remove messages
     i = 0
     while i < len(Global.to_delete_in_time_messages_list):
         # Some rand to avoid all requests sent at same time
-        _t0 = time() + randint(0, 10)
+        _t0 = time() + random_randint(0, 10)
         Global.to_delete_in_time_messages_list[i]["time"] = _t0
         i = i + 1
     logger.info("Last session data restored")
@@ -559,12 +572,12 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
         "equation_result": ""
     }
     if captcha_mode == "math":
-        captcha = CaptchaGen.gen_math_captcha_image(2, bool(randint(0, 1)))
+        captcha = CaptchaGen.gen_math_captcha_image(2, bool(random_randint(0, 1)))
         captcha_result["equation_str"] = captcha["equation_str"]
         captcha_result["equation_result"] = captcha["equation_result"]
     else:
         captcha = CaptchaGen.gen_captcha_image(
-            difficult_level, captcha_mode, bool(randint(0, 1)))
+            difficult_level, captcha_mode, bool(random_randint(0, 1)))
         captcha_result["characters"] = captcha["characters"]
     captcha["image"].save(img_file_path, "png")
     return captcha_result
@@ -671,6 +684,16 @@ def get_update_user_lang(update_user_data):
     if lang not in TEXT:
         lang = "EN"
     return lang
+
+
+async def delete_msg(bot, chat_id, msg_id):
+    '''Delete a Telegram Message.'''
+    delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
+    if delete_result["error"] == "":
+        logger.info("[%d] Message deleted (%d)", chat_id, msg_id)
+    else:
+        logger.info("[%d] Fail to delete message (%d)", chat_id, msg_id)
+    return delete_result
 
 
 def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
@@ -790,7 +813,7 @@ async def captcha_fail_member_mute(bot, chat_id, user_id, user_name):
     else:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+    await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
 
 
 async def captcha_fail_member_no_media(bot, chat_id, user_id, user_name):
@@ -813,7 +836,7 @@ async def captcha_fail_member_no_media(bot, chat_id, user_id, user_name):
     else:
         msg_text = TEXT[lang]["CAPTCHA_FAIL_CANT_RESTRICT"].format(user_name)
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
-    await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+    await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
 
 
 async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
@@ -848,7 +871,7 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
                 if bilang:
                     en_text = TEXT["EN"]["CAPTCHA_FAIL_KICK"].format(user_name)
                     msg_text = f"{msg_text}\n\n{en_text}"
-            await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+            await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
         else:
             # Kick fail
             logger.info("[%s] Unable to kick", chat_id)
@@ -857,18 +880,18 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(
                         user_name)
-                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+                await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
             elif kick_result["error"] == \
                     "Not enough rights to restrict/unrestrict chat member":
                 # Bot has no privileges to kick
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(
                         user_name)
                 # Send no rights for kick message without auto-remove
-                await bot_send_msg(bot, chat_id, msg_text, False)
+                await tlg_bot_send_msg(bot, chat_id, msg_text, False)
             else:
                 # For other reason, the Bot can't ban
                 msg_text = TEXT[lang]["BOT_CANT_KICK"].format(user_name)
-                await bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
+                await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
     # Ban if user has join "max_join_retries" times without solving
     # the captcha
     else:
@@ -944,13 +967,10 @@ async def captcha_fail_member(bot, chat_id, user_id):
         logger.info("[%s] Removing msgs from user %s...", chat_id, user_name)
         join_msg = Global.new_users[chat_id][user_id]["join_msg"]
         if join_msg is not None:
-            await tlg_delete_msg(bot, chat_id, join_msg)
+            await delete_msg(bot, chat_id, join_msg)
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-            await tlg_delete_msg(bot, chat_id, msg)
+            await delete_msg(bot, chat_id, msg)
         Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
-        for msg in Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"]:
-            await tlg_delete_msg(bot, chat_id, msg)
-        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
         if restriction != CMD["RESTRICTION"]["KICK"]:
             del Global.new_users[chat_id][user_id]
     except KeyError:
@@ -1088,7 +1108,7 @@ async def chat_member_status_change(
             if "msg_to_rm" in Global.new_users[chat_id][join_user_id]:
                 for msg in \
                         Global.new_users[chat_id][join_user_id]["msg_to_rm"]:
-                    await tlg_delete_msg(bot, chat_id, msg)
+                    await delete_msg(bot, chat_id, msg)
                 Global.new_users[chat_id][join_user_id]["msg_to_rm"].clear()
     # Ignore if the captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
@@ -1107,7 +1127,7 @@ async def chat_member_status_change(
     send_problem = False
     captcha_num = ""
     if captcha_mode == "random":
-        captcha_mode = choice(["nums", "math", "poll"])
+        captcha_mode = random_choice(["nums", "math", "poll"])
         # If Captcha Mode Poll is not configured use another mode
         if captcha_mode == "poll":
             poll_question = get_chat_config(chat_id, "Poll_Q")
@@ -1116,7 +1136,7 @@ async def chat_member_status_change(
             if ((poll_question == "") or
                     (num_config_poll_options(poll_options) < 2) or
                     (poll_correct_option == 0)):
-                captcha_mode = choice(["nums", "math"])
+                captcha_mode = random_choice(["nums", "math"])
     if captcha_mode == "button":
         # Send a button-only challenge
         challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(
@@ -1254,10 +1274,6 @@ async def chat_member_status_change(
         if path.exists(captcha["image"]):
             remove(captcha["image"])
     if not send_problem:
-        # Add sent captcha message to auto-delete list
-        if sent_result["msg"] is not None:
-            tlg_autodelete_msg(
-                    sent_result["msg"], captcha_timeout + 10)
         # Default user join data
         join_data = {
             "user_name": join_user_name,
@@ -1279,8 +1295,6 @@ async def chat_member_status_change(
             Global.new_users[chat_id][join_user_id]["join_msg"] = None
         if "msg_to_rm" not in Global.new_users[chat_id][join_user_id]:
             Global.new_users[chat_id][join_user_id]["msg_to_rm"] = []
-        if "msg_to_rm_on_kick" not in Global.new_users[chat_id][join_user_id]:
-            Global.new_users[chat_id][join_user_id]["msg_to_rm_on_kick"] = []
         # Check if this user was before in the chat without solve the
         # captcha and restore previous join_retries
         if len(Global.new_users[chat_id][join_user_id]["join_data"]) != 0:
@@ -1375,7 +1389,7 @@ async def user_left_group(
             "[%s] Delete \"%s removed %s\" msg",
             chat_id, update_msg.from_user.username,
             update_msg.left_chat_member.username)
-        await tlg_delete_msg(bot, chat_id, msg_id)
+        await delete_msg(bot, chat_id, msg_id)
 
 
 async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1425,7 +1439,7 @@ async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # allowed until solve captcha
     msg_id = update_msg.message_id
     logger.info("[%s] Removing non-text msg sent by %s", chat_id, user_name)
-    await tlg_delete_msg(bot, chat_id, msg_id)
+    await delete_msg(bot, chat_id, msg_id)
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
     await tlg_send_autodelete_msg(
@@ -1507,7 +1521,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # remove URLs msg
     url_enable = get_chat_config(chat_id, "URL_Enabled")
     if not url_enable:
-        # Ignore if message comes from an Admin
+        # Allow message if it comes from an Admin
         is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
         if is_admin:
             return
@@ -1586,13 +1600,13 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Remove all restrictions on the user
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
+        Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-            await tlg_delete_msg(bot, chat_id, msg)
+            await delete_msg(bot, chat_id, msg)
         Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
-        Global.new_users[chat_id][user_id]["msg_to_rm_on_kick"].clear()
         del Global.new_users[chat_id][user_id]
         # Remove user captcha numbers message
-        await tlg_delete_msg(bot, chat_id, msg_id)
+        await delete_msg(bot, chat_id, msg_id)
         # Send message solve message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if lang != "EN":
@@ -1600,7 +1614,8 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if bilang:
                 en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
                 bot_msg = f"{bot_msg}\n\n{en_text}"
-        await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+        rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
+        await tlg_bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
                 escape_markdown(user_name, 2))
@@ -1631,6 +1646,10 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await restrict_user_media(bot, chat_id, user_id)
     # The provided message doesn't has the valid captcha number
     else:
+        # Set if received user message should be removed
+        rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
+        if rm_all_msg:
+            Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         # Check if the message is for a math operation captcha
         if captcha_mode == "math":
             clueless_user = False
@@ -1647,29 +1666,29 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 sent_msg_id = await tlg_send_autodelete_msg(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                if sent_msg_id:
+                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                            sent_msg_id)
         # If "nums", "hex" or "ascii" captcha
         else:
             # Check if the message has 4 chars
             if len(msg_text) == 4:
-                tlg_autodelete_msg(update_msg)
+                tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
-            # Check if the message was just a 4 numbers msg
+                if sent_msg_id:
+                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                            sent_msg_id)
+            # Check if the message just has numbers but is not 4 chars
             elif is_int(msg_text):
-                tlg_autodelete_msg(update_msg)
+                tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
                         CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                if sent_msg_id:
+                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
+                            sent_msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
 
 
@@ -1718,7 +1737,7 @@ async def poll_answer_rx(
     await asyncio_sleep(3)
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        await tlg_delete_msg(bot, chat_id, msg)
+        await delete_msg(bot, chat_id, msg)
     Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
@@ -1732,7 +1751,7 @@ async def poll_answer_rx(
             if bilang:
                 en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
                 bot_msg = f"{bot_msg}\n\n{en_text}"
-        await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+        await tlg_bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         del Global.new_users[chat_id][user_id]
         # Check for custom welcome message and send it
         if welcome_msg != "-":
@@ -1766,7 +1785,7 @@ async def poll_answer_rx(
                 if bilang:
                     en_text = TEXT["EN"]["CAPTCHA_POLL_FAIL"].format(user_name)
                     bot_msg = f"{bot_msg}\n\n{en_text}"
-            await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+            await tlg_bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
             await asyncio_sleep(10)
         # Try to punish the user
         await captcha_fail_member(bot, chat_id, user_id)
@@ -1927,7 +1946,7 @@ async def button_im_not_a_bot_press(bot, query):
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
-        await tlg_delete_msg(bot, chat_id, msg)
+        await delete_msg(bot, chat_id, msg)
     # Remove user from captcha process
     del Global.new_users[chat_id][user_id]
     # Send message solve message
@@ -1943,7 +1962,7 @@ async def button_im_not_a_bot_press(bot, query):
         if bilang:
             en_text = TEXT["EN"]["CAPTCHA_SOLVED"].format(user_name)
             bot_msg = f"{bot_msg}\n\n{en_text}"
-    await bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
+    await tlg_bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
     # Check for custom welcome message and send it
     welcome_msg = ""
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
@@ -3576,8 +3595,8 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 topic_id=tlg_get_msg_topic(update_msg))
         return
     # Generate a random difficulty captcha
-    difficulty = randint(1, 5)
-    captcha_mode = choice(["nums", "hex", "ascii", "math"])
+    difficulty = random_randint(1, 5)
+    captcha_mode = random_choice(["nums", "hex", "ascii", "math"])
     captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
     if captcha_mode == "math":
         captcha_code = \
@@ -3807,7 +3826,7 @@ async def auto_delete_messages(bot):
             if time() - sent_msg["time"] < sent_msg["delete_time"]:
                 continue
             # Delete message
-            delete_result = await tlg_delete_msg(
+            delete_result = await delete_msg(
                     bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
             # The bot has no privileges to delete messages
             if delete_result["error"] == "Message can't be deleted":
