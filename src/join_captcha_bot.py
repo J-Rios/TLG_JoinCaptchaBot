@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    06/07/2024
+    03/02/2026
 Version:
-    1.31.2
+    1.32.0
 '''
 
 ###############################################################################
@@ -146,7 +146,6 @@ logger = logging.getLogger(__name__)
 
 class Globals():
     '''Global Elements Container.'''
-
     files_config_list: list = []
     to_delete_in_time_messages_list: list = []
     new_users: dict = {}
@@ -4145,6 +4144,9 @@ def main(argc, argv):
         logger.error("Bot Owner has not been set for Private Bot.")
         logger.info("Please add the Bot Owner to settings.py file.")
         return 1
+    # Disable info logging level from httpx-httpcore (used by PTB > v20)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("httpcore").setLevel(logging.WARNING)
     # Setup Bot Application
     tlg_app = tlg_app_setup(CONST["TOKEN"])
     # Launch Bot Application
