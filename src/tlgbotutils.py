@@ -674,6 +674,31 @@ def tlg_get_msg(update: Update):
     return msg
 
 
+async def tlg_get_chat_admins(
+        bot: Bot,
+        chat_id: Union[str, int],
+        ignore_bots: bool = True):
+    '''Get a list of all group/channel Administrators.'''
+    list_admins = list()
+    try:
+        group_admins = await bot.get_chat_administrators(chat_id)
+    except Exception as error:
+        logger.error("[%s] %s", str(chat_id), str(error))
+        return list_admins
+    for admin in group_admins:
+        if ignore_bots and admin.user.is_bot:
+            continue
+        admin_name = ""
+        if admin.user.username:
+            admin_name = f"@{admin.user.username}"
+        else:
+            admin_name = admin.user.first_name
+            if admin.user.last_name:
+                admin_name = f"{admin_name} {admin.user.last_name}"
+        list_admins.append(admin_name)
+    return list_admins
+
+
 def tlg_get_embedded_url_in_msg(msg):
     '''
     Check if a message has any embedded URL link and get a list of them.

@@ -106,7 +106,7 @@ from telegram.error import (
 
 # Telegram Bot Ease Library
 from tlgbotutils import (
-    tlg_add_cmd, tlg_send_msg, tlg_send_image,
+    tlg_add_cmd, tlg_get_chat_admins, tlg_send_msg, tlg_send_image,
     tlg_send_poll, tlg_stop_poll, tlg_answer_callback_query, tlg_delete_msg,
     tlg_edit_msg_media, tlg_ban_user, tlg_kick_user, tlg_user_is_admin,
     tlg_leave_chat, tlg_restrict_user, tlg_unrestrict_user,
@@ -704,6 +704,13 @@ def is_unverified_user(chat_id, user_id):
            (user_id in Global.new_users[chat_id])
 
 
+def is_admin_call(text: str) -> bool:
+    '''Check if a text is a specific keyword to call admins.'''
+    if not text or not isinstance(text, str):
+        return False
+    return text.lstrip().split(None, 1)[0].lower() in ADMIN_CALL_KEYWORDS
+
+
 def is_captcha_num_solve(captcha_mode, msg_text, solve_num):
     '''
     Check if number send by user solves a num/hex/ascii/math captcha.
@@ -985,6 +992,30 @@ async def captcha_fail_member(bot, chat_id, user_id):
         logger.warning(
                 "[%s] %s (%d) not in new_users list (already solve captcha)",
                 chat_id, user_name, user_id)
+
+
+async def call_admins(bot, chat_id, topic_id):
+    '''Send a message to call the admins of the group.'''
+    # Todo add time wait to avoid flood of calls
+    lang = get_chat_config(chat_id, "Language")
+    list_admins = await tlg_get_chat_admins(bot, chat_id)
+    if list_admins:
+        # Get up to 3 random admins from the list
+        num_admins_to_show = 3
+        if len(list_admins) < num_admins_to_show:
+            num_admins_to_show = len(list_admins)
+        list_admins = random_sample(list_admins, num_admins_to_show)
+        # Admin text string
+        str_admins = ""
+        for admin_name in list_admins:
+            if str_admins == "":
+                str_admins = admin_name
+            else:
+                str_admins = f"{str_admins}\n{admin_name}"
+        bot_msg = TEXT[lang]['CALLING_ADMINS'].format(str_admins)
+    else:
+        bot_msg = TEXT[lang]['CALLING_ADMINS_NO_ADMINS']
+    await tlg_send_msg(bot, chat_id, bot_msg, "MARKDOWN", topic_id=topic_id)
 
 
 ###############################################################################
@@ -1467,6 +1498,10 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
     user_name = msg.from_user.full_name
     if msg.from_user.username:
         user_name = f"@{msg.from_user.username}"
+    # Check and handle admin calls
+    if is_admin_call(msg_text):
+        await call_admins(bot, chat_id, topic_id)
+        return
     # Check and handle deny msgs with URLs from any user
     url_enable = get_chat_config(chat_id, "URL_Enabled")
     if not url_enable:

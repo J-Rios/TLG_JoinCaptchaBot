@@ -357,6 +357,12 @@ CONST = {
     "VERSION": "1.32.0 (2026-02-03)"
 }
 
+# Keywords to call Admins
+ADMIN_CALL_KEYWORDS = {
+    "/admin", "@admin", "#admin",
+    "/spam",  "@spam",  "#spam"
+}
+
 # Supported languages list
 TEXT: dict = {
     "AR": {},    # Arabic

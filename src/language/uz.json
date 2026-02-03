@@ -310,6 +310,13 @@
 
     "BILANG_MSG_YES":
         "Sozlama o‘zgartirildi. CAPTCHA xabar matnlari ikkita til (inglizcha va tanlangan til) ko‘rsatiladi.",
+
     "TIME_UNIT_REQUIRED":
-     "⚠️ Please specify unit.\nUsage:\nSeconds:\n/time <value> sec\nor /time <value> secs\nor /time <value> seconds\nor /time <value> s\nMinutes:\n/time <value> min\nor /time <value> mins\nor /time <value> minutes\nor /time <value> m"
+        "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+
+    "CALLING_ADMINS":
+        "Calling Admins:\n————————————————\n{}",
+
+    "CALLING_ADMINS_NO_ADMINS":
+        "There are no human admins in this group!"
 }
