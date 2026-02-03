@@ -1639,16 +1639,8 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
             Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         # Check if the message is for a math operation captcha
         if captcha_mode == "math":
-            clueless_user = False
-            # Check if message is just 4 numbers
-            if is_int(msg_text) and (len(msg_text) == 4):
-                clueless_user = True
-            # Check if message is "NN+NN" or "NN-NN"
-            elif ((len(msg_text) == 5) and (is_int(msg_text[:2])) and
-                    (is_int(msg_text[3:])) and (msg_text[2] in ["+", "-"])):
-                clueless_user = True
-            # Tell the user that is wrong
-            if clueless_user:
+            # Check if wrong captcha answer is just numbers
+            if is_int(msg_text):
                 tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
                         bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
