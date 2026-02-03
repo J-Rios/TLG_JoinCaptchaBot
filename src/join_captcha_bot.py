@@ -106,13 +106,15 @@ from telegram.error import (
 
 # Telegram Bot Ease Library
 from tlgbotutils import (
-    tlg_add_cmd, tlg_send_msg, tlg_send_image, tlg_send_poll, tlg_stop_poll,
-    tlg_answer_callback_query, tlg_delete_msg, tlg_edit_msg_media,
-    tlg_ban_user, tlg_kick_user, tlg_user_is_admin, tlg_leave_chat,
-    tlg_restrict_user, tlg_unrestrict_user, tlg_is_valid_user_id_or_alias,
-    tlg_is_valid_group, tlg_alias_in_string, tlg_extract_members_status_change,
-    tlg_get_msg, tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
-    tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic
+    tlg_add_cmd, tlg_send_msg, tlg_send_image,
+    tlg_send_poll, tlg_stop_poll, tlg_answer_callback_query, tlg_delete_msg,
+    tlg_edit_msg_media, tlg_ban_user, tlg_kick_user, tlg_user_is_admin,
+    tlg_leave_chat, tlg_restrict_user, tlg_unrestrict_user,
+    tlg_is_valid_user_id_or_alias, tlg_is_valid_group, tlg_alias_in_string,
+    tlg_extract_members_status_change, tlg_get_msg,
+    tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
+    tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic,
+    tlg_get_embedded_url_in_msg, tlg_is_msg_forwarded
 )
 
 # Commons Library
@@ -123,7 +125,7 @@ from commons import (
 
 # Constants Library
 from constants import (
-    SCRIPT_PATH, CONST, TEXT, CMD
+    SCRIPT_PATH, CONST, TEXT, CMD, ADMIN_CALL_KEYWORDS
 )
 
 # Thread-Safe JSON Library
@@ -1503,6 +1505,8 @@ async def handle_spam(bot, msg, msg_text):
     # Check for Spam
     spam_msg = tlg_is_msg_forwarded(msg)
     if not spam_msg and tlg_alias_in_string(msg_text):
+        spam_msg = True
+    if not spam_msg and tlg_get_embedded_url_in_msg(msg):
         spam_msg = True
     if not spam_msg and re.search(CONST["REGEX_URLS"], msg_text):
         spam_msg = True
