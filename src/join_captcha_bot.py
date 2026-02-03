@@ -1530,7 +1530,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Get Chat configured language
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
-        has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+        has_url = re.search(CONST["REGEX_URLS"], msg_text)
         if has_url:
             # Try to remove the message and notify detection
             delete_result = await tlg_delete_msg(bot, chat_id, msg_id)
@@ -1565,7 +1565,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
             logger.info("Message can't be deleted.")
         return
     # Check for Spam (check if the message contains any URL or alias)
-    has_url = re.findall(CONST["REGEX_URLS"], msg_text)
+    has_url = re.search(CONST["REGEX_URLS"], msg_text)
     has_alias = tlg_alias_in_string(msg_text)
     if has_url or has_alias:
         logger.info("[%s] Spammer detected: %s.", chat_id, user_name)
