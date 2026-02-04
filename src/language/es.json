@@ -309,5 +309,14 @@
         "Configuración cambiada. Los Mensajes de Captcha se enviarán en un solo idioma.",
 
     "BILANG_MSG_YES":
-        "Configuración cambiada. Los Mensajes de Captcha se enviarán en dos idiomas."
+        "Configuración cambiada. Los Mensajes de Captcha se enviarán en dos idiomas.",
+
+    "TIME_UNIT_REQUIRED":
+        "⚠️ Por favor, especifica la unidad de tiempo.\n\nSegundos:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutos:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+
+    "CALLING_ADMINS":
+        "Llamando a los Administradores:\n————————————————\n{}",
+
+    "CALLING_ADMINS_NO_ADMINS":
+        "No hay ningún Administrador humano en este grupo!"
 }

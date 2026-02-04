@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    06/07/2024
+    03/02/2026
 Version:
-    1.31.2
+    1.32.0
 '''
 
 ###############################################################################
@@ -356,7 +356,13 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.31.2 (06/07/2024)"
+    "VERSION": "1.32.0 (2026-02-03)"
+}
+
+# Keywords to call Admins
+ADMIN_CALL_KEYWORDS = {
+    "/admin", "@admin", "#admin",
+    "/spam",  "@spam",  "#spam"
 }
 
 # Supported languages list
