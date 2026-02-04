@@ -309,5 +309,14 @@
         "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na jednom jeziku.",
 
     "BILANG_MSG_YES":
-        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika."
+        "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika.",
+
+    "TIME_UNIT_REQUIRED":
+        "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+
+    "CALLING_ADMINS":
+        "Calling Admins:\n————————————————\n{}",
+
+    "CALLING_ADMINS_NO_ADMINS":
+        "There are no human admins in this group!"
 }

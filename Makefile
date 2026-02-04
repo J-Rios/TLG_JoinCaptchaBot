@@ -21,6 +21,7 @@ setup:
 
 start:
 	@ chmod +x $(TOOLS)/start
+	@ chmod +x $(TOOLS)/status
 	@ $(TOOLS)/start
 
 stop:

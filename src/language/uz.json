@@ -12,7 +12,7 @@
         "Faqat Admin ushbu buyruqdan foydalanishi mumkin.",
 
     "CMD_INVALID_PARAMETER":
-        "Invalid command parameter.",
+        "Noto‘g‘ri buyruq parametri.",
 
     "LANG_CHANGE":
         "Til muvaffaqiyatli o'zgartirildi.",
@@ -63,13 +63,13 @@
         "Buyruqni o'rnatish uchun rejimga muhtoj.Mavjud rejimlar:\n\n- Numeric Captchas (\"nums\").\n- Hexadecimal Captchas, Raqamlar va belgilar A-F (\"hex\").\n- Raqamlar va belgilar A-Z Captchas (\"ascii\").\n- Matematik tenglama CAPTCHAlarni hal qiladi (\"math\").\n- Tugmacha - faqat qiyinchilik (\"button\").\n- Custom so'rovi qiyinchiliklari (\"poll\").\n- Tasodifiy qiyinchilik (\"random\").\n\n Misollar:\n/captcha_mode nums\n/captcha_mode hex\n/captcha_mode ascii\n/captcha_mode math\n/captcha_mode button\n/captcha_mode poll\n/captcha_mode random",
 
     "CMD_RESTRICTION_CHANGE":
-        "Restriction to apply when user fail the captcha changed to \"{}\".",
+        "Foydalanuvchi captcha-ni yechishda muvaffaqiyatsizlikka uchraganda qo‘llaniladigan cheklov \"{}\" ga o‘zgartirildi.",
 
     "CMD_RESTRICTION_NOT_ARG":
-        "The command requires a type of restriction to set.",
+        "Buyruqni sozlash uchun cheklov turini ko‘rsatish kerak.",
 
     "CMD_RESTRICTION_AVAILABLE_ARGS":
-        "Available restrictions to punish an user that has fail the captcha:\n\n/restriction kick - Kick the user from the group (default behavior; after multiple fails, the user will be banned).\n\n/restriction mute - Don't allow the user to write messages in the group for 24h (after this time, the restriction will be automatically removed).\n\n/restriction media - Don't allow the user to write media messages (image, video, audio, etc) in the group for 24h (after this time, the restriction will be automatically removed).",
+        "Captcha-ni yecha olmagan foydalanuvchini jazolash uchun mavjud cheklovlar:\n\n/restriction kick - Foydalanuvchini guruhdan chiqarish (standart; bir nechta muvaffaqiyatsizlikdan keyin foydalanuvchi ban qilinadi).\n\n/restriction mute - Foydalanuvchiga 24 soat davomida guruhda xabar yozishga ruxsat bermaslik (keyin avtomatik olib tashlanadi).\n\n/restriction media - Foydalanuvchiga 24 soat davomida media xabarlar (rasm, video, audio va h.k.) yuborishga ruxsat bermaslik (keyin avtomatik olib tashlanadi).",
 
     "WELCOME_MSG_SET":
         "Xush kelibsiz xabar muvaffaqiyatli o'zgartirildi.",
@@ -126,13 +126,13 @@
         "Salom {}, Xush kelibsiz {} ga. Iltimos, robot emasligingizni tekshirish uchun quyidagi tugmani bosing. Agar siz ushbu CAPTCHA ni {} hal qilmasangiz, siz avtomatik ravishda guruhdan chiqarib yuborasiz.",
 
     "CAPTCHA_FAIL_CANT_RESTRICT":
-        "Warning: User {} fail to solve the captcha, but I was not able to restrict/remove the user.",
+        "Ogohlantirish: Foydalanuvchi {} CAPTCHA ni yecha olmadi, lekin men foydalanuvchini cheklay/olib tashlay olmadim.",
 
     "CAPTCHA_FAIL_MUTE":
-        "The user {} failed to resolve the captcha. The \"user\" was muted and won't be able to send messages for 24h.",
+        "Foydalanuvchi {} CAPTCHA ni yecha olmadi. Foydalanuvchi 24 soat davomida xabar yubora olmaydi.",
 
     "CAPTCHA_FAIL_NO_MEDIA":
-        "The user {} failed to resolve the captcha. The \"user\" was restricted and won't be able to send media messages (image, audio, video, etc.) for 24h.",
+        "Foydalanuvchi {} CAPTCHA ni yecha olmadi. Foydalanuvchiga 24 soat davomida media xabarlar (rasm, audio, video va h.k.) yuborishga ruxsat berilmadi.",
 
     "CAPTCHA_SOLVED":
         "CAPTCHA hal qilindi, foydalanuvchi tasdiqlandi.\nGuruhga xush kelibsiz, {}",
@@ -291,7 +291,7 @@
         "Ushbu buyruqni shaxsiy suhbatda ishlatib bo'lmaydi.",
 
     "CMD_NEEDS_CONNECTION":
-        "Agar siz biron bir guruhni sozlash  uchun ulanish (/connect) bo'lsa, ushbu buyruqni shaxsiy suhbatda ishlatib bo'lmaydi.",
+        "Agar siz biron bir guruhni sozlash  uchun ulanish (/connect) bo'lsa, ushbu buyruqni shaxsiy suhbatda ishlatib bo'lmaydi",
 
     "CMD_JUST_IN_PRIVATE":
         "Ushbu buyruq guruh ichida ishlatilishi mumkin emas (uni shaxsiy bot chatida ishlating).",
@@ -303,11 +303,20 @@
         "Konfiguratsiya o'zgargan, CAPTCHAni hal qilmagan foydalanuvchilar tomonidan yuborilmaydi.",
 
     "BILANG_MSG":
-        "Configure if text of captcha messages must be shown in both, english and configured language.\n\nExamples:\n/bilanguage yes\n/bilanguage no",
+        "CAPTCHA xabar matnlari faqat bitta tilmi yoki ikkita til (inglizcha va tanlangan til) ko‘rsatilishini sozlang.\n\nMisollar:\n/bilanguage yes\n/bilanguage no",
 
     "BILANG_MSG_NO":
-        "Configuration changed. Captcha messages text will be shown in a single language.",
+        "Sozlama o‘zgartirildi. CAPTCHA xabar matnlari faqat bitta tilda ko‘rsatiladi.",
 
     "BILANG_MSG_YES":
-        "Configuration changed. Captcha messages text will be shown in two languages."
+        "Sozlama o‘zgartirildi. CAPTCHA xabar matnlari ikkita til (inglizcha va tanlangan til) ko‘rsatiladi.",
+
+    "TIME_UNIT_REQUIRED":
+        "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+
+    "CALLING_ADMINS":
+        "Calling Admins:\n————————————————\n{}",
+
+    "CALLING_ADMINS_NO_ADMINS":
+        "There are no human admins in this group!"
 }

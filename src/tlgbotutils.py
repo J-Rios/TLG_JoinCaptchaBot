@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    28/12/2022
+    03/02/2026
 Version:
-    1.1.6
+    1.2.0
 '''
 
 ###############################################################################
@@ -564,11 +564,15 @@ def tlg_is_valid_group(group: Union[str, int]):
     return True
 
 
-def tlg_alias_in_string(str_text: str):
+def tlg_alias_in_string(msg_text: str) -> bool:
     ''' Check if a string contains an alias.'''
-    for word in str_text.split():
-        if (len(word) > 1) and (word[0] == '@'):
-            return True
+    n = len(msg_text)
+    for i, c in enumerate(msg_text):
+        if c == '@':
+            if i > 0 and msg_text[i - 1].isalnum():
+                continue
+            if i + 1 < n and msg_text[i + 1].isalnum():
+                return True
     return False
 
 
@@ -665,4 +669,59 @@ def tlg_get_msg(update: Update):
         msg = getattr(update, "edited_message", None)
     if msg is None:
         msg = getattr(update, "channel_post", None)
+    if msg is None:
+        msg = getattr(update, "edited_channel_post", None)
     return msg
+
+
+async def tlg_get_chat_admins(
+        bot: Bot,
+        chat_id: Union[str, int],
+        ignore_bots: bool = True):
+    '''Get a list of all group/channel Administrators.'''
+    list_admins = list()
+    try:
+        group_admins = await bot.get_chat_administrators(chat_id)
+    except Exception as error:
+        logger.error("[%s] %s", str(chat_id), str(error))
+        return list_admins
+    for admin in group_admins:
+        if ignore_bots and admin.user.is_bot:
+            continue
+        admin_name = ""
+        if admin.user.username:
+            admin_name = f"@{admin.user.username}"
+        else:
+            admin_name = admin.user.first_name
+            if admin.user.last_name:
+                admin_name = f"{admin_name} {admin.user.last_name}"
+        list_admins.append(admin_name)
+    return list_admins
+
+
+def tlg_get_embedded_url_in_msg(msg):
+    '''
+    Check if a message has any embedded URL link and get a list of them.
+    '''
+    urls = []
+    msg_entities = getattr(msg, "entities", None)
+    if msg_entities is None:
+        msg_entities = []
+    for entity in msg_entities:
+        url = getattr(entity, "url", None)
+        if url is not None:
+            if url != "":
+                urls.append(url)
+
+
+def tlg_is_msg_forwarded(msg):
+    '''Check if a message is a forwarded message.'''
+    msg_forwarded = False
+    if msg.forward_origin:
+        msg_forwarded = True
+    if not msg_forwarded:
+        forward_from = getattr(msg, "forward_from", None)
+        forward_from_chat = getattr(msg, "forward_from_chat", None)
+        if (forward_from is not None) or (forward_from_chat is not None):
+            msg_forwarded = True
+    return msg_forwarded

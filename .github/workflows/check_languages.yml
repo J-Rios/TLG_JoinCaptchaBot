@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - development
 
 jobs:
   check_languages:
