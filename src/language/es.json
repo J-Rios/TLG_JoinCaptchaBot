@@ -174,7 +174,7 @@
         "Atención: El usuario {} ha fallado {} veces al intentar resolver el captcha. El \"usuario\" debería ser expulsado y bloqueado (ban), pero debido a un problema inesperado (quizás relacionado con la red o el servidor), no he podido hacerlo.",
 
     "SPAM_DETECTED_RM":
-        "Se ha detectado un mensaje que contiene una URL (o alias) enviado por {}, quien aún no ha resuelto el captcha. El mensaje ha sido eliminado en aras de un Telegram libre de Spam:)",
+        "Se ha detectado un mensaje que contiene una URL (o alias) enviado por {}, quien aún no ha resuelto el captcha. El mensaje ha sido eliminado en aras de un Telegram libre de Spam :)",
 
     "SPAM_DETECTED_NOT_RM":
         "Se ha detectado un mensaje con URL (o alias) enviado por {}, quien aún no ha resuelto el captcha. He intentado borrar el mensaje, pero no se me han dado los privilegios de administración necesarios para eliminar mensajes que no son míos.",

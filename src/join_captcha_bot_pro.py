@@ -603,7 +603,7 @@ def is_user_in_ignored_list(chat_id, user):
     ignored_users = get_chat_config(chat_id, "Ignore_List")
     if user.id in ignored_users:
         return True
-    if user.username is not None:
+    if user.username:
         user_alias = f"@{user.username}"
         if user_alias in ignored_users:
             return True
@@ -617,7 +617,7 @@ def is_user_in_allowed_list(user):
     l_white_users = file_read(CONST["F_ALLOWED_USERS"])
     if user.id in l_white_users:
         return True
-    if user.username is not None:
+    if user.username:
         user_alias = f"@{user.username}"
         if user_alias in l_white_users:
             return True
@@ -1067,7 +1067,7 @@ async def chat_bot_status_change(
                 save_config_property(chat.id, "Link", chat_link)
             logger.info(
                 "[%s] Bot added to group %s by %s (%s)",
-                chat.id, chat_link, caused_by_user.username, caused_by_user.id)
+                chat.id, chat_link, caused_by_user.name, caused_by_user.id)
             # Check if Group is not allowed to be used by the Bot
             if not await allowed_in_this_group(bot, chat, caused_by_user):
                 await tlg_leave_chat(bot, chat.id)
@@ -1084,7 +1084,7 @@ async def chat_bot_status_change(
             else:
                 logger.info(
                         "[%d] Bot removed from group by %s",
-                        chat.id, caused_by_user.username)
+                        chat.id, caused_by_user.name)
         return
     # Bot added to channel
     if not was_member and is_member:
@@ -1425,10 +1425,9 @@ async def user_left_group(
     if msg_id is None:
         return
     if update_msg.from_user.id == bot.id:
-        logger.info(
-            "[%s] Delete \"%s removed %s\" msg",
-            chat_id, update_msg.from_user.username,
-            update_msg.left_chat_member.username)
+        logger.info("[%s] Delete \"%s removed %s\" msg",
+                    chat_id, update_msg.from_user.name,
+                    update_msg.left_chat_member.name)
         await delete_msg(bot, chat_id, msg_id)
 
 
@@ -1471,10 +1470,8 @@ async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     if user_id not in Global.new_users[chat_id]:
         return
-    # Get username, if has an alias, just use the alias
-    user_name = update_msg.from_user.full_name
-    if update_msg.from_user.username is not None:
-        user_name = f"@{update_msg.from_user.username}"
+    # Get username
+    user_name = update_msg.from_user.name
     # Remove send message and notify that not text messages are not
     # allowed until solve captcha
     msg_id = update_msg.message_id
@@ -1494,9 +1491,7 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
     msg_id = msg.message_id
     user_id = msg.from_user.id
     topic_id = tlg_get_msg_topic(msg)
-    user_name = msg.from_user.full_name
-    if msg.from_user.username:
-        user_name = f"@{msg.from_user.username}"
+    user_name = msg.from_user.name
     # Check and handle admin calls
     if is_admin_call(msg_text):
         await call_admins(bot, chat_id, topic_id)
@@ -1512,7 +1507,7 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
         has_url = re.search(CONST["REGEX_URLS"], msg_text)
-        if not has_url:
+        if has_url is not None:
             return
         # Try to remove the message and notify detection
         delete_result = await delete_msg(bot, chat_id, msg_id)
@@ -1533,9 +1528,7 @@ async def handle_spam(bot, msg, msg_text):
     '''
     chat_id = msg.chat_id
     topic_id = tlg_get_msg_topic(msg)
-    user_name = msg.from_user.full_name
-    if msg.from_user.username:
-        user_name = f"@{msg.from_user.username}"
+    user_name = msg.from_user.name
     # Check for Spam
     spam_msg = tlg_is_msg_forwarded(msg)
     if not spam_msg and tlg_alias_in_string(msg_text):
@@ -1567,9 +1560,7 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     msg_id = msg.message_id
     user_id = msg.from_user.id
     topic_id = tlg_get_msg_topic(msg)
-    user_name = msg.from_user.full_name
-    if msg.from_user.username:
-        user_name = f"@{msg.from_user.username}"
+    user_name = msg.from_user.name
     # Do nothing if no image captcha mode
     captcha_mode = \
         Global.new_users[chat_id][user_id]["join_data"]["captcha_mode"]
@@ -1755,12 +1746,10 @@ async def poll_answer_rx(
     # The vote come from expected user, let's stop the Poll
     logger.info(
             "[%s] User %s select poll option %d",
-            chat_id, from_user.username, option_answer)
+            chat_id, from_user.name, option_answer)
     await tlg_stop_poll(bot, chat_id, poll_msg_id)
-    # Get user name (if has an alias, just use the alias)
-    user_name = from_user.full_name
-    if from_user.username is not None:
-        user_name = f"@{from_user.username}"
+    # Get user name
+    user_name = from_user.name
     # Get chat settings
     lang = get_chat_config(chat_id, "Language")
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
@@ -1866,10 +1855,7 @@ async def button_request_another_captcha_press(bot, query):
     chat_id = query.message.chat_id
     user_id = query.from_user.id
     msg_id = query.message.message_id
-    user_name = query.from_user.full_name
-    # If has an alias, just use the alias
-    if query.from_user.username is not None:
-        user_name = f"@{query.from_user.username}"
+    user_name = query.from_user.name
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title
     # (fix for arabic, hebrew, etc.)
@@ -1963,10 +1949,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Get query data
     chat_id = query.message.chat_id
     user_id = query.from_user.id
-    user_name = query.from_user.full_name
-    # If has an alias, just use the alias
-    if query.from_user.username is not None:
-        user_name = f"@{query.from_user.username}"
+    user_name = query.from_user.name
     chat_title = query.message.chat.title
     # Add an unicode Left to Right Mark (LRM) to chat title (fix for
     # arabic, hebrew, etc.)
@@ -2133,9 +2116,9 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     user_id = update_msg.from_user.id
-    user_alias = update_msg.from_user.username
-    if user_alias is not None:
-        user_alias = f"@{user_alias}"
+    user_alias = ""
+    if update_msg.from_user.username:
+        user_alias = f"@{update_msg.from_user.username}"
     lang = get_update_user_lang(update_msg.from_user)
     # Ignore if command is not in private chat
     if chat_type != "private":
@@ -3618,7 +3601,7 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update_msg.from_user
     user_id = user.id
     user_alias = ""
-    if user.username is not None:
+    if user.username:
         user_alias = f"@{user.username}"
     # Remove command message automatically after a while
     tlg_autodelete_msg(update_msg)
@@ -3678,7 +3661,7 @@ async def cmd_allowuserlist(
     user = update_msg.from_user
     user_id = user.id
     user_alias = ""
-    if user.username is not None:
+    if user.username:
         user_alias = f"@{user.username}"
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
@@ -3768,7 +3751,7 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update_msg.from_user
     user_id = user.id
     user_alias = ""
-    if user.username is not None:
+    if user.username:
         user_alias = f"@{user.username}"
     topic_id = tlg_get_msg_topic(update_msg)
     # Check if command was execute by Bot owner
