@@ -612,13 +612,11 @@ def tlg_get_user_name(user: User, truncate_name_len: int = 0):
     ensure and fix any possible representation error due Right-To-Left
     language texts.
     '''
-    user_name = ""
     if user is None:
         return "None"
-    if user.name is not None:
-        user_name = user.name
-    else:
-        user_name = user.full_name
+    if user.name is None:
+        return "None"
+    user_name = user.name
     # If the user name is too long, truncate it to specified num of
     # characters
     if truncate_name_len > 0:
@@ -688,14 +686,8 @@ async def tlg_get_chat_admins(
     for admin in group_admins:
         if ignore_bots and admin.user.is_bot:
             continue
-        admin_name = ""
-        if admin.user.username:
-            admin_name = f"@{admin.user.username}"
-        else:
-            admin_name = admin.user.first_name
-            if admin.user.last_name:
-                admin_name = f"{admin_name} {admin.user.last_name}"
-        list_admins.append(admin_name)
+        if admin.user.name:
+            list_admins.append(admin.user.name)
     return list_admins
 
 
@@ -709,7 +701,7 @@ def tlg_get_embedded_url_in_msg(msg):
         msg_entities = []
     for entity in msg_entities:
         url = getattr(entity, "url", None)
-        if url is not None:
+        if url:
             if url != "":
                 urls.append(url)
 
