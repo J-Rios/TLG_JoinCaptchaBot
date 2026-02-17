@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/02/2026
+    17/02/2026
 Version:
-    1.32.0
+    1.32.2
 '''
 
 ###############################################################################
@@ -56,7 +56,7 @@ CONST = {
     # Bot Webhook Listen Address
     "WEBHOOK_IP":
         os_getenv("CAPTCHABOT_WEBHOOK_IP",
-                      SETTINGS["CAPTCHABOT_WEBHOOK_IP"]),
+                  SETTINGS["CAPTCHABOT_WEBHOOK_IP"]),
 
     # Bot Webhook Listen Port
     "WEBHOOK_PORT":
@@ -71,7 +71,7 @@ CONST = {
     # Bot Webhook path
     "WEBHOOK_PATH":
         os_getenv("CAPTCHABOT_WEBHOOK_PATH",
-                      SETTINGS["CAPTCHABOT_WEBHOOK_PATH"]),
+                  SETTINGS["CAPTCHABOT_WEBHOOK_PATH"]),
 
     # Bot Webhook Certificate file path (this is not used if
     # WEBHOOK_URL is None)
@@ -268,27 +268,27 @@ CONST = {
     "BOT_LEAVE_CHANNEL": "This Bot can't be used in channels, just in groups.",
 
     # Allowed users list usage
-    "ALLOWUSERLIST_USAGE": "Command usage (user ID or Alias):\n" \
-        "/allowuserlist add @peter123\n" \
+    "ALLOWUSERLIST_USAGE": "Command usage (user ID or Alias):\n"
+        "/allowuserlist add @peter123\n"
         "/allowuserlist rm 123456789",
 
     # Allowgroup usage
-    "ALLOWGROUP_USAGE": "Command usage (group ID):\n" \
-        "/allowgroup add -1001142817523\n" \
+    "ALLOWGROUP_USAGE": "Command usage (group ID):\n"
+        "/allowgroup add -1001142817523\n"
         "/allowgroup rm -1001142817523",
 
     # Allowgroup usage
-    "NOT_ALLOW_GROUP": "WARNING:\n———————————\n" \
-        "Current Group Chat ID:\n" \
-        "{}\n" \
-         "\n" \
-        "This Bot account is Private and can only be used in allowed " \
-        "groups by making a donation of 5 eurs each month.\n" \
-         "\n" \
-        "If you want to use this captcha Bot without restriction in large " \
-        "groups, follow next instructions:\n" \
-        "https://ko-fi.com/Post/JoinCaptchaBot-for-large-groups-V7V3ANADF\n" \
-        "\n" \
+    "NOT_ALLOW_GROUP": "WARNING:\n———————————\n"
+        "Current Group Chat ID:\n"
+        "{}\n"
+        "\n"
+        "This Bot account is Private and can only be used in allowed "
+        "groups by making a donation of 5 eurs each month.\n"
+        "\n"
+        "If you want to use this captcha Bot without restriction in large "
+        "groups, follow next instructions:\n"
+        "https://ko-fi.com/Post/JoinCaptchaBot-for-large-groups-V7V3ANADF\n"
+        "\n"
         "Best Regards.",
 
     # IANA Top-Level-Domain List
@@ -296,54 +296,54 @@ CONST = {
     "F_TLDS": "tlds-alpha-by-domain.txt",
 
     # Regular expression to detect URLs in a string
-    "REGEX_URLS": \
-        r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)" \
+    "REGEX_URLS":
+        r"((?<=[^a-zA-Z0-9])*(?:https\:\/\/|[a-zA-Z0-9]{{1,}}\.{{1}}|\b)"
         r"(?:\w{{1,}}\.{{1}}){{1,5}}(?:{})\b/?(?!@))",
 
     # List string of supported languages commands shows in invalid
     # language set
-    "SUPPORTED_LANGS_CMDS": \
-        "\nArabic / Arabic\n/language ar\n" \
-        "\nBasque / Euskal\n/language eu\n" \
-        "\nBelarusian / беларуская\n/language be\n" \
-        "\nCatalan / Català\n/language ca\n" \
-        "\nChinese-Simplified / 中文\n/language zh_cn\n" \
-        "\nDutch / Nederlands\n/language nl\n" \
-        "\nEnglish / English\n/language en\n" \
-        "\nEsperanto\n/language eo\n" \
-        "\nFinnish / Suomi\n/language fi\n" \
-        "\nFrench / Francais\n/language fr\n" \
-        "\nGalician / Galego\n/language gl\n" \
-        "\nGerman / Deutsch\n/language de\n" \
-        "\nGreek / Ελληνικά\n/language el\n" \
-        "\nHebrew / Hebrew\n/language he\n" \
-        "\nIndonesian / Indonesia\n/language id\n" \
-        "\nItalian / Italiano\n/language it\n" \
-        "\nKannada / Kannada\n/language kn\n" \
-        "\nKorean / 한국어\n/language ko\n" \
-        "\nPersian\n/language fa\n" \
-        "\nPolish / Polskie\n/language pl\n" \
-        "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n" \
-        "\nRussian / Pусский\n/language ru\n" \
-        "\nSerbo-Croatian / EX-YU\n/language sr\n" \
-        "\nSlovak / Slovenčine\n/language sk\n" \
-        "\nSpanish / Español\n/language es\n" \
-        "\nTurkish / Türkçe\n/language tr\n" \
-        "\nUkrainian / Українську\n/language uk\n" \
+    "SUPPORTED_LANGS_CMDS":
+        "\nArabic / Arabic\n/language ar\n"
+        "\nBasque / Euskal\n/language eu\n"
+        "\nBelarusian / беларуская\n/language be\n"
+        "\nCatalan / Català\n/language ca\n"
+        "\nChinese-Simplified / 中文\n/language zh_cn\n"
+        "\nDutch / Nederlands\n/language nl\n"
+        "\nEnglish / English\n/language en\n"
+        "\nEsperanto\n/language eo\n"
+        "\nFinnish / Suomi\n/language fi\n"
+        "\nFrench / Francais\n/language fr\n"
+        "\nGalician / Galego\n/language gl\n"
+        "\nGerman / Deutsch\n/language de\n"
+        "\nGreek / Ελληνικά\n/language el\n"
+        "\nHebrew / Hebrew\n/language he\n"
+        "\nIndonesian / Indonesia\n/language id\n"
+        "\nItalian / Italiano\n/language it\n"
+        "\nKannada / Kannada\n/language kn\n"
+        "\nKorean / 한국어\n/language ko\n"
+        "\nPersian\n/language fa\n"
+        "\nPolish / Polskie\n/language pl\n"
+        "\nPortuguese-Brazil / Português-Brasil\n/language pt_br\n"
+        "\nRussian / Pусский\n/language ru\n"
+        "\nSerbo-Croatian / EX-YU\n/language sr\n"
+        "\nSlovak / Slovenčine\n/language sk\n"
+        "\nSpanish / Español\n/language es\n"
+        "\nTurkish / Türkçe\n/language tr\n"
+        "\nUkrainian / Українську\n/language uk\n"
         "\nUzbek / o'zbek\n/language uz\n",
 
     # Privacy information
-    "PRIVACY": \
-        "Privacy Information:\n" \
-        "————————————————\n" \
-        "This Bot doesn't store any data from users, but it stores some " \
+    "PRIVACY":
+        "Privacy Information:\n"
+        "————————————————\n"
+        "This Bot doesn't store any data from users, but it stores some "
         "group information (the group ID and Title).\n"
-        "\n" \
-        "In order to work and check for user captcha solve responses, " \
-        "the Bot needs to receive any message published in the group. The " \
-        "content of the messages are only used to check if it contains the " \
-        "captcha resolution. Once check is done, the message is discarded. " \
-        "Messages from users that are not involved into a captcha process " \
+        "\n"
+        "In order to work and check for user captcha solve responses, "
+        "the Bot needs to receive any message published in the group. The "
+        "content of the messages are only used to check if it contains the "
+        "captcha resolution. Once check is done, the message is discarded. "
+        "Messages from users that are not involved into a captcha process "
         "are directly ignored and discarded.\n",
 
     # Bot developer
@@ -356,7 +356,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.32.0 (2026-02-03)"
+    "VERSION": "1.32.2 (2026-02-17)"
 }
 
 # Keywords to call Admins
@@ -387,7 +387,7 @@ TEXT: dict = {
     "KO": {},    # Korean
     "NL": {},    # Dutch
     "PL": {},    # Polish
-    "PT_BR": {}, # Portuguese (Brasil)
+    "PT_BR": {},  # Portuguese (Brasil)
     "RU": {},    # Russian
     "SK": {},    # Slovak
     "SR": {},    # Serbo-Croatian (Ex-Yugoslavia Countries)
