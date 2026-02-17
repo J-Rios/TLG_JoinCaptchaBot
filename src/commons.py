@@ -125,8 +125,7 @@ def file_exists(file_path: str):
 def file_write(
         file_path: str,
         text: Union[str, list] = "",
-        mode: str = "a"
-        ):
+        mode: str = "a"):
     '''
     Write a text or a list of text lines to plain text file.
     '''

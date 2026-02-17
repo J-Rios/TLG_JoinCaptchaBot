@@ -16,7 +16,8 @@ Version:
 '''
 
 ###############################################################################
-### Standard Libraries
+# Standard Libraries
+###############################################################################
 
 # Logging Library
 import logging
@@ -40,13 +41,17 @@ from threading import Lock
 # Error Traceback Library
 from traceback import format_exc
 
+
 ###############################################################################
-### Logger Setup
+# Logger Setup
+###############################################################################
 
 logger = logging.getLogger(__name__)
 
+
 ###############################################################################
-### Thread-Safe JSON Class
+# Thread-Safe JSON Class
+###############################################################################
 
 class TSjson():
     '''
@@ -60,7 +65,6 @@ class TSjson():
         '''
         self.lock = Lock()
         self.file_name = file_name
-
 
     def read(self):
         '''
@@ -89,7 +93,6 @@ class TSjson():
             read = None
         return read
 
-
     def write(self, data):
         '''
         Thread-Safe Write of JSON file.
@@ -114,7 +117,6 @@ class TSjson():
             logger.error(format_exc())
             logger.error("Fail to write JSON file %s", self.file_name)
         return write_result_ok
-
 
     def delete(self):
         '''
