@@ -1508,7 +1508,7 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
         has_url = re.search(CONST["REGEX_URLS"], msg_text)
-        if has_url is not None:
+        if has_url is None:
             return
         # Try to remove the message and notify detection
         delete_result = await delete_msg(bot, chat_id, msg_id)
