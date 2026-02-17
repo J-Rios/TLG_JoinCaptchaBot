@@ -15,7 +15,7 @@ Creation date:
 Last modified date:
     17/02/2026
 Version:
-    1.32.1
+    1.32.2
 '''
 
 ###############################################################################
@@ -85,7 +85,8 @@ from telegram import (
 # Python-Telegram_Bot Extension Library
 from telegram.ext import (
     Application, CallbackQueryHandler, ChatMemberHandler, ContextTypes,
-    Defaults, filters, MessageHandler, PollAnswerHandler,
+    Defaults, filters, MessageHandler, MessageReactionHandler,
+    PollAnswerHandler
 )
 
 # Python-Telegram_Bot Helpers Library
@@ -1427,6 +1428,16 @@ async def user_left_group(
                     chat_id, update_msg.from_user.name,
                     update_msg.left_chat_member.name)
         await delete_msg(bot, chat_id, msg_id)
+
+
+async def reaction_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''Message reaction reception handler.'''
+    # Do nothing (RFU)
+    return
+    # bot = context.bot
+    # reaction_update = getattr(update, "message_reaction", None)
+    # if reaction_update is None:
+    #    return
 
 
 async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -4015,9 +4026,9 @@ def tlg_app_setup(token: str) -> Application:
         tlg_add_cmd(app, CMD["ALLOWUSERLIST"]["KEY"], cmd_allowuserlist)
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         tlg_add_cmd(app, CMD["ALLOWGROUP"]["KEY"], cmd_allowgroup)
-    # Set to application handler for reception of text messages
+    # Set handler for text messages
     app.add_handler(MessageHandler(filters.TEXT, text_msg_rx, block=False))
-    # Set to application not text messages handler
+    # Set handler for media messages
     # pylint: disable=E1131
     app.add_handler(
         MessageHandler(
@@ -4027,39 +4038,41 @@ def tlg_app_setup(token: str) -> Application:
             media_msg_rx
         )
     )
-    # Set to application a new member join the group and member left the
-    # group events handlers
+    # Set handler for reactions
+    app.add_handler(MessageReactionHandler(reaction_rx))
+    # Set handler for Bot status change
     app.add_handler(
         ChatMemberHandler(
             chat_bot_status_change,
             ChatMemberHandler.MY_CHAT_MEMBER
         )
     )
+    # Set handler for member status change (member join/left the group)
     app.add_handler(
         ChatMemberHandler(
             chat_member_status_change,
             ChatMemberHandler.CHAT_MEMBER
         )
     )
-    # Set to application "USER joined the group" messages event handlers
+    # Set handler for "USER joined the group" messages
     app.add_handler(
         MessageHandler(
             filters.StatusUpdate.NEW_CHAT_MEMBERS,
             user_joined_group_msg_rx
         )
     )
-    # Set to application "USER left the group" or "BOT removed USER"
-    # messages event handlers
+    # Set handler for "USER left the group" or "BOT removed USER"
+    # messages
     app.add_handler(
         MessageHandler(
             filters.StatusUpdate.LEFT_CHAT_MEMBER,
             user_left_group
         )
     )
-    # Set to application inline keyboard callback handler for new captcha
-    # request and button captcha challenge
+    # Set handler for inline keyboard events ("other captcha" request
+    # and button captcha challenge)
     app.add_handler(CallbackQueryHandler(button_press_rx))
-    # Set to application users poll vote handler
+    # Set handler for users poll vote
     app.add_handler(PollAnswerHandler(poll_answer_rx, block=False))
     logger.info("Bot setup completed.")
     return app
