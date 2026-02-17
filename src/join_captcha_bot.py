@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    03/02/2026
+    17/02/2026
 Version:
-    1.32.0
+    1.32.2
 '''
 
 ###############################################################################
@@ -85,7 +85,8 @@ from telegram import (
 # Python-Telegram_Bot Extension Library
 from telegram.ext import (
     Application, CallbackQueryHandler, ChatMemberHandler, ContextTypes,
-    Defaults, filters, MessageHandler, PollAnswerHandler,
+    Defaults, filters, MessageHandler, MessageReactionHandler,
+    PollAnswerHandler
 )
 
 # Python-Telegram_Bot Helpers Library
@@ -266,13 +267,13 @@ def get_chat_config_file(chat_id):
                 break
         if not found:
             chat_config_file_name = \
-                    f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
+                f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
             file["ID"] = chat_id
             file["File"] = TSjson(chat_config_file_name)
             Global.files_config_list.append(file)
     else:
         chat_config_file_name = \
-                f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
+            f'{CONST["CHATS_DIR"]}/{chat_id}/{CONST["F_CONF"]}'
         file["ID"] = chat_id
         file["File"] = TSjson(chat_config_file_name)
         Global.files_config_list.append(file)
@@ -324,13 +325,12 @@ async def tlg_send_autodelete_msg(
         chat_id,
         message,
         time_delete_sec=CONST["T_DEL_MSG"],
-        **kwargs_for_send_message
-        ):
+        **kwargs_for_send_message):
     '''
     Send a telegram message that will be auto-delete in specified time.
     '''
     sent_result = await tlg_send_msg(
-            bot, chat_id, message, **kwargs_for_send_message)
+        bot, chat_id, message, **kwargs_for_send_message)
     if sent_result["msg"] is None:
         return None
     tlg_autodelete_msg(sent_result["msg"], time_delete_sec)
@@ -346,8 +346,8 @@ async def tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg,
     send_fail = False
     if rm_result_msg:
         sent_result = await tlg_send_autodelete_msg(
-                bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"],
-                **kwargs_for_send_message)
+            bot, chat_id, msg_text, CONST["T_FAST_DEL_MSG"],
+            **kwargs_for_send_message)
         if not sent_result:
             send_fail = True
     else:
@@ -371,7 +371,7 @@ async def tlg_send_msg_type_chat(
     else:
         auto_delete_msg = False
     return await tlg_bot_send_msg(bot, chat_id, msg_text, auto_delete_msg,
-            **kwargs_for_send_message)
+                                  **kwargs_for_send_message)
 
 
 ###############################################################################
@@ -459,8 +459,8 @@ def initialize_resources():
             # Populate config files list
             file_path = f'{CONST["CHATS_DIR"]}/{f_chat_id}/{CONST["F_CONF"]}'
             Global.files_config_list.append(
-                    OrderedDict(
-                            [("ID", f_chat_id), ("File", TSjson(file_path))]))
+                OrderedDict(
+                    [("ID", f_chat_id), ("File", TSjson(file_path))]))
             # Create default configuration file if it does not exists
             if not path.exists(file_path):
                 default_conf = get_default_config_data()
@@ -517,9 +517,9 @@ def load_texts_languages():
     json_init_lang_texts = TSjson(lang_file).read()
     if (json_init_lang_texts is None) or (json_init_lang_texts == {}):
         logger.error(
-                "Loading language \"%s\" from %s. Language file not "
-                "found or bad JSON syntax.",
-                CONST["INIT_LANG"].lower(), lang_file)
+            "Loading language \"%s\" from %s. Language file not "
+            "found or bad JSON syntax.",
+            CONST["INIT_LANG"].lower(), lang_file)
         logger.info("Exit.\n")
         sys_exit(0)
     for lang_iso_code, _ in TEXT.items():
@@ -531,9 +531,9 @@ def load_texts_languages():
         json_lang_texts = json_lang_file.read()
         if (json_lang_texts is None) or (json_lang_texts == {}):
             logger.error(
-                    "Loading language \"%s\" from %s. "
-                    "Language file not found or bad JSON syntax.",
-                    lang_iso_code, lang_file)
+                "Loading language \"%s\" from %s. "
+                "Language file not found or bad JSON syntax.",
+                lang_iso_code, lang_file)
             logger.info("Exit.\n")
             sys_exit(0)
         TEXT[lang_iso_code] = json_lang_texts
@@ -546,8 +546,8 @@ def load_texts_languages():
         for text in json_init_lang_texts:
             if text not in json_lang_texts:
                 logger.warning(
-                        "Text \"%s\" missing from language file \"%s\".json",
-                        text, lang_iso_code)
+                    "Text \"%s\" missing from language file \"%s\".json",
+                    text, lang_iso_code)
 
 
 def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
@@ -575,7 +575,8 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
         "equation_result": ""
     }
     if captcha_mode == "math":
-        captcha = CaptchaGen.gen_math_captcha_image(2, bool(random_randint(0, 1)))
+        captcha = CaptchaGen.gen_math_captcha_image(
+            2, bool(random_randint(0, 1)))
         captcha_result["equation_str"] = captcha["equation_str"]
         captcha_result["equation_result"] = captcha["equation_result"]
     else:
@@ -663,10 +664,10 @@ async def allowed_in_this_group(bot, chat, member_added_by):
         if chat.username:
             chat_link = f"@{chat.username}"
         logger.info(
-                "%s, %s, %s, %s",
-                chat.id, from_user_name, chat.title, chat_link)
+            "%s, %s, %s, %s",
+            chat.id, from_user_name, chat.title, chat_link)
         msg_text = CONST["NOT_ALLOW_GROUP"].format(
-                CONST["BOT_OWNER"], chat.id, CONST["REPOSITORY"])
+            CONST["BOT_OWNER"], chat.id, CONST["REPOSITORY"])
         await tlg_send_msg(bot, chat.id, msg_text)
         return False
     if is_group_in_banned_list(chat.id):
@@ -909,13 +910,13 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
                     (kick_result["error"] == "The user was already kicked")):
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_IN_CHAT"].format(
-                        user_name)
+                    user_name)
                 await tlg_bot_send_msg(bot, chat_id, msg_text, rm_result_msg)
             elif kick_result["error"] == \
                     "Not enough rights to restrict/unrestrict chat member":
                 # Bot has no privileges to kick
                 msg_text = TEXT[lang]["NEW_USER_KICK_NOT_RIGHTS"].format(
-                        user_name)
+                    user_name)
                 # Send no rights for kick message without auto-remove
                 await tlg_bot_send_msg(bot, chat_id, msg_text, False)
             else:
@@ -929,7 +930,8 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
                     chat_id, user_name, user_id)
         # Try to ban the user and notify Admins
         if CONST["BAN_DURATION"] >= 0:
-            ban_until_date = datetime.now(timezone.utc) + timedelta(seconds=CONST["BAN_DURATION"])
+            ban_until_date = datetime.now(
+                timezone.utc) + timedelta(seconds=CONST["BAN_DURATION"])
         else:
             ban_until_date = None
         ban_result = await tlg_ban_user(bot, chat_id, user_id, until_date=ban_until_date)
@@ -937,7 +939,7 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
             # Ban success
             banned = True
             msg_text = TEXT[lang]["CAPTCHA_FAIL_BAN"].format(
-                    user_name, max_join_retries)
+                user_name, max_join_retries)
             if lang != "EN":
                 bilang = get_chat_config(chat_id, "BiLang")
                 if bilang:
@@ -949,16 +951,16 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
             if ban_result["error"] == "User not found":
                 # The user is not in the chat
                 msg_text = TEXT[lang]["NEW_USER_BAN_NOT_IN_CHAT"].format(
-                        user_name, max_join_retries)
+                    user_name, max_join_retries)
             elif ban_result["error"] \
                     == "Not enough rights to restrict/un-restrict chat member":
                 # Bot has no privileges to ban
                 msg_text = TEXT[lang]["NEW_USER_BAN_NOT_RIGHTS"].format(
-                        user_name, max_join_retries)
+                    user_name, max_join_retries)
             else:
                 # For other reason, the Bot can't ban
                 msg_text = TEXT[lang]["BOT_CANT_BAN"].format(
-                        user_name, max_join_retries)
+                    user_name, max_join_retries)
         # Send ban notify message
         logger.info("[%s] %s", chat_id, msg_text)
         if rm_result_msg:
@@ -975,8 +977,8 @@ async def captcha_fail_member_kick(bot, chat_id, user_id, user_name):
             del Global.new_users[chat_id][user_id]
     except KeyError:
         logger.warning(
-                "[%s] %s (%d) not in new_users list (already solve captcha)",
-                chat_id, user_name, user_id)
+            "[%s] %s (%d) not in new_users list (already solve captcha)",
+            chat_id, user_name, user_id)
 
 
 async def captcha_fail_member(bot, chat_id, user_id):
@@ -1005,8 +1007,8 @@ async def captcha_fail_member(bot, chat_id, user_id):
             del Global.new_users[chat_id][user_id]
     except KeyError:
         logger.warning(
-                "[%s] %s (%d) not in new_users list (already solve captcha)",
-                chat_id, user_name, user_id)
+            "[%s] %s (%d) not in new_users list (already solve captcha)",
+            chat_id, user_name, user_id)
 
 
 async def call_admins(bot, chat_id, topic_id):
@@ -1039,8 +1041,7 @@ async def call_admins(bot, chat_id, topic_id):
 
 async def chat_bot_status_change(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Get Bot chats status changes (Bot was added to group/channel,
     started/stopped conversation in private chat, etc.) event handler.
@@ -1099,8 +1100,8 @@ async def chat_bot_status_change(
             # Bot removed from group
             else:
                 logger.info(
-                        "[%d] Bot removed from group by %s",
-                        chat.id, caused_by_user.name)
+                    "[%d] Bot removed from group by %s",
+                    chat.id, caused_by_user.name)
         return
     # Bot added to channel
     if not was_member and is_member:
@@ -1115,8 +1116,7 @@ async def chat_bot_status_change(
 
 async def chat_member_status_change(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Get Members chats status changes (user join/leave/added/removed
     to/from group/channel) event handler. Note: if Bot is not an Admin,
@@ -1139,8 +1139,8 @@ async def chat_member_status_change(
                 chat.id, join_user_name, join_user_id)
         return
     logger.info(
-            "[%s] New join detected: %s (%s)",
-            chat_id, join_user_name, join_user_id)
+        "[%s] New join detected: %s (%s)",
+        chat_id, join_user_name, join_user_id)
     # Get and update chat data
     chat_title = chat.title
     if chat_title:
@@ -1196,7 +1196,7 @@ async def chat_member_status_change(
     if captcha_mode == "button":
         # Send a button-only challenge
         challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(
-                join_user_name, chat_title, timeout_str)
+            join_user_name, chat_title, timeout_str)
         if lang != "EN":
             bilang = get_chat_config(chat_id, "BiLang")
             if bilang:
@@ -1205,17 +1205,17 @@ async def chat_member_status_change(
                 challenge_text = f"{challenge_text}\n\n{en_text}"
         # Prepare inline keyboard button to let user pass
         keyboard = [[
-                InlineKeyboardButton(
-                        TEXT[lang]["PASS_BTN_TEXT"],
-                        callback_data=f"button_captcha {join_user_id}")
-                ]
+            InlineKeyboardButton(
+                    TEXT[lang]["PASS_BTN_TEXT"],
+                    callback_data=f"button_captcha {join_user_id}")
+        ]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         logger.info(
-                "[%s] Sending captcha message to %s: [button]",
-                chat_id, join_user_name)
+            "[%s] Sending captcha message to %s: [button]",
+            chat_id, join_user_name)
         sent_result = await tlg_send_msg(
-                bot, chat_id, challenge_text, reply_markup=reply_markup)
+            bot, chat_id, challenge_text, reply_markup=reply_markup)
         if sent_result["msg"] is None:
             send_problem = True
     elif captcha_mode == "poll":
@@ -1226,14 +1226,14 @@ async def chat_member_status_change(
                 (num_config_poll_options(poll_options) < 2) or
                 (poll_correct_option == 0)):
             await tlg_send_autodelete_msg(
-                    bot, chat_id, TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"],
-                    CONST["T_FAST_DEL_MSG"])
+                bot, chat_id, TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"],
+                CONST["T_FAST_DEL_MSG"])
             return
         # Remove empty strings from options list
         poll_options = list(filter(None, poll_options))
         # Send request to solve the poll text message
         poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
-                join_user_name, chat_title, timeout_str)
+            join_user_name, chat_title, timeout_str)
         if lang != "EN":
             bilang = get_chat_config(chat_id, "BiLang")
             if bilang:
@@ -1241,15 +1241,15 @@ async def chat_member_status_change(
                     join_user_name, chat_title, timeout_str)
                 poll_request_msg_text = f"{poll_request_msg_text}\n\n{en_text}"
         sent_result = await tlg_send_autodelete_msg(
-                bot, chat_id, poll_request_msg_text, captcha_timeout)
+            bot, chat_id, poll_request_msg_text, captcha_timeout)
         solve_poll_request_msg_id = None
         if sent_result is not None:
             solve_poll_request_msg_id = sent_result
         # Send the Poll
         sent_result = await tlg_send_poll(
-                bot, chat_id, poll_question, poll_options,
-                poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
-                read_timeout=20)
+            bot, chat_id, poll_question, poll_options,
+            poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
+            read_timeout=20)
         if sent_result["msg"] is None:
             send_problem = True
         else:
@@ -1271,16 +1271,16 @@ async def chat_member_status_change(
         # Generate a pseudorandom captcha send it to telegram group and
         # program message
         captcha = create_image_captcha(
-                chat_id, join_user_id, captcha_level, captcha_mode)
+            chat_id, join_user_id, captcha_level, captcha_mode)
         if captcha_mode == "math":
             captcha_num = captcha["equation_result"]
             logger.info(
-                    "[%s] Sending captcha message to %s: %s=%s...",
-                    chat_id, join_user_name, captcha["equation_str"],
-                    captcha["equation_result"])
+                "[%s] Sending captcha message to %s: %s=%s...",
+                chat_id, join_user_name, captcha["equation_str"],
+                captcha["equation_result"])
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
-                    join_user_name, chat_title, timeout_str)
+                join_user_name, chat_title, timeout_str)
             if lang != "EN":
                 bilang = get_chat_config(chat_id, "BiLang")
                 if bilang:
@@ -1291,11 +1291,11 @@ async def chat_member_status_change(
         else:
             captcha_num = captcha["characters"]
             logger.info(
-                    "[%s] Sending captcha message to %s: %s...",
-                    chat_id, join_user_name, captcha_num)
+                "[%s] Sending captcha message to %s: %s...",
+                chat_id, join_user_name, captcha_num)
             # Note: Img caption must be <= 1024 chars
             img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
-                    join_user_name, chat_title, timeout_str)
+                join_user_name, chat_title, timeout_str)
             if lang != "EN":
                 bilang = get_chat_config(chat_id, "BiLang")
                 if bilang:
@@ -1306,10 +1306,10 @@ async def chat_member_status_change(
         # Prepare inline keyboard button to let user request another
         # captcha
         keyboard = [[
-                InlineKeyboardButton(
-                        TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                        callback_data=f"image_captcha {join_user_id}")
-                ]
+            InlineKeyboardButton(
+                    TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
+                    callback_data=f"image_captcha {join_user_id}")
+        ]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         # Send the image
@@ -1318,8 +1318,8 @@ async def chat_member_status_change(
         try:
             with open(captcha["image"], "rb") as file_image:
                 sent_result = await tlg_send_image(
-                        bot, chat_id, file_image, img_caption,
-                        reply_markup=reply_markup, read_timeout=20)
+                    bot, chat_id, file_image, img_caption,
+                    reply_markup=reply_markup, read_timeout=20)
         except Exception:
             logger.error(format_exc())
             logger.error("Fail to send image to Telegram")
@@ -1355,20 +1355,20 @@ async def chat_member_status_change(
         # captcha and restore previous join_retries
         if len(Global.new_users[chat_id][join_user_id]["join_data"]) != 0:
             user_join_data = \
-                    Global.new_users[chat_id][join_user_id]["join_data"]
+                Global.new_users[chat_id][join_user_id]["join_data"]
             join_data["join_retries"] = user_join_data["join_retries"]
         # Add new user join data and messages to be removed
         Global.new_users[chat_id][join_user_id]["join_data"] = join_data
         if update.message:
             Global.new_users[chat_id][join_user_id]["join_msg"] = \
-                    update.message.message_id
+                update.message.message_id
         if sent_result["msg"]:
             Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                    sent_result["msg"].message_id)
+                sent_result["msg"].message_id)
         if ((captcha_mode == "poll") and
                 (solve_poll_request_msg_id is not None)):
             Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                    solve_poll_request_msg_id)
+                solve_poll_request_msg_id)
         # Restrict user to deny send any kind of message until captcha
         # is solve. Allow send text messages for image based captchas
         # that requires it
@@ -1381,8 +1381,7 @@ async def chat_member_status_change(
 
 async def user_joined_group_msg_rx(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     New member join the group event handler.
     This handler is trigger when a "USER joined the group" message is
@@ -1420,8 +1419,7 @@ async def user_joined_group_msg_rx(
 
 async def user_left_group(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Member left a group or was removed event handler.
     This handler is trigger when a "USER left group" or
@@ -1445,6 +1443,16 @@ async def user_left_group(
                     chat_id, update_msg.from_user.name,
                     update_msg.left_chat_member.name)
         await delete_msg(bot, chat_id, msg_id)
+
+
+async def reaction_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    '''Message reaction reception handler.'''
+    # Do nothing (RFU)
+    return
+    # bot = context.bot
+    # reaction_update = getattr(update, "message_reaction", None)
+    # if reaction_update is None:
+    #    return
 
 
 async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -1496,8 +1504,8 @@ async def media_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = get_chat_config(chat_id, "Language")
     bot_msg = TEXT[lang]["NOT_TEXT_MSG_ALLOWED"].format(user_name)
     await tlg_send_autodelete_msg(
-            bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def text_msg_rx_verified_user(bot, msg, msg_text):
@@ -1523,16 +1531,16 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
         has_url = re.search(CONST["REGEX_URLS"], msg_text)
-        if has_url is not None:
+        if has_url is None:
             return
         # Try to remove the message and notify detection
         delete_result = await delete_msg(bot, chat_id, msg_id)
         if delete_result["error"] == "":
             bot_msg = TEXT[lang]["URL_MSG_NOT_ALLOWED_DETECTED"].format(
-                    user_name)
+                user_name)
             await tlg_send_autodelete_msg(
-                    bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
-                    topic_id=topic_id)
+                bot, chat_id, bot_msg, CONST["T_FAST_DEL_MSG"],
+                topic_id=topic_id)
     # ...
 
 
@@ -1565,7 +1573,7 @@ async def handle_spam(bot, msg, msg_text):
     else:
         bot_msg = TEXT[lang]["SPAM_DETECTED_NOT_RM"].format(user_name)
     await tlg_send_autodelete_msg(bot, chat_id, bot_msg,
-            CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
+                                  CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
     return True
 
 
@@ -1585,7 +1593,7 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     # Get configured language
     lang = get_chat_config(chat_id, "Language")
     logger.info("[%s] Received captcha reply from %s: %s",
-            chat_id, user_name, msg_text)
+                chat_id, user_name, msg_text)
     # Check if the expected captcha solve number is in the message
     solve_num = Global.new_users[chat_id][user_id]["join_data"]["captcha_num"]
     if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
@@ -1611,22 +1619,22 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
         await tlg_bot_send_msg(bot, chat_id, bot_msg, rm_result_msg)
         # Check for custom welcome message and send it
         welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
-                escape_markdown(user_name, 2))
+            escape_markdown(user_name, 2))
         if welcome_msg != "-":
             # Send the message as Markdown
             rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
             if rm_welcome_msg:
                 welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
                 sent_result = await tlg_send_autodelete_msg(
-                        bot, chat_id, welcome_msg, welcome_msg_time,
-                        parse_mode="MARKDOWN")
+                    bot, chat_id, welcome_msg, welcome_msg_time,
+                    parse_mode="MARKDOWN")
             else:
                 sent_result = await tlg_send_msg(
-                        bot, chat_id, welcome_msg, "MARKDOWN")
+                    bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
                 logger.info(
-                        "[%s] Error: Can't send the welcome message.",
-                        chat_id)
+                    "[%s] Error: Can't send the welcome message.",
+                    chat_id)
         # Check for send just text message option and apply user
         # restrictions
         restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
@@ -1649,31 +1657,31 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
             if is_int(msg_text):
                 tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
-                        bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
-                        CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
+                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
+                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
                 if sent_msg_id:
                     Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                            sent_msg_id)
+                        sent_msg_id)
         # If "nums", "hex" or "ascii" captcha
         else:
             # Check if the message has 4 chars
             if len(msg_text) == 4:
                 tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
-                        bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
-                        CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
+                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
+                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
                 if sent_msg_id:
                     Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                            sent_msg_id)
+                        sent_msg_id)
             # Check if the message just has numbers but is not 4 chars
             elif is_int(msg_text):
                 tlg_autodelete_msg(msg)
                 sent_msg_id = await tlg_send_autodelete_msg(
-                        bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
-                        CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
+                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
+                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
                 if sent_msg_id:
                     Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                            sent_msg_id)
+                        sent_msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
 
 
@@ -1736,8 +1744,7 @@ async def text_msg_rx(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def poll_answer_rx(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     User poll vote received.
     '''
@@ -1761,8 +1768,8 @@ async def poll_answer_rx(
     poll_correct_option = poll_data["correct_option"]
     # The vote come from expected user, let's stop the Poll
     logger.info(
-            "[%s] User %s select poll option %d",
-            chat_id, from_user.name, option_answer)
+        "[%s] User %s select poll option %d",
+        chat_id, from_user.name, option_answer)
     await tlg_stop_poll(bot, chat_id, poll_msg_id)
     # Get user name
     user_name = from_user.name
@@ -1771,7 +1778,7 @@ async def poll_answer_rx(
     rm_result_msg = get_chat_config(chat_id, "Rm_Result_Msg")
     rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
-            escape_markdown(user_name, 2))
+        escape_markdown(user_name, 2))
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Wait 3s to let poll animation be shown
     await asyncio_sleep(3)
@@ -1798,15 +1805,15 @@ async def poll_answer_rx(
             if rm_welcome_msg:
                 welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
                 sent_result = await tlg_send_autodelete_msg(
-                        bot, chat_id, welcome_msg, welcome_msg_time,
-                        parse_mode="MARKDOWN")
+                    bot, chat_id, welcome_msg, welcome_msg_time,
+                    parse_mode="MARKDOWN")
             else:
                 sent_result = await tlg_send_msg(
-                        bot, chat_id, welcome_msg, "MARKDOWN")
+                    bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
                 logger.info(
-                        "[%s] Error: Can't send the welcome message.",
-                        chat_id)
+                    "[%s] Error: Can't send the welcome message.",
+                    chat_id)
         # Check for send just text message option and apply user
         # restrictions
         if restrict_non_text_msgs == 1:  # Restrict for 1 day
@@ -1834,8 +1841,7 @@ async def poll_answer_rx(
 
 async def button_press_rx(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Any Telegram Inline Keyboard Button pressed handler.
     '''
@@ -1887,10 +1893,10 @@ async def button_request_another_captcha_press(bot, query):
     logger.info("[%s] User %s requested a new captcha.", chat_id, user_name)
     # Prepare inline keyboard button to let user request another captcha
     keyboard = [[
-            InlineKeyboardButton(
-                    TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                    callback_data=f"image_captcha {str(query.from_user.id)}")
-            ]
+        InlineKeyboardButton(
+                TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
+                callback_data=f"image_captcha {str(query.from_user.id)}")
+    ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     # Get captcha timeout
@@ -1910,14 +1916,14 @@ async def button_request_another_captcha_press(bot, query):
         captcha_mode = "nums"
     # Generate a new captcha and edit previous captcha image message
     captcha = create_image_captcha(
-                chat_id, user_id, captcha_level, captcha_mode)
+        chat_id, user_id, captcha_level, captcha_mode)
     if captcha_mode == "math":
         captcha_num = captcha["equation_result"]
         logger.info(
-                "[%s] Sending new captcha msg: %s = %s...",
-                chat_id, captcha["equation_str"], captcha_num)
+            "[%s] Sending new captcha msg: %s = %s...",
+            chat_id, captcha["equation_str"], captcha_num)
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
-                user_name, chat_title, timeout_str)
+            user_name, chat_title, timeout_str)
         if lang != "EN":
             bilang = get_chat_config(chat_id, "BiLang")
             if bilang:
@@ -1927,10 +1933,10 @@ async def button_request_another_captcha_press(bot, query):
     else:
         captcha_num = captcha["characters"]
         logger.info(
-                "[%s] Sending new captcha msg: %s...",
-                chat_id, captcha_num)
+            "[%s] Sending new captcha msg: %s...",
+            chat_id, captcha_num)
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
-                user_name, chat_title, timeout_str)
+            user_name, chat_title, timeout_str)
         if lang != "EN":
             bilang = get_chat_config(chat_id, "BiLang")
             if bilang:
@@ -1943,12 +1949,12 @@ async def button_request_another_captcha_press(bot, query):
         with open(captcha["image"], "rb") as file_img:
             input_media = InputMediaPhoto(media=file_img, caption=img_caption)
             edit_result = await tlg_edit_msg_media(
-                    bot, chat_id, msg_id, media=input_media,
-                    reply_markup=reply_markup)
+                bot, chat_id, msg_id, media=input_media,
+                reply_markup=reply_markup)
         if edit_result["error"] == "":
             # Set and modified to new expected captcha number
             Global.new_users[chat_id][user_id]["join_data"]["captcha_num"] = \
-                    captcha_num
+                captcha_num
             # Remove sent captcha image file from file system
             if path.exists(captcha["image"]):
                 remove(captcha["image"])
@@ -1985,8 +1991,8 @@ async def button_im_not_a_bot_press(bot, query):
     del Global.new_users[chat_id][user_id]
     # Send message solve message
     logger.info(
-            "[%s] User %s solved a button-only challenge.",
-            chat_id, user_name)
+        "[%s] User %s solved a button-only challenge.",
+        chat_id, user_name)
     # Remove all restrictions on the user
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
@@ -2000,22 +2006,22 @@ async def button_im_not_a_bot_press(bot, query):
     # Check for custom welcome message and send it
     welcome_msg = ""
     welcome_msg = get_chat_config(chat_id, "Welcome_Msg").format(
-            escape_markdown(user_name, 2))
+        escape_markdown(user_name, 2))
     if welcome_msg != "-":
         # Send the message as Markdown
         rm_welcome_msg = get_chat_config(chat_id, "Rm_Welcome_Msg")
         if rm_welcome_msg:
             welcome_msg_time = get_chat_config(chat_id, "Welcome_Time")
             sent_result = await tlg_send_autodelete_msg(
-                    bot, chat_id, welcome_msg, welcome_msg_time,
-                    parse_mode="MARKDOWN")
+                bot, chat_id, welcome_msg, welcome_msg_time,
+                parse_mode="MARKDOWN")
         else:
             sent_result = await tlg_send_msg(
-                    bot, chat_id, welcome_msg, "MARKDOWN")
+                bot, chat_id, welcome_msg, "MARKDOWN")
         if sent_result is None:
             logger.info(
-                    "[%s] Error: Can't send the welcome message.",
-                    chat_id)
+                "[%s] Error: Can't send the welcome message.",
+                chat_id)
     # Check to send just text message option and apply user restrictions
     restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
     # Restrict for 1 day
@@ -2057,8 +2063,8 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
         await tlg_send_autodelete_msg(
-                bot, chat_id, TEXT[lang]["START"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, TEXT[lang]["START"],
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2086,8 +2092,8 @@ async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
         await tlg_send_autodelete_msg(
-                bot, chat_id, TEXT[lang]["HELP"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, TEXT[lang]["HELP"],
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2115,8 +2121,8 @@ async def cmd_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
         await tlg_send_autodelete_msg(
-                bot, chat_id, TEXT[lang]["COMMANDS"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, TEXT[lang]["COMMANDS"],
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2147,14 +2153,14 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Send just allowed in private chat message
         lang = get_chat_config(chat_id, "Language")
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["CMD_JUST_IN_PRIVATE"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["CMD_JUST_IN_PRIVATE"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check for group chat ID
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["CONNECT_USAGE"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["CONNECT_USAGE"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     group_id = args[0]
     # Add "-" if not present
@@ -2162,8 +2168,8 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
         group_id = f"-{group_id}"
     if not tlg_is_valid_group(group_id):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["INVALID_GROUP_ID"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["INVALID_GROUP_ID"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if requested by the Bot owner or an Admin of the group
     if ((str(user_id) != CONST["BOT_OWNER"]) and
@@ -2171,15 +2177,15 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
         is_admin = await tlg_user_is_admin(bot, group_id, user_id)
         if (is_admin is None) or (is_admin is False):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, TEXT[lang]["CONNECT_JUST_ADMIN"],
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id, TEXT[lang]["CONNECT_JUST_ADMIN"],
+                topic_id=tlg_get_msg_topic(update_msg))
             return
     # Connection
     group_lang = get_chat_config(group_id, "Language")
     Global.connections[user_id] = {"group_id": group_id, "lang": group_lang}
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, TEXT[lang]["CONNECT_OK"].format(group_id),
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, TEXT[lang]["CONNECT_OK"].format(group_id),
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_disconnect(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2206,24 +2212,24 @@ async def cmd_disconnect(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Send just allowed in private chat message
         lang = get_chat_config(chat_id, "Language")
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["CMD_JUST_IN_PRIVATE"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["CMD_JUST_IN_PRIVATE"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if User is connected to some group
     if user_id not in Global.connections:
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["DISCONNECT_NOT_CONNECTED"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["DISCONNECT_NOT_CONNECTED"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Disconnection
     lang = Global.connections[user_id]["lang"]
     group_id = Global.connections[user_id]["group_id"]
     del Global.connections[user_id]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id,
-            TEXT[lang]["DISCONNECT_OK"].format(group_id),
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id,
+        TEXT[lang]["DISCONNECT_OK"].format(group_id),
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2242,8 +2248,8 @@ async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2260,9 +2266,9 @@ async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     group_cfg = get_all_chat_config(group_id)
     group_cfg = json_dumps(group_cfg, indent=4, sort_keys=True)
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id,
-            TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg, 2)),
-            parse_mode="MARKDOWN", topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id,
+        TEXT[lang]["CHECK_CFG"].format(escape_markdown(group_cfg, 2)),
+        parse_mode="MARKDOWN", topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2283,8 +2289,8 @@ async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2300,8 +2306,8 @@ async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["BILANG_MSG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["BILANG_MSG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get remove welcome messages config to set
     yes_or_no = args[0].lower()
@@ -2314,8 +2320,8 @@ async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         bot_msg = TEXT[lang]["BILANG_MSG"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2336,8 +2342,8 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2353,17 +2359,17 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         msg_text = TEXT[lang]["LANG_NOT_ARG"].format(
-                CONST["SUPPORTED_LANGS_CMDS"])
+            CONST["SUPPORTED_LANGS_CMDS"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get and configure chat to provided language
     lang_provided = args[0].upper()
     if lang_provided in TEXT:
         if (chat_type != "private") and (lang_provided == lang):
             msg_text = TEXT[lang]["LANG_SAME"].format(
-                    CONST["SUPPORTED_LANGS_CMDS"])
+                CONST["SUPPORTED_LANGS_CMDS"])
         else:
             lang = lang_provided
             save_config_property(group_id, "Language", lang)
@@ -2372,10 +2378,10 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
             msg_text = TEXT[lang]["LANG_CHANGE"]
     else:
         msg_text = TEXT[lang]["LANG_BAD_LANG"].format(
-                CONST["SUPPORTED_LANGS_CMDS"])
+            CONST["SUPPORTED_LANGS_CMDS"])
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, msg_text,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, msg_text,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2396,8 +2402,8 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2413,21 +2419,21 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if provided time argument is not a number
     if not is_int(args[0]):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_NUM"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_NUM"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Require user to provide unit
     if len(args) < 2:
         await tlg_send_msg_type_chat(
-               bot, chat_type, chat_id,
-               TEXT[lang]["TIME_UNIT_REQUIRED"],
-               topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["TIME_UNIT_REQUIRED"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get time value and unit
     new_time = int(args[0])
@@ -2442,30 +2448,30 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
         new_time_str = f"{new_time} sec"
     else:
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if time value is out of limits (less than 10s)
     if new_time < 10:
         msg_text = TEXT[lang]["TIME_OUT_RANGE"].format(
-                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+            CONST["MAX_CONFIG_CAPTCHA_TIME"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     if new_time > CONST["MAX_CONFIG_CAPTCHA_TIME"] * CONST["T_SECONDS_IN_MIN"]:
         msg_text = TEXT[lang]["TIME_OUT_RANGE"].format(
-                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+            CONST["MAX_CONFIG_CAPTCHA_TIME"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Set the new captcha time
     save_config_property(group_id, "Captcha_Time", new_time)
     msg_text = TEXT[lang]["TIME_CHANGE"].format(new_time_str)
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, msg_text,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, msg_text,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2486,8 +2492,8 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2503,8 +2509,8 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["DIFFICULTY_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["DIFFICULTY_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get and configure chat to provided captcha difficulty
     if is_int(args[0]):
@@ -2512,13 +2518,13 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
         new_difficulty = max(new_difficulty, 1)
         new_difficulty = min(new_difficulty, 5)
         save_config_property(
-                group_id, "Captcha_Difficulty_Level", new_difficulty)
+            group_id, "Captcha_Difficulty_Level", new_difficulty)
         bot_msg = TEXT[lang]["DIFFICULTY_CHANGE"].format(new_difficulty)
     else:
         bot_msg = TEXT[lang]["DIFFICULTY_NOT_NUM"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2539,8 +2545,8 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2556,8 +2562,8 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["CAPTCHA_MODE_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get and configure chat to provided captcha mode
     new_captcha_mode = args[0].lower()
@@ -2568,14 +2574,13 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         bot_msg = TEXT[lang]["CAPTCHA_MODE_INVALID"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_restriction(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /restriction message handler.
     To configure type of restriction to apply on users that fails the
@@ -2595,8 +2600,8 @@ async def cmd_restriction(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2615,8 +2620,8 @@ async def cmd_restriction(
             TEXT[lang]["CMD_RESTRICTION_NOT_ARG"],
             TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get and configure chat to provided restriction
     restriction_type = args[0].lower()
@@ -2628,8 +2633,8 @@ async def cmd_restriction(
             TEXT[lang]["CMD_INVALID_PARAMETER"],
             TEXT[lang]["CMD_RESTRICTION_AVAILABLE_ARGS"])
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2650,8 +2655,8 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2667,8 +2672,8 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["WELCOME_MSG_SET_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get welcome message in markdown and remove "/Welcome_msg "
     # text from it
@@ -2684,14 +2689,13 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
         bot_msg = TEXT[lang]["WELCOME_MSG_SET"]
     save_config_property(group_id, "Welcome_Msg", welcome_msg)
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_welcome_msg_time(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /welcome_msg_time message handler.
     '''
@@ -2709,9 +2713,9 @@ async def cmd_welcome_msg_time(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"],
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"],
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2727,14 +2731,14 @@ async def cmd_welcome_msg_time(
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if provided time argument is not a number
     if not is_int(args[0]):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_NUM"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["TIME_NOT_NUM"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get time arguments
     new_time = int(args[0])
@@ -2752,30 +2756,30 @@ async def cmd_welcome_msg_time(
         new_time_str = f"{new_time} sec"
     else:
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["WELCOME_TIME_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check if time value is out of limits (less than 10s)
     if new_time < 10:
         msg_text = TEXT[lang]["TIME_OUT_RANGE"].format(
-                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+            CONST["MAX_CONFIG_CAPTCHA_TIME"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     if new_time > CONST["MAX_CONFIG_CAPTCHA_TIME"] * CONST["T_SECONDS_IN_MIN"]:
         msg_text = TEXT[lang]["TIME_OUT_RANGE"].format(
-                CONST["MAX_CONFIG_CAPTCHA_TIME"])
+            CONST["MAX_CONFIG_CAPTCHA_TIME"])
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Set the new captcha time
     save_config_property(group_id, "Welcome_Time", new_time)
     msg_text = TEXT[lang]["WELCOME_TIME_CHANGE"].format(new_time_str)
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, msg_text,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, msg_text,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2796,8 +2800,8 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2812,22 +2816,22 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lang = get_chat_config(group_id, "Language")
     # Format command usage text
     text_cmd_usage = TEXT[lang]["CAPTCHA_POLL_USAGE"].format(
-            CONST["MAX_POLL_QUESTION_LENGTH"],
-            CONST["MAX_POLL_OPTION_LENGTH"],
-            CONST["MAX_POLL_OPTIONS"])
+        CONST["MAX_POLL_QUESTION_LENGTH"],
+        CONST["MAX_POLL_OPTION_LENGTH"],
+        CONST["MAX_POLL_OPTIONS"])
     # Check if no argument was provided with the command
     if (args is None) or (len(args) < 2):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, text_cmd_usage,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, text_cmd_usage,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get poll message command
     poll_cmd = args[0]
     logger.info("poll_cmd: %s", poll_cmd)
     if poll_cmd not in ["question", "option", "correct_option"]:
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, text_cmd_usage,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, text_cmd_usage,
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     if poll_cmd == "question":
         # get Poll Question
@@ -2838,57 +2842,57 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Save Poll Question
         save_config_property(group_id, "Poll_Q", poll_question)
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["POLL_QUESTION_CONFIGURED"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["POLL_QUESTION_CONFIGURED"],
+            topic_id=tlg_get_msg_topic(update_msg))
     elif poll_cmd == "correct_option":
         # get Poll correct option and check if is a number
         option_num = args[1]
         if not is_int(option_num):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, text_cmd_usage)
+                bot, chat_type, chat_id, text_cmd_usage)
             return
         option_num = int(option_num)
         # Check if correct option number is configured
         if (option_num < 1) or (option_num > CONST["MAX_POLL_OPTIONS"]):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, text_cmd_usage,
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id, text_cmd_usage,
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         poll_options = get_chat_config(group_id, "Poll_A")
         if option_num > num_config_poll_options(poll_options):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["POLL_CORRECT_OPTION_NOT_CONFIGURED"].format(
-                            option_num),
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id,
+                TEXT[lang]["POLL_CORRECT_OPTION_NOT_CONFIGURED"].format(
+                    option_num),
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         # Save Poll correct option number
         save_config_property(group_id, "Poll_C_A", option_num)
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["POLL_CORRECT_OPTION_CONFIGURED"].format(
-                    option_num),
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["POLL_CORRECT_OPTION_CONFIGURED"].format(
+                option_num),
+            topic_id=tlg_get_msg_topic(update_msg))
     elif poll_cmd == "option":
         # Check if option argument is valid
         if len(args) < 3:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, text_cmd_usage,
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id, text_cmd_usage,
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         option_num = args[1]
         logger.info("option_num: %s", option_num)
         if not is_int(option_num):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, text_cmd_usage,
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id, text_cmd_usage,
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         option_num = int(option_num)
         if (option_num < 1) or (option_num > CONST["MAX_POLL_OPTIONS"]):
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id, text_cmd_usage,
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id, text_cmd_usage,
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         option_num = option_num - 1
         # Resize poll options list if missing options slots
@@ -2916,15 +2920,14 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Save Poll option
         save_config_property(group_id, "Poll_A", poll_options)
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["POLL_OPTION_CONFIGURED"].format(option_num+1),
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["POLL_OPTION_CONFIGURED"].format(option_num+1),
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_restrict_non_text(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /restrict_non_text message handler.
     '''
@@ -2942,8 +2945,8 @@ async def cmd_restrict_non_text(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -2959,17 +2962,17 @@ async def cmd_restrict_non_text(
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check for valid expected argument values
     restrict_non_text_msgs = args[0]
     if restrict_non_text_msgs not in ["enable", "disable"]:
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["RESTRICT_NON_TEXT_MSG_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check for forever restriction argument
     restrict_forever = False
@@ -2986,8 +2989,8 @@ async def cmd_restrict_non_text(
         save_config_property(group_id, "Restrict_Non_Text", 0)
         bot_msg = TEXT[lang]["RESTRICT_NON_TEXT_MSG_DISABLED"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3008,8 +3011,8 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3025,8 +3028,8 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["IGNORE_LIST_ADD_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check and add user ID/alias form ignore list
     user_id_alias = args[0]
@@ -3045,14 +3048,13 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         bot_msg = TEXT[lang]["IGNORE_LIST_ADD_INVALID"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_ignore(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /remove_ignore message handler.
     '''
@@ -3070,8 +3072,8 @@ async def cmd_remove_ignore(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3087,9 +3089,9 @@ async def cmd_remove_ignore(
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id,
-                TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id,
+            TEXT[lang]["IGNORE_LIST_REMOVE_NOT_ARG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Check and remove user ID/alias form ignore list
     ignore_list = get_chat_config(group_id, "Ignore_List")
@@ -3100,8 +3102,8 @@ async def cmd_remove_ignore(
     else:
         bot_msg = TEXT[lang]["IGNORE_LIST_REMOVE_NOT_IN_LIST"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3121,8 +3123,8 @@ async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3142,14 +3144,13 @@ async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         bot_msg = "\n".join([str(x) for x in ignore_list])
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_solve_kick_msg(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /remove_solve_kick_msg message handler.
     '''
@@ -3167,9 +3168,9 @@ async def cmd_remove_solve_kick_msg(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"],
-                    topic_id=tlg_get_msg_topic(update_msg))
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"],
+                topic_id=tlg_get_msg_topic(update_msg))
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3185,8 +3186,8 @@ async def cmd_remove_solve_kick_msg(
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["RM_SOLVE_KICK_MSG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["RM_SOLVE_KICK_MSG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get remove solve/kick messages config to set
     yes_or_no = args[0].lower()
@@ -3199,14 +3200,13 @@ async def cmd_remove_solve_kick_msg(
     else:
         bot_msg = TEXT[lang]["RM_SOLVE_KICK_MSG"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_welcome_msg(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /remove_welcome_msg message handler.
     '''
@@ -3224,8 +3224,8 @@ async def cmd_remove_welcome_msg(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3241,8 +3241,8 @@ async def cmd_remove_welcome_msg(
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
         await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["RM_WELCOME_MSG"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_type, chat_id, TEXT[lang]["RM_WELCOME_MSG"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Get remove welcome messages config to set
     yes_or_no = args[0].lower()
@@ -3255,14 +3255,13 @@ async def cmd_remove_welcome_msg(
     else:
         bot_msg = TEXT[lang]["RM_WELCOME_MSG"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_all_msg_kick_on(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /remove_all_msg_kick_on message handler.
     '''
@@ -3279,8 +3278,8 @@ async def cmd_remove_all_msg_kick_on(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3302,14 +3301,13 @@ async def cmd_remove_all_msg_kick_on(
         save_config_property(group_id, "RM_All_Msg", enable)
         bot_msg = TEXT[lang]["RM_ALL_MSGS_AFTER_KICK_ON"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_all_msg_kick_off(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /remove_all_msg_kick_off message handler.
     '''
@@ -3326,8 +3324,8 @@ async def cmd_remove_all_msg_kick_off(
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3349,8 +3347,8 @@ async def cmd_remove_all_msg_kick_off(
         save_config_property(group_id, "RM_All_Msg", enable)
         bot_msg = TEXT[lang]["RM_ALL_MSGS_AFTER_KICK_OFF"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3370,8 +3368,8 @@ async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3393,8 +3391,8 @@ async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         save_config_property(group_id, "URL_Enabled", enable)
         bot_msg = TEXT[lang]["URL_ENABLE"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3414,8 +3412,8 @@ async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type == "private":
         if user_id not in Global.connections:
             await tlg_send_msg_type_chat(
-                    bot, chat_type, chat_id,
-                    TEXT[lang]["CMD_NEEDS_CONNECTION"])
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
             return
         group_id = Global.connections[user_id]["group_id"]
     else:
@@ -3437,8 +3435,8 @@ async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         save_config_property(group_id, "URL_Enabled", enable)
         bot_msg = TEXT[lang]["URL_DISABLE"]
     await tlg_send_msg_type_chat(
-            bot, chat_type, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_type, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3475,8 +3473,8 @@ async def cmd_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         save_config_property(chat_id, "Enabled", enable)
         bot_msg = TEXT[lang]["ENABLE"]
     await tlg_send_autodelete_msg(
-            bot, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3513,8 +3511,8 @@ async def cmd_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         save_config_property(chat_id, "Enabled", enable)
         bot_msg = TEXT[lang]["DISABLE"]
     await tlg_send_autodelete_msg(
-            bot, chat_id, bot_msg,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_id, bot_msg,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_chatid(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3535,8 +3533,8 @@ async def cmd_chatid(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg_text = f"Group Chat ID:\n—————————\n{chat_id}"
         tlg_autodelete_msg(update_msg)
         await tlg_send_autodelete_msg(
-                bot, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3566,8 +3564,8 @@ async def cmd_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lang = get_chat_config(chat_id, "Language")
         msg_text = TEXT[lang]["VERSION"].format(CONST["VERSION"])
         await tlg_send_autodelete_msg(
-                bot, chat_id, msg_text,
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, msg_text,
+            topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3585,11 +3583,11 @@ async def cmd_about(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type != "private":
         lang = get_chat_config(chat_id, "Language")
     msg_text = TEXT[lang]["ABOUT_MSG"].format(
-            CONST["DEVELOPER"], CONST["REPOSITORY"],
-            CONST["DEV_DONATION_ADDR"])
+        CONST["DEVELOPER"], CONST["REPOSITORY"],
+        CONST["DEV_DONATION_ADDR"])
     await tlg_send_msg(
-            bot, chat_id, msg_text,
-            topic_id=tlg_get_msg_topic(update_msg))
+        bot, chat_id, msg_text,
+        topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_privacy(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3625,8 +3623,8 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if ((str(user_id) != CONST["BOT_OWNER"]) and
             (user_alias != CONST["BOT_OWNER"])):
         await tlg_send_autodelete_msg(
-                bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"],
-                topic_id=tlg_get_msg_topic(update_msg))
+            bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"],
+            topic_id=tlg_get_msg_topic(update_msg))
         return
     # Generate a random difficulty captcha
     difficulty = random_randint(1, 5)
@@ -3634,7 +3632,7 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
     if captcha_mode == "math":
         captcha_code = \
-                f'{captcha["equation_str"]} = {captcha["equation_result"]}'
+            f'{captcha["equation_str"]} = {captcha["equation_result"]}'
     else:
         captcha_code = captcha["characters"]
     logger.info("[%s] Sending captcha msg: %s", chat_id, captcha_code)
@@ -3660,8 +3658,7 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def cmd_allowuserlist(
         update: Update,
-        context: ContextTypes.DEFAULT_TYPE
-        ):
+        context: ContextTypes.DEFAULT_TYPE):
     '''
     Command /allowuserlist message handler.
     To Global allowed list blind users.
@@ -3684,7 +3681,7 @@ async def cmd_allowuserlist(
     if ((str(user_id) != CONST["BOT_OWNER"]) and
             (user_alias != CONST["BOT_OWNER"])):
         await tlg_send_autodelete_msg(
-                bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
+            bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
@@ -3693,21 +3690,21 @@ async def cmd_allowuserlist(
         bot_msg = "\n".join([str(user) for user in l_white_users])
         bot_msg = f"Global Allowed Users List:\n------------------\n{bot_msg}"
         await tlg_send_msg(
-                bot, chat_id, bot_msg, topic_id=topic_id)
+            bot, chat_id, bot_msg, topic_id=topic_id)
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWUSERLIST_USAGE"], topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWUSERLIST_USAGE"], topic_id=topic_id)
         return
     # Just one argument provided
     if len(args) == 1:
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
-                topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+            topic_id=topic_id)
         return
     # Invalid argument provided
     if args[0] not in ["add", "rm"]:
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
-                topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWUSERLIST_USAGE"],
+            topic_id=topic_id)
         return
     # Expected argument provided
     add_rm = args[0]
@@ -3716,39 +3713,39 @@ async def cmd_allowuserlist(
     if add_rm == "add":
         if not tlg_is_valid_user_id_or_alias(user):
             await tlg_send_msg(
-                    bot, chat_id,
-                    "Invalid User ID/Alias.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "Invalid User ID/Alias.",
+                topic_id=topic_id)
             return
         if user not in l_white_users:
             file_write(CONST["F_ALLOWED_USERS"], f"{user}\n")
             await tlg_send_msg(
-                    bot, chat_id,
-                    "User added to Global allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "User added to Global allowed list.",
+                topic_id=topic_id)
         else:
             await tlg_send_msg(
-                    bot, chat_id,
-                    "The User is already in Global allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "The User is already in Global allowed list.",
+                topic_id=topic_id)
         return
     if add_rm == "rm":
         if not tlg_is_valid_user_id_or_alias(user):
             await tlg_send_msg(
-                    bot, chat_id, "Invalid User ID/Alias.",
-                    topic_id=topic_id)
+                bot, chat_id, "Invalid User ID/Alias.",
+                topic_id=topic_id)
             return
         if list_remove_element(l_white_users, user):
             file_write(CONST["F_ALLOWED_USERS"], l_white_users, "w")
             await tlg_send_msg(
-                    bot, chat_id,
-                    "User removed from Global allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "User removed from Global allowed list.",
+                topic_id=topic_id)
         else:
             await tlg_send_msg(
-                    bot, chat_id,
-                    "The User is not in Global allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "The User is not in Global allowed list.",
+                topic_id=topic_id)
 
 
 async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -3774,7 +3771,7 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if ((str(user_id) != CONST["BOT_OWNER"]) and
             (user_alias != CONST["BOT_OWNER"])):
         await tlg_send_autodelete_msg(
-                bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
+            bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
     # Check if no argument was provided with the command
     if (args is None) or (len(args) == 0):
@@ -3784,17 +3781,17 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
         bot_msg = f"Allowed Groups:\n--------------------\n{bot_msg}"
         await tlg_send_msg(bot, chat_id, bot_msg, topic_id=topic_id)
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
         return
     # Just one arguments provided
     if len(args) == 1:
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
         return
     # Invalid argument provided
     if args[0] not in ["add", "rm"]:
         await tlg_send_msg(
-                bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
+            bot, chat_id, CONST["ALLOWGROUP_USAGE"], topic_id=topic_id)
         return
     # Expected argument provided
     add_rm = args[0]
@@ -3803,34 +3800,34 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if add_rm == "add":
         if not tlg_is_valid_group(group):
             await tlg_send_msg(
-                    bot, chat_id, "Invalid Group ID.", topic_id=topic_id)
+                bot, chat_id, "Invalid Group ID.", topic_id=topic_id)
             return
         if group not in l_allowed_groups:
             file_write(CONST["F_ALLOWED_GROUPS"], f"{group}\n")
             await tlg_send_msg(
-                    bot, chat_id, "Group added to allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id, "Group added to allowed list.",
+                topic_id=topic_id)
         else:
             await tlg_send_msg(
-                    bot, chat_id,
-                    "The group is already in the allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id,
+                "The group is already in the allowed list.",
+                topic_id=topic_id)
         return
     if add_rm == "rm":
         if not tlg_is_valid_group(group):
             await tlg_send_msg(
-                    bot, chat_id, "Invalid Group ID.",
-                    topic_id=topic_id)
+                bot, chat_id, "Invalid Group ID.",
+                topic_id=topic_id)
             return
         if list_remove_element(l_allowed_groups, group):
             file_write(CONST["F_ALLOWED_GROUPS"], l_allowed_groups, "w")
             await tlg_send_msg(
-                    bot, chat_id, "Group removed from allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id, "Group removed from allowed list.",
+                topic_id=topic_id)
         else:
             await tlg_send_msg(
-                    bot, chat_id, "The group is not in allowed list.",
-                    topic_id=topic_id)
+                bot, chat_id, "The group is not in allowed list.",
+                topic_id=topic_id)
 
 
 ###############################################################################
@@ -3861,17 +3858,17 @@ async def auto_delete_messages(bot):
                 continue
             # Delete message
             delete_result = await delete_msg(
-                    bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
+                bot, sent_msg["Chat_id"], sent_msg["Msg_id"])
             # The bot has no privileges to delete messages
             if delete_result["error"] == "Message can't be deleted":
                 lang = get_chat_config(sent_msg["Chat_id"], "Language")
                 sent_result = await tlg_send_msg(
-                        bot, sent_msg["Chat_id"], TEXT[lang]["CANT_DEL_MSG"],
-                        reply_to_message_id=sent_msg["Msg_id"])
+                    bot, sent_msg["Chat_id"], TEXT[lang]["CANT_DEL_MSG"],
+                    reply_to_message_id=sent_msg["Msg_id"])
                 if sent_result["msg"] is not None:
                     tlg_autodelete_msg(sent_result["msg"])
             list_remove_element(
-                    Global.to_delete_in_time_messages_list, sent_msg)
+                Global.to_delete_in_time_messages_list, sent_msg)
             await asyncio_sleep(0.01)
     logger.info("Auto-delete messages coroutine finished")
 
@@ -3913,7 +3910,7 @@ async def captcha_timeout(bot):
                     continue
                 try:
                     user_join_data = \
-                            Global.new_users[chat_id][user_id]["join_data"]
+                        Global.new_users[chat_id][user_id]["join_data"]
                     user_join_time = user_join_data["join_time"]
                     captcha_timeout = user_join_data["captcha_timeout"]
                     if user_join_data["kicked_ban"]:
@@ -3925,8 +3922,8 @@ async def captcha_timeout(bot):
                         if time() - user_join_time < captcha_timeout + 1800:
                             continue
                         logger.info(
-                                "Removing kicked user %s after 30 mins",
-                                user_id)
+                            "Removing kicked user %s after 30 mins",
+                            user_id)
                         del Global.new_users[chat_id][user_id]
                     else:
                         # If time for kick/ban has not arrived yet
@@ -3934,8 +3931,8 @@ async def captcha_timeout(bot):
                             continue
                         user_name = user_join_data["user_name"]
                         logger.info(
-                                "[%s] Captcha reply timeout for user %s.",
-                                chat_id, user_name)
+                            "[%s] Captcha reply timeout for user %s.",
+                            chat_id, user_name)
                         await captcha_fail_member(bot, chat_id, user_id)
                         await asyncio_sleep(0.01)
                 except Exception:
@@ -4044,51 +4041,53 @@ def tlg_app_setup(token: str) -> Application:
         tlg_add_cmd(app, CMD["ALLOWUSERLIST"]["KEY"], cmd_allowuserlist)
     if (CONST["BOT_OWNER"] != "XXXXXXXXX") and CONST["BOT_PRIVATE"]:
         tlg_add_cmd(app, CMD["ALLOWGROUP"]["KEY"], cmd_allowgroup)
-    # Set to application handler for reception of text messages
+    # Set handler for text messages
     app.add_handler(MessageHandler(filters.TEXT, text_msg_rx, block=False))
-    # Set to application not text messages handler
+    # Set handler for media messages
     # pylint: disable=E1131
     app.add_handler(
-            MessageHandler(
-                    filters.Document.ALL | filters.PHOTO | filters.VIDEO |
-                    filters.AUDIO | filters.VOICE | filters.Sticker.ALL |
-                    filters.LOCATION | filters.CONTACT,
-                    media_msg_rx
-            )
+        MessageHandler(
+            filters.Document.ALL | filters.PHOTO | filters.VIDEO |
+            filters.AUDIO | filters.VOICE | filters.Sticker.ALL |
+            filters.LOCATION | filters.CONTACT,
+            media_msg_rx
+        )
     )
-    # Set to application a new member join the group and member left the
-    # group events handlers
+    # Set handler for reactions
+    app.add_handler(MessageReactionHandler(reaction_rx))
+    # Set handler for Bot status change
     app.add_handler(
-            ChatMemberHandler(
-                    chat_bot_status_change,
-                    ChatMemberHandler.MY_CHAT_MEMBER
-            )
+        ChatMemberHandler(
+            chat_bot_status_change,
+            ChatMemberHandler.MY_CHAT_MEMBER
+        )
     )
+    # Set handler for member status change (member join/left the group)
     app.add_handler(
-            ChatMemberHandler(
-                    chat_member_status_change,
-                    ChatMemberHandler.CHAT_MEMBER
-            )
+        ChatMemberHandler(
+            chat_member_status_change,
+            ChatMemberHandler.CHAT_MEMBER
+        )
     )
-    # Set to application "USER joined the group" messages event handlers
+    # Set handler for "USER joined the group" messages
     app.add_handler(
-            MessageHandler(
-                    filters.StatusUpdate.NEW_CHAT_MEMBERS,
-                    user_joined_group_msg_rx
-            )
+        MessageHandler(
+            filters.StatusUpdate.NEW_CHAT_MEMBERS,
+            user_joined_group_msg_rx
+        )
     )
-    # Set to application "USER left the group" or "BOT removed USER"
-    # messages event handlers
+    # Set handler for "USER left the group" or "BOT removed USER"
+    # messages
     app.add_handler(
-            MessageHandler(
-                    filters.StatusUpdate.LEFT_CHAT_MEMBER,
-                    user_left_group
-            )
+        MessageHandler(
+            filters.StatusUpdate.LEFT_CHAT_MEMBER,
+            user_left_group
+        )
     )
-    # Set to application inline keyboard callback handler for new captcha
-    # request and button captcha challenge
+    # Set handler for inline keyboard events ("other captcha" request
+    # and button captcha challenge)
     app.add_handler(CallbackQueryHandler(button_press_rx))
-    # Set to application users poll vote handler
+    # Set handler for users poll vote
     app.add_handler(PollAnswerHandler(poll_answer_rx, block=False))
     logger.info("Bot setup completed.")
     return app

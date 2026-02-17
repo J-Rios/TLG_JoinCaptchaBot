@@ -93,8 +93,7 @@ def tlg_add_cmd(app, key, callback):
 
 async def tlg_get_chat(
         bot: Bot,
-        chat_id_or_alias: Union[str, int]
-        ):
+        chat_id_or_alias: Union[str, int]):
     '''Telegram get chat data.'''
     chat_result: dict = {}
     chat_result["chat_data"] = None
@@ -116,8 +115,7 @@ async def tlg_get_chat(
 async def tlg_get_chat_member(
         bot: Bot,
         chat_id: Union[str, int],
-        user_id: Union[str, int]
-        ):
+        user_id: Union[str, int]):
     '''Telegram Get Chat member info.'''
     result: dict = {}
     result["member"] = None
@@ -133,15 +131,14 @@ async def tlg_get_chat_member(
 
 async def tlg_get_chat_members_count(
         bot: Bot,
-        chat_id: Union[str, int]
-        ):
+        chat_id: Union[str, int]):
     '''telegram Get number of members in a Chat.'''
     result: dict = {}
     result["num_members"] = None
     result["error"] = ""
     try:
         result["num_members"] = await bot.get_chat_member_count(
-                chat_id=chat_id)
+            chat_id=chat_id)
     except Exception as error:
         result["error"] = str(error)
         logger.error("[%s] %s", str(chat_id), str(error))
@@ -164,8 +161,7 @@ async def tlg_send_msg(
         disable_notification: DVInput[bool] = DEFAULT_NONE,
         reply_to_message_id: Optional[int] = None,
         reply_markup: Optional[ReplyMarkup] = None,
-        topic_id: Optional[int] = None
-        ):
+        topic_id: Optional[int] = None):
     '''Bot try to send a text message.'''
     sent_result: dict = {}
     sent_result["msg"] = None
@@ -176,12 +172,12 @@ async def tlg_send_msg(
         parse_mode = ParseMode.MARKDOWN_V2
     try:
         msg = await bot.send_message(
-                chat_id=chat_id, text=text, parse_mode=parse_mode,
-                reply_markup=reply_markup,
-                disable_web_page_preview=disable_web_page_preview,
-                disable_notification=disable_notification,
-                reply_to_message_id=reply_to_message_id,
-                message_thread_id=topic_id)
+            chat_id=chat_id, text=text, parse_mode=parse_mode,
+            reply_markup=reply_markup,
+            disable_web_page_preview=disable_web_page_preview,
+            disable_notification=disable_notification,
+            reply_to_message_id=reply_to_message_id,
+            message_thread_id=topic_id)
         logger.debug("[%s] TLG text msg %d sent", str(chat_id), msg.message_id)
         sent_result["msg"] = msg
     except TelegramError as error:
@@ -200,22 +196,21 @@ async def tlg_send_image(
         reply_markup: Optional[ReplyMarkup] = None,
         parse_mode: ODVInput[str] = DEFAULT_NONE,
         topic_id: Optional[int] = None,
-        **kwargs
-        ):
+        **kwargs):
     '''Bot try to send an image message.'''
     sent_result: dict = {}
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
         msg = await bot.send_photo(
-                chat_id=chat_id, photo=photo, caption=caption,
-                disable_notification=disable_notification,
-                reply_to_message_id=reply_to_message_id,
-                reply_markup=reply_markup, parse_mode=parse_mode,
-                message_thread_id=topic_id, **kwargs)
+            chat_id=chat_id, photo=photo, caption=caption,
+            disable_notification=disable_notification,
+            reply_to_message_id=reply_to_message_id,
+            reply_markup=reply_markup, parse_mode=parse_mode,
+            message_thread_id=topic_id, **kwargs)
         logger.debug(
-                "[%s] TLG image msg %d sent",
-                str(chat_id), msg.message_id)
+            "[%s] TLG image msg %d sent",
+            str(chat_id), msg.message_id)
         sent_result["msg"] = msg
     except TelegramError as error:
         sent_result["error"] = str(error)
@@ -241,24 +236,23 @@ async def tlg_send_poll(
         explanation_parse_mode: ODVInput[str] = DEFAULT_NONE,
         close_date: Optional[Union[int, datetime]] = None,
         topic_id: Optional[int] = None,
-        **kwargs
-        ):
+        **kwargs):
     '''Bot try to send a Poll message'''
     sent_result: dict = {}
     sent_result["msg"] = None
     sent_result["error"] = ""
     try:
         msg = await bot.send_poll(
-                chat_id=chat_id, question=question, options=options,
-                is_anonymous=is_anonymous, type=poll_type,
-                allows_multiple_answers=allows_multiple_answers,
-                correct_option_id=correct_option_id, is_closed=is_closed,
-                disable_notification=disable_notification,
-                reply_to_message_id=reply_to_message_id,
-                reply_markup=reply_markup, message_thread_id=topic_id,
-                explanation=explanation,
-                explanation_parse_mode=explanation_parse_mode,
-                open_period=open_period, close_date=close_date, **kwargs)
+            chat_id=chat_id, question=question, options=options,
+            is_anonymous=is_anonymous, type=poll_type,
+            allows_multiple_answers=allows_multiple_answers,
+            correct_option_id=correct_option_id, is_closed=is_closed,
+            disable_notification=disable_notification,
+            reply_to_message_id=reply_to_message_id,
+            reply_markup=reply_markup, message_thread_id=topic_id,
+            explanation=explanation,
+            explanation_parse_mode=explanation_parse_mode,
+            open_period=open_period, close_date=close_date, **kwargs)
         logger.debug("[%s] TLG poll msg %d sent", str(chat_id), msg.message_id)
         sent_result["msg"] = msg
     except TelegramError as error:
@@ -272,16 +266,15 @@ async def tlg_stop_poll(
         chat_id: Union[int, str],
         message_id: int,
         reply_markup: Optional[InlineKeyboardMarkup] = None,
-        **kwargs
-        ):
+        **kwargs):
     '''Bot try to stop a Poll.'''
     result: dict = {}
     result["msg"] = None
     result["error"] = ""
     try:
         result["msg"] = await bot.stop_poll(
-                chat_id=chat_id, message_id=message_id,
-                reply_markup=reply_markup, **kwargs)
+            chat_id=chat_id, message_id=message_id,
+            reply_markup=reply_markup, **kwargs)
         logger.debug("[%s] TLG poll %d stop", str(chat_id), message_id)
     except Exception as error:
         result["error"] = str(error)
@@ -292,8 +285,7 @@ async def tlg_stop_poll(
 async def tlg_delete_msg(
         bot: Bot,
         chat_id: Union[int, str],
-        msg_id: int
-        ):
+        msg_id: int):
     '''Try to remove a telegram message'''
     delete_result: dict = {}
     delete_result["error"] = ""
@@ -314,16 +306,15 @@ async def tlg_edit_msg_media(
         msg_id: int,
         inline_msg_id: Optional[int] = None,
         media: Optional[InputMedia] = None,
-        reply_markup: Optional[InlineKeyboardMarkup] = None
-        ):
+        reply_markup: Optional[InlineKeyboardMarkup] = None):
     '''Try to edit a telegram multimedia message'''
     edit_result: dict = {}
     edit_result["error"] = ""
     try:
         await bot.edit_message_media(
-                chat_id=chat_id, message_id=msg_id,
-                inline_message_id=inline_msg_id, media=media,
-                reply_markup=reply_markup)
+            chat_id=chat_id, message_id=msg_id,
+            inline_message_id=inline_msg_id, media=media,
+            reply_markup=reply_markup)
     except Exception as error:
         edit_result["error"] = str(error)
         logger.error("[%s] %s", str(chat_id), str(error))
@@ -336,16 +327,15 @@ async def tlg_answer_callback_query(
         text: Union[str, None] = None,
         show_alert: bool = False,
         url: Union[str, None] = None,
-        cache_time: Union[int, None] = None
-        ) -> dict:
+        cache_time: Union[int, None] = None) -> dict:
     '''Try to send a telegram callback query answer'''
     query_ans_result: dict = {}
     query_ans_result["error"] = ""
     try:
         await bot.answer_callback_query(
-                callback_query_id=query.id, text=text, show_alert=show_alert,
-                url=url,
-                cache_time=cache_time)
+            callback_query_id=query.id, text=text, show_alert=show_alert,
+            url=url,
+            cache_time=cache_time)
     except Exception as error:
         query_ans_result["error"] = str(error)
         logger.error("[%s] %s", str(query.message.chat_id), str(error))
@@ -356,8 +346,7 @@ async def tlg_ban_user(
         bot: Bot,
         chat_id: Union[str, int],
         user_id: Union[str, int],
-        until_date: Union[int, datetime, None] = None
-        ):
+        until_date: Union[int, datetime, None] = None):
     '''Telegram Ban a user of an specified chat'''
     ban_result: dict = {}
     ban_result["error"] = ""
@@ -379,7 +368,7 @@ async def tlg_ban_user(
             await bot.ban_chat_member(chat_id=chat_id, user_id=user_id)
         else:
             await bot.ban_chat_member(
-                    chat_id=chat_id, user_id=user_id, until_date=until_date)
+                chat_id=chat_id, user_id=user_id, until_date=until_date)
     except Exception as error:
         ban_result["error"] = str(error)
         logger.error("[%s] %s", str(chat_id), str(error))
@@ -389,8 +378,7 @@ async def tlg_ban_user(
 async def tlg_kick_user(
         bot: Bot,
         chat_id: Union[str, int],
-        user_id: Union[str, int]
-        ):
+        user_id: Union[str, int]):
     '''Telegram Kick a user of an specified chat'''
     kick_result: dict = {}
     kick_result["error"] = ""
@@ -410,7 +398,7 @@ async def tlg_kick_user(
     # it kick)
     try:
         await bot.unban_chat_member(
-                chat_id=chat_id, user_id=user_id, only_if_banned=False)
+            chat_id=chat_id, user_id=user_id, only_if_banned=False)
     except Exception as error:
         kick_result["error"] = str(error)
         logger.error("[%s] %s", str(chat_id), str(error))
@@ -419,8 +407,7 @@ async def tlg_kick_user(
 
 async def tlg_leave_chat(
         bot: Bot,
-        chat_id: Union[str, int]
-        ):
+        chat_id: Union[str, int]):
     '''Telegram Bot try to leave a chat.'''
     left = False
     try:
@@ -444,22 +431,21 @@ async def tlg_restrict_user(
         invite_members: bool,
         pin_messages: bool,
         manage_topics: bool,
-        until_date: Union[int, datetime, None] = None
-        ):
+        until_date: Union[int, datetime, None] = None):
     '''Telegram Bot try to restrict user permissions in a group.'''
     result = False
     try:
         permissions = ChatPermissions(
-                send_msg, send_media, send_polls, send_stickers_gifs,
-                insert_links, change_group_info, invite_members, pin_messages,
-                manage_topics)
+            send_msg, send_media, send_polls, send_stickers_gifs,
+            insert_links, change_group_info, invite_members, pin_messages,
+            manage_topics)
         if until_date is None:
             result = await bot.restrict_chat_member(
-                    chat_id=chat_id, user_id=user_id, permissions=permissions)
+                chat_id=chat_id, user_id=user_id, permissions=permissions)
         else:
             result = await bot.restrict_chat_member(
-                    chat_id=chat_id, user_id=user_id, permissions=permissions,
-                    until_date=until_date)
+                chat_id=chat_id, user_id=user_id, permissions=permissions,
+                until_date=until_date)
     except Exception as error:
         logger.error("[%s] %s", str(chat_id), str(error))
         result = False
@@ -469,15 +455,14 @@ async def tlg_restrict_user(
 async def tlg_unrestrict_user(
         bot: Bot,
         chat_id: Union[str, int],
-        user_id: Union[str, int]
-        ):
+        user_id: Union[str, int]):
     '''Telegram Bot try to remove all user restrictions in a group.'''
     result = False
     try:
         permissions = ChatPermissions(
-                True, True, True, True, True, True, True, True)
+            True, True, True, True, True, True, True, True)
         result = await bot.restrict_chat_member(
-                chat_id=chat_id, user_id=user_id, permissions=permissions)
+            chat_id=chat_id, user_id=user_id, permissions=permissions)
     except Exception as error:
         logger.error("[%s] %s", str(chat_id), str(error))
         result = False
@@ -487,8 +472,7 @@ async def tlg_unrestrict_user(
 async def tlg_user_is_admin(
         bot: Bot,
         chat_id: Union[str, int],
-        user_id: Union[str, int]
-        ):
+        user_id: Union[str, int]):
     '''Check if the specified user is an Administrator of a group given
     by IDs'''
     # Check if it is an Admin with anonymous config enabled
@@ -516,8 +500,7 @@ def tlg_is_a_channel_msg_on_discussion_group(msg: Message):
 
 async def tlg_get_chat_type(
         bot: Bot,
-        chat_id_or_alias: Union[str, int]
-        ):
+        chat_id_or_alias: Union[str, int]):
     '''
     Telegram check if a chat exists and what type it is (user, group,
     channel).
@@ -584,7 +567,7 @@ def tlg_extract_members_status_change(chat_member_update: ChatMemberUpdated):
     status didn't change.'''
     status_change = chat_member_update.difference().get("status")
     old_is_member, new_is_member = chat_member_update.difference().get(
-            "is_member", (None, None))
+        "is_member", (None, None))
     if status_change is None:
         if (old_is_member is None) or (new_is_member is None):
             return None

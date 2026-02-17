@@ -100,8 +100,8 @@ def get_config(chat_id):
     fjson_config = TSjson(path_cfg_file)
     config_data = fjson_config.read()
     if not config_data:
-        #config_data = get_default_config_data()
-        #fjson_config.write(config_data)
+        # config_data = get_default_config_data()
+        # fjson_config.write(config_data)
         return None
     return fjson_config
 
