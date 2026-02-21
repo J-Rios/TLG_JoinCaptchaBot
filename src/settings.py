@@ -12,9 +12,9 @@ Author:
 Creation date:
     07/11/2020
 Last modified date:
-    29/12/2022
+    21/02/2026
 Version:
-    1.0.0
+    2.0.0
 '''
 
 ###############################################################################
@@ -118,9 +118,9 @@ SETTINGS = {
     # Initial captcha difficult level
     "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 3,
 
-    # Initial captcha characters mode (ascii, hex, nums, math, poll, or
-    # button)
-    "CAPTCHABOT_INIT_CAPTCHA_MODE": "nums",
+    # Initial captcha characters mode (video, nums, ascii, math, poll,
+    # or button)
+    "CAPTCHABOT_INIT_CAPTCHA_MODE": "video",
 
     # Initial remove result messages group configuration
     "CAPTCHABOT_INIT_RM_RESULT_MSG": True,

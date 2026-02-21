@@ -359,7 +359,7 @@ CONST = {
 
 # Captcha Modes
 CAPTCHA_MODES = {
-    "button", "nums", "hex", "ascii", "math", "poll", "random"
+    "button", "nums", "hex", "ascii", "math", "poll", "video", "random"
 }
 
 # Keywords to call Admins
