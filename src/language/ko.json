@@ -8,6 +8,9 @@
     "COMMANDS":
         "명령어 목록:\n————————————————\n/start - 봇에 관한 초기 정보를 보여줍니다.\n\n/help - 도움말 정보를 보여줍니다.\n\n/commands - 이 메시지를 보여줍니다. 이용할 수 있는 모든 명령어 정보를 보여줍니다.\n\n/language - 봇 메시지에서 제공되는 언어를 바꿀 수 있습니다.\n\n/bilanguage - Captcha message text in two languages (english + configured language).\n\n/time - 캡차 입력 제한 시간을 바꿀 수 있습니다.\n\n/difficulty - 캡차 난이도(1부터 5까지)를 바꿀 수 있습니다.\n\n/restriction - Set the type of punishment to apply to users that fails the captcha (kick, mute, etc.).\n\n/captcha_mode - 캡차 모드를 바꿀 수 있습니다. (nums: 숫자, hex: 숫자와 A~F까지 문자, ascii: 숫자와 A~Z까지 문자, math: 수학 등식, poll: 객관식 문제 풀기, button: 버튼).\n\n/captcha_poll - 객관식 모드에서 질물과 캡차 관련 설정을 할 수 있습니다.\n\n/welcome_msg - 캡차를 푼 사용자에게 보여줄 환영 메시지를 설정할 수 있습니다.\n\n/welcome_msg_time - 환영 메시지가 자동으로 제거되는 시간을 구성할 수 있습니다.\n\n/restrict_non_text - 새 사용자가 캡차를 둔 뒤 하루 동안(또는 \"forever\" 키워드로 영원히) 텍스트가 아닌 메시지(이미지, 비디오, 오디오 등)를 보낼 수 없도록 제한할 수 있습니다.\n\n/add_ignore - 캡차 예외 사용자를 추가합니다.\n\n/remove_ignore - 사용자 예외를 중단합니다.\n\n/ignore_list - 예외 목록에 등록된 사용자 ID 확인.\n\n/remove_solve_kick_msg - 캡차 완료, 추방, 제한 메시지를 자동으로 삭제할 수 있도록 구성합니다.\n\n/remove_welcome_msg - 일정 시간이 지난 뒤 환영 메시지를 자동으로 삭제할 수 있도록 구성합니다.\n\n/url_disable - 그룹 구성원이 웹사이트 링크(URL)가 포함된 메시지를 보내지 못하도록 합니다.\n\n/url_enable - 그룹 구성원이 웹사이트 링크(URL)가 포함된 메시지를 보낼 수 있도록 허용합니다.\n\n/remove_all_msg_kick_off - 캡차를 풀지 않은 사용자가 보낸 문자 메시지를 지우지 않도록 구성합니다.\n\n/remove_all_msg_kick_on - 캡차를 풀지 않은 사용자가 보낸 문자 메시지를 지우도록 구성합니다.\n\n/allowgroup - 그룹에서 봇을 쓸 수 있도록 허용합니다.(봇이 비공개인 경우)\n\n/enable - 캡차 기능 활성화.\n\n/disable - 캡차 기능 비활성화\n\n/checkcfg - 그룹의 현재 캡차 구성을 보여줍니다.\n\n/chatid - 현재 채팅의 Chat ID 보기.\n\n/connect - 그룹에 연결하여 비공개 봇 채팅에서 그룹을 구성할 수 있습니다.\n\n/disconnect - 비공개 봇 채팅에서 구성한 연결된 그룹을 끊습니다.\n\n/version - 봇 버전 보기.\n\n/about - 봇 정보 보기.",
 
+    "CAPTCHA_VIDEO":
+        "안녕하세요 {}, 이 영상에 표시되는 숫자 순서를 포함한 메시지를 작성하여 사람이 맞는지 확인해 주세요. 이 인증을 완료하지 않으면 {} 내에 그룹에서 제거됩니다.",
+
     "CMD_NOT_ALLOW":
         "이 명령어는 관리자만 쓸 수 있습니다.",
 
