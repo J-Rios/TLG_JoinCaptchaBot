@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/02/2026
+    21/02/2026
 Version:
-    1.32.2
+    2.0.0
 '''
 
 ###############################################################################
@@ -126,7 +126,7 @@ from commons import (
 
 # Constants Library
 from constants import (
-    SCRIPT_PATH, CONST, TEXT, CMD, ADMIN_CALL_KEYWORDS
+    SCRIPT_PATH, CONST, TEXT, CMD, CAPTCHA_MODES, ADMIN_CALL_KEYWORDS
 )
 
 # Thread-Safe JSON Library
@@ -187,7 +187,7 @@ def get_default_config_data():
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
-        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
+        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
         ("Fail_Restriction", CMD["RESTRICTION"]["KICK"]),
@@ -1020,6 +1020,227 @@ async def call_admins(bot, chat_id, topic_id):
     await tlg_send_msg(bot, chat_id, bot_msg, "MARKDOWN", topic_id=topic_id)
 
 
+def add_join_user_data(chat_id, join_user_id, join_user_name, captcha_mode,
+                       captcha_code, captcha_timeout, join_msg_id,
+                       list_msg_to_rm):
+    '''
+    Add new join member captcha process data to global list of new
+    users that needs to solve the captcha challenge.
+    '''
+    # Default user join data
+    join_data = {
+        "user_name": join_user_name,
+        "captcha_code": captcha_code,
+        "captcha_mode": captcha_mode,
+        "join_time": time(),
+        "captcha_timeout": captcha_timeout,
+        "join_retries": 1,
+        "kicked_ban": False
+    }
+    # Create dict keys for new user
+    if chat_id not in Global.new_users:
+        Global.new_users[chat_id] = {}
+    if join_user_id not in Global.new_users[chat_id]:
+        Global.new_users[chat_id][join_user_id] = {}
+    if "join_data" not in Global.new_users[chat_id][join_user_id]:
+        Global.new_users[chat_id][join_user_id]["join_data"] = {}
+    if "join_msg" not in Global.new_users[chat_id][join_user_id]:
+        Global.new_users[chat_id][join_user_id]["join_msg"] = None
+    if "msg_to_rm" not in Global.new_users[chat_id][join_user_id]:
+        Global.new_users[chat_id][join_user_id]["msg_to_rm"] = []
+    # Check if this user was before in the chat without solve the
+    # captcha and restore previous join_retries
+    if len(Global.new_users[chat_id][join_user_id]["join_data"]) != 0:
+        user_join_data = \
+            Global.new_users[chat_id][join_user_id]["join_data"]
+        join_data["join_retries"] = user_join_data["join_retries"]
+    # Add new user join data and messages to be removed
+    Global.new_users[chat_id][join_user_id]["join_data"] = join_data
+    Global.new_users[chat_id][join_user_id]["join_msg"] = join_msg_id
+    for msg_id in list_msg_to_rm:
+        Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(msg_id)
+
+
+async def send_captcha_button(update, context, captcha_mode, captcha_timeout,
+                              chat_id, chat_title, lang, bilang, join_user_id,
+                              join_user_name, timeout_str):
+    '''Send button captcha challenge.'''
+    send_success = False
+    list_msg_to_rm = list()
+    bot = context.bot
+    challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(
+        join_user_name, chat_title, timeout_str)
+    if bilang:
+        en_text = TEXT["EN"]["NEW_USER_BUTTON_MODE"].format(
+            join_user_name, chat_title, timeout_str)
+        challenge_text = f"{challenge_text}\n\n{en_text}"
+    keyboard = [[
+        InlineKeyboardButton(
+                TEXT[lang]["PASS_BTN_TEXT"],
+                callback_data=f"button_captcha {join_user_id}")
+    ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    logger.info("[%s] Sending captcha message to %s: [button]",
+                chat_id, join_user_name)
+    sent_result = await tlg_send_msg(
+        bot, chat_id, challenge_text, reply_markup=reply_markup)
+    if sent_result["msg"]:
+        send_success = True
+        join_msg_id = None
+        if update.message:
+            join_msg_id = update.message.message_id
+        list_msg_to_rm.append(sent_result["msg"].message_id)
+        captcha_code = ""
+        add_join_user_data(chat_id, join_user_id, join_user_name, captcha_mode,
+                           captcha_code, captcha_timeout, join_msg_id,
+                           list_msg_to_rm)
+        # Restrict user to send any kind of message until captcha completion
+        await restrict_user_mute(bot, chat_id, join_user_id)
+    return send_success
+
+
+async def send_captcha_poll(update, context, captcha_mode, captcha_timeout,
+                            chat_id, chat_title, lang, bilang, join_user_id,
+                            join_user_name, timeout_str):
+    '''Send custom poll captcha challenge.'''
+    send_success = False
+    list_msg_to_rm = list()
+    bot = context.bot
+    poll_question = get_chat_config(chat_id, "Poll_Q")
+    poll_options = get_chat_config(chat_id, "Poll_A")
+    poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
+    if ((poll_question == "") or
+            (num_config_poll_options(poll_options) < 2) or
+            (poll_correct_option == 0)):
+        await tlg_send_autodelete_msg(
+            bot, chat_id, TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"],
+            CONST["T_FAST_DEL_MSG"])
+        return
+    # Remove empty strings from options list
+    poll_options = list(filter(None, poll_options))
+    # Send request to solve the poll text message
+    poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
+        join_user_name, chat_title, timeout_str)
+    if bilang:
+        en_text = TEXT["EN"]["POLL_NEW_USER"].format(
+            join_user_name, chat_title, timeout_str)
+        poll_request_msg_text = f"{poll_request_msg_text}\n\n{en_text}"
+    sent_msg_id = await tlg_send_autodelete_msg(
+        bot, chat_id, poll_request_msg_text, captcha_timeout)
+    if sent_msg_id:
+        list_msg_to_rm.append(sent_msg_id)
+    # Send the Poll
+    send_result = await tlg_send_poll(
+        bot, chat_id, poll_question, poll_options,
+        poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
+        read_timeout=20)
+    if send_result["msg"]:
+        send_success = True
+        list_msg_to_rm.append(send_result["msg"].message_id)
+        # Save some info about the poll the bot_data for
+        # later use in receive_quiz_answer
+        poll_id = send_result["msg"].poll.id
+        poll_msg_id = send_result["msg"].message_id
+        poll_data = {
+            poll_id:
+            {
+                "chat_id": chat_id,
+                "poll_msg_id": poll_msg_id,
+                "user_id": join_user_id,
+                "correct_option": poll_correct_option
+            }
+        }
+        context.bot_data.update(poll_data)
+    if send_success:
+        join_msg_id = None
+        if update.message:
+            join_msg_id = update.message.message_id
+        captcha_code = str(poll_correct_option)
+        add_join_user_data(chat_id, join_user_id, join_user_name,
+                           captcha_mode, captcha_code, captcha_timeout,
+                           join_msg_id, list_msg_to_rm)
+        # Restrict user to send any message until captcha completion
+        await restrict_user_mute(bot, chat_id, join_user_id)
+    return send_success
+
+
+async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
+                             chat_id, chat_title, lang, bilang, join_user_id,
+                             join_user_name, timeout_str):
+    '''Send image captcha challenge.'''
+    send_success = False
+    list_msg_to_rm = list()
+    bot = context.bot
+    captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
+    captcha = create_image_captcha(
+        chat_id, join_user_id, captcha_level, captcha_mode)
+    if captcha_mode == "math":
+        captcha_code = captcha["equation_result"]
+        logger.info(
+            "[%s] Sending captcha message to %s: %s=%s...",
+            chat_id, join_user_name, captcha["equation_str"],
+            captcha["equation_result"])
+        # Note: Img caption must be <= 1024 chars
+        img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
+            join_user_name, chat_title, timeout_str)
+        if bilang:
+            en_text = TEXT["EN"]["NEW_USER_MATH_CAPTION"].format(
+                join_user_name, chat_title, timeout_str)
+            img_caption = f"{img_caption}\n\n{en_text}"
+        img_caption = img_caption[:1024]
+    else:
+        captcha_code = captcha["characters"]
+        logger.info(
+            "[%s] Sending captcha message to %s: %s...",
+            chat_id, join_user_name, captcha_code)
+        # Note: Img caption must be <= 1024 chars
+        img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
+            join_user_name, chat_title, timeout_str)
+        if bilang:
+            en_text = TEXT["EN"]["NEW_USER_IMG_CAPTION"].format(
+                join_user_name, chat_title, timeout_str)
+            img_caption = f"{img_caption}\n\n{en_text}"
+        img_caption = img_caption[:1024]
+    # Prepare inline keyboard button to let user request another
+    # captcha
+    keyboard = [[
+        InlineKeyboardButton(
+                TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
+                callback_data=f"image_captcha {join_user_id}")
+    ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    # Send the image
+    sent_result = {}
+    sent_result["msg"] = None
+    try:
+        with open(captcha["image"], "rb") as file_image:
+            sent_result = await tlg_send_image(
+                bot, chat_id, file_image, img_caption,
+                reply_markup=reply_markup, read_timeout=20)
+    except Exception:
+        logger.error(format_exc())
+        logger.error("Fail to send image to Telegram")
+        send_success = False
+    if sent_result["msg"]:
+        send_success = True
+        list_msg_to_rm.append(sent_result["msg"].message_id)
+    if send_success:
+        join_msg_id = None
+        if update.message:
+            join_msg_id = update.message.message_id
+        add_join_user_data(chat_id, join_user_id, join_user_name,
+                           captcha_mode, captcha_code, captcha_timeout,
+                           join_msg_id, list_msg_to_rm)
+        # Restrict user to send any non-text message
+        await restrict_user_media(bot, chat_id, join_user_id)
+    # Remove sent captcha image file from file system
+    if path.exists(captcha["image"]):
+        remove(captcha["image"])
+    return send_success
+
+
 ###############################################################################
 # Received Telegram not-command messages handlers
 ###############################################################################
@@ -1158,15 +1379,15 @@ async def chat_member_status_change(
         return
     # Determine configured language and captcha settings
     lang = get_chat_config(chat_id, "Language")
-    captcha_level = get_chat_config(chat_id, "Captcha_Difficulty_Level")
+    bilang = None
+    if lang != "EN":
+        bilang = get_chat_config(chat_id, "BiLang")
     captcha_mode = get_chat_config(chat_id, "Captcha_Chars_Mode")
     captcha_timeout = get_chat_config(chat_id, "Captcha_Time")
     if captcha_timeout < CONST["T_SECONDS_IN_MIN"]:
         timeout_str = f"{captcha_timeout} sec"
     else:
         timeout_str = f'{int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])} min'
-    send_problem = False
-    captcha_num = ""
     if captcha_mode == "random":
         captcha_mode = random_choice(["nums", "math", "poll"])
         # If Captcha Mode Poll is not configured use another mode
@@ -1174,194 +1395,31 @@ async def chat_member_status_change(
             poll_question = get_chat_config(chat_id, "Poll_Q")
             poll_options = get_chat_config(chat_id, "Poll_A")
             poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
-            if ((poll_question == "") or
-                    (num_config_poll_options(poll_options) < 2) or
-                    (poll_correct_option == 0)):
+            if ((poll_question == "") or (poll_correct_option == 0) or
+                    (num_config_poll_options(poll_options) < 2)):
                 captcha_mode = random_choice(["nums", "math"])
+    # Send Captcha Challenge
+    send_success = False
     if captcha_mode == "button":
-        # Send a button-only challenge
-        challenge_text = TEXT[lang]["NEW_USER_BUTTON_MODE"].format(
-            join_user_name, chat_title, timeout_str)
-        if lang != "EN":
-            bilang = get_chat_config(chat_id, "BiLang")
-            if bilang:
-                en_text = TEXT["EN"]["NEW_USER_BUTTON_MODE"].format(
-                    join_user_name, chat_title, timeout_str)
-                challenge_text = f"{challenge_text}\n\n{en_text}"
-        # Prepare inline keyboard button to let user pass
-        keyboard = [[
-            InlineKeyboardButton(
-                    TEXT[lang]["PASS_BTN_TEXT"],
-                    callback_data=f"button_captcha {join_user_id}")
-        ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        logger.info(
-            "[%s] Sending captcha message to %s: [button]",
-            chat_id, join_user_name)
-        sent_result = await tlg_send_msg(
-            bot, chat_id, challenge_text, reply_markup=reply_markup)
-        if sent_result["msg"] is None:
-            send_problem = True
+        send_success = await send_captcha_button(
+            update, context, captcha_mode, captcha_timeout, chat_id,
+            chat_title, lang, bilang, join_user_id,
+            join_user_name, timeout_str)
     elif captcha_mode == "poll":
-        poll_question = get_chat_config(chat_id, "Poll_Q")
-        poll_options = get_chat_config(chat_id, "Poll_A")
-        poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
-        if ((poll_question == "") or
-                (num_config_poll_options(poll_options) < 2) or
-                (poll_correct_option == 0)):
-            await tlg_send_autodelete_msg(
-                bot, chat_id, TEXT[lang]["POLL_NEW_USER_NOT_CONFIG"],
-                CONST["T_FAST_DEL_MSG"])
-            return
-        # Remove empty strings from options list
-        poll_options = list(filter(None, poll_options))
-        # Send request to solve the poll text message
-        poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
-            join_user_name, chat_title, timeout_str)
-        if lang != "EN":
-            bilang = get_chat_config(chat_id, "BiLang")
-            if bilang:
-                en_text = TEXT["EN"]["POLL_NEW_USER"].format(
-                    join_user_name, chat_title, timeout_str)
-                poll_request_msg_text = f"{poll_request_msg_text}\n\n{en_text}"
-        sent_result = await tlg_send_autodelete_msg(
-            bot, chat_id, poll_request_msg_text, captcha_timeout)
-        solve_poll_request_msg_id = None
-        if sent_result is not None:
-            solve_poll_request_msg_id = sent_result
-        # Send the Poll
-        sent_result = await tlg_send_poll(
-            bot, chat_id, poll_question, poll_options,
-            poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
-            read_timeout=20)
-        if sent_result["msg"] is None:
-            send_problem = True
-        else:
-            # Save some info about the poll the bot_data for
-            # later use in receive_quiz_answer
-            poll_id = sent_result["msg"].poll.id
-            poll_msg_id = sent_result["msg"].message_id
-            poll_data = {
-                poll_id:
-                {
-                    "chat_id": chat_id,
-                    "poll_msg_id": poll_msg_id,
-                    "user_id": join_user_id,
-                    "correct_option": poll_correct_option
-                }
-            }
-            context.bot_data.update(poll_data)
+        send_success = await send_captcha_poll(
+            update, context, captcha_mode, captcha_timeout, chat_id,
+            chat_title, lang, bilang, join_user_id,
+            join_user_name, timeout_str)
     else:  # Image captcha
-        # Generate a pseudorandom captcha send it to telegram group and
-        # program message
-        captcha = create_image_captcha(
-            chat_id, join_user_id, captcha_level, captcha_mode)
-        if captcha_mode == "math":
-            captcha_num = captcha["equation_result"]
-            logger.info(
-                "[%s] Sending captcha message to %s: %s=%s...",
-                chat_id, join_user_name, captcha["equation_str"],
-                captcha["equation_result"])
-            # Note: Img caption must be <= 1024 chars
-            img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
-                join_user_name, chat_title, timeout_str)
-            if lang != "EN":
-                bilang = get_chat_config(chat_id, "BiLang")
-                if bilang:
-                    en_text = TEXT["EN"]["NEW_USER_MATH_CAPTION"].format(
-                        join_user_name, chat_title, timeout_str)
-                    img_caption = f"{img_caption}\n\n{en_text}"
-            img_caption = img_caption[:1024]
-        else:
-            captcha_num = captcha["characters"]
-            logger.info(
-                "[%s] Sending captcha message to %s: %s...",
-                chat_id, join_user_name, captcha_num)
-            # Note: Img caption must be <= 1024 chars
-            img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
-                join_user_name, chat_title, timeout_str)
-            if lang != "EN":
-                bilang = get_chat_config(chat_id, "BiLang")
-                if bilang:
-                    en_text = TEXT["EN"]["NEW_USER_IMG_CAPTION"].format(
-                        join_user_name, chat_title, timeout_str)
-                    img_caption = f"{img_caption}\n\n{en_text}"
-            img_caption = img_caption[:1024]
-        # Prepare inline keyboard button to let user request another
-        # captcha
-        keyboard = [[
-            InlineKeyboardButton(
-                    TEXT[lang]["OTHER_CAPTCHA_BTN_TEXT"],
-                    callback_data=f"image_captcha {join_user_id}")
-        ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        # Send the image
-        sent_result = {}
-        sent_result["msg"] = None
-        try:
-            with open(captcha["image"], "rb") as file_image:
-                sent_result = await tlg_send_image(
-                    bot, chat_id, file_image, img_caption,
-                    reply_markup=reply_markup, read_timeout=20)
-        except Exception:
-            logger.error(format_exc())
-            logger.error("Fail to send image to Telegram")
-            send_problem = True
-        if sent_result["msg"] is None:
-            send_problem = True
-        # Remove sent captcha image file from file system
-        if path.exists(captcha["image"]):
-            remove(captcha["image"])
-    if not send_problem:
-        # Default user join data
-        join_data = {
-            "user_name": join_user_name,
-            "captcha_num": captcha_num,
-            "captcha_mode": captcha_mode,
-            "join_time": time(),
-            "captcha_timeout": captcha_timeout,
-            "join_retries": 1,
-            "kicked_ban": False
-        }
-        # Create dict keys for new user
-        if chat_id not in Global.new_users:
-            Global.new_users[chat_id] = {}
-        if join_user_id not in Global.new_users[chat_id]:
-            Global.new_users[chat_id][join_user_id] = {}
-        if "join_data" not in Global.new_users[chat_id][join_user_id]:
-            Global.new_users[chat_id][join_user_id]["join_data"] = {}
-        if "join_msg" not in Global.new_users[chat_id][join_user_id]:
-            Global.new_users[chat_id][join_user_id]["join_msg"] = None
-        if "msg_to_rm" not in Global.new_users[chat_id][join_user_id]:
-            Global.new_users[chat_id][join_user_id]["msg_to_rm"] = []
-        # Check if this user was before in the chat without solve the
-        # captcha and restore previous join_retries
-        if len(Global.new_users[chat_id][join_user_id]["join_data"]) != 0:
-            user_join_data = \
-                Global.new_users[chat_id][join_user_id]["join_data"]
-            join_data["join_retries"] = user_join_data["join_retries"]
-        # Add new user join data and messages to be removed
-        Global.new_users[chat_id][join_user_id]["join_data"] = join_data
-        if update.message:
-            Global.new_users[chat_id][join_user_id]["join_msg"] = \
-                update.message.message_id
-        if sent_result["msg"]:
-            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                sent_result["msg"].message_id)
-        if ((captcha_mode == "poll") and
-                (solve_poll_request_msg_id is not None)):
-            Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(
-                solve_poll_request_msg_id)
-        # Restrict user to deny send any kind of message until captcha
-        # is solve. Allow send text messages for image based captchas
-        # that requires it
-        if captcha_mode in ["poll", "button"]:
-            await restrict_user_mute(bot, chat_id, join_user_id)
-        else:  # Restrict user to only allow send text messages
-            await restrict_user_media(bot, chat_id, join_user_id)
-        logger.info("[%s] Captcha send process completed.", chat_id)
+        send_success = await send_captcha_image(
+            update, context, captcha_mode, captcha_timeout, chat_id,
+            chat_title, lang, bilang, join_user_id,
+            join_user_name, timeout_str)
+    if send_success:
+        logger.info("[%s] Captcha challenge send sucess.", chat_id)
+    else:
+        logger.error("[%s] Captcha challenge send fail (%s).",
+                     chat_id, captcha_mode)
 
 
 async def user_joined_group_msg_rx(
@@ -1580,8 +1638,9 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     logger.info("[%s] Received captcha reply from %s: %s",
                 chat_id, user_name, msg_text)
     # Check if the expected captcha solve number is in the message
-    solve_num = Global.new_users[chat_id][user_id]["join_data"]["captcha_num"]
-    if is_captcha_num_solve(captcha_mode, msg_text, solve_num):
+    captcha_code = \
+        Global.new_users[chat_id][user_id]["join_data"]["captcha_code"]
+    if is_captcha_num_solve(captcha_mode, msg_text, captcha_code):
         logger.info("[%s] Captcha solved by %s", chat_id, user_name)
         # Remove all restrictions on the user
         await tlg_unrestrict_user(bot, chat_id, user_id)
@@ -1903,10 +1962,9 @@ async def button_request_another_captcha_press(bot, query):
     captcha = create_image_captcha(
         chat_id, user_id, captcha_level, captcha_mode)
     if captcha_mode == "math":
-        captcha_num = captcha["equation_result"]
-        logger.info(
-            "[%s] Sending new captcha msg: %s = %s...",
-            chat_id, captcha["equation_str"], captcha_num)
+        captcha_code = captcha["equation_result"]
+        logger.info("[%s] Sending new captcha msg: %s = %s...",
+                    chat_id, captcha["equation_str"], captcha_code)
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
             user_name, chat_title, timeout_str)
         if lang != "EN":
@@ -1916,10 +1974,9 @@ async def button_request_another_captcha_press(bot, query):
                     user_name, chat_title, timeout_str)
                 img_caption = f"{img_caption}\n\n{en_text}"
     else:
-        captcha_num = captcha["characters"]
-        logger.info(
-            "[%s] Sending new captcha msg: %s...",
-            chat_id, captcha_num)
+        captcha_code = captcha["characters"]
+        logger.info("[%s] Sending new captcha msg: %s...",
+                    chat_id, captcha_code)
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
             user_name, chat_title, timeout_str)
         if lang != "EN":
@@ -1938,8 +1995,8 @@ async def button_request_another_captcha_press(bot, query):
                 reply_markup=reply_markup)
         if edit_result["error"] == "":
             # Set and modified to new expected captcha number
-            Global.new_users[chat_id][user_id]["join_data"]["captcha_num"] = \
-                captcha_num
+            Global.new_users[chat_id][user_id]["join_data"]["captcha_code"] = \
+                captcha_code
             # Remove sent captcha image file from file system
             if path.exists(captcha["image"]):
                 remove(captcha["image"])
@@ -2552,8 +2609,7 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     # Get and configure chat to provided captcha mode
     new_captcha_mode = args[0].lower()
-    if (new_captcha_mode in
-            {"poll", "button", "nums", "hex", "ascii", "math", "random"}):
+    if new_captcha_mode in CAPTCHA_MODES:
         save_config_property(group_id, "Captcha_Chars_Mode", new_captcha_mode)
         bot_msg = TEXT[lang]["CAPTCHA_MODE_CHANGE"].format(new_captcha_mode)
     else:

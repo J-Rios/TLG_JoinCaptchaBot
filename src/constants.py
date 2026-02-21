@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    17/02/2026
+    21/02/2026
 Version:
-    1.32.2
+    2.0.0
 '''
 
 ###############################################################################
@@ -142,9 +142,9 @@ CONST = {
                       SETTINGS["CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL"])),
 
     # Initial captcha characters mode (ascii, hex, nums, math or button)
-    "INIT_CAPTCHA_CHARS_MODE":
-        os_getenv("CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE",
-                  SETTINGS["CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE"]),
+    "INIT_CAPTCHA_MODE":
+        os_getenv("CAPTCHABOT_INIT_CAPTCHA_MODE",
+                  SETTINGS["CAPTCHABOT_INIT_CAPTCHA_MODE"]),
 
     # Maximum configurable captcha time
     "MAX_CONFIG_CAPTCHA_TIME":
@@ -354,7 +354,12 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "1.32.2 (2026-02-17)"
+    "VERSION": "2.0.0 (2026-02-21)"
+}
+
+# Captcha Modes
+CAPTCHA_MODES = {
+    "button", "nums", "hex", "ascii", "math", "poll", "random"
 }
 
 # Keywords to call Admins

@@ -120,7 +120,7 @@ SETTINGS = {
 
     # Initial captcha characters mode (ascii, hex, nums, math, poll, or
     # button)
-    "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
+    "CAPTCHABOT_INIT_CAPTCHA_MODE": "nums",
 
     # Initial remove result messages group configuration
     "CAPTCHABOT_INIT_RM_RESULT_MSG": True,

@@ -75,7 +75,7 @@ def get_default_config_data():
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
-        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_CHARS_MODE"]),
+        ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
         ("Captcha_Difficulty_Level", CONST["INIT_CAPTCHA_DIFFICULTY_LEVEL"]),
         ("Fail_Restriction", CMD["RESTRICTION"]["KICK"]),
