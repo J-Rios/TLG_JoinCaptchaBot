@@ -148,7 +148,8 @@ from tsjson import TSjson
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.INFO,
+    force=True
 )
 
 logger = logging.getLogger(__name__)
