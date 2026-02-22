@@ -1261,11 +1261,11 @@ async def send_captcha_video(update, context, captcha_mode, captcha_timeout,
     bot = context.bot
     # Prepare message text
     # Note: Video caption must be <= 1024 chars
-    img_caption = TEXT[lang]["CAPTCHA_VIDEO"].format(
-        join_user_name, chat_title, timeout_str)
+    img_caption = TEXT[lang]["CAPTCHA_VIDEO"].format(join_user_name,
+                                                     timeout_str)
     if bilang:
-        en_text = TEXT["EN"]["CAPTCHA_VIDEO"].format(
-            join_user_name, chat_title, timeout_str)
+        en_text = TEXT["EN"]["CAPTCHA_VIDEO"].format(join_user_name,
+                                                     timeout_str)
         img_caption = f"{img_caption}\n\n{en_text}"
     img_caption = img_caption[:1024]
     # Get and send captcha
