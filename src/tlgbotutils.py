@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    03/02/2026
+    22/02/2026
 Version:
-    1.2.0
+    1.3.0
 '''
 
 ###############################################################################
@@ -37,7 +37,7 @@ from typing import List, Optional, Union
 from telegram import (
     Bot, CallbackQuery, ChatMember, ChatMemberUpdated, ChatPermissions,
     InlineKeyboardMarkup, InputMedia, Message, PhotoSize, Poll,
-    Update, User
+    Update, User, Video
 )
 
 # Python-Telegram_Bot Extension Library
@@ -204,6 +204,38 @@ async def tlg_send_image(
     try:
         msg = await bot.send_photo(
             chat_id=chat_id, photo=photo, caption=caption,
+            disable_notification=disable_notification,
+            reply_to_message_id=reply_to_message_id,
+            reply_markup=reply_markup, parse_mode=parse_mode,
+            message_thread_id=topic_id, **kwargs)
+        logger.debug(
+            "[%s] TLG image msg %d sent",
+            str(chat_id), msg.message_id)
+        sent_result["msg"] = msg
+    except TelegramError as error:
+        sent_result["error"] = str(error)
+        logger.error("[%s] %s", str(chat_id), str(error))
+    return sent_result
+
+
+async def tlg_send_video(
+        bot: Bot,
+        chat_id: Union[int, str],
+        video: Union[FileInput, Video],
+        caption: Optional[str] = None,
+        disable_notification: DVInput[bool] = DEFAULT_NONE,
+        reply_to_message_id: Optional[int] = None,
+        reply_markup: Optional[ReplyMarkup] = None,
+        parse_mode: ODVInput[str] = DEFAULT_NONE,
+        topic_id: Optional[int] = None,
+        **kwargs):
+    '''Bot try to send an image message.'''
+    sent_result: dict = {}
+    sent_result["msg"] = None
+    sent_result["error"] = ""
+    try:
+        msg = await bot.send_video(
+            chat_id=chat_id, video=video, caption=caption,
             disable_notification=disable_notification,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup, parse_mode=parse_mode,

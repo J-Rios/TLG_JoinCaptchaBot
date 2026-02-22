@@ -12,9 +12,9 @@ Author:
 Creation date:
     07/11/2020
 Last modified date:
-    29/12/2022
+    22/02/2026
 Version:
-    1.0.0
+    2.0.0
 '''
 
 ###############################################################################
@@ -118,9 +118,9 @@ SETTINGS = {
     # Initial captcha difficult level
     "CAPTCHABOT_INIT_CAPTCHA_DIFFICULTY_LEVEL": 3,
 
-    # Initial captcha characters mode (ascii, hex, nums, math, poll, or
-    # button)
-    "CAPTCHABOT_INIT_CAPTCHA_CHARS_MODE": "nums",
+    # Initial captcha characters mode (video, nums, ascii, math, poll,
+    # or button)
+    "CAPTCHABOT_INIT_CAPTCHA_MODE": "video",
 
     # Initial remove result messages group configuration
     "CAPTCHABOT_INIT_RM_RESULT_MSG": True,
@@ -173,4 +173,13 @@ SETTINGS = {
     # Duration of ban (in seconds, negative values mean indefinite ban).
     # Useful if you want to ban someone temporarily.
     "CAPTCHABOT_BAN_DURATION": -1,
+
+    # Maximum limit of video captcha files
+    # Means: Automatically remove older captcha files to allow new
+    # captchas while maintaning this maximum limit in the file system
+    "CAPTCHABOT_MAX_NUM_VIDEO_CAPTCHAS": 100,
+
+    # Captcha Video File Generation interval (in seconds)
+    # Means: Automatically create a new video captcha each this time
+    "CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S": 60,
 }
