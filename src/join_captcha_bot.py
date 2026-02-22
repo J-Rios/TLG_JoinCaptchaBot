@@ -149,7 +149,8 @@ from tsjson import TSjson
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.INFO,
+    force=True
 )
 
 logger = logging.getLogger(__name__)
@@ -4275,6 +4276,7 @@ async def tlg_app_start(app: Application) -> None:
         logger.error("Fail to Start CaptchaAutoGenerator")
         await app.stop()
         return
+    logger.info("CaptchaAutoGenerator started")
     # Launch delete messages and kick users coroutines
     Global.async_captcha_timeout = \
         asyncio_create_task(captcha_timeout(app.bot))
