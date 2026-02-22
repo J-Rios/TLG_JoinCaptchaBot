@@ -13,7 +13,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/02/2026
+    22/02/2026
 Version:
     2.0.0
 '''
@@ -40,6 +40,9 @@ from json import dumps as json_dumps
 
 # Operating System Library
 from os import path, remove, makedirs, listdir
+
+# File System Path Library
+from pathlib import Path
 
 # Random Library
 from random import choice as random_choice
@@ -73,8 +76,14 @@ from typing import Optional
 # Third-Party Libraries
 ###############################################################################
 
+# Video Captcha Generator Library
+from manim_captcha.auto_generator import (
+    CaptchaAutoGenerator as ManimCaptchaGenerator
+)
+from manim_captcha.scenes import CaptchaScene
+
 # Image Captcha Generator Library
-from multicolorcaptcha import CaptchaGenerator
+from multicolorcaptcha import CaptchaGenerator as MultiColorCaptchaGenerator
 
 # Python-Telegram_Bot Core Library
 from telegram import (
@@ -108,9 +117,9 @@ from telegram.error import (
 # Telegram Bot Ease Library
 from tlgbotutils import (
     tlg_add_cmd, tlg_get_chat_admins, tlg_send_msg, tlg_send_image,
-    tlg_send_poll, tlg_stop_poll, tlg_answer_callback_query, tlg_delete_msg,
-    tlg_edit_msg_media, tlg_ban_user, tlg_kick_user, tlg_user_is_admin,
-    tlg_leave_chat, tlg_restrict_user, tlg_unrestrict_user,
+    tlg_send_poll, tlg_send_video, tlg_stop_poll, tlg_answer_callback_query,
+    tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user, tlg_kick_user,
+    tlg_user_is_admin, tlg_leave_chat, tlg_restrict_user, tlg_unrestrict_user,
     tlg_is_valid_user_id_or_alias, tlg_is_valid_group, tlg_alias_in_string,
     tlg_extract_members_status_change, tlg_get_msg,
     tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
@@ -167,8 +176,13 @@ class Globals():
 # Global Data Elements
 Global = Globals()
 
-# Create Captcha Generator object of specified size (2 -> 640x360)
-CaptchaGen = CaptchaGenerator(2)
+# Create Video Captcha Generator object
+CaptchaGenVideo = ManimCaptchaGenerator(Path(CONST["CAPTCHAS_DIR_VIDEO"]),
+                                        CONST["TIME_VIDEO_GEN_INTERVAL_S"],
+                                        CONST["MAX_NUM_VIDEO_CAPTCHAS"])
+
+# Create Image Captcha Generator object of specified size (2 -> 640x360)
+CaptchaGenImage = MultiColorCaptchaGenerator(2)
 
 
 ###############################################################################
@@ -434,10 +448,9 @@ def initialize_resources():
     Initialize resources by populating files list with chats found
     files.
     '''
-    # Remove old captcha directory and create it again
-    if path.exists(CONST["CAPTCHAS_DIR"]):
-        rmtree(CONST["CAPTCHAS_DIR"])
-    makedirs(CONST["CAPTCHAS_DIR"])
+    # Remove old image captcha directory and create it again
+    if path.exists(CONST["CAPTCHAS_DIR_IMG"]):
+        rmtree(CONST["CAPTCHAS_DIR_IMG"])
     # Create allowed users file if it does not exists
     if not path.exists(CONST["F_ALLOWED_USERS"]):
         file_write(CONST["F_ALLOWED_USERS"], "")
@@ -554,17 +567,14 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
     Generate an image captcha from pseudo numbers.
     '''
     # If it doesn't exists, create captchas folder to store them
-    img_dir_path = f'{CONST["CAPTCHAS_DIR"]}/{chat_id}'
+    img_dir_path = f'{CONST["CAPTCHAS_DIR_IMG"]}/{chat_id}'
     img_file_path = f'{img_dir_path}/{file_name}.png'
-    if not path.exists(CONST["CAPTCHAS_DIR"]):
-        makedirs(CONST["CAPTCHAS_DIR"])
+    if not path.exists(img_dir_path):
+        makedirs(img_dir_path)
     else:
-        if not path.exists(img_dir_path):
-            makedirs(img_dir_path)
-        else:
-            # If the captcha file exists remove it
-            if path.exists(img_file_path):
-                remove(img_file_path)
+        # If the captcha file exists remove it
+        if path.exists(img_file_path):
+            remove(img_file_path)
     # Generate and save the captcha with a random background
     # mono-color or multi-color
     captcha_result = {
@@ -574,12 +584,12 @@ def create_image_captcha(chat_id, file_name, difficult_level, captcha_mode):
         "equation_result": ""
     }
     if captcha_mode == "math":
-        captcha = CaptchaGen.gen_math_captcha_image(
+        captcha = CaptchaGenImage.gen_math_captcha_image(
             2, bool(random_randint(0, 1)))
         captcha_result["equation_str"] = captcha["equation_str"]
         captcha_result["equation_result"] = captcha["equation_result"]
     else:
-        captcha = CaptchaGen.gen_captcha_image(
+        captcha = CaptchaGenImage.gen_captcha_image(
             difficult_level, captcha_mode, bool(random_randint(0, 1)))
         captcha_result["characters"] = captcha["characters"]
     captcha["image"].save(img_file_path, "png")
@@ -1178,7 +1188,7 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
     if captcha_mode == "math":
         captcha_code = captcha["equation_result"]
         logger.info(
-            "[%s] Sending captcha message to %s: %s=%s...",
+            "[%s] Sending image math captcha message to %s: %s=%s...",
             chat_id, join_user_name, captcha["equation_str"],
             captcha["equation_result"])
         # Note: Img caption must be <= 1024 chars
@@ -1192,7 +1202,7 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
     else:
         captcha_code = captcha["characters"]
         logger.info(
-            "[%s] Sending captcha message to %s: %s...",
+            "[%s] Sending image captcha message to %s: %s...",
             chat_id, join_user_name, captcha_code)
         # Note: Img caption must be <= 1024 chars
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
@@ -1238,6 +1248,63 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
     # Remove sent captcha image file from file system
     if path.exists(captcha["image"]):
         remove(captcha["image"])
+    return send_success
+
+
+async def send_captcha_video(update, context, captcha_mode, captcha_timeout,
+                             chat_id, chat_title, lang, bilang, join_user_id,
+                             join_user_name, timeout_str):
+    '''Send video captcha challenge.'''
+    MAX_RETRIES = 5
+    send_success = False
+    list_msg_to_rm = list()
+    bot = context.bot
+    # Prepare message text
+    # Note: Video caption must be <= 1024 chars
+    img_caption = TEXT[lang]["CAPTCHA_VIDEO"].format(
+        join_user_name, chat_title, timeout_str)
+    if bilang:
+        en_text = TEXT["EN"]["CAPTCHA_VIDEO"].format(
+            join_user_name, chat_title, timeout_str)
+        img_caption = f"{img_caption}\n\n{en_text}"
+    img_caption = img_caption[:1024]
+    # Get and send captcha
+    sent_result = {}
+    sent_result["msg"] = None
+    for _ in range(MAX_RETRIES):
+        captcha = CaptchaGenVideo.get_captcha()
+        if not captcha.error:
+            captcha_code = captcha.code
+            logger.info("[%s] Sending video captcha message to %s: %s...",
+                        chat_id, join_user_name, captcha_code)
+            try:
+                with open(captcha.file, "rb") as file:
+                    sent_result = await tlg_send_video(
+                        bot, chat_id, file, img_caption, read_timeout=20)
+                break
+            except Exception:
+                logger.warning("[%s] Fail to send captcha msg, retrying...",
+                               chat_id)
+    # Handle send result
+    if sent_result["msg"]:
+        send_success = True
+        list_msg_to_rm.append(sent_result["msg"].message_id)
+        join_msg_id = None
+        if update.message:
+            join_msg_id = update.message.message_id
+        add_join_user_data(chat_id, join_user_id, join_user_name,
+                           captcha_mode, captcha_code, captcha_timeout,
+                           join_msg_id, list_msg_to_rm)
+        # Restrict user to send any non-text message
+        await restrict_user_media(bot, chat_id, join_user_id)
+    # Fallback to image captcha if captcha video send has fail
+    if not send_success:
+        logger.warning("[%s] Fail to send video captcha, fallback to img...",
+                       chat_id)
+        send_success = await send_captcha_image(
+            update, context, captcha_mode, captcha_timeout, chat_id,
+            chat_title, lang, bilang, join_user_id,
+            join_user_name, timeout_str)
     return send_success
 
 
@@ -1389,7 +1456,7 @@ async def chat_member_status_change(
     else:
         timeout_str = f'{int(captcha_timeout / CONST["T_SECONDS_IN_MIN"])} min'
     if captcha_mode == "random":
-        captcha_mode = random_choice(["nums", "math", "poll"])
+        captcha_mode = random_choice(["video", "nums", "math", "poll"])
         # If Captcha Mode Poll is not configured use another mode
         if captcha_mode == "poll":
             poll_question = get_chat_config(chat_id, "Poll_Q")
@@ -1397,10 +1464,15 @@ async def chat_member_status_change(
             poll_correct_option = get_chat_config(chat_id, "Poll_C_A")
             if ((poll_question == "") or (poll_correct_option == 0) or
                     (num_config_poll_options(poll_options) < 2)):
-                captcha_mode = random_choice(["nums", "math"])
+                captcha_mode = random_choice(["video", "nums", "math"])
     # Send Captcha Challenge
     send_success = False
-    if captcha_mode == "button":
+    if captcha_mode == "video":
+        send_success = await send_captcha_video(
+            update, context, captcha_mode, captcha_timeout, chat_id,
+            chat_title, lang, bilang, join_user_id, join_user_name,
+            timeout_str)
+    elif captcha_mode == "button":
         send_success = await send_captcha_button(
             update, context, captcha_mode, captcha_timeout, chat_id,
             chat_title, lang, bilang, join_user_id,
@@ -1631,7 +1703,7 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     # Do nothing if no image captcha mode
     captcha_mode = \
         Global.new_users[chat_id][user_id]["join_data"]["captcha_mode"]
-    if captcha_mode not in ["nums", "hex", "ascii", "math"]:
+    if captcha_mode not in ["video", "nums", "hex", "ascii", "math"]:
         return
     # Get configured language
     lang = get_chat_config(chat_id, "Language")
@@ -4180,6 +4252,14 @@ async def tlg_app_start(app: Application) -> None:
     Telegram Bot Application initialized.
     This function is called at the startup of run_polling() or
     run_webhook() functions.'''
+    # Setup and start Captcha Video Generator process
+    CaptchaGenVideo.add_captcha_scene(CaptchaScene.CIRCLE_NUMS,
+                                     {"theme": "dark", "noise": True})
+    start_success = await CaptchaGenVideo.start()
+    if not start_success:
+        logger.error("Fail to Start CaptchaAutoGenerator")
+        await app.stop()
+        return
     # Launch delete messages and kick users coroutines
     Global.async_captcha_timeout = \
         asyncio_create_task(captcha_timeout(app.bot))
@@ -4210,6 +4290,8 @@ async def tlg_app_exit(app: Application) -> None:
         if not Global.async_auto_delete_messages.done():
             logger.info("Waiting coroutine end: async_auto_delete_messages()")
             await Global.async_auto_delete_messages
+    # Stop the Captcha Video Generator process
+    await CaptchaGenVideo.stop()
     # Save current session data
     save_session()
     # Close the program

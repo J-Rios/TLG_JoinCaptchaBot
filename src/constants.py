@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/02/2026
+    22/02/2026
 Version:
     2.0.0
 '''
@@ -99,6 +99,16 @@ CONST = {
     "CAPTCHAS_DIR":
         os_getenv("CAPTCHABOT_CAPTCHAS_DIR",
                   SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"]),
+
+    # Directory where create/generate temporary video captchas
+    "CAPTCHAS_DIR_VIDEO":
+        f"{os_getenv("CAPTCHABOT_CAPTCHAS_DIR",
+                  SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"])}/video",
+
+    # Directory where create/generate temporary image captchas
+    "CAPTCHAS_DIR_IMG":
+        f"{os_getenv("CAPTCHABOT_CAPTCHAS_DIR",
+                  SETTINGS["CAPTCHABOT_CAPTCHAS_DIR"])}/image",
 
     # Global allowed users file path (i.e. to allow blind users)
     "F_ALLOWED_USERS":
@@ -225,6 +235,16 @@ CONST = {
     "BAN_DURATION":
         int(os_getenv("CAPTCHABOT_BAN_DURATION",
                       SETTINGS["CAPTCHABOT_BAN_DURATION"])),
+
+    # Maximum limit of video captcha files
+    "MAX_NUM_VIDEO_CAPTCHAS":
+        int(os_getenv("CAPTCHABOT_MAX_NUM_VIDEO_CAPTCHAS",
+                      SETTINGS["CAPTCHABOT_MAX_NUM_VIDEO_CAPTCHAS"])),
+
+    # Captcha Video File Generation interval (in seconds)
+    "TIME_VIDEO_GEN_INTERVAL_S":
+        int(os_getenv("CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S",
+                      SETTINGS["CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S"])),
 
     # Last session restorable RAM data backup file path
     "F_SESSION": SCRIPT_PATH + "/session.pkl",
@@ -354,7 +374,7 @@ CONST = {
     "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot version
-    "VERSION": "2.0.0 (2026-02-21)"
+    "VERSION": "2.0.0 (2026-02-22)"
 }
 
 # Captcha Modes
