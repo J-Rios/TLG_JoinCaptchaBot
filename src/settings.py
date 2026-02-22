@@ -181,5 +181,5 @@ SETTINGS = {
 
     # Captcha Video File Generation interval (in seconds)
     # Means: Automatically create a new video captcha each this time
-    "CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S": 60,
+    "CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S": 600,
 }
