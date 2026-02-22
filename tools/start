@@ -12,9 +12,6 @@ if [ ! -z "$PID" ]; then
     exit 1
 fi
 
-# Clean old/previous residual captcha images
-rm -rf $DIR/../src/data/captchas/*
-
 # Launch the Bot
 echo "Starting Script..."
 source $DIR/../.venv/bin/activate
