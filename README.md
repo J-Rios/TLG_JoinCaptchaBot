@@ -1,17 +1,25 @@
 # TLG_JoinCaptchaBot
 [![License](https://img.shields.io/github/license/J-Rios/TLG_JoinCaptchaBot)](https://github.com/J-Rios/TLG_JoinCaptchaBot/blob/master/LICENSE) [![Stars](https://img.shields.io/github/stars/J-Rios/TLG_JoinCaptchaBot)](https://github.com/J-Rios/TLG_JoinCaptchaBot/stargazers) [![Forks](https://img.shields.io/github/forks/J-Rios/TLG_JoinCaptchaBot)](https://github.com/J-Rios/TLG_JoinCaptchaBot/network/members) [![Issues](https://img.shields.io/github/issues/J-Rios/TLG_JoinCaptchaBot)](https://github.com/J-Rios/TLG_JoinCaptchaBot/issues) [![Python](https://img.shields.io/badge/python-3.6+-blue)](https://www.python.org/) [![Telegram](https://img.shields.io/badge/Telegram-Bot-blue?logo=telegram)](https://t.me/join_captcha_bot) [![Maintenance](https://img.shields.io/badge/Maintained-Yes-green)](https://github.com/J-Rios/TLG_JoinCaptchaBot/graphs/commit-activity) [![GitHub last commit](https://img.shields.io/github/last-commit/J-Rios/TLG_JoinCaptchaBot)](https://github.com/J-Rios/TLG_JoinCaptchaBot/commits/master) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/J-Rios/TLG_JoinCaptchaBot/pulls)
 
-<p align="center">
-    <img width="100%" height="100%" src="https://gist.githubusercontent.com/J-Rios/05d7a8fc04166fa19f31a9608033d10b/raw/32dee32a530c0a0994736fe2d02a1747478bd0e3/captchas.png">
+<p align="left">
+    <img width="100%" height="100%" src="https://github.com/user-attachments/assets/eec4ee8b-2734-4d86-985f-53f5f4e752f2">
+    <img width="35%" height="35%" src="https://github.com/user-attachments/assets/191d9a7b-5f28-46a4-9597-01bd3d7d1436">
 </p>
 
 ## Overview
 
-TLG_JoinCaptchaBot is a Telegram Bot designed to verify that new members joining a group are humans by presenting an image-based [CAPTCHA challenge](https://en.wikipedia.org/wiki/CAPTCHA). The bot:
+TLG_JoinCaptchaBot is a Telegram Bot designed to verify that new members joining a group are humans by presenting a [CAPTCHA challenge](https://en.wikipedia.org/wiki/CAPTCHA).
+
+The bot:
 
 - Automatically sends a CAPTCHA when a new user joins
 - Removes users who fail to solve the CAPTCHA within a specified time limit
 - Deletes messages containing URLs sent by users who haven't completed the CAPTCHA (anti-spam)
+- Block new users to send media messages before the captcha is not solved
+- Provides different captcha modes, like visual animated video captchas, image captchas, custom poll captchas, etc
+- Has multilanguage support with near to ~30 languages
+- Allows custom configuration per group (time for solving the captcha, captcha mode, difficulty, language, welcome message, etc)
+- Keeps the groups clean from Bot and captcha messages by automatically self-removing them after a while.
 
 ## Table of Contents
 
@@ -32,23 +40,28 @@ TLG_JoinCaptchaBot is a Telegram Bot designed to verify that new members joining
 
 ## Requirements
 
-- Python 3.6+
-- Pillow and its prerequisites
+- Python 3.12+
+- Manim requirements
+- Pillow requirements
 - Telegram Bot Token (from [@BotFather](https://t.me/BotFather))
 
 ## Installation
 
-### 1. Install Pillow prerequisites
+sudo apt-get install build-essential make python3 python3-dev python3-pip
+sudo apt-get install libcairo2-dev libpango1.0-dev
 
-```bash
-sudo apt update
-sudo apt install -y make libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
-```
-
-### 2. Install Python3 and tools
+### 1. Install Python3 and tools
 
 ```bash
 sudo apt-get install python3 python3-pip python3-venv
+```
+
+### 2. Install Pillow & Manim prerequisites
+
+```bash
+sudo apt update
+sudo apt install -y build-essential make libcairo2-dev libpango1.0-dev
+sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
 ```
 
 ### 3. Get and setup the project
