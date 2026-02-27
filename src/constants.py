@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/02/2026
+    27/02/2026
 Version:
-    2.0.0
+    2.0.1
 '''
 
 ###############################################################################
@@ -34,6 +34,18 @@ SCRIPT_PATH = os_path.dirname(os_path.realpath(__file__))
 
 # General Bots Parameters
 CONST = {
+
+    # Bot developer
+    "DEVELOPER": "@JoseTLG",
+
+    # Bot version
+    "VERSION": "2.0.1 (2026-02-27)",
+
+    # Bot code repository
+    "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
+
+    # Developer Donation address
+    "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
 
     # Bot Public or Private
     "BOT_PRIVATE":
@@ -362,19 +374,7 @@ CONST = {
         "content of the messages are only used to check if it contains the "
         "captcha resolution. Once check is done, the message is discarded. "
         "Messages from users that are not involved into a captcha process "
-        "are directly ignored and discarded.\n",
-
-    # Bot developer
-    "DEVELOPER": "@JoseTLG",
-
-    # Bot code repository
-    "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
-
-    # Developer Donation address
-    "DEV_DONATION_ADDR": "https://ko-fi.com/joincaptchabot",
-
-    # Bot version
-    "VERSION": "2.0.0 (2026-02-22)"
+        "are directly ignored and discarded.\n"
 }
 
 # Captcha Modes

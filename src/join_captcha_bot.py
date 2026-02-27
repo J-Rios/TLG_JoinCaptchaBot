@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/02/2026
+    27/02/2026
 Version:
-    2.0.0
+    2.0.1
 '''
 
 ###############################################################################
@@ -4321,7 +4321,8 @@ def main(argc, argv):
         logger.error("Bot Owner has not been set for Private Bot.")
         logger.info("Please add the Bot Owner to settings.py file.")
         return 1
-    # Disable info logging level from httpx-httpcore (used by PTB > v20)
+    # Setup logging level for internal modules to hide info/warning msg
+    logging.getLogger("tornado.general").setLevel(logging.ERROR)
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("httpcore").setLevel(logging.WARNING)
     # Setup Bot Application
