@@ -3742,32 +3742,41 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     # Generate a random difficulty captcha
     difficulty = random_randint(1, 5)
-    captcha_mode = random_choice(["nums", "hex", "ascii", "math"])
-    captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
-    if captcha_mode == "math":
-        captcha_code = \
-            f'{captcha["equation_str"]} = {captcha["equation_result"]}'
+    captcha_mode = random_choice(["video", "nums", "ascii", "math"])
+    if captcha_mode == "video":
+        captcha = CaptchaGenVideo.get_captcha()
+        if not captcha.error:
+            captcha_code = captcha.code
+            caption = (f"Captcha Level: {difficulty}\n"
+                       f"Captcha Mode: {captcha_mode}\n"
+                       f"Captcha Code: {captcha_code}")
+            try:
+                with open(captcha.file, "rb") as file:
+                    await tlg_send_video(bot, chat_id, file, caption,
+                                         read_timeout=20)
+            except Exception:
+                pass
     else:
-        captcha_code = captcha["characters"]
-    logger.info("[%s] Sending captcha msg: %s", chat_id, captcha_code)
-    # Note: Img caption must be <= 1024 chars
-    img_caption = (f"Captcha Level: {difficulty}\n"
+        captcha = create_image_captcha(chat_id, user_id, difficulty,
+                                       captcha_mode)
+        if captcha_mode == "math":
+            captcha_code = \
+                f'{captcha["equation_str"]} = {captcha["equation_result"]}'
+        else:
+            captcha_code = captcha["characters"]
+        caption = (f"Captcha Level: {difficulty}\n"
                    f"Captcha Mode: {captcha_mode}\n"
                    f"Captcha Code: {captcha_code}")
-    # Send the image
-    sent_result: dict = {}
-    sent_result["msg"] = None
-    try:
-        with open(captcha["image"], "rb") as file_image:
-            await tlg_send_image(
-                bot, chat_id, file_image, img_caption,
-                topic_id=tlg_get_msg_topic(update_msg), read_timeout=20)
-    except Exception:
-        logger.error(format_exc())
-        logger.error("Fail to send image to Telegram")
-    # Remove sent captcha image file from file system
-    if path.exists(captcha["image"]):
-        remove(captcha["image"])
+        try:
+            with open(captcha["image"], "rb") as file_image:
+                await tlg_send_image(bot, chat_id, file_image, caption,
+                                     topic_id=tlg_get_msg_topic(update_msg),
+                                     read_timeout=20)
+        except Exception:
+            pass
+        # Remove sent captcha image file from file system
+        if path.exists(captcha["image"]):
+            remove(captcha["image"])
 
 
 async def cmd_allowuserlist(
