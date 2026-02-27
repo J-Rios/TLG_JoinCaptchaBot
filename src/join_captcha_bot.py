@@ -1092,8 +1092,8 @@ async def send_captcha_button(update, context, captcha_mode, captcha_timeout,
     ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    logger.info("[%s] Sending captcha message to %s: [button]",
-                chat_id, join_user_name)
+    logger.info("[%s] Sending captcha message to %s (%d): [button]",
+                chat_id, join_user_name, join_user_id)
     sent_result = await tlg_send_msg(
         bot, chat_id, challenge_text, reply_markup=reply_markup)
     if sent_result["msg"]:
@@ -1131,6 +1131,8 @@ async def send_captcha_poll(update, context, captcha_mode, captcha_timeout,
     # Remove empty strings from options list
     poll_options = list(filter(None, poll_options))
     # Send request to solve the poll text message
+    logger.info("[%s] Sending captcha message to %s (%d): [poll]",
+                chat_id, join_user_name, join_user_id)
     poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
         join_user_name, chat_title, timeout_str)
     if bilang:
@@ -1188,10 +1190,9 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
         chat_id, join_user_id, captcha_level, captcha_mode)
     if captcha_mode == "math":
         captcha_code = captcha["equation_result"]
-        logger.info(
-            "[%s] Sending image math captcha message to %s: %s=%s...",
-            chat_id, join_user_name, captcha["equation_str"],
-            captcha["equation_result"])
+        logger.info("[%s] Sending captcha message to %s (%d): %s=%s [math]",
+                    chat_id, join_user_name, join_user_id,
+                    captcha["equation_str"], captcha["equation_result"])
         # Note: Img caption must be <= 1024 chars
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
             join_user_name, chat_title, timeout_str)
@@ -1202,9 +1203,8 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
         img_caption = img_caption[:1024]
     else:
         captcha_code = captcha["characters"]
-        logger.info(
-            "[%s] Sending image captcha message to %s: %s...",
-            chat_id, join_user_name, captcha_code)
+        logger.info("[%s] Sending captcha message to %s (%d): %s [img]",
+                    chat_id, join_user_name, join_user_id, captcha_code)
         # Note: Img caption must be <= 1024 chars
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
             join_user_name, chat_title, timeout_str)
@@ -1276,8 +1276,8 @@ async def send_captcha_video(update, context, captcha_mode, captcha_timeout,
         captcha = CaptchaGenVideo.get_captcha()
         if not captcha.error:
             captcha_code = captcha.code
-            logger.info("[%s] Sending video captcha message to %s: %s...",
-                        chat_id, join_user_name, captcha_code)
+            logger.info("[%s] Sending captcha message to %s (%d): %s [video]",
+                        chat_id, join_user_name, join_user_id, captcha_code)
             try:
                 with open(captcha.file, "rb") as file:
                     sent_result = await tlg_send_video(
@@ -2106,7 +2106,7 @@ async def button_im_not_a_bot_press(bot, query):
     del Global.new_users[chat_id][user_id]
     # Send message solve message
     logger.info(
-        "[%s] User %s solved a button-only challenge.",
+        "[%s] User %s solved a button challenge.",
         chat_id, user_name)
     # Remove all restrictions on the user
     await tlg_unrestrict_user(bot, chat_id, user_id)
@@ -2146,7 +2146,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Restrict forever
     elif restrict_non_text_msgs == 2:
         await restrict_user_media(bot, chat_id, user_id)
-    logger.info("[%s] Button-only challenge process completed.", chat_id)
+    logger.info("[%s] Button challenge process completed.", chat_id)
 
 
 ###############################################################################
@@ -4255,7 +4255,7 @@ async def tlg_app_start(app: Application) -> None:
     run_webhook() functions.'''
     # Setup and start Captcha Video Generator process
     CaptchaGenVideo.add_captcha_scene(CaptchaScene.CIRCLE_NUMS,
-                                     {"theme": "dark", "noise": True})
+                                      {"theme": "dark", "noise": True})
     start_success = await CaptchaGenVideo.start()
     if not start_success:
         logger.error("Fail to Start CaptchaAutoGenerator")
