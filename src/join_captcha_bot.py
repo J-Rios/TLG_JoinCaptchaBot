@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/02/2026
+    27/02/2026
 Version:
-    2.0.0
+    2.0.1
 '''
 
 ###############################################################################
@@ -1107,8 +1107,8 @@ async def send_captcha_button(update, context, captcha_mode, captcha_timeout,
     ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    logger.info("[%s] Sending captcha message to %s: [button]",
-                chat_id, join_user_name)
+    logger.info("[%s] Sending captcha message to %s (%d): [button]",
+                chat_id, join_user_name, join_user_id)
     sent_result = await tlg_send_msg(
         bot, chat_id, challenge_text, reply_markup=reply_markup)
     if sent_result["msg"]:
@@ -1146,6 +1146,8 @@ async def send_captcha_poll(update, context, captcha_mode, captcha_timeout,
     # Remove empty strings from options list
     poll_options = list(filter(None, poll_options))
     # Send request to solve the poll text message
+    logger.info("[%s] Sending captcha message to %s (%d): [poll]",
+                chat_id, join_user_name, join_user_id)
     poll_request_msg_text = TEXT[lang]["POLL_NEW_USER"].format(
         join_user_name, chat_title, timeout_str)
     if bilang:
@@ -1203,10 +1205,9 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
         chat_id, join_user_id, captcha_level, captcha_mode)
     if captcha_mode == "math":
         captcha_code = captcha["equation_result"]
-        logger.info(
-            "[%s] Sending image math captcha message to %s: %s=%s...",
-            chat_id, join_user_name, captcha["equation_str"],
-            captcha["equation_result"])
+        logger.info("[%s] Sending captcha message to %s (%d): %s=%s [math]",
+                    chat_id, join_user_name, join_user_id,
+                    captcha["equation_str"], captcha["equation_result"])
         # Note: Img caption must be <= 1024 chars
         img_caption = TEXT[lang]["NEW_USER_MATH_CAPTION"].format(
             join_user_name, chat_title, timeout_str)
@@ -1217,9 +1218,8 @@ async def send_captcha_image(update, context, captcha_mode, captcha_timeout,
         img_caption = img_caption[:1024]
     else:
         captcha_code = captcha["characters"]
-        logger.info(
-            "[%s] Sending image captcha message to %s: %s...",
-            chat_id, join_user_name, captcha_code)
+        logger.info("[%s] Sending captcha message to %s (%d): %s [img]",
+                    chat_id, join_user_name, join_user_id, captcha_code)
         # Note: Img caption must be <= 1024 chars
         img_caption = TEXT[lang]["NEW_USER_IMG_CAPTION"].format(
             join_user_name, chat_title, timeout_str)
@@ -1291,8 +1291,8 @@ async def send_captcha_video(update, context, captcha_mode, captcha_timeout,
         captcha = CaptchaGenVideo.get_captcha()
         if not captcha.error:
             captcha_code = captcha.code
-            logger.info("[%s] Sending video captcha message to %s: %s...",
-                        chat_id, join_user_name, captcha_code)
+            logger.info("[%s] Sending captcha message to %s (%d): %s [video]",
+                        chat_id, join_user_name, join_user_id, captcha_code)
             try:
                 with open(captcha.file, "rb") as file:
                     sent_result = await tlg_send_video(
@@ -2121,7 +2121,7 @@ async def button_im_not_a_bot_press(bot, query):
     del Global.new_users[chat_id][user_id]
     # Send message solve message
     logger.info(
-        "[%s] User %s solved a button-only challenge.",
+        "[%s] User %s solved a button challenge.",
         chat_id, user_name)
     # Remove all restrictions on the user
     await tlg_unrestrict_user(bot, chat_id, user_id)
@@ -2161,7 +2161,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Restrict forever
     elif restrict_non_text_msgs == 2:
         await restrict_user_media(bot, chat_id, user_id)
-    logger.info("[%s] Button-only challenge process completed.", chat_id)
+    logger.info("[%s] Button challenge process completed.", chat_id)
 
 
 ###############################################################################
@@ -3757,32 +3757,41 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     # Generate a random difficulty captcha
     difficulty = random_randint(1, 5)
-    captcha_mode = random_choice(["nums", "hex", "ascii", "math"])
-    captcha = create_image_captcha(chat_id, user_id, difficulty, captcha_mode)
-    if captcha_mode == "math":
-        captcha_code = \
-            f'{captcha["equation_str"]} = {captcha["equation_result"]}'
+    captcha_mode = random_choice(["video", "nums", "ascii", "math"])
+    if captcha_mode == "video":
+        captcha = CaptchaGenVideo.get_captcha()
+        if not captcha.error:
+            captcha_code = captcha.code
+            caption = (f"Captcha Level: {difficulty}\n"
+                       f"Captcha Mode: {captcha_mode}\n"
+                       f"Captcha Code: {captcha_code}")
+            try:
+                with open(captcha.file, "rb") as file:
+                    await tlg_send_video(bot, chat_id, file, caption,
+                                         read_timeout=20)
+            except Exception:
+                pass
     else:
-        captcha_code = captcha["characters"]
-    logger.info("[%s] Sending captcha msg: %s", chat_id, captcha_code)
-    # Note: Img caption must be <= 1024 chars
-    img_caption = (f"Captcha Level: {difficulty}\n"
+        captcha = create_image_captcha(chat_id, user_id, difficulty,
+                                       captcha_mode)
+        if captcha_mode == "math":
+            captcha_code = \
+                f'{captcha["equation_str"]} = {captcha["equation_result"]}'
+        else:
+            captcha_code = captcha["characters"]
+        caption = (f"Captcha Level: {difficulty}\n"
                    f"Captcha Mode: {captcha_mode}\n"
                    f"Captcha Code: {captcha_code}")
-    # Send the image
-    sent_result: dict = {}
-    sent_result["msg"] = None
-    try:
-        with open(captcha["image"], "rb") as file_image:
-            await tlg_send_image(
-                bot, chat_id, file_image, img_caption,
-                topic_id=tlg_get_msg_topic(update_msg), read_timeout=20)
-    except Exception:
-        logger.error(format_exc())
-        logger.error("Fail to send image to Telegram")
-    # Remove sent captcha image file from file system
-    if path.exists(captcha["image"]):
-        remove(captcha["image"])
+        try:
+            with open(captcha["image"], "rb") as file_image:
+                await tlg_send_image(bot, chat_id, file_image, caption,
+                                     topic_id=tlg_get_msg_topic(update_msg),
+                                     read_timeout=20)
+        except Exception:
+            pass
+        # Remove sent captcha image file from file system
+        if path.exists(captcha["image"]):
+            remove(captcha["image"])
 
 
 async def cmd_allowuserlist(
@@ -4270,7 +4279,7 @@ async def tlg_app_start(app: Application) -> None:
     run_webhook() functions.'''
     # Setup and start Captcha Video Generator process
     CaptchaGenVideo.add_captcha_scene(CaptchaScene.CIRCLE_NUMS,
-                                     {"theme": "dark", "noise": True})
+                                      {"theme": "dark", "noise": True})
     start_success = await CaptchaGenVideo.start()
     if not start_success:
         logger.error("Fail to Start CaptchaAutoGenerator")
@@ -4336,7 +4345,8 @@ def main(argc, argv):
         logger.error("Bot Owner has not been set for Private Bot.")
         logger.info("Please add the Bot Owner to settings.py file.")
         return 1
-    # Disable info logging level from httpx-httpcore (used by PTB > v20)
+    # Setup logging level for internal modules to hide info/warning msg
+    logging.getLogger("tornado.general").setLevel(logging.ERROR)
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("httpcore").setLevel(logging.WARNING)
     # Setup Bot Application
