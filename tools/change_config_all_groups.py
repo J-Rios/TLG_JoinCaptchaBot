@@ -91,6 +91,7 @@ def get_default_config_data():
         ("BiLang", CONST["INIT_BILANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
+        ("Allow_Unverify_Msg", CONST["INIT_ALLOW_UNVERIFY_MSG"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
