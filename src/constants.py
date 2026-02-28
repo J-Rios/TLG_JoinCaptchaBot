@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/02/2026
+    28/02/2026
 Version:
-    2.0.1
+    2.0.2
 '''
 
 ###############################################################################
@@ -39,7 +39,7 @@ CONST = {
     "DEVELOPER": "@JoseTLG",
 
     # Bot version
-    "VERSION": "2.0.1 (2026-02-27)",
+    "VERSION": "2.0.2 (2026-02-28)",
 
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
@@ -147,6 +147,11 @@ CONST = {
     "INIT_URL_ENABLE":
         bool(int(os_getenv("CAPTCHABOT_INIT_URL_ENABLE",
                            SETTINGS["CAPTCHABOT_INIT_URL_ENABLE"]))),
+
+    # Initial config regarding remove all messages sent by a user kicked
+    "INIT_ALLOW_UNVERIFY_MSG":
+        bool(int(os_getenv("CAPTCHABOT_INIT_ALLOW_UNVERIFY_MSG",
+                           SETTINGS["CAPTCHABOT_INIT_ALLOW_UNVERIFY_MSG"]))),
 
     # Initial config regarding remove all messages sent by a user kicked
     "INIT_RM_ALL_MSG":
@@ -442,6 +447,7 @@ CMD = {
     "IGNORE_LIST": {"KEY": "ignore_list"},
     "REMOVE_SOLVE_KICK_MSG": {"KEY": "remove_solve_kick_msg"},
     "REMOVE_WELCOME_MSG": {"KEY": "remove_welcome_msg"},
+    "ALLOW_UNVERIFY_MSG": {"KEY": "allow_unverify_msg"},
     "REMOVE_ALL_MSG_KICK_ON": {"KEY": "remove_all_msg_kick_on"},
     "REMOVE_ALL_MSG_KICK_OFF": {"KEY": "remove_all_msg_kick_off"},
     "URL_ENABLE": {"KEY": "url_enable"},
