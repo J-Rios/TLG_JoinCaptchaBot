@@ -7,10 +7,12 @@ Script:
 Description:
     Change a config on all stored group configurations json files.
 Usage:
-    0. Be careful!
+    0. Be careful (considerate to make a backup of groups config)!
     1. Move this scipt to src/ directory
-    2. Set the config key-value to modify (CONFIG_KEY & CONFIG_VALUE)
-    3. Run the script
+    2. Set the config key to modify (CONFIG_KEY)
+    3. Set the target value to modify (CONFIG_VALUE_TO_MODIFY)
+    4. Set the new value to apply (CONFIG_VALUE)
+    5. Run the script
 '''
 
 ###############################################################################
@@ -60,8 +62,23 @@ logger = logging.getLogger(__name__)
 
 
 ###############################################################################
+# Setup
+###############################################################################
+
+# Target configuration key to modify
+CONFIG_KEY = "Captcha_Chars_Mode"
+
+# Target value of the key to modify (use "ALL" to force the change no
+# matter it current value)
+CONFIG_VALUE = "nums"  # "ALL"
+
+# New value to set
+CONFIG_NEW_VALUE = "video"
+
+###############################################################################
 # JSON Chat Config File Functions
 ###############################################################################
+
 
 def get_default_config_data():
     '''
@@ -74,6 +91,7 @@ def get_default_config_data():
         ("BiLang", CONST["INIT_BILANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
+        ("Allow_Unverify_Msg", CONST["INIT_ALLOW_UNVERIFY_MSG"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
@@ -114,37 +132,70 @@ def get_groups_configs_chat_id():
     return list_chat_id
 
 
-def change_config(cfg_key, cfg_value):
+def change_config(target_key, target_value, new_value):
+    update_all = False
+    if target_value == "ALL":
+        update_all = True
+        logger.info("Modifying all groups config to \"%s\": \"%s\"...",
+                    target_key, new_value)
+    else:
+        logger.info("Modifying groups config \"%s\": \"%s\" -> \"%s\"...",
+                    target_key, target_value, new_value)
     l_chat_id = get_groups_configs_chat_id()
     for chat_id in l_chat_id:
         # Read current config
-        logger.info("Reading config of %s", chat_id)
+        logger.info("")
+        logger.info("[%s] Reading config", chat_id)
         fjson_config = get_config(chat_id)
         if not fjson_config:
-            logger.error("Missing config at %s", chat_id)
+            logger.error("[%s] Missing config", chat_id)
             return False
         cfg = fjson_config.read()
         missing_key = False
-        if cfg_key not in cfg:
-            logger.warning("Missing key \"%s\" at config %s", cfg_key, chat_id)
+        if target_key not in cfg:
+            logger.warning("[%s] Missing key \"%s\"", chat_id, target_key)
             missing_key = True
-        # Apply new value to config
-        success = False
-        if not missing_key:
-            if cfg[cfg_key] == cfg_value:
-                success = True
-        if not success:
-            cfg[cfg_key] = cfg_value
-            success = fjson_config.write(cfg)
-        if not success:
-            logger.error("Fail to write config of %s", chat_id)
-            return False
+        # Add missing key-value to config
         if missing_key:
-            logger.info("Added config of %s: \"%s\" : %s",
-                        chat_id, cfg_key, cfg_value)
+            cfg[target_key] = new_value
+            success = fjson_config.write(cfg)
+            if not success:
+                logger.error("[%s] Fail to write config", chat_id)
+                return False
+            logger.info("[%s] Added:    \"%s\" : \"%s\"",
+                        chat_id, target_key, new_value)
+            continue
+        logger.info("[%s] Config:  \"%s\" : \"%s\"",
+                    chat_id, target_key, cfg[target_key])
+        # Skip change (write) of groups that already has this value
+        if cfg[target_key] == new_value:
+            logger.info("[%s] Skip (already has this value)", chat_id)
+            continue
+        # Update config to new value
+        if update_all:
+            cfg[target_key] = new_value
+            success = fjson_config.write(cfg)
+            if not success:
+                logger.error("[%s] Fail to write config", chat_id)
+                return False
+            else:
+                logger.info("[%s] Update config")
+                logger.info("[%s] Changed: \"%s\" : \"%s\"",
+                            chat_id, target_key, new_value)
+            continue
+        # Skip groups that doesnt have the target value to change
+        if cfg[target_key] != target_value:
+            logger.info("[%s] Skip (not target value)", chat_id)
+            continue
+        # Update target value
+        cfg[target_key] = new_value
+        success = fjson_config.write(cfg)
+        if not success:
+            logger.error("[%s] Fail to write config", chat_id)
+            return False
         else:
-            logger.info("Updated config of %s: \"%s\" : %s",
-                        chat_id, cfg_key, cfg_value)
+            logger.info("[%s] Changed: \"%s\" : \"%s\"",
+                        chat_id, target_key, new_value)
     return True
 
 
@@ -160,12 +211,14 @@ def main(argc, argv):
     del argc
     del argv
     # Change Configuration on all json files
-    CONFIG_KEY = "RM_All_Msg"
-    CONFIG_VALUE = True
-    success = change_config(CONFIG_KEY, CONFIG_VALUE)
+    logger.info("")
+    success = change_config(CONFIG_KEY, CONFIG_VALUE, CONFIG_NEW_VALUE)
+    logger.info("")
     if success:
+        logger.info("Success")
         success = 0
     else:
+        logger.info("Fail / Abort")
         success = 1
     return success
 
@@ -177,4 +230,5 @@ def main(argc, argv):
 if __name__ == "__main__":
     return_code = main(len(sys_argv) - 1, sys_argv[1:])
     logger.info("Exit (%d)", return_code)
+    logger.info("")
     sys_exit(return_code)

@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    27/02/2026
+    28/02/2026
 Version:
-    2.0.1
+    2.0.2
 '''
 
 ###############################################################################
@@ -202,6 +202,7 @@ def get_default_config_data():
         ("BiLang", CONST["INIT_BILANG"]),
         ("Enabled", CONST["INIT_ENABLE"]),
         ("URL_Enabled", CONST["INIT_URL_ENABLE"]),
+        ("Allow_Unverify_Msg", CONST["INIT_ALLOW_UNVERIFY_MSG"]),
         ("RM_All_Msg", CONST["INIT_RM_ALL_MSG"]),
         ("Captcha_Chars_Mode", CONST["INIT_CAPTCHA_MODE"]),
         ("Captcha_Time", CONST["INIT_CAPTCHA_TIME"]),
@@ -387,6 +388,24 @@ async def tlg_send_msg_type_chat(
         auto_delete_msg = False
     return await tlg_bot_send_msg(bot, chat_id, msg_text, auto_delete_msg,
                                   **kwargs_for_send_message)
+
+
+def is_owner_msg(user):
+    '''Check if a message comes from the Bot owner.'''
+    id = str(user.id)
+    alias = ""
+    if user.username:
+        alias = f"@{user.username}"
+    return ((id == CONST["BOT_OWNER"]) or (alias == CONST["BOT_OWNER"]))
+
+
+async def is_admin_or_owner(bot, chat_id, user):
+    '''Check if the user is allowed to run this command.'''
+    is_owner = is_owner_msg(user)
+    is_admin = await tlg_user_is_admin(bot, chat_id, user.id)
+    if is_owner or is_admin:
+        return True
+    return False
 
 
 ###############################################################################
@@ -1764,9 +1783,8 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
                 sent_result = await tlg_send_msg(
                     bot, chat_id, welcome_msg, "MARKDOWN")
             if sent_result is None:
-                logger.info(
-                    "[%s] Error: Can't send the welcome message.",
-                    chat_id)
+                logger.info("[%s] Error: Can't send the welcome message.",
+                            chat_id)
         # Check for send just text message option and apply user
         # restrictions
         restrict_non_text_msgs = get_chat_config(chat_id, "Restrict_Non_Text")
@@ -1779,41 +1797,27 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
             await restrict_user_media(bot, chat_id, user_id)
     # The provided message doesn't has the valid captcha number
     else:
-        # Set if received user message should be removed
-        rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
-        if rm_all_msg:
-            Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
-        # Check if the message is for a math operation captcha
-        if captcha_mode == "math":
-            # Check if wrong captcha answer is just numbers
-            if is_int(msg_text):
-                tlg_autodelete_msg(msg)
-                sent_msg_id = await tlg_send_autodelete_msg(
-                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_MATH"],
-                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                if sent_msg_id:
-                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
-        # If "nums", "hex" or "ascii" captcha
+        # Check if unverified user messages are allowed
+        allow_unverify_msg = get_chat_config(chat_id, "Allow_Unverify_Msg")
+        if not allow_unverify_msg:
+            # Directly remove messages from unverified users
+            delete_result = await delete_msg(bot, chat_id, msg_id)
+            if delete_result["error"] != "":
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
         else:
-            # Check if the message has 4 chars
-            if len(msg_text) == 4:
-                tlg_autodelete_msg(msg)
-                sent_msg_id = await tlg_send_autodelete_msg(
-                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_0"],
-                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                if sent_msg_id:
-                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
-            # Check if the message just has numbers but is not 4 chars
-            elif is_int(msg_text):
-                tlg_autodelete_msg(msg)
-                sent_msg_id = await tlg_send_autodelete_msg(
-                    bot, chat_id, TEXT[lang]["CAPTCHA_INCORRECT_1"],
-                    CONST["T_FAST_DEL_MSG"], topic_id=topic_id)
-                if sent_msg_id:
-                    Global.new_users[chat_id][user_id]["msg_to_rm"].append(
-                        sent_msg_id)
+            # Check if received user msgs should be removed after kick/ban
+            rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
+            if rm_all_msg:
+                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+        # Notify wrong code
+        wrong_code_msg_text = TEXT[lang]["CAPTCHA_INCORRECT"]
+        if captcha_mode == "math":
+            wrong_code_msg_text = TEXT[lang]["CAPTCHA_INCORRECT_MATH"]
+        sent_msg_id = await tlg_send_autodelete_msg(
+            bot, chat_id, wrong_code_msg_text, CONST["T_FAST_DEL_MSG"],
+            topic_id=topic_id)
+        if sent_msg_id:
+            Global.new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
 
 
@@ -2185,10 +2189,8 @@ async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        user_id = update_msg.from_user.id
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if not is_admin:
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
@@ -2214,10 +2216,8 @@ async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        user_id = update_msg.from_user.id
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
@@ -2243,10 +2243,8 @@ async def cmd_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        user_id = update_msg.from_user.id
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send the response message
         lang = get_chat_config(chat_id, "Language")
@@ -2268,17 +2266,13 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update_msg.chat_id
     chat_type = update_msg.chat.type
     user_id = update_msg.from_user.id
-    user_alias = ""
-    if update_msg.from_user.username:
-        user_alias = f"@{update_msg.from_user.username}"
     lang = get_update_user_lang(update_msg.from_user)
     # Ignore if command is not in private chat
     if chat_type != "private":
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send just allowed in private chat message
         lang = get_chat_config(chat_id, "Language")
@@ -2301,15 +2295,12 @@ async def cmd_connect(update: Update, context: ContextTypes.DEFAULT_TYPE):
             bot, chat_type, chat_id, TEXT[lang]["INVALID_GROUP_ID"],
             topic_id=tlg_get_msg_topic(update_msg))
         return
-    # Check if requested by the Bot owner or an Admin of the group
-    if ((str(user_id) != CONST["BOT_OWNER"]) and
-            (user_alias != CONST["BOT_OWNER"])):
-        is_admin = await tlg_user_is_admin(bot, group_id, user_id)
-        if (is_admin is None) or (is_admin is False):
-            await tlg_send_msg_type_chat(
-                bot, chat_type, chat_id, TEXT[lang]["CONNECT_JUST_ADMIN"],
-                topic_id=tlg_get_msg_topic(update_msg))
-            return
+    # Deny if not requested by Owner or Admin of that group
+    if not await is_admin_or_owner(bot, group_id, update_msg.from_user):
+        await tlg_send_msg_type_chat(
+            bot, chat_type, chat_id, TEXT[lang]["CONNECT_JUST_ADMIN"],
+            topic_id=tlg_get_msg_topic(update_msg))
+        return
     # Connection
     group_lang = get_chat_config(group_id, "Language")
     Global.connections[user_id] = {"group_id": group_id, "lang": group_lang}
@@ -2335,9 +2326,8 @@ async def cmd_disconnect(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if chat_type != "private":
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send just allowed in private chat message
         lang = get_chat_config(chat_id, "Language")
@@ -2385,9 +2375,8 @@ async def cmd_checkcfg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2426,9 +2415,8 @@ async def cmd_bilanguage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2479,9 +2467,8 @@ async def cmd_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2539,9 +2526,8 @@ async def cmd_time(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2629,9 +2615,8 @@ async def cmd_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2682,9 +2667,8 @@ async def cmd_captcha_mode(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2736,9 +2720,8 @@ async def cmd_restriction(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2791,9 +2774,8 @@ async def cmd_welcome_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2850,9 +2832,8 @@ async def cmd_welcome_msg_time(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -2936,9 +2917,8 @@ async def cmd_captcha_poll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3081,9 +3061,8 @@ async def cmd_restrict_non_text(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3147,9 +3126,8 @@ async def cmd_add_ignore(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3208,9 +3186,8 @@ async def cmd_remove_ignore(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3259,9 +3236,8 @@ async def cmd_ignore_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3305,9 +3281,8 @@ async def cmd_remove_solve_kick_msg(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3360,9 +3335,8 @@ async def cmd_remove_welcome_msg(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3386,6 +3360,59 @@ async def cmd_remove_welcome_msg(
     await tlg_send_msg_type_chat(
         bot, chat_type, chat_id, bot_msg,
         topic_id=tlg_get_msg_topic(update_msg))
+
+
+async def cmd_allow_unverify_msg(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE):
+    '''
+    Command /allow_unverify_msg message handler.
+    '''
+    bot = context.bot
+    args = context.args
+    # Ignore command if it was a edited message
+    update_msg = getattr(update, "message", None)
+    if update_msg is None:
+        return
+    chat_id = update_msg.chat_id
+    user_id = update_msg.from_user.id
+    chat_type = update_msg.chat.type
+    lang = get_update_user_lang(update_msg.from_user)
+    # Check and deny usage in private chat
+    if chat_type == "private":
+        if user_id not in Global.connections:
+            await tlg_send_msg_type_chat(
+                bot, chat_type, chat_id,
+                TEXT[lang]["CMD_NEEDS_CONNECTION"])
+            return
+        group_id = Global.connections[user_id]["group_id"]
+    else:
+        # Remove command message automatically after a while
+        tlg_autodelete_msg(update_msg)
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
+            return
+        # Get Group Chat ID and configured language
+        group_id = chat_id
+        lang = get_chat_config(group_id, "Language")
+    # Check if no argument was provided with the command
+    if (args is None) or (len(args) == 0):
+        await tlg_send_msg_type_chat(
+            bot, chat_type, chat_id, TEXT[lang]["ALLOW_UNVERIFY_MSG"],
+            topic_id=tlg_get_msg_topic(update_msg))
+        return
+    # Get remove welcome messages config to set
+    yes_or_no = args[0].lower()
+    if yes_or_no == "yes":
+        save_config_property(group_id, "Allow_Unverify_Msg", True)
+        bot_msg = TEXT[lang]["ALLOW_UNVERIFY_MSG_YES"]
+    elif yes_or_no == "no":
+        save_config_property(group_id, "Allow_Unverify_Msg", False)
+        bot_msg = TEXT[lang]["ALLOW_UNVERIFY_MSG_NO"]
+    else:
+        bot_msg = TEXT[lang]["ALLOW_UNVERIFY_MSG"]
+    await tlg_send_msg_type_chat(bot, chat_type, chat_id, bot_msg,
+                                 topic_id=tlg_get_msg_topic(update_msg))
 
 
 async def cmd_remove_all_msg_kick_on(
@@ -3414,9 +3441,8 @@ async def cmd_remove_all_msg_kick_on(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3460,9 +3486,8 @@ async def cmd_remove_all_msg_kick_off(
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3504,9 +3529,8 @@ async def cmd_url_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3548,9 +3572,8 @@ async def cmd_url_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Get Group Chat ID and configured language
         group_id = chat_id
@@ -3587,9 +3610,8 @@ async def cmd_enable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     # Remove command message automatically after a while
     tlg_autodelete_msg(update_msg)
-    # Ignore if not requested by a group Admin
-    is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-    if (is_admin is None) or (is_admin is False):
+    # Ignore if not requested by a group Admin or owner
+    if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
         return
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
@@ -3625,9 +3647,8 @@ async def cmd_disable(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     # Remove command message automatically after a while
     tlg_autodelete_msg(update_msg)
-    # Ignore if not requested by a group Admin
-    is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-    if (is_admin is None) or (is_admin is False):
+    # Ignore if not requested by a group Admin or owner
+    if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
         return
     # Get actual chat configured language
     lang = get_chat_config(chat_id, "Language")
@@ -3685,9 +3706,8 @@ async def cmd_version(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         # Remove command message automatically after a while
         tlg_autodelete_msg(update_msg)
-        # Ignore if not requested by a group Admin
-        is_admin = await tlg_user_is_admin(bot, chat_id, user_id)
-        if (is_admin is None) or (is_admin is False):
+        # Ignore if not requested by a group Admin or owner
+        if not await is_admin_or_owner(bot, chat_id, update_msg.from_user):
             return
         # Send the message
         lang = get_chat_config(chat_id, "Language")
@@ -3743,14 +3763,10 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update_msg.chat_id
     user = update_msg.from_user
     user_id = user.id
-    user_alias = ""
-    if user.username:
-        user_alias = f"@{user.username}"
     # Remove command message automatically after a while
     tlg_autodelete_msg(update_msg)
-    # Check if command was execute by Bot owner
-    if ((str(user_id) != CONST["BOT_OWNER"]) and
-            (user_alias != CONST["BOT_OWNER"])):
+    # Deny if command was not execute by Bot Owner
+    if not is_owner_msg(user):
         await tlg_send_autodelete_msg(
             bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"],
             topic_id=tlg_get_msg_topic(update_msg))
@@ -3810,14 +3826,9 @@ async def cmd_allowuserlist(
         return
     chat_id = update_msg.chat_id
     user = update_msg.from_user
-    user_id = user.id
-    user_alias = ""
-    if user.username:
-        user_alias = f"@{user.username}"
     topic_id = tlg_get_msg_topic(update_msg)
-    # Check if command was execute by Bot owner
-    if ((str(user_id) != CONST["BOT_OWNER"]) and
-            (user_alias != CONST["BOT_OWNER"])):
+    # Deny if command was not execute by Bot Owner
+    if not is_owner_msg(user):
         await tlg_send_autodelete_msg(
             bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
@@ -3900,14 +3911,9 @@ async def cmd_allowgroup(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     chat_id = update_msg.chat_id
     user = update_msg.from_user
-    user_id = user.id
-    user_alias = ""
-    if user.username:
-        user_alias = f"@{user.username}"
     topic_id = tlg_get_msg_topic(update_msg)
-    # Check if command was execute by Bot owner
-    if ((str(user_id) != CONST["BOT_OWNER"]) and
-            (user_alias != CONST["BOT_OWNER"])):
+    # Deny if command was not execute by Bot Owner
+    if not is_owner_msg(user):
         await tlg_send_autodelete_msg(
             bot, chat_id, CONST["CMD_JUST_ALLOW_OWNER"], topic_id=topic_id)
         return
@@ -4162,6 +4168,7 @@ def tlg_app_setup(token: str) -> Application:
     tlg_add_cmd(app, CMD["REMOVE_WELCOME_MSG"]["KEY"], cmd_remove_welcome_msg)
     tlg_add_cmd(app, CMD["REMOVE_SOLVE_KICK_MSG"]["KEY"],
                 cmd_remove_solve_kick_msg)
+    tlg_add_cmd(app, CMD["ALLOW_UNVERIFY_MSG"]["KEY"], cmd_allow_unverify_msg)
     tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_ON"]["KEY"],
                 cmd_remove_all_msg_kick_on)
     tlg_add_cmd(app, CMD["REMOVE_ALL_MSG_KICK_OFF"]["KEY"],

@@ -4,6 +4,6 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 # Continuous check and show users joins and captcha process
-tail -n1000 -f $DIR/../output.log | grep -e "New join detected:" -e "Sending captcha message" -e "requested a new captcha" -e "Sending new captcha" -e "Captcha not solved, kicking" -e "Captcha solved" -e "solved a button challenge" -e "left the group" -e "Captcha Fail" -e "Bot added to group" -e "Bot leave the group" -e "Bot removed from group" -e "Captcha challenge send" -e "select poll option" -e "solve a poll challenge" -e "fail poll" -e "Spammer detected" -e "Removing spam message"
+tail -n1000 -f $DIR/../output.log | grep -e "New join detected:" -e "Sending captcha message" -e "requested a new captcha" -e "Sending new captcha" -e "Captcha Fail" -e "Captcha solved" -e "solved a button challenge" -e "left the group" -e "Bot added to group" -e "Bot leave the group" -e "Bot removed from group" -e "Captcha challenge send" -e "select poll option" -e "solve a poll challenge" -e "fail poll" -e "Spammer detected" -e "Removing spam message"
 
 exit 0

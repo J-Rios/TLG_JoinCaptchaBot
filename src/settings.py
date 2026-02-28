@@ -12,9 +12,9 @@ Author:
 Creation date:
     07/11/2020
 Last modified date:
-    22/02/2026
+    28/02/2026
 Version:
-    2.0.0
+    2.0.2
 '''
 
 ###############################################################################
@@ -106,8 +106,11 @@ SETTINGS = {
     # Initial users send URLs enable/disable at Bot start
     "CAPTCHABOT_INIT_URL_ENABLE": True,
 
+    # Initial config for allowing messages from unverified users
+    "CAPTCHABOT_INIT_ALLOW_UNVERIFY_MSG": False,
+
     # Initial config regarding remove all messages sent by a user kicked
-    "CAPTCHABOT_INIT_RM_ALL_MSG": True,
+    "CAPTCHABOT_INIT_RM_ALL_MSG": False,
 
     # Initial captcha solve time (in minutes)
     "CAPTCHABOT_INIT_CAPTCHA_TIME_MIN": 5,
