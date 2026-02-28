@@ -15,10 +15,10 @@ num_spams=-1
 stats_get()
 {
     num_joins=$(cat $LOGFILE | grep -e "${1}" | grep -e "New join detected: " | wc -l)
-    num_kicks=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha not solved, kicking" | wc -l)
-    num_bans=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha not solved, banning" | wc -l)
-    num_solves=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha solved by " | wc -l)
-    num_spams=$(cat $LOGFILE | grep -e "${1}" | grep -e "Removing spam" | wc -l)
+    num_kicks=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha Fail - Kick" | wc -l)
+    num_bans=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha Fail - Ban" | wc -l)
+    num_solves=$(cat $LOGFILE | grep -e "${1}" | grep -e "Captcha solved" | wc -l)
+    num_spams=$(cat $LOGFILE | grep -e "${1}" | grep -e "Spammer detected" | wc -l)
 }
 
 # Usage: show_data date num_joins num_kicks num_solves

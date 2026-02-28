@@ -13,6 +13,7 @@ help:
 	@ echo "  status: Check if Bot is running"
 	@ echo "  monitor: Check users captcha process"
 	@ echo "  error: Check for errors in the Bot"
+	@ echo "  stats: Show statistics"
 	@ echo ""
 
 setup:
@@ -36,13 +37,9 @@ monitor:
 	@ chmod +x $(TOOLS)/monitor
 	@ $(TOOLS)/monitor
 
-errors:
+error:
 	@ chmod +x $(TOOLS)/check_errors
 	@ $(TOOLS)/check_errors
-
-catcfgchat:
-	@ chmod +x $(TOOLS)/catcfgchat
-	@ $(TOOLS)/catcfgchat
 
 stats:
 	@ chmod +x $(TOOLS)/stats
