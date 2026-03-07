@@ -179,7 +179,7 @@ def change_config(target_key, target_value, new_value):
                 logger.error("[%s] Fail to write config", chat_id)
                 return False
             else:
-                logger.info("[%s] Update config")
+                logger.info("[%s] Update config", chat_id)
                 logger.info("[%s] Changed: \"%s\" : \"%s\"",
                             chat_id, target_key, new_value)
             continue

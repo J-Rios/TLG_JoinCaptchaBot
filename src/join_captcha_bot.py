@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    28/02/2026
+    07/03/2026
 Version:
-    2.0.2
+    2.0.3
 '''
 
 ###############################################################################
@@ -1300,7 +1300,8 @@ async def send_captcha_video(update, context, captcha_mode, captcha_timeout,
             try:
                 with open(captcha.file, "rb") as file:
                     sent_result = await tlg_send_video(
-                        bot, chat_id, file, img_caption, read_timeout=20)
+                        bot, chat_id, file, img_caption, read_timeout=20,
+                        filename="captcha.mp4")
                 break
             except Exception:
                 logger.warning("[%s] Fail to send captcha msg, retrying...",
@@ -3769,7 +3770,8 @@ async def cmd_captcha(update: Update, context: ContextTypes.DEFAULT_TYPE):
             try:
                 with open(captcha.file, "rb") as file:
                     await tlg_send_video(bot, chat_id, file, caption,
-                                         read_timeout=20)
+                                         read_timeout=20,
+                                         filename="captcha.mp4")
             except Exception:
                 pass
     else:

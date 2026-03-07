@@ -241,7 +241,7 @@ async def tlg_send_video(
             reply_markup=reply_markup, parse_mode=parse_mode,
             message_thread_id=topic_id, **kwargs)
         logger.debug(
-            "[%s] TLG image msg %d sent",
+            "[%s] TLG video msg %d sent",
             str(chat_id), msg.message_id)
         sent_result["msg"] = msg
     except TelegramError as error:
