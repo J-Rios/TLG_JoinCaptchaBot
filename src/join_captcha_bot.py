@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/03/2026
+    21/03/2026
 Version:
-    2.0.3
+    2.0.4
 '''
 
 ###############################################################################
@@ -678,6 +678,30 @@ def is_group_in_banned_list(chat_id):
     return False
 
 
+def is_chat_user_in_new_user_list(chat_id, user_id):
+    if chat_id not in Global.new_users:
+        return False
+    if user_id not in Global.new_users[chat_id]:
+        return False
+    return True
+
+
+def list_new_user_msg_to_rm_clear(chat_id, user_id):
+    '''Clear all messages to be removed from new users list.'''
+    if not is_chat_user_in_new_user_list(chat_id, user_id):
+        return False
+    Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+    return True
+
+
+def list_new_user_msg_to_rm_add(chat_id, user_id, msg_id):
+    '''Adds ID of message to be removed for new users list.'''
+    if not is_chat_user_in_new_user_list(chat_id, user_id):
+        return False
+    Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+    return True
+
+
 async def allowed_in_this_group(bot, chat, member_added_by):
     '''
     Check if Bot is allowed to be used in a Chat.
@@ -844,7 +868,10 @@ async def captcha_fail_member_mute(bot, chat_id, user_id, user_name):
     Restrict the user to deny send any kind of message for 24h.
     '''
     lang = get_chat_config(chat_id, "Language")
-    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
+    user_name = "unknown"
+    if is_chat_user_in_new_user_list(chat_id, user_id):
+        user_name = \
+            Global.new_users[chat_id][user_id]["join_data"]["user_name"]
     mute_until_24h = get_unix_epoch() + CONST["T_SECONDS_IN_A_DAY"]
     logger.info("[%s] Captcha Fail - Mute - %s (%s)",
                 chat_id, user_name, user_id)
@@ -1001,7 +1028,10 @@ async def captcha_fail_member(bot, chat_id, user_id):
     Restrict (Kick, Ban, mute, etc) a new member that has fail to solve
     the captcha.
     '''
-    user_name = Global.new_users[chat_id][user_id]["join_data"]["user_name"]
+    user_name = "unknown"
+    if is_chat_user_in_new_user_list(chat_id, user_id):
+        user_name = \
+            Global.new_users[chat_id][user_id]["join_data"]["user_name"]
     restriction = get_chat_config(chat_id, "Fail_Restriction")
     if restriction == CMD["RESTRICTION"]["MUTE"]:
         await captcha_fail_member_mute(bot, chat_id, user_id, user_name)
@@ -1017,7 +1047,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
             await delete_msg(bot, chat_id, join_msg)
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
             await delete_msg(bot, chat_id, msg)
-        Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+        list_new_user_msg_to_rm_clear(chat_id, user_id)
         if restriction != CMD["RESTRICTION"]["KICK"]:
             del Global.new_users[chat_id][user_id]
     except KeyError:
@@ -1088,7 +1118,7 @@ def add_join_user_data(chat_id, join_user_id, join_user_name, captcha_mode,
     Global.new_users[chat_id][join_user_id]["join_data"] = join_data
     Global.new_users[chat_id][join_user_id]["join_msg"] = join_msg_id
     for msg_id in list_msg_to_rm:
-        Global.new_users[chat_id][join_user_id]["msg_to_rm"].append(msg_id)
+        list_new_user_msg_to_rm_add(chat_id, join_user_id, msg_id)
 
 
 async def send_captcha_button(update, context, captcha_mode, captcha_timeout,
@@ -1167,7 +1197,7 @@ async def send_captcha_poll(update, context, captcha_mode, captcha_timeout,
         bot, chat_id, poll_question, poll_options,
         poll_correct_option-1, captcha_timeout, False, Poll.QUIZ,
         read_timeout=20)
-    if send_result["msg"]:
+    if send_result["msg"] and send_result["msg"].poll:
         send_success = True
         list_msg_to_rm.append(send_result["msg"].message_id)
         # Save some info about the poll the bot_data for
@@ -1738,10 +1768,10 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
         # Remove all restrictions on the user
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
-        Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+        list_new_user_msg_to_rm_add(chat_id, user_id, msg_id)
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
             await delete_msg(bot, chat_id, msg)
-        Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+        list_new_user_msg_to_rm_clear(chat_id, user_id)
         del Global.new_users[chat_id][user_id]
         # Remove user captcha numbers message
         await delete_msg(bot, chat_id, msg_id)
@@ -1789,12 +1819,12 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
             # Directly remove messages from unverified users
             delete_result = await delete_msg(bot, chat_id, msg_id)
             if delete_result["error"] != "":
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                list_new_user_msg_to_rm_add(chat_id, user_id, msg_id)
         else:
             # Check if received user msgs should be removed after kick/ban
             rm_all_msg = get_chat_config(chat_id, "RM_All_Msg")
             if rm_all_msg:
-                Global.new_users[chat_id][user_id]["msg_to_rm"].append(msg_id)
+                list_new_user_msg_to_rm_add(chat_id, user_id, msg_id)
         # Notify wrong code
         wrong_code_msg_text = TEXT[lang]["CAPTCHA_INCORRECT"]
         if captcha_mode == "math":
@@ -1907,7 +1937,7 @@ async def poll_answer_rx(
     # Remove previous join messages
     for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
         await delete_msg(bot, chat_id, msg)
-    Global.new_users[chat_id][user_id]["msg_to_rm"].clear()
+    list_new_user_msg_to_rm_clear(chat_id, user_id)
     # Check if user vote the correct option
     if option_answer == poll_correct_option:
         logger.info("[%s] User %s solve a poll challenge.", chat_id, user_name)
