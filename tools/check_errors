@@ -4,6 +4,6 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 # Check and shows errors
-cat -n $DIR/../output.log | grep -e "Traceback" -A 15 -B 5
+cat -n $DIR/../output.log | grep -e "Traceback" -A 25 -B 5
 
 exit 0
