@@ -39,7 +39,7 @@ CONST = {
     "DEVELOPER": "@JoseTLG",
 
     # Bot version
-    "VERSION": "2.0.3 (2026-03-07)",
+    "VERSION": "2.0.4 (2026-03-21)",
 
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
