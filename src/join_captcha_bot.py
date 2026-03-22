@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    21/03/2026
+    22/03/2026
 Version:
-    2.0.4
+    2.0.5
 '''
 
 ###############################################################################
@@ -1504,7 +1504,7 @@ async def chat_member_status_change(
                 for msg in \
                         Global.new_users[chat_id][join_user_id]["msg_to_rm"]:
                     await delete_msg(bot, chat_id, msg)
-                Global.new_users[chat_id][join_user_id]["msg_to_rm"].clear()
+                list_new_user_msg_to_rm_clear(chat_id, join_user_id)
     # Ignore if the captcha protection is not enable in this chat
     captcha_enable = get_chat_config(chat_id, "Enabled")
     if not captcha_enable:
@@ -1779,7 +1779,8 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     captcha_code = \
         Global.new_users[chat_id][user_id]["join_data"]["captcha_code"]
     if is_captcha_num_solve(captcha_mode, msg_text, captcha_code):
-        logger.info("[%s] Captcha solved by %s", chat_id, user_name)
+        logger.info("[%s] Captcha solved by %s (%s)",
+                    chat_id, user_name, captcha_mode)
         # Remove all restrictions on the user
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
@@ -1848,7 +1849,7 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
             bot, chat_id, wrong_code_msg_text, CONST["T_FAST_DEL_MSG"],
             topic_id=topic_id)
         if sent_msg_id:
-            Global.new_users[chat_id][user_id]["msg_to_rm"].append(sent_msg_id)
+            list_new_user_msg_to_rm_add(chat_id, user_id, sent_msg_id)
     logger.info("[%s] Captcha reply process completed.", chat_id)
 
 
@@ -2155,9 +2156,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Remove user from captcha process
     del Global.new_users[chat_id][user_id]
     # Send message solve message
-    logger.info(
-        "[%s] User %s solved a button challenge.",
-        chat_id, user_name)
+    logger.info("[%s] Captcha solved by %s (button)", chat_id, user_name)
     # Remove all restrictions on the user
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
