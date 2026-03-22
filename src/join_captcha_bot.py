@@ -1764,7 +1764,8 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
     captcha_code = \
         Global.new_users[chat_id][user_id]["join_data"]["captcha_code"]
     if is_captcha_num_solve(captcha_mode, msg_text, captcha_code):
-        logger.info("[%s] Captcha solved by %s", chat_id, user_name)
+        logger.info("[%s] Captcha solved by %s (%s)",
+                    chat_id, user_name, captcha_mode)
         # Remove all restrictions on the user
         await tlg_unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
@@ -2140,9 +2141,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Remove user from captcha process
     del Global.new_users[chat_id][user_id]
     # Send message solve message
-    logger.info(
-        "[%s] User %s solved a button challenge.",
-        chat_id, user_name)
+    logger.info("[%s] Captcha solved by %s (button)", chat_id, user_name)
     # Remove all restrictions on the user
     await tlg_unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
