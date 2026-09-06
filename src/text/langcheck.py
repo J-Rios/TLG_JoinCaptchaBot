@@ -5,7 +5,7 @@
 Script:
     langcheck.py
 Description:
-    Join Captcha Bot language texts JSON files validator to verify of the JSON
+    Language texts JSON files validator to verify of the JSON
     of all language files are valid and all languages has the same keys as the
     english language file (reference file).
 Author:
@@ -13,9 +13,9 @@ Author:
 Creation date:
     02/10/2020
 Last modified date:
-    28/12/2022
+    06/09/2026
 Version:
-    1.1.0
+    1.1.1
 '''
 
 ###############################################################################
@@ -31,8 +31,16 @@ import os
 # System Library
 from sys import exit as sys_exit
 
-# Local Constants Library
-from constants import CONST
+
+###############################################################################
+# Constants
+###############################################################################
+
+# Actual constants.py full path directory name
+SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
+
+# Language texts files directory path
+LANG_DIR = os.path.join(SCRIPT_PATH, "language")
 
 
 ###############################################################################
@@ -72,16 +80,16 @@ def is_valid(lang_name, lang_to_check, reference_lang):
 
 def main():
     '''Main Function.'''
-    file_path_en = os.path.join(CONST["LANG_DIR"], "en.json")
+    file_path_en = os.path.join(LANG_DIR, "en.json")
     with open(file_path_en, encoding="utf8") as file_en:
         json_en = json.load(file_en)
     errs = False
-    for lang in os.listdir(CONST["LANG_DIR"]):
+    for lang in os.listdir(LANG_DIR):
         if not lang.endswith(".json"):
             continue
         if lang == "en.json":
             continue
-        file_path_lang = os.path.join(CONST["LANG_DIR"], lang)
+        file_path_lang = os.path.join(LANG_DIR, lang)
         with open(file_path_lang, encoding="utf8") as file_lang:
             try:
                 lang_name = lang.split(".")[0]

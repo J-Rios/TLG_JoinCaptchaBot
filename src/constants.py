@@ -267,7 +267,7 @@ CONST = {
     "F_SESSION": SCRIPT_PATH + "/session.pkl",
 
     # Languages texts files directory path
-    "LANG_DIR": SCRIPT_PATH + "/language",
+    "LANG_DIR": SCRIPT_PATH + "text/language",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",
