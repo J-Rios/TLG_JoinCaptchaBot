@@ -264,7 +264,8 @@ CONST = {
                       SETTINGS["CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S"])),
 
     # Last session restorable RAM data backup file path
-    "F_SESSION": SCRIPT_PATH + "/session.pkl",
+    "F_SESSION":
+        os_getenv("CAPTCHABOT_F_SESSION", SETTINGS["CAPTCHABOT_F_SESSION"]),
 
     # Languages texts files directory path
     "LANG_DIR": SCRIPT_PATH + "text/language",
