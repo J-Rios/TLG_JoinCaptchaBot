@@ -2,20 +2,9 @@
 # -*- coding: utf-8 -*-
 
 '''
-Script:
-    langcheck.py
-Description:
-    Language texts JSON files validator to verify of the JSON of all
-    language files are valid and all languages has the same keys as the
-    english language file (reference file).
-Author:
-    Jose Miguel Rios Rubio
-Creation date:
-    02/10/2020
-Last modified date:
-    06/09/2026
-Version:
-    1.2.0
+Language texts JSON files validator to verify of the JSON of all
+language files are valid and all languages has the same keys as the
+english language file (reference file).
 '''
 
 ###############################################################################
@@ -29,7 +18,7 @@ import json
 import os
 
 # System Library
-from sys import exit as sys_exit
+import sys
 
 
 ###############################################################################
@@ -122,4 +111,4 @@ def main():
 ###############################################################################
 
 if __name__ == "__main__":
-    sys_exit(main())
+    sys.exit(main())
