@@ -63,9 +63,9 @@
     "RM_SOLVE_KICK_MSG": "Configure if solve and kick/ban messages should be automatically removed after a while.\n\n Misollar:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
     "RM_SOLVE_KICK_MSG_YES": "Konfiguratsiya o'zgarishi, bir muncha vaqt o'tgach, konfiguratsiya o'zgarishi va boshdan kechirish / taqiq avtomatik ravishda o'chiriladi.",
     "RM_SOLVE_KICK_MSG_NO": "Konfiguratsiya o'zgarishi, hal qilish va boshdan kechirish / taqiqlarni olib tashlamaydi.",
-    "ALLOW_UNVERIFY_MSG": "Configure if text messages from users doing the captcha are allowed (yes) or should be automatically deleted (no).\n\nExamples:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
-    "ALLOW_UNVERIFY_MSG_YES": "Configuration change, text messages from users doing the captcha are allowed.",
-    "ALLOW_UNVERIFY_MSG_NO": "Configuration change, text messages from users doing the captcha will be automatically removed.",
+    "ALLOW_UNVERIFY_MSG": "Captcha yechayotgan foydalanuvchilarning matnli xabarlari ruxsat etilishini (yes) yoki avtomatik o‘chirilishini (no) sozlang.\n\nMisollar:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
+    "ALLOW_UNVERIFY_MSG_YES": "Sozlama o‘zgartirildi: captcha yechayotgan foydalanuvchilarning matnli xabarlariga ruxsat berildi.",
+    "ALLOW_UNVERIFY_MSG_NO": "Sozlama o‘zgartirildi: captcha yechayotgan foydalanuvchilarning matnli xabarlari avtomatik o‘chiriladi.",
     "RM_WELCOME_MSG": "Agar muborak xabarlar bir muncha vaqt o'tgach avtomatik ravishda o'chirilishi kerak bo'lsa sozlang.\n\nMisollar:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
     "RM_WELCOME_MSG_YES": "Konfiguratsiya o'zgarishi, bir muncha vaqt o'tgach, Welcome xabarlari avtomatik ravishda o'chiriladi.",
     "RM_WELCOME_MSG_NO": "Konfiguratsiya o'zgarishi, Xush kelibsiz xabarlar olib tashlanmaydi.",
@@ -106,7 +106,7 @@
     "BILANG_MSG": "CAPTCHA xabar matnlari faqat bitta tilmi yoki ikkita til (inglizcha va tanlangan til) ko‘rsatilishini sozlang.\n\nMisollar:\n/bilanguage yes\n/bilanguage no",
     "BILANG_MSG_NO": "Sozlama o‘zgartirildi. CAPTCHA xabar matnlari faqat bitta tilda ko‘rsatiladi.",
     "BILANG_MSG_YES": "Sozlama o‘zgartirildi. CAPTCHA xabar matnlari ikkita til (inglizcha va tanlangan til) ko‘rsatiladi.",
-    "TIME_UNIT_REQUIRED": "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
-    "CALLING_ADMINS": "Calling Admins:\n————————————————\n{}",
-    "CALLING_ADMINS_NO_ADMINS": "There are no human admins in this group!"
+    "TIME_UNIT_REQUIRED": "⚠️ Vaqt birligini ko‘rsating.\n\nSoniyalar:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nDaqiqalar:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+    "CALLING_ADMINS": "Administratorlar chaqirilmoqda:\n————————————————\n{}",
+    "CALLING_ADMINS_NO_ADMINS": "Bu guruhda inson administratorlar yo‘q!"
 }

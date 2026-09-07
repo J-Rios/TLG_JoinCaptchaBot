@@ -63,9 +63,9 @@
     "RM_SOLVE_KICK_MSG": "يضبط فيما إذا كانت رسائل الحل والطرد والحظر ستحذف بعد فترة.\n\nأمثلة:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
     "RM_SOLVE_KICK_MSG_YES": "تغيير الإعدادات، رسائل الحل والطرد والحظر ستحذف تلقائيا بعد فترة.",
     "RM_SOLVE_KICK_MSG_NO": "تغيير الإعدادات، لن تحذف رسائل الحل والطرد والحظر.",
-    "ALLOW_UNVERIFY_MSG": "Configure if text messages from users doing the captcha are allowed (yes) or should be automatically deleted (no).\n\nExamples:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
-    "ALLOW_UNVERIFY_MSG_YES": "Configuration change, text messages from users doing the captcha are allowed.",
-    "ALLOW_UNVERIFY_MSG_NO": "Configuration change, text messages from users doing the captcha will be automatically removed.",
+    "ALLOW_UNVERIFY_MSG": "اضبط ما إذا كانت الرسائل النصية من المستخدمين الذين يحلون الكابتشا مسموحة (yes) أو يجب حذفها تلقائيًا (no).\n\nأمثلة:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
+    "ALLOW_UNVERIFY_MSG_YES": "تم تغيير الإعداد: الرسائل النصية من المستخدمين الذين يحلون الكابتشا مسموحة.",
+    "ALLOW_UNVERIFY_MSG_NO": "تم تغيير الإعداد: ستُحذف الرسائل النصية من المستخدمين الذين يحلون الكابتشا تلقائيًا.",
     "RM_WELCOME_MSG": "ضبط فيما إذا كانت رسائل الترحيب ستحذف آليا بعد فترة.\n\nأمثلة:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
     "RM_WELCOME_MSG_YES": "تغيير الإعدادات، ستحذف رسائل الترحيب آليا بعد فترة.",
     "RM_WELCOME_MSG_NO": "تغيير الإعدادات، لن تُحذف رسالة التحذير.",
@@ -106,7 +106,7 @@
     "BILANG_MSG": "Configure if text of captcha messages must be shown in both, english and configured language.\n\nExamples:\n/bilanguage yes\n/bilanguage no",
     "BILANG_MSG_NO": "Configuration changed. Captcha messages text will be shown in a single language.",
     "BILANG_MSG_YES": "Configuration changed. Captcha messages text will be shown in two languages.",
-    "TIME_UNIT_REQUIRED": "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
-    "CALLING_ADMINS": "Calling Admins:\n————————————————\n{}",
-    "CALLING_ADMINS_NO_ADMINS": "There are no human admins in this group!"
+    "TIME_UNIT_REQUIRED": "⚠️ يرجى تحديد وحدة الوقت.\n\nثوانٍ:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nدقائق:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+    "CALLING_ADMINS": "جارٍ استدعاء المشرفين:\n————————————————\n{}",
+    "CALLING_ADMINS_NO_ADMINS": "لا يوجد مشرفون بشريون في هذه المجموعة!"
 }

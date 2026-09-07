@@ -63,9 +63,9 @@
     "RM_SOLVE_KICK_MSG": "Konfigurišite da li da se poruke za rešavanje i izbacivanje/zabranu automatski uklanjaju nakon nekog vremena.\n\nPrimeri:\n/remove_solve_kick_msg yes\n/remove_solve_kick_msg no",
     "RM_SOLVE_KICK_MSG_YES": "Poruke promene konfiguracije, rešavanje i izbacivanje/zabrana poruka će se automatski ukloniti nakon nekog vremena.",
     "RM_SOLVE_KICK_MSG_NO": "Poruke promene konfiguracije, rešavanje i izbacivanje/zabrana neće biti uklonjene.",
-    "ALLOW_UNVERIFY_MSG": "Configure if text messages from users doing the captcha are allowed (yes) or should be automatically deleted (no).\n\nExamples:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
-    "ALLOW_UNVERIFY_MSG_YES": "Configuration change, text messages from users doing the captcha are allowed.",
-    "ALLOW_UNVERIFY_MSG_NO": "Configuration change, text messages from users doing the captcha will be automatically removed.",
+    "ALLOW_UNVERIFY_MSG": "Podesite da li su tekstualne poruke korisnika koji rešavaju captcha dozvoljene (yes) ili treba da budu automatski obrisane (no).\n\nPrimeri:\n/allow_unverify_msg yes\n/allow_unverify_msg no",
+    "ALLOW_UNVERIFY_MSG_YES": "Konfiguracija je promenjena: tekstualne poruke korisnika koji rešavaju captcha su dozvoljene.",
+    "ALLOW_UNVERIFY_MSG_NO": "Konfiguracija je promenjena: tekstualne poruke korisnika koji rešavaju captcha biće automatski obrisane.",
     "RM_WELCOME_MSG": "Konfigurišite da li se poruke dobrodošlice automatski uklanjaju nakon definisanog vremena.\n\nPrimeri:\n/remove_welcome_msg yes\n/remove_welcome_msg no",
     "RM_WELCOME_MSG_YES": "Promena konfiguracije, poruke dobrodošlice će se automatski ukloniti nakon definisanog vremena.",
     "RM_WELCOME_MSG_NO": "Promena konfiguracije, poruke dobrodošlice neće biti uklonjene.",
@@ -106,7 +106,7 @@
     "BILANG_MSG": "Konfigurišite da li tekst captcha poruka mora biti prikazan i na engleskom i na konfigurisanom jeziku.\n\nPrimeri:\n/bilanguage yes\n/bilanguage no",
     "BILANG_MSG_NO": "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na jednom jeziku.",
     "BILANG_MSG_YES": "Konfiguracija je promenjena. Tekst Captcha poruka će biti prikazan na dva jezika.",
-    "TIME_UNIT_REQUIRED": "⚠️ Please specify time unit.\n\nSeconds:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinutes:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
-    "CALLING_ADMINS": "Calling Admins:\n————————————————\n{}",
-    "CALLING_ADMINS_NO_ADMINS": "There are no human admins in this group!"
+    "TIME_UNIT_REQUIRED": "⚠️ Navedite jedinicu vremena.\n\nSekunde:\n/time <value> sec\n/time <value> secs\n/time <value> seconds\n/time <value> s\n\nMinuti:\n/time <value> min\n/time <value> mins\n/time <value> minutes\n/time <value> m",
+    "CALLING_ADMINS": "Pozivanje administratora:\n————————————————\n{}",
+    "CALLING_ADMINS_NO_ADMINS": "U ovoj grupi nema ljudskih administratora!"
 }
