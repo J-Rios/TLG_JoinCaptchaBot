@@ -268,7 +268,7 @@ CONST = {
         os_getenv("CAPTCHABOT_F_SESSION", SETTINGS["CAPTCHABOT_F_SESSION"]),
 
     # Languages texts files directory path
-    "LANG_DIR": SCRIPT_PATH + "text/language",
+    "LANG_DIR": SCRIPT_PATH + "/text/language",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",
