@@ -47,21 +47,18 @@ The bot:
 
 ## Installation
 
-sudo apt-get install build-essential make python3 python3-dev python3-pip
-sudo apt-get install libcairo2-dev libpango1.0-dev
-
-### 1. Install Python3 and tools
-
-```bash
-sudo apt-get install python3 python3-pip python3-venv
-```
-
-### 2. Install Pillow & Manim prerequisites
+### 1. Install Pillow & Manim prerequisites
 
 ```bash
 sudo apt update
 sudo apt install -y build-essential make libcairo2-dev libpango1.0-dev
-sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
+sudo apt install -y libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev
+```
+
+### 2. Install Python3 and tools
+
+```bash
+sudo apt-get install python3 python3-pip python3-venv python3-tk
 ```
 
 ### 3. Get and setup the project
