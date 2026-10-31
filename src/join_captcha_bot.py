@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/03/2026
+    31/10/2026
 Version:
-    2.0.5
+    2.0.6
 '''
 
 ###############################################################################
@@ -124,7 +124,8 @@ from tlgbotutils import (
     tlg_extract_members_status_change, tlg_get_msg,
     tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
     tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic,
-    tlg_get_embedded_url_in_msg, tlg_is_msg_forwarded
+    tlg_get_embedded_url_in_msg, tlg_is_msg_forwarded,
+    tlg_delete_all_message_reactions
 )
 
 # Commons Library
@@ -842,6 +843,7 @@ async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
         invite_members=False,
         pin_messages=False,
         manage_topics=False,
+        can_react_to_messages=False,
         until_date=until_date)
     return restrict_success
 
@@ -859,6 +861,7 @@ async def restrict_user_media(bot, chat_id, user_id, until_date=None):
         invite_members=False,
         pin_messages=False,
         manage_topics=False,
+        can_react_to_messages=False,
         until_date=until_date)
     return restrict_success
 
@@ -1039,7 +1042,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
         await captcha_fail_member_no_media(bot, chat_id, user_id, user_name)
     else:  # restriction == CMD["RESTRICTION"]["KICK"]
         await captcha_fail_member_kick(bot, chat_id, user_id, user_name)
-    # Remove join messages
+    # Remove join messages and reactions
     try:
         logger.info("[%s] Removing msgs from user %s...", chat_id, user_name)
         join_msg = Global.new_users[chat_id][user_id]["join_msg"]
@@ -1050,6 +1053,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
         list_new_user_msg_to_rm_clear(chat_id, user_id)
         if restriction != CMD["RESTRICTION"]["KICK"]:
             del Global.new_users[chat_id][user_id]
+        await tlg_delete_all_message_reactions(bot, chat_id, user_id)
     except KeyError:
         logger.warning(
             "[%s] %s (%d) not in new_users list (already solve captcha)",
