@@ -1066,8 +1066,8 @@ async def call_admins(bot, chat_id, topic_id):
     lang = get_chat_config(chat_id, "Language")
     list_admins = await tlg_get_chat_admins(bot, chat_id)
     if list_admins:
-        # Get up to 3 random admins from the list
-        num_admins_to_show = 3
+        # Get up to 5 random admins from the list
+        num_admins_to_show = 5
         if len(list_admins) < num_admins_to_show:
             num_admins_to_show = len(list_admins)
         list_admins = random_sample(list_admins, num_admins_to_show)
