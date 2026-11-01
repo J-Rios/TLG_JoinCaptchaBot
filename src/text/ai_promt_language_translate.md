@@ -1,3 +1,1 @@
 Use @src/test/language/en.json as single source of trust, update the texts of all other JSON languages files in order that they match the same information as the english file but in their each corresponding language. Keep the JSON structure, the keys names and the special characters (`{}`, `"`, `'`, `\n`, etc.). Don't translate the name of the telegram commands (such as /start, /help, etc). Don't modify the en.json file. Use the @src/langcheck.py script to verify if all the JSON files are valid. Do it sequencially language by language.
-
-Revisa si los textos de todos los archivos JSON de idiomas tienen el mismo significado que el correspondiente texto del idioma inglés, y en caso de que alguno diga algo distinto actualizalo.
