@@ -34,8 +34,7 @@ The bot:
   - [Bot Owner Commands](#bot-owner)
   - [Private Mode](#make-bot-private)
   - [Scalability (Polling vs Webhook)](#scalability-polling-or-webhook)
-- [Localization](#adding-a-new-language)
-- [Languages Contributors](#languages-contributors)
+- [Language Contributors](#language-contributors)
 - [Support Development](#donate)
 
 ## Requirements
@@ -212,20 +211,9 @@ openssl req -newkey rsa:2048 -sha256 -nodes -keyout private.key -x509 -days 3650
 "CAPTCHABOT_USE_WEBHOOK": True,
 ```
 
-## Adding a New Language
+## Language Contributors
 
-The bot supports multiple languages through external JSON files. To add a new language:
-
-1. Fork the repository and create a new branch (e.g., `language-support-xx`)
-2. Copy an existing language file from the [language directory](https://github.com/J-Rios/TLG_JoinCaptchaBot/tree/master/src/language)
-3. Rename the file to the ISO code of your target language
-4. Translate all text values while maintaining:
-   - The JSON structure and key names
-   - Command names in English (`START`, `HELP`, etc.)
-   - Special characters (`{}`, `"`, `'`, `\n`, etc.)
-5. Submit a pull request with your translation
-
-## Languages Contributors
+Current texts are translated via AI, but initial language translations were done by the following contributors:
 
 - Arabic: [@damascene](https://github.com/damascene)
 - Basque: [@xa2er](https://github.com/xa2er)

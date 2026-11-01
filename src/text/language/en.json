@@ -54,7 +54,7 @@
         "The provided captcha difficulty is not a number.",
 
     "DIFFICULTY_NOT_ARG":
-        "The command needs a difficulty level to set (from 1 to 5).\n\nNote: Only has effect in video or captcha modes.\n\nExamples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
+        "The command needs a difficulty level to set (from 1 to 5).\n\nNote: Only has effect in video or image captcha modes.\n\nExamples:\n/difficulty 1\n/difficulty 2\n/difficulty 3\n/difficulty 4\n/difficulty 5",
 
     "CAPTCHA_MODE_CHANGE":
         "Captcha mode successfully changed to \"{}\".",
