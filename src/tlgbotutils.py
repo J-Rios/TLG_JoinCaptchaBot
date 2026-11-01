@@ -10,7 +10,7 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    31/10/2026
+    01/11/2026
 Version:
     1.4.0
 '''
@@ -450,7 +450,7 @@ async def tlg_leave_chat(
     return left
 
 
-async def tlg_restrict_user(
+async def tlg_set_user_restrictions(
         bot: Bot,
         chat_id: Union[str, int],
         user_id: Union[str, int],
@@ -471,7 +471,7 @@ async def tlg_restrict_user(
         can_edit_tag: bool | None = None,
         can_react_to_messages: bool | None = None,
         until_date: Union[int, datetime, None] = None):
-    '''Telegram Bot try to restrict user permissions in a group.'''
+    '''Telegram Bot try to restrict/unrestrict user permissions in a group.'''
     result = False
     try:
         permissions = ChatPermissions(
@@ -488,24 +488,6 @@ async def tlg_restrict_user(
             result = await bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions,
                 until_date=until_date)
-    except Exception as error:
-        logger.error("[%s] %s", str(chat_id), str(error))
-        result = False
-    return result
-
-
-async def tlg_unrestrict_user(
-        bot: Bot,
-        chat_id: Union[str, int],
-        user_id: Union[str, int]):
-    '''Telegram Bot try to remove all user restrictions in a group.'''
-    result = False
-    try:
-        permissions = ChatPermissions(
-            True, True, True, True, True, True, True, True, True, True, True,
-            True, True, True, True, True)
-        result = await bot.restrict_chat_member(
-            chat_id=chat_id, user_id=user_id, permissions=permissions)
     except Exception as error:
         logger.error("[%s] %s", str(chat_id), str(error))
         result = False
