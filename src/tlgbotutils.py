@@ -10,9 +10,9 @@ Author:
 Creation date:
     02/11/2020
 Last modified date:
-    22/02/2026
+    01/11/2026
 Version:
-    1.3.0
+    1.4.0
 '''
 
 ###############################################################################
@@ -450,27 +450,37 @@ async def tlg_leave_chat(
     return left
 
 
-async def tlg_restrict_user(
+async def tlg_set_user_restrictions(
         bot: Bot,
         chat_id: Union[str, int],
         user_id: Union[str, int],
-        send_msg: bool,
-        send_media: bool,
-        send_polls: bool,
-        send_stickers_gifs: bool,
-        insert_links: bool,
-        change_group_info: bool,
-        invite_members: bool,
-        pin_messages: bool,
-        manage_topics: bool,
+        can_send_messages: bool | None = None,
+        can_send_polls: bool | None = None,
+        can_send_other_messages: bool | None = None,
+        can_add_web_page_previews: bool | None = None,
+        can_change_info: bool | None = None,
+        can_invite_users: bool | None = None,
+        can_pin_messages: bool | None = None,
+        can_manage_topics: bool | None = None,
+        can_send_audios: bool | None = None,
+        can_send_documents: bool | None = None,
+        can_send_photos: bool | None = None,
+        can_send_videos: bool | None = None,
+        can_send_video_notes: bool | None = None,
+        can_send_voice_notes: bool | None = None,
+        can_edit_tag: bool | None = None,
+        can_react_to_messages: bool | None = None,
         until_date: Union[int, datetime, None] = None):
-    '''Telegram Bot try to restrict user permissions in a group.'''
+    '''Telegram Bot try to restrict/unrestrict user permissions in a group.'''
     result = False
     try:
         permissions = ChatPermissions(
-            send_msg, send_media, send_polls, send_stickers_gifs,
-            insert_links, change_group_info, invite_members, pin_messages,
-            manage_topics)
+            can_send_messages, can_send_polls, can_send_other_messages,
+            can_add_web_page_previews, can_change_info, can_invite_users,
+            can_pin_messages, can_manage_topics, can_send_audios,
+            can_send_documents, can_send_photos, can_send_videos,
+            can_send_video_notes, can_send_voice_notes, can_edit_tag,
+            can_react_to_messages)
         if until_date is None:
             result = await bot.restrict_chat_member(
                 chat_id=chat_id, user_id=user_id, permissions=permissions)
@@ -484,17 +494,17 @@ async def tlg_restrict_user(
     return result
 
 
-async def tlg_unrestrict_user(
+async def tlg_delete_all_message_reactions(
         bot: Bot,
         chat_id: Union[str, int],
-        user_id: Union[str, int]):
-    '''Telegram Bot try to remove all user restrictions in a group.'''
+        user_id: Union[str, int, None] = None):
+    '''Telegram Bot try to delete all user message reactions in a group.'''
     result = False
+    if user_id is None:
+        return False
     try:
-        permissions = ChatPermissions(
-            True, True, True, True, True, True, True, True)
-        result = await bot.restrict_chat_member(
-            chat_id=chat_id, user_id=user_id, permissions=permissions)
+        result = await bot.delete_all_message_reactions(
+            chat_id=chat_id, user_id=user_id)
     except Exception as error:
         logger.error("[%s] %s", str(chat_id), str(error))
         result = False
