@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+Language texts JSON files validator to verify of the JSON of all
+language files are valid and all languages has the same keys as the
+english language file (reference file).
+'''
+
+###############################################################################
+# Imported modules
+###############################################################################
+
+# JSON Library
+import json
+
+# Operating System Library
+import os
+
+# System Library
+import sys
+
+
+###############################################################################
+# Constants
+###############################################################################
+
+# Actual constants.py full path directory name
+SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
+
+# Language texts files directory path
+LANG_DIR = os.path.join(SCRIPT_PATH, "language")
+
+
+###############################################################################
+# Auxiliary Functions
+###############################################################################
+
+def is_valid(lang_name, lang_to_check, reference_lang):
+    '''
+    Validate JSON language texts with a reference language (i.e. english).
+    It checks for missing keys, extra keys and placeholder count mismatches.
+    '''
+    l_missing_keys = []
+    l_extra_keys = []
+    l_brackets_mismatch_keys = []
+    for key in reference_lang:
+        if key not in lang_to_check:
+            l_missing_keys.append(key)
+            continue
+        ref_value = reference_lang[key]
+        lang_value = lang_to_check[key]
+        if not isinstance(ref_value, str) or not isinstance(lang_value, str):
+            l_brackets_mismatch_keys.append(key)
+            continue
+        num_expected_brackets = ref_value.count("{}")
+        num_brackets = lang_value.count("{}")
+        if num_brackets != num_expected_brackets:
+            l_brackets_mismatch_keys.append(key)
+    for key in lang_to_check:
+        if key not in reference_lang:
+            l_extra_keys.append(key)
+    if len(lang_name) == 2:
+        lang_name = f"{lang_name}   "
+    if len(l_missing_keys) != 0:
+        print(f"{lang_name} - FAIL - Missing Keys: {l_missing_keys}")
+        return False
+    if len(l_extra_keys) != 0:
+        print(f"{lang_name} - FAIL - Extra Keys: {l_extra_keys}")
+        return False
+    if len(l_brackets_mismatch_keys) != 0:
+        miss_key = l_brackets_mismatch_keys
+        print(f"{lang_name} - FAIL - Brackets Mismatch in Keys: {miss_key}")
+        return False
+    print(f"{lang_name} - OK")
+    return True
+
+
+###############################################################################
+# Main Function
+###############################################################################
+
+def main():
+    '''Main Function.'''
+    file_path_en = os.path.join(LANG_DIR, "en.json")
+    with open(file_path_en, encoding="utf8") as file_en:
+        json_en = json.load(file_en)
+    errs = False
+    for lang in os.listdir(LANG_DIR):
+        if not lang.endswith(".json"):
+            continue
+        if lang == "en.json":
+            continue
+        file_path_lang = os.path.join(LANG_DIR, lang)
+        with open(file_path_lang, encoding="utf8") as file_lang:
+            try:
+                lang_name = lang.split(".")[0]
+                json_lang = json.load(file_lang)
+                if not is_valid(lang_name, json_lang, json_en):
+                    errs = True
+            except (json.decoder.JSONDecodeError, TypeError, ValueError):
+                errs = True
+                print(f"{lang} is not valid json")
+    if errs:
+        return 1
+    return 0
+
+
+###############################################################################
+# Runnable Main Script Detection
+###############################################################################
+
+if __name__ == "__main__":
+    sys.exit(main())

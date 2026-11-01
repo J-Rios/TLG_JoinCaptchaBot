@@ -10,9 +10,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    07/03/2026
+    01/11/2026
 Version:
-    2.0.3
+    2.0.4
 '''
 
 ###############################################################################
@@ -39,7 +39,7 @@ CONST = {
     "DEVELOPER": "@JoseTLG",
 
     # Bot version
-    "VERSION": "2.0.5 (2026-03-22)",
+    "VERSION": "2.0.6 (2026-11-01)",
 
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
@@ -264,10 +264,11 @@ CONST = {
                       SETTINGS["CAPTCHABOT_TIME_VIDEO_GEN_INTERVAL_S"])),
 
     # Last session restorable RAM data backup file path
-    "F_SESSION": SCRIPT_PATH + "/session.pkl",
+    "F_SESSION":
+        os_getenv("CAPTCHABOT_F_SESSION", SETTINGS["CAPTCHABOT_F_SESSION"]),
 
     # Languages texts files directory path
-    "LANG_DIR": SCRIPT_PATH + "/language",
+    "LANG_DIR": SCRIPT_PATH + "/text/language",
 
     # Chat configurations JSON files
     "F_CONF": "configs.json",

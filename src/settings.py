@@ -78,6 +78,9 @@ SETTINGS = {
     # Note: only used if CAPTCHABOT_USE_WEBHOOK is True
     "CAPTCHABOT_WEBHOOK_SECRET_TOKEN": None,
 
+    # Last session restorable RAM data backup file path
+    "CAPTCHABOT_F_SESSION": SCRIPT_PATH + "/session.pkl",
+
     # Chats directory path
     "CAPTCHABOT_CHATS_DIR": SCRIPT_PATH + "/data/chats",
 

@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    22/03/2026
+    01/11/2026
 Version:
-    2.0.5
+    2.0.6
 '''
 
 ###############################################################################
@@ -120,12 +120,13 @@ from tlgbotutils import (
     tlg_add_cmd, tlg_get_chat_admins, tlg_send_msg, tlg_send_image,
     tlg_send_poll, tlg_send_video, tlg_stop_poll, tlg_answer_callback_query,
     tlg_delete_msg, tlg_edit_msg_media, tlg_ban_user, tlg_kick_user,
-    tlg_user_is_admin, tlg_leave_chat, tlg_restrict_user, tlg_unrestrict_user,
+    tlg_user_is_admin, tlg_leave_chat, tlg_set_user_restrictions,
     tlg_is_valid_user_id_or_alias, tlg_is_valid_group, tlg_alias_in_string,
     tlg_extract_members_status_change, tlg_get_msg,
     tlg_is_a_channel_msg_on_discussion_group, tlg_get_user_name,
     tlg_member_has_join_group, tlg_member_has_left_group, tlg_get_msg_topic,
-    tlg_get_embedded_url_in_msg, tlg_is_msg_forwarded
+    tlg_get_embedded_url_in_msg, tlg_is_msg_forwarded,
+    tlg_delete_all_message_reactions
 )
 
 # Commons Library
@@ -846,35 +847,60 @@ async def should_manage_captcha(update, bot):
 
 async def restrict_user_mute(bot, chat_id, user_id, until_date=None):
     '''Restrict an user in order to deny it send any kind of message.'''
-    restrict_success = await tlg_restrict_user(
+    restrict_success = await tlg_set_user_restrictions(
         bot, chat_id, user_id,
-        send_msg=False,
-        send_media=False,
-        send_polls=False,
-        send_stickers_gifs=False,
-        insert_links=False,
-        change_group_info=False,
-        invite_members=False,
-        pin_messages=False,
-        manage_topics=False,
+        can_send_messages=False,
+        can_send_polls=False,
+        can_send_other_messages=False,
+        can_add_web_page_previews=False,
+        can_invite_users=False,
+        can_send_audios=False,
+        can_send_documents=False,
+        can_send_photos=False,
+        can_send_videos=False,
+        can_send_video_notes=False,
+        can_send_voice_notes=False,
+        can_react_to_messages=False,
         until_date=until_date)
     return restrict_success
 
 
 async def restrict_user_media(bot, chat_id, user_id, until_date=None):
     '''Restrict an user in order to deny it send media messages.'''
-    restrict_success = await tlg_restrict_user(
+    restrict_success = await tlg_set_user_restrictions(
         bot, chat_id, user_id,
-        send_msg=True,
-        send_media=False,
-        send_polls=False,
-        send_stickers_gifs=False,
-        insert_links=False,
-        change_group_info=False,
-        invite_members=False,
-        pin_messages=False,
-        manage_topics=False,
+        can_send_messages=True,
+        can_send_polls=False,
+        can_send_other_messages=False,
+        can_add_web_page_previews=False,
+        can_invite_users=False,
+        can_send_audios=False,
+        can_send_documents=False,
+        can_send_photos=False,
+        can_send_videos=False,
+        can_send_video_notes=False,
+        can_send_voice_notes=False,
+        can_react_to_messages=False,
         until_date=until_date)
+    return restrict_success
+
+
+async def unrestrict_user(bot, chat_id, user_id):
+    '''Unrestrict an user in order to allow it send any kind of message.'''
+    restrict_success = await tlg_set_user_restrictions(
+        bot, chat_id, user_id,
+        can_send_messages=True,
+        can_send_polls=True,
+        can_send_other_messages=True,
+        can_add_web_page_previews=True,
+        can_invite_users=True,
+        can_send_audios=True,
+        can_send_documents=True,
+        can_send_photos=True,
+        can_send_videos=True,
+        can_send_video_notes=True,
+        can_send_voice_notes=True,
+        can_react_to_messages=True)
     return restrict_success
 
 
@@ -1054,7 +1080,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
         await captcha_fail_member_no_media(bot, chat_id, user_id, user_name)
     else:  # restriction == CMD["RESTRICTION"]["KICK"]
         await captcha_fail_member_kick(bot, chat_id, user_id, user_name)
-    # Remove join messages
+    # Remove join messages and reactions
     try:
         logger.info("[%s] Removing msgs from user %s...", chat_id, user_name)
         join_msg = Global.new_users[chat_id][user_id]["join_msg"]
@@ -1065,6 +1091,7 @@ async def captcha_fail_member(bot, chat_id, user_id):
         list_new_user_msg_to_rm_clear(chat_id, user_id)
         if restriction != CMD["RESTRICTION"]["KICK"]:
             del Global.new_users[chat_id][user_id]
+        await tlg_delete_all_message_reactions(bot, chat_id, user_id)
     except KeyError:
         logger.warning(
             "[%s] %s (%d) not in new_users list (already solve captcha)",
@@ -1077,8 +1104,8 @@ async def call_admins(bot, chat_id, topic_id):
     lang = get_chat_config(chat_id, "Language")
     list_admins = await tlg_get_chat_admins(bot, chat_id)
     if list_admins:
-        # Get up to 3 random admins from the list
-        num_admins_to_show = 3
+        # Get up to 5 random admins from the list
+        num_admins_to_show = 5
         if len(list_admins) < num_admins_to_show:
             num_admins_to_show = len(list_admins)
         list_admins = random_sample(list_admins, num_admins_to_show)
@@ -1782,7 +1809,7 @@ async def handle_captcha_text_answer(bot, msg, msg_text):
         logger.info("[%s] Captcha solved by %s (%s)",
                     chat_id, user_name, captcha_mode)
         # Remove all restrictions on the user
-        await tlg_unrestrict_user(bot, chat_id, user_id)
+        await unrestrict_user(bot, chat_id, user_id)
         # Remove join messages
         list_new_user_msg_to_rm_add(chat_id, user_id, msg_id)
         for msg in Global.new_users[chat_id][user_id]["msg_to_rm"]:
@@ -1958,7 +1985,7 @@ async def poll_answer_rx(
     if option_answer == poll_correct_option:
         logger.info("[%s] User %s solve a poll challenge.", chat_id, user_name)
         # Remove all restrictions on the user
-        await tlg_unrestrict_user(bot, chat_id, user_id)
+        await unrestrict_user(bot, chat_id, user_id)
         # Send captcha solved message
         bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
         if lang != "EN":
@@ -2158,7 +2185,7 @@ async def button_im_not_a_bot_press(bot, query):
     # Send message solve message
     logger.info("[%s] Captcha solved by %s (button)", chat_id, user_name)
     # Remove all restrictions on the user
-    await tlg_unrestrict_user(bot, chat_id, user_id)
+    await unrestrict_user(bot, chat_id, user_id)
     # Send captcha solved message
     bot_msg = TEXT[lang]["CAPTCHA_SOLVED"].format(user_name)
     if lang != "EN":
