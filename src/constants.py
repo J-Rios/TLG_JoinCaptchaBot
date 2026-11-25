@@ -10,7 +10,7 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/11/2026
+    25/11/2026
 Version:
     2.0.4
 '''
@@ -39,7 +39,7 @@ CONST = {
     "DEVELOPER": "@JoseTLG",
 
     # Bot version
-    "VERSION": "2.0.6 (2026-11-01)",
+    "VERSION": "2.0.7 (2026-11-25)",
 
     # Bot code repository
     "REPOSITORY": "https://github.com/J-Rios/TLG_JoinCaptchaBot",
