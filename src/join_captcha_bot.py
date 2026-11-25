@@ -13,9 +13,9 @@ Author:
 Creation date:
     09/09/2018
 Last modified date:
-    01/11/2026
+    25/11/2026
 Version:
-    2.0.6
+    2.0.7
 '''
 
 ###############################################################################
@@ -1738,8 +1738,14 @@ async def text_msg_rx_verified_user(bot, msg, msg_text):
         # Get Chat configured language
         lang = get_chat_config(chat_id, "Language")
         # Check for Spam (check if the message contains any URL)
-        has_url = re.search(CONST["REGEX_URLS"], msg_text)
-        if has_url is None:
+        has_url = bool(re.search(CONST["REGEX_URLS"], msg_text))
+        if not has_url:
+            embedded_text = tlg_get_embedded_url_in_msg(msg)
+            has_url = any(
+                re.search(CONST["REGEX_URLS"], text)
+                for text in embedded_text
+            )
+        if not has_url:
             return
         # Try to remove the message and notify detection
         delete_result = await delete_msg(bot, chat_id, msg_id)

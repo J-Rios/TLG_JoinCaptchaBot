@@ -727,8 +727,8 @@ def tlg_get_embedded_url_in_msg(msg):
     for entity in msg_entities:
         url = getattr(entity, "url", None)
         if url:
-            if url != "":
-                urls.append(url)
+            urls.append(url)
+    return urls
 
 
 def tlg_is_msg_forwarded(msg):
